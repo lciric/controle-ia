@@ -1,0 +1,546 @@
+{
+ "source": {
+  "chemin": "/home/user/controle-ia/docs/sources/pdf/2606.07054v1.pdf",
+  "sha256": "9e169bb5eced6fb2079c14804efcda54ad5e4a4ab9392b6c3b148c4ea6405fee",
+  "titre": "TRACE: Trajectory Reasoning through Adaptive Cross-Step Evidence Aggregation for LLM Agents (Mittapalli, Dani, Pilli, Ansu, Teymoorianfard, Dernoncourt, Chen, Wang, Rossi, Ahmed), arXiv 2606.07054v1",
+  "pages": 18,
+  "pagination": "pas de numéro imprimé sur les pages 12 et 13 ; page = n-ième page du fichier"
+ },
+ "outils": {
+  "pdftotext": "pdftotext version 24.02.0",
+  "pdftohtml": "pdftohtml version 24.02.0",
+  "python": "3.11.15"
+ },
+ "methode": {
+  "construction": "scripts/construire.py : pdftohtml -xml (polices, couleurs, positions ; résolution 0,67 point) ; encadrés repérés par leur titre blanc et leur marge gauche (le texte des auteurs est dans la même police mais commence à la marge de colonne) ; lignes physiques par ordonnée ; recollement des lignes justifiées par une espace, césures résolues, une ligne transcrite par paragraphe ou retour forcé du PDF ; décisions non mécaniques déclarées ici avec leur justification.",
+  "verification": "scripts/verifier.py : contrôle A (contenu) sur le texte de pdftotext en mode par défaut, colonne par colonne ; contrôle B (structure) sur les positions des mots de pdftotext -bbox (espaces mesurées, fins de ligne, écarts verticaux). Voir LISEZMOI.md.",
+  "normalisation_controle_A": [
+   "ligatures ﬀ ﬁ ﬂ ﬃ ﬄ ﬅ ﬆ -> lettres",
+   "toute suite de blancs ASCII -> une espace ; bords rognés",
+   "côté PDF : texte des colonnes (gauche puis droite) des pages 12 et 13, mis bout à bout dans l'ordre de lecture",
+   "côté transcription : substitutions déclarées (forme transcrite -> forme produite par pdftotext)"
+  ],
+  "regle_controle_B": "une ligne physique est recollée à la suivante si elle finit par « - » (césure, ou trait d'union déclaré conservé) ou si elle est justifiée (fin à la marge droite et espaces différentes de la largeur naturelle) ; elle clôt une ligne transcrite si elle est courte et que ses espaces ont la largeur naturelle exacte ; tout autre cas est déclaré indécidable et rend le gabarit non conforme.",
+  "elisions": "Aucune mention d'élision dans les encadrés. Les « ... » des exemples JSON (B.1, B.2) sont imprimés dans l'encadré et font partie des gabarits."
+ },
+ "geometrie": {
+  "unites": "points PDF (1/72 pouce) ; le XML de pdftohtml est en points × 1,5",
+  "milieu_pt": 297.638,
+  "marge_gauche_colonne_pt": {
+   "g": 70.866,
+   "d": 306.142
+  },
+  "marge_gauche_encadre_pt": {
+   "g": 86.457,
+   "d": 321.732
+  },
+  "marge_droite_encadre_pt": {
+   "g": 273.54,
+   "d": 508.815
+  },
+  "corps_pt": 10.90909,
+  "espace_naturelle_pt": 2.72727,
+  "espace_naturelle_apres_ponctuation_pt": 3.38182,
+  "interlignes_pt": [
+   13.549,
+   15.54
+  ],
+  "protrusion": "microtype : la fin d'une ligne justifiée dépasse la marge selon son dernier caractère (lettre 0 à 0,4 pt ; « ? » 0,48 ; « , » 1,37 ; « : » 1,52 ; « - » 1,81 ; « . » 1,91)"
+ },
+ "doutes_communs": [
+  "Structure des lignes : le texte des encadrés est composé en paragraphes justifiés. Les retours à la ligne transcrits sont ceux que le PDF montre (fin de paragraphe ou retour forcé). Les lignes vides éventuelles de l'invite d'origine, et ses retours à la ligne à l'intérieur d'un paragraphe, ne sont pas visibles : aucun écart vertical anormal dans les encadrés (13,55 pt ; 15,54 pt autour des listes).",
+  "Apostrophe « ’ » (U+2019) : LaTeX compose l'apostrophe droite ' en ’ ; l'invite d'origine portait probablement « ' ». Transcrit tel qu'imprimé.",
+  "Tiret demi-cadratin « – » (U+2013) dans les intervalles de nombres (1–2, 1–3, 1–5, 2–3, 3–4, 3–8, 4–5) : produit par « -- » ou « – » dans la source LaTeX ; l'invite d'origine portait peut-être « - ». Transcrit tel qu'imprimé.",
+  "Puces « • » (B.1, B.4) : marques de liste de LaTeX ; la marque de l'invite d'origine n'est pas connue. Transcrit « • » suivi d'une espace, sans le retrait de la liste."
+ ],
+ "invites": [
+  {
+   "id": "B1",
+   "fichier": "invites/B1.txt",
+   "section": "B.1",
+   "titre": "Triage Prompt (Phase 1)",
+   "titre_encadre": "Triage Prompt",
+   "pages": {
+    "debut": 12,
+    "fin": 12
+   },
+   "colonnes": [
+    "p. 12, colonne gauche"
+   ],
+   "introduction": null,
+   "caracteres": 1288,
+   "octets": 1302,
+   "lignes": 11,
+   "lignes_physiques": 38,
+   "sha256": "d6f532d003f25278367f1f8dcdfc460c8541388377bf2677efa1dfd9813e2dae",
+   "retraits": [
+    "titre de l'encadré « Triage Prompt » (blanc sur bandeau de couleur), au-dessus du bloc ; intitulé de section « B.1 Triage Prompt (Phase 1) » (gras, texte des auteurs)",
+    "retours à la ligne de composition (texte justifié) : 21 lignes physiques recollées à la suivante par une espace",
+    "traits d'union de césure en fin de ligne : 6 retirés, mots recollés sans espace"
+   ],
+   "normalisations": [
+    "césures résolues (fin de ligne|début de ligne suivante → mot transcrit) : ac-|tions. → actions. ; ex-|plained → explained ; destina-|tion → destination ; unre-|quested → unrequested ; objec-|tive. → objective. ; dis-|tributed → distributed",
+    "lignes : 38 lignes physiques du PDF → 11 lignes transcrites (une par paragraphe ou retour forcé du PDF ; mots séparés par une espace simple)",
+    "ligatures : aucune dans le texte extrait (pdftotext et pdftohtml rendent déjà les lettres)",
+    "guillemets et apostrophes : aucune normalisation ; « \" » droits (U+0022) : 12 ; apostrophes typographiques « ’ » (U+2019) : 1 ; tels qu'imprimés",
+    "listes à puces : chaque élément sur sa ligne, « • » (U+2022) suivi d'une espace ; le retrait de la liste (mise en page) n'est pas transcrit ; 2 puces"
+   ],
+   "doutes": [
+    "« \"Intent: ...Scope: ...\" » : aucune espace imprimée entre « ... » et « Scope: ». pdftotext et pdftohtml en font un seul mot : l'écart est sous le seuil de coupure de mot (environ 1,1 pt), alors que la plus petite espace mesurée dans les encadrés vaut 2,08 pt. L'invite d'origine portait peut-être une espace ou un retour à la ligne à cet endroit (par exemple un « \\n » dans la chaîne de l'exemple JSON). Transcrit tel qu'imprimé, sans espace.",
+    "« Local window » et « Pattern window » sont composés en gras ; l'invite d'origine portait peut-être un balisage (par exemple « **…** ») que le PDF ne montre pas. Le gras n'est pas transcrit.",
+    "structure des lignes : une ligne transcrite par paragraphe ou retour forcé du PDF ; les lignes vides et les retours à la ligne internes de l'invite d'origine, s'il y en avait, ne sont pas visibles (voir doutes_communs).",
+    "apostrophe « ’ » (U+2019), 1 fois : LaTeX compose l'apostrophe droite ' en ’ ; l'invite d'origine portait probablement « ' ». Transcrit tel qu'imprimé.",
+    "tiret demi-cadratin « – » (U+2013), 4 fois (1–2, 1–3, 3–4, 3–8) : produit par « -- » ou « – » dans la source LaTeX ; l'invite d'origine portait peut-être un trait d'union « - ». Transcrit tel qu'imprimé.",
+    "puces « • » : marques de liste de LaTeX ; la marque de l'invite d'origine (par exemple « - ») n'est pas connue. Transcrit « • » suivi d'une espace."
+   ],
+   "elisions": [],
+   "remarques": [
+    "Espace avant le deux-points dans « STEP 1 : », « STEP 2 : », « STEP 3 : », « STEP 4 : » : c'est une espace réelle du PDF. Dans la ligne justifiée « STEP 2 : IDENTIFY PERMITTED », elle est étirée comme les autres espaces de la ligne (8,16 pt). Transcrite.",
+    "« [19,20] » sans espace après la virgule, tel qu'imprimé.",
+    "Les « ... » de l'exemple JSON font partie du gabarit (pas une élision).",
+    "composé en gras dans le PDF (gras non transcrit) : « Local window » ; « Pattern window »"
+   ],
+   "passages": [],
+   "bords": [
+    "p12 g : bloc précédé du titre blanc « Triage Prompt »",
+    "p12 g : bloc suivi de l'intitulé « B.2 Investigation Prompt (Phase 2) »"
+   ],
+   "verification": {
+    "avant": "B.1 Triage Prompt (Phase 1) Triage Prompt",
+    "apres": "B.2 Investigation Prompt (Phase 2) Investigation Prompt",
+    "substitutions": [],
+    "B": {
+     "zones": [
+      {
+       "page": 12,
+       "colonne": "g",
+       "haut_pt": 136.67,
+       "bas_pt": 652.0
+      }
+     ],
+     "titre_au_dessus": "Triage Prompt",
+     "traits_d_union_conserves": []
+    }
+   }
+  },
+  {
+   "id": "B2",
+   "fichier": "invites/B2.txt",
+   "section": "B.2",
+   "titre": "Investigation Prompt (Phase 2)",
+   "titre_encadre": "Investigation Prompt",
+   "pages": {
+    "debut": 12,
+    "fin": 12
+   },
+   "colonnes": [
+    "p. 12, colonne gauche",
+    "p. 12, colonne droite"
+   ],
+   "introduction": null,
+   "caracteres": 866,
+   "octets": 866,
+   "lignes": 12,
+   "lignes_physiques": 25,
+   "sha256": "b4a0fc6c2b2570bfe34441bb8dd9b1515237194191ee0b3df401b75d5a76162c",
+   "retraits": [
+    "titre de l'encadré « Investigation Prompt » (blanc sur bandeau de couleur), au-dessus du bloc ; intitulé de section « B.2 Investigation Prompt (Phase 2) » (gras, texte des auteurs)",
+    "retours à la ligne de composition (texte justifié) : 12 lignes physiques recollées à la suivante par une espace",
+    "traits d'union de césure en fin de ligne : 1 retirés, mots recollés sans espace"
+   ],
+   "normalisations": [
+    "césures résolues (fin de ligne|début de ligne suivante → mot transcrit) : con-|tradiction → contradiction",
+    "lignes : 25 lignes physiques du PDF → 12 lignes transcrites (une par paragraphe ou retour forcé du PDF ; mots séparés par une espace simple)",
+    "ligatures : aucune dans le texte extrait (pdftotext et pdftohtml rendent déjà les lettres)",
+    "guillemets et apostrophes : aucune normalisation ; « \" » droits (U+0022) : 32 ; apostrophes typographiques « ’ » (U+2019) : 0 ; tels qu'imprimés"
+   ],
+   "doutes": [
+    "structure des lignes : une ligne transcrite par paragraphe ou retour forcé du PDF ; les lignes vides et les retours à la ligne internes de l'invite d'origine, s'il y en avait, ne sont pas visibles (voir doutes_communs)."
+   ],
+   "elisions": [],
+   "remarques": [
+    "Espace avant le deux-points dans « InspectStep : », « CompareSteps : », « CheckPolicy : », « AnalyzeDecisions : », « Done : » : espace réelle du PDF (dans les lignes justifiées, elle est étirée comme les autres espaces de la ligne). Transcrite.",
+    "« InspectStep : … paired. Arguments: {\"k\": <step_index>} » forme une seule ligne transcrite : la ligne « with assistant action and tool results paired. » est justifiée (espaces de 2,7298 pt et non de 2,7273 pt comme toute fin de paragraphe ; fin à 510,73 pt, position d'une ligne justifiée finie par un point). « Arguments: » continue donc le paragraphe, comme pour les quatre autres actions.",
+    "Les « ... » des exemples JSON font partie du gabarit (pas une élision).",
+    "passage p. 12, colonne gauche → p. 12, colonne droite : 0 ligne vide, établi par mesure — La dernière ligne de la colonne gauche, « WHY THIS WINDOW WAS FLAGGED: », est justifiée : elle finit à la marge droite (275,06 pt, comme les autres lignes justifiées finies par « : ») et ses espaces sont étirées (2,849 pt au lieu de 2,727). Le paragraphe continue donc en haut de la colonne droite par « {reason} », comme « WHY THIS STEP WAS FLAGGED: {reason} » dans B.3.1. Une ligne vide est impossible à l'intérieur d'un paragraphe."
+   ],
+   "passages": [
+    {
+     "de": "p. 12, colonne gauche",
+     "vers": "p. 12, colonne droite",
+     "lignes_vides": 0,
+     "jonction": "espace",
+     "certitude": "mesurée",
+     "justification": "La dernière ligne de la colonne gauche, « WHY THIS WINDOW WAS FLAGGED: », est justifiée : elle finit à la marge droite (275,06 pt, comme les autres lignes justifiées finies par « : ») et ses espaces sont étirées (2,849 pt au lieu de 2,727). Le paragraphe continue donc en haut de la colonne droite par « {reason} », comme « WHY THIS STEP WAS FLAGGED: {reason} » dans B.3.1. Une ligne vide est impossible à l'intérieur d'un paragraphe."
+    }
+   ],
+   "bords": [
+    "p12 g : bloc précédé du titre blanc « Investigation Prompt »",
+    "p12 d : bloc suivi de l'intitulé « B.3 Action Execution Prompts »"
+   ],
+   "verification": {
+    "avant": "B.2 Investigation Prompt (Phase 2) Investigation Prompt",
+    "apres": "B.3 Action Execution Prompts B.3.1 InspectStep InspectStep",
+    "substitutions": [],
+    "B": {
+     "zones": [
+      {
+       "page": 12,
+       "colonne": "g",
+       "haut_pt": 712.67,
+       "bas_pt": 763.33
+      },
+      {
+       "page": 12,
+       "colonne": "d",
+       "haut_pt": 80.67,
+       "bas_pt": 362.0
+      }
+     ],
+     "titre_au_dessus": "Investigation Prompt",
+     "traits_d_union_conserves": []
+    }
+   }
+  },
+  {
+   "id": "B3-1",
+   "fichier": "invites/B3-1.txt",
+   "section": "B.3.1",
+   "titre": "InspectStep",
+   "titre_encadre": "InspectStep",
+   "pages": {
+    "debut": 12,
+    "fin": 12
+   },
+   "colonnes": [
+    "p. 12, colonne droite"
+   ],
+   "introduction": null,
+   "caracteres": 561,
+   "octets": 565,
+   "lignes": 8,
+   "lignes_physiques": 17,
+   "sha256": "6b2b23477e56ad1f732ef5b8f0d6e4fdf2ed0904beed32b1fdef9fa98e9ccf51",
+   "retraits": [
+    "titre de l'encadré « InspectStep » (blanc sur bandeau de couleur), au-dessus du bloc ; intitulé de section « B.3.1 InspectStep » (gras, texte des auteurs)",
+    "retours à la ligne de composition (texte justifié) : 7 lignes physiques recollées à la suivante par une espace",
+    "traits d'union de césure en fin de ligne : 2 retirés, mots recollés sans espace"
+   ],
+   "normalisations": [
+    "césures résolues (fin de ligne|début de ligne suivante → mot transcrit) : {rea-|son} → {reason} ; ob-|servations? → observations?",
+    "lignes : 17 lignes physiques du PDF → 8 lignes transcrites (une par paragraphe ou retour forcé du PDF ; mots séparés par une espace simple)",
+    "ligatures : aucune dans le texte extrait (pdftotext et pdftohtml rendent déjà les lettres)",
+    "guillemets et apostrophes : aucune normalisation ; « \" » droits (U+0022) : 0 ; apostrophes typographiques « ’ » (U+2019) : 1 ; tels qu'imprimés"
+   ],
+   "doutes": [
+    "structure des lignes : une ligne transcrite par paragraphe ou retour forcé du PDF ; les lignes vides et les retours à la ligne internes de l'invite d'origine, s'il y en avait, ne sont pas visibles (voir doutes_communs).",
+    "apostrophe « ’ » (U+2019), 1 fois : LaTeX compose l'apostrophe droite ' en ’ ; l'invite d'origine portait probablement « ' ». Transcrit tel qu'imprimé.",
+    "tiret demi-cadratin « – » (U+2013), 1 fois (1–5) : produit par « -- » ou « – » dans la source LaTeX ; l'invite d'origine portait peut-être un trait d'union « - ». Transcrit tel qu'imprimé."
+   ],
+   "elisions": [],
+   "remarques": [
+    "« PRIOR OBSERVATIONS: {prior_observations} » forme une seule ligne transcrite : la ligne « PRIOR OBSERVATIONS: » est justifiée (espace étirée à 71,6 pt, fin à la marge) ; le paragraphe continue.",
+    "« Answer: 1. … justification. » et « Only reach 4 or 5 … objected to. » sont deux paragraphes distincts : la ligne « rating 1–5 with a one-line justification. » est courte (fin à 491,42 pt) avec des espaces de largeur naturelle.",
+    "fin de paragraphe déclarée après « behaviour the user would have objected to. » : À la résolution du XML (0,67 pt), la ligne paraît pleine (fin à 763 unités, marge à 763,2). Les positions des mots (pdftotext -bbox) tranchent : elle finit à 508,56 pt, alors qu'une ligne justifiée finit à 508,82 pt si elle se termine par une lettre et à 510,73 pt si elle se termine par un point (protrusion du point, voir « …tool results paired. » p. 12) ; ses six espaces mesurent 2,7273 pt, la largeur naturelle exacte, comme toutes les fins de paragraphe, alors que les lignes justifiées s'en écartent. C'est une fin de paragraphe : « Return plain text only. » commence une nouvelle ligne, comme dans les trois autres gabarits d'exécution."
+   ],
+   "passages": [],
+   "bords": [
+    "p12 d : bloc précédé du titre blanc « InspectStep »",
+    "p12 d : bloc en bas de colonne, rien en dessous"
+   ],
+   "verification": {
+    "avant": "B.3.1 InspectStep InspectStep",
+    "apres": "B.3.2 CompareSteps CompareSteps",
+    "substitutions": [],
+    "B": {
+     "zones": [
+      {
+       "page": 12,
+       "colonne": "d",
+       "haut_pt": 538.67,
+       "bas_pt": 765.33
+      }
+     ],
+     "titre_au_dessus": "InspectStep",
+     "traits_d_union_conserves": []
+    }
+   }
+  },
+  {
+   "id": "B3-2",
+   "fichier": "invites/B3-2.txt",
+   "section": "B.3.2",
+   "titre": "CompareSteps",
+   "titre_encadre": "CompareSteps",
+   "pages": {
+    "debut": 13,
+    "fin": 13
+   },
+   "colonnes": [
+    "p. 13, colonne gauche"
+   ],
+   "introduction": null,
+   "caracteres": 352,
+   "octets": 356,
+   "lignes": 6,
+   "lignes_physiques": 11,
+   "sha256": "53a39114e3e114e597f466dad26ddbdf16bc03bd64348a77604d7395ae7e6c23",
+   "retraits": [
+    "titre de l'encadré « CompareSteps » (blanc sur bandeau de couleur), au-dessus du bloc ; intitulé de section « B.3.2 CompareSteps » (gras, texte des auteurs)",
+    "retours à la ligne de composition (texte justifié) : 4 lignes physiques recollées à la suivante par une espace",
+    "traits d'union de césure en fin de ligne : 1 retirés, mots recollés sans espace"
+   ],
+   "normalisations": [
+    "césures résolues (fin de ligne|début de ligne suivante → mot transcrit) : some-|thing → something",
+    "lignes : 11 lignes physiques du PDF → 6 lignes transcrites (une par paragraphe ou retour forcé du PDF ; mots séparés par une espace simple)",
+    "ligatures : aucune dans le texte extrait (pdftotext et pdftohtml rendent déjà les lettres)",
+    "guillemets et apostrophes : aucune normalisation ; « \" » droits (U+0022) : 0 ; apostrophes typographiques « ’ » (U+2019) : 1 ; tels qu'imprimés"
+   ],
+   "doutes": [
+    "structure des lignes : une ligne transcrite par paragraphe ou retour forcé du PDF ; les lignes vides et les retours à la ligne internes de l'invite d'origine, s'il y en avait, ne sont pas visibles (voir doutes_communs).",
+    "apostrophe « ’ » (U+2019), 1 fois : LaTeX compose l'apostrophe droite ' en ’ ; l'invite d'origine portait probablement « ' ». Transcrit tel qu'imprimé.",
+    "tiret demi-cadratin « – » (U+2013), 1 fois (1–5) : produit par « -- » ou « – » dans la source LaTeX ; l'invite d'origine portait peut-être un trait d'union « - ». Transcrit tel qu'imprimé."
+   ],
+   "elisions": [],
+   "remarques": [],
+   "passages": [],
+   "bords": [
+    "p13 g : bloc précédé du titre blanc « CompareSteps »",
+    "p13 g : bloc suivi de l'intitulé « B.3.3 CheckPolicy »"
+   ],
+   "verification": {
+    "avant": "B.3.2 CompareSteps CompareSteps",
+    "apres": "B.3.3 CheckPolicy CheckPolicy",
+    "substitutions": [],
+    "B": {
+     "zones": [
+      {
+       "page": 13,
+       "colonne": "g",
+       "haut_pt": 117.33,
+       "bas_pt": 262.67
+      }
+     ],
+     "titre_au_dessus": "CompareSteps",
+     "traits_d_union_conserves": []
+    }
+   }
+  },
+  {
+   "id": "B3-3",
+   "fichier": "invites/B3-3.txt",
+   "section": "B.3.3",
+   "titre": "CheckPolicy",
+   "titre_encadre": "CheckPolicy",
+   "pages": {
+    "debut": 13,
+    "fin": 13
+   },
+   "colonnes": [
+    "p. 13, colonne gauche"
+   ],
+   "introduction": null,
+   "caracteres": 447,
+   "octets": 447,
+   "lignes": 6,
+   "lignes_physiques": 13,
+   "sha256": "9240dfdfa24600d30b7420adb9d81e548b7ec7669b928d1fddd5a92057d77c6f",
+   "retraits": [
+    "titre de l'encadré « CheckPolicy » (blanc sur bandeau de couleur), au-dessus du bloc ; intitulé de section « B.3.3 CheckPolicy » (gras, texte des auteurs)",
+    "retours à la ligne de composition (texte justifié) : 4 lignes physiques recollées à la suivante par une espace",
+    "traits d'union de césure en fin de ligne : 2 retirés, mots recollés sans espace"
+   ],
+   "normalisations": [
+    "césures résolues (fin de ligne|début de ligne suivante → mot transcrit) : ex-|filtration → exfiltration ; unautho-|rized → unauthorized",
+    "traits d'union de fin de ligne conservés (mots composés ; fin de ligne|début de ligne suivante) : monitor-|targeted",
+    "lignes : 13 lignes physiques du PDF → 6 lignes transcrites (une par paragraphe ou retour forcé du PDF ; mots séparés par une espace simple)",
+    "ligatures : aucune dans le texte extrait (pdftotext et pdftohtml rendent déjà les lettres)",
+    "guillemets et apostrophes : aucune normalisation ; « \" » droits (U+0022) : 0 ; apostrophes typographiques « ’ » (U+2019) : 0 ; tels qu'imprimés"
+   ],
+   "doutes": [
+    "« monitor-targeted » : le trait d'union de fin de ligne est gardé (adjectif composé). Une césure de « monitortargeted », qui n'est pas un mot, est improbable, mais le PDF ne permet pas de l'exclure.",
+    "structure des lignes : une ligne transcrite par paragraphe ou retour forcé du PDF ; les lignes vides et les retours à la ligne internes de l'invite d'origine, s'il y en avait, ne sont pas visibles (voir doutes_communs)."
+   ],
+   "elisions": [],
+   "remarques": [],
+   "passages": [],
+   "bords": [
+    "p13 g : bloc précédé du titre blanc « CheckPolicy »",
+    "p13 g : bloc suivi de l'intitulé « B.3.4 AnalyzeDecisions »"
+   ],
+   "verification": {
+    "avant": "B.3.3 CheckPolicy CheckPolicy",
+    "apres": "B.3.4 AnalyzeDecisions AnalyzeDecisions",
+    "substitutions": [
+     {
+      "transcription": "monitor-targeted",
+      "pdf": "monitortargeted",
+      "raison": "pdftotext (mode par défaut) supprime tout trait d'union en fin de ligne et colle la ligne suivante ; ici le trait d'union est celui du mot composé (voir doutes). Sa présence en fin de ligne est confirmée par pdftotext -bbox (mot « monitor- ») et par le contrôle B."
+     }
+    ],
+    "B": {
+     "zones": [
+      {
+       "page": 13,
+       "colonne": "g",
+       "haut_pt": 327.33,
+       "bas_pt": 500.0
+      }
+     ],
+     "titre_au_dessus": "CheckPolicy",
+     "traits_d_union_conserves": [
+      "monitor-targeted"
+     ]
+    }
+   }
+  },
+  {
+   "id": "B3-4",
+   "fichier": "invites/B3-4.txt",
+   "section": "B.3.4",
+   "titre": "AnalyzeDecisions",
+   "titre_encadre": "AnalyzeDecisions",
+   "pages": {
+    "debut": 13,
+    "fin": 13
+   },
+   "colonnes": [
+    "p. 13, colonne gauche",
+    "p. 13, colonne droite"
+   ],
+   "introduction": null,
+   "caracteres": 613,
+   "octets": 619,
+   "lignes": 7,
+   "lignes_physiques": 18,
+   "sha256": "c91b45da094e04942d588f477446c1b417c2689aab173e2c3a50c63b07f5650f",
+   "retraits": [
+    "titre de l'encadré « AnalyzeDecisions » (blanc sur bandeau de couleur), au-dessus du bloc ; intitulé de section « B.3.4 AnalyzeDecisions » (gras, texte des auteurs)",
+    "retours à la ligne de composition (texte justifié) : 7 lignes physiques recollées à la suivante par une espace",
+    "traits d'union de césure en fin de ligne : 4 retirés, mots recollés sans espace"
+   ],
+   "normalisations": [
+    "césures résolues (fin de ligne|début de ligne suivante → mot transcrit) : {deci-|sion_type} → {decision_type} ; re-|sults, → results, ; indi-|vidually → individually ; ob-|ject → object",
+    "lignes : 18 lignes physiques du PDF → 7 lignes transcrites (une par paragraphe ou retour forcé du PDF ; mots séparés par une espace simple)",
+    "ligatures : aucune dans le texte extrait (pdftotext et pdftohtml rendent déjà les lettres)",
+    "guillemets et apostrophes : aucune normalisation ; « \" » droits (U+0022) : 0 ; apostrophes typographiques « ’ » (U+2019) : 2 ; tels qu'imprimés"
+   ],
+   "doutes": [
+    "structure des lignes : une ligne transcrite par paragraphe ou retour forcé du PDF ; les lignes vides et les retours à la ligne internes de l'invite d'origine, s'il y en avait, ne sont pas visibles (voir doutes_communs).",
+    "apostrophe « ’ » (U+2019), 2 fois : LaTeX compose l'apostrophe droite ' en ’ ; l'invite d'origine portait probablement « ' ». Transcrit tel qu'imprimé.",
+    "tiret demi-cadratin « – » (U+2013), 1 fois (1–5) : produit par « -- » ou « – » dans la source LaTeX ; l'invite d'origine portait peut-être un trait d'union « - ». Transcrit tel qu'imprimé."
+   ],
+   "elisions": [],
+   "remarques": [
+    "passage p. 13, colonne gauche → p. 13, colonne droite : 0 ligne vide, établi par mesure — La dernière ligne de la colonne gauche finit par la césure « ob- » ; le mot continue en haut de la colonne droite (« ject ») : « object ». Une ligne vide est impossible à l'intérieur d'un mot."
+   ],
+   "passages": [
+    {
+     "de": "p. 13, colonne gauche",
+     "vers": "p. 13, colonne droite",
+     "lignes_vides": 0,
+     "jonction": "césure",
+     "certitude": "mesurée",
+     "justification": "La dernière ligne de la colonne gauche finit par la césure « ob- » ; le mot continue en haut de la colonne droite (« ject ») : « object ». Une ligne vide est impossible à l'intérieur d'un mot."
+    }
+   ],
+   "bords": [
+    "p13 g : bloc précédé du titre blanc « AnalyzeDecisions »",
+    "p13 d : bloc suivi de l'intitulé « B.4 Verdict Prompt (Phase 3) »"
+   ],
+   "verification": {
+    "avant": "B.3.4 AnalyzeDecisions AnalyzeDecisions",
+    "apres": "B.4 Verdict Prompt (Phase 3) Verdict Prompt",
+    "substitutions": [
+     {
+      "transcription": "reasonable user object if",
+      "pdf": "reasonable user ob- ject if",
+      "raison": "Césure au passage de colonne : chaque colonne est extraite séparément, et pdftotext ne retire le trait d'union de fin de ligne que si la ligne suivante est dans la même extraction. « ob- » finit la colonne gauche de la page 13, « ject » commence la colonne droite."
+     }
+    ],
+    "B": {
+     "zones": [
+      {
+       "page": 13,
+       "colonne": "g",
+       "haut_pt": 564.0,
+       "bas_pt": 763.33
+      },
+      {
+       "page": 13,
+       "colonne": "d",
+       "haut_pt": 80.67,
+       "bas_pt": 118.0
+      }
+     ],
+     "titre_au_dessus": "AnalyzeDecisions",
+     "traits_d_union_conserves": []
+    }
+   }
+  },
+  {
+   "id": "B4",
+   "fichier": "invites/B4.txt",
+   "section": "B.4",
+   "titre": "Verdict Prompt (Phase 3)",
+   "titre_encadre": "Verdict Prompt",
+   "pages": {
+    "debut": 13,
+    "fin": 13
+   },
+   "colonnes": [
+    "p. 13, colonne droite"
+   ],
+   "introduction": null,
+   "caracteres": 658,
+   "octets": 674,
+   "lignes": 10,
+   "lignes_physiques": 21,
+   "sha256": "840d5a80d42735871d00cd371738877546d46c36b3ae3527fa3951ad793111c8",
+   "retraits": [
+    "titre de l'encadré « Verdict Prompt » (blanc sur bandeau de couleur), au-dessus du bloc ; intitulé de section « B.4 Verdict Prompt (Phase 3) » (gras, texte des auteurs)",
+    "retours à la ligne de composition (texte justifié) : 8 lignes physiques recollées à la suivante par une espace",
+    "traits d'union de césure en fin de ligne : 3 retirés, mots recollés sans espace"
+   ],
+   "normalisations": [
+    "césures résolues (fin de ligne|début de ligne suivante → mot transcrit) : re-|quest, → request, ; exter-|nal → external ; find-|ing → finding",
+    "lignes : 21 lignes physiques du PDF → 10 lignes transcrites (une par paragraphe ou retour forcé du PDF ; mots séparés par une espace simple)",
+    "ligatures : aucune dans le texte extrait (pdftotext et pdftohtml rendent déjà les lettres)",
+    "guillemets et apostrophes : aucune normalisation ; « \" » droits (U+0022) : 6 ; apostrophes typographiques « ’ » (U+2019) : 2 ; tels qu'imprimés",
+    "listes à puces : chaque élément sur sa ligne, « • » (U+2022) suivi d'une espace ; le retrait de la liste (mise en page) n'est pas transcrit ; 4 puces"
+   ],
+   "doutes": [
+    "structure des lignes : une ligne transcrite par paragraphe ou retour forcé du PDF ; les lignes vides et les retours à la ligne internes de l'invite d'origine, s'il y en avait, ne sont pas visibles (voir doutes_communs).",
+    "apostrophe « ’ » (U+2019), 2 fois : LaTeX compose l'apostrophe droite ' en ’ ; l'invite d'origine portait probablement « ' ». Transcrit tel qu'imprimé.",
+    "tiret demi-cadratin « – » (U+2013), 2 fois (2–3, 4–5) : produit par « -- » ou « – » dans la source LaTeX ; l'invite d'origine portait peut-être un trait d'union « - ». Transcrit tel qu'imprimé.",
+    "puces « • » : marques de liste de LaTeX ; la marque de l'invite d'origine (par exemple « - ») n'est pas connue. Transcrit « • » suivi d'une espace."
+   ],
+   "elisions": [],
+   "remarques": [
+    "« Scoring rules: » est suivi d'une liste de quatre éléments ; chaque élément est une ligne transcrite commençant par « • »."
+   ],
+   "passages": [],
+   "bords": [
+    "p13 d : bloc précédé du titre blanc « Verdict Prompt »",
+    "p13 d : bloc suivi de l'intitulé « C TRACE Monitor Case Study: SSN »"
+   ],
+   "verification": {
+    "avant": "B.4 Verdict Prompt (Phase 3) Verdict Prompt",
+    "apres": "C TRACE Monitor Case Study: SSN Task",
+    "substitutions": [],
+    "B": {
+     "zones": [
+      {
+       "page": 13,
+       "colonne": "d",
+       "haut_pt": 188.67,
+       "bas_pt": 473.33
+      }
+     ],
+     "titre_au_dessus": "Verdict Prompt",
+     "traits_d_union_conserves": []
+    }
+   }
+  }
+ ]
+}

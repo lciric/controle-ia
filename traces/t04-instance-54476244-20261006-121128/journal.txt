@@ -1,0 +1,119 @@
+AMORCE 2026-10-06T11:37:21Z : commit ce54afd5b96ba3483182e2533fbbea49312f7c78
+2026-10-06T11:37:24Z début : MODE=reel COMMIT=ce54afd5b96ba3483182e2533fbbea49312f7c78 BRANCHE=calcul/t04-validation-v3
+name, driver_version, memory.total [MiB]
+NVIDIA H200 NVL, 580.159.03, 143771 MiB
+[notice] A new release of pip is available: 24.0 -> 26.2.1
+[notice] To update, run: pip install --upgrade pip
+torch 2.14.1+cu130 cuda 13.0 disponible True
+2026-10-06T11:40:25Z tests : 206 passed in 84.27s (0:01:24)
+2026-10-06T11:40:25Z révision du modèle (citée) : 0e9e39f249a16976918f6564b8830bc894c89659
+2026-10-06T11:40:25Z run A : 20261006-114025-validation-reelle
+2026-10-06T11:54:37Z run A terminé : 20261006-114025-validation-reelle
+remote: 
+remote: Create a pull request for 'calcul/t04-validation-v3' on GitHub by visiting:        
+remote:      https://github.com/lciric/controle-ia/pull/new/calcul/t04-validation-v3        
+remote: 
+2026-10-06T11:54:40Z run B (rejeu de 20261006-114025-validation-reelle) : 20261006-115440-validation-reelle
+2026-10-06T12:07:52Z run B terminé : 20261006-115440-validation-reelle
+{
+  "manifeste": "runs/20261006-115440-validation-reelle/manifeste.json",
+  "resume": "diag/20261006-115440-validation-reelle/resume.json",
+  "lecture": {
+    "format": "conforme",
+    "tests_instance": "conforme",
+    "logique_equivalence": "conforme",
+    "logique_controle_negatif": "conforme",
+    "chemin_equivalence": "conforme",
+    "chemin_controle_negatif": "conforme",
+    "production_equivalence": "conforme",
+    "production_controle_negatif": "conforme",
+    "controle_positif": "conforme",
+    "controle_positif_chemin": "conforme",
+    "rejeu_en_processus": "conforme",
+    "audit_symetrie": "non déclenché"
+  },
+  "comparaison": {
+    "run_a": "20261006-114025-validation-reelle",
+    "run_b": "20261006-115440-validation-reelle",
+    "identique": true,
+    "differences": [],
+    "lecture": "conforme"
+  }
+}
+2026-10-06T12:07:52Z fin : A=20261006-114025-validation-reelle B=20261006-115440-validation-reelle ; arrêter l'instance par son identifiant (R10)
+2026-10-06T12:07:54Z branche calcul/t04-validation-v3 poussée
+AMORCE 2026-10-06T12:07:54Z : fin, code 0
+----- /root/t04/journal.txt
+    "logique_controle_negatif": "conforme",
+    "chemin_equivalence": "conforme",
+    "chemin_controle_negatif": "conforme",
+    "production_equivalence": "conforme",
+    "production_controle_negatif": "conforme",
+    "controle_positif": "conforme",
+    "controle_positif_chemin": "conforme",
+    "rejeu_en_processus": "conforme",
+    "audit_symetrie": "non déclenché"
+  },
+  "comparaison": {
+    "run_a": "20261006-114025-validation-reelle",
+    "run_b": "20261006-115440-validation-reelle",
+    "identique": true,
+    "differences": [],
+    "lecture": "conforme"
+  }
+}
+2026-10-06T12:07:52Z fin : A=20261006-114025-validation-reelle B=20261006-115440-validation-reelle ; arrêter l'instance par son identifiant (R10)
+2026-10-06T12:07:54Z branche calcul/t04-validation-v3 poussée
+----- /root/t04/tests.txt
+........................................................................ [ 34%]
+........................................................................ [ 69%]
+..............................................................           [100%]
+206 passed in 84.27s (0:01:24)
+----- /root/t04/run-A.err (dernières lignes)
+Fetching 4 files:   0%|          | 0/4 [00:00<?, ?it/s]Fetching 4 files:  25%|██▌       | 1/4 [00:06<00:18,  6.00s/it]Fetching 4 files:  50%|█████     | 2/4 [00:13<00:14,  7.10s/it]Fetching 4 files:  75%|███████▌  | 3/4 [00:13<00:03,  3.91s/it]Fetching 4 files: 100%|██████████| 4/4 [00:14<00:00,  2.66s/it]Fetching 4 files: 100%|██████████| 4/4 [00:14<00:00,  3.68s/it]
+Loading weights:   0%|          | 0/291 [00:00<?, ?it/s]Loading weights: 100%|██████████| 291/291 [00:00<00:00, 7751.40it/s]
+[transformers] Ignoring clean_up_tokenization_spaces=True for BPE tokenizer TokenizersBackend. The clean_up_tokenization post-processing step is designed for WordPiece tokenizers and is destructive for BPE (it strips spaces before punctuation). Set clean_up_tokenization_spaces=False to suppress this warning, or set clean_up_tokenization_spaces_for_bpe_even_though_it_will_corrupt_output=True to force cleanup anyway.
+Loading weights:   0%|          | 0/291 [00:00<?, ?it/s]Loading weights: 100%|██████████| 291/291 [00:00<00:00, 7601.69it/s]
+Loading weights:   0%|          | 0/291 [00:00<?, ?it/s]Loading weights: 100%|██████████| 291/291 [00:00<00:00, 5198.69it/s]
+----- /root/t04/run-B.err (dernières lignes)
+Loading weights:   0%|          | 0/291 [00:00<?, ?it/s]Loading weights: 100%|██████████| 291/291 [00:00<00:00, 7246.84it/s]
+[transformers] Ignoring clean_up_tokenization_spaces=True for BPE tokenizer TokenizersBackend. The clean_up_tokenization post-processing step is designed for WordPiece tokenizers and is destructive for BPE (it strips spaces before punctuation). Set clean_up_tokenization_spaces=False to suppress this warning, or set clean_up_tokenization_spaces_for_bpe_even_though_it_will_corrupt_output=True to force cleanup anyway.
+Loading weights:   0%|          | 0/291 [00:00<?, ?it/s]Loading weights: 100%|██████████| 291/291 [00:00<00:00, 6892.33it/s]
+Loading weights:   0%|          | 0/291 [00:00<?, ?it/s]Loading weights: 100%|██████████| 291/291 [00:00<00:00, 7546.42it/s]
+AMORCE 2026-10-06T12:08:08Z : commit ce54afd5b96ba3483182e2533fbbea49312f7c78
+AMORCE : dossiers d'un essai précédent présents (R12) : relancer sur une instance neuve
+AMORCE 2026-10-06T12:08:18Z : commit ce54afd5b96ba3483182e2533fbbea49312f7c78
+AMORCE : dossiers d'un essai précédent présents (R12) : relancer sur une instance neuve
+AMORCE 2026-10-06T12:08:30Z : commit ce54afd5b96ba3483182e2533fbbea49312f7c78
+AMORCE : dossiers d'un essai précédent présents (R12) : relancer sur une instance neuve
+AMORCE 2026-10-06T12:08:40Z : commit ce54afd5b96ba3483182e2533fbbea49312f7c78
+AMORCE : dossiers d'un essai précédent présents (R12) : relancer sur une instance neuve
+AMORCE 2026-10-06T12:08:52Z : commit ce54afd5b96ba3483182e2533fbbea49312f7c78
+AMORCE : dossiers d'un essai précédent présents (R12) : relancer sur une instance neuve
+AMORCE 2026-10-06T12:09:08Z : commit ce54afd5b96ba3483182e2533fbbea49312f7c78
+AMORCE : dossiers d'un essai précédent présents (R12) : relancer sur une instance neuve
+AMORCE 2026-10-06T12:09:16Z : commit ce54afd5b96ba3483182e2533fbbea49312f7c78
+AMORCE : dossiers d'un essai précédent présents (R12) : relancer sur une instance neuve
+AMORCE 2026-10-06T12:09:26Z : commit ce54afd5b96ba3483182e2533fbbea49312f7c78
+AMORCE : dossiers d'un essai précédent présents (R12) : relancer sur une instance neuve
+AMORCE 2026-10-06T12:09:39Z : commit ce54afd5b96ba3483182e2533fbbea49312f7c78
+AMORCE : dossiers d'un essai précédent présents (R12) : relancer sur une instance neuve
+AMORCE 2026-10-06T12:09:49Z : commit ce54afd5b96ba3483182e2533fbbea49312f7c78
+AMORCE : dossiers d'un essai précédent présents (R12) : relancer sur une instance neuve
+AMORCE 2026-10-06T12:10:01Z : commit ce54afd5b96ba3483182e2533fbbea49312f7c78
+AMORCE : dossiers d'un essai précédent présents (R12) : relancer sur une instance neuve
+AMORCE 2026-10-06T12:10:12Z : commit ce54afd5b96ba3483182e2533fbbea49312f7c78
+AMORCE : dossiers d'un essai précédent présents (R12) : relancer sur une instance neuve
+AMORCE 2026-10-06T12:10:23Z : commit ce54afd5b96ba3483182e2533fbbea49312f7c78
+AMORCE : dossiers d'un essai précédent présents (R12) : relancer sur une instance neuve
+AMORCE 2026-10-06T12:10:34Z : commit ce54afd5b96ba3483182e2533fbbea49312f7c78
+AMORCE : dossiers d'un essai précédent présents (R12) : relancer sur une instance neuve
+AMORCE 2026-10-06T12:10:46Z : commit ce54afd5b96ba3483182e2533fbbea49312f7c78
+AMORCE : dossiers d'un essai précédent présents (R12) : relancer sur une instance neuve
+AMORCE 2026-10-06T12:10:56Z : commit ce54afd5b96ba3483182e2533fbbea49312f7c78
+AMORCE : dossiers d'un essai précédent présents (R12) : relancer sur une instance neuve
+AMORCE 2026-10-06T12:11:08Z : commit ce54afd5b96ba3483182e2533fbbea49312f7c78
+AMORCE : dossiers d'un essai précédent présents (R12) : relancer sur une instance neuve
+AMORCE 2026-10-06T12:11:18Z : commit ce54afd5b96ba3483182e2533fbbea49312f7c78
+AMORCE : dossiers d'un essai précédent présents (R12) : relancer sur une instance neuve
+

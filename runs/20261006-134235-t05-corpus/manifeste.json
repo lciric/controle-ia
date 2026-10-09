@@ -1,0 +1,77 @@
+{
+  "commande": "python -m controle_ia.environnements.corpus_arxiv selectionner --regle docs/procedures/T0.5-selection-papiers-v1.md --run-id 20261006-134235-t05-corpus --donnees donnees/T0.5-corpus-v1 --besoin 96",
+  "commit": "ea08b9c0f07c4d2d8e626bbc3c4a183eebbe535b",
+  "config": {
+    "besoin": 96,
+    "bornes_caracteres": [
+      15000,
+      300000
+    ],
+    "categories_principales": [
+      "cs.LG",
+      "cs.CL",
+      "cs.CV",
+      "stat.ML"
+    ],
+    "conference": "neurips\\s*2025|iclr\\s*2026",
+    "dates_v1": [
+      "2025-06-01",
+      "2026-06-30"
+    ],
+    "donnees": "donnees/T0.5-corpus-v1",
+    "extensions_texte": [
+      ".bbl",
+      ".bst",
+      ".cfg",
+      ".clo",
+      ".cls",
+      ".def",
+      ".ltx",
+      ".sty",
+      ".tex"
+    ],
+    "filtre_lua": "function Image(el) return {} end\nfunction Figure(el) return {} end\n",
+    "format_pandoc": "markdown-raw_tex-raw_html-raw_attribute-link_attributes-header_attributes",
+    "pandoc": "pandoc 3.9",
+    "pause_s": 3.0,
+    "pypandoc_binary": "1.17",
+    "refus_commentaire": "workshop|under review|in review|submitted|submission|withdrawn",
+    "regle": "docs/procedures/T0.5-selection-papiers-v1.md",
+    "regle_sha256": "8f43dcaeb5fd782c07fe4e0c9d093ed15d6bc09eb183a1fd9a3db589e5cac28b",
+    "requete": "(cat:cs.LG OR cat:cs.CL OR cat:cs.CV OR cat:stat.ML) AND (co:\"NeurIPS 2025\" OR co:\"ICLR 2026\") AND submittedDate:[202506010000 TO 202606302359]",
+    "sujets_exclus": "decepti|sabotag|jailbreak|red[- ]?team|backdoor|trojan|monitor|alignment|safety|steganograph|sandbag|scheming|honest|persuas|sycophan|manipulat|oversight|\\blie\\b|\\blies\\b|\\blying\\b|\\bai control\\b",
+    "tache": "T0.5 sélection des papiers",
+    "taille_page": 1000
+  },
+  "config_sha256": "95b6d629e2bcd113742f2079a4eb4a9568480afe70dec6b947573483212baedc",
+  "cree_le": "2026-10-06T13:42:35+00:00",
+  "decisif": false,
+  "depot_propre": true,
+  "graines": {
+    "tirage-corpus": {
+      "entropie": "190431963258901096632080588385540456145",
+      "etat_controle": [
+        2895411838,
+        2398159693
+      ],
+      "spawn_key": [
+        "17555860840378163972"
+      ]
+    }
+  },
+  "preenregistrement": null,
+  "reserves": [],
+  "run_id": "20261006-134235-t05-corpus",
+  "versions": {
+    "huggingface_hub": "1.33.0",
+    "matplotlib": "3.11.2",
+    "numpy": "2.4.6",
+    "plateforme": "Linux-6.18.44-fc-v70-x86_64-with-glibc2.39",
+    "python": "3.11.15",
+    "safetensors": "0.8.0",
+    "scipy": "1.17.1",
+    "tokenizers": "0.23.2",
+    "torch": "2.14.1",
+    "transformers": "5.18.0"
+  }
+}

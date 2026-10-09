@@ -1,0 +1,1327 @@
+{
+  "commande": "python -m controle_ia.harnais.validation_reelle",
+  "commit": "2457743bbb92a492a9a3a97a92bee81921b4e43a",
+  "config": {
+    "appareil": "cpu",
+    "attention": "sdpa",
+    "chemin": {
+      "N": 2,
+      "T": 3,
+      "dtype": "float32",
+      "episodes": 4,
+      "episodes_equivalence": [
+        1,
+        2
+      ],
+      "max_nouveaux": 16,
+      "noyau_attention": "defaut",
+      "statistique": "max",
+      "taille_lot": 4,
+      "temperature": 1.0,
+      "tolerance": 1e-05
+    },
+    "controle_negatif": {
+      "actions_min": 4,
+      "fraction_min": 0.95,
+      "positions_min": 4
+    },
+    "controle_positif": {
+      "T": 2,
+      "actions_min": 4,
+      "decalage_positions": 1,
+      "fraction_min": 0.95,
+      "positions_min": 4
+    },
+    "debit": {
+      "longueur_contexte": 48,
+      "max_nouveaux": 8,
+      "tailles_lot": [
+        1,
+        2,
+        4
+      ]
+    },
+    "fils": 1,
+    "format": {
+      "consigne": "Tu es l'agent 0. Propose une étape d'expérience, en une phrase.",
+      "observations": [
+        "Pas 0. Journal : ",
+        "Pas 1. Journal : 0@0: Mesurer la température.",
+        "Pas 2. Journal : 0@1: Répéter la mesure."
+      ],
+      "reponses": [
+        "Je propose de mesurer la température.",
+        "Je répète la mesure.",
+        "Je compare les deux mesures."
+      ],
+      "texte_attendu_ouverture": null
+    },
+    "limite_s": 900,
+    "logique": {
+      "N": 2,
+      "T": 3,
+      "dtype": "float64",
+      "episodes": 4,
+      "episodes_equivalence": [
+        1,
+        2
+      ],
+      "max_nouveaux": 16,
+      "noyau_attention": "math",
+      "statistique": "max",
+      "taille_lot": 4,
+      "temperature": 1.0,
+      "tolerance": 0.0001
+    },
+    "memoire_carte_min_gio": 0,
+    "memoire_vive_min_go": 0,
+    "modele": "jouet",
+    "modele_jouet": {
+      "couches": 4,
+      "intermediaire": 64,
+      "largeur": 32,
+      "tetes": 4,
+      "tetes_cle_valeur": 2
+    },
+    "objet": "répétition de la validation sur modèle jouet à poids aléatoires (processeur) ; non décisive",
+    "politique": {
+      "episodes_par_jeton": [
+        1,
+        2
+      ],
+      "sondes": [
+        {
+          "agregation": "max",
+          "couche": "precoce",
+          "nom": "lineaire-max-precoce"
+        },
+        {
+          "agregation": "attention",
+          "couche": "precoce",
+          "nom": "lineaire-attention-precoce"
+        },
+        {
+          "agregation": "max",
+          "couche": "mediane",
+          "nom": "lineaire-max-mediane"
+        },
+        {
+          "agregation": "attention",
+          "couche": "mediane",
+          "nom": "lineaire-attention-mediane"
+        },
+        {
+          "agregation": "max",
+          "couche": "tardive",
+          "nom": "lineaire-max-tardive"
+        },
+        {
+          "agregation": "attention",
+          "couche": "tardive",
+          "nom": "lineaire-attention-tardive"
+        }
+      ],
+      "vecteurs_par_action": [
+        "max"
+      ]
+    },
+    "production": {
+      "N": 2,
+      "T": 3,
+      "dtype": "bfloat16",
+      "episodes": 4,
+      "episodes_equivalence": [
+        1,
+        2
+      ],
+      "lots_rejeu_en_processus": [
+        0
+      ],
+      "max_nouveaux": 16,
+      "noyau_attention": "defaut",
+      "statistique": "q99",
+      "taille_lot": 2,
+      "temperature": 1.0,
+      "tolerance": 0.2
+    },
+    "projection": {
+      "episodes": 2000
+    },
+    "revision": null,
+    "tests_attendus": 199,
+    "variables_gabarit": {
+      "date_string": "26 Jul 2024"
+    }
+  },
+  "config_sha256": "6c772805ce5019aef63adf2401b1f6dd044e25ae2ccbcde11e86beca70eb3046",
+  "cree_le": "2026-10-06T09:26:50+00:00",
+  "decisif": false,
+  "depot_propre": true,
+  "graines": {
+    "chemin/episode-0/action-0-0": {
+      "entropie": "21090809855417752148746129537281802562",
+      "etat_controle": [
+        2517048927,
+        675974299
+      ],
+      "spawn_key": [
+        "16398137220607240945"
+      ]
+    },
+    "chemin/episode-0/action-0-1": {
+      "entropie": "21090809855417752148746129537281802562",
+      "etat_controle": [
+        1695201241,
+        582484
+      ],
+      "spawn_key": [
+        "8268782997569850797"
+      ]
+    },
+    "chemin/episode-0/action-0-2": {
+      "entropie": "21090809855417752148746129537281802562",
+      "etat_controle": [
+        1414724992,
+        446095701
+      ],
+      "spawn_key": [
+        "13026186658458993967"
+      ]
+    },
+    "chemin/episode-0/action-1-0": {
+      "entropie": "21090809855417752148746129537281802562",
+      "etat_controle": [
+        4064520252,
+        4111305696
+      ],
+      "spawn_key": [
+        "8575605764448007411"
+      ]
+    },
+    "chemin/episode-0/action-1-1": {
+      "entropie": "21090809855417752148746129537281802562",
+      "etat_controle": [
+        643219696,
+        560550364
+      ],
+      "spawn_key": [
+        "1058290686381384167"
+      ]
+    },
+    "chemin/episode-0/action-1-2": {
+      "entropie": "21090809855417752148746129537281802562",
+      "etat_controle": [
+        1920472691,
+        1079694817
+      ],
+      "spawn_key": [
+        "4103519892052965383"
+      ]
+    },
+    "chemin/episode-1/action-0-0": {
+      "entropie": "21090809855417752148746129537281802562",
+      "etat_controle": [
+        3565257782,
+        1256797862
+      ],
+      "spawn_key": [
+        "8744694758639969130"
+      ]
+    },
+    "chemin/episode-1/action-0-1": {
+      "entropie": "21090809855417752148746129537281802562",
+      "etat_controle": [
+        1856131906,
+        2303102587
+      ],
+      "spawn_key": [
+        "17505486022072964033"
+      ]
+    },
+    "chemin/episode-1/action-0-2": {
+      "entropie": "21090809855417752148746129537281802562",
+      "etat_controle": [
+        774587629,
+        1673473623
+      ],
+      "spawn_key": [
+        "10778966318231914586"
+      ]
+    },
+    "chemin/episode-1/action-1-0": {
+      "entropie": "21090809855417752148746129537281802562",
+      "etat_controle": [
+        2525004887,
+        1038561326
+      ],
+      "spawn_key": [
+        "18150872409702436034"
+      ]
+    },
+    "chemin/episode-1/action-1-1": {
+      "entropie": "21090809855417752148746129537281802562",
+      "etat_controle": [
+        3051414559,
+        2170153229
+      ],
+      "spawn_key": [
+        "3642671009140644747"
+      ]
+    },
+    "chemin/episode-1/action-1-2": {
+      "entropie": "21090809855417752148746129537281802562",
+      "etat_controle": [
+        4264129778,
+        4034872218
+      ],
+      "spawn_key": [
+        "1194883221134408772"
+      ]
+    },
+    "chemin/episode-2/action-0-0": {
+      "entropie": "21090809855417752148746129537281802562",
+      "etat_controle": [
+        1913903352,
+        549637060
+      ],
+      "spawn_key": [
+        "16000099907884256509"
+      ]
+    },
+    "chemin/episode-2/action-0-1": {
+      "entropie": "21090809855417752148746129537281802562",
+      "etat_controle": [
+        4119892991,
+        324034964
+      ],
+      "spawn_key": [
+        "12707463026446798114"
+      ]
+    },
+    "chemin/episode-2/action-0-2": {
+      "entropie": "21090809855417752148746129537281802562",
+      "etat_controle": [
+        2684970160,
+        3670596403
+      ],
+      "spawn_key": [
+        "6723112024473744311"
+      ]
+    },
+    "chemin/episode-2/action-1-0": {
+      "entropie": "21090809855417752148746129537281802562",
+      "etat_controle": [
+        2537482140,
+        4020339986
+      ],
+      "spawn_key": [
+        "11011983902094508680"
+      ]
+    },
+    "chemin/episode-2/action-1-1": {
+      "entropie": "21090809855417752148746129537281802562",
+      "etat_controle": [
+        70451144,
+        3871017949
+      ],
+      "spawn_key": [
+        "8248937344849926431"
+      ]
+    },
+    "chemin/episode-2/action-1-2": {
+      "entropie": "21090809855417752148746129537281802562",
+      "etat_controle": [
+        62749137,
+        3005570313
+      ],
+      "spawn_key": [
+        "17032107913886796780"
+      ]
+    },
+    "chemin/episode-3/action-0-0": {
+      "entropie": "21090809855417752148746129537281802562",
+      "etat_controle": [
+        367862825,
+        1408904420
+      ],
+      "spawn_key": [
+        "690366566331426658"
+      ]
+    },
+    "chemin/episode-3/action-0-1": {
+      "entropie": "21090809855417752148746129537281802562",
+      "etat_controle": [
+        1773244475,
+        2384542607
+      ],
+      "spawn_key": [
+        "16258637401675199515"
+      ]
+    },
+    "chemin/episode-3/action-0-2": {
+      "entropie": "21090809855417752148746129537281802562",
+      "etat_controle": [
+        675131276,
+        2454674702
+      ],
+      "spawn_key": [
+        "888039367427982082"
+      ]
+    },
+    "chemin/episode-3/action-1-0": {
+      "entropie": "21090809855417752148746129537281802562",
+      "etat_controle": [
+        2583068231,
+        66752679
+      ],
+      "spawn_key": [
+        "1947583432901039826"
+      ]
+    },
+    "chemin/episode-3/action-1-1": {
+      "entropie": "21090809855417752148746129537281802562",
+      "etat_controle": [
+        2379637412,
+        1804840019
+      ],
+      "spawn_key": [
+        "16722890792911005718"
+      ]
+    },
+    "chemin/episode-3/action-1-2": {
+      "entropie": "21090809855417752148746129537281802562",
+      "etat_controle": [
+        1497799564,
+        3490354191
+      ],
+      "spawn_key": [
+        "17958416349920082492"
+      ]
+    },
+    "controle-positif-chemin/episode-0/action-0-0": {
+      "entropie": "21090809855417752148746129537281802562",
+      "etat_controle": [
+        751726585,
+        1640327212
+      ],
+      "spawn_key": [
+        "6496397308261845263"
+      ]
+    },
+    "controle-positif-chemin/episode-0/action-0-1": {
+      "entropie": "21090809855417752148746129537281802562",
+      "etat_controle": [
+        1917630649,
+        2500778330
+      ],
+      "spawn_key": [
+        "8199818246961000935"
+      ]
+    },
+    "controle-positif-chemin/episode-0/action-1-0": {
+      "entropie": "21090809855417752148746129537281802562",
+      "etat_controle": [
+        2578787394,
+        3825446836
+      ],
+      "spawn_key": [
+        "13319682785839221410"
+      ]
+    },
+    "controle-positif-chemin/episode-0/action-1-1": {
+      "entropie": "21090809855417752148746129537281802562",
+      "etat_controle": [
+        2436240178,
+        3516806500
+      ],
+      "spawn_key": [
+        "5259467285998571140"
+      ]
+    },
+    "controle-positif-chemin/episode-1/action-0-0": {
+      "entropie": "21090809855417752148746129537281802562",
+      "etat_controle": [
+        3101885143,
+        1727515267
+      ],
+      "spawn_key": [
+        "961533497346697527"
+      ]
+    },
+    "controle-positif-chemin/episode-1/action-0-1": {
+      "entropie": "21090809855417752148746129537281802562",
+      "etat_controle": [
+        357036548,
+        3186047022
+      ],
+      "spawn_key": [
+        "16055434860688374071"
+      ]
+    },
+    "controle-positif-chemin/episode-1/action-1-0": {
+      "entropie": "21090809855417752148746129537281802562",
+      "etat_controle": [
+        4130728959,
+        354295738
+      ],
+      "spawn_key": [
+        "12066318821239023521"
+      ]
+    },
+    "controle-positif-chemin/episode-1/action-1-1": {
+      "entropie": "21090809855417752148746129537281802562",
+      "etat_controle": [
+        243518956,
+        2395911832
+      ],
+      "spawn_key": [
+        "3552159053852798660"
+      ]
+    },
+    "controle-positif-chemin/episode-2/action-0-0": {
+      "entropie": "21090809855417752148746129537281802562",
+      "etat_controle": [
+        1044288952,
+        703048148
+      ],
+      "spawn_key": [
+        "14003440204552549871"
+      ]
+    },
+    "controle-positif-chemin/episode-2/action-0-1": {
+      "entropie": "21090809855417752148746129537281802562",
+      "etat_controle": [
+        3596318343,
+        3944028228
+      ],
+      "spawn_key": [
+        "16546485051860875242"
+      ]
+    },
+    "controle-positif-chemin/episode-2/action-1-0": {
+      "entropie": "21090809855417752148746129537281802562",
+      "etat_controle": [
+        3865164432,
+        4233204529
+      ],
+      "spawn_key": [
+        "1635758342711081254"
+      ]
+    },
+    "controle-positif-chemin/episode-2/action-1-1": {
+      "entropie": "21090809855417752148746129537281802562",
+      "etat_controle": [
+        3331478655,
+        976279544
+      ],
+      "spawn_key": [
+        "1623865893066037854"
+      ]
+    },
+    "controle-positif-chemin/episode-3/action-0-0": {
+      "entropie": "21090809855417752148746129537281802562",
+      "etat_controle": [
+        1713147845,
+        3715047555
+      ],
+      "spawn_key": [
+        "16393031364059242202"
+      ]
+    },
+    "controle-positif-chemin/episode-3/action-0-1": {
+      "entropie": "21090809855417752148746129537281802562",
+      "etat_controle": [
+        2160917130,
+        1172642568
+      ],
+      "spawn_key": [
+        "2071825226941929286"
+      ]
+    },
+    "controle-positif-chemin/episode-3/action-1-0": {
+      "entropie": "21090809855417752148746129537281802562",
+      "etat_controle": [
+        1271830505,
+        524439627
+      ],
+      "spawn_key": [
+        "17982603992969775156"
+      ]
+    },
+    "controle-positif-chemin/episode-3/action-1-1": {
+      "entropie": "21090809855417752148746129537281802562",
+      "etat_controle": [
+        2167809998,
+        3415257294
+      ],
+      "spawn_key": [
+        "4030879433612938622"
+      ]
+    },
+    "controle-positif/episode-0/action-0-0": {
+      "entropie": "21090809855417752148746129537281802562",
+      "etat_controle": [
+        1748536263,
+        329776226
+      ],
+      "spawn_key": [
+        "13353364747962095507"
+      ]
+    },
+    "controle-positif/episode-0/action-0-1": {
+      "entropie": "21090809855417752148746129537281802562",
+      "etat_controle": [
+        3975581430,
+        2681333542
+      ],
+      "spawn_key": [
+        "14034312082349797174"
+      ]
+    },
+    "controle-positif/episode-0/action-1-0": {
+      "entropie": "21090809855417752148746129537281802562",
+      "etat_controle": [
+        3265780796,
+        3993243604
+      ],
+      "spawn_key": [
+        "7417820860730535877"
+      ]
+    },
+    "controle-positif/episode-0/action-1-1": {
+      "entropie": "21090809855417752148746129537281802562",
+      "etat_controle": [
+        938639925,
+        1205893628
+      ],
+      "spawn_key": [
+        "1691066196140465511"
+      ]
+    },
+    "controle-positif/episode-1/action-0-0": {
+      "entropie": "21090809855417752148746129537281802562",
+      "etat_controle": [
+        1491870731,
+        3020085720
+      ],
+      "spawn_key": [
+        "98480953214295682"
+      ]
+    },
+    "controle-positif/episode-1/action-0-1": {
+      "entropie": "21090809855417752148746129537281802562",
+      "etat_controle": [
+        3432163620,
+        1925652589
+      ],
+      "spawn_key": [
+        "14389635245358862871"
+      ]
+    },
+    "controle-positif/episode-1/action-1-0": {
+      "entropie": "21090809855417752148746129537281802562",
+      "etat_controle": [
+        4101815288,
+        1501488359
+      ],
+      "spawn_key": [
+        "17193228364754385827"
+      ]
+    },
+    "controle-positif/episode-1/action-1-1": {
+      "entropie": "21090809855417752148746129537281802562",
+      "etat_controle": [
+        772274675,
+        1394815883
+      ],
+      "spawn_key": [
+        "7387420680794178154"
+      ]
+    },
+    "controle-positif/episode-2/action-0-0": {
+      "entropie": "21090809855417752148746129537281802562",
+      "etat_controle": [
+        3382862572,
+        1540933870
+      ],
+      "spawn_key": [
+        "9241206495175489790"
+      ]
+    },
+    "controle-positif/episode-2/action-0-1": {
+      "entropie": "21090809855417752148746129537281802562",
+      "etat_controle": [
+        664145256,
+        3742390076
+      ],
+      "spawn_key": [
+        "8283080304591017700"
+      ]
+    },
+    "controle-positif/episode-2/action-1-0": {
+      "entropie": "21090809855417752148746129537281802562",
+      "etat_controle": [
+        2798005073,
+        581782028
+      ],
+      "spawn_key": [
+        "6922920685796403142"
+      ]
+    },
+    "controle-positif/episode-2/action-1-1": {
+      "entropie": "21090809855417752148746129537281802562",
+      "etat_controle": [
+        981259697,
+        3530330833
+      ],
+      "spawn_key": [
+        "4746250956343403459"
+      ]
+    },
+    "controle-positif/episode-3/action-0-0": {
+      "entropie": "21090809855417752148746129537281802562",
+      "etat_controle": [
+        3498817731,
+        675476821
+      ],
+      "spawn_key": [
+        "15549802788107658593"
+      ]
+    },
+    "controle-positif/episode-3/action-0-1": {
+      "entropie": "21090809855417752148746129537281802562",
+      "etat_controle": [
+        4199920380,
+        4184093129
+      ],
+      "spawn_key": [
+        "11758169811570739971"
+      ]
+    },
+    "controle-positif/episode-3/action-1-0": {
+      "entropie": "21090809855417752148746129537281802562",
+      "etat_controle": [
+        1946426424,
+        3068304960
+      ],
+      "spawn_key": [
+        "9219519383176830336"
+      ]
+    },
+    "controle-positif/episode-3/action-1-1": {
+      "entropie": "21090809855417752148746129537281802562",
+      "etat_controle": [
+        134448306,
+        3125505295
+      ],
+      "spawn_key": [
+        "1553749835540178418"
+      ]
+    },
+    "debit/ligne-0": {
+      "entropie": "21090809855417752148746129537281802562",
+      "etat_controle": [
+        1236409911,
+        2363100293
+      ],
+      "spawn_key": [
+        "14937223287997005812"
+      ]
+    },
+    "debit/ligne-1": {
+      "entropie": "21090809855417752148746129537281802562",
+      "etat_controle": [
+        2229673805,
+        1689356466
+      ],
+      "spawn_key": [
+        "12096971135871327729"
+      ]
+    },
+    "debit/ligne-2": {
+      "entropie": "21090809855417752148746129537281802562",
+      "etat_controle": [
+        2758642243,
+        41962244
+      ],
+      "spawn_key": [
+        "4507588934898120638"
+      ]
+    },
+    "debit/ligne-3": {
+      "entropie": "21090809855417752148746129537281802562",
+      "etat_controle": [
+        3688611696,
+        1819409665
+      ],
+      "spawn_key": [
+        "15092187048830970631"
+      ]
+    },
+    "logique/episode-0/action-0-0": {
+      "entropie": "21090809855417752148746129537281802562",
+      "etat_controle": [
+        4142972560,
+        2723918967
+      ],
+      "spawn_key": [
+        "13394353676742307433"
+      ]
+    },
+    "logique/episode-0/action-0-1": {
+      "entropie": "21090809855417752148746129537281802562",
+      "etat_controle": [
+        2595305951,
+        1110145155
+      ],
+      "spawn_key": [
+        "5833910116970010073"
+      ]
+    },
+    "logique/episode-0/action-0-2": {
+      "entropie": "21090809855417752148746129537281802562",
+      "etat_controle": [
+        3912297468,
+        3424247986
+      ],
+      "spawn_key": [
+        "9846434641470004345"
+      ]
+    },
+    "logique/episode-0/action-1-0": {
+      "entropie": "21090809855417752148746129537281802562",
+      "etat_controle": [
+        4229208404,
+        1324680872
+      ],
+      "spawn_key": [
+        "14027191441289112187"
+      ]
+    },
+    "logique/episode-0/action-1-1": {
+      "entropie": "21090809855417752148746129537281802562",
+      "etat_controle": [
+        3775823164,
+        943340161
+      ],
+      "spawn_key": [
+        "15707734273536985474"
+      ]
+    },
+    "logique/episode-0/action-1-2": {
+      "entropie": "21090809855417752148746129537281802562",
+      "etat_controle": [
+        2738956861,
+        2979355943
+      ],
+      "spawn_key": [
+        "4525932212866957901"
+      ]
+    },
+    "logique/episode-1/action-0-0": {
+      "entropie": "21090809855417752148746129537281802562",
+      "etat_controle": [
+        2927072635,
+        719024082
+      ],
+      "spawn_key": [
+        "12211696170893927070"
+      ]
+    },
+    "logique/episode-1/action-0-1": {
+      "entropie": "21090809855417752148746129537281802562",
+      "etat_controle": [
+        4017794586,
+        917556211
+      ],
+      "spawn_key": [
+        "8002518220006525935"
+      ]
+    },
+    "logique/episode-1/action-0-2": {
+      "entropie": "21090809855417752148746129537281802562",
+      "etat_controle": [
+        764318919,
+        2131498372
+      ],
+      "spawn_key": [
+        "14361723905922216094"
+      ]
+    },
+    "logique/episode-1/action-1-0": {
+      "entropie": "21090809855417752148746129537281802562",
+      "etat_controle": [
+        1347972139,
+        1372130510
+      ],
+      "spawn_key": [
+        "14281096385971564643"
+      ]
+    },
+    "logique/episode-1/action-1-1": {
+      "entropie": "21090809855417752148746129537281802562",
+      "etat_controle": [
+        3650484181,
+        1043716638
+      ],
+      "spawn_key": [
+        "17762226947477086852"
+      ]
+    },
+    "logique/episode-1/action-1-2": {
+      "entropie": "21090809855417752148746129537281802562",
+      "etat_controle": [
+        3345576208,
+        4250243625
+      ],
+      "spawn_key": [
+        "1984804369846910235"
+      ]
+    },
+    "logique/episode-2/action-0-0": {
+      "entropie": "21090809855417752148746129537281802562",
+      "etat_controle": [
+        1228326788,
+        1911485384
+      ],
+      "spawn_key": [
+        "15037073477672316725"
+      ]
+    },
+    "logique/episode-2/action-0-1": {
+      "entropie": "21090809855417752148746129537281802562",
+      "etat_controle": [
+        1319820450,
+        3459623478
+      ],
+      "spawn_key": [
+        "11051714346080589362"
+      ]
+    },
+    "logique/episode-2/action-0-2": {
+      "entropie": "21090809855417752148746129537281802562",
+      "etat_controle": [
+        855300498,
+        774442781
+      ],
+      "spawn_key": [
+        "8191001749564545479"
+      ]
+    },
+    "logique/episode-2/action-1-0": {
+      "entropie": "21090809855417752148746129537281802562",
+      "etat_controle": [
+        1024510476,
+        3918708355
+      ],
+      "spawn_key": [
+        "16036068437446327210"
+      ]
+    },
+    "logique/episode-2/action-1-1": {
+      "entropie": "21090809855417752148746129537281802562",
+      "etat_controle": [
+        123682623,
+        2221460241
+      ],
+      "spawn_key": [
+        "11932112797626504292"
+      ]
+    },
+    "logique/episode-2/action-1-2": {
+      "entropie": "21090809855417752148746129537281802562",
+      "etat_controle": [
+        4215421171,
+        227254022
+      ],
+      "spawn_key": [
+        "6320229292178242488"
+      ]
+    },
+    "logique/episode-3/action-0-0": {
+      "entropie": "21090809855417752148746129537281802562",
+      "etat_controle": [
+        4242158852,
+        3929361310
+      ],
+      "spawn_key": [
+        "17356146378038230458"
+      ]
+    },
+    "logique/episode-3/action-0-1": {
+      "entropie": "21090809855417752148746129537281802562",
+      "etat_controle": [
+        1483602943,
+        2208781680
+      ],
+      "spawn_key": [
+        "18443221810545327905"
+      ]
+    },
+    "logique/episode-3/action-0-2": {
+      "entropie": "21090809855417752148746129537281802562",
+      "etat_controle": [
+        3476022589,
+        3680044060
+      ],
+      "spawn_key": [
+        "12479775259861214192"
+      ]
+    },
+    "logique/episode-3/action-1-0": {
+      "entropie": "21090809855417752148746129537281802562",
+      "etat_controle": [
+        3804058087,
+        4184720196
+      ],
+      "spawn_key": [
+        "3185512414769823890"
+      ]
+    },
+    "logique/episode-3/action-1-1": {
+      "entropie": "21090809855417752148746129537281802562",
+      "etat_controle": [
+        1264074549,
+        3422976242
+      ],
+      "spawn_key": [
+        "8972688996946054754"
+      ]
+    },
+    "logique/episode-3/action-1-2": {
+      "entropie": "21090809855417752148746129537281802562",
+      "etat_controle": [
+        463186675,
+        3094107740
+      ],
+      "spawn_key": [
+        "6903626413037392597"
+      ]
+    },
+    "modele-jouet": {
+      "entropie": "21090809855417752148746129537281802562",
+      "etat_controle": [
+        271137884,
+        451092740
+      ],
+      "spawn_key": [
+        "15004608045090016366"
+      ]
+    },
+    "production/episode-0/action-0-0": {
+      "entropie": "21090809855417752148746129537281802562",
+      "etat_controle": [
+        1597398717,
+        17149073
+      ],
+      "spawn_key": [
+        "10844027381481331825"
+      ]
+    },
+    "production/episode-0/action-0-1": {
+      "entropie": "21090809855417752148746129537281802562",
+      "etat_controle": [
+        1378314927,
+        931051772
+      ],
+      "spawn_key": [
+        "4888618616262072316"
+      ]
+    },
+    "production/episode-0/action-0-2": {
+      "entropie": "21090809855417752148746129537281802562",
+      "etat_controle": [
+        788768005,
+        1140570164
+      ],
+      "spawn_key": [
+        "5169827647410487989"
+      ]
+    },
+    "production/episode-0/action-1-0": {
+      "entropie": "21090809855417752148746129537281802562",
+      "etat_controle": [
+        1690362901,
+        2596222804
+      ],
+      "spawn_key": [
+        "6771253319524137300"
+      ]
+    },
+    "production/episode-0/action-1-1": {
+      "entropie": "21090809855417752148746129537281802562",
+      "etat_controle": [
+        3993506046,
+        3602021423
+      ],
+      "spawn_key": [
+        "15242902977151107326"
+      ]
+    },
+    "production/episode-0/action-1-2": {
+      "entropie": "21090809855417752148746129537281802562",
+      "etat_controle": [
+        597974845,
+        3871468682
+      ],
+      "spawn_key": [
+        "11536939864648722396"
+      ]
+    },
+    "production/episode-1/action-0-0": {
+      "entropie": "21090809855417752148746129537281802562",
+      "etat_controle": [
+        1693685740,
+        1816108960
+      ],
+      "spawn_key": [
+        "16677509324170672285"
+      ]
+    },
+    "production/episode-1/action-0-1": {
+      "entropie": "21090809855417752148746129537281802562",
+      "etat_controle": [
+        4040043243,
+        38702494
+      ],
+      "spawn_key": [
+        "9080006918268656068"
+      ]
+    },
+    "production/episode-1/action-0-2": {
+      "entropie": "21090809855417752148746129537281802562",
+      "etat_controle": [
+        1907295070,
+        535019630
+      ],
+      "spawn_key": [
+        "18441011759893489778"
+      ]
+    },
+    "production/episode-1/action-1-0": {
+      "entropie": "21090809855417752148746129537281802562",
+      "etat_controle": [
+        309755874,
+        2763009251
+      ],
+      "spawn_key": [
+        "16661070956674229727"
+      ]
+    },
+    "production/episode-1/action-1-1": {
+      "entropie": "21090809855417752148746129537281802562",
+      "etat_controle": [
+        3422743595,
+        2913091428
+      ],
+      "spawn_key": [
+        "4963561159942108396"
+      ]
+    },
+    "production/episode-1/action-1-2": {
+      "entropie": "21090809855417752148746129537281802562",
+      "etat_controle": [
+        1556215213,
+        2431604337
+      ],
+      "spawn_key": [
+        "2210547613191930991"
+      ]
+    },
+    "production/episode-2/action-0-0": {
+      "entropie": "21090809855417752148746129537281802562",
+      "etat_controle": [
+        2556096534,
+        1571484413
+      ],
+      "spawn_key": [
+        "17865218662848805356"
+      ]
+    },
+    "production/episode-2/action-0-1": {
+      "entropie": "21090809855417752148746129537281802562",
+      "etat_controle": [
+        1600204010,
+        1248445825
+      ],
+      "spawn_key": [
+        "2269901283935896065"
+      ]
+    },
+    "production/episode-2/action-0-2": {
+      "entropie": "21090809855417752148746129537281802562",
+      "etat_controle": [
+        241800665,
+        153593761
+      ],
+      "spawn_key": [
+        "14733459236307645607"
+      ]
+    },
+    "production/episode-2/action-1-0": {
+      "entropie": "21090809855417752148746129537281802562",
+      "etat_controle": [
+        755847244,
+        2348674209
+      ],
+      "spawn_key": [
+        "17557128758001013541"
+      ]
+    },
+    "production/episode-2/action-1-1": {
+      "entropie": "21090809855417752148746129537281802562",
+      "etat_controle": [
+        1425031177,
+        2234204879
+      ],
+      "spawn_key": [
+        "8820006695857549660"
+      ]
+    },
+    "production/episode-2/action-1-2": {
+      "entropie": "21090809855417752148746129537281802562",
+      "etat_controle": [
+        2828001401,
+        3746820869
+      ],
+      "spawn_key": [
+        "3940303713785115806"
+      ]
+    },
+    "production/episode-3/action-0-0": {
+      "entropie": "21090809855417752148746129537281802562",
+      "etat_controle": [
+        3178515396,
+        2275761647
+      ],
+      "spawn_key": [
+        "483495804099464884"
+      ]
+    },
+    "production/episode-3/action-0-1": {
+      "entropie": "21090809855417752148746129537281802562",
+      "etat_controle": [
+        2390892963,
+        4001185470
+      ],
+      "spawn_key": [
+        "10560444056606382370"
+      ]
+    },
+    "production/episode-3/action-0-2": {
+      "entropie": "21090809855417752148746129537281802562",
+      "etat_controle": [
+        2271042329,
+        1294508186
+      ],
+      "spawn_key": [
+        "17382081625555073566"
+      ]
+    },
+    "production/episode-3/action-1-0": {
+      "entropie": "21090809855417752148746129537281802562",
+      "etat_controle": [
+        3292898067,
+        726733563
+      ],
+      "spawn_key": [
+        "15736375220455465655"
+      ]
+    },
+    "production/episode-3/action-1-1": {
+      "entropie": "21090809855417752148746129537281802562",
+      "etat_controle": [
+        3862331997,
+        2261119986
+      ],
+      "spawn_key": [
+        "11320072516385041878"
+      ]
+    },
+    "production/episode-3/action-1-2": {
+      "entropie": "21090809855417752148746129537281802562",
+      "etat_controle": [
+        3555526055,
+        2661086663
+      ],
+      "spawn_key": [
+        "8106079878062059029"
+      ]
+    },
+    "sonde-lineaire-attention-mediane": {
+      "entropie": "21090809855417752148746129537281802562",
+      "etat_controle": [
+        1804979347,
+        1886209940
+      ],
+      "spawn_key": [
+        "14416710389665664891"
+      ]
+    },
+    "sonde-lineaire-attention-precoce": {
+      "entropie": "21090809855417752148746129537281802562",
+      "etat_controle": [
+        1882129005,
+        2686316436
+      ],
+      "spawn_key": [
+        "481714776124208619"
+      ]
+    },
+    "sonde-lineaire-attention-tardive": {
+      "entropie": "21090809855417752148746129537281802562",
+      "etat_controle": [
+        4258246593,
+        2294688459
+      ],
+      "spawn_key": [
+        "10659568331056105563"
+      ]
+    },
+    "sonde-lineaire-max-mediane": {
+      "entropie": "21090809855417752148746129537281802562",
+      "etat_controle": [
+        2995050552,
+        775627250
+      ],
+      "spawn_key": [
+        "9978451046508889522"
+      ]
+    },
+    "sonde-lineaire-max-precoce": {
+      "entropie": "21090809855417752148746129537281802562",
+      "etat_controle": [
+        3253094615,
+        2712903013
+      ],
+      "spawn_key": [
+        "16176389841305308844"
+      ]
+    },
+    "sonde-lineaire-max-tardive": {
+      "entropie": "21090809855417752148746129537281802562",
+      "etat_controle": [
+        2784136893,
+        2721138884
+      ],
+      "spawn_key": [
+        "17215383167034982927"
+      ]
+    }
+  },
+  "preenregistrement": null,
+  "reserves": [],
+  "run_id": "20261006-092650-repetition-jouet",
+  "versions": {
+    "huggingface_hub": "1.33.0",
+    "matplotlib": "3.11.2",
+    "numpy": "2.4.6",
+    "plateforme": "Linux-6.18.44-fc-v70-x86_64-with-glibc2.39",
+    "python": "3.11.15",
+    "safetensors": "0.8.0",
+    "scipy": "1.17.1",
+    "tokenizers": "0.23.2",
+    "torch": "2.14.1",
+    "transformers": "5.18.0"
+  }
+}

@@ -1,0 +1,55 @@
+--- brouillons/T0.4-validation-modele-reel-v1-brouillon6.md	2026-10-04 16:01:01.275970527 +0000
++++ prereg/T0.4-validation-modele-reel-v1.md	2026-10-04 16:46:26.639292837 +0000
+@@ -190,7 +190,7 @@
+   4. Traces (journal, sorties des tests, sorties des runs), scellées par un fichier d'empreintes, et résultats poussés sur la branche `calcul/t04-validation`, fusionnée ensuite dans `main`.
+   5. Arrêt de l'instance par son identifiant (R10), consigné dans `registres/arrets.md` et `registres/depenses.md`.
+   - Un run dont le résumé est écrit sans arrêt consigné (pour B : résumé et comparaison) est complet, quel que soit le délai qui frappe ensuite : délai externe du run ou plafond de l'amorce, pendant la fin du processus ou après. Un « ARRÊT » consigné par le script d'instance après la fin d'un run ne change pas sa lecture.
+-  - Toute sortie en échec du script d'instance après le clonage (mise en place, tests, commande en échec), que rien n'a consignée, déclenche un filet : arrêt consigné, traces versées et poussées, code de sortie conservé. Un échec d'avant le clonage (clonage impossible, commit introuvable, dossiers d'un essai précédent) ne laisse que le journal de l'instance.
++  - Toute sortie en échec du script d'instance après la création de sa branche de travail (mise en place, tests, commande en échec), que rien n'a consignée, déclenche un filet : arrêt consigné, traces versées et poussées, code de sortie conservé. Un échec d'avant (clonage impossible, commit introuvable, dossiers d'un essai précédent) ne laisse que le journal de l'instance.
+   - L'instance reste arrêtée, avec son disque (gros tableaux sous `donnees/`), jusqu'au verdict du critère 1. Sa destruction se décide ensuite. Le zip versionné des livrables de T0.4 (R12) suit le verdict.
+ - **Délais**, figés dans les scripts :
+   - limite interne de 2 h 30 par run, vérifiée à chaque pas ;
+@@ -223,6 +223,7 @@
+ | arrêt de A ou de B, avant qu'il soit complet, pour une cause d'infrastructure : réseau (mise en place comprise), instance perdue, durée (limite interne, délai externe ou plafond de l'amorce) | non concluant ; cette ligne prime sur la ligne P7, même quand A a passé la même garde de durée | consigné ; un seul relancement à l'identique (même commit, entropie et révision) de A et de B, sur une instance neuve, branche `calcul/t04-validation-relance`, dans le plafond cumulatif de 6 heures ; au-delà, nœud et nouveau GO ; tout changement de paramètre exige une v2 |
+ | arrêt de A ou de B pour une cause déterministe : noyau refusé par le mode déterministe, mémoire de la carte ou mémoire vive insuffisante, mise en place en échec hors réseau (image, roue, pilote, carte absente) | non concluant | consigné ; aucun relancement à l'identique ; nœud (correction, v2) |
+ | arrêt dont la cause reste indéterminée après lecture des traces et du journal de l'instance | non concluant | consigné ; aucun relancement ; nœud |
++| A et B complets sur l'instance, résultats non poussés (« poussée impossible ») | lecture suspendue | consigné ; récupérer les fichiers sur le disque de l'instance arrêtée si elle le permet, puis lire comme d'ordinaire ; sinon, nœud (relancement de A et de B dans le plafond cumulatif, sur décision) |
+ 
+ Où se lisent les issues :
+ - P0 contraire se lit dans les traces poussées (sortie d'erreur du run A, sortie des tests) ;
+@@ -255,7 +256,7 @@
+ - Échec de la comparaison de B : `arret-comparaison-<run A>.json`.
+ - Le délai externe envoie TERM au processus du run qu'il a lancé (R10), puis KILL cinq minutes plus tard. Après un KILL, seules les traces, le journal de l'instance et son disque témoignent.
+ - Tests en échec sur l'instance : aucun run ; traces poussées.
+-- Mise en place en échec après le clonage : arrêt consigné par le filet de sortie, traces poussées. Échec d'avant le clonage : journal de l'instance seulement.
++- Mise en place en échec après la création de la branche de travail : arrêt consigné par le filet de sortie, traces poussées. Échec d'avant : journal de l'instance seulement.
+ - Aucun relancement automatique. Aucun paramètre ne change sans nouvelle version du préenregistrement : tailles, seuils, lots, échantillons, couches, modèle, révision, entropie, délais.
+ - Budget :
+   - T0.4 sur modèle réel est plafonnée aux 6 heures du devis, cumulées sur les tentatives ;
+@@ -271,7 +272,7 @@
+     - résumés scellés `6af77a2bc358269bf5d980da339c2171a1a4e8916deeea926c2140b476458d6e` et `0a2c017222411004b6e9a3c7e172038a6cef1fcb77af1503ddadd1e38f893dcc` ;
+     - comparaison `a13d03ee059e93135a1d4093917e3e9d97afb52ee067ea02718e5825c930277a` ;
+     - tout y est conforme ;
+-  - essais de la chaîne amorce et script d'instance au code cité, en mode jouet, contre une copie nue du dépôt, jetons factices. Archive scellée : `diag/essais-amorce-T0.4/essais-amorce-T0.4-cl4-v1.tar`, sha256 `ba2ec1c7b5a5ae968142202b552f10104c245bd857f7e8f0b7489aac63a1bd30`. Dix scénarios, tous conformes :
++  - essais de la chaîne amorce et script d'instance au code cité, en mode jouet, contre une copie nue du dépôt, jetons factices. Archive scellée : `diag/essais-amorce-T0.4/essais-amorce-T0.4-cl4-v1.tar`, sha256 `ba2ec1c7b5a5ae968142202b552f10104c245bd857f7e8f0b7489aac63a1bd30`. Neuf scénarios (douze lancements de l'amorce), tous conformes :
+     - cas sain : 178 tests, runs A et B, comparaison identique, traces scellées et poussées ;
+     - tests en échec : arrêt consigné, sorties des tests scellées et poussées ;
+     - mise en place en échec : arrêt consigné par le filet de sortie, traces poussées ;
+@@ -347,4 +348,16 @@
+   - Q-5 : forme reconnue des entrées décrite ; l'entrée de la contre-lecture 4 suit cette forme, avec ses empreintes.
+   - Q-6 : un dossier de traces neuf par versement ; motif du TERM « délai externe du run ou plafond de l'amorce » ; messages et commentaires de l'arbre gelé à jour.
+   - Q-7 : procédure : `.claude/` est gelé, rien à committer hors des dossiers documentaires avant le scellement ; registres à jour (R-035, R-036).
+-- **Contre-lecture 5** du différentiel `92e2f99..3a7b5e0` et des passages modifiés : À REMPLIR (brouillon relu, rapport, traitement).
++- **Contre-lecture 5** (cinquième sous-agent neuf, 2026-10-04), sur le différentiel `92e2f99..3a7b5e0` et les passages modifiés :
++  - brouillons relus : `brouillons/T0.4-validation-modele-reel-v1-brouillon6.md`, sha256 `2702effd98ec33d190cfcaf61319947710e17f2f5ffe84b8d1df21db0a1ce9a9`, et `brouillons/procedure-validation-T0.4-modele-reel-v1-brouillon5.md`, sha256 `fe3c99c0a468f7175bc12b747550f937b48105b4a8b414859f0c413752c432f1` ; code relu : commit `3a7b5e0523864f386c7ef528b663dbae83e046dd` ;
++  - rapport : `prereg/contre-lectures/T0.4-rapport-contre-lecture-5-v1.md`, sha256 `42d90c97c78a779207a3967ffb7b95f90d9aaeb84058001034710c012e5a9c09` ;
++  - vérifications : `prereg/contre-lectures/T0.4-contre-lecture-5-verifications-v1.tar`, sha256 `ad86c776b2ffcf4027d5980f944ee2c0f44ee9abbf6ddf24e80b1b67f5d72101` ;
++  - verdict : scellable après corrections de texte ; aucune bloquante ni majeure ; R-1 et R-2 mineures ; R-3 à R-7 de forme. Les sept remarques de la contre-lecture 4 sont traitées. Q-1, Q-4 et Q-6 sont prouvées par les essais de ce rapport ; la preuve de Q-6 (deux versements dans la même seconde, même préfixe) est dans ce rapport, non dans les essais de l'auteur.
++- **Traitement des remarques de la contre-lecture 5**, toutes acceptées ; aucun changement de code (le code cité reste `3a7b5e0`) :
++  - R-1 : procédure : un commit « plafond de l'amorce atteint » ne prouve pas le plafond ; les codes 124 et 137 se lisent au vu des heures de l'amorce et du journal (commande tuée, en général faute de mémoire : cause déterministe).
++  - R-2 : ligne de table pour des runs A et B complets dont les résultats ne sont pas poussés.
++  - R-3 : décompte des essais de l'auteur corrigé (neuf scénarios, douze lancements) ; R-036 corrigée dans le registre des décisions.
++  - R-4 : procédure : une paire A/B complète ne se relance pas ; si B n'est pas complet, A et B se relancent ensemble.
++  - R-6 : texte corrigé (filet posé après la création de la branche de travail).
++  - R-5, R-6 (partie code) et R-7 : pour une version ultérieure du code, après T0.4 ; consignés dans le registre des décisions (R-037).
++- Le texte scellé ne diffère du brouillon 6 que par ces corrections et par ces deux dernières entrées. Le différentiel est consigné et scellé : `prereg/contre-lectures/T0.4-differentiel-brouillon6-scelle-v1.diff`.

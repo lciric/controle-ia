@@ -1,0 +1,7 @@
+# Machine de calcul (T0.4 et suivantes) : mêmes versions que sur processeur, pour que le code et les tests
+# soient identiques des deux côtés.
+# La roue PyPI de torch 2.14.1 vise CUDA 13.0 (torch.version.cuda == "13.0") : choisir une offre dont la version
+# CUDA maximale affichée (donc le pilote) est au moins 13.0. À défaut, la même version construite pour CUDA 12.8
+# s'installe depuis l'index de PyTorch (download.pytorch.org/whl/cu128) ; le manifeste consigne alors la
+# version exacte de torch, suffixe de construction compris.
+-r requirements-cpu.txt

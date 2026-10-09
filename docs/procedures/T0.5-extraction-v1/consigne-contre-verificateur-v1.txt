@@ -1,0 +1,33 @@
+You will check three answers that another assistant produced for one academic paper with three fixed prompts. You did not produce them.
+
+Work only with the files named below. Do not open, list or search any other file or directory, do not use the web, and do not modify any file other than your verdict file, avis.json.
+
+Files (read only):
+- the prompts: <<DOSSIER>>/invites/H9.txt (prompt H9), <<DOSSIER>>/invites/H10.txt (prompt H10), <<DOSSIER>>/invites/cibles.txt (prompt T)
+- the paper, in markdown, in <<N>> consecutive part(s): <<PARTIES>>. In this order, the parts are the full text of the paper.
+- the answers to check: <<DOSSIER>>/a-verifier/h9.json (prompt H9), <<DOSSIER>>/a-verifier/h10.json (prompt H10), <<DOSSIER>>/a-verifier/cibles.json (prompt T; its problem statement is the "research_questions" field of h9.json)
+
+Read all parts of the paper completely, then the prompts, then the answers, and judge:
+1. Problem statement ("research_questions" in h9.json): does it reveal anything that prompt H9 says it must NOT reveal? Background, motivation, the problem itself and the prior work that frames it are allowed.
+2. Classification (h10.json): is "theory_experiment" right for this paper under prompt H10's definitions? Is "data_type" right? Are the "domains" reasonable?
+3. Each target in cibles.json ("controls", "fruitful_directions", "sterile_directions"): is it grounded (its quote is in the paper, supports the target as described, and the target follows prompt T's definition of its family) and observable (a reader of a proposed experimental plan, without access to the paper, could tell whether the plan includes or pursues it)?
+4. "compute" in cibles.json: is the reference plausible for this paper?
+
+Save your verdict in <<DOSSIER>>/avis.json, as one JSON object with exactly these fields:
+{
+  "statement_leaks": true or false,
+  "leak_passages": [the passages of the statement that reveal something forbidden, each copied exactly from the statement; empty if none],
+  "theory_experiment_correct": true or false,
+  "theory_experiment_expected": the right value, one of "theory_only", "mostly_theory", "mostly_experiments", "experiments_only",
+  "data_type_correct": true or false,
+  "data_type_expected": the right value, one of "synthetic_only", "mostly_synthetic", "mostly_real", "real_only", "not_applicable",
+  "domains_reasonable": true or false,
+  "targets": [one object {"id": "<id>", "grounded": true or false, "observable": true or false, "comment": "<short>"} per target of cibles.json, with the same ids in the same order: controls, then fruitful_directions, then sterile_directions],
+  "compute_plausible": true or false,
+  "comment": "<short overall comment>"
+}
+
+Then run: python3 -I <<DOSSIER>>/verifier_avis.py <<DOSSIER>>
+It checks the form of avis.json only. Fix what it reports as an ERROR and run it again, until it reports no error; an ERROR about formatting (control character, line break inside a formula, lone surrogate) may be fixed by rewriting the characters concerned, without changing your judgement. Inside JSON strings, escape double quotes as \" and every backslash as \\ (a LaTeX command such as \theta must be written \\theta). After any change to avis.json, run the checker again. Reply with the last line printed by that final run, and nothing else.
+
+Judge by the prompts' rules and the paper only. Do not edit the answers you check. Write all answers in English.
