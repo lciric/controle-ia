@@ -1,0 +1,68 @@
+{
+ "source": "preenregistrement-attaque-goodhart-v3-v3-brouillon1.md",
+ "source_sha256": "6e65136aa23c7aae8b64bb142a5aa07a81811720b53e96ea5a6e1c57d0f7b78e",
+ "cible": "preenregistrement-attaque-goodhart-v3-v3-brouillon2.md",
+ "regle": "couples appliqués dans l'ordre ; chaque « ancien » présent une seule fois au moment de son application ; rien d'autre ne change ; la ligne 545 (citation verbatim du périmètre de GO-2026-11-04-06) n'est pas touchée",
+ "couples": [
+  {
+   "n": 1,
+   "lieu": "paragraphe de tête, ligne 18 (le rédacteur du brouillon 1 et le lanceur v1)",
+   "ancien": "il a écrit le lanceur durable (`src/controle_ia/hote_durable_a1_v3.py`, `scripts/amorce_hote_durable_a1_v3_v1.sh` et `tests/test_hote_durable_a1_v3.py` du dépôt privé, fichiers neufs)",
+   "nouveau": "il a écrit le lanceur durable v1 (`src/controle_ia/hote_durable_a1_v3.py`, `scripts/amorce_hote_durable_a1_v3_v1.sh` et `tests/test_hote_durable_a1_v3.py` du dépôt privé, fichiers neufs ; brouillon 2 : remplacé par le lanceur durable v2, `src/controle_ia/hote_durable_a1_v3_v2.py`, `scripts/amorce_hote_durable_a1_v3_v2.sh` et `tests/test_hote_durable_a1_v3_v2.py`, d'un rédacteur-développeur neuf, la v1 gardée inchangée, R12)"
+  },
+  {
+   "n": 2,
+   "lieu": "paragraphe de tête, fin (ligne du brouillon 2)",
+   "ancien": "contre-lu » et « non scellé » décrivent la v2 et ses versions antérieures.",
+   "nouveau": "contre-lu » et « non scellé » décrivent la v2 et ses versions antérieures. **Brouillon 2 (5 novembre 2026, rédacteur-développeur neuf, qui n'a écrit ni le texte v3, ni le lanceur v1, ni les sondes ; heures relevées par `date -u` au rapport `rapport-redaction-v3-v2.md`)** : le brouillon 1 (`6e65136a…`) avec, et seulement, les dix couples de `couples-brouillon2-v3-v1.json`, appliqués dans l'ordre par script (`appliquer-couples-brouillon2-v1.py`, sortie `sortie-appliquer-couples-brouillon2-v1.txt`, même dossier) : avant → après, une machine louée sur Vast « sans carte » → « à une carte » (sections 0.5 bis et 8 ; raison : R-1511, sur Vast toute offre sans carte est un volume de stockage, non louable ; sonde v10 réussie sur une telle machine, R-1527 ; GO-2026-11-05-03) ; lanceur durable v1 → v2, chemins et essais (ce paragraphe, sections 8, 13 point 7 quater et 14 ; raison : la v2 porte la machine à une carte et les corrections des sondes v2 à v10) ; deux risques déclarés en section 8 (clé d'Argon actuelle, R-1539 ; refus HTTP 402 à solde nul) ; cette ligne ; une ligne en section 0.7. Les mentions « brouillon 1 » de ce paragraphe décrivent le brouillon 1."
+  },
+  {
+   "n": 3,
+   "lieu": "section 0.5 bis, ligne 552",
+   "ancien": "La troisième course tourne donc sur **une machine louée sur Vast, sans carte**, qui ne dépend d'aucune session",
+   "nouveau": "La troisième course tourne donc sur **une machine louée sur Vast, à une carte** (brouillon 2 : ce que Vast loue ; R-1511 : sur Vast, toutes les offres sans carte sont des volumes de stockage, non louables comme machines ; sonde v10 réussie sur une telle machine, R-1527 ; **GO-2026-11-05-03** pour la machine, GO-2026-11-04-06 pour la course ; section 8), qui ne dépend d'aucune session"
+  },
+  {
+   "n": 4,
+   "lieu": "section 8, « Troisième course (v3) », ligne 1567",
+   "ancien": "La course, le relais 8805 et la garde tournent sur **une machine louée sur Vast, sans carte**,",
+   "nouveau": "La course, le relais 8805 et la garde tournent sur **une machine louée sur Vast, à une carte** (brouillon 2 : `resource_type` « gpu », `num_gpus` = 1, au moins 8 000 Mo de mémoire, la carte n'est pas utilisée ; ces critères remplacent « aucune carte (`num_gpus` = 0) » dans la liste ci-dessous, le reste de l'offre inchangé ; raison : R-1511, sur Vast toutes les offres sans carte sont des volumes de stockage, non louables comme machines, et la sonde v10 a réussi sur une telle machine, R-1527 ; **GO-2026-11-05-03** pour la machine, 35 USD, prix horaire au plus 0,40 USD, minuterie de destruction sur la machine, destruction par l'identifiant ; GO-2026-11-04-06 reste le GO de la course, Argon rendu à A1-v3 par GO-2026-11-05-04, R-1538),"
+  },
+  {
+   "n": 5,
+   "lieu": "section 8, ligne 1568 (chemins et essais du lanceur)",
+   "ancien": "Le lanceur durable (`src/controle_ia/hote_durable_a1_v3.py`, `scripts/amorce_hote_durable_a1_v3_v1.sh` et `tests/test_hote_durable_a1_v3.py` du dépôt privé, au commit <<COMMIT_LANCEUR_DURABLE>> ; essais en mode jouet : section 9, L18)",
+   "nouveau": "Le lanceur durable v2 (`src/controle_ia/hote_durable_a1_v3_v2.py`, `scripts/amorce_hote_durable_a1_v3_v2.sh` et `tests/test_hote_durable_a1_v3_v2.py` du dépôt privé, au commit <<COMMIT_LANCEUR_DURABLE>>, qui porte aussi la v1, `src/controle_ia/hote_durable_a1_v3.py`, et la sonde v10, `src/controle_ia/sonde_hote_durable_a1_v3_v10.py` et `src/controle_ia/sonde_hote_durable_a1_v3.py`, dont la v2 reprend le code ; essais en mode jouet : les 82 de la v2 et les 49 de la v1 rejoués, 131 passés, rapport `rapport-redaction-v3-v2.md`, section 3 ; brouillon 1 : la v1 seule, section 9, L18)"
+  },
+  {
+   "n": 6,
+   "lieu": "section 8, « Création », lignes 1576-1577 (risque déclaré : clé d'Argon)",
+   "ancien": "restent lisibles dans les métadonnées de la machine chez Vast (déclaré : l'inventaire du lanceur durable n'en montre aucun champ).",
+   "nouveau": "restent lisibles dans les métadonnées de la machine chez Vast (déclaré : l'inventaire du lanceur durable n'en montre aucun champ). **Brouillon 2, risque déclaré (R-1539)** : la clé d'Argon portée sur l'hôte est la clé actuelle (aucune clé dédiée) ; elle est lisible dans les métadonnées de la machine chez Vast et par tout porteur de la clé du compte Vast, dont la clé d'instance que Vast pose dans chaque conteneur, qui voit tout le compte (R-1533) ; rotation de la clé recommandée après la course ; risque écrit aussi au rapport de la course."
+  },
+  {
+   "n": 7,
+   "lieu": "section 8, « Garde, sans session » (risque déclaré : HTTP 402 à solde nul)",
+   "ancien": "bornée par le lanceur et par le relais).",
+   "nouveau": "bornée par le lanceur et par le relais). **Brouillon 2, risque déclaré (HTTP 402)** : Argon est payé d'avance (interface Gemini) ; à solde nul, toute clé reçoit le statut **HTTP 402**. Le lanceur gelé (`9776ed0`, `pole/attaque_goodhart_v3.py`) arrête la course sans nouvelle tentative sur un code 4 de la commande d'Argon (budget sans envoi, `arreter_sur_refus_de_budget`) et attend sans fin sur un code 3 (relais ou interface ; `relais_perdu_h: aucun`) ; la traduction d'un 402 de l'interface en code 4 ou en code 3 par la commande gelée (`221df610…`) n'a pas été relue (commande absente du conteneur du rédacteur, aucun réseau). Si c'est le code 3, la course attend sans dépense d'Argon jusqu'à la garde de 72 h du lanceur ou aux plafonds de la machine (80 h, 32 USD), sans résultat. Ce brouillon n'ajoute aucune règle d'arrêt ; une conduite est proposée au directeur (rapport `rapport-redaction-v3-v2.md`) ; son adoption serait un changement de cette liste (nœud de Lazar)."
+  },
+  {
+   "n": 8,
+   "lieu": "section 13, point 7 quater, ligne 1916",
+   "ancien": "tenus par le lanceur durable (`src/controle_ia/hote_durable_a1_v3.py`, `scripts/amorce_hote_durable_a1_v3_v1.sh` et `tests/test_hote_durable_a1_v3.py` du dépôt privé, commit <<COMMIT_LANCEUR_DURABLE>>,",
+   "nouveau": "tenus par le lanceur durable v2 (`src/controle_ia/hote_durable_a1_v3_v2.py`, `scripts/amorce_hote_durable_a1_v3_v2.sh` et `tests/test_hote_durable_a1_v3_v2.py` du dépôt privé, avec la v1 et la sonde v10 dont il reprend le code, commit <<COMMIT_LANCEUR_DURABLE>>,"
+  },
+  {
+   "n": 9,
+   "lieu": "section 14, contre-lecture n° 4, ligne 2028 (fichiers à lui donner)",
+   "ancien": "le lanceur durable (`src/controle_ia/hote_durable_a1_v3.py`, `scripts/amorce_hote_durable_a1_v3_v1.sh` et `tests/test_hote_durable_a1_v3.py` du dépôt privé) ; le rapport de",
+   "nouveau": "le lanceur durable v2 (`src/controle_ia/hote_durable_a1_v3_v2.py`, `scripts/amorce_hote_durable_a1_v3_v2.sh` et `tests/test_hote_durable_a1_v3_v2.py` du dépôt privé, son rapport `rapport-redaction-v3-v2.md`, et la v1 et la sonde v10 dont il reprend le code) ; le rapport de"
+  },
+  {
+   "n": 10,
+   "lieu": "section 0.7, après le point 21 (ligne du brouillon 2)",
+   "ancien": "21. Empreintes : + fichiers du rédacteur de la v3 ; R6.",
+   "nouveau": "21. Empreintes : + fichiers du rédacteur de la v3 ; R6.\n22. Brouillon 2 : « une machine louée sur Vast, sans carte » → « une machine louée sur Vast, à une carte » (sections 0.5 bis et 8) ; lanceur durable v1 → v2, chemins et essais (paragraphe de tête, sections 8, 13 point 7 quater et 14) ; + deux risques déclarés en section 8 (clé d'Argon actuelle ; HTTP 402 à solde nul) ; + une ligne au paragraphe de tête ; raison : R-1511 (sur Vast, toute offre sans carte est un volume de stockage), sonde v10 réussie (R-1527), GO-2026-11-05-03 (R-1534), Argon rendu (GO-2026-11-05-04, R-1538), clé actuelle (R-1539) ; la v2 porte les corrections des sondes v2 à v10."
+  }
+ ]
+}

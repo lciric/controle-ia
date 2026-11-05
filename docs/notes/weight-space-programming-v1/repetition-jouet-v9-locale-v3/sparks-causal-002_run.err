@@ -1,0 +1,99 @@
+'[Errno -2] Name or service not known' thrown while requesting HEAD https://huggingface.co/jouet/resolve/main/config.json
+Retrying in 1s [Retry 1/5].
+'[Errno -2] Name or service not known' thrown while requesting HEAD https://huggingface.co/jouet/resolve/main/config.json
+Retrying in 2s [Retry 2/5].
+'[Errno -2] Name or service not known' thrown while requesting HEAD https://huggingface.co/jouet/resolve/main/config.json
+Retrying in 4s [Retry 3/5].
+'[Errno -2] Name or service not known' thrown while requesting HEAD https://huggingface.co/jouet/resolve/main/config.json
+Retrying in 8s [Retry 4/5].
+'[Errno -2] Name or service not known' thrown while requesting HEAD https://huggingface.co/jouet/resolve/main/config.json
+Retrying in 8s [Retry 5/5].
+'[Errno -2] Name or service not known' thrown while requesting HEAD https://huggingface.co/jouet/resolve/main/config.json
+'[Errno -2] Name or service not known' thrown while requesting HEAD https://huggingface.co/jouet/resolve/main/config.json
+Retrying in 1s [Retry 1/5].
+'[Errno -2] Name or service not known' thrown while requesting HEAD https://huggingface.co/jouet/resolve/main/config.json
+Retrying in 2s [Retry 2/5].
+'[Errno -2] Name or service not known' thrown while requesting HEAD https://huggingface.co/jouet/resolve/main/config.json
+Retrying in 4s [Retry 3/5].
+'[Errno -2] Name or service not known' thrown while requesting HEAD https://huggingface.co/jouet/resolve/main/config.json
+Retrying in 8s [Retry 4/5].
+'[Errno -2] Name or service not known' thrown while requesting HEAD https://huggingface.co/jouet/resolve/main/config.json
+Retrying in 8s [Retry 5/5].
+'[Errno -2] Name or service not known' thrown while requesting HEAD https://huggingface.co/jouet/resolve/main/config.json
+httpcore.ConnectError: [Errno -2] Name or service not known
+
+The above exception was the direct cause of the following exception:
+
+httpx.ConnectError: [Errno -2] Name or service not known
+
+The above exception was the direct cause of the following exception:
+
+Traceback (most recent call last):
+  File "/home/user/controle-ia-travail/.venv/lib/python3.13/site-packages/transformers/utils/hub.py", line 537, in cached_files
+    hf_hub_download(
+    ~~~~~~~~~~~~~~~^
+        path_or_repo_id,
+        ^^^^^^^^^^^^^^^^
+    ...<10 lines>...
+        tqdm_class=tqdm_class,
+        ^^^^^^^^^^^^^^^^^^^^^^
+    )
+    ^
+  File "/home/user/controle-ia-travail/.venv/lib/python3.13/site-packages/huggingface_hub/utils/_validators.py", line 89, in _inner_fn
+    return fn(*args, **kwargs)
+  File "/home/user/controle-ia-travail/.venv/lib/python3.13/site-packages/huggingface_hub/utils/_http.py", line 266, in _inner
+    return fn(*args, **kwargs)
+  File "/home/user/controle-ia-travail/.venv/lib/python3.13/site-packages/huggingface_hub/file_download.py", line 1047, in hf_hub_download
+    return _hf_hub_download_to_cache_dir(
+        # Destination
+    ...<15 lines>...
+        dry_run=dry_run,
+    )
+  File "/home/user/controle-ia-travail/.venv/lib/python3.13/site-packages/huggingface_hub/file_download.py", line 1194, in _hf_hub_download_to_cache_dir
+    _raise_on_head_call_error(head_call_error, force_download, local_files_only)
+    ~~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/user/controle-ia-travail/.venv/lib/python3.13/site-packages/huggingface_hub/file_download.py", line 1961, in _raise_on_head_call_error
+    raise LocalEntryNotFoundError(
+    ...<3 lines>...
+    ) from head_call_error
+huggingface_hub.errors.LocalEntryNotFoundError: An error happened while trying to locate the file on the Hub and we cannot find the requested files in the local cache. Please check your connection and try again or make sure your Internet connection is on.
+
+The above exception was the direct cause of the following exception:
+
+Traceback (most recent call last):
+  File "<string>", line 1, in <module>
+    import runpy, sys; sys.path.insert(0, sys.argv[1]); n = sys.argv[2]; sys.argv = [n] + sys.argv[3:]; runpy.run_module(n, run_name="__main__", alter_sys=True)
+                                                                                                        ~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "<frozen runpy>", line 231, in run_module
+  File "<frozen runpy>", line 98, in _run_module_code
+  File "<frozen runpy>", line 88, in _run_code
+  File "/tmp/claude-0/-home-user/4a4722d4-e39d-57bd-bde3-e6a99e2eecdf/scratchpad/rep9-pQaX/racine/sparks-causal-002/controle-ia/src/controle_ia/sparks_exp7_nul_v3/instance.py", line 122, in <module>
+    raise SystemExit(main())
+                     ~~~~^^
+  File "/tmp/claude-0/-home-user/4a4722d4-e39d-57bd-bde3-e6a99e2eecdf/scratchpad/rep9-pQaX/racine/sparks-causal-002/controle-ia/src/controle_ia/sparks_exp7_nul_v3/instance.py", line 101, in main
+    m, tok = charger_depart(a.depart)
+             ~~~~~~~~~~~~~~^^^^^^^^^^
+  File "/tmp/claude-0/-home-user/4a4722d4-e39d-57bd-bde3-e6a99e2eecdf/scratchpad/rep9-pQaX/racine/sparks-causal-002/controle-ia/src/controle_ia/sparks_exp7_nul_v1/instance.py", line 259, in charger_depart
+    tok = AutoTokenizer.from_pretrained(nom)
+  File "/home/user/controle-ia-travail/.venv/lib/python3.13/site-packages/transformers/models/auto/tokenization_auto.py", line 811, in from_pretrained
+    config = PreTrainedConfig.from_pretrained(pretrained_model_name_or_path, **kwargs)
+  File "/home/user/controle-ia-travail/.venv/lib/python3.13/site-packages/transformers/configuration_utils.py", line 742, in from_pretrained
+    config_dict, kwargs = cls.get_config_dict(pretrained_model_name_or_path, **kwargs)
+                          ~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/user/controle-ia-travail/.venv/lib/python3.13/site-packages/transformers/configuration_utils.py", line 792, in get_config_dict
+    config_dict, kwargs = cls._get_config_dict(pretrained_model_name_or_path, **kwargs)
+                          ~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/user/controle-ia-travail/.venv/lib/python3.13/site-packages/transformers/configuration_utils.py", line 844, in _get_config_dict
+    resolved_config_file = cached_file(
+        pretrained_model_name_or_path,
+    ...<8 lines>...
+        subfolder=subfolder,
+    )
+  File "/home/user/controle-ia-travail/.venv/lib/python3.13/site-packages/transformers/utils/hub.py", line 370, in cached_file
+    file = cached_files(path_or_repo_id=path_or_repo_id, filenames=[filename], **kwargs)
+  File "/home/user/controle-ia-travail/.venv/lib/python3.13/site-packages/transformers/utils/hub.py", line 620, in cached_files
+    raise OSError(
+    ...<3 lines>...
+    ) from e
+OSError: We couldn't connect to 'https://huggingface.co' to load the files, and couldn't find them in the cached files.
+Check your internet connection or see how to run the library in offline mode at 'https://huggingface.co/docs/transformers/installation#offline-mode'.

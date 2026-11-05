@@ -1,0 +1,56 @@
+elif NOM.startswith("D-"):
+    # CL9 : options du devis v7 sexies aux tailles du devis (pièces 750 000 + matériau 350 000, huit fiches, seconde passe).
+    # NOM = D-<option>-<tarif>[-q<taille question>] ; option ∈ {base, a, b, c} ; tarif ∈ {plafond, devis, haut}
+    import shutil
+    _, option, tarif_nom, *reste_nom = NOM.split("-")
+    tq = int(reste_nom[0][1:]) if reste_nom else None
+    tp = 650_000 if option == "b" else 750_000
+    prep = preparer(taille_piece=tp, taille_materiau=350_000, taille_question=tq)
+    RAPPORT["tailles_fichiers"] = {k: os.path.getsize(prep[k]) for k in ("p", "m", "q")}
+    tarifs = {"plafond": {},
+              "devis": {"factice": "argon_factice_cl9.py", "tarif_tout": {"usd_par_car_entree": 2.5 / 1.1e6}},
+              "haut": {"factice": "argon_factice_cl9.py", "tarif_tout": {"usd_par_car_entree": 10e-6 / 4,
+                                                                          "usd_par_car_sortie": 50e-6 / 4}}}
+    cfg = dict(cout="plafond", **tarifs[tarif_nom])
+    if "factice" not in cfg:
+        cfg["factice"] = "argon_factice_cl9.py"
+    cmd = config_argon(**cfg)
+    extra = {"base": (), "a": ("--budget-controle-externe-usd", "3.0", "--budget-externe-usd", "12.1"),
+             "b": ("--taille-max-pieces", "650000"), "c": ("--taille-max-consigne-externe", "1200000")}[option]
+    code, out, err = lancer(args_course(prep, "course", cmd, extra))
+    resume(code, out, err, "course")
+    RAPPORT["course_claude_appels"] = [(a["role"], a["controle"], a["cout"]) for a in claude_appels(err)]
+    RAPPORT["argon_course"] = [(a["role"], a["controle"], a.get("passe"), a["plafond"], a["taille"], a["cout_rendu"])
+                               for a in argon_appels()]
+    ctl = os.path.join(D, "course-controle")
+    RAPPORT["controle_fichiers"] = sorted(os.listdir(ctl)) if os.path.isdir(ctl) else None
+    for f in (RAPPORT["controle_fichiers"] or []):
+        if f.endswith(".json"):
+            r_ = lire_scelle(os.path.join(ctl, f))["reglages"]
+            RAPPORT["controle-" + f] = {k: r_.get(k) for k in ("cout_claude_usd", "cout_externe_usd", "relancable",
+                                                                "motifs_relance", "erreur", "garde_taille", "cout_usd")}
+    s = os.path.join(D, "course")
+    RAPPORT["sortie_existe"] = os.path.exists(s)
+    if os.path.exists(os.path.join(s, "manifeste-depart.json")):
+        dep = lire_scelle(os.path.join(s, "manifeste-depart.json"))["reglages"]
+        RAPPORT["somme_des_plafonds"] = dep["somme_des_plafonds"]
+        RAPPORT["versions_taille"] = {k: dep["versions"].get(k) for k in ("taille_max_consigne_externe", "marge_controle_externe")}
+    mf = os.path.join(s, "manifeste-fin.json")
+    if os.path.exists(mf):
+        j = lire_scelle(mf)["reglages"]["journal"]
+        RAPPORT["course_fin"] = {k: j.get(k) for k in ("cout_total_usd", "cout_externe_usd", "cout_appels_de_controle_usd",
+                                                       "cout_appels_de_controle_externes_usd", "arret")}
+    if code == 0 and os.path.exists(os.path.join(s, "juges-bras-rapporte")):
+        att = attester_bras(s)
+        avant = len(argon_appels())
+        code, out, err = lancer(args_bras("course", att, cmd))
+        resume(code, out, err, "bras")
+        RAPPORT["argon_bras"] = [(a["role"], a["controle"], a["plafond"], a["taille"], a["cout_rendu"])
+                                 for a in argon_appels()[avant:]]
+        RAPPORT["bras_fichiers"] = sorted(f for f in os.listdir(s) if f.startswith(("bras-", "manifeste-bras", "classement")))
+        if os.path.exists(os.path.join(s, "manifeste-bras-rapporte.json")):
+            jb = lire_scelle(os.path.join(s, "manifeste-bras-rapporte.json"))["reglages"]["journal"]
+            RAPPORT["bras_journal"] = {k: jb.get(k) for k in ("cout_total_usd", "plafond_externe_usd", "arret", "garde_taille")}
+    RAPPORT["argon_total"] = round(sum(a["cout_rendu"] for a in argon_appels()), 4)
+    RAPPORT["classements"] = sorted(f for f in os.listdir(s) if f.startswith("classement")) if os.path.isdir(s) else []
+

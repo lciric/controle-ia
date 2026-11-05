@@ -1,0 +1,50 @@
+[
+ {
+  "id": "L1",
+  "raison": "nom resté de la v3 ; le code lancé est celui de la section 2 (point 2)",
+  "ancien": "donc l'amorce (`scripts/amorce_instance_sparks_exp7_nul_v3.sh`)",
+  "nouveau": "donc l'amorce de la version du code citée en section 2 (`scripts/amorce_instance_sparks_exp7_nul_v<N>.sh`, <N> étant le numéro de cette version)"
+ },
+ {
+  "id": "L2",
+  "raison": "nom de fichier resté de la v3 (le code v4 pose `sparks-v4-detruire`) (point 2)",
+  "ancien": "dès que la machine pose le fichier `sparks-v3-detruire`",
+  "nouveau": "dès que la machine pose le fichier `sparks-v<N>-detruire` (même numéro que l'amorce)"
+ },
+ {
+  "id": "L3",
+  "raison": "idem (point 2)",
+  "ancien": "**Qui pose `sparks-v3-detruire`.**",
+  "nouveau": "**Qui pose `sparks-v<N>-detruire`.**"
+ },
+ {
+  "id": "L4",
+  "raison": "clé de Vast retirée par `env -i` ; refus rendus avec le code 0 (R-1506) (points 14 et 15)",
+  "ancien": "tout code non nul ou délai dépassé pose un marqueur de création incertaine",
+  "nouveau": "l'environnement de `vastai` garde, par leur nom, la clé `VAST_API_KEY` (que `vastai` lit, R-032) et les variables du mandataire (R-1497) ; tout code non nul, tout délai dépassé et toute sortie sans identifiant rendu avec « success » vrai, code 0 compris (`vastai` 1.8.3 rend ses refus avec le code 0, R-1506), pose un marqueur de création incertaine"
+ },
+ {
+  "id": "L5",
+  "raison": "un code 0 de `vastai start` ou `vastai destroy` ne prouve rien (R-1506) (point 16)",
+  "ancien": "aucune seconde création avant un inventaire sans sortie brute.",
+  "nouveau": "aucune seconde création avant un inventaire sans sortie brute. Un redémarrage ou une destruction par la session ne sont tenus pour faits qu'après un inventaire filtré (état lu, ou instance introuvable), jamais sur le seul code de retour de `vastai`."
+ },
+ {
+  "id": "L6",
+  "raison": "plafonds consignés jamais remplacés par la durée réelle : phase causale refusée au coin haut du devis (point 9)",
+  "ancien": "somme des plafonds des démarrages consignés sur son disque × prix de la carte, plus la durée depuis la création × prix du stockage",
+  "nouveau": "somme, pour chaque démarrage consigné sur son disque, de sa durée réelle consignée à sa fin par l'amorce, ou de son plafond consigné avant le lancement si aucune fin n'est consignée, × prix de la carte, plus la durée depuis la création × prix du stockage"
+ },
+ {
+  "id": "L7",
+  "raison": "le tir n'a pas de commande, et le lanceur refuse sans addendum scellé ; répétition à rejouer, chaque démarrage isolé (points 19 à 22)",
+  "ancien": " et la répétition jouet complète (création, redémarrage de copie, phase causale) par la session reliée au dépôt distant.",
+  "nouveau": ", joué par une commande écrite d'avance (mode « tir » du lanceur : échéance courte, étiquette de tir, création arrêtée à la garde du code, puis ordre « fin ») et sous un GO qui le couvre ; et la répétition jouet complète (création, redémarrage de copie, phase causale) par la session reliée au dépôt distant, sur la version du code citée en section 2, chaque démarrage dans son propre espace de processus (`unshare -pf`)."
+ },
+ {
+  "id": "L8",
+  "raison": "branche restée de la v2 (point 3)",
+  "ancien": "(branche `prep/sparks-exp7-nul-v2`, descendant de `55399606`) : À REMPLIR.",
+  "nouveau": "(branche `prep/sparks-exp7-nul-v<N>` de la dernière version contre-lue, descendant de `55399606`) : À REMPLIR."
+ }
+]

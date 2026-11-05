@@ -1,0 +1,115 @@
+........................../tmp/claude-0/-home-user-controle-ia-travail/75a1275d-b838-5015-909e-b2bfadb395f9/scratchpad/relecture-v43/cl10/outils-cl10/mutants/W30/essais/test_v7_ideation.py:557: ResourceWarning: unclosed file <_io.TextIOWrapper name='/tmp/claude-0/-home-user-controle-ia-travail/75a1275d-b838-5015-909e-b2bfadb395f9/scratchpad/relecture-v43/cl10/outils-cl10/mutants/W30/essais/_tmp/tmpv631avdg/petit-enfant.pid' mode='r' encoding='UTF-8'>
+  pid = int(open(pid_f).read())
+ResourceWarning: Enable tracemalloc to get the object allocation traceback
+../tmp/claude-0/-home-user-controle-ia-travail/75a1275d-b838-5015-909e-b2bfadb395f9/scratchpad/relecture-v43/cl10/outils-cl10/mutants/W30/essais/test_v7_ideation.py:649: ResourceWarning: unclosed file <_io.TextIOWrapper name='/tmp/claude-0/-home-user-controle-ia-travail/75a1275d-b838-5015-909e-b2bfadb395f9/scratchpad/relecture-v43/cl10/outils-cl10/mutants/W30/essais/_tmp/tmp0i40xfx_/cx-3/proposeurs/argon/traces-passe-2/consigne.md' mode='r' encoding='utf-8'>
+  encoding="utf-8").read()
+ResourceWarning: Enable tracemalloc to get the object allocation traceback
+................................./tmp/claude-0/-home-user-controle-ia-travail/75a1275d-b838-5015-909e-b2bfadb395f9/scratchpad/relecture-v43/cl10/outils-cl10/mutants/W30/essais/test_v7_ideation.py:1254: ResourceWarning: unclosed file <_io.TextIOWrapper name='/tmp/claude-0/-home-user-controle-ia-travail/75a1275d-b838-5015-909e-b2bfadb395f9/scratchpad/relecture-v43/cl10/outils-cl10/mutants/W30/essais/_tmp/tmpyqbjtyfs/pe.pid' mode='r' encoding='UTF-8'>
+  pe = int(open(pid_f).read())
+ResourceWarning: Enable tracemalloc to get the object allocation traceback
+.........................................EE
+======================================================================
+ERROR: test_cl42_07_w30_plafond_externe_non_fini_au_bras_sur_sortie_fraiche (essais.test_v7_ideation.TestV43.test_cl42_07_w30_plafond_externe_non_fini_au_bras_sur_sortie_fraiche) (valeur=nan)
+CL42-07, W30 : sur une SORTIE fraîche (bras jamais joué), `budget_externe_usd` NaN, +∞, négatif ou booléen →
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/tmp/claude-0/-home-user-controle-ia-travail/75a1275d-b838-5015-909e-b2bfadb395f9/scratchpad/relecture-v43/cl10/outils-cl10/mutants/W30/pole/ideation.py", line 1926, in executer_bras_differe
+    ecrire_manifeste()  # CL35-01 : avant les fichiers de lecture
+    ~~~~~~~~~~~~~~~~^^
+  File "/tmp/claude-0/-home-user-controle-ia-travail/75a1275d-b838-5015-909e-b2bfadb395f9/scratchpad/relecture-v43/cl10/outils-cl10/mutants/W30/pole/ideation.py", line 1741, in ecrire_manifeste
+    ecrire_json_scelle(chemin_manifeste, manifeste(
+    ~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+        phase="bras-rapporte", horodatage=horodatage, journal=journal, attestation=attestation, erreur=erreur,
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+        commande_externe=commande_externe or [getattr(a, "description", lambda: None)() for _, _, a in juges_externes],
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+        juges=[[e, m, getattr(a, "nom", type(a).__name__)] for e, m, a in juges_externes]))
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/tmp/claude-0/-home-user-controle-ia-travail/75a1275d-b838-5015-909e-b2bfadb395f9/scratchpad/relecture-v43/cl10/outils-cl10/mutants/W30/pole/outils.py", line 68, in ecrire_json_scelle
+    texte = json.dumps(objet, ensure_ascii=False, indent=2, sort_keys=True, allow_nan=False) + "\n"
+            ~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/lib/python3.13/json/__init__.py", line 242, in dumps
+    **kw).encode(obj)
+          ~~~~~~^^^^^
+  File "/usr/lib/python3.13/json/encoder.py", line 202, in encode
+    chunks = self.iterencode(o, _one_shot=True)
+  File "/usr/lib/python3.13/json/encoder.py", line 263, in iterencode
+    return _iterencode(o, 0)
+ValueError: Out of range float values are not JSON compliant: nan
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "/tmp/claude-0/-home-user-controle-ia-travail/75a1275d-b838-5015-909e-b2bfadb395f9/scratchpad/relecture-v43/cl10/outils-cl10/mutants/W30/pole/ideation.py", line 1982, in executer_bras_differe
+    classement_sans_bras(journal["arret"])
+    ~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^
+  File "/tmp/claude-0/-home-user-controle-ia-travail/75a1275d-b838-5015-909e-b2bfadb395f9/scratchpad/relecture-v43/cl10/outils-cl10/mutants/W30/pole/ideation.py", line 1760, in classement_sans_bras
+    ecrire_manifeste(erreur=motif)
+    ~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^
+  File "/tmp/claude-0/-home-user-controle-ia-travail/75a1275d-b838-5015-909e-b2bfadb395f9/scratchpad/relecture-v43/cl10/outils-cl10/mutants/W30/pole/ideation.py", line 1741, in ecrire_manifeste
+    ecrire_json_scelle(chemin_manifeste, manifeste(
+    ~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+        phase="bras-rapporte", horodatage=horodatage, journal=journal, attestation=attestation, erreur=erreur,
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+        commande_externe=commande_externe or [getattr(a, "description", lambda: None)() for _, _, a in juges_externes],
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+        juges=[[e, m, getattr(a, "nom", type(a).__name__)] for e, m, a in juges_externes]))
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/tmp/claude-0/-home-user-controle-ia-travail/75a1275d-b838-5015-909e-b2bfadb395f9/scratchpad/relecture-v43/cl10/outils-cl10/mutants/W30/pole/outils.py", line 68, in ecrire_json_scelle
+    texte = json.dumps(objet, ensure_ascii=False, indent=2, sort_keys=True, allow_nan=False) + "\n"
+            ~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/lib/python3.13/json/__init__.py", line 242, in dumps
+    **kw).encode(obj)
+          ~~~~~~^^^^^
+  File "/usr/lib/python3.13/json/encoder.py", line 202, in encode
+    chunks = self.iterencode(o, _one_shot=True)
+  File "/usr/lib/python3.13/json/encoder.py", line 263, in iterencode
+    return _iterencode(o, 0)
+ValueError: Out of range float values are not JSON compliant: nan
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "/tmp/claude-0/-home-user-controle-ia-travail/75a1275d-b838-5015-909e-b2bfadb395f9/scratchpad/relecture-v43/cl10/outils-cl10/mutants/W30/essais/test_v7_ideation.py", line 3147, in test_cl42_07_w30_plafond_externe_non_fini_au_bras_sur_sortie_fraiche
+    idn.executer_bras_differe(sortie, attestation_lecture_humaine=att, budgets=budgets,
+    ~~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+                              juges_externes=[("argon", "autre-lignee-x", juge)], budget_externe_usd=valeur)
+                              ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/tmp/claude-0/-home-user-controle-ia-travail/75a1275d-b838-5015-909e-b2bfadb395f9/scratchpad/relecture-v43/cl10/outils-cl10/mutants/W30/pole/ideation.py", line 1986, in executer_bras_differe
+    ecrire_manifeste(erreur=journal["arret"] + suite_repli)
+    ~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/tmp/claude-0/-home-user-controle-ia-travail/75a1275d-b838-5015-909e-b2bfadb395f9/scratchpad/relecture-v43/cl10/outils-cl10/mutants/W30/pole/ideation.py", line 1741, in ecrire_manifeste
+    ecrire_json_scelle(chemin_manifeste, manifeste(
+    ~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+        phase="bras-rapporte", horodatage=horodatage, journal=journal, attestation=attestation, erreur=erreur,
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+        commande_externe=commande_externe or [getattr(a, "description", lambda: None)() for _, _, a in juges_externes],
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+        juges=[[e, m, getattr(a, "nom", type(a).__name__)] for e, m, a in juges_externes]))
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/tmp/claude-0/-home-user-controle-ia-travail/75a1275d-b838-5015-909e-b2bfadb395f9/scratchpad/relecture-v43/cl10/outils-cl10/mutants/W30/pole/outils.py", line 68, in ecrire_json_scelle
+    texte = json.dumps(objet, ensure_ascii=False, indent=2, sort_keys=True, allow_nan=False) + "\n"
+            ~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/lib/python3.13/json/__init__.py", line 242, in dumps
+    **kw).encode(obj)
+          ~~~~~~^^^^^
+  File "/usr/lib/python3.13/json/encoder.py", line 202, in encode
+    chunks = self.iterencode(o, _one_shot=True)
+  File "/usr/lib/python3.13/json/encoder.py", line 263, in iterencode
+    return _iterencode(o, 0)
+ValueError: Out of range float values are not JSON compliant: nan
+
+======================================================================
+ERROR: test_cl42_07_w30_plafond_externe_non_fini_au_bras_sur_sortie_fraiche (essais.test_v7_ideation.TestV43.test_cl42_07_w30_plafond_externe_non_fini_au_bras_sur_sortie_fraiche)
+CL42-07, W30 : sur une SORTIE fraîche (bras jamais joué), `budget_externe_usd` NaN, +∞, négatif ou booléen →
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/tmp/claude-0/-home-user-controle-ia-travail/75a1275d-b838-5015-909e-b2bfadb395f9/scratchpad/relecture-v43/cl10/outils-cl10/mutants/W30/essais/test_v7_ideation.py", line 3149, in test_cl42_07_w30_plafond_externe_non_fini_au_bras_sur_sortie_fraiche
+    self.assertIn("budget_externe_usd", str(cm.exception))
+                                            ^^^^^^^^^^^^
+AttributeError: '_AssertRaisesContext' object has no attribute 'exception'
+
+----------------------------------------------------------------------
+Ran 103 tests in 80.032s
+
+FAILED (errors=2)

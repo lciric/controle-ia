@@ -1,0 +1,45 @@
+== 1. issues atteintes
+analyses : 470 ; noms possibles : 27 ; atteints : 22
+non atteints : ['fuite de signe inverse (grand)', 'fuite de signe inverse (petit et grand)', 'fuite de signe inverse (petit et grand) non confirmé (sens a→b)', 'fuite de signe inverse (petit et grand) non confirmé (sens b→a)', 'pas de fuite non confirmé (sens a→b)']
+hors liste : []
+
+== 2. R3 et voisins de cl6 : lectures prononcées par classe (avec réserve v8 : λ change | contexte inégal | l'une ou l'autre | aucune)
+H_0 et sans fuite : {'analyses': {'n': 36}, 'nul': {'n': 15, 'λ change': 1, 'contexte inégal': 0, "l'une ou l'autre": 1, 'aucune': 14}}
+H_0 à contextes inégaux, sans signature (v7, v8) : {'analyses': {'n': 42}, 'nul': {'n': 22, 'λ change': 17, 'contexte inégal': 22, "l'une ou l'autre": 22, 'aucune': 0}}
+double signature, α = 0 : {'analyses': {'n': 12}, 'positif': {'n': 3, 'λ change': 0, 'contexte inégal': 0, "l'une ou l'autre": 0, 'aucune': 3}, 'inverse': {'n': 4, 'λ change': 0, 'contexte inégal': 0, "l'une ou l'autre": 0, 'aucune': 4}}
+signature d'un seul jeu, α = 0 : {'analyses': {'n': 32}}
+signatures croisées de même signe, α = 0 : {'analyses': {'n': 24}}
+v7 : H_0, signatures croisées de signes opposés : {'analyses': {'n': 144}}
+v8 B : H_0 à écart vrai sous δ, signatures croisées de signes opposés : {'analyses': {'n': 18}, 'positif': {'n': 3, 'λ change': 3, 'contexte inégal': 0, "l'une ou l'autre": 3, 'aucune': 0}, 'inverse': {'n': 1, 'λ change': 1, 'contexte inégal': 0, "l'une ou l'autre": 1, 'aucune': 0}}
+v8 B, témoin : H_0 à écart vrai sous δ, sans signature : {'analyses': {'n': 6}}
+v8 C : H_A compensé par des signatures croisées : {'analyses': {'n': 12}, 'nul': {'n': 4, 'λ change': 4, 'contexte inégal': 0, "l'une ou l'autre": 4, 'aucune': 0}}
+v8 C, témoin : H_A (0,65 et 0,35) sans signature : {'analyses': {'n': 6}}
+v8 D : fuite égale, contexte inégal, signatures croisées : {'analyses': {'n': 12}, 'inverse': {'n': 1, 'λ change': 1, 'contexte inégal': 1, "l'une ou l'autre": 1, 'aucune': 0}, 'positif': {'n': 2, 'λ change': 1, 'contexte inégal': 2, "l'une ou l'autre": 2, 'aucune': 0}}
+lectures fausses sans réserve v8, détail :
+
+== 3. analyses communes avec la simulation v7
+analyses communes : 386 ; « désaccord des deux sens » renommé « (cohérence) » : 64 ; autres lectures différentes : 0
+réserves v8 ajoutées (classe ou cas, lecture, réserves) :
+  8 × ('H_0 à contextes inégaux, sans signature (v7, v8)', 'nul', 'λ change', 'contexte inégal')
+  4 × ('H1 (1,0 et 0,2), contexte du jeu b × 0,8', 'positif', 'λ change', 'contexte inégal')
+  4 × ('H1 (1,0 et 0,2), contexte du jeu b × 0,8, d 256', 'positif', 'λ change', 'contexte inégal')
+  4 × ('H_0 à contextes inégaux, sans signature (v7, v8)', 'nul', '', 'contexte inégal')
+  2 × ('fuite masquée par une signature négative du jeu a (0,6 et 0)', 'positif', 'λ change', '')
+  2 × ('fuite faible égale, contexte du jeu b plus faible (0,15 et 0,15 ; × 0,6)', 'nul', '', 'contexte inégal')
+  2 × ('fuite faible égale, contexte du jeu b plus faible (0,15 et 0,15 ; × 0,6)', 'nul', 'λ change', 'contexte inégal')
+  1 × ('H_0 et sans fuite', 'nul', 'λ change', '')
+  1 × ('H1 (1,0 et 0,2)', 'positif', 'λ change', 'contexte inégal')
+  1 × ('H1 (1,0 et 0,2)', 'positif', '', 'contexte inégal')
+  1 × ('H1 (1,0 et 0,2), jeu a −1 au petit, d 256', 'positif', 'λ change', '')
+
+== 4. prix des réserves v8 sous des vérités sans signature, à contextes égaux
+{'nul': {'n': 19, 'λ change': 1, 'contexte inégal': 0, "l'une ou l'autre": 1}, 'positif': {'n': 28, 'λ change': 1, 'contexte inégal': 2, "l'une ou l'autre": 2}, 'inverse': {'n': 4, 'λ change': 0, 'contexte inégal': 0, "l'une ou l'autre": 0}}
+
+== 5. prix de la cohérence sous H_0 à contextes inégaux (CLT-02)
+  H0 (0,5 et 0,5), contexte du jeu b × 0,6 : {'désaccord des deux sens (cohérence)': 5, 'nul non confirmé (sens a→b)': 1}
+  H0 (0,5 et 0,5), contexte du jeu b × 0,6, d 256 : {'nul non confirmé (sens b→a)': 1, 'désaccord des deux sens (cohérence)': 2, 'nul non confirmé (sens a→b)': 3}
+  H0 (0,5 et 0,5), contexte du jeu b × 0,8 : {'nul (contexte inégal)': 6}
+  H0 (0,5 et 0,5), contexte du jeu b × 0,8, d 256 : {'nul (contexte inégal)': 6}
+  H0 (0,7 et 0,7), contexte du jeu b × 0,75, d 256 : {'désaccord des deux sens (cohérence)': 2, 'nul non confirmé (sens a→b)': 3, 'nul (contexte inégal)': 1}
+  H0 (0,7 et 0,7), contexte du jeu b × 1,333, d 256 : {'nul (contexte inégal)': 6}
+  H0 (0,9 et 0,9), contexte du jeu b × 0,8, d 256 : {'nul (contexte inégal)': 3, 'nul non confirmé (sens a→b)': 3}

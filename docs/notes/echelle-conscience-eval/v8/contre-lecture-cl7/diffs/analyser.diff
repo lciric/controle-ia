@@ -1,0 +1,173 @@
+--- echelle-v6/scripts/analyser_echelle_v6.py	2026-10-27 07:08:16.123717007 +0000
++++ echelle-v7/scripts/analyser_echelle_v7.py	2026-10-27 07:48:32.547553146 +0000
+@@ -1,9 +1,12 @@
+ #!/usr/bin/env python3
+-"""Analyse v6 de la comparaison d'échelle 8B contre 70B (lignée « session-depot », 27 octobre 2026 ; préenregistrement
+-`prereg/test-echelle-conscience-eval-v7.md`, qui fait foi en cas de désaccord). Déclinée de `analyser_echelle_v5.py`
+-sous un nom nouveau (R12) après la contre-lecture n° 5 : la fuite de signe inverse se lit modèle par modèle, et n'est
+-prononcée que si le même modèle la tient dans les deux sens (CLV-01) ; conditions manquantes de chaque issue tenue
+-dans un seul sens (CLV-07). Calcul inchangé depuis la v5. Processeur seulement.
++"""Analyse v7 de la comparaison d'échelle 8B contre 70B (lignée « session-depot », 27 octobre 2026 ; préenregistrement
++`prereg/test-echelle-conscience-eval-v8.md`, qui fait foi en cas de désaccord). Déclinée de `analyser_echelle_v6.py`
++sous un nom nouveau (R12) après la contre-lecture n° 6 : « positif », « inverse » et « nul » ne sont communs aux deux
++sens que si chaque modèle garde le même λ d'un sens à l'autre, à δ près, en estimation ponctuelle (cohérence des deux
++sens, CLU-01) ; sinon l'écart d'échelle peut être porté par un modèle différent dans chaque sens. Depuis la v6 (contre-lecture n° 5) : la
++fuite de signe inverse se lit modèle par modèle, et n'est prononcée que si le même modèle la tient dans les deux sens
++(CLV-01) ; conditions manquantes de chaque issue tenue dans un seul sens (CLV-07). Calcul des mesures inchangé depuis
++la v5 ; la v7 ajoute l'écart du λ de chaque modèle entre les deux sens. Processeur seulement.
+ 
+ Deux sens d'ajustement, chacun croisé sur les moitiés de contenus E1 et E2, **lus par les mêmes règles** :
+   a→b  direction apprise sur le jeu de cadrages a, mesurée sur les paraphrases b ;
+@@ -20,6 +23,11 @@
+   ν   témoin de permutation : dix partitions équilibrées des six paires d'apprentissage, d_σ = moyenne du groupe 1 −
+       moyenne du groupe 2, orthogonalisée par rapport à ĉ (CLY-02), ν = moyenne des |Ef le long de d_σ| / |Ec| ;
+   points seuls (CLY-07) : λ mesuré sur le jeu d'apprentissage de l'autre moitié, rapport de transfert, Ec par format.
++Cohérence des deux sens (CLU-01), par modèle m : écart entre les sens e(m) = λ_a→b(m) − λ_b→a(m), même couche L*,
++en point ; intervalle sur les mêmes tirages, rapporté. Sous une fuite égale et la poussée d'un seul jeu à chaque
++taille (artefact de cl6), e(m) vaut, au bruit près, le Δλ du sens que la signature de m déplace : dès que « positif »
++tient dans les deux sens, |e(m)| dépasse δ. La forme par intervalle (« l'intervalle rencontre [−δ ; δ] ») laissait
++passer cette classe à amplitude intermédiaire (essai exploratoire de la v7).
+ Contrastes, par sens : Δλ = λ(petit) − λ(grand) ; spécificité = Δλ − (ν(petit) − ν(grand)) ; pour la fuite de signe
+ inverse, spécificité de signe inverse d'un modèle = −λ − ν (CLW-02) ; ΔA_ctx_fixe et ΔA_conf ; sac de mots appris sur
+ le jeu d'apprentissage et appliqué au jeu de mesure (CLW-07).
+@@ -45,7 +53,8 @@
+      Les deux fuites de signe inverse forment la même étape : aucune ne passe avant l'autre. Un sens non certifié rend
+      son échec : non certifiable (aucun modèle) ou certification asymétrique (grand seulement | petit seulement).
+   2. Combinaison ; une issue est « commune » si elle tient dans les deux sens (pour la fuite de signe inverse : le même
+-     modèle sous −δ dans les deux sens) :
++     modèle sous −δ dans les deux sens ; pour « positif », « inverse » et « nul » : de plus, cohérence des deux sens,
++     |e(m)| ≤ δ en point pour chacun des deux modèles, CLU-01) :
+      aucun sens certifié                → l'échec commun s'il est le même dans les deux sens, sinon non certifiable ;
+      les deux sens certifiés, une issue commune au moins → la **première étape qui porte une issue commune** ; à
+           l'étape 1 : « fuite de signe inverse (petit) », « (grand) », ou « (petit et grand) » si les deux sont communes ;
+@@ -58,18 +67,21 @@
+               positif et inverse, Δλ de signe contraire ; fuite de signe inverse, λ > 0 pour un modèle prononcé (la
+               réserve le nomme) ; pas de fuite, |λ| > δ pour un modèle ; nul, |Δλ| > δ ;
+      aucune issue commune, chaque sens en tient une  → désaccord des deux sens (dont la fuite de signe inverse tenue
+-          par un modèle dans un sens et par l'autre dans l'autre sens) ;
++          par un modèle dans un sens et par l'autre dans l'autre sens, et « positif », « inverse » ou « nul » tenu dans
++          les deux sens sans la cohérence des deux sens) ;
+      aucune issue commune, un seul sens en tient   → « X non confirmé (sens de l'autre) », X la première étape tenue ;
+           un sens non certifié ne tient aucune issue ;
+      aucun                              → indécis.
+      « X non confirmé », « désaccord des deux sens », « indécis » et les échecs de certification ne portent aucune
+      réserve. Pour chaque issue tenue dans un seul sens, ce qui lui manque dans l'autre sens est rapporté, chiffré
+-     (CLV-07).
++     (CLV-07) ; pour chaque issue tenue dans les deux sens sans la cohérence, l'écart de chaque modèle qui la rompt
++     (CLU-01). Une telle issue ne précède jamais l'étape prononcée : « positif » et « inverse » excluent toute autre
++     issue d'un sens, et « nul » est la dernière étape ; elle ne porte donc pas de réserve.
+ 
+-Usage (décisif) :    python -I -B analyser_echelle_v6.py STIMULI PETIT GRAND ENTROPIE SORTIE --commit-attendu COMMIT
+-Usage (répétition) : python -I -B analyser_echelle_v6.py STIMULI PETIT GRAND ENTROPIE SORTIE --repetition
++Usage (décisif) :    python -I -B analyser_echelle_v7.py STIMULI PETIT GRAND ENTROPIE SORTIE --commit-attendu COMMIT
++Usage (répétition) : python -I -B analyser_echelle_v7.py STIMULI PETIT GRAND ENTROPIE SORTIE --repetition
+ Mode décisif (CLY-06, CLW-04) : commit des scripts égal à COMMIT, arbre des scripts propre, numpy 2.4.6, modèles
+-attendus, et mesure faite par `mesurer_echelle_v6.py` de cet arbre (nom et empreinte relus dans chaque manifeste).
++attendus, et mesure faite par `mesurer_echelle_v7.py` de cet arbre (nom et empreinte relus dans chaque manifeste).
+ Codes : 0 analyse écrite ; 1 arrêt (liste d'arrêt) ; 2 usage ou sortie déjà présente.
+ """
+ import hashlib
+@@ -91,7 +103,7 @@
+               "couches": [20, 30, 40, 50], "dimension": 8192},
+ }
+ NUMPY_ATTENDU = "2.4.6"
+-SCRIPT_MESURE = "mesurer_echelle_v6.py"     # mode décisif : nom et empreinte relus dans chaque manifeste (CLW-04)
++SCRIPT_MESURE = "mesurer_echelle_v7.py"     # mode décisif : nom et empreinte relus dans chaque manifeste (CLW-04)
+ N_BOOT = 2000
+ FORMATS = ("qcm", "prose")
+ CLASSES = ("eval", "reel")
+@@ -470,6 +482,21 @@
+     }
+ 
+ 
++COHERENCE = ("positif", "inverse", "nul")       # issues qui comparent les deux modèles (CLU-01)
++
++
++def coherence(r):
++    """Cohérence des deux sens (CLU-01) : pour chaque modèle, l'écart ponctuel e(m) = λ_a→b(m) − λ_b→a(m), à la couche
++    L*, vérifie |e(m)| ≤ δ ; son intervalle (mêmes tirages) est rapporté avec lui. Liste de (énoncé chiffré, tenue)."""
++    d = SEUILS["delta"]
++    out = []
++    for k in ("petit", "grand"):
++        e, ic = r["ecart_sens"][k], r["ecart_sens_ic"][k]
++        out.append((f"cohérence des deux sens du {k} : |λ_a→b − λ_b→a| = |{e:.3f}| ≤ δ (intervalle "
++                    f"[{ic[0]:.3f} ; {ic[1]:.3f}])", abs(e) <= d))
++    return out
++
++
+ def echec_certification(r, s):
+     """Échec de certification du sens s, ou None si les deux modèles y sont certifiés."""
+     c = certification(r, s)
+@@ -550,21 +577,28 @@
+ 
+ 
+ def lire(r):
+-    """Lecture mécanique (CLZ-01, CLW-01, CLV-01) : chaque sens rend l'ensemble des issues qu'il tient ; on prononce la
+-    première étape de l'ordre de lecture qui porte une issue tenue dans les deux sens. Rend (lecture, réserves,
+-    détail)."""
++    """Lecture mécanique (CLZ-01, CLW-01, CLV-01, CLU-01) : chaque sens rend l'ensemble des issues qu'il tient ; on
++    prononce la première étape de l'ordre de lecture qui porte une issue commune (tenue dans les deux sens, et, pour
++    « positif », « inverse » et « nul », sous la cohérence des deux sens). Rend (lecture, réserves, détail)."""
+     echec = {s: echec_certification(r, s) for s in SENS}
+     tenues = {s: ([] if echec[s] else issues_tenues(r, s)) for s in SENS}
++    coh = coherence(r)
+     detail = {"lecture_par_sens": {NOM_SENS[s]: lire_sens(r, s) for s in SENS},
+-              "issues_tenues_par_sens": {NOM_SENS[s]: tenues[s] for s in SENS}, "conditions_manquantes": {}}
++              "issues_tenues_par_sens": {NOM_SENS[s]: tenues[s] for s in SENS}, "conditions_manquantes": {},
++              "coherence_des_sens": [{"condition": enonce, "tenue": tenue} for enonce, tenue in coh]}
+     if echec["ab"] and echec["ba"]:
+         return (echec["ab"] if echec["ab"] == echec["ba"] else "non certifiable"), [], detail
+-    communes = [x for x in ISSUES if x in tenues["ab"] and x in tenues["ba"]]
+-    seules = [(s, x) for s in SENS for x in tenues[s] if x not in communes]         # tenues dans un seul sens
++    rompue = [enonce for enonce, tenue in coh if not tenue]
++    deux = [x for x in ISSUES if x in tenues["ab"] and x in tenues["ba"]]             # tenues dans les deux sens
++    incoherentes = [x for x in deux if x in COHERENCE and rompue]                     # sans la cohérence (CLU-01)
++    communes = [x for x in deux if x not in incoherentes]
++    seules = [(s, x) for s in SENS for x in tenues[s] if x not in deux]             # tenues dans un seul sens
+     for s, x in seules:                                                             # ce qui leur manque (CLV-07)
+         autre = "ba" if s == "ab" else "ab"
+         detail["conditions_manquantes"][f"{x} ({NOM_SENS[s]}), dans le sens {NOM_SENS[autre]}"] = \
+             manquantes(r, autre, x)
++    for x in incoherentes:                                                          # ce qui leur manque (CLU-01)
++        detail["conditions_manquantes"][f"{x} (a→b et b→a), cohérence des deux sens"] = rompue
+     if communes:
+         issue = premiere_etape(communes)
+         etape = ETAPE[membres(issue)[0]]
+@@ -598,7 +632,7 @@
+         commit_attendu = argv[i + 1] if i + 1 < len(argv) else ""
+         argv = argv[:i] + argv[i + 2:]
+     if len(argv) != 5 or (not repetition and not commit_attendu):
+-        print("usage : analyser_echelle_v6.py STIMULI PETIT GRAND ENTROPIE SORTIE (--commit-attendu C | --repetition)",
++        print("usage : analyser_echelle_v7.py STIMULI PETIT GRAND ENTROPIE SORTIE (--commit-attendu C | --repetition)",
+               file=sys.stderr)
+         return 2
+     stimuli, d_petit, d_grand, entropie, sortie = argv
+@@ -681,6 +715,10 @@
+             r["delta_" + k] = {s: point["grand"][s][k] - point["petit"][s][k] for s in SENS}
+             r["delta_" + k + "_ic"] = {s: intervalle([t["grand"][s][k] - t["petit"][s][k] for t in tirages])
+                                       for s in SENS}
++        r["ecart_sens"], r["ecart_sens_ic"] = {}, {}          # λ_a→b(m) − λ_b→a(m), mêmes tirages (CLU-01)
++        for nom in ("petit", "grand"):
++            r["ecart_sens"][nom] = point[nom]["ab"]["lambda"] - point[nom]["ba"]["lambda"]
++            r["ecart_sens_ic"][nom] = intervalle([t[nom]["ab"]["lambda"] - t[nom]["ba"]["lambda"] for t in tirages])
+         r["specificite_signe_inverse"], r["specificite_signe_inverse_ic"] = {}, {}   # −λ − ν (CLW-02)
+         for nom in ("petit", "grand"):
+             r["specificite_signe_inverse"][nom] = {s: -point[nom][s]["lambda"] - point[nom][s]["nu"] for s in SENS}
+@@ -712,7 +750,7 @@
+     if repetition:
+         lecture = f"répétition, non décisive ({lecture})"
+     sortie.mkdir(parents=True)
+-    out = {"version": "analyse-echelle-v6", "repetition": repetition, "stimuli": pathlib.Path(stimuli).name,
++    out = {"version": "analyse-echelle-v7", "repetition": repetition, "stimuli": pathlib.Path(stimuli).name,
+            "sha256_stimuli": sha_stim, "resultats": {"petit": str(d_petit), "grand": str(d_grand)},
+            "manifestes_sha256": {k: empreinte(pathlib.Path(d) / "manifeste-mesure.json")
+                                  for k, d in (("petit", d_petit), ("grand", d_grand))},
+@@ -721,7 +759,7 @@
+            "script": pathlib.Path(__file__).name, "sha256_script": empreinte(__file__), "commit_scripts": commit,
+            "commit_attendu": commit_attendu, "arbre_scripts_propre": propre, "python": platform.python_version(),
+            "numpy": np.__version__, **r, "lecture": lecture, "reserves": reserves_lues, **detail}
+-    f = sortie / "analyse-echelle-v6.json"
++    f = sortie / "analyse-echelle-v7.json"
+     f.write_text(json.dumps(out, ensure_ascii=False, indent=1) + "\n", encoding="utf-8")
+     (sortie / (f.name + ".sha256")).write_text(f"{empreinte(f)}  {f.name}\n", encoding="utf-8")
+     print(json.dumps({"lecture": lecture, "reserves": reserves_lues, **detail}, ensure_ascii=False))

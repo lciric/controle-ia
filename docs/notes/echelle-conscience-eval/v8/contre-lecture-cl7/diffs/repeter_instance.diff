@@ -1,0 +1,106 @@
+--- echelle-v6/scripts/repeter_instance_v6.sh	2026-10-27 07:08:16.123717007 +0000
++++ echelle-v7/scripts/repeter_instance_v7.sh	2026-10-27 07:25:53.245055841 +0000
+@@ -1,23 +1,24 @@
+ #!/usr/bin/env bash
+-# Répétition locale de la chaîne d'instance de la comparaison d'échelle v6 (R5, CLX-10, CLY-03, CLY-14, CLZ-04, CLW-08),
+-# lignée « session-depot », 27 octobre 2026 ; copie de `repeter_instance_v5.sh` (R12), sans changement des cas.
+-# Aucune carte, aucune
++# Répétition locale de la chaîne d'instance de la comparaison d'échelle v7 (R5, CLX-10, CLY-03, CLY-14, CLZ-04, CLW-08,
++# CLU-04), lignée « session-depot », 27 octobre 2026 ; déclinée de `repeter_instance_v6.sh` (R12) : les cas de la v6,
++# plus le clonage bloqué (CLU-04 : un faux git qui ne rend pas la main au clonage ; refus à la borne d'essai, avec la
++# ligne de fin) et la borne réelle du clonage écrite par le cas sain. Aucune carte, aucune
+ # instance, aucune clé réelle : un dépôt nu local tient lieu de dépôt de travail, le modèle minuscule local tient lieu
+-# des deux modèles, les jetons sont factices. Un cas sain et treize artefacts ; chaque cas écrit son journal ;
++# des deux modèles, les jetons sont factices. Un cas sain et quatorze artefacts ; chaque cas écrit son journal ;
+ # RESUME.txt donne le code attendu et le code obtenu. Nouveau depuis la v4 (CLW-08) : chaque refus précoce de l'amorce
+ # doit écrire sa ligne « fin, code 1 », que la surveillance relit ; vérifié sur les six refus précoces.
+-# Usage : repeter_instance_v6.sh DOSSIER_NEUF COMMIT MODELE_MINUSCULE VENV
+-#   COMMIT : commit de la branche d'outils outils/echelle-conscience-eval-v6 (déjà présent dans le dépôt courant)
++# Usage : repeter_instance_v7.sh DOSSIER_NEUF COMMIT MODELE_MINUSCULE VENV
++#   COMMIT : commit de la branche d'outils outils/echelle-conscience-eval-v7 (déjà présent dans le dépôt courant)
+ set -uo pipefail
+-[ $# -eq 4 ] || { echo "usage : repeter_instance_v6.sh DOSSIER_NEUF COMMIT MODELE_MINUSCULE VENV"; exit 2; }
++[ $# -eq 4 ] || { echo "usage : repeter_instance_v7.sh DOSSIER_NEUF COMMIT MODELE_MINUSCULE VENV"; exit 2; }
+ E=$(realpath -m "$1"); C=$2; MIN=$3; VENV=$4
+ [ -e "$E" ] && { echo "$E existe déjà (R12)"; exit 2; }
+ ICI=$(cd "$(dirname "$0")" && pwd)
+ DEPOT_SRC=$(git -C "$ICI" rev-parse --show-toplevel)
+ mkdir -p "$E"
+ git init -q --bare "$E/depot.git"
+-git -C "$DEPOT_SRC" push -q "$E/depot.git" "$C:refs/heads/outils/echelle-conscience-eval-v6" 2>/dev/null
+-A="$ICI/amorce_echelle_v6.sh"
++git -C "$DEPOT_SRC" push -q "$E/depot.git" "$C:refs/heads/outils/echelle-conscience-eval-v7" 2>/dev/null
++A="$ICI/amorce_echelle_v7.sh"
+ resume() { printf '%-32s attendu %s ; obtenu %s ; %s\n' "$1" "$2" "$3" "$4" | tee -a "$E/RESUME.txt"; }
+ cas() {  # $1 nom, $2 code attendu, puis variables d'environnement, puis la commande
+     local nom=$1 attendu=$2; shift 2
+@@ -38,6 +39,8 @@
+ cas sain 0 "${COMMUN[@]}" COMMIT="$C" BRANCHE=donnees/essai-sain RACINE_AMORCE="$E/sain" MODELE_LOCAL="$MIN" bash "$A"
+ n=$(git -C "$E/depot.git" rev-list --count "$C..donnees/essai-sain" 2>/dev/null || echo 0)
+ resume "sain : commits de résultats" "2" "$n" "$([ "$n" = 2 ] && echo conforme || echo ÉCART)"
++b=$(grep -c 'clonage borné à 600 s$' "$E/sain/sortie.log")
++resume "sain : borne du clonage 600 s" "1" "$b" "$([ "$b" = 1 ] && echo conforme || echo ÉCART)"
+ # 2. mauvais commit
+ cas mauvais-commit 1 "${COMMUN[@]}" COMMIT=0000000000000000000000000000000000000000 BRANCHE=donnees/essai-a2 \
+     RACINE_AMORCE="$E/mauvais-commit" MODELE_LOCAL="$MIN" bash "$A"
+@@ -45,8 +48,8 @@
+ cas branche-presente 1 "${COMMUN[@]}" COMMIT="$C" BRANCHE=donnees/essai-sain RACINE_AMORCE="$E/branche-presente" \
+     MODELE_LOCAL="$MIN" bash "$A"
+ # 4. stimuli altérés (commit d'essai sur une branche d'essai du dépôt nu)
+-git clone -q "$E/depot.git" "$E/clone-altere" && git -C "$E/clone-altere" checkout -q outils/echelle-conscience-eval-v6 \
+-    && printf ' ' >> "$E/clone-altere/echelle-v6/stimuli/echelle-v2.json" \
++git clone -q "$E/depot.git" "$E/clone-altere" && git -C "$E/clone-altere" checkout -q outils/echelle-conscience-eval-v7 \
++    && printf ' ' >> "$E/clone-altere/echelle-v7/stimuli/echelle-v2.json" \
+     && git -C "$E/clone-altere" -c user.name=essai -c user.email=essai@invalid commit -q -am "essai : stimuli altérés" \
+     && git -C "$E/clone-altere" push -q origin HEAD:refs/heads/outils/essai-altere
+ CA=$(git -C "$E/clone-altere" rev-parse HEAD)
+@@ -57,10 +60,10 @@
+     MODELE_LOCAL="$MIN" HF_TOKEN="modele-minuscule" bash "$A"
+ absente "clé" donnees/essai-a5
+ # 6. git ls-remote en échec (origine injoignable après le clonage) : arrêt avant tout calcul
+-git clone -q --branch outils/echelle-conscience-eval-v6 "$E/depot.git" "$E/ls-remote/depot"
++git clone -q --branch outils/echelle-conscience-eval-v7 "$E/depot.git" "$E/ls-remote/depot"
+ git -C "$E/ls-remote/depot" remote set-url origin "$E/inexistant.git"
+ cas ls-remote-en-echec 1 "${COMMUN[@]}" COMMIT="$C" BRANCHE=donnees/essai-a6 TRAVAIL="$E/ls-remote/travail" \
+-    MODELE_LOCAL="$MIN" bash "$E/ls-remote/depot/echelle-v6/scripts/echelle_instance_v6.sh"
++    MODELE_LOCAL="$MIN" bash "$E/ls-remote/depot/echelle-v7/scripts/echelle_instance_v7.sh"
+ # 7. téléchargement refusé (jeton factice sur un modèle à licence ; aucune carte : PERMETTRE_SANS_CARTE)
+ cas telechargement-refuse 1 "${COMMUN[@]}" COMMIT="$C" BRANCHE=donnees/essai-a7 RACINE_AMORCE="$E/telechargement-refuse" \
+     HF_TOKEN=hf_jeton_factice_essai PERMETTRE_SANS_CARTE=1 HF_HOME="$E/telechargement-refuse/cache-hf" bash "$A"
+@@ -78,8 +81,8 @@
+ cas creation-trop-ancienne 1 "${SANS_TEMPS[@]}" DUREE_MAX_S=4500 CREATION_S=$((MAINTENANT - 1300)) COMMIT="$C" \
+     BRANCHE=donnees/essai-a12 RACINE_AMORCE="$E/creation-trop-ancienne" MODELE_LOCAL="$MIN" bash "$A"
+ # 13. compagnon d'empreinte d'un script faux sur l'instance : le script de mesure change, son compagnon non (CLY-14)
+-git clone -q "$E/depot.git" "$E/clone-compagnon" && git -C "$E/clone-compagnon" checkout -q outils/echelle-conscience-eval-v6 \
+-    && printf '# essai\n' >> "$E/clone-compagnon/echelle-v6/scripts/mesurer_echelle_v6.py" \
++git clone -q "$E/depot.git" "$E/clone-compagnon" && git -C "$E/clone-compagnon" checkout -q outils/echelle-conscience-eval-v7 \
++    && printf '# essai\n' >> "$E/clone-compagnon/echelle-v7/scripts/mesurer_echelle_v7.py" \
+     && git -C "$E/clone-compagnon" -c user.name=essai -c user.email=essai@invalid commit -q -am "essai : compagnon faux" \
+     && git -C "$E/clone-compagnon" push -q origin HEAD:refs/heads/outils/essai-compagnon
+ CC=$(git -C "$E/clone-compagnon" rev-parse HEAD)
+@@ -98,8 +101,23 @@
+     case "$(readlink "$p/cwd" 2>/dev/null)" in "$E/delai-atteint"*) r="processus restants"; break ;; esac
+ done
+ resume "délai atteint : processus" "aucun" "$r" "$([ "$r" = aucun ] && echo conforme || echo ÉCART)"
+-# 15. chaque refus précoce de l'amorce écrit sa ligne de fin, que la surveillance relit (CLW-08)
+-for c in duree-absente duree-4499 duree-7201 creation-absente creation-trop-ancienne mauvais-commit; do
++# 15. clonage bloqué (CLU-04) : un faux git, placé en tête du PATH, ne rend pas la main au clonage (300 s) et passe tout
++#     le reste au vrai git ; borne d'essai 5 s : refus, ligne de fin, aucun calcul, en moins de 40 s
++mkdir -p "$E/faux-git"
++printf '#!/usr/bin/env bash
++case " $* " in *" clone "*) sleep 300 ;; esac
++exec %s "$@"
++' "$(command -v git)" \
++    > "$E/faux-git/git"
++chmod +x "$E/faux-git/git"
++t0=$(date -u +%s)
++cas clonage-bloque 1 "${COMMUN[@]}" PATH="$E/faux-git:$PATH" CLONAGE_ESSAI_S=5 COMMIT="$C" BRANCHE=donnees/essai-a15 \
++    RACINE_AMORCE="$E/clonage-bloque" MODELE_LOCAL="$MIN" bash "$A"
++duree=$(( $(date -u +%s) - t0 ))
++resume "clonage bloqué : durée (s)" "< 40" "$duree" "$([ "$duree" -lt 40 ] && echo conforme || echo ÉCART)"
++absente "clonage bloqué" donnees/essai-a15
++# 16. chaque refus précoce de l'amorce écrit sa ligne de fin, que la surveillance relit (CLW-08, CLU-04)
++for c in duree-absente duree-4499 duree-7201 creation-absente creation-trop-ancienne mauvais-commit clonage-bloque; do
+     f=$(grep -c '^AMORCE .* : fin, code 1$' "$E/$c/sortie.log")
+     resume "$c : ligne de fin" "1" "$f" "$([ "$f" = 1 ] && echo conforme || echo ÉCART)"
+ done

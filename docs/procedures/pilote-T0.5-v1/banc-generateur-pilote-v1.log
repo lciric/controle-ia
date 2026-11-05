@@ -1,0 +1,49 @@
+banc : essais_generateur_pilote_v1.sh 5addf716d9593e84c4f63bf3e2376c792b3c2008b7a4c865f858889e30b61976 ; générateur f54382d78a9ebb19103239b333d67223811377b17c8f9e3b55389bb326a5d980
+commit des préalables : 3881fb7183a6448ace018b26efd5bfed247287df
+C = 3881fb7183a6448ace018b26efd5bfed247287df ; générateur f54382d78a9ebb19103239b333d67223811377b17c8f9e3b55389bb326a5d980
+G00-candidat-sain : code 0 ; CONFORME
+    | {"prereg_sha256": "56cc945f0c33b5eee8d31e182f9c097d5d1cca7e28ae94031715e4ed6f3aad83", "config_canonique": "db3ad3cebc3f0832e43514749b42c01b344ab4dca2997153d851814fe251b714", "noyau": "defaut", "d_s": 
+    normalisé du candidat sain : 83056d15157ef9043daab5275e7d4665aa7e087bbb3b5a1556e7d9830cf9ed63
+G01-taches-autre-chemin : code 1 ; CONFORME
+    | ARRÊT du remplissage du pilote : --taches 'donnees/autre/copie.json' : seul donnees/t05-pilote-v1/taches-pilote-60-v1.json est admis en modes reel et candidat (CH-07)
+G02-date-libre-candidat : code 1 ; CONFORME
+    | ARRÊT du remplissage du pilote : date attendue au format « AAAA-MM-JJ HH:MM UTC »
+G03-date-libre-jouet : code 1 ; CONFORME
+    | ARRÊT du remplissage du pilote : date attendue au format « AAAA-MM-JJ HH:MM UTC »
+G04-brouillon-modifie-sceau-laisse : code 1 ; CONFORME
+    | ARRÊT du remplissage du pilote : brouillons/T0.5-pilote-8B-v1-brouillon10.md : sceau absent ou différent au commit
+G05-brouillon-modifie-rescelle : code 1 ; CONFORME
+    | ARRÊT du remplissage du pilote : brouillons/T0.5-pilote-8B-v1-brouillon10.md : empreinte non épinglée ou ≠ c3ee76a9f6d0… (CH-06)
+G06-lecture-math-modifiee : code 1 ; CONFORME
+    | ARRÊT du remplissage du pilote : diag/20261011-225701-t05-revalidation-reel/lecture-math.json : sceau absent ou différent au commit
+G07-brouillon-config-modifie : code 1 ; CONFORME
+    | ARRÊT du remplissage du pilote : brouillons/T0.5-pilote-config-v1-brouillon1.json : empreinte ≠ 80d16f6e7a13… (CH-06)
+G08-go-hors-du-mode-reel : code 1 ; CONFORME
+    | ARRÊT du remplissage du pilote : --go et --registre : mode reel seulement
+G10-reel-sain : code 0 ; CONFORME
+    | {"prereg_sha256": "9d2bebd8c28678f8b68c83d5afdbd5e2715d3fa6f9c287a85e5e3832b2bff294", "config_canonique": "db3ad3cebc3f0832e43514749b42c01b344ab4dca2997153d851814fe251b714", "noyau": "defaut", "d_s": 
+    normalisé du texte reel = normalisé du candidat (83056d15157ef9043daab5275e7d4665aa7e087bbb3b5a1556e7d9830cf9ed63) : CONFORME
+G11-reel-sans-go : code 1 ; CONFORME
+    | ARRÊT du remplissage du pilote : mode reel : --go GO-AAAA-MM-JJ-NN et --registre R-NNN exigés (décision de Lazar sur N-019)
+G12-reel-date-ancienne : code 1 ; CONFORME
+    | ARRÊT du remplissage du pilote : date à 107984 s de l'horloge (au plus 3 600 s)
+G13-n019-forme-inexacte : code 1 ; CONFORME
+    | ARRÊT du remplissage du pilote : N-019 : colonne d'état ≠ « tranché (a) par Lazar : GO-2026-10-12-99 (R-990) »
+G14-n019-suite-ajoutee : code 1 ; CONFORME
+    | ARRÊT du remplissage du pilote : N-019 : colonne d'état ≠ « tranché (a) par Lazar : GO-2026-10-12-99 (R-990) »
+G15-go-revoque : code 1 ; CONFORME
+    | ARRÊT du remplissage du pilote : GO-2026-10-12-99 révoqué dans registres/go.md
+G15b-go-revoque-ligne-mal-formee : code 1 ; CONFORME
+    | ARRÊT du remplissage du pilote : GO-2026-10-12-99 révoqué dans registres/go.md
+G15c-ligne-go-qui-mentionne-une-revocation : code 0 ; CONFORME
+    | {"prereg_sha256": "3becdea1a51592a3ff93e10036de5dd624f351969dd456fd9e8d640f59cfb230", "config_canonique": "db3ad3cebc3f0832e43514749b42c01b344ab4dca2997153d851814fe251b714", "noyau": "defaut", "d_s": 
+G16-go-autre-type : code 1 ; CONFORME
+    | ARRÊT du remplissage du pilote : GO-2026-10-12-99 : type 'calcul', accordé par 'Lazar', ou périmètre sans N-019 et l'option (a)
+G17-go-option-b : code 1 ; CONFORME
+    | ARRÊT du remplissage du pilote : GO-2026-10-12-99 : type 'revendication', accordé par 'Lazar', ou périmètre sans N-019 et l'option (a)
+G18-registre-absent : code 1 ; CONFORME
+    | ARRÊT du remplissage du pilote : R-990 : ligne absente, en double ou sans GO-2026-10-12-99
+G19-candidat-relu-different : code 1 ; CONFORME
+    | ARRÊT du remplissage du pilote : version écrite ≠ candidat relu, hors des champs du scellement
+FIN DU BANC DU GÉNÉRATEUR DU PILOTE (21 générations)
+code 0

@@ -1,0 +1,322 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <title>Understanding AppArmor User Namespace Restriction - Security - Ubuntu Discourse</title>
+    <meta name="description" content="Understanding the AppArmor user namespace restriction feature
+Ubuntu 23.10 and 24.04 LTS introduced new AppArmor-based features to reduce the attack surface presented by unprivileged user namespaces in the Linux kernel. &amp;hellip;">
+    <meta name="generator" content="Discourse 2026.1.7 - https://github.com/discourse/discourse version b6af77c0382ac61817e825e4e285217327772b54">
+<link rel="icon" type="image/png" href="https://ubuntucommunity.s3.dualstack.us-east-2.amazonaws.com/optimized/3X/b/e/be7e4cc6ef7ce95e285337634be009b70561d719_2_32x32.png">
+<link rel="apple-touch-icon" type="image/png" href="https://ubuntucommunity.s3.dualstack.us-east-2.amazonaws.com/optimized/3X/f/3/f38b9c7e7decc51bc26320541c441bfa28f99298_2_180x180.png">
+<meta name="theme-color" media="(prefers-color-scheme: light)" content="#333">
+<meta name="theme-color" media="(prefers-color-scheme: dark)" content="#333">
+
+<meta name="color-scheme" content="light dark">
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0, viewport-fit=cover">
+<link rel="canonical" href="https://discourse.ubuntu.com/t/understanding-apparmor-user-namespace-restriction/58007" />
+
+
+<link rel="search" type="application/opensearchdescription+xml" href="https://discourse.ubuntu.com/opensearch.xml" title="Ubuntu Discourse Search">
+
+    
+    <link href="/stylesheets/color_definitions_ubuntu_2_2_8d049131329ff8301bdd457d4cf8d4f9facc4378.css?__ws=discourse.ubuntu.com" media="all" rel="stylesheet" class="light-scheme" data-scheme-id="2"/>
+
+<link href="/stylesheets/common_cca453ef16459888cd3cb79fc5b04876f6a0b0c4.css?__ws=discourse.ubuntu.com" media="all" rel="stylesheet" data-target="common"  />
+
+  <link href="/stylesheets/mobile_cca453ef16459888cd3cb79fc5b04876f6a0b0c4.css?__ws=discourse.ubuntu.com" media="(max-width: 39.99999rem)" rel="stylesheet" data-target="mobile"  />
+  <link href="/stylesheets/desktop_cca453ef16459888cd3cb79fc5b04876f6a0b0c4.css?__ws=discourse.ubuntu.com" media="(min-width: 40rem)" rel="stylesheet" data-target="desktop"  />
+
+
+
+    <link href="/stylesheets/automation_cca453ef16459888cd3cb79fc5b04876f6a0b0c4.css?__ws=discourse.ubuntu.com" media="all" rel="stylesheet" data-target="automation"  />
+    <link href="/stylesheets/chat_cca453ef16459888cd3cb79fc5b04876f6a0b0c4.css?__ws=discourse.ubuntu.com" media="all" rel="stylesheet" data-target="chat"  />
+    <link href="/stylesheets/checklist_cca453ef16459888cd3cb79fc5b04876f6a0b0c4.css?__ws=discourse.ubuntu.com" media="all" rel="stylesheet" data-target="checklist"  />
+    <link href="/stylesheets/discourse-calendar_cca453ef16459888cd3cb79fc5b04876f6a0b0c4.css?__ws=discourse.ubuntu.com" media="all" rel="stylesheet" data-target="discourse-calendar"  />
+    <link href="/stylesheets/discourse-data-explorer_cca453ef16459888cd3cb79fc5b04876f6a0b0c4.css?__ws=discourse.ubuntu.com" media="all" rel="stylesheet" data-target="discourse-data-explorer"  />
+    <link href="/stylesheets/discourse-details_cca453ef16459888cd3cb79fc5b04876f6a0b0c4.css?__ws=discourse.ubuntu.com" media="all" rel="stylesheet" data-target="discourse-details"  />
+    <link href="/stylesheets/discourse-gamification_cca453ef16459888cd3cb79fc5b04876f6a0b0c4.css?__ws=discourse.ubuntu.com" media="all" rel="stylesheet" data-target="discourse-gamification"  />
+    <link href="/stylesheets/discourse-lazy-videos_cca453ef16459888cd3cb79fc5b04876f6a0b0c4.css?__ws=discourse.ubuntu.com" media="all" rel="stylesheet" data-target="discourse-lazy-videos"  />
+    <link href="/stylesheets/discourse-local-dates_cca453ef16459888cd3cb79fc5b04876f6a0b0c4.css?__ws=discourse.ubuntu.com" media="all" rel="stylesheet" data-target="discourse-local-dates"  />
+    <link href="/stylesheets/discourse-narrative-bot_cca453ef16459888cd3cb79fc5b04876f6a0b0c4.css?__ws=discourse.ubuntu.com" media="all" rel="stylesheet" data-target="discourse-narrative-bot"  />
+    <link href="/stylesheets/discourse-presence_cca453ef16459888cd3cb79fc5b04876f6a0b0c4.css?__ws=discourse.ubuntu.com" media="all" rel="stylesheet" data-target="discourse-presence"  />
+    <link href="/stylesheets/discourse-reactions_cca453ef16459888cd3cb79fc5b04876f6a0b0c4.css?__ws=discourse.ubuntu.com" media="all" rel="stylesheet" data-target="discourse-reactions"  />
+    <link href="/stylesheets/discourse-signatures_cca453ef16459888cd3cb79fc5b04876f6a0b0c4.css?__ws=discourse.ubuntu.com" media="all" rel="stylesheet" data-target="discourse-signatures"  />
+    <link href="/stylesheets/discourse-solved_cca453ef16459888cd3cb79fc5b04876f6a0b0c4.css?__ws=discourse.ubuntu.com" media="all" rel="stylesheet" data-target="discourse-solved"  />
+    <link href="/stylesheets/discourse-templates_cca453ef16459888cd3cb79fc5b04876f6a0b0c4.css?__ws=discourse.ubuntu.com" media="all" rel="stylesheet" data-target="discourse-templates"  />
+    <link href="/stylesheets/discourse-topic-voting_cca453ef16459888cd3cb79fc5b04876f6a0b0c4.css?__ws=discourse.ubuntu.com" media="all" rel="stylesheet" data-target="discourse-topic-voting"  />
+    <link href="/stylesheets/footnote_cca453ef16459888cd3cb79fc5b04876f6a0b0c4.css?__ws=discourse.ubuntu.com" media="all" rel="stylesheet" data-target="footnote"  />
+    <link href="/stylesheets/markdown-note_cca453ef16459888cd3cb79fc5b04876f6a0b0c4.css?__ws=discourse.ubuntu.com" media="all" rel="stylesheet" data-target="markdown-note"  />
+    <link href="/stylesheets/poll_cca453ef16459888cd3cb79fc5b04876f6a0b0c4.css?__ws=discourse.ubuntu.com" media="all" rel="stylesheet" data-target="poll"  />
+    <link href="/stylesheets/spoiler-alert_cca453ef16459888cd3cb79fc5b04876f6a0b0c4.css?__ws=discourse.ubuntu.com" media="all" rel="stylesheet" data-target="spoiler-alert"  />
+    <link href="/stylesheets/chat_mobile_cca453ef16459888cd3cb79fc5b04876f6a0b0c4.css?__ws=discourse.ubuntu.com" media="(max-width: 39.99999rem)" rel="stylesheet" data-target="chat_mobile"  />
+    <link href="/stylesheets/discourse-calendar_mobile_cca453ef16459888cd3cb79fc5b04876f6a0b0c4.css?__ws=discourse.ubuntu.com" media="(max-width: 39.99999rem)" rel="stylesheet" data-target="discourse-calendar_mobile"  />
+    <link href="/stylesheets/discourse-gamification_mobile_cca453ef16459888cd3cb79fc5b04876f6a0b0c4.css?__ws=discourse.ubuntu.com" media="(max-width: 39.99999rem)" rel="stylesheet" data-target="discourse-gamification_mobile"  />
+    <link href="/stylesheets/discourse-reactions_mobile_cca453ef16459888cd3cb79fc5b04876f6a0b0c4.css?__ws=discourse.ubuntu.com" media="(max-width: 39.99999rem)" rel="stylesheet" data-target="discourse-reactions_mobile"  />
+    <link href="/stylesheets/discourse-solved_mobile_cca453ef16459888cd3cb79fc5b04876f6a0b0c4.css?__ws=discourse.ubuntu.com" media="(max-width: 39.99999rem)" rel="stylesheet" data-target="discourse-solved_mobile"  />
+    <link href="/stylesheets/discourse-topic-voting_mobile_cca453ef16459888cd3cb79fc5b04876f6a0b0c4.css?__ws=discourse.ubuntu.com" media="(max-width: 39.99999rem)" rel="stylesheet" data-target="discourse-topic-voting_mobile"  />
+    <link href="/stylesheets/chat_desktop_cca453ef16459888cd3cb79fc5b04876f6a0b0c4.css?__ws=discourse.ubuntu.com" media="(min-width: 40rem)" rel="stylesheet" data-target="chat_desktop"  />
+    <link href="/stylesheets/discourse-gamification_desktop_cca453ef16459888cd3cb79fc5b04876f6a0b0c4.css?__ws=discourse.ubuntu.com" media="(min-width: 40rem)" rel="stylesheet" data-target="discourse-gamification_desktop"  />
+    <link href="/stylesheets/discourse-reactions_desktop_cca453ef16459888cd3cb79fc5b04876f6a0b0c4.css?__ws=discourse.ubuntu.com" media="(min-width: 40rem)" rel="stylesheet" data-target="discourse-reactions_desktop"  />
+    <link href="/stylesheets/discourse-topic-voting_desktop_cca453ef16459888cd3cb79fc5b04876f6a0b0c4.css?__ws=discourse.ubuntu.com" media="(min-width: 40rem)" rel="stylesheet" data-target="discourse-topic-voting_desktop"  />
+    <link href="/stylesheets/poll_desktop_cca453ef16459888cd3cb79fc5b04876f6a0b0c4.css?__ws=discourse.ubuntu.com" media="(min-width: 40rem)" rel="stylesheet" data-target="poll_desktop"  />
+
+  <link href="/stylesheets/common_theme_88_57efd3a8b4a4d568e17f3231f7239516b780d951.css?__ws=discourse.ubuntu.com" media="all" rel="stylesheet" data-target="common_theme" data-theme-id="88" data-theme-name="customize new topic button text"/>
+<link href="/stylesheets/common_theme_51_44621cb5cac0d2166fe0a5916de8922e297d6f01.css?__ws=discourse.ubuntu.com" media="all" rel="stylesheet" data-target="common_theme" data-theme-id="51" data-theme-name="discotoc"/>
+<link href="/stylesheets/common_theme_50_2ecba46b9bcbc5a3fc49cb340e2a8d3d707df9aa.css?__ws=discourse.ubuntu.com" media="all" rel="stylesheet" data-target="common_theme" data-theme-id="50" data-theme-name="discourse cookie policy"/>
+<link href="/stylesheets/common_theme_115_3daa233be5ab96fdb2327fb7627014c8c949270f.css?__ws=discourse.ubuntu.com" media="all" rel="stylesheet" data-target="common_theme" data-theme-id="115" data-theme-name="discourse tweaks"/>
+<link href="/stylesheets/common_theme_156_ad97f5583352e18b3d5143678f0336e3128a753c.css?__ws=discourse.ubuntu.com" media="all" rel="stylesheet" data-target="common_theme" data-theme-id="156" data-theme-name="ubuntu summit widget"/>
+<link href="/stylesheets/common_theme_2_ebf908ab85e03479d12e03e1320781624d7ddd93.css?__ws=discourse.ubuntu.com" media="all" rel="stylesheet" data-target="common_theme" data-theme-id="2" data-theme-name="default"/>
+    <link href="/stylesheets/mobile_theme_2_4778fbb1fcc4e42fe556f563c23616d399f5785a.css?__ws=discourse.ubuntu.com" media="(max-width: 39.99999rem)" rel="stylesheet" data-target="mobile_theme" data-theme-id="2" data-theme-name="default"/>
+    
+
+    <link href="https://fonts.googleapis.com/css?family=Ubuntu:100,300,400" rel="stylesheet"> 
+<meta name="google-site-verification" content="grFP-bTinUn8jXfEmhZCV8ccDV1IJG2wexOuguu7z_M">
+    
+        <link rel="alternate nofollow" type="application/rss+xml" title="RSS feed of &#39;Understanding AppArmor User Namespace Restriction&#39;" href="https://discourse.ubuntu.com/t/understanding-apparmor-user-namespace-restriction/58007.rss" />
+    <meta property="og:site_name" content="Ubuntu Discourse" />
+<meta property="og:type" content="website" />
+<meta name="twitter:card" content="summary" />
+<meta property="og:image" content="https://ubuntucommunity.s3.dualstack.us-east-2.amazonaws.com/original/3X/9/0/905b15b7d477513b2af0668c333736b100eef109.svg" />
+<meta property="og:url" content="https://discourse.ubuntu.com/t/understanding-apparmor-user-namespace-restriction/58007" />
+<meta name="twitter:url" content="https://discourse.ubuntu.com/t/understanding-apparmor-user-namespace-restriction/58007" />
+<meta property="og:title" content="Understanding AppArmor User Namespace Restriction" />
+<meta name="twitter:title" content="Understanding AppArmor User Namespace Restriction" />
+<meta property="og:description" content="Understanding the AppArmor user namespace restriction feature Ubuntu 23.10 and 24.04 LTS introduced new AppArmor-based features to reduce the attack surface presented by unprivileged user namespaces in the Linux kernel. Unprivileged user namespaces are a feature in the Linux kernel that was introduced in order to provide additional sandboxing functionality for programs such as container runtimes; it enables unprivileged users to gain administrator (root) permissions within a confined environment..." />
+<meta name="twitter:description" content="Understanding the AppArmor user namespace restriction feature Ubuntu 23.10 and 24.04 LTS introduced new AppArmor-based features to reduce the attack surface presented by unprivileged user namespaces in the Linux kernel. Unprivileged user namespaces are a feature in the Linux kernel that was introduced in order to provide additional sandboxing functionality for programs such as container runtimes; it enables unprivileged users to gain administrator (root) permissions within a confined environment..." />
+<meta property="og:article:section" content="Project Discussion" />
+<meta property="og:article:section:color" content="E95420" />
+<meta property="og:article:section" content="Security" />
+<meta property="og:article:section:color" content="F7941D" />
+<meta name="twitter:label1" value="Reading time" />
+<meta name="twitter:data1" value="3 mins 🕑" />
+<meta name="twitter:label2" value="Likes" />
+<meta name="twitter:data2" value="10 ❤" />
+<meta property="article:published_time" content="2025-03-27T16:56:56+00:00" />
+<meta property="og:ignore_canonical" content="true" />
+
+
+    <script type="application/ld+json">{"@context":"http://schema.org","@type":"QAPage","name":"Understanding AppArmor User Namespace Restriction","mainEntity":{"@type":"Question","name":"Understanding AppArmor User Namespace Restriction","text":"<a name=\"p-148026-understanding-the-apparmor-user-namespace-restriction-feature-1\" class=\"anchor\" href=\"#p-148026-understanding-the-apparmor-user-namespace-restriction-feature-1\" aria-label=\"Heading link\"><\/a>Understanding the AppArmor user namespace restriction feature\n\nUbuntu 23.10 and 24.04 LTS introduced new AppArmor-based features to reduce the attack surface presented by unprivileged user namespaces in the Linux kernel. Unprivileged user namespaces are a feature in the Linux kernel that was introduc&hellip;","upvoteCount":10,"answerCount":0,"datePublished":"2025-03-27T16:56:56.143Z","author":{"@type":"Person","name":"mbelair","url":"https://discourse.ubuntu.com/u/mbelair"}}}</script>
+  </head>
+  <body class="crawler ">
+    
+    <header>
+  <a href="/">Ubuntu Discourse</a>
+</header>
+
+    <div id="main-outlet" class="wrap" role="main">
+        <div id="topic-title">
+    <h1>
+      <a href="/t/understanding-apparmor-user-namespace-restriction/58007">Understanding AppArmor User Namespace Restriction</a>
+    </h1>
+
+      <div class="topic-category" itemscope itemtype="http://schema.org/BreadcrumbList">
+          <span itemprop="itemListElement" itemscope itemtype="http://schema.org/ListItem">
+            <a href="/c/project/307" class="badge-wrapper bullet" itemprop="item">
+              <span class='badge-category-bg' style='background-color: #E95420'></span>
+              <span class='badge-category clear-badge'>
+                <span class='category-name' itemprop='name'>Project Discussion</span>
+              </span>
+            </a>
+            <meta itemprop="position" content="1" />
+          </span>
+          <span itemprop="itemListElement" itemscope itemtype="http://schema.org/ListItem">
+            <a href="/c/project/security/33" class="badge-wrapper bullet" itemprop="item">
+              <span class='badge-category-bg' style='background-color: #F7941D'></span>
+              <span class='badge-category clear-badge'>
+                <span class='category-name' itemprop='name'>Security</span>
+              </span>
+            </a>
+            <meta itemprop="position" content="2" />
+          </span>
+      </div>
+
+  </div>
+
+  
+
+    <div itemscope itemtype='http://schema.org/DiscussionForumPosting'>
+      <meta itemprop='headline' content='Understanding AppArmor User Namespace Restriction'>
+      <link itemprop='url' href='https://discourse.ubuntu.com/t/understanding-apparmor-user-namespace-restriction/58007'>
+      <meta itemprop='datePublished' content='2025-03-27T16:56:56Z'>
+        <meta itemprop='articleSection' content='Security'>
+      <meta itemprop='keywords' content=''>
+      <div itemprop='publisher' itemscope itemtype="http://schema.org/Organization">
+        <meta itemprop='name' content='Canonical Inc.'>
+          <div itemprop='logo' itemscope itemtype="http://schema.org/ImageObject">
+            <meta itemprop='url' content='https://ubuntucommunity.s3.dualstack.us-east-2.amazonaws.com/original/3X/d/1/d1318a905da7b730a81d0b3f393762cb7d478e38.svg'>
+          </div>
+      </div>
+
+
+          <div id='post_1'  class='topic-body crawler-post'>
+            <div class='crawler-post-meta'>
+              <span class="creator" itemprop="author" itemscope itemtype="http://schema.org/Person">
+                <a itemprop="url" rel='nofollow' href='https://discourse.ubuntu.com/u/mbelair'><span itemprop='name'>mbelair</span></a>
+                
+              </span>
+
+                <link itemprop="mainEntityOfPage" href="https://discourse.ubuntu.com/t/understanding-apparmor-user-namespace-restriction/58007">
+
+
+              <span class="crawler-post-infos">
+                  <time  datetime='2025-03-27T16:56:56Z' class='post-time'>
+                    March 27, 2025,  4:56pm
+                  </time>
+                  <meta itemprop='dateModified' content='2025-03-27T19:30:31Z'>
+              <span itemprop='position'>1</span>
+              </span>
+            </div>
+            <div class='post' itemprop='text'>
+              <h1><a name="p-148026-understanding-the-apparmor-user-namespace-restriction-feature-1" class="anchor" href="#p-148026-understanding-the-apparmor-user-namespace-restriction-feature-1" aria-label="Heading link"></a>Understanding the AppArmor user namespace restriction feature</h1>
+<p>Ubuntu 23.10 and 24.04 LTS introduced new AppArmor-based features to reduce the attack surface presented by unprivileged user namespaces in the Linux kernel. Unprivileged user namespaces are a feature in the Linux kernel that was introduced in order to provide additional sandboxing functionality for programs such as container runtimes; it enables unprivileged users to gain administrator (root) permissions within a confined environment, without giving them elevated permissions on the host system.</p>
+<p>Unprivileged user namespaces have been repeatedly used to exploit kernel vulnerabilities, so the AppArmor restriction acts as a security hardening measure. Our long-term plan is to implement further tightening rules in AppArmor, with the current set of features acting as a stepping stone towards a stronger security posture.</p>
+<p><a href="https://www.qualys.com/three-bypasses-of-Ubuntu-unprivileged-user-namespace-restrictions" rel="noopener nofollow ugc">The security researchers at Qualys</a> have identified three different ways through which this hardening feature can, under certain circumstances, be bypassed. They have responsibly disclosed these to the Ubuntu Security Team in January and our teams have been coordinating the release of updated documentation and mitigation instructions, as well as ways to improve this feature (you can find the original advisory text <a href="https://www.qualys.com/2025/three-bypasses-of-Ubuntu-unprivileged-user-namespace-restrictions.txt" rel="noopener nofollow ugc">here</a>). These are not security vulnerabilities, as Ubuntu installations benefit from an extra layer of hardening with the AppArmor protections, despite the limitations identified.</p>
+<p>While a superficial observation of the application of user namespaces may indicate privileged (root level) access, this is a fictitious state that is operating as expected, with access control still mapped to the real (root namespace) user’s permissions. As such, these bypasses do not enable more access than what the default Linux kernel unprivileged user namespace feature allows in most Linux distributions. They do, however, demonstrate limitations that we are looking to address in order to strengthen existing protections against as-of-yet-unknown Linux kernel vulnerabilities.</p>
+<p>In this post we will explain what the AppArmor user namespace restriction is and how to further harden an Ubuntu installation against possible bypasses, such as the ones that Qualys have discovered.</p>
+<h1><a name="p-148026-why-the-apparmor-user-namespace-restriction-feature-was-developed-2" class="anchor" href="#p-148026-why-the-apparmor-user-namespace-restriction-feature-was-developed-2" aria-label="Heading link"></a>Why the AppArmor user namespace restriction feature was developed</h1>
+<p>Because of the attack surface exposed by user namespaces in the Linux kernel and the vulnerabilities involving them, Ubuntu, Debian and other distros have carried a big hammer patch to be able to globally disable unprivileged user namespaces. This patch, however, can only ever be enabled at the system level as an emergency mitigation because it breaks too many applications (such as desktop environments, Flatpak, LXD, container runtimes, etc.).</p>
+<p>Instead of a big all or nothing switch, AppArmor’s unprivileged user namespace restriction allows selectively enabling/disabling the use of unprivileged user namespaces, as well as the use of capabilities within a user namespace. The degree of enablement or restriction is under the control of a privileged admin and can be dynamically scaled, allowing for selective mitigation of an issue to be applied or updated on a live system.</p>
+<p>The AppArmor unprivileged user namespace restriction does not stop kernel exploits directly. Instead, it reduces the attack surface presented by restricting the use of unprivileged user namespaces to applications that have a legitimate use for them. Administrators have control on how much they want to harden the system to improve its security.</p>
+<h1><a name="p-148026-bypassing-apparmor-security-restriction-3" class="anchor" href="#p-148026-bypassing-apparmor-security-restriction-3" aria-label="Heading link"></a>Bypassing AppArmor security restriction</h1>
+<p>It is not possible to completely eliminate the risk introduced by unprivileged user namespaces without disabling/restricting the feature. The protection provided by AppArmor is always a tradeoff between security and usability. For this reason, several methods, as detailed by the Qualys security researchers, could be used to bypass these protections. Administrators can choose to disable or add bypasses to the protection. However, an imperfect protection remains better than no protection at all.</p>
+<p>For example, unconfined profiles that allow the use of user namespaces provide a trivial bypass of the unprivileged user namespace restriction from unconfined processes. All the unconfined application or user has to do is enter the unconfined profile. The unconfined user or application can execute the application associated with the unconfined profile. If the application provides the ability to run arbitrary code or shell access, that is all that needs to be done to bypass the restriction. The busybox shell is such an example and it is available by default on standard Ubuntu installations.</p>
+<h1><a name="p-148026-why-the-protections-still-matter-4" class="anchor" href="#p-148026-why-the-protections-still-matter-4" aria-label="Heading link"></a>Why the protections still matter</h1>
+<p>Even if you can bypass the AppArmor restrictions in a general-purpose shell, this does not make the functionality ineffective in all circumstances. In fact, any application that is either properly confined using AppArmor or which is not affected by vulnerabilities that allow breaking out to a general-purpose shell (such as busybox) will still benefit from the functionality.</p>
+<p>The restriction will continue to be developed, further hardening Ubuntu systems and reducing the attack surface of Linux kernel vulnerabilities that can be exploited through unprivileged user namespaces.</p>
+<h1><a name="p-148026-minimizing-the-attack-surface-5" class="anchor" href="#p-148026-minimizing-the-attack-surface-5" aria-label="Heading link"></a>Minimizing the attack surface</h1>
+<p>Several approaches can be used to further strengthen Ubuntu installations and mitigate against the first two of the three bypasses discovered by Qualys. By combining them, the security level of the system can be significantly improved. Please note that these hardening steps are only applicable on releases after Ubuntu 23.10 and will be enabled by default in future releases.</p>
+<h2><a name="p-148026-restrict-unprivileged-unconfined-profile-changes-6" class="anchor" href="#p-148026-restrict-unprivileged-unconfined-profile-changes-6" aria-label="Heading link"></a>Restrict unprivileged unconfined profile changes</h2>
+<p>By making sure the <code>kernel.apparmor_restrict_unprivileged_unconfined</code> sysctl setting is enabled, a process that is unprivileged and unconfined cannot leverage <code>aa-exec</code> to change to a more favourable profile. This can be achieved with the following:</p>
+<pre data-code-wrap="bash"><code class="lang-bash">echo "kernel.apparmor_restrict_unprivileged_unconfined=1" | sudo tee /etc/sysctl.d/10-apparmor-hardening.conf
+sudo sysctl --load /etc/sysctl.d/10-apparmor-hardening.conf
+</code></pre>
+<p>Please note that, if installed, LXD will completely disable the user namespace restriction feature when running, effectively making this sysctl irrelevant.</p>
+<h2><a name="p-148026-remove-broad-apparmor-profiles-7" class="anchor" href="#p-148026-remove-broad-apparmor-profiles-7" aria-label="Heading link"></a>Remove broad AppArmor profiles</h2>
+<p>Ubuntu ships with default unconfined profiles for several applications that allow the creation of user namespaces. This is done because users may reasonably be expected to use functionality within these applications that rely on user namespace creation.</p>
+<p>Busybox is a general-purpose shell that also implements a set of common command line utilities. A broad AppArmor profile is provided because we cannot predict how it would be used. However, if the creation of user namespaces (such as through the unshare command) is not required, the profile can be disabled with the following command:</p>
+<pre data-code-wrap="bash"><code class="lang-bash">sudo ln -s /etc/apparmor.d/busybox /etc/apparmor.d/disable
+sudo apparmor_parser -R /etc/apparmor.d/busybox
+</code></pre>
+<p>Nautilus is a file manager for the GNOME desktop environment and it is part of standard Ubuntu Desktop installations. It makes use of unprivileged user namespaces for some operations, which is why a default unconfined AppArmor profile allowing user namespace creation is shipped by Ubuntu. While some functionality, such as thumbnail generation, would no longer be available, its broad profile can be similarly disabled:</p>
+<pre data-code-wrap="bash"><code class="lang-bash">sudo ln -s /etc/apparmor.d/nautilus /etc/apparmor.d/disable
+sudo apparmor_parser -R /etc/apparmor.d/nautilus
+</code></pre>
+<p>Please note that any other installed application with an unconfined profile that allows creation of user namespaces can be similarly used to bypass this functionality. These two are simply the only ones that apply to programs installed by default on Ubuntu. You may get the list of unconfined profiles and of processes using them with <code>sudo aa-status --filter.mode=unconfined.</code> It has to be noted that most programs will not be installed on your machine and therefore cannot cause any harm.</p>
+<h2><a name="p-148026-define-bwrap-profile-8" class="anchor" href="#p-148026-define-bwrap-profile-8" aria-label="Heading link"></a>Define bwrap profile</h2>
+<p>The Nautilus file manager uses bwrap for the functionality that relies on user namespace creation. Therefore, using a purpose-built bwrap profile can allow Nautilus to continue to function as intended, with one caveat – executing the file manager with administrative privileges (as root) will not retain the higher privileges for any operations that rely on user namespaces. This is usage that we strongly recommend against.</p>
+<p>In addition to removing the broad Nautilus profile, you can add a bwrap profile based on the one from the <a href="https://gitlab.com/apparmor/apparmor/-/blob/master/profiles/apparmor/profiles/extras/bwrap-userns-restrict?ref_type=heads" rel="noopener nofollow ugc">AppArmor repository</a>, if it is not already present on the system.</p>
+<p>Please note that the bwrap profile can be used by other applications that rely on its functionality, such as flatpak, libgnome-desktop or bubblejail. This step should only be followed by system administrators that have a strong grasp of AppArmor configuration and may interfere with future updates that will distribute this file in the apparmor package.</p>
+<h1><a name="p-148026-next-steps-9" class="anchor" href="#p-148026-next-steps-9" aria-label="Heading link"></a>Next steps</h1>
+<p>In addition to preparing extensive documentation that explains the nuances behind the AppArmor hardening functionality, we are developing new features that will further decrease the attack surface in the event of unforeseen Linux kernel vulnerabilities. The current issues with the above mitigations will be addressed via new AppArmor features and made available by default on standard installations. These will be selectively backported to supported Ubuntu releases via Stable Release Updates or introduced in new releases.</p>
+<p>As this is developed, we will update this post to link to the new documentation and feature release notes.</p>
+            </div>
+
+            <div itemprop="interactionStatistic" itemscope itemtype="http://schema.org/InteractionCounter">
+              <meta itemprop="interactionType" content="http://schema.org/LikeAction"/>
+              <meta itemprop="userInteractionCount" content="10" />
+              <span class='post-likes'>10 Likes</span>
+            </div>
+
+                <div class='crawler-linkback-list'>
+                    <div>
+                      <a href="https://discourse.ubuntu.com/t/ubuntu-weekly-newsletter-issue-885/57815">Ubuntu Weekly Newsletter Issue 885</a>
+                    </div>
+                    <div>
+                      <a href="https://discourse.ubuntu.com/t/plucky-puffin-release-notes/48687">Plucky Puffin Release Notes</a>
+                    </div>
+                </div>
+
+            
+          </div>
+          <div id='post_2' itemprop='comment' itemscope itemtype='http://schema.org/Comment' class='topic-body crawler-post'>
+            <div class='crawler-post-meta'>
+              <span class="creator" itemprop="author" itemscope itemtype="http://schema.org/Person">
+                <a itemprop="url" rel='nofollow' href='https://discourse.ubuntu.com/u/glc'><span itemprop='name'>glc</span></a>
+                
+              </span>
+
+
+
+              <span class="crawler-post-infos">
+                  <time itemprop='datePublished' datetime='2025-07-09T16:29:26Z' class='post-time'>
+                    July 9, 2025,  4:29pm
+                  </time>
+                  <meta itemprop='dateModified' content='2025-07-09T16:29:26Z'>
+              <span itemprop='position'>2</span>
+              </span>
+            </div>
+            <div class='post' itemprop='text'>
+              <p>Hi<br>
+I have just hit the restriction , when trying to switch Evolution from Ubuntu source for flatpak (to get app upgrades), After a long conversation with ChatGPT, I was able to get an understanding of where the issue is, is anyone aware if someone with in-depth AppArmor knowledge has created a tutorial on how go forward, I got hit in bwarp, flatpak and Evolution.<br>
+Thanks in advance<br>
+GC</p>
+            </div>
+
+            <div itemprop="interactionStatistic" itemscope itemtype="http://schema.org/InteractionCounter">
+              <meta itemprop="interactionType" content="http://schema.org/LikeAction"/>
+              <meta itemprop="userInteractionCount" content="0" />
+              <span class='post-likes'></span>
+            </div>
+
+
+            
+          </div>
+    </div>
+
+
+    
+
+
+
+
+    </div>
+    <footer class="container wrap">
+  <nav class='crawler-nav'>
+    <ul>
+      <li itemscope itemtype='http://schema.org/SiteNavigationElement'>
+        <span itemprop='name'>
+          <a href='/' itemprop="url">Home </a>
+        </span>
+      </li>
+      <li itemscope itemtype='http://schema.org/SiteNavigationElement'>
+        <span itemprop='name'>
+          <a href='/categories' itemprop="url">Categories </a>
+        </span>
+      </li>
+      <li itemscope itemtype='http://schema.org/SiteNavigationElement'>
+        <span itemprop='name'>
+          <a href='/guidelines' itemprop="url">Guidelines </a>
+        </span>
+      </li>
+        <li itemscope itemtype='http://schema.org/SiteNavigationElement'>
+          <span itemprop='name'>
+            <a href='https://www.ubuntu.com/legal' itemprop="url">Terms of Service </a>
+          </span>
+        </li>
+        <li itemscope itemtype='http://schema.org/SiteNavigationElement'>
+          <span itemprop='name'>
+            <a href='https://www.ubuntu.com/legal/terms-and-policies/privacy-policy' itemprop="url">Privacy Policy </a>
+          </span>
+        </li>
+    </ul>
+  </nav>
+  <p class='powered-by-link'>Powered by <a href="https://www.discourse.org">Discourse</a>, best viewed with JavaScript enabled</p>
+</footer>
+
+    <footer class="d-footer">
+    <div class="wrap">
+        <div class="contents">
+            <p>© 2026 Canonical Ltd.</p>
+            <div class="d-footer__links">
+                <a href="https://ubuntu.com/legal">Legal information</a>
+                <a href="https://ubuntu.com/legal/data-privacy" target="_blank">Privacy policy</a>
+                <a href="#" class="js-revoke-cookie-manager">Manage your tracker settings</a>
+            </div>
+        </div>
+    </div>
+</footer>
+    
+  </body>
+  
+</html>

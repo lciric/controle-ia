@@ -1,0 +1,9312 @@
+{
+ "version": "v2",
+ "statut": "exploratoire, non opposable ; seule la règle primaire porte un verdict",
+ "regle_primaire": {
+  "enonce": "Règle primaire unique, gelée avant toute exécution réelle (v2, 29 octobre 2026). Pour chaque sonde principale de P3 (une par concept, à sa couche : tromperie-difference_moyennes-c15, enjeux-lineaire-c15) et pour chacune des deux lentilles (logits, jacobienne), on décode la direction +w (variante « direction », sens de la classe 1). S = nombre de jetons de la liste du concept propre (concepts-sondes-p3-v2.json, jetons de début de mot) parmi les 20 jetons de tête, la tête étant restreinte aux jetons de début de mot (un espace initial, puis une lettre, puis lettres ou chiffres). On calcule la même statistique, par la même lentille et à la même couche, pour deux distributions nulles : 200 directions isotropes (graine 20261029, numpy.random.SeedSequence) et les planchers appariés en covariance de P3 pour ce concept (200 dans le run 20261019-230011-p3-reel ; refus en dessous de 100). Verdict « cohérent » si S >= 2 et si S est strictement supérieur au quantile 0,99 (méthode inverted_cdf de numpy) de chacune des deux distributions nulles ; sinon « non cohérent ». Quatre verdicts, lus tels quels, sans correction, sans seuil de rechange, sans autre liste de mots. Tout le reste de la sortie (scores z, p, têtes brutes, sens moins, autre concept, autres sondes et couches, variantes) est descriptif et ne sert pas de critère.",
+  "empreinte_enonce": "c1b21cd6f67bb4b46f9d4514abd1d00757226b28d35604ad87d780f30e250339",
+  "parametres": {
+   "k": 20,
+   "n_isotropes": 200,
+   "graine": 20261029,
+   "quantile": 0.99,
+   "methode_quantile": "inverted_cdf",
+   "min_jetons": 2,
+   "n_planchers_min": 100
+  },
+  "complete": true,
+  "verdicts": [
+   {
+    "sonde": "enjeux-lineaire-c15",
+    "concept": "enjeux",
+    "couche": 15,
+    "lentille": "jacobienne",
+    "S": 2,
+    "quantile_0_99_isotropes": 1.0,
+    "quantile_0_99_planchers": 3.0,
+    "n_planchers": 200,
+    "verdict": "non cohérent"
+   },
+   {
+    "sonde": "enjeux-lineaire-c15",
+    "concept": "enjeux",
+    "couche": 15,
+    "lentille": "logits",
+    "S": 0,
+    "quantile_0_99_isotropes": 0.0,
+    "quantile_0_99_planchers": 1.0,
+    "n_planchers": 200,
+    "verdict": "non cohérent"
+   },
+   {
+    "sonde": "tromperie-difference_moyennes-c15",
+    "concept": "tromperie",
+    "couche": 15,
+    "lentille": "jacobienne",
+    "S": 1,
+    "quantile_0_99_isotropes": 0.0,
+    "quantile_0_99_planchers": 1.0,
+    "n_planchers": 200,
+    "verdict": "non cohérent"
+   },
+   {
+    "sonde": "tromperie-difference_moyennes-c15",
+    "concept": "tromperie",
+    "couche": 15,
+    "lentille": "logits",
+    "S": 0,
+    "quantile_0_99_isotropes": 1.0,
+    "quantile_0_99_planchers": 0.0,
+    "n_planchers": 200,
+    "verdict": "non cohérent"
+   }
+  ]
+ },
+ "convention_couche": "couche ℓ de P3 = clé ℓ de la lentille (sortie du bloc décodeur ℓ, indice à partir de 0) ; voir note-convention-couche-jlens-p3-v1.md",
+ "lecture_des_signes": "plus = direction +w (vers la classe 1 : consigne malhonnête pour « tromperie », « high-stakes » pour « enjeux ») ; moins = −w",
+ "run_sondes": "20261019-230011-p3-reel",
+ "principales": {
+  "enjeux": "enjeux-lineaire-c15",
+  "tromperie": "tromperie-difference_moyennes-c15"
+ },
+ "lentille_meta": {
+  "n_prompts": 461,
+  "d_model": 4096,
+  "source_layers": [
+   0,
+   1,
+   2,
+   3,
+   4,
+   5,
+   6,
+   7,
+   8,
+   9,
+   10,
+   11,
+   12,
+   13,
+   14,
+   15,
+   16,
+   17,
+   18,
+   19,
+   20,
+   21,
+   22,
+   23,
+   24,
+   25,
+   26,
+   27,
+   28,
+   29,
+   30
+  ]
+ },
+ "lentille_ajustee_sur": "inconnu",
+ "largeur": 4096,
+ "vocabulaire": {
+  "taille_desembedding": 128256,
+  "format": "tokenizer.json",
+  "jetons_lus": 128256,
+  "manquants": 0,
+  "jetons_mots": 99864,
+  "jetons_debut_de_mot": 55449
+ },
+ "parametres": {
+  "sondes": "principales-par-couche",
+  "un_seul_couple": null,
+  "variantes": [
+   "direction"
+  ],
+  "alpha": null,
+  "correspondance": "début de mot, exacte, casse libre"
+ },
+ "concepts": {
+  "tromperie": {
+   "mots": [
+    "lie",
+    "lies",
+    "lying",
+    "liar",
+    "lied",
+    "deceive",
+    "deceived",
+    "deception",
+    "deceptive",
+    "dishonest",
+    "falsely",
+    "fake",
+    "pretend",
+    "pretending",
+    "untrue",
+    "misleading",
+    "fraud",
+    "cheat",
+    "cheating",
+    "trick",
+    "fabricated",
+    "hoax",
+    "manipulate",
+    "conceal"
+   ],
+   "jetons": [
+    {
+     "id": 10457,
+     "texte": " lie"
+    },
+    {
+     "id": 12700,
+     "texte": " fake"
+    },
+    {
+     "id": 14397,
+     "texte": " trick"
+    },
+    {
+     "id": 15812,
+     "texte": " lies"
+    },
+    {
+     "id": 16515,
+     "texte": " fraud"
+    },
+    {
+     "id": 21078,
+     "texte": " lying"
+    },
+    {
+     "id": 22213,
+     "texte": " Lie"
+    },
+    {
+     "id": 35840,
+     "texte": " pretend"
+    },
+    {
+     "id": 37735,
+     "texte": " manipulate"
+    },
+    {
+     "id": 38065,
+     "texte": " Fake"
+    },
+    {
+     "id": 38309,
+     "texte": " misleading"
+    },
+    {
+     "id": 41868,
+     "texte": " cheat"
+    },
+    {
+     "id": 42823,
+     "texte": " cheating"
+    },
+    {
+     "id": 47253,
+     "texte": " lied"
+    },
+    {
+     "id": 54262,
+     "texte": " conceal"
+    },
+    {
+     "id": 55906,
+     "texte": " pretending"
+    },
+    {
+     "id": 60016,
+     "texte": " dishonest"
+    },
+    {
+     "id": 61456,
+     "texte": " falsely"
+    },
+    {
+     "id": 64575,
+     "texte": " deception"
+    },
+    {
+     "id": 67047,
+     "texte": " Fraud"
+    },
+    {
+     "id": 70325,
+     "texte": " Trick"
+    },
+    {
+     "id": 70554,
+     "texte": " fabricated"
+    },
+    {
+     "id": 73724,
+     "texte": " liar"
+    },
+    {
+     "id": 73944,
+     "texte": " hoax"
+    },
+    {
+     "id": 78186,
+     "texte": " Lies"
+    },
+    {
+     "id": 81374,
+     "texte": " deceptive"
+    },
+    {
+     "id": 88977,
+     "texte": " untrue"
+    },
+    {
+     "id": 93928,
+     "texte": " deceive"
+    },
+    {
+     "id": 98884,
+     "texte": " deceived"
+    },
+    {
+     "id": 99123,
+     "texte": " Cheat"
+    }
+   ],
+   "jetons_par_mot": {
+    "lie": [
+     " lie",
+     " Lie"
+    ],
+    "lies": [
+     " lies",
+     " Lies"
+    ],
+    "lying": [
+     " lying"
+    ],
+    "liar": [
+     " liar"
+    ],
+    "lied": [
+     " lied"
+    ],
+    "deceive": [
+     " deceive"
+    ],
+    "deceived": [
+     " deceived"
+    ],
+    "deception": [
+     " deception"
+    ],
+    "deceptive": [
+     " deceptive"
+    ],
+    "dishonest": [
+     " dishonest"
+    ],
+    "falsely": [
+     " falsely"
+    ],
+    "fake": [
+     " fake",
+     " Fake"
+    ],
+    "pretend": [
+     " pretend"
+    ],
+    "pretending": [
+     " pretending"
+    ],
+    "untrue": [
+     " untrue"
+    ],
+    "misleading": [
+     " misleading"
+    ],
+    "fraud": [
+     " fraud",
+     " Fraud"
+    ],
+    "cheat": [
+     " cheat",
+     " Cheat"
+    ],
+    "cheating": [
+     " cheating"
+    ],
+    "trick": [
+     " trick",
+     " Trick"
+    ],
+    "fabricated": [
+     " fabricated"
+    ],
+    "hoax": [
+     " hoax"
+    ],
+    "manipulate": [
+     " manipulate"
+    ],
+    "conceal": [
+     " conceal"
+    ]
+   }
+  },
+  "enjeux": {
+   "mots": [
+    "danger",
+    "dangerous",
+    "risk",
+    "risky",
+    "urgent",
+    "urgency",
+    "emergency",
+    "critical",
+    "crisis",
+    "serious",
+    "severe",
+    "fatal",
+    "death",
+    "deadly",
+    "safety",
+    "threat",
+    "harm",
+    "lawsuit",
+    "catastrophic",
+    "disaster",
+    "stakes",
+    "consequences",
+    "surgery",
+    "bankrupt",
+    "fired",
+    "jail"
+   ],
+   "jetons": [
+    {
+     "id": 4648,
+     "texte": " death"
+    },
+    {
+     "id": 5326,
+     "texte": " risk"
+    },
+    {
+     "id": 6023,
+     "texte": " threat"
+    },
+    {
+     "id": 6129,
+     "texte": " serious"
+    },
+    {
+     "id": 7296,
+     "texte": " safety"
+    },
+    {
+     "id": 8137,
+     "texte": " danger"
+    },
+    {
+     "id": 9200,
+     "texte": " critical"
+    },
+    {
+     "id": 11501,
+     "texte": " crisis"
+    },
+    {
+     "id": 11660,
+     "texte": " dangerous"
+    },
+    {
+     "id": 11682,
+     "texte": " harm"
+    },
+    {
+     "id": 13147,
+     "texte": " emergency"
+    },
+    {
+     "id": 14219,
+     "texte": " fired"
+    },
+    {
+     "id": 15173,
+     "texte": " surgery"
+    },
+    {
+     "id": 15748,
+     "texte": " severe"
+    },
+    {
+     "id": 16290,
+     "texte": " Death"
+    },
+    {
+     "id": 16296,
+     "texte": " consequences"
+    },
+    {
+     "id": 17999,
+     "texte": " jail"
+    },
+    {
+     "id": 19094,
+     "texte": " fatal"
+    },
+    {
+     "id": 19220,
+     "texte": " Safety"
+    },
+    {
+     "id": 19831,
+     "texte": " lawsuit"
+    },
+    {
+     "id": 21426,
+     "texte": " disaster"
+    },
+    {
+     "id": 25114,
+     "texte": " deadly"
+    },
+    {
+     "id": 29320,
+     "texte": " bankrupt"
+    },
+    {
+     "id": 32388,
+     "texte": " Risk"
+    },
+    {
+     "id": 32708,
+     "texte": " Emergency"
+    },
+    {
+     "id": 34771,
+     "texte": " urgent"
+    },
+    {
+     "id": 35761,
+     "texte": " Critical"
+    },
+    {
+     "id": 41273,
+     "texte": " risky"
+    },
+    {
+     "id": 45525,
+     "texte": " stakes"
+    },
+    {
+     "id": 46250,
+     "texte": " Crisis"
+    },
+    {
+     "id": 48190,
+     "texte": " Surgery"
+    },
+    {
+     "id": 48399,
+     "texte": " Danger"
+    },
+    {
+     "id": 53435,
+     "texte": " Threat"
+    },
+    {
+     "id": 54677,
+     "texte": " catastrophic"
+    },
+    {
+     "id": 54917,
+     "texte": " urgency"
+    },
+    {
+     "id": 57246,
+     "texte": " Jail"
+    },
+    {
+     "id": 66729,
+     "texte": " Fatal"
+    },
+    {
+     "id": 73378,
+     "texte": " Disaster"
+    },
+    {
+     "id": 74132,
+     "texte": " Dangerous"
+    },
+    {
+     "id": 74596,
+     "texte": " Serious"
+    },
+    {
+     "id": 75930,
+     "texte": " Fired"
+    },
+    {
+     "id": 92071,
+     "texte": " Harm"
+    },
+    {
+     "id": 95937,
+     "texte": " Deadly"
+    }
+   ],
+   "jetons_par_mot": {
+    "danger": [
+     " danger",
+     " Danger"
+    ],
+    "dangerous": [
+     " dangerous",
+     " Dangerous"
+    ],
+    "risk": [
+     " risk",
+     " Risk"
+    ],
+    "risky": [
+     " risky"
+    ],
+    "urgent": [
+     " urgent"
+    ],
+    "urgency": [
+     " urgency"
+    ],
+    "emergency": [
+     " emergency",
+     " Emergency"
+    ],
+    "critical": [
+     " critical",
+     " Critical"
+    ],
+    "crisis": [
+     " crisis",
+     " Crisis"
+    ],
+    "serious": [
+     " serious",
+     " Serious"
+    ],
+    "severe": [
+     " severe"
+    ],
+    "fatal": [
+     " fatal",
+     " Fatal"
+    ],
+    "death": [
+     " death",
+     " Death"
+    ],
+    "deadly": [
+     " deadly",
+     " Deadly"
+    ],
+    "safety": [
+     " safety",
+     " Safety"
+    ],
+    "threat": [
+     " threat",
+     " Threat"
+    ],
+    "harm": [
+     " harm",
+     " Harm"
+    ],
+    "lawsuit": [
+     " lawsuit"
+    ],
+    "catastrophic": [
+     " catastrophic"
+    ],
+    "disaster": [
+     " disaster",
+     " Disaster"
+    ],
+    "stakes": [
+     " stakes"
+    ],
+    "consequences": [
+     " consequences"
+    ],
+    "surgery": [
+     " surgery",
+     " Surgery"
+    ],
+    "bankrupt": [
+     " bankrupt"
+    ],
+    "fired": [
+     " fired",
+     " Fired"
+    ],
+    "jail": [
+     " jail",
+     " Jail"
+    ]
+   }
+  }
+ },
+ "sondes": [
+  {
+   "nom": "enjeux-lineaire-c7",
+   "concept": "enjeux",
+   "principale": false,
+   "famille": "lineaire",
+   "couche": 7,
+   "classe": "SondeLineaireJetons",
+   "agregation": "max",
+   "empreinte": "a97efee697808d54e567e69d5055195ec835fa3720f56b0fad59ecb41b36dd0c",
+   "biais_b": -5.0439381709504545,
+   "norme_w": 35.350433951033025,
+   "norme_Jw_sur_norme_w": 0.6368165925632955,
+   "cosinus_w_Jw": 0.08582006667962197,
+   "regle": {
+    "logits": {
+     "S": 0,
+     "isotropes": {
+      "n": 200,
+      "quantile_0_99": 1.0,
+      "p_haut_diagnostic": 1.0,
+      "comptes": {
+       "0": 196,
+       "1": 4
+      }
+     },
+     "planchers": {
+      "statut": "absents à cette couche pour ce concept"
+     },
+     "comptes_par_concept_diagnostic": {
+      "tromperie": 0,
+      "enjeux": 0
+     },
+     "statut": "descriptif, hors règle primaire ; planchers absents : isotropes seules",
+     "verdict_descriptif": "non cohérent"
+    },
+    "jacobienne": {
+     "S": 2,
+     "isotropes": {
+      "n": 200,
+      "quantile_0_99": 0.0,
+      "p_haut_diagnostic": 0.004975124378109453,
+      "comptes": {
+       "0": 198,
+       "1": 2
+      }
+     },
+     "planchers": {
+      "statut": "absents à cette couche pour ce concept"
+     },
+     "comptes_par_concept_diagnostic": {
+      "tromperie": 0,
+      "enjeux": 2
+     },
+     "statut": "descriptif, hors règle primaire ; planchers absents : isotropes seules",
+     "verdict_descriptif": "cohérent"
+    }
+   },
+   "variantes": {
+    "direction": {
+     "logits": {
+      "plus": {
+       "tete": [
+        {
+         "id": 74605,
+         "texte": " Hicks",
+         "logit": 9.616411
+        },
+        {
+         "id": 84201,
+         "texte": " Uno",
+         "logit": 9.290705
+        },
+        {
+         "id": 494,
+         "texte": "orm",
+         "logit": 9.087688
+        },
+        {
+         "id": 25318,
+         "texte": "ías",
+         "logit": 8.541489
+        },
+        {
+         "id": 93529,
+         "texte": "lac",
+         "logit": 8.448044
+        },
+        {
+         "id": 7893,
+         "texte": " pul",
+         "logit": 8.343605
+        },
+        {
+         "id": 19388,
+         "texte": "igne",
+         "logit": 8.21647
+        },
+        {
+         "id": 12533,
+         "texte": "223",
+         "logit": 8.2032
+        },
+        {
+         "id": 80401,
+         "texte": "autos",
+         "logit": 8.050102
+        },
+        {
+         "id": 81211,
+         "texte": " Vulner",
+         "logit": 7.783057
+        },
+        {
+         "id": 48544,
+         "texte": "ewater",
+         "logit": 7.772823
+        },
+        {
+         "id": 64602,
+         "texte": "egl",
+         "logit": 7.745311
+        },
+        {
+         "id": 2041,
+         "texte": "ced",
+         "logit": 7.712144
+        },
+        {
+         "id": 9662,
+         "texte": " unf",
+         "logit": 7.694932
+        },
+        {
+         "id": 93893,
+         "texte": " Heller",
+         "logit": 7.674419
+        },
+        {
+         "id": 26692,
+         "texte": "rons",
+         "logit": 7.655417
+        },
+        {
+         "id": 13136,
+         "texte": "ulp",
+         "logit": 7.637812
+        },
+        {
+         "id": 26261,
+         "texte": "uka",
+         "logit": 7.586423
+        },
+        {
+         "id": 1155,
+         "texte": "ayer",
+         "logit": 7.570745
+        },
+        {
+         "id": 6815,
+         "texte": "unday",
+         "logit": 7.568084
+        }
+       ],
+       "tete_mots": [
+        {
+         "id": 74605,
+         "texte": " Hicks",
+         "logit": 9.616411
+        },
+        {
+         "id": 84201,
+         "texte": " Uno",
+         "logit": 9.290705
+        },
+        {
+         "id": 494,
+         "texte": "orm",
+         "logit": 9.087688
+        },
+        {
+         "id": 25318,
+         "texte": "ías",
+         "logit": 8.541489
+        },
+        {
+         "id": 93529,
+         "texte": "lac",
+         "logit": 8.448044
+        },
+        {
+         "id": 7893,
+         "texte": " pul",
+         "logit": 8.343605
+        },
+        {
+         "id": 19388,
+         "texte": "igne",
+         "logit": 8.21647
+        },
+        {
+         "id": 12533,
+         "texte": "223",
+         "logit": 8.2032
+        },
+        {
+         "id": 80401,
+         "texte": "autos",
+         "logit": 8.050102
+        },
+        {
+         "id": 81211,
+         "texte": " Vulner",
+         "logit": 7.783057
+        },
+        {
+         "id": 48544,
+         "texte": "ewater",
+         "logit": 7.772823
+        },
+        {
+         "id": 64602,
+         "texte": "egl",
+         "logit": 7.745311
+        },
+        {
+         "id": 2041,
+         "texte": "ced",
+         "logit": 7.712144
+        },
+        {
+         "id": 9662,
+         "texte": " unf",
+         "logit": 7.694932
+        },
+        {
+         "id": 93893,
+         "texte": " Heller",
+         "logit": 7.674419
+        },
+        {
+         "id": 26692,
+         "texte": "rons",
+         "logit": 7.655417
+        },
+        {
+         "id": 13136,
+         "texte": "ulp",
+         "logit": 7.637812
+        },
+        {
+         "id": 26261,
+         "texte": "uka",
+         "logit": 7.586423
+        },
+        {
+         "id": 1155,
+         "texte": "ayer",
+         "logit": 7.570745
+        },
+        {
+         "id": 6815,
+         "texte": "unday",
+         "logit": 7.568084
+        }
+       ],
+       "tete_debut_de_mot": [
+        {
+         "id": 74605,
+         "texte": " Hicks",
+         "logit": 9.616411
+        },
+        {
+         "id": 84201,
+         "texte": " Uno",
+         "logit": 9.290705
+        },
+        {
+         "id": 7893,
+         "texte": " pul",
+         "logit": 8.343605
+        },
+        {
+         "id": 81211,
+         "texte": " Vulner",
+         "logit": 7.783057
+        },
+        {
+         "id": 9662,
+         "texte": " unf",
+         "logit": 7.694932
+        },
+        {
+         "id": 93893,
+         "texte": " Heller",
+         "logit": 7.674419
+        },
+        {
+         "id": 92042,
+         "texte": " Pis",
+         "logit": 7.496607
+        },
+        {
+         "id": 74842,
+         "texte": " Grave",
+         "logit": 7.439592
+        },
+        {
+         "id": 90720,
+         "texte": " fours",
+         "logit": 7.418461
+        },
+        {
+         "id": 19263,
+         "texte": " zo",
+         "logit": 7.37853
+        },
+        {
+         "id": 105506,
+         "texte": " आत",
+         "logit": 7.357504
+        },
+        {
+         "id": 48452,
+         "texte": " Bom",
+         "logit": 7.252615
+        },
+        {
+         "id": 100637,
+         "texte": " zá",
+         "logit": 7.146258
+        },
+        {
+         "id": 68573,
+         "texte": " Tiffany",
+         "logit": 6.905679
+        },
+        {
+         "id": 95700,
+         "texte": " IsActive",
+         "logit": 6.822105
+        },
+        {
+         "id": 122125,
+         "texte": " rád",
+         "logit": 6.800231
+        },
+        {
+         "id": 124009,
+         "texte": " الجام",
+         "logit": 6.793318
+        },
+        {
+         "id": 1567,
+         "texte": " event",
+         "logit": 6.749297
+        },
+        {
+         "id": 43875,
+         "texte": " pumps",
+         "logit": 6.725232
+        },
+        {
+         "id": 38814,
+         "texte": " macros",
+         "logit": 6.622368
+        }
+       ]
+      },
+      "moins": {
+       "tete": [
+        {
+         "id": 94707,
+         "texte": "otch",
+         "logit": 11.287085
+        },
+        {
+         "id": 112096,
+         "texte": "роч",
+         "logit": 10.434274
+        },
+        {
+         "id": 48497,
+         "texte": "şt",
+         "logit": 10.318674
+        },
+        {
+         "id": 68636,
+         "texte": "atrice",
+         "logit": 10.149352
+        },
+        {
+         "id": 22321,
+         "texte": "artz",
+         "logit": 10.004094
+        },
+        {
+         "id": 47986,
+         "texte": ".art",
+         "logit": 9.936682
+        },
+        {
+         "id": 113527,
+         "texte": "्यत",
+         "logit": 9.856557
+        },
+        {
+         "id": 107704,
+         "texte": "สาร",
+         "logit": 9.632639
+        },
+        {
+         "id": 125514,
+         "texte": "еві",
+         "logit": 9.562277
+        },
+        {
+         "id": 103154,
+         "texte": "ชน",
+         "logit": 9.111479
+        },
+        {
+         "id": 33906,
+         "texte": "opsis",
+         "logit": 9.076379
+        },
+        {
+         "id": 24678,
+         "texte": "865",
+         "logit": 8.939898
+        },
+        {
+         "id": 92512,
+         "texte": "osg",
+         "logit": 8.886501
+        },
+        {
+         "id": 60619,
+         "texte": "needle",
+         "logit": 8.808255
+        },
+        {
+         "id": 103241,
+         "texte": " �",
+         "logit": 8.780001
+        },
+        {
+         "id": 39566,
+         "texte": " gif",
+         "logit": 8.736248
+        },
+        {
+         "id": 58521,
+         "texte": "作者",
+         "logit": 8.653666
+        },
+        {
+         "id": 3751,
+         "texte": "ster",
+         "logit": 8.632648
+        },
+        {
+         "id": 113850,
+         "texte": "仲",
+         "logit": 8.6106
+        },
+        {
+         "id": 17848,
+         "texte": "eren",
+         "logit": 8.608175
+        }
+       ],
+       "tete_mots": [
+        {
+         "id": 94707,
+         "texte": "otch",
+         "logit": 11.287085
+        },
+        {
+         "id": 112096,
+         "texte": "роч",
+         "logit": 10.434274
+        },
+        {
+         "id": 48497,
+         "texte": "şt",
+         "logit": 10.318674
+        },
+        {
+         "id": 68636,
+         "texte": "atrice",
+         "logit": 10.149352
+        },
+        {
+         "id": 22321,
+         "texte": "artz",
+         "logit": 10.004094
+        },
+        {
+         "id": 107704,
+         "texte": "สาร",
+         "logit": 9.632639
+        },
+        {
+         "id": 125514,
+         "texte": "еві",
+         "logit": 9.562277
+        },
+        {
+         "id": 103154,
+         "texte": "ชน",
+         "logit": 9.111479
+        },
+        {
+         "id": 33906,
+         "texte": "opsis",
+         "logit": 9.076379
+        },
+        {
+         "id": 24678,
+         "texte": "865",
+         "logit": 8.939898
+        },
+        {
+         "id": 92512,
+         "texte": "osg",
+         "logit": 8.886501
+        },
+        {
+         "id": 60619,
+         "texte": "needle",
+         "logit": 8.808255
+        },
+        {
+         "id": 39566,
+         "texte": " gif",
+         "logit": 8.736248
+        },
+        {
+         "id": 58521,
+         "texte": "作者",
+         "logit": 8.653666
+        },
+        {
+         "id": 3751,
+         "texte": "ster",
+         "logit": 8.632648
+        },
+        {
+         "id": 113850,
+         "texte": "仲",
+         "logit": 8.6106
+        },
+        {
+         "id": 17848,
+         "texte": "eren",
+         "logit": 8.608175
+        },
+        {
+         "id": 112248,
+         "texte": " عد",
+         "logit": 8.599603
+        },
+        {
+         "id": 43558,
+         "texte": "ENCY",
+         "logit": 8.45593
+        },
+        {
+         "id": 87868,
+         "texte": " AIM",
+         "logit": 8.434236
+        }
+       ],
+       "tete_debut_de_mot": [
+        {
+         "id": 39566,
+         "texte": " gif",
+         "logit": 8.736248
+        },
+        {
+         "id": 112248,
+         "texte": " عد",
+         "logit": 8.599603
+        },
+        {
+         "id": 87868,
+         "texte": " AIM",
+         "logit": 8.434236
+        },
+        {
+         "id": 34415,
+         "texte": " Deutsch",
+         "logit": 8.235675
+        },
+        {
+         "id": 43922,
+         "texte": " Dear",
+         "logit": 8.141702
+        },
+        {
+         "id": 44945,
+         "texte": " naken",
+         "logit": 7.986537
+        },
+        {
+         "id": 75607,
+         "texte": " bead",
+         "logit": 7.883497
+        },
+        {
+         "id": 110217,
+         "texte": " 절",
+         "logit": 7.874344
+        },
+        {
+         "id": 92307,
+         "texte": " swore",
+         "logit": 7.769444
+        },
+        {
+         "id": 84837,
+         "texte": " zdję",
+         "logit": 7.730049
+        },
+        {
+         "id": 112285,
+         "texte": " 듯",
+         "logit": 7.698908
+        },
+        {
+         "id": 81983,
+         "texte": " IDD",
+         "logit": 7.653933
+        },
+        {
+         "id": 27786,
+         "texte": " AUTHORS",
+         "logit": 7.587784
+        },
+        {
+         "id": 28062,
+         "texte": " stab",
+         "logit": 7.450483
+        },
+        {
+         "id": 7193,
+         "texte": " thous",
+         "logit": 7.354265
+        },
+        {
+         "id": 94460,
+         "texte": " eldre",
+         "logit": 7.349522
+        },
+        {
+         "id": 24981,
+         "texte": " steady",
+         "logit": 7.33941
+        },
+        {
+         "id": 40202,
+         "texte": " Bald",
+         "logit": 7.292544
+        },
+        {
+         "id": 8593,
+         "texte": " Select",
+         "logit": 7.259026
+        },
+        {
+         "id": 94731,
+         "texte": " DFA",
+         "logit": 7.251392
+        }
+       ]
+      },
+      "diagnostics_z": {
+       "tromperie": {
+        "z": 0.3402596018076156,
+        "jetons_concept": 30,
+        "n_concept_tete_plus": 0,
+        "n_concept_tete_moins": 0,
+        "meilleur_rang_plus": 7416,
+        "meilleur_rang_moins": 12349,
+        "isotropes": {
+         "n": 200,
+         "p_haut": 0.17412935323383086,
+         "p_bas": 0.8308457711442786,
+         "p_bilateral": 0.36318407960199006,
+         "z_quantiles_5_50_95": [
+          -0.6118727956236102,
+          0.016223286728834874,
+          0.5415618606004464
+         ]
+        },
+        "planchers": {
+         "statut": "pas de plancher de ce concept à cette couche"
+        }
+       },
+       "enjeux": {
+        "z": 0.8341126354798829,
+        "jetons_concept": 43,
+        "n_concept_tete_plus": 0,
+        "n_concept_tete_moins": 0,
+        "meilleur_rang_plus": 345,
+        "meilleur_rang_moins": 35618,
+        "isotropes": {
+         "n": 200,
+         "p_haut": 0.014925373134328358,
+         "p_bas": 0.9900497512437811,
+         "p_bilateral": 0.014925373134328358,
+         "z_quantiles_5_50_95": [
+          -0.5012575749485026,
+          -0.02233065734693602,
+          0.49453859015986973
+         ]
+        },
+        "planchers": {
+         "statut": "pas de plancher de ce concept à cette couche"
+        }
+       }
+      }
+     },
+     "jacobienne": {
+      "plus": {
+       "tete": [
+        {
+         "id": 33151,
+         "texte": " billions",
+         "logit": 11.45076
+        },
+        {
+         "id": 28701,
+         "texte": " countless",
+         "logit": 10.505618
+        },
+        {
+         "id": 11990,
+         "texte": " millions",
+         "logit": 10.374239
+        },
+        {
+         "id": 47322,
+         "texte": " horrific",
+         "logit": 10.296851
+        },
+        {
+         "id": 11191,
+         "texte": " massive",
+         "logit": 9.73642
+        },
+        {
+         "id": 17235,
+         "texte": " incredibly",
+         "logit": 9.69941
+        },
+        {
+         "id": 54677,
+         "texte": " catastrophic",
+         "logit": 9.571703
+        },
+        {
+         "id": 33318,
+         "texte": " devastating",
+         "logit": 9.21866
+        },
+        {
+         "id": 512,
+         "texte": ":\n",
+         "logit": 8.829773
+        },
+        {
+         "id": 31550,
+         "texte": " globally",
+         "logit": 8.80406
+        },
+        {
+         "id": 35205,
+         "texte": " catast",
+         "logit": 8.63654
+        },
+        {
+         "id": 3728,
+         "texte": " global",
+         "logit": 8.612414
+        },
+        {
+         "id": 70287,
+         "texte": " brutally",
+         "logit": 8.461182
+        },
+        {
+         "id": 28860,
+         "texte": " brutal",
+         "logit": 8.397367
+        },
+        {
+         "id": 13057,
+         "texte": " vast",
+         "logit": 8.334579
+        },
+        {
+         "id": 76820,
+         "texte": " marginalized",
+         "logit": 8.30041
+        },
+        {
+         "id": 9214,
+         "texte": " thousands",
+         "logit": 8.282134
+        },
+        {
+         "id": 15603,
+         "texte": " worldwide",
+         "logit": 8.279014
+        },
+        {
+         "id": 39633,
+         "texte": " infamous",
+         "logit": 8.256927
+        },
+        {
+         "id": 25114,
+         "texte": " deadly",
+         "logit": 8.247986
+        }
+       ],
+       "tete_mots": [
+        {
+         "id": 33151,
+         "texte": " billions",
+         "logit": 11.45076
+        },
+        {
+         "id": 28701,
+         "texte": " countless",
+         "logit": 10.505618
+        },
+        {
+         "id": 11990,
+         "texte": " millions",
+         "logit": 10.374239
+        },
+        {
+         "id": 47322,
+         "texte": " horrific",
+         "logit": 10.296851
+        },
+        {
+         "id": 11191,
+         "texte": " massive",
+         "logit": 9.73642
+        },
+        {
+         "id": 17235,
+         "texte": " incredibly",
+         "logit": 9.69941
+        },
+        {
+         "id": 54677,
+         "texte": " catastrophic",
+         "logit": 9.571703
+        },
+        {
+         "id": 33318,
+         "texte": " devastating",
+         "logit": 9.21866
+        },
+        {
+         "id": 31550,
+         "texte": " globally",
+         "logit": 8.80406
+        },
+        {
+         "id": 35205,
+         "texte": " catast",
+         "logit": 8.63654
+        },
+        {
+         "id": 3728,
+         "texte": " global",
+         "logit": 8.612414
+        },
+        {
+         "id": 70287,
+         "texte": " brutally",
+         "logit": 8.461182
+        },
+        {
+         "id": 28860,
+         "texte": " brutal",
+         "logit": 8.397367
+        },
+        {
+         "id": 13057,
+         "texte": " vast",
+         "logit": 8.334579
+        },
+        {
+         "id": 76820,
+         "texte": " marginalized",
+         "logit": 8.30041
+        },
+        {
+         "id": 9214,
+         "texte": " thousands",
+         "logit": 8.282134
+        },
+        {
+         "id": 15603,
+         "texte": " worldwide",
+         "logit": 8.279014
+        },
+        {
+         "id": 39633,
+         "texte": " infamous",
+         "logit": 8.256927
+        },
+        {
+         "id": 25114,
+         "texte": " deadly",
+         "logit": 8.247986
+        },
+        {
+         "id": 23205,
+         "texte": " enormous",
+         "logit": 8.220654
+        }
+       ],
+       "tete_debut_de_mot": [
+        {
+         "id": 33151,
+         "texte": " billions",
+         "logit": 11.45076
+        },
+        {
+         "id": 28701,
+         "texte": " countless",
+         "logit": 10.505618
+        },
+        {
+         "id": 11990,
+         "texte": " millions",
+         "logit": 10.374239
+        },
+        {
+         "id": 47322,
+         "texte": " horrific",
+         "logit": 10.296851
+        },
+        {
+         "id": 11191,
+         "texte": " massive",
+         "logit": 9.73642
+        },
+        {
+         "id": 17235,
+         "texte": " incredibly",
+         "logit": 9.69941
+        },
+        {
+         "id": 54677,
+         "texte": " catastrophic",
+         "logit": 9.571703
+        },
+        {
+         "id": 33318,
+         "texte": " devastating",
+         "logit": 9.21866
+        },
+        {
+         "id": 31550,
+         "texte": " globally",
+         "logit": 8.80406
+        },
+        {
+         "id": 35205,
+         "texte": " catast",
+         "logit": 8.63654
+        },
+        {
+         "id": 3728,
+         "texte": " global",
+         "logit": 8.612414
+        },
+        {
+         "id": 70287,
+         "texte": " brutally",
+         "logit": 8.461182
+        },
+        {
+         "id": 28860,
+         "texte": " brutal",
+         "logit": 8.397367
+        },
+        {
+         "id": 13057,
+         "texte": " vast",
+         "logit": 8.334579
+        },
+        {
+         "id": 76820,
+         "texte": " marginalized",
+         "logit": 8.30041
+        },
+        {
+         "id": 9214,
+         "texte": " thousands",
+         "logit": 8.282134
+        },
+        {
+         "id": 15603,
+         "texte": " worldwide",
+         "logit": 8.279014
+        },
+        {
+         "id": 39633,
+         "texte": " infamous",
+         "logit": 8.256927
+        },
+        {
+         "id": 25114,
+         "texte": " deadly",
+         "logit": 8.247986
+        },
+        {
+         "id": 23205,
+         "texte": " enormous",
+         "logit": 8.220654
+        }
+       ]
+      },
+      "moins": {
+       "tete": [
+        {
+         "id": 128001,
+         "texte": "<|end_of_text|>",
+         "logit": 10.533361
+        },
+        {
+         "id": 50891,
+         "texte": "aybe",
+         "logit": 9.074433
+        },
+        {
+         "id": 113072,
+         "texte": "्मक",
+         "logit": 8.908475
+        },
+        {
+         "id": 91861,
+         "texte": "kke",
+         "logit": 8.826126
+        },
+        {
+         "id": 80686,
+         "texte": "okane",
+         "logit": 8.795965
+        },
+        {
+         "id": 89369,
+         "texte": "ptrdiff",
+         "logit": 8.204813
+        },
+        {
+         "id": 90646,
+         "texte": "chia",
+         "logit": 8.168214
+        },
+        {
+         "id": 35273,
+         "texte": " ########.",
+         "logit": 8.034834
+        },
+        {
+         "id": 56498,
+         "texte": "ioneer",
+         "logit": 7.828935
+        },
+        {
+         "id": 37091,
+         "texte": "partment",
+         "logit": 7.787003
+        },
+        {
+         "id": 33707,
+         "texte": "amac",
+         "logit": 7.785584
+        },
+        {
+         "id": 83271,
+         "texte": "Overlap",
+         "logit": 7.77789
+        },
+        {
+         "id": 99088,
+         "texte": "ynet",
+         "logit": 7.609629
+        },
+        {
+         "id": 70975,
+         "texte": "eldorf",
+         "logit": 7.552864
+        },
+        {
+         "id": 74512,
+         "texte": "lland",
+         "logit": 7.533228
+        },
+        {
+         "id": 112871,
+         "texte": "hend",
+         "logit": 7.52706
+        },
+        {
+         "id": 80677,
+         "texte": "orny",
+         "logit": 7.522776
+        },
+        {
+         "id": 95763,
+         "texte": "pmat",
+         "logit": 7.493028
+        },
+        {
+         "id": 62779,
+         "texte": "orthand",
+         "logit": 7.481668
+        },
+        {
+         "id": 72649,
+         "texte": "asthan",
+         "logit": 7.423993
+        }
+       ],
+       "tete_mots": [
+        {
+         "id": 50891,
+         "texte": "aybe",
+         "logit": 9.074433
+        },
+        {
+         "id": 91861,
+         "texte": "kke",
+         "logit": 8.826126
+        },
+        {
+         "id": 80686,
+         "texte": "okane",
+         "logit": 8.795965
+        },
+        {
+         "id": 89369,
+         "texte": "ptrdiff",
+         "logit": 8.204813
+        },
+        {
+         "id": 90646,
+         "texte": "chia",
+         "logit": 8.168214
+        },
+        {
+         "id": 56498,
+         "texte": "ioneer",
+         "logit": 7.828935
+        },
+        {
+         "id": 37091,
+         "texte": "partment",
+         "logit": 7.787003
+        },
+        {
+         "id": 33707,
+         "texte": "amac",
+         "logit": 7.785584
+        },
+        {
+         "id": 83271,
+         "texte": "Overlap",
+         "logit": 7.77789
+        },
+        {
+         "id": 99088,
+         "texte": "ynet",
+         "logit": 7.609629
+        },
+        {
+         "id": 70975,
+         "texte": "eldorf",
+         "logit": 7.552864
+        },
+        {
+         "id": 74512,
+         "texte": "lland",
+         "logit": 7.533228
+        },
+        {
+         "id": 112871,
+         "texte": "hend",
+         "logit": 7.52706
+        },
+        {
+         "id": 80677,
+         "texte": "orny",
+         "logit": 7.522776
+        },
+        {
+         "id": 95763,
+         "texte": "pmat",
+         "logit": 7.493028
+        },
+        {
+         "id": 62779,
+         "texte": "orthand",
+         "logit": 7.481668
+        },
+        {
+         "id": 72649,
+         "texte": "asthan",
+         "logit": 7.423993
+        },
+        {
+         "id": 64529,
+         "texte": "acho",
+         "logit": 7.342855
+        },
+        {
+         "id": 110180,
+         "texte": " рекоменду",
+         "logit": 7.337068
+        },
+        {
+         "id": 84555,
+         "texte": "eldo",
+         "logit": 7.335766
+        }
+       ],
+       "tete_debut_de_mot": [
+        {
+         "id": 110180,
+         "texte": " рекоменду",
+         "logit": 7.337068
+        },
+        {
+         "id": 78056,
+         "texte": " ffi",
+         "logit": 7.129399
+        },
+        {
+         "id": 55130,
+         "texte": " Incontri",
+         "logit": 7.108446
+        },
+        {
+         "id": 43051,
+         "texte": " damer",
+         "logit": 6.683255
+        },
+        {
+         "id": 47812,
+         "texte": " Elli",
+         "logit": 6.626183
+        },
+        {
+         "id": 65892,
+         "texte": " vivastreet",
+         "logit": 6.620191
+        },
+        {
+         "id": 73352,
+         "texte": " tion",
+         "logit": 6.510367
+        },
+        {
+         "id": 85043,
+         "texte": " aio",
+         "logit": 6.428611
+        },
+        {
+         "id": 47139,
+         "texte": " Contacts",
+         "logit": 6.284928
+        },
+        {
+         "id": 68702,
+         "texte": " orm",
+         "logit": 6.284382
+        },
+        {
+         "id": 69755,
+         "texte": " Notebook",
+         "logit": 6.238977
+        },
+        {
+         "id": 60788,
+         "texte": " AppleWebKit",
+         "logit": 6.238571
+        },
+        {
+         "id": 114296,
+         "texte": " vui",
+         "logit": 6.211617
+        },
+        {
+         "id": 89426,
+         "texte": " Occasionally",
+         "logit": 6.190625
+        },
+        {
+         "id": 77504,
+         "texte": " Geile",
+         "logit": 6.156766
+        },
+        {
+         "id": 113907,
+         "texte": " 골",
+         "logit": 6.149842
+        },
+        {
+         "id": 76992,
+         "texte": " ffm",
+         "logit": 6.142657
+        },
+        {
+         "id": 91499,
+         "texte": " Leisure",
+         "logit": 6.089169
+        },
+        {
+         "id": 77916,
+         "texte": " Tester",
+         "logit": 5.992605
+        },
+        {
+         "id": 71368,
+         "texte": " plais",
+         "logit": 5.990237
+        }
+       ]
+      },
+      "diagnostics_z": {
+       "tromperie": {
+        "z": 1.201760196318462,
+        "jetons_concept": 30,
+        "n_concept_tete_plus": 0,
+        "n_concept_tete_moins": 0,
+        "meilleur_rang_plus": 598,
+        "meilleur_rang_moins": 26914,
+        "isotropes": {
+         "n": 200,
+         "p_haut": 0.029850746268656716,
+         "p_bas": 0.9751243781094527,
+         "p_bilateral": 0.05970149253731343,
+         "z_quantiles_5_50_95": [
+          -1.1135815561386542,
+          -0.09018175060204772,
+          0.9476641338731844
+         ]
+        },
+        "planchers": {
+         "statut": "pas de plancher de ce concept à cette couche"
+        }
+       },
+       "enjeux": {
+        "z": 2.372735491394897,
+        "jetons_concept": 43,
+        "n_concept_tete_plus": 2,
+        "n_concept_tete_moins": 0,
+        "meilleur_rang_plus": 7,
+        "meilleur_rang_moins": 16266,
+        "isotropes": {
+         "n": 200,
+         "p_haut": 0.004975124378109453,
+         "p_bas": 1.0,
+         "p_bilateral": 0.004975124378109453,
+         "z_quantiles_5_50_95": [
+          -1.077501817238955,
+          0.024834304457865074,
+          1.1221314897038024
+         ]
+        },
+        "planchers": {
+         "statut": "pas de plancher de ce concept à cette couche"
+        }
+       }
+      }
+     },
+     "recouvrement": {
+      "plus": {
+       "intersection": 0,
+       "jaccard": 0.0,
+       "communs": []
+      },
+      "moins": {
+       "intersection": 0,
+       "jaccard": 0.0,
+       "communs": []
+      },
+      "plus_mots": {
+       "intersection": 0,
+       "jaccard": 0.0,
+       "communs": []
+      },
+      "moins_mots": {
+       "intersection": 0,
+       "jaccard": 0.0,
+       "communs": []
+      },
+      "plus_debut_de_mot": {
+       "intersection": 0,
+       "jaccard": 0.0,
+       "communs": []
+      },
+      "cosinus_logits_centres": 0.13983106640017837
+     }
+    }
+   }
+  },
+  {
+   "nom": "enjeux-lineaire-c15",
+   "concept": "enjeux",
+   "principale": true,
+   "famille": "lineaire",
+   "couche": 15,
+   "classe": "SondeLineaireJetons",
+   "agregation": "max",
+   "empreinte": "88f4af7c8aa90c023a8999308d364407b021e5bea1111d445fc07f6a19da4229",
+   "biais_b": -4.413272926199768,
+   "norme_w": 22.04665328928355,
+   "norme_Jw_sur_norme_w": 1.2596756723056681,
+   "cosinus_w_Jw": 0.3558870366113695,
+   "regle": {
+    "logits": {
+     "S": 0,
+     "isotropes": {
+      "n": 200,
+      "quantile_0_99": 0.0,
+      "p_haut_diagnostic": 1.0,
+      "comptes": {
+       "0": 198,
+       "1": 2
+      }
+     },
+     "planchers": {
+      "n": 200,
+      "quantile_0_99": 1.0,
+      "p_haut_diagnostic": 1.0,
+      "comptes": {
+       "0": 196,
+       "1": 3,
+       "2": 1
+      }
+     },
+     "verdict": "non cohérent",
+     "comptes_par_concept_diagnostic": {
+      "tromperie": 0,
+      "enjeux": 0
+     },
+     "statut": "règle primaire"
+    },
+    "jacobienne": {
+     "S": 2,
+     "isotropes": {
+      "n": 200,
+      "quantile_0_99": 1.0,
+      "p_haut_diagnostic": 0.014925373134328358,
+      "comptes": {
+       "0": 193,
+       "1": 5,
+       "2": 2
+      }
+     },
+     "planchers": {
+      "n": 200,
+      "quantile_0_99": 3.0,
+      "p_haut_diagnostic": 0.03980099502487562,
+      "comptes": {
+       "0": 187,
+       "1": 6,
+       "2": 3,
+       "3": 2,
+       "4": 2
+      }
+     },
+     "verdict": "non cohérent",
+     "comptes_par_concept_diagnostic": {
+      "tromperie": 0,
+      "enjeux": 2
+     },
+     "statut": "règle primaire"
+    }
+   },
+   "variantes": {
+    "direction": {
+     "logits": {
+      "plus": {
+       "tete": [
+        {
+         "id": 26692,
+         "texte": "rons",
+         "logit": 11.384028
+        },
+        {
+         "id": 17356,
+         "texte": "alc",
+         "logit": 10.300172
+        },
+        {
+         "id": 40495,
+         "texte": " Lives",
+         "logit": 10.057363
+        },
+        {
+         "id": 90140,
+         "texte": "putc",
+         "logit": 9.935219
+        },
+        {
+         "id": 23698,
+         "texte": "lags",
+         "logit": 9.728298
+        },
+        {
+         "id": 49127,
+         "texte": "PHPExcel",
+         "logit": 9.690685
+        },
+        {
+         "id": 26121,
+         "texte": "scr",
+         "logit": 9.664282
+        },
+        {
+         "id": 9406,
+         "texte": " scr",
+         "logit": 9.510775
+        },
+        {
+         "id": 98200,
+         "texte": " Races",
+         "logit": 9.431695
+        },
+        {
+         "id": 49748,
+         "texte": " survivor",
+         "logit": 9.264191
+        },
+        {
+         "id": 37450,
+         "texte": " Rug",
+         "logit": 9.226898
+        },
+        {
+         "id": 56152,
+         "texte": " tep",
+         "logit": 9.102819
+        },
+        {
+         "id": 1086,
+         "texte": "ethod",
+         "logit": 9.098392
+        },
+        {
+         "id": 14450,
+         "texte": "oft",
+         "logit": 9.050134
+        },
+        {
+         "id": 36233,
+         "texte": " Operating",
+         "logit": 9.047236
+        },
+        {
+         "id": 118712,
+         "texte": "شاء",
+         "logit": 9.038203
+        },
+        {
+         "id": 111670,
+         "texte": "ンデ",
+         "logit": 9.02495
+        },
+        {
+         "id": 32077,
+         "texte": "ieved",
+         "logit": 8.947529
+        },
+        {
+         "id": 69609,
+         "texte": " WARN",
+         "logit": 8.882936
+        },
+        {
+         "id": 31329,
+         "texte": "ainted",
+         "logit": 8.872297
+        }
+       ],
+       "tete_mots": [
+        {
+         "id": 26692,
+         "texte": "rons",
+         "logit": 11.384028
+        },
+        {
+         "id": 17356,
+         "texte": "alc",
+         "logit": 10.300172
+        },
+        {
+         "id": 40495,
+         "texte": " Lives",
+         "logit": 10.057363
+        },
+        {
+         "id": 90140,
+         "texte": "putc",
+         "logit": 9.935219
+        },
+        {
+         "id": 23698,
+         "texte": "lags",
+         "logit": 9.728298
+        },
+        {
+         "id": 49127,
+         "texte": "PHPExcel",
+         "logit": 9.690685
+        },
+        {
+         "id": 26121,
+         "texte": "scr",
+         "logit": 9.664282
+        },
+        {
+         "id": 9406,
+         "texte": " scr",
+         "logit": 9.510775
+        },
+        {
+         "id": 98200,
+         "texte": " Races",
+         "logit": 9.431695
+        },
+        {
+         "id": 49748,
+         "texte": " survivor",
+         "logit": 9.264191
+        },
+        {
+         "id": 37450,
+         "texte": " Rug",
+         "logit": 9.226898
+        },
+        {
+         "id": 56152,
+         "texte": " tep",
+         "logit": 9.102819
+        },
+        {
+         "id": 1086,
+         "texte": "ethod",
+         "logit": 9.098392
+        },
+        {
+         "id": 14450,
+         "texte": "oft",
+         "logit": 9.050134
+        },
+        {
+         "id": 36233,
+         "texte": " Operating",
+         "logit": 9.047236
+        },
+        {
+         "id": 118712,
+         "texte": "شاء",
+         "logit": 9.038203
+        },
+        {
+         "id": 111670,
+         "texte": "ンデ",
+         "logit": 9.02495
+        },
+        {
+         "id": 32077,
+         "texte": "ieved",
+         "logit": 8.947529
+        },
+        {
+         "id": 69609,
+         "texte": " WARN",
+         "logit": 8.882936
+        },
+        {
+         "id": 31329,
+         "texte": "ainted",
+         "logit": 8.872297
+        }
+       ],
+       "tete_debut_de_mot": [
+        {
+         "id": 40495,
+         "texte": " Lives",
+         "logit": 10.057363
+        },
+        {
+         "id": 9406,
+         "texte": " scr",
+         "logit": 9.510775
+        },
+        {
+         "id": 98200,
+         "texte": " Races",
+         "logit": 9.431695
+        },
+        {
+         "id": 49748,
+         "texte": " survivor",
+         "logit": 9.264191
+        },
+        {
+         "id": 37450,
+         "texte": " Rug",
+         "logit": 9.226898
+        },
+        {
+         "id": 56152,
+         "texte": " tep",
+         "logit": 9.102819
+        },
+        {
+         "id": 36233,
+         "texte": " Operating",
+         "logit": 9.047236
+        },
+        {
+         "id": 69609,
+         "texte": " WARN",
+         "logit": 8.882936
+        },
+        {
+         "id": 98923,
+         "texte": " Rounds",
+         "logit": 8.868233
+        },
+        {
+         "id": 48087,
+         "texte": " ticker",
+         "logit": 8.603931
+        },
+        {
+         "id": 68846,
+         "texte": " Warn",
+         "logit": 8.558246
+        },
+        {
+         "id": 43839,
+         "texte": " reput",
+         "logit": 8.472463
+        },
+        {
+         "id": 77800,
+         "texte": " SCR",
+         "logit": 8.375896
+        },
+        {
+         "id": 63658,
+         "texte": " Leh",
+         "logit": 8.344819
+        },
+        {
+         "id": 10163,
+         "texte": " warning",
+         "logit": 8.291971
+        },
+        {
+         "id": 82064,
+         "texte": " ActiveForm",
+         "logit": 8.258257
+        },
+        {
+         "id": 89180,
+         "texte": " Reputation",
+         "logit": 8.244364
+        },
+        {
+         "id": 94816,
+         "texte": " Zust",
+         "logit": 8.24367
+        },
+        {
+         "id": 74248,
+         "texte": " Buildings",
+         "logit": 8.19404
+        },
+        {
+         "id": 63966,
+         "texte": " Scotia",
+         "logit": 8.190518
+        }
+       ]
+      },
+      "moins": {
+       "tete": [
+        {
+         "id": 66225,
+         "texte": " onCancel",
+         "logit": 8.500305
+        },
+        {
+         "id": 25549,
+         "texte": " divorce",
+         "logit": 8.490664
+        },
+        {
+         "id": 37644,
+         "texte": "OTA",
+         "logit": 8.024549
+        },
+        {
+         "id": 6845,
+         "texte": "ă",
+         "logit": 7.985538
+        },
+        {
+         "id": 70215,
+         "texte": "Forbidden",
+         "logit": 7.872136
+        },
+        {
+         "id": 127890,
+         "texte": "overy",
+         "logit": 7.84754
+        },
+        {
+         "id": 36967,
+         "texte": " Jazz",
+         "logit": 7.823554
+        },
+        {
+         "id": 69838,
+         "texte": " Inflate",
+         "logit": 7.820682
+        },
+        {
+         "id": 15308,
+         "texte": "�",
+         "logit": 7.817918
+        },
+        {
+         "id": 1295,
+         "texte": "ote",
+         "logit": 7.752446
+        },
+        {
+         "id": 253,
+         "texte": "�",
+         "logit": 7.721474
+        },
+        {
+         "id": 98075,
+         "texte": "cstdint",
+         "logit": 7.602077
+        },
+        {
+         "id": 85830,
+         "texte": " hoof",
+         "logit": 7.576571
+        },
+        {
+         "id": 26956,
+         "texte": "086",
+         "logit": 7.543287
+        },
+        {
+         "id": 5398,
+         "texte": " align",
+         "logit": 7.512078
+        },
+        {
+         "id": 91137,
+         "texte": "vrier",
+         "logit": 7.508523
+        },
+        {
+         "id": 110742,
+         "texte": "ίνη",
+         "logit": 7.507323
+        },
+        {
+         "id": 98551,
+         "texte": "-aligned",
+         "logit": 7.477288
+        },
+        {
+         "id": 66289,
+         "texte": "ALIGN",
+         "logit": 7.440108
+        },
+        {
+         "id": 30893,
+         "texte": " Minor",
+         "logit": 7.378582
+        }
+       ],
+       "tete_mots": [
+        {
+         "id": 66225,
+         "texte": " onCancel",
+         "logit": 8.500305
+        },
+        {
+         "id": 25549,
+         "texte": " divorce",
+         "logit": 8.490664
+        },
+        {
+         "id": 37644,
+         "texte": "OTA",
+         "logit": 8.024549
+        },
+        {
+         "id": 6845,
+         "texte": "ă",
+         "logit": 7.985538
+        },
+        {
+         "id": 70215,
+         "texte": "Forbidden",
+         "logit": 7.872136
+        },
+        {
+         "id": 127890,
+         "texte": "overy",
+         "logit": 7.84754
+        },
+        {
+         "id": 36967,
+         "texte": " Jazz",
+         "logit": 7.823554
+        },
+        {
+         "id": 69838,
+         "texte": " Inflate",
+         "logit": 7.820682
+        },
+        {
+         "id": 1295,
+         "texte": "ote",
+         "logit": 7.752446
+        },
+        {
+         "id": 98075,
+         "texte": "cstdint",
+         "logit": 7.602077
+        },
+        {
+         "id": 85830,
+         "texte": " hoof",
+         "logit": 7.576571
+        },
+        {
+         "id": 26956,
+         "texte": "086",
+         "logit": 7.543287
+        },
+        {
+         "id": 5398,
+         "texte": " align",
+         "logit": 7.512078
+        },
+        {
+         "id": 91137,
+         "texte": "vrier",
+         "logit": 7.508523
+        },
+        {
+         "id": 110742,
+         "texte": "ίνη",
+         "logit": 7.507323
+        },
+        {
+         "id": 66289,
+         "texte": "ALIGN",
+         "logit": 7.440108
+        },
+        {
+         "id": 30893,
+         "texte": " Minor",
+         "logit": 7.378582
+        },
+        {
+         "id": 69768,
+         "texte": "ecz",
+         "logit": 7.378519
+        },
+        {
+         "id": 95370,
+         "texte": " espect",
+         "logit": 7.341925
+        },
+        {
+         "id": 110599,
+         "texte": "างว",
+         "logit": 7.292475
+        }
+       ],
+       "tete_debut_de_mot": [
+        {
+         "id": 66225,
+         "texte": " onCancel",
+         "logit": 8.500305
+        },
+        {
+         "id": 25549,
+         "texte": " divorce",
+         "logit": 8.490664
+        },
+        {
+         "id": 36967,
+         "texte": " Jazz",
+         "logit": 7.823554
+        },
+        {
+         "id": 69838,
+         "texte": " Inflate",
+         "logit": 7.820682
+        },
+        {
+         "id": 85830,
+         "texte": " hoof",
+         "logit": 7.576571
+        },
+        {
+         "id": 5398,
+         "texte": " align",
+         "logit": 7.512078
+        },
+        {
+         "id": 30893,
+         "texte": " Minor",
+         "logit": 7.378582
+        },
+        {
+         "id": 95370,
+         "texte": " espect",
+         "logit": 7.341925
+        },
+        {
+         "id": 93916,
+         "texte": " alignments",
+         "logit": 7.274399
+        },
+        {
+         "id": 63649,
+         "texte": " Kub",
+         "logit": 7.247144
+        },
+        {
+         "id": 90953,
+         "texte": " empres",
+         "logit": 7.169312
+        },
+        {
+         "id": 58325,
+         "texte": " Paste",
+         "logit": 7.149005
+        },
+        {
+         "id": 18079,
+         "texte": " Motor",
+         "logit": 7.005423
+        },
+        {
+         "id": 103514,
+         "texte": " انگ",
+         "logit": 6.995525
+        },
+        {
+         "id": 50572,
+         "texte": " Align",
+         "logit": 6.961347
+        },
+        {
+         "id": 48838,
+         "texte": " Bend",
+         "logit": 6.945288
+        },
+        {
+         "id": 55216,
+         "texte": " 기",
+         "logit": 6.912961
+        },
+        {
+         "id": 20587,
+         "texte": " childhood",
+         "logit": 6.905778
+        },
+        {
+         "id": 32245,
+         "texte": " Gem",
+         "logit": 6.897387
+        },
+        {
+         "id": 49074,
+         "texte": " Tiny",
+         "logit": 6.88477
+        }
+       ]
+      },
+      "diagnostics_z": {
+       "tromperie": {
+        "z": 0.13201427677597471,
+        "jetons_concept": 30,
+        "n_concept_tete_plus": 0,
+        "n_concept_tete_moins": 0,
+        "meilleur_rang_plus": 13513,
+        "meilleur_rang_moins": 8896,
+        "isotropes": {
+         "n": 200,
+         "p_haut": 0.417910447761194,
+         "p_bas": 0.5870646766169154,
+         "p_bilateral": 0.7661691542288557,
+         "z_quantiles_5_50_95": [
+          -0.5461855039029051,
+          0.0563696928312023,
+          0.6232394890189233
+         ]
+        },
+        "planchers": {
+         "n": 200,
+         "p_haut": 0.35323383084577115,
+         "p_bas": 0.6517412935323383,
+         "p_bilateral": 0.7412935323383084,
+         "z_quantiles_5_50_95": [
+          -0.597258261497383,
+          -0.027068406610575725,
+          0.5294966749850568
+         ]
+        }
+       },
+       "enjeux": {
+        "z": 0.3665510262047536,
+        "jetons_concept": 43,
+        "n_concept_tete_plus": 0,
+        "n_concept_tete_moins": 0,
+        "meilleur_rang_plus": 729,
+        "meilleur_rang_moins": 207,
+        "isotropes": {
+         "n": 200,
+         "p_haut": 0.0945273631840796,
+         "p_bas": 0.9104477611940298,
+         "p_bilateral": 0.22388059701492538,
+         "z_quantiles_5_50_95": [
+          -0.5042543902372801,
+          -0.0248342095697989,
+          0.46530875945935296
+         ]
+        },
+        "planchers": {
+         "n": 200,
+         "p_haut": 0.19402985074626866,
+         "p_bas": 0.8109452736318408,
+         "p_bilateral": 0.4079601990049751,
+         "z_quantiles_5_50_95": [
+          -0.6682132859004547,
+          0.004475529929854218,
+          0.7150031577332993
+         ]
+        }
+       }
+      }
+     },
+     "jacobienne": {
+      "plus": {
+       "tete": [
+        {
+         "id": 66153,
+         "texte": " suicidal",
+         "logit": 10.538126
+        },
+        {
+         "id": 25114,
+         "texte": " deadly",
+         "logit": 9.956365
+        },
+        {
+         "id": 78602,
+         "texte": "_critical",
+         "logit": 9.061165
+        },
+        {
+         "id": 43919,
+         "texte": " suic",
+         "logit": 8.940245
+        },
+        {
+         "id": 75458,
+         "texte": " Powerful",
+         "logit": 8.909775
+        },
+        {
+         "id": 33318,
+         "texte": " devastating",
+         "logit": 8.887295
+        },
+        {
+         "id": 53731,
+         "texte": " terrified",
+         "logit": 8.786343
+        },
+        {
+         "id": 24020,
+         "texte": " terrorism",
+         "logit": 8.785994
+        },
+        {
+         "id": 11191,
+         "texte": " massive",
+         "logit": 8.668775
+        },
+        {
+         "id": 59070,
+         "texte": "_SAFE",
+         "logit": 8.580904
+        },
+        {
+         "id": 8818,
+         "texte": " terror",
+         "logit": 8.503998
+        },
+        {
+         "id": 99469,
+         "texte": " deadliest",
+         "logit": 8.433383
+        },
+        {
+         "id": 8147,
+         "texte": " powerful",
+         "logit": 8.373034
+        },
+        {
+         "id": 32696,
+         "texte": " survivors",
+         "logit": 8.321648
+        },
+        {
+         "id": 32708,
+         "texte": " Emergency",
+         "logit": 8.299935
+        },
+        {
+         "id": 82564,
+         "texte": " Massive",
+         "logit": 8.298787
+        },
+        {
+         "id": 27718,
+         "texte": " shocked",
+         "logit": 8.243144
+        },
+        {
+         "id": 81027,
+         "texte": " murdering",
+         "logit": 8.2223
+        },
+        {
+         "id": 87546,
+         "texte": " raping",
+         "logit": 8.203665
+        },
+        {
+         "id": 7436,
+         "texte": " •",
+         "logit": 8.072848
+        }
+       ],
+       "tete_mots": [
+        {
+         "id": 66153,
+         "texte": " suicidal",
+         "logit": 10.538126
+        },
+        {
+         "id": 25114,
+         "texte": " deadly",
+         "logit": 9.956365
+        },
+        {
+         "id": 43919,
+         "texte": " suic",
+         "logit": 8.940245
+        },
+        {
+         "id": 75458,
+         "texte": " Powerful",
+         "logit": 8.909775
+        },
+        {
+         "id": 33318,
+         "texte": " devastating",
+         "logit": 8.887295
+        },
+        {
+         "id": 53731,
+         "texte": " terrified",
+         "logit": 8.786343
+        },
+        {
+         "id": 24020,
+         "texte": " terrorism",
+         "logit": 8.785994
+        },
+        {
+         "id": 11191,
+         "texte": " massive",
+         "logit": 8.668775
+        },
+        {
+         "id": 8818,
+         "texte": " terror",
+         "logit": 8.503998
+        },
+        {
+         "id": 99469,
+         "texte": " deadliest",
+         "logit": 8.433383
+        },
+        {
+         "id": 8147,
+         "texte": " powerful",
+         "logit": 8.373034
+        },
+        {
+         "id": 32696,
+         "texte": " survivors",
+         "logit": 8.321648
+        },
+        {
+         "id": 32708,
+         "texte": " Emergency",
+         "logit": 8.299935
+        },
+        {
+         "id": 82564,
+         "texte": " Massive",
+         "logit": 8.298787
+        },
+        {
+         "id": 27718,
+         "texte": " shocked",
+         "logit": 8.243144
+        },
+        {
+         "id": 81027,
+         "texte": " murdering",
+         "logit": 8.2223
+        },
+        {
+         "id": 87546,
+         "texte": " raping",
+         "logit": 8.203665
+        },
+        {
+         "id": 25185,
+         "texte": " racist",
+         "logit": 8.038082
+        },
+        {
+         "id": 54451,
+         "texte": " Survival",
+         "logit": 7.956528
+        },
+        {
+         "id": 42351,
+         "texte": " terrifying",
+         "logit": 7.936244
+        }
+       ],
+       "tete_debut_de_mot": [
+        {
+         "id": 66153,
+         "texte": " suicidal",
+         "logit": 10.538126
+        },
+        {
+         "id": 25114,
+         "texte": " deadly",
+         "logit": 9.956365
+        },
+        {
+         "id": 43919,
+         "texte": " suic",
+         "logit": 8.940245
+        },
+        {
+         "id": 75458,
+         "texte": " Powerful",
+         "logit": 8.909775
+        },
+        {
+         "id": 33318,
+         "texte": " devastating",
+         "logit": 8.887295
+        },
+        {
+         "id": 53731,
+         "texte": " terrified",
+         "logit": 8.786343
+        },
+        {
+         "id": 24020,
+         "texte": " terrorism",
+         "logit": 8.785994
+        },
+        {
+         "id": 11191,
+         "texte": " massive",
+         "logit": 8.668775
+        },
+        {
+         "id": 8818,
+         "texte": " terror",
+         "logit": 8.503998
+        },
+        {
+         "id": 99469,
+         "texte": " deadliest",
+         "logit": 8.433383
+        },
+        {
+         "id": 8147,
+         "texte": " powerful",
+         "logit": 8.373034
+        },
+        {
+         "id": 32696,
+         "texte": " survivors",
+         "logit": 8.321648
+        },
+        {
+         "id": 32708,
+         "texte": " Emergency",
+         "logit": 8.299935
+        },
+        {
+         "id": 82564,
+         "texte": " Massive",
+         "logit": 8.298787
+        },
+        {
+         "id": 27718,
+         "texte": " shocked",
+         "logit": 8.243144
+        },
+        {
+         "id": 81027,
+         "texte": " murdering",
+         "logit": 8.2223
+        },
+        {
+         "id": 87546,
+         "texte": " raping",
+         "logit": 8.203665
+        },
+        {
+         "id": 25185,
+         "texte": " racist",
+         "logit": 8.038082
+        },
+        {
+         "id": 54451,
+         "texte": " Survival",
+         "logit": 7.956528
+        },
+        {
+         "id": 42351,
+         "texte": " terrifying",
+         "logit": 7.936244
+        }
+       ]
+      },
+      "moins": {
+       "tete": [
+        {
+         "id": 4856,
+         "texte": " rather",
+         "logit": 9.863398
+        },
+        {
+         "id": 32628,
+         "texte": " hobby",
+         "logit": 9.759003
+        },
+        {
+         "id": 720,
+         "texte": " \n",
+         "logit": 9.379644
+        },
+        {
+         "id": 5779,
+         "texte": "\\\n",
+         "logit": 9.360291
+        },
+        {
+         "id": 70946,
+         "texte": " humorous",
+         "logit": 9.292824
+        },
+        {
+         "id": 47950,
+         "texte": " beginners",
+         "logit": 9.136553
+        },
+        {
+         "id": 50048,
+         "texte": " beginner",
+         "logit": 9.129448
+        },
+        {
+         "id": 74032,
+         "texte": " trivia",
+         "logit": 8.869936
+        },
+        {
+         "id": 30571,
+         "texte": " silly",
+         "logit": 8.835268
+        },
+        {
+         "id": 28485,
+         "texte": " humor",
+         "logit": 8.696644
+        },
+        {
+         "id": 4619,
+         "texte": " instead",
+         "logit": 8.621969
+        },
+        {
+         "id": 5150,
+         "texte": " actual",
+         "logit": 8.302799
+        },
+        {
+         "id": 3604,
+         "texte": " actually",
+         "logit": 8.283208
+        },
+        {
+         "id": 6118,
+         "texte": " usually",
+         "logit": 8.250636
+        },
+        {
+         "id": 23781,
+         "texte": " occasionally",
+         "logit": 8.240211
+        },
+        {
+         "id": 44682,
+         "texte": " fictional",
+         "logit": 8.210163
+        },
+        {
+         "id": 28961,
+         "texte": " occasional",
+         "logit": 8.193835
+        },
+        {
+         "id": 64405,
+         "texte": " hobbies",
+         "logit": 8.031332
+        },
+        {
+         "id": 60986,
+         "texte": " amusing",
+         "logit": 8.012897
+        },
+        {
+         "id": 13220,
+         "texte": "_\n",
+         "logit": 7.970368
+        }
+       ],
+       "tete_mots": [
+        {
+         "id": 4856,
+         "texte": " rather",
+         "logit": 9.863398
+        },
+        {
+         "id": 32628,
+         "texte": " hobby",
+         "logit": 9.759003
+        },
+        {
+         "id": 70946,
+         "texte": " humorous",
+         "logit": 9.292824
+        },
+        {
+         "id": 47950,
+         "texte": " beginners",
+         "logit": 9.136553
+        },
+        {
+         "id": 50048,
+         "texte": " beginner",
+         "logit": 9.129448
+        },
+        {
+         "id": 74032,
+         "texte": " trivia",
+         "logit": 8.869936
+        },
+        {
+         "id": 30571,
+         "texte": " silly",
+         "logit": 8.835268
+        },
+        {
+         "id": 28485,
+         "texte": " humor",
+         "logit": 8.696644
+        },
+        {
+         "id": 4619,
+         "texte": " instead",
+         "logit": 8.621969
+        },
+        {
+         "id": 5150,
+         "texte": " actual",
+         "logit": 8.302799
+        },
+        {
+         "id": 3604,
+         "texte": " actually",
+         "logit": 8.283208
+        },
+        {
+         "id": 6118,
+         "texte": " usually",
+         "logit": 8.250636
+        },
+        {
+         "id": 23781,
+         "texte": " occasionally",
+         "logit": 8.240211
+        },
+        {
+         "id": 44682,
+         "texte": " fictional",
+         "logit": 8.210163
+        },
+        {
+         "id": 28961,
+         "texte": " occasional",
+         "logit": 8.193835
+        },
+        {
+         "id": 64405,
+         "texte": " hobbies",
+         "logit": 8.031332
+        },
+        {
+         "id": 60986,
+         "texte": " amusing",
+         "logit": 8.012897
+        },
+        {
+         "id": 66284,
+         "texte": " nicer",
+         "logit": 7.935587
+        },
+        {
+         "id": 18427,
+         "texte": " adventure",
+         "logit": 7.882483
+        },
+        {
+         "id": 2254,
+         "texte": " local",
+         "logit": 7.862057
+        }
+       ],
+       "tete_debut_de_mot": [
+        {
+         "id": 4856,
+         "texte": " rather",
+         "logit": 9.863398
+        },
+        {
+         "id": 32628,
+         "texte": " hobby",
+         "logit": 9.759003
+        },
+        {
+         "id": 70946,
+         "texte": " humorous",
+         "logit": 9.292824
+        },
+        {
+         "id": 47950,
+         "texte": " beginners",
+         "logit": 9.136553
+        },
+        {
+         "id": 50048,
+         "texte": " beginner",
+         "logit": 9.129448
+        },
+        {
+         "id": 74032,
+         "texte": " trivia",
+         "logit": 8.869936
+        },
+        {
+         "id": 30571,
+         "texte": " silly",
+         "logit": 8.835268
+        },
+        {
+         "id": 28485,
+         "texte": " humor",
+         "logit": 8.696644
+        },
+        {
+         "id": 4619,
+         "texte": " instead",
+         "logit": 8.621969
+        },
+        {
+         "id": 5150,
+         "texte": " actual",
+         "logit": 8.302799
+        },
+        {
+         "id": 3604,
+         "texte": " actually",
+         "logit": 8.283208
+        },
+        {
+         "id": 6118,
+         "texte": " usually",
+         "logit": 8.250636
+        },
+        {
+         "id": 23781,
+         "texte": " occasionally",
+         "logit": 8.240211
+        },
+        {
+         "id": 44682,
+         "texte": " fictional",
+         "logit": 8.210163
+        },
+        {
+         "id": 28961,
+         "texte": " occasional",
+         "logit": 8.193835
+        },
+        {
+         "id": 64405,
+         "texte": " hobbies",
+         "logit": 8.031332
+        },
+        {
+         "id": 60986,
+         "texte": " amusing",
+         "logit": 8.012897
+        },
+        {
+         "id": 66284,
+         "texte": " nicer",
+         "logit": 7.935587
+        },
+        {
+         "id": 18427,
+         "texte": " adventure",
+         "logit": 7.882483
+        },
+        {
+         "id": 2254,
+         "texte": " local",
+         "logit": 7.862057
+        }
+       ]
+      },
+      "diagnostics_z": {
+       "tromperie": {
+        "z": -0.5695831686054018,
+        "jetons_concept": 30,
+        "n_concept_tete_plus": 0,
+        "n_concept_tete_moins": 0,
+        "meilleur_rang_plus": 17271,
+        "meilleur_rang_moins": 261,
+        "isotropes": {
+         "n": 200,
+         "p_haut": 0.7661691542288557,
+         "p_bas": 0.23880597014925373,
+         "p_bilateral": 0.4427860696517413,
+         "z_quantiles_5_50_95": [
+          -1.177519562561038,
+          -0.03442256013302996,
+          1.1151514310744768
+         ]
+        },
+        "planchers": {
+         "n": 200,
+         "p_haut": 0.746268656716418,
+         "p_bas": 0.25870646766169153,
+         "p_bilateral": 0.6119402985074627,
+         "z_quantiles_5_50_95": [
+          -1.6455265256780962,
+          0.12210450639807834,
+          1.5994751574852122
+         ]
+        }
+       },
+       "enjeux": {
+        "z": 2.7363501647100574,
+        "jetons_concept": 43,
+        "n_concept_tete_plus": 2,
+        "n_concept_tete_moins": 0,
+        "meilleur_rang_plus": 2,
+        "meilleur_rang_moins": 21721,
+        "isotropes": {
+         "n": 200,
+         "p_haut": 0.004975124378109453,
+         "p_bas": 1.0,
+         "p_bilateral": 0.004975124378109453,
+         "z_quantiles_5_50_95": [
+          -1.1725912876177027,
+          -0.15823853991118086,
+          0.9706372384569515
+         ]
+        },
+        "planchers": {
+         "n": 200,
+         "p_haut": 0.004975124378109453,
+         "p_bas": 1.0,
+         "p_bilateral": 0.009950248756218905,
+         "z_quantiles_5_50_95": [
+          -1.737299923657184,
+          0.08142354237630135,
+          2.0231385531794617
+         ]
+        }
+       }
+      }
+     },
+     "recouvrement": {
+      "plus": {
+       "intersection": 0,
+       "jaccard": 0.0,
+       "communs": []
+      },
+      "moins": {
+       "intersection": 0,
+       "jaccard": 0.0,
+       "communs": []
+      },
+      "plus_mots": {
+       "intersection": 0,
+       "jaccard": 0.0,
+       "communs": []
+      },
+      "moins_mots": {
+       "intersection": 0,
+       "jaccard": 0.0,
+       "communs": []
+      },
+      "plus_debut_de_mot": {
+       "intersection": 0,
+       "jaccard": 0.0,
+       "communs": []
+      },
+      "cosinus_logits_centres": 0.4023140140500687
+     }
+    }
+   }
+  },
+  {
+   "nom": "enjeux-lineaire-c23",
+   "concept": "enjeux",
+   "principale": false,
+   "famille": "lineaire",
+   "couche": 23,
+   "classe": "SondeLineaireJetons",
+   "agregation": "max",
+   "empreinte": "e5be383a330205119fd6afc4d7667f90947ffedf58783ce1785861e068b17213",
+   "biais_b": -5.586329583947542,
+   "norme_w": 10.007383432803953,
+   "norme_Jw_sur_norme_w": 1.7998471778880991,
+   "cosinus_w_Jw": 0.6800682839641226,
+   "regle": {
+    "logits": {
+     "S": 1,
+     "isotropes": {
+      "n": 200,
+      "quantile_0_99": 0.0,
+      "p_haut_diagnostic": 0.014925373134328358,
+      "comptes": {
+       "0": 198,
+       "1": 1,
+       "2": 1
+      }
+     },
+     "planchers": {
+      "statut": "absents à cette couche pour ce concept"
+     },
+     "comptes_par_concept_diagnostic": {
+      "tromperie": 0,
+      "enjeux": 1
+     },
+     "statut": "descriptif, hors règle primaire ; planchers absents : isotropes seules",
+     "verdict_descriptif": "non cohérent"
+    },
+    "jacobienne": {
+     "S": 3,
+     "isotropes": {
+      "n": 200,
+      "quantile_0_99": 1.0,
+      "p_haut_diagnostic": 0.009950248756218905,
+      "comptes": {
+       "0": 197,
+       "1": 2,
+       "3": 1
+      }
+     },
+     "planchers": {
+      "statut": "absents à cette couche pour ce concept"
+     },
+     "comptes_par_concept_diagnostic": {
+      "tromperie": 0,
+      "enjeux": 3
+     },
+     "statut": "descriptif, hors règle primaire ; planchers absents : isotropes seules",
+     "verdict_descriptif": "cohérent"
+    }
+   },
+   "variantes": {
+    "direction": {
+     "logits": {
+      "plus": {
+       "tete": [
+        {
+         "id": 94841,
+         "texte": " Trails",
+         "logit": 10.516161
+        },
+        {
+         "id": 3484,
+         "texte": "�",
+         "logit": 10.004639
+        },
+        {
+         "id": 104841,
+         "texte": "독",
+         "logit": 9.866467
+        },
+        {
+         "id": 99461,
+         "texte": "inclusive",
+         "logit": 9.856428
+        },
+        {
+         "id": 112462,
+         "texte": "ادل",
+         "logit": 9.84376
+        },
+        {
+         "id": 32563,
+         "texte": "cko",
+         "logit": 9.691351
+        },
+        {
+         "id": 85352,
+         "texte": "_VC",
+         "logit": 9.605172
+        },
+        {
+         "id": 90595,
+         "texte": "uraa",
+         "logit": 9.227348
+        },
+        {
+         "id": 98440,
+         "texte": "ayas",
+         "logit": 9.175641
+        },
+        {
+         "id": 53440,
+         "texte": "asz",
+         "logit": 9.048614
+        },
+        {
+         "id": 107922,
+         "texte": "رخ",
+         "logit": 9.033924
+        },
+        {
+         "id": 32811,
+         "texte": " TObject",
+         "logit": 9.007919
+        },
+        {
+         "id": 96015,
+         "texte": " queryInterface",
+         "logit": 8.996971
+        },
+        {
+         "id": 112117,
+         "texte": "ustos",
+         "logit": 8.93556
+        },
+        {
+         "id": 93268,
+         "texte": "fdc",
+         "logit": 8.894381
+        },
+        {
+         "id": 71876,
+         "texte": "kich",
+         "logit": 8.796867
+        },
+        {
+         "id": 92808,
+         "texte": "/effects",
+         "logit": 8.747478
+        },
+        {
+         "id": 42836,
+         "texte": "runner",
+         "logit": 8.734194
+        },
+        {
+         "id": 75763,
+         "texte": "_OC",
+         "logit": 8.67965
+        },
+        {
+         "id": 42268,
+         "texte": " Joi",
+         "logit": 8.666853
+        }
+       ],
+       "tete_mots": [
+        {
+         "id": 94841,
+         "texte": " Trails",
+         "logit": 10.516161
+        },
+        {
+         "id": 104841,
+         "texte": "독",
+         "logit": 9.866467
+        },
+        {
+         "id": 99461,
+         "texte": "inclusive",
+         "logit": 9.856428
+        },
+        {
+         "id": 112462,
+         "texte": "ادل",
+         "logit": 9.84376
+        },
+        {
+         "id": 32563,
+         "texte": "cko",
+         "logit": 9.691351
+        },
+        {
+         "id": 90595,
+         "texte": "uraa",
+         "logit": 9.227348
+        },
+        {
+         "id": 98440,
+         "texte": "ayas",
+         "logit": 9.175641
+        },
+        {
+         "id": 53440,
+         "texte": "asz",
+         "logit": 9.048614
+        },
+        {
+         "id": 107922,
+         "texte": "رخ",
+         "logit": 9.033924
+        },
+        {
+         "id": 32811,
+         "texte": " TObject",
+         "logit": 9.007919
+        },
+        {
+         "id": 96015,
+         "texte": " queryInterface",
+         "logit": 8.996971
+        },
+        {
+         "id": 112117,
+         "texte": "ustos",
+         "logit": 8.93556
+        },
+        {
+         "id": 93268,
+         "texte": "fdc",
+         "logit": 8.894381
+        },
+        {
+         "id": 71876,
+         "texte": "kich",
+         "logit": 8.796867
+        },
+        {
+         "id": 42836,
+         "texte": "runner",
+         "logit": 8.734194
+        },
+        {
+         "id": 42268,
+         "texte": " Joi",
+         "logit": 8.666853
+        },
+        {
+         "id": 110440,
+         "texte": "طل",
+         "logit": 8.609587
+        },
+        {
+         "id": 4677,
+         "texte": "block",
+         "logit": 8.602847
+        },
+        {
+         "id": 7031,
+         "texte": "stants",
+         "logit": 8.581593
+        },
+        {
+         "id": 88054,
+         "texte": "erland",
+         "logit": 8.56026
+        }
+       ],
+       "tete_debut_de_mot": [
+        {
+         "id": 94841,
+         "texte": " Trails",
+         "logit": 10.516161
+        },
+        {
+         "id": 32811,
+         "texte": " TObject",
+         "logit": 9.007919
+        },
+        {
+         "id": 96015,
+         "texte": " queryInterface",
+         "logit": 8.996971
+        },
+        {
+         "id": 42268,
+         "texte": " Joi",
+         "logit": 8.666853
+        },
+        {
+         "id": 63271,
+         "texte": " México",
+         "logit": 8.389707
+        },
+        {
+         "id": 80666,
+         "texte": " Bij",
+         "logit": 8.364712
+        },
+        {
+         "id": 48454,
+         "texte": " carte",
+         "logit": 8.166027
+        },
+        {
+         "id": 112277,
+         "texte": " ступ",
+         "logit": 8.037104
+        },
+        {
+         "id": 118825,
+         "texte": " başında",
+         "logit": 7.995142
+        },
+        {
+         "id": 9200,
+         "texte": " critical",
+         "logit": 7.981134
+        },
+        {
+         "id": 13235,
+         "texte": " Medical",
+         "logit": 7.973424
+        },
+        {
+         "id": 37450,
+         "texte": " Rug",
+         "logit": 7.962159
+        },
+        {
+         "id": 2565,
+         "texte": " block",
+         "logit": 7.947993
+        },
+        {
+         "id": 41641,
+         "texte": " eskort",
+         "logit": 7.884061
+        },
+        {
+         "id": 124355,
+         "texte": " kriz",
+         "logit": 7.875898
+        },
+        {
+         "id": 50556,
+         "texte": " Families",
+         "logit": 7.857491
+        },
+        {
+         "id": 50145,
+         "texte": " jobject",
+         "logit": 7.850902
+        },
+        {
+         "id": 12553,
+         "texte": " lic",
+         "logit": 7.842075
+        },
+        {
+         "id": 123707,
+         "texte": " dahi",
+         "logit": 7.785744
+        },
+        {
+         "id": 84867,
+         "texte": " Sug",
+         "logit": 7.720905
+        }
+       ]
+      },
+      "moins": {
+       "tete": [
+        {
+         "id": 21860,
+         "texte": "551",
+         "logit": 9.200459
+        },
+        {
+         "id": 56409,
+         "texte": "quist",
+         "logit": 9.013195
+        },
+        {
+         "id": 572,
+         "texte": "iew",
+         "logit": 8.789459
+        },
+        {
+         "id": 14376,
+         "texte": "LOAT",
+         "logit": 8.29351
+        },
+        {
+         "id": 44353,
+         "texte": "ereal",
+         "logit": 8.095438
+        },
+        {
+         "id": 13914,
+         "texte": " Loc",
+         "logit": 8.036271
+        },
+        {
+         "id": 90298,
+         "texte": "spa",
+         "logit": 8.003057
+        },
+        {
+         "id": 37180,
+         "texte": "adar",
+         "logit": 7.958281
+        },
+        {
+         "id": 69236,
+         "texte": " mains",
+         "logit": 7.957711
+        },
+        {
+         "id": 12651,
+         "texte": " hex",
+         "logit": 7.832467
+        },
+        {
+         "id": 1926,
+         "texte": "ideo",
+         "logit": 7.797986
+        },
+        {
+         "id": 15189,
+         "texte": "315",
+         "logit": 7.731151
+        },
+        {
+         "id": 20217,
+         "texte": " Mini",
+         "logit": 7.697769
+        },
+        {
+         "id": 24551,
+         "texte": "iko",
+         "logit": 7.653641
+        },
+        {
+         "id": 33945,
+         "texte": "vascular",
+         "logit": 7.651843
+        },
+        {
+         "id": 91966,
+         "texte": " coax",
+         "logit": 7.593261
+        },
+        {
+         "id": 42190,
+         "texte": " sidewalk",
+         "logit": 7.54737
+        },
+        {
+         "id": 49604,
+         "texte": "VML",
+         "logit": 7.541615
+        },
+        {
+         "id": 82286,
+         "texte": "aney",
+         "logit": 7.526583
+        },
+        {
+         "id": 10911,
+         "texte": "LOB",
+         "logit": 7.514278
+        }
+       ],
+       "tete_mots": [
+        {
+         "id": 21860,
+         "texte": "551",
+         "logit": 9.200459
+        },
+        {
+         "id": 56409,
+         "texte": "quist",
+         "logit": 9.013195
+        },
+        {
+         "id": 572,
+         "texte": "iew",
+         "logit": 8.789459
+        },
+        {
+         "id": 14376,
+         "texte": "LOAT",
+         "logit": 8.29351
+        },
+        {
+         "id": 44353,
+         "texte": "ereal",
+         "logit": 8.095438
+        },
+        {
+         "id": 13914,
+         "texte": " Loc",
+         "logit": 8.036271
+        },
+        {
+         "id": 90298,
+         "texte": "spa",
+         "logit": 8.003057
+        },
+        {
+         "id": 37180,
+         "texte": "adar",
+         "logit": 7.958281
+        },
+        {
+         "id": 69236,
+         "texte": " mains",
+         "logit": 7.957711
+        },
+        {
+         "id": 12651,
+         "texte": " hex",
+         "logit": 7.832467
+        },
+        {
+         "id": 1926,
+         "texte": "ideo",
+         "logit": 7.797986
+        },
+        {
+         "id": 15189,
+         "texte": "315",
+         "logit": 7.731151
+        },
+        {
+         "id": 20217,
+         "texte": " Mini",
+         "logit": 7.697769
+        },
+        {
+         "id": 24551,
+         "texte": "iko",
+         "logit": 7.653641
+        },
+        {
+         "id": 33945,
+         "texte": "vascular",
+         "logit": 7.651843
+        },
+        {
+         "id": 91966,
+         "texte": " coax",
+         "logit": 7.593261
+        },
+        {
+         "id": 42190,
+         "texte": " sidewalk",
+         "logit": 7.54737
+        },
+        {
+         "id": 49604,
+         "texte": "VML",
+         "logit": 7.541615
+        },
+        {
+         "id": 82286,
+         "texte": "aney",
+         "logit": 7.526583
+        },
+        {
+         "id": 10911,
+         "texte": "LOB",
+         "logit": 7.514278
+        }
+       ],
+       "tete_debut_de_mot": [
+        {
+         "id": 13914,
+         "texte": " Loc",
+         "logit": 8.036271
+        },
+        {
+         "id": 69236,
+         "texte": " mains",
+         "logit": 7.957711
+        },
+        {
+         "id": 12651,
+         "texte": " hex",
+         "logit": 7.832467
+        },
+        {
+         "id": 20217,
+         "texte": " Mini",
+         "logit": 7.697769
+        },
+        {
+         "id": 91966,
+         "texte": " coax",
+         "logit": 7.593261
+        },
+        {
+         "id": 42190,
+         "texte": " sidewalk",
+         "logit": 7.54737
+        },
+        {
+         "id": 56429,
+         "texte": " cavity",
+         "logit": 7.513371
+        },
+        {
+         "id": 31518,
+         "texte": " enrich",
+         "logit": 7.377328
+        },
+        {
+         "id": 31922,
+         "texte": " Formula",
+         "logit": 7.33329
+        },
+        {
+         "id": 13726,
+         "texte": " mini",
+         "logit": 7.306745
+        },
+        {
+         "id": 91758,
+         "texte": " Penal",
+         "logit": 7.222601
+        },
+        {
+         "id": 94639,
+         "texte": " laut",
+         "logit": 7.196194
+        },
+        {
+         "id": 8275,
+         "texte": " slight",
+         "logit": 7.192524
+        },
+        {
+         "id": 21252,
+         "texte": " Sab",
+         "logit": 7.185864
+        },
+        {
+         "id": 42365,
+         "texte": " gum",
+         "logit": 7.171306
+        },
+        {
+         "id": 22154,
+         "texte": " memo",
+         "logit": 7.029261
+        },
+        {
+         "id": 36380,
+         "texte": " patron",
+         "logit": 6.987183
+        },
+        {
+         "id": 35914,
+         "texte": " Spa",
+         "logit": 6.980146
+        },
+        {
+         "id": 10284,
+         "texte": " slightly",
+         "logit": 6.927078
+        },
+        {
+         "id": 89785,
+         "texte": " millennium",
+         "logit": 6.917528
+        }
+       ]
+      },
+      "diagnostics_z": {
+       "tromperie": {
+        "z": 0.2076798653407739,
+        "jetons_concept": 30,
+        "n_concept_tete_plus": 0,
+        "n_concept_tete_moins": 0,
+        "meilleur_rang_plus": 1546,
+        "meilleur_rang_moins": 3584,
+        "isotropes": {
+         "n": 200,
+         "p_haut": 0.3283582089552239,
+         "p_bas": 0.6766169154228856,
+         "p_bilateral": 0.5472636815920398,
+         "z_quantiles_5_50_95": [
+          -0.5106953580519038,
+          0.02360413731870334,
+          0.6016644649933506
+         ]
+        },
+        "planchers": {
+         "statut": "pas de plancher de ce concept à cette couche"
+        }
+       },
+       "enjeux": {
+        "z": 0.3845158791638848,
+        "jetons_concept": 43,
+        "n_concept_tete_plus": 0,
+        "n_concept_tete_moins": 0,
+        "meilleur_rang_plus": 53,
+        "meilleur_rang_moins": 2613,
+        "isotropes": {
+         "n": 200,
+         "p_haut": 0.13432835820895522,
+         "p_bas": 0.8706467661691543,
+         "p_bilateral": 0.22388059701492538,
+         "z_quantiles_5_50_95": [
+          -0.47008932338095033,
+          0.004097543709475621,
+          0.49618037267202697
+         ]
+        },
+        "planchers": {
+         "statut": "pas de plancher de ce concept à cette couche"
+        }
+       }
+      }
+     },
+     "jacobienne": {
+      "plus": {
+       "tete": [
+        {
+         "id": 43108,
+         "texte": "Critical",
+         "logit": 8.688101
+        },
+        {
+         "id": 41440,
+         "texte": " critically",
+         "logit": 8.655928
+        },
+        {
+         "id": 53654,
+         "texte": "Medical",
+         "logit": 8.471085
+        },
+        {
+         "id": 75362,
+         "texte": " nightmares",
+         "logit": 8.443497
+        },
+        {
+         "id": 8249,
+         "texte": " medic",
+         "logit": 8.024282
+        },
+        {
+         "id": 78948,
+         "texte": "_SECURE",
+         "logit": 8.015256
+        },
+        {
+         "id": 74137,
+         "texte": "Safety",
+         "logit": 7.79647
+        },
+        {
+         "id": 33189,
+         "texte": "Multiple",
+         "logit": 7.727547
+        },
+        {
+         "id": 42641,
+         "texte": "critical",
+         "logit": 7.66158
+        },
+        {
+         "id": 13613,
+         "texte": "Med",
+         "logit": 7.564382
+        },
+        {
+         "id": 75225,
+         "texte": " Nightmare",
+         "logit": 7.529909
+        },
+        {
+         "id": 79918,
+         "texte": ".bio",
+         "logit": 7.497929
+        },
+        {
+         "id": 17047,
+         "texte": " governments",
+         "logit": 7.44231
+        },
+        {
+         "id": 102891,
+         "texte": "kup",
+         "logit": 7.385221
+        },
+        {
+         "id": 112462,
+         "texte": "ادل",
+         "logit": 7.380314
+        },
+        {
+         "id": 9200,
+         "texte": " critical",
+         "logit": 7.376283
+        },
+        {
+         "id": 12851,
+         "texte": " Medic",
+         "logit": 7.280104
+        },
+        {
+         "id": 13235,
+         "texte": " Medical",
+         "logit": 7.256811
+        },
+        {
+         "id": 104841,
+         "texte": "독",
+         "logit": 7.124903
+        },
+        {
+         "id": 98770,
+         "texte": " impunity",
+         "logit": 7.111476
+        }
+       ],
+       "tete_mots": [
+        {
+         "id": 43108,
+         "texte": "Critical",
+         "logit": 8.688101
+        },
+        {
+         "id": 41440,
+         "texte": " critically",
+         "logit": 8.655928
+        },
+        {
+         "id": 53654,
+         "texte": "Medical",
+         "logit": 8.471085
+        },
+        {
+         "id": 75362,
+         "texte": " nightmares",
+         "logit": 8.443497
+        },
+        {
+         "id": 8249,
+         "texte": " medic",
+         "logit": 8.024282
+        },
+        {
+         "id": 74137,
+         "texte": "Safety",
+         "logit": 7.79647
+        },
+        {
+         "id": 33189,
+         "texte": "Multiple",
+         "logit": 7.727547
+        },
+        {
+         "id": 42641,
+         "texte": "critical",
+         "logit": 7.66158
+        },
+        {
+         "id": 13613,
+         "texte": "Med",
+         "logit": 7.564382
+        },
+        {
+         "id": 75225,
+         "texte": " Nightmare",
+         "logit": 7.529909
+        },
+        {
+         "id": 17047,
+         "texte": " governments",
+         "logit": 7.44231
+        },
+        {
+         "id": 102891,
+         "texte": "kup",
+         "logit": 7.385221
+        },
+        {
+         "id": 112462,
+         "texte": "ادل",
+         "logit": 7.380314
+        },
+        {
+         "id": 9200,
+         "texte": " critical",
+         "logit": 7.376283
+        },
+        {
+         "id": 12851,
+         "texte": " Medic",
+         "logit": 7.280104
+        },
+        {
+         "id": 13235,
+         "texte": " Medical",
+         "logit": 7.256811
+        },
+        {
+         "id": 104841,
+         "texte": "독",
+         "logit": 7.124903
+        },
+        {
+         "id": 98770,
+         "texte": " impunity",
+         "logit": 7.111476
+        },
+        {
+         "id": 6593,
+         "texte": " medical",
+         "logit": 7.057212
+        },
+        {
+         "id": 88799,
+         "texte": " Governments",
+         "logit": 7.034837
+        }
+       ],
+       "tete_debut_de_mot": [
+        {
+         "id": 41440,
+         "texte": " critically",
+         "logit": 8.655928
+        },
+        {
+         "id": 75362,
+         "texte": " nightmares",
+         "logit": 8.443497
+        },
+        {
+         "id": 8249,
+         "texte": " medic",
+         "logit": 8.024282
+        },
+        {
+         "id": 75225,
+         "texte": " Nightmare",
+         "logit": 7.529909
+        },
+        {
+         "id": 17047,
+         "texte": " governments",
+         "logit": 7.44231
+        },
+        {
+         "id": 9200,
+         "texte": " critical",
+         "logit": 7.376283
+        },
+        {
+         "id": 12851,
+         "texte": " Medic",
+         "logit": 7.280104
+        },
+        {
+         "id": 13235,
+         "texte": " Medical",
+         "logit": 7.256811
+        },
+        {
+         "id": 98770,
+         "texte": " impunity",
+         "logit": 7.111476
+        },
+        {
+         "id": 6593,
+         "texte": " medical",
+         "logit": 7.057212
+        },
+        {
+         "id": 88799,
+         "texte": " Governments",
+         "logit": 7.034837
+        },
+        {
+         "id": 8689,
+         "texte": " families",
+         "logit": 7.007431
+        },
+        {
+         "id": 35761,
+         "texte": " Critical",
+         "logit": 6.942821
+        },
+        {
+         "id": 38911,
+         "texte": " nightmare",
+         "logit": 6.819633
+        },
+        {
+         "id": 39242,
+         "texte": " accountability",
+         "logit": 6.789677
+        },
+        {
+         "id": 7296,
+         "texte": " safety",
+         "logit": 6.69973
+        },
+        {
+         "id": 34616,
+         "texte": " diplomatic",
+         "logit": 6.638406
+        },
+        {
+         "id": 126200,
+         "texte": " खतर",
+         "logit": 6.595895
+        },
+        {
+         "id": 45350,
+         "texte": " fragile",
+         "logit": 6.573967
+        },
+        {
+         "id": 61910,
+         "texte": " DOJ",
+         "logit": 6.494599
+        }
+       ]
+      },
+      "moins": {
+       "tete": [
+        {
+         "id": 13914,
+         "texte": " Loc",
+         "logit": 9.80521
+        },
+        {
+         "id": 56409,
+         "texte": "quist",
+         "logit": 9.536072
+        },
+        {
+         "id": 25385,
+         "texte": " Poll",
+         "logit": 8.795212
+        },
+        {
+         "id": 79511,
+         "texte": "enzhen",
+         "logit": 8.766073
+        },
+        {
+         "id": 41282,
+         "texte": " Parking",
+         "logit": 8.644178
+        },
+        {
+         "id": 25958,
+         "texte": " locals",
+         "logit": 8.638563
+        },
+        {
+         "id": 6463,
+         "texte": " nor",
+         "logit": 8.610651
+        },
+        {
+         "id": 59589,
+         "texte": " municipalities",
+         "logit": 8.594256
+        },
+        {
+         "id": 88153,
+         "texte": " Fuji",
+         "logit": 8.591218
+        },
+        {
+         "id": 4051,
+         "texte": " decl",
+         "logit": 8.500843
+        },
+        {
+         "id": 42365,
+         "texte": " gum",
+         "logit": 8.464763
+        },
+        {
+         "id": 57918,
+         "texte": " municipality",
+         "logit": 8.421906
+        },
+        {
+         "id": 16036,
+         "texte": " urban",
+         "logit": 8.41824
+        },
+        {
+         "id": 13726,
+         "texte": " mini",
+         "logit": 8.341257
+        },
+        {
+         "id": 38292,
+         "texte": " annoy",
+         "logit": 8.304913
+        },
+        {
+         "id": 8170,
+         "texte": " Nor",
+         "logit": 8.238004
+        },
+        {
+         "id": 79375,
+         "texte": " Taxi",
+         "logit": 8.150314
+        },
+        {
+         "id": 20217,
+         "texte": " Mini",
+         "logit": 8.135569
+        },
+        {
+         "id": 8522,
+         "texte": " applications",
+         "logit": 8.110495
+        },
+        {
+         "id": 30977,
+         "texte": "uffy",
+         "logit": 8.037696
+        }
+       ],
+       "tete_mots": [
+        {
+         "id": 13914,
+         "texte": " Loc",
+         "logit": 9.80521
+        },
+        {
+         "id": 56409,
+         "texte": "quist",
+         "logit": 9.536072
+        },
+        {
+         "id": 25385,
+         "texte": " Poll",
+         "logit": 8.795212
+        },
+        {
+         "id": 79511,
+         "texte": "enzhen",
+         "logit": 8.766073
+        },
+        {
+         "id": 41282,
+         "texte": " Parking",
+         "logit": 8.644178
+        },
+        {
+         "id": 25958,
+         "texte": " locals",
+         "logit": 8.638563
+        },
+        {
+         "id": 6463,
+         "texte": " nor",
+         "logit": 8.610651
+        },
+        {
+         "id": 59589,
+         "texte": " municipalities",
+         "logit": 8.594256
+        },
+        {
+         "id": 88153,
+         "texte": " Fuji",
+         "logit": 8.591218
+        },
+        {
+         "id": 4051,
+         "texte": " decl",
+         "logit": 8.500843
+        },
+        {
+         "id": 42365,
+         "texte": " gum",
+         "logit": 8.464763
+        },
+        {
+         "id": 57918,
+         "texte": " municipality",
+         "logit": 8.421906
+        },
+        {
+         "id": 16036,
+         "texte": " urban",
+         "logit": 8.41824
+        },
+        {
+         "id": 13726,
+         "texte": " mini",
+         "logit": 8.341257
+        },
+        {
+         "id": 38292,
+         "texte": " annoy",
+         "logit": 8.304913
+        },
+        {
+         "id": 8170,
+         "texte": " Nor",
+         "logit": 8.238004
+        },
+        {
+         "id": 79375,
+         "texte": " Taxi",
+         "logit": 8.150314
+        },
+        {
+         "id": 20217,
+         "texte": " Mini",
+         "logit": 8.135569
+        },
+        {
+         "id": 8522,
+         "texte": " applications",
+         "logit": 8.110495
+        },
+        {
+         "id": 30977,
+         "texte": "uffy",
+         "logit": 8.037696
+        }
+       ],
+       "tete_debut_de_mot": [
+        {
+         "id": 13914,
+         "texte": " Loc",
+         "logit": 9.80521
+        },
+        {
+         "id": 25385,
+         "texte": " Poll",
+         "logit": 8.795212
+        },
+        {
+         "id": 41282,
+         "texte": " Parking",
+         "logit": 8.644178
+        },
+        {
+         "id": 25958,
+         "texte": " locals",
+         "logit": 8.638563
+        },
+        {
+         "id": 6463,
+         "texte": " nor",
+         "logit": 8.610651
+        },
+        {
+         "id": 59589,
+         "texte": " municipalities",
+         "logit": 8.594256
+        },
+        {
+         "id": 88153,
+         "texte": " Fuji",
+         "logit": 8.591218
+        },
+        {
+         "id": 4051,
+         "texte": " decl",
+         "logit": 8.500843
+        },
+        {
+         "id": 42365,
+         "texte": " gum",
+         "logit": 8.464763
+        },
+        {
+         "id": 57918,
+         "texte": " municipality",
+         "logit": 8.421906
+        },
+        {
+         "id": 16036,
+         "texte": " urban",
+         "logit": 8.41824
+        },
+        {
+         "id": 13726,
+         "texte": " mini",
+         "logit": 8.341257
+        },
+        {
+         "id": 38292,
+         "texte": " annoy",
+         "logit": 8.304913
+        },
+        {
+         "id": 8170,
+         "texte": " Nor",
+         "logit": 8.238004
+        },
+        {
+         "id": 79375,
+         "texte": " Taxi",
+         "logit": 8.150314
+        },
+        {
+         "id": 20217,
+         "texte": " Mini",
+         "logit": 8.135569
+        },
+        {
+         "id": 8522,
+         "texte": " applications",
+         "logit": 8.110495
+        },
+        {
+         "id": 57863,
+         "texte": " miniature",
+         "logit": 8.01473
+        },
+        {
+         "id": 8949,
+         "texte": " Local",
+         "logit": 8.013371
+        },
+        {
+         "id": 73945,
+         "texte": " directional",
+         "logit": 8.008259
+        }
+       ]
+      },
+      "diagnostics_z": {
+       "tromperie": {
+        "z": 0.08074107645404707,
+        "jetons_concept": 30,
+        "n_concept_tete_plus": 0,
+        "n_concept_tete_moins": 0,
+        "meilleur_rang_plus": 3458,
+        "meilleur_rang_moins": 4526,
+        "isotropes": {
+         "n": 200,
+         "p_haut": 0.46766169154228854,
+         "p_bas": 0.5373134328358209,
+         "p_bilateral": 0.8706467661691543,
+         "z_quantiles_5_50_95": [
+          -0.8370253660667993,
+          0.014029219619623461,
+          0.8921812548684301
+         ]
+        },
+        "planchers": {
+         "statut": "pas de plancher de ce concept à cette couche"
+        }
+       },
+       "enjeux": {
+        "z": 1.3297711886475274,
+        "jetons_concept": 43,
+        "n_concept_tete_plus": 1,
+        "n_concept_tete_moins": 0,
+        "meilleur_rang_plus": 16,
+        "meilleur_rang_moins": 12993,
+        "isotropes": {
+         "n": 200,
+         "p_haut": 0.004975124378109453,
+         "p_bas": 1.0,
+         "p_bilateral": 0.009950248756218905,
+         "z_quantiles_5_50_95": [
+          -0.6024667063923409,
+          0.05766987310377064,
+          0.7212865033395582
+         ]
+        },
+        "planchers": {
+         "statut": "pas de plancher de ce concept à cette couche"
+        }
+       }
+      }
+     },
+     "recouvrement": {
+      "plus": {
+       "intersection": 2,
+       "jaccard": 0.052632,
+       "communs": [
+        "ادل",
+        "독"
+       ]
+      },
+      "moins": {
+       "intersection": 3,
+       "jaccard": 0.081081,
+       "communs": [
+        " Loc",
+        " Mini",
+        "quist"
+       ]
+      },
+      "plus_mots": {
+       "intersection": 2,
+       "jaccard": 0.052632,
+       "communs": [
+        "ادل",
+        "독"
+       ]
+      },
+      "moins_mots": {
+       "intersection": 3,
+       "jaccard": 0.081081,
+       "communs": [
+        " Loc",
+        " Mini",
+        "quist"
+       ]
+      },
+      "plus_debut_de_mot": {
+       "intersection": 2,
+       "jaccard": 0.052632,
+       "communs": [
+        " Medical",
+        " critical"
+       ]
+      },
+      "cosinus_logits_centres": 0.7263202231923314
+     }
+    }
+   }
+  },
+  {
+   "nom": "tromperie-difference_moyennes-c7",
+   "concept": "tromperie",
+   "principale": false,
+   "famille": "difference_moyennes",
+   "couche": 7,
+   "classe": "SondeLineaireJetons",
+   "agregation": "max",
+   "empreinte": "ed464425a3d54cac75570f16f73e95f6d2eca599ee562d56e96f9d9186f2ffde",
+   "biais_b": -0.1872078802786632,
+   "norme_w": 0.4925659424062394,
+   "norme_Jw_sur_norme_w": 0.6990592075289268,
+   "cosinus_w_Jw": 0.0707756608401074,
+   "regle": {
+    "logits": {
+     "S": 0,
+     "isotropes": {
+      "n": 200,
+      "quantile_0_99": 0.0,
+      "p_haut_diagnostic": 1.0,
+      "comptes": {
+       "0": 199,
+       "1": 1
+      }
+     },
+     "planchers": {
+      "statut": "absents à cette couche pour ce concept"
+     },
+     "comptes_par_concept_diagnostic": {
+      "tromperie": 0,
+      "enjeux": 0
+     },
+     "statut": "descriptif, hors règle primaire ; planchers absents : isotropes seules",
+     "verdict_descriptif": "non cohérent"
+    },
+    "jacobienne": {
+     "S": 0,
+     "isotropes": {
+      "n": 200,
+      "quantile_0_99": 1.0,
+      "p_haut_diagnostic": 1.0,
+      "comptes": {
+       "0": 197,
+       "1": 3
+      }
+     },
+     "planchers": {
+      "statut": "absents à cette couche pour ce concept"
+     },
+     "comptes_par_concept_diagnostic": {
+      "tromperie": 0,
+      "enjeux": 0
+     },
+     "statut": "descriptif, hors règle primaire ; planchers absents : isotropes seules",
+     "verdict_descriptif": "non cohérent"
+    }
+   },
+   "variantes": {
+    "direction": {
+     "logits": {
+      "plus": {
+       "tete": [
+        {
+         "id": 115766,
+         "texte": "ovol",
+         "logit": 10.330297
+        },
+        {
+         "id": 27825,
+         "texte": " Nin",
+         "logit": 9.927197
+        },
+        {
+         "id": 112163,
+         "texte": "敏",
+         "logit": 9.51601
+        },
+        {
+         "id": 19594,
+         "texte": "ATEG",
+         "logit": 9.171724
+        },
+        {
+         "id": 12980,
+         "texte": " Mono",
+         "logit": 8.79888
+        },
+        {
+         "id": 76742,
+         "texte": "_handling",
+         "logit": 8.673498
+        },
+        {
+         "id": 41523,
+         "texte": "mdi",
+         "logit": 8.628972
+        },
+        {
+         "id": 107724,
+         "texte": "kové",
+         "logit": 8.480319
+        },
+        {
+         "id": 29037,
+         "texte": "etti",
+         "logit": 8.442315
+        },
+        {
+         "id": 56629,
+         "texte": "IGIN",
+         "logit": 8.318275
+        },
+        {
+         "id": 65717,
+         "texte": " Aires",
+         "logit": 8.281797
+        },
+        {
+         "id": 118644,
+         "texte": "σκ",
+         "logit": 8.277207
+        },
+        {
+         "id": 57671,
+         "texte": "duk",
+         "logit": 8.185492
+        },
+        {
+         "id": 42842,
+         "texte": "enderror",
+         "logit": 8.181512
+        },
+        {
+         "id": 109793,
+         "texte": "ーナ",
+         "logit": 8.045956
+        },
+        {
+         "id": 7717,
+         "texte": "upt",
+         "logit": 8.014965
+        },
+        {
+         "id": 45295,
+         "texte": " pok",
+         "logit": 7.963481
+        },
+        {
+         "id": 95819,
+         "texte": " Agility",
+         "logit": 7.919315
+        },
+        {
+         "id": 66557,
+         "texte": " pulses",
+         "logit": 7.856755
+        },
+        {
+         "id": 57435,
+         "texte": " rtn",
+         "logit": 7.854806
+        }
+       ],
+       "tete_mots": [
+        {
+         "id": 115766,
+         "texte": "ovol",
+         "logit": 10.330297
+        },
+        {
+         "id": 27825,
+         "texte": " Nin",
+         "logit": 9.927197
+        },
+        {
+         "id": 112163,
+         "texte": "敏",
+         "logit": 9.51601
+        },
+        {
+         "id": 19594,
+         "texte": "ATEG",
+         "logit": 9.171724
+        },
+        {
+         "id": 12980,
+         "texte": " Mono",
+         "logit": 8.79888
+        },
+        {
+         "id": 41523,
+         "texte": "mdi",
+         "logit": 8.628972
+        },
+        {
+         "id": 107724,
+         "texte": "kové",
+         "logit": 8.480319
+        },
+        {
+         "id": 29037,
+         "texte": "etti",
+         "logit": 8.442315
+        },
+        {
+         "id": 56629,
+         "texte": "IGIN",
+         "logit": 8.318275
+        },
+        {
+         "id": 65717,
+         "texte": " Aires",
+         "logit": 8.281797
+        },
+        {
+         "id": 118644,
+         "texte": "σκ",
+         "logit": 8.277207
+        },
+        {
+         "id": 57671,
+         "texte": "duk",
+         "logit": 8.185492
+        },
+        {
+         "id": 42842,
+         "texte": "enderror",
+         "logit": 8.181512
+        },
+        {
+         "id": 109793,
+         "texte": "ーナ",
+         "logit": 8.045956
+        },
+        {
+         "id": 7717,
+         "texte": "upt",
+         "logit": 8.014965
+        },
+        {
+         "id": 45295,
+         "texte": " pok",
+         "logit": 7.963481
+        },
+        {
+         "id": 95819,
+         "texte": " Agility",
+         "logit": 7.919315
+        },
+        {
+         "id": 66557,
+         "texte": " pulses",
+         "logit": 7.856755
+        },
+        {
+         "id": 57435,
+         "texte": " rtn",
+         "logit": 7.854806
+        },
+        {
+         "id": 116827,
+         "texte": "ереч",
+         "logit": 7.815286
+        }
+       ],
+       "tete_debut_de_mot": [
+        {
+         "id": 27825,
+         "texte": " Nin",
+         "logit": 9.927197
+        },
+        {
+         "id": 12980,
+         "texte": " Mono",
+         "logit": 8.79888
+        },
+        {
+         "id": 65717,
+         "texte": " Aires",
+         "logit": 8.281797
+        },
+        {
+         "id": 45295,
+         "texte": " pok",
+         "logit": 7.963481
+        },
+        {
+         "id": 95819,
+         "texte": " Agility",
+         "logit": 7.919315
+        },
+        {
+         "id": 66557,
+         "texte": " pulses",
+         "logit": 7.856755
+        },
+        {
+         "id": 57435,
+         "texte": " rtn",
+         "logit": 7.854806
+        },
+        {
+         "id": 38857,
+         "texte": " xsi",
+         "logit": 7.618375
+        },
+        {
+         "id": 41502,
+         "texte": " Bid",
+         "logit": 7.454929
+        },
+        {
+         "id": 11234,
+         "texte": " Ange",
+         "logit": 7.21581
+        },
+        {
+         "id": 70346,
+         "texte": " Sabb",
+         "logit": 7.084907
+        },
+        {
+         "id": 90477,
+         "texte": " Angelo",
+         "logit": 6.972795
+        },
+        {
+         "id": 70009,
+         "texte": " mocks",
+         "logit": 6.953064
+        },
+        {
+         "id": 40774,
+         "texte": " mono",
+         "logit": 6.94534
+        },
+        {
+         "id": 36992,
+         "texte": " Thu",
+         "logit": 6.944863
+        },
+        {
+         "id": 13790,
+         "texte": " linear",
+         "logit": 6.857365
+        },
+        {
+         "id": 29363,
+         "texte": " Linear",
+         "logit": 6.760683
+        },
+        {
+         "id": 70907,
+         "texte": " Piper",
+         "logit": 6.733451
+        },
+        {
+         "id": 83472,
+         "texte": " createSelector",
+         "logit": 6.71899
+        },
+        {
+         "id": 48581,
+         "texte": " hurd",
+         "logit": 6.705581
+        }
+       ]
+      },
+      "moins": {
+       "tete": [
+        {
+         "id": 21511,
+         "texte": "486",
+         "logit": 10.011238
+        },
+        {
+         "id": 46104,
+         "texte": "rieve",
+         "logit": 9.378806
+        },
+        {
+         "id": 40658,
+         "texte": "atra",
+         "logit": 9.278769
+        },
+        {
+         "id": 58641,
+         "texte": "abus",
+         "logit": 9.197741
+        },
+        {
+         "id": 91602,
+         "texte": "vore",
+         "logit": 9.177999
+        },
+        {
+         "id": 121246,
+         "texte": " Zd",
+         "logit": 8.710971
+        },
+        {
+         "id": 73976,
+         "texte": "jid",
+         "logit": 8.685994
+        },
+        {
+         "id": 7379,
+         "texte": "rie",
+         "logit": 8.568309
+        },
+        {
+         "id": 94138,
+         "texte": "loff",
+         "logit": 8.508968
+        },
+        {
+         "id": 38131,
+         "texte": " frau",
+         "logit": 8.317851
+        },
+        {
+         "id": 22144,
+         "texte": "issa",
+         "logit": 8.296642
+        },
+        {
+         "id": 79426,
+         "texte": "imu",
+         "logit": 8.265767
+        },
+        {
+         "id": 45597,
+         "texte": "ubar",
+         "logit": 8.057543
+        },
+        {
+         "id": 72660,
+         "texte": "linger",
+         "logit": 7.967732
+        },
+        {
+         "id": 34395,
+         "texte": "rique",
+         "logit": 7.957828
+        },
+        {
+         "id": 61454,
+         "texte": "quete",
+         "logit": 7.880605
+        },
+        {
+         "id": 94976,
+         "texte": "leck",
+         "logit": 7.843775
+        },
+        {
+         "id": 1184,
+         "texte": "ople",
+         "logit": 7.82671
+        },
+        {
+         "id": 12188,
+         "texte": "OU",
+         "logit": 7.812365
+        },
+        {
+         "id": 82000,
+         "texte": ".scalablytyped",
+         "logit": 7.78428
+        }
+       ],
+       "tete_mots": [
+        {
+         "id": 21511,
+         "texte": "486",
+         "logit": 10.011238
+        },
+        {
+         "id": 46104,
+         "texte": "rieve",
+         "logit": 9.378806
+        },
+        {
+         "id": 40658,
+         "texte": "atra",
+         "logit": 9.278769
+        },
+        {
+         "id": 58641,
+         "texte": "abus",
+         "logit": 9.197741
+        },
+        {
+         "id": 91602,
+         "texte": "vore",
+         "logit": 9.177999
+        },
+        {
+         "id": 121246,
+         "texte": " Zd",
+         "logit": 8.710971
+        },
+        {
+         "id": 73976,
+         "texte": "jid",
+         "logit": 8.685994
+        },
+        {
+         "id": 7379,
+         "texte": "rie",
+         "logit": 8.568309
+        },
+        {
+         "id": 94138,
+         "texte": "loff",
+         "logit": 8.508968
+        },
+        {
+         "id": 38131,
+         "texte": " frau",
+         "logit": 8.317851
+        },
+        {
+         "id": 22144,
+         "texte": "issa",
+         "logit": 8.296642
+        },
+        {
+         "id": 79426,
+         "texte": "imu",
+         "logit": 8.265767
+        },
+        {
+         "id": 45597,
+         "texte": "ubar",
+         "logit": 8.057543
+        },
+        {
+         "id": 72660,
+         "texte": "linger",
+         "logit": 7.967732
+        },
+        {
+         "id": 34395,
+         "texte": "rique",
+         "logit": 7.957828
+        },
+        {
+         "id": 61454,
+         "texte": "quete",
+         "logit": 7.880605
+        },
+        {
+         "id": 94976,
+         "texte": "leck",
+         "logit": 7.843775
+        },
+        {
+         "id": 1184,
+         "texte": "ople",
+         "logit": 7.82671
+        },
+        {
+         "id": 12188,
+         "texte": "OU",
+         "logit": 7.812365
+        },
+        {
+         "id": 28657,
+         "texte": "ropa",
+         "logit": 7.768655
+        }
+       ],
+       "tete_debut_de_mot": [
+        {
+         "id": 121246,
+         "texte": " Zd",
+         "logit": 8.710971
+        },
+        {
+         "id": 38131,
+         "texte": " frau",
+         "logit": 8.317851
+        },
+        {
+         "id": 60402,
+         "texte": " Vie",
+         "logit": 7.652676
+        },
+        {
+         "id": 55008,
+         "texte": " gü",
+         "logit": 7.595655
+        },
+        {
+         "id": 47153,
+         "texte": " ż",
+         "logit": 7.566289
+        },
+        {
+         "id": 50492,
+         "texte": " Cave",
+         "logit": 7.525136
+        },
+        {
+         "id": 61858,
+         "texte": " saddle",
+         "logit": 7.459405
+        },
+        {
+         "id": 71136,
+         "texte": " Laud",
+         "logit": 7.39887
+        },
+        {
+         "id": 41135,
+         "texte": " CW",
+         "logit": 7.385444
+        },
+        {
+         "id": 24416,
+         "texte": " Schedule",
+         "logit": 7.369826
+        },
+        {
+         "id": 71307,
+         "texte": " SKF",
+         "logit": 7.209732
+        },
+        {
+         "id": 61406,
+         "texte": " Qualified",
+         "logit": 7.189281
+        },
+        {
+         "id": 92014,
+         "texte": " Tears",
+         "logit": 6.981138
+        },
+        {
+         "id": 75878,
+         "texte": " mec",
+         "logit": 6.945341
+        },
+        {
+         "id": 45859,
+         "texte": " Scheduler",
+         "logit": 6.90417
+        },
+        {
+         "id": 29937,
+         "texte": " Gram",
+         "logit": 6.831772
+        },
+        {
+         "id": 89652,
+         "texte": " TERM",
+         "logit": 6.810171
+        },
+        {
+         "id": 23163,
+         "texte": " poster",
+         "logit": 6.790148
+        },
+        {
+         "id": 74465,
+         "texte": " Confidential",
+         "logit": 6.753149
+        },
+        {
+         "id": 13520,
+         "texte": " ourselves",
+         "logit": 6.676474
+        }
+       ]
+      },
+      "diagnostics_z": {
+       "tromperie": {
+        "z": -0.15885130558564017,
+        "jetons_concept": 30,
+        "n_concept_tete_plus": 0,
+        "n_concept_tete_moins": 0,
+        "meilleur_rang_plus": 8103,
+        "meilleur_rang_moins": 1358,
+        "isotropes": {
+         "n": 200,
+         "p_haut": 0.6517412935323383,
+         "p_bas": 0.35323383084577115,
+         "p_bilateral": 0.6716417910447762,
+         "z_quantiles_5_50_95": [
+          -0.6118727956236102,
+          0.016223286728834874,
+          0.5415618606004464
+         ]
+        },
+        "planchers": {
+         "statut": "pas de plancher de ce concept à cette couche"
+        }
+       },
+       "enjeux": {
+        "z": -0.08735986212893843,
+        "jetons_concept": 43,
+        "n_concept_tete_plus": 0,
+        "n_concept_tete_moins": 0,
+        "meilleur_rang_plus": 1355,
+        "meilleur_rang_moins": 3073,
+        "isotropes": {
+         "n": 200,
+         "p_haut": 0.6218905472636815,
+         "p_bas": 0.38308457711442784,
+         "p_bilateral": 0.7860696517412935,
+         "z_quantiles_5_50_95": [
+          -0.5012575749485026,
+          -0.02233065734693602,
+          0.49453859015986973
+         ]
+        },
+        "planchers": {
+         "statut": "pas de plancher de ce concept à cette couche"
+        }
+       }
+      }
+     },
+     "jacobienne": {
+      "plus": {
+       "tete": [
+        {
+         "id": 4194,
+         "texte": " ",
+         "logit": 14.722828
+        },
+        {
+         "id": 9421,
+         "texte": "  ",
+         "logit": 13.273394
+        },
+        {
+         "id": 17529,
+         "texte": "  ",
+         "logit": 11.775934
+        },
+        {
+         "id": 1054,
+         "texte": " “",
+         "logit": 11.379461
+        },
+        {
+         "id": 104462,
+         "texte": "                ",
+         "logit": 11.036379
+        },
+        {
+         "id": 5879,
+         "texte": "­",
+         "logit": 10.930676
+        },
+        {
+         "id": 27179,
+         "texte": " (“",
+         "logit": 10.874589
+        },
+        {
+         "id": 9787,
+         "texte": " ·",
+         "logit": 10.775831
+        },
+        {
+         "id": 320,
+         "texte": " (",
+         "logit": 10.617714
+        },
+        {
+         "id": 46493,
+         "texte": "   ",
+         "logit": 10.612738
+        },
+        {
+         "id": 46549,
+         "texte": "        ",
+         "logit": 10.605019
+        },
+        {
+         "id": 2345,
+         "texte": "—",
+         "logit": 10.547902
+        },
+        {
+         "id": 33595,
+         "texte": " �",
+         "logit": 10.463615
+        },
+        {
+         "id": 115922,
+         "texte": "                                ",
+         "logit": 10.276459
+        },
+        {
+         "id": 7083,
+         "texte": " £",
+         "logit": 10.216568
+        },
+        {
+         "id": 2188,
+         "texte": " �",
+         "logit": 10.047678
+        },
+        {
+         "id": 50955,
+         "texte": " ­",
+         "logit": 9.941931
+        },
+        {
+         "id": 110029,
+         "texte": "      ",
+         "logit": 9.898557
+        },
+        {
+         "id": 6,
+         "texte": "'",
+         "logit": 9.876848
+        },
+        {
+         "id": 109719,
+         "texte": "     ",
+         "logit": 9.863823
+        }
+       ],
+       "tete_mots": [
+        {
+         "id": 68,
+         "texte": "e",
+         "logit": 9.767024
+        },
+        {
+         "id": 281,
+         "texte": " p",
+         "logit": 9.646838
+        },
+        {
+         "id": 326,
+         "texte": " l",
+         "logit": 9.390304
+        },
+        {
+         "id": 384,
+         "texte": " e",
+         "logit": 9.362205
+        },
+        {
+         "id": 259,
+         "texte": " t",
+         "logit": 8.911988
+        },
+        {
+         "id": 75,
+         "texte": "l",
+         "logit": 8.890827
+        },
+        {
+         "id": 293,
+         "texte": " b",
+         "logit": 8.792898
+        },
+        {
+         "id": 436,
+         "texte": " r",
+         "logit": 8.780376
+        },
+        {
+         "id": 83,
+         "texte": "t",
+         "logit": 8.722082
+        },
+        {
+         "id": 270,
+         "texte": " th",
+         "logit": 8.708525
+        },
+        {
+         "id": 64,
+         "texte": "a",
+         "logit": 8.604866
+        },
+        {
+         "id": 348,
+         "texte": " v",
+         "logit": 8.437485
+        },
+        {
+         "id": 16632,
+         "texte": " merely",
+         "logit": 8.43556
+        },
+        {
+         "id": 308,
+         "texte": " n",
+         "logit": 8.432895
+        },
+        {
+         "id": 16,
+         "texte": "1",
+         "logit": 8.429365
+        },
+        {
+         "id": 73352,
+         "texte": " tion",
+         "logit": 8.424633
+        },
+        {
+         "id": 99781,
+         "texte": " manoe",
+         "logit": 8.421469
+        },
+        {
+         "id": 70960,
+         "texte": " splendid",
+         "logit": 8.327465
+        },
+        {
+         "id": 88,
+         "texte": "y",
+         "logit": 8.295862
+        },
+        {
+         "id": 274,
+         "texte": " s",
+         "logit": 8.29537
+        }
+       ],
+       "tete_debut_de_mot": [
+        {
+         "id": 281,
+         "texte": " p",
+         "logit": 9.646838
+        },
+        {
+         "id": 326,
+         "texte": " l",
+         "logit": 9.390304
+        },
+        {
+         "id": 384,
+         "texte": " e",
+         "logit": 9.362205
+        },
+        {
+         "id": 259,
+         "texte": " t",
+         "logit": 8.911988
+        },
+        {
+         "id": 293,
+         "texte": " b",
+         "logit": 8.792898
+        },
+        {
+         "id": 436,
+         "texte": " r",
+         "logit": 8.780376
+        },
+        {
+         "id": 270,
+         "texte": " th",
+         "logit": 8.708525
+        },
+        {
+         "id": 348,
+         "texte": " v",
+         "logit": 8.437485
+        },
+        {
+         "id": 16632,
+         "texte": " merely",
+         "logit": 8.43556
+        },
+        {
+         "id": 308,
+         "texte": " n",
+         "logit": 8.432895
+        },
+        {
+         "id": 73352,
+         "texte": " tion",
+         "logit": 8.424633
+        },
+        {
+         "id": 99781,
+         "texte": " manoe",
+         "logit": 8.421469
+        },
+        {
+         "id": 70960,
+         "texte": " splendid",
+         "logit": 8.327465
+        },
+        {
+         "id": 274,
+         "texte": " s",
+         "logit": 8.29537
+        },
+        {
+         "id": 264,
+         "texte": " a",
+         "logit": 8.188067
+        },
+        {
+         "id": 282,
+         "texte": " f",
+         "logit": 8.172328
+        },
+        {
+         "id": 297,
+         "texte": " o",
+         "logit": 8.143774
+        },
+        {
+         "id": 19214,
+         "texte": " favourite",
+         "logit": 8.13108
+        },
+        {
+         "id": 296,
+         "texte": " m",
+         "logit": 8.073099
+        },
+        {
+         "id": 30958,
+         "texte": " ie",
+         "logit": 8.060537
+        }
+       ]
+      },
+      "moins": {
+       "tete": [
+        {
+         "id": 93479,
+         "texte": "?\"\n\n\n\n",
+         "logit": 8.350398
+        },
+        {
+         "id": 75000,
+         "texte": " ...\n\n\n\n",
+         "logit": 8.011203
+        },
+        {
+         "id": 66679,
+         "texte": "…\n\n\n",
+         "logit": 7.659715
+        },
+        {
+         "id": 79693,
+         "texte": "_:*",
+         "logit": 7.626659
+        },
+        {
+         "id": 67998,
+         "texte": "。\\",
+         "logit": 7.581814
+        },
+        {
+         "id": 73329,
+         "texte": "…\n\n\n\n",
+         "logit": 7.490246
+        },
+        {
+         "id": 27915,
+         "texte": "_https",
+         "logit": 7.489404
+        },
+        {
+         "id": 88136,
+         "texte": "...\n\n\n\n\n\n",
+         "logit": 7.323178
+        },
+        {
+         "id": 62757,
+         "texte": "...]\n\n",
+         "logit": 7.259092
+        },
+        {
+         "id": 103273,
+         "texte": " �",
+         "logit": 7.231219
+        },
+        {
+         "id": 70227,
+         "texte": "-\r\n",
+         "logit": 7.189672
+        },
+        {
+         "id": 116494,
+         "texte": "데이트",
+         "logit": 7.105273
+        },
+        {
+         "id": 48586,
+         "texte": "...\"\n\n",
+         "logit": 7.103081
+        },
+        {
+         "id": 80752,
+         "texte": "ReLU",
+         "logit": 7.093251
+        },
+        {
+         "id": 52130,
+         "texte": "...\n\n\n",
+         "logit": 7.068501
+        },
+        {
+         "id": 42989,
+         "texte": "steder",
+         "logit": 6.965403
+        },
+        {
+         "id": 52241,
+         "texte": " \n\t\n",
+         "logit": 6.922877
+        },
+        {
+         "id": 107588,
+         "texte": "นวน",
+         "logit": 6.889445
+        },
+        {
+         "id": 35873,
+         "texte": "._\n\n",
+         "logit": 6.88803
+        },
+        {
+         "id": 69107,
+         "texte": " Kardashian",
+         "logit": 6.800356
+        }
+       ],
+       "tete_mots": [
+        {
+         "id": 116494,
+         "texte": "데이트",
+         "logit": 7.105273
+        },
+        {
+         "id": 80752,
+         "texte": "ReLU",
+         "logit": 7.093251
+        },
+        {
+         "id": 42989,
+         "texte": "steder",
+         "logit": 6.965403
+        },
+        {
+         "id": 107588,
+         "texte": "นวน",
+         "logit": 6.889445
+        },
+        {
+         "id": 69107,
+         "texte": " Kardashian",
+         "logit": 6.800356
+        },
+        {
+         "id": 123689,
+         "texte": "τέλε",
+         "logit": 6.789127
+        },
+        {
+         "id": 63024,
+         "texte": " SpaceX",
+         "logit": 6.727654
+        },
+        {
+         "id": 124586,
+         "texte": "原始",
+         "logit": 6.658559
+        },
+        {
+         "id": 114332,
+         "texte": "页面存档备份",
+         "logit": 6.587401
+        },
+        {
+         "id": 93421,
+         "texte": "arkin",
+         "logit": 6.587324
+        },
+        {
+         "id": 125914,
+         "texte": " मतलब",
+         "logit": 6.574356
+        },
+        {
+         "id": 112355,
+         "texte": "合作",
+         "logit": 6.482353
+        },
+        {
+         "id": 108396,
+         "texte": "科学",
+         "logit": 6.482311
+        },
+        {
+         "id": 115490,
+         "texte": " GWei",
+         "logit": 6.473933
+        },
+        {
+         "id": 118480,
+         "texte": "胎",
+         "logit": 6.464977
+        },
+        {
+         "id": 124235,
+         "texte": "法国",
+         "logit": 6.40958
+        },
+        {
+         "id": 51376,
+         "texte": "marvin",
+         "logit": 6.356095
+        },
+        {
+         "id": 13948,
+         "texte": "icode",
+         "logit": 6.201074
+        },
+        {
+         "id": 117178,
+         "texte": "肥",
+         "logit": 6.158668
+        },
+        {
+         "id": 116880,
+         "texte": "重複",
+         "logit": 6.139319
+        }
+       ],
+       "tete_debut_de_mot": [
+        {
+         "id": 69107,
+         "texte": " Kardashian",
+         "logit": 6.800356
+        },
+        {
+         "id": 63024,
+         "texte": " SpaceX",
+         "logit": 6.727654
+        },
+        {
+         "id": 125914,
+         "texte": " मतलब",
+         "logit": 6.574356
+        },
+        {
+         "id": 115490,
+         "texte": " GWei",
+         "logit": 6.473933
+        },
+        {
+         "id": 81069,
+         "texte": " globalization",
+         "logit": 6.061286
+        },
+        {
+         "id": 106944,
+         "texte": " других",
+         "logit": 5.916599
+        },
+        {
+         "id": 105574,
+         "texte": " больше",
+         "logit": 5.871752
+        },
+        {
+         "id": 61201,
+         "texte": " Airbnb",
+         "logit": 5.820004
+        },
+        {
+         "id": 124028,
+         "texte": " पहच",
+         "logit": 5.809931
+        },
+        {
+         "id": 108991,
+         "texte": " 네이트",
+         "logit": 5.780351
+        },
+        {
+         "id": 125999,
+         "texte": " международ",
+         "logit": 5.761899
+        },
+        {
+         "id": 126109,
+         "texte": " คำ",
+         "logit": 5.759854
+        },
+        {
+         "id": 119874,
+         "texte": " разных",
+         "logit": 5.735907
+        },
+        {
+         "id": 115331,
+         "texte": " تقس",
+         "logit": 5.734281
+        },
+        {
+         "id": 59817,
+         "texte": " Kanye",
+         "logit": 5.685403
+        },
+        {
+         "id": 81943,
+         "texte": " newSize",
+         "logit": 5.684293
+        },
+        {
+         "id": 111000,
+         "texte": " अलग",
+         "logit": 5.684134
+        },
+        {
+         "id": 116371,
+         "texte": " ژان",
+         "logit": 5.656063
+        },
+        {
+         "id": 56212,
+         "texte": " UObject",
+         "logit": 5.635071
+        },
+        {
+         "id": 110974,
+         "texte": " دلیل",
+         "logit": 5.617355
+        }
+       ]
+      },
+      "diagnostics_z": {
+       "tromperie": {
+        "z": 1.131741280669424,
+        "jetons_concept": 30,
+        "n_concept_tete_plus": 0,
+        "n_concept_tete_moins": 0,
+        "meilleur_rang_plus": 1335,
+        "meilleur_rang_moins": 71064,
+        "isotropes": {
+         "n": 200,
+         "p_haut": 0.029850746268656716,
+         "p_bas": 0.9751243781094527,
+         "p_bilateral": 0.07960199004975124,
+         "z_quantiles_5_50_95": [
+          -1.1135815561386542,
+          -0.09018175060204772,
+          0.9476641338731844
+         ]
+        },
+        "planchers": {
+         "statut": "pas de plancher de ce concept à cette couche"
+        }
+       },
+       "enjeux": {
+        "z": 0.6890654581030135,
+        "jetons_concept": 43,
+        "n_concept_tete_plus": 0,
+        "n_concept_tete_moins": 0,
+        "meilleur_rang_plus": 3195,
+        "meilleur_rang_moins": 7881,
+        "isotropes": {
+         "n": 200,
+         "p_haut": 0.13432835820895522,
+         "p_bas": 0.8706467661691543,
+         "p_bilateral": 0.30845771144278605,
+         "z_quantiles_5_50_95": [
+          -1.077501817238955,
+          0.024834304457865074,
+          1.1221314897038024
+         ]
+        },
+        "planchers": {
+         "statut": "pas de plancher de ce concept à cette couche"
+        }
+       }
+      }
+     },
+     "recouvrement": {
+      "plus": {
+       "intersection": 0,
+       "jaccard": 0.0,
+       "communs": []
+      },
+      "moins": {
+       "intersection": 0,
+       "jaccard": 0.0,
+       "communs": []
+      },
+      "plus_mots": {
+       "intersection": 0,
+       "jaccard": 0.0,
+       "communs": []
+      },
+      "moins_mots": {
+       "intersection": 0,
+       "jaccard": 0.0,
+       "communs": []
+      },
+      "plus_debut_de_mot": {
+       "intersection": 0,
+       "jaccard": 0.0,
+       "communs": []
+      },
+      "cosinus_logits_centres": 0.03247941389283601
+     }
+    }
+   }
+  },
+  {
+   "nom": "tromperie-difference_moyennes-c15",
+   "concept": "tromperie",
+   "principale": true,
+   "famille": "difference_moyennes",
+   "couche": 15,
+   "classe": "SondeLineaireJetons",
+   "agregation": "max",
+   "empreinte": "edf5e22ac3e0f0e13ad4a05129724f4406015b05fd06832cd50543bddd180705",
+   "biais_b": -2.8772109022939785,
+   "norme_w": 3.5299629126612997,
+   "norme_Jw_sur_norme_w": 1.6421524754575625,
+   "cosinus_w_Jw": 0.2781055501727137,
+   "regle": {
+    "logits": {
+     "S": 0,
+     "isotropes": {
+      "n": 200,
+      "quantile_0_99": 1.0,
+      "p_haut_diagnostic": 1.0,
+      "comptes": {
+       "0": 197,
+       "1": 3
+      }
+     },
+     "planchers": {
+      "n": 200,
+      "quantile_0_99": 0.0,
+      "p_haut_diagnostic": 1.0,
+      "comptes": {
+       "0": 200
+      }
+     },
+     "verdict": "non cohérent",
+     "comptes_par_concept_diagnostic": {
+      "tromperie": 0,
+      "enjeux": 0
+     },
+     "statut": "règle primaire"
+    },
+    "jacobienne": {
+     "S": 1,
+     "isotropes": {
+      "n": 200,
+      "quantile_0_99": 0.0,
+      "p_haut_diagnostic": 0.014925373134328358,
+      "comptes": {
+       "0": 198,
+       "1": 1,
+       "2": 1
+      }
+     },
+     "planchers": {
+      "n": 200,
+      "quantile_0_99": 1.0,
+      "p_haut_diagnostic": 0.03482587064676617,
+      "comptes": {
+       "0": 194,
+       "1": 5,
+       "2": 1
+      }
+     },
+     "verdict": "non cohérent",
+     "comptes_par_concept_diagnostic": {
+      "tromperie": 1,
+      "enjeux": 0
+     },
+     "statut": "règle primaire"
+    }
+   },
+   "variantes": {
+    "direction": {
+     "logits": {
+      "plus": {
+       "tete": [
+        {
+         "id": 21761,
+         "texte": ".ht",
+         "logit": 9.08835
+        },
+        {
+         "id": 42839,
+         "texte": " secretly",
+         "logit": 9.012021
+        },
+        {
+         "id": 25100,
+         "texte": "igm",
+         "logit": 8.739552
+        },
+        {
+         "id": 11951,
+         "texte": " specifically",
+         "logit": 8.548231
+        },
+        {
+         "id": 76865,
+         "texte": "aroo",
+         "logit": 8.166012
+        },
+        {
+         "id": 53625,
+         "texte": " Seal",
+         "logit": 7.865288
+        },
+        {
+         "id": 89848,
+         "texte": " eins",
+         "logit": 7.80302
+        },
+        {
+         "id": 87224,
+         "texte": " nef",
+         "logit": 7.798253
+        },
+        {
+         "id": 122768,
+         "texte": "主人",
+         "logit": 7.730087
+        },
+        {
+         "id": 21391,
+         "texte": " mainstream",
+         "logit": 7.669405
+        },
+        {
+         "id": 91299,
+         "texte": "mia",
+         "logit": 7.660196
+        },
+        {
+         "id": 84138,
+         "texte": "orra",
+         "logit": 7.649639
+        },
+        {
+         "id": 18525,
+         "texte": " exclus",
+         "logit": 7.612855
+        },
+        {
+         "id": 90655,
+         "texte": " Hanging",
+         "logit": 7.576328
+        },
+        {
+         "id": 71678,
+         "texte": " Intervention",
+         "logit": 7.448627
+        },
+        {
+         "id": 18246,
+         "texte": "echa",
+         "logit": 7.419634
+        },
+        {
+         "id": 7815,
+         "texte": "stitute",
+         "logit": 7.405993
+        },
+        {
+         "id": 26417,
+         "texte": " Fat",
+         "logit": 7.401213
+        },
+        {
+         "id": 123308,
+         "texte": "袖",
+         "logit": 7.392543
+        },
+        {
+         "id": 1549,
+         "texte": "gram",
+         "logit": 7.366695
+        }
+       ],
+       "tete_mots": [
+        {
+         "id": 42839,
+         "texte": " secretly",
+         "logit": 9.012021
+        },
+        {
+         "id": 25100,
+         "texte": "igm",
+         "logit": 8.739552
+        },
+        {
+         "id": 11951,
+         "texte": " specifically",
+         "logit": 8.548231
+        },
+        {
+         "id": 76865,
+         "texte": "aroo",
+         "logit": 8.166012
+        },
+        {
+         "id": 53625,
+         "texte": " Seal",
+         "logit": 7.865288
+        },
+        {
+         "id": 89848,
+         "texte": " eins",
+         "logit": 7.80302
+        },
+        {
+         "id": 87224,
+         "texte": " nef",
+         "logit": 7.798253
+        },
+        {
+         "id": 122768,
+         "texte": "主人",
+         "logit": 7.730087
+        },
+        {
+         "id": 21391,
+         "texte": " mainstream",
+         "logit": 7.669405
+        },
+        {
+         "id": 91299,
+         "texte": "mia",
+         "logit": 7.660196
+        },
+        {
+         "id": 84138,
+         "texte": "orra",
+         "logit": 7.649639
+        },
+        {
+         "id": 18525,
+         "texte": " exclus",
+         "logit": 7.612855
+        },
+        {
+         "id": 90655,
+         "texte": " Hanging",
+         "logit": 7.576328
+        },
+        {
+         "id": 71678,
+         "texte": " Intervention",
+         "logit": 7.448627
+        },
+        {
+         "id": 18246,
+         "texte": "echa",
+         "logit": 7.419634
+        },
+        {
+         "id": 7815,
+         "texte": "stitute",
+         "logit": 7.405993
+        },
+        {
+         "id": 26417,
+         "texte": " Fat",
+         "logit": 7.401213
+        },
+        {
+         "id": 123308,
+         "texte": "袖",
+         "logit": 7.392543
+        },
+        {
+         "id": 1549,
+         "texte": "gram",
+         "logit": 7.366695
+        },
+        {
+         "id": 8080,
+         "texte": "olver",
+         "logit": 7.281891
+        }
+       ],
+       "tete_debut_de_mot": [
+        {
+         "id": 42839,
+         "texte": " secretly",
+         "logit": 9.012021
+        },
+        {
+         "id": 11951,
+         "texte": " specifically",
+         "logit": 8.548231
+        },
+        {
+         "id": 53625,
+         "texte": " Seal",
+         "logit": 7.865288
+        },
+        {
+         "id": 89848,
+         "texte": " eins",
+         "logit": 7.80302
+        },
+        {
+         "id": 87224,
+         "texte": " nef",
+         "logit": 7.798253
+        },
+        {
+         "id": 21391,
+         "texte": " mainstream",
+         "logit": 7.669405
+        },
+        {
+         "id": 18525,
+         "texte": " exclus",
+         "logit": 7.612855
+        },
+        {
+         "id": 90655,
+         "texte": " Hanging",
+         "logit": 7.576328
+        },
+        {
+         "id": 71678,
+         "texte": " Intervention",
+         "logit": 7.448627
+        },
+        {
+         "id": 26417,
+         "texte": " Fat",
+         "logit": 7.401213
+        },
+        {
+         "id": 24182,
+         "texte": " FT",
+         "logit": 7.211196
+        },
+        {
+         "id": 6367,
+         "texte": " secret",
+         "logit": 7.147683
+        },
+        {
+         "id": 31402,
+         "texte": " reign",
+         "logit": 7.134889
+        },
+        {
+         "id": 32498,
+         "texte": " Mall",
+         "logit": 7.122843
+        },
+        {
+         "id": 1193,
+         "texte": " only",
+         "logit": 7.113667
+        },
+        {
+         "id": 10171,
+         "texte": " supposed",
+         "logit": 7.035229
+        },
+        {
+         "id": 1536,
+         "texte": " ob",
+         "logit": 6.965099
+        },
+        {
+         "id": 114757,
+         "texte": " всю",
+         "logit": 6.888262
+        },
+        {
+         "id": 4219,
+         "texte": " center",
+         "logit": 6.878318
+        },
+        {
+         "id": 117492,
+         "texte": " отри",
+         "logit": 6.814216
+        }
+       ]
+      },
+      "moins": {
+       "tete": [
+        {
+         "id": 2659,
+         "texte": "annel",
+         "logit": 9.512777
+        },
+        {
+         "id": 17872,
+         "texte": "inda",
+         "logit": 9.177457
+        },
+        {
+         "id": 43419,
+         "texte": "ponsible",
+         "logit": 9.119045
+        },
+        {
+         "id": 8278,
+         "texte": " abstract",
+         "logit": 8.911339
+        },
+        {
+         "id": 1439,
+         "texte": "ures",
+         "logit": 8.618977
+        },
+        {
+         "id": 37644,
+         "texte": "OTA",
+         "logit": 8.589287
+        },
+        {
+         "id": 31202,
+         "texte": "feld",
+         "logit": 8.576246
+        },
+        {
+         "id": 6963,
+         "texte": "criptor",
+         "logit": 8.514516
+        },
+        {
+         "id": 44132,
+         "texte": ".Invariant",
+         "logit": 8.462408
+        },
+        {
+         "id": 30542,
+         "texte": "ACC",
+         "logit": 8.414222
+        },
+        {
+         "id": 17619,
+         "texte": " shit",
+         "logit": 8.410833
+        },
+        {
+         "id": 43244,
+         "texte": "�",
+         "logit": 8.407177
+        },
+        {
+         "id": 46352,
+         "texte": "vil",
+         "logit": 8.378536
+        },
+        {
+         "id": 124496,
+         "texte": " Socorro",
+         "logit": 8.357056
+        },
+        {
+         "id": 17698,
+         "texte": "560",
+         "logit": 8.264224
+        },
+        {
+         "id": 56682,
+         "texte": " Weinstein",
+         "logit": 8.259841
+        },
+        {
+         "id": 97911,
+         "texte": "ameleon",
+         "logit": 8.251509
+        },
+        {
+         "id": 62235,
+         "texte": " elemental",
+         "logit": 8.233513
+        },
+        {
+         "id": 108409,
+         "texte": " yine",
+         "logit": 8.209793
+        },
+        {
+         "id": 88130,
+         "texte": " poj",
+         "logit": 8.167669
+        }
+       ],
+       "tete_mots": [
+        {
+         "id": 2659,
+         "texte": "annel",
+         "logit": 9.512777
+        },
+        {
+         "id": 17872,
+         "texte": "inda",
+         "logit": 9.177457
+        },
+        {
+         "id": 43419,
+         "texte": "ponsible",
+         "logit": 9.119045
+        },
+        {
+         "id": 8278,
+         "texte": " abstract",
+         "logit": 8.911339
+        },
+        {
+         "id": 1439,
+         "texte": "ures",
+         "logit": 8.618977
+        },
+        {
+         "id": 37644,
+         "texte": "OTA",
+         "logit": 8.589287
+        },
+        {
+         "id": 31202,
+         "texte": "feld",
+         "logit": 8.576246
+        },
+        {
+         "id": 6963,
+         "texte": "criptor",
+         "logit": 8.514516
+        },
+        {
+         "id": 30542,
+         "texte": "ACC",
+         "logit": 8.414222
+        },
+        {
+         "id": 17619,
+         "texte": " shit",
+         "logit": 8.410833
+        },
+        {
+         "id": 46352,
+         "texte": "vil",
+         "logit": 8.378536
+        },
+        {
+         "id": 124496,
+         "texte": " Socorro",
+         "logit": 8.357056
+        },
+        {
+         "id": 17698,
+         "texte": "560",
+         "logit": 8.264224
+        },
+        {
+         "id": 56682,
+         "texte": " Weinstein",
+         "logit": 8.259841
+        },
+        {
+         "id": 97911,
+         "texte": "ameleon",
+         "logit": 8.251509
+        },
+        {
+         "id": 62235,
+         "texte": " elemental",
+         "logit": 8.233513
+        },
+        {
+         "id": 108409,
+         "texte": " yine",
+         "logit": 8.209793
+        },
+        {
+         "id": 88130,
+         "texte": " poj",
+         "logit": 8.167669
+        },
+        {
+         "id": 64234,
+         "texte": " SCO",
+         "logit": 8.142553
+        },
+        {
+         "id": 116232,
+         "texte": " Yani",
+         "logit": 8.114304
+        }
+       ],
+       "tete_debut_de_mot": [
+        {
+         "id": 8278,
+         "texte": " abstract",
+         "logit": 8.911339
+        },
+        {
+         "id": 17619,
+         "texte": " shit",
+         "logit": 8.410833
+        },
+        {
+         "id": 124496,
+         "texte": " Socorro",
+         "logit": 8.357056
+        },
+        {
+         "id": 56682,
+         "texte": " Weinstein",
+         "logit": 8.259841
+        },
+        {
+         "id": 62235,
+         "texte": " elemental",
+         "logit": 8.233513
+        },
+        {
+         "id": 108409,
+         "texte": " yine",
+         "logit": 8.209793
+        },
+        {
+         "id": 88130,
+         "texte": " poj",
+         "logit": 8.167669
+        },
+        {
+         "id": 64234,
+         "texte": " SCO",
+         "logit": 8.142553
+        },
+        {
+         "id": 116232,
+         "texte": " Yani",
+         "logit": 8.114304
+        },
+        {
+         "id": 89026,
+         "texte": " TMPro",
+         "logit": 8.08316
+        },
+        {
+         "id": 69063,
+         "texte": " imperfect",
+         "logit": 8.079329
+        },
+        {
+         "id": 28252,
+         "texte": " fucked",
+         "logit": 8.021421
+        },
+        {
+         "id": 64546,
+         "texte": " Analog",
+         "logit": 7.973202
+        },
+        {
+         "id": 70407,
+         "texte": " Scouts",
+         "logit": 7.909676
+        },
+        {
+         "id": 99489,
+         "texte": " handwritten",
+         "logit": 7.889895
+        },
+        {
+         "id": 70342,
+         "texte": " scrutin",
+         "logit": 7.795896
+        },
+        {
+         "id": 44352,
+         "texte": " GLuint",
+         "logit": 7.780168
+        },
+        {
+         "id": 49452,
+         "texte": " porr",
+         "logit": 7.775127
+        },
+        {
+         "id": 67010,
+         "texte": " proprio",
+         "logit": 7.717949
+        },
+        {
+         "id": 111741,
+         "texte": " říj",
+         "logit": 7.662977
+        }
+       ]
+      },
+      "diagnostics_z": {
+       "tromperie": {
+        "z": 0.009568195069580983,
+        "jetons_concept": 30,
+        "n_concept_tete_plus": 0,
+        "n_concept_tete_moins": 0,
+        "meilleur_rang_plus": 1106,
+        "meilleur_rang_moins": 2941,
+        "isotropes": {
+         "n": 200,
+         "p_haut": 0.5373134328358209,
+         "p_bas": 0.46766169154228854,
+         "p_bilateral": 0.9900497512437811,
+         "z_quantiles_5_50_95": [
+          -0.5461855039029051,
+          0.0563696928312023,
+          0.6232394890189233
+         ]
+        },
+        "planchers": {
+         "n": 200,
+         "p_haut": 0.4577114427860697,
+         "p_bas": 0.5472636815920398,
+         "p_bilateral": 0.9751243781094527,
+         "z_quantiles_5_50_95": [
+          -0.4583360780491979,
+          -0.02901805839819293,
+          0.5013777153559823
+         ]
+        }
+       },
+       "enjeux": {
+        "z": 0.4114079784473517,
+        "jetons_concept": 43,
+        "n_concept_tete_plus": 0,
+        "n_concept_tete_moins": 0,
+        "meilleur_rang_plus": 1419,
+        "meilleur_rang_moins": 6702,
+        "isotropes": {
+         "n": 200,
+         "p_haut": 0.06965174129353234,
+         "p_bas": 0.9353233830845771,
+         "p_bilateral": 0.16417910447761194,
+         "z_quantiles_5_50_95": [
+          -0.5042543902372801,
+          -0.0248342095697989,
+          0.46530875945935296
+         ]
+        },
+        "planchers": {
+         "n": 200,
+         "p_haut": 0.11442786069651742,
+         "p_bas": 0.8905472636815921,
+         "p_bilateral": 0.23880597014925373,
+         "z_quantiles_5_50_95": [
+          -0.5856768317164212,
+          0.02605484763043578,
+          0.5187692659095979
+         ]
+        }
+       }
+      }
+     },
+     "jacobienne": {
+      "plus": {
+       "tete": [
+        {
+         "id": 1193,
+         "texte": " only",
+         "logit": 12.542881
+        },
+        {
+         "id": 4619,
+         "texte": " instead",
+         "logit": 11.49532
+        },
+        {
+         "id": 12700,
+         "texte": " fake",
+         "logit": 11.071043
+        },
+        {
+         "id": 33288,
+         "texte": " bizarre",
+         "logit": 10.426939
+        },
+        {
+         "id": 18754,
+         "texte": " stupid",
+         "logit": 10.313611
+        },
+        {
+         "id": 75174,
+         "texte": " Disneyland",
+         "logit": 10.234907
+        },
+        {
+         "id": 78825,
+         "texte": " magically",
+         "logit": 10.081803
+        },
+        {
+         "id": 26359,
+         "texte": " conspiracy",
+         "logit": 10.030087
+        },
+        {
+         "id": 27785,
+         "texte": " ONLY",
+         "logit": 9.864648
+        },
+        {
+         "id": 6367,
+         "texte": " secret",
+         "logit": 9.858776
+        },
+        {
+         "id": 29512,
+         "texte": " backwards",
+         "logit": 9.826175
+        },
+        {
+         "id": 14289,
+         "texte": " evil",
+         "logit": 9.822686
+        },
+        {
+         "id": 49044,
+         "texte": " UFO",
+         "logit": 9.741589
+        },
+        {
+         "id": 67306,
+         "texte": " Elvis",
+         "logit": 9.650548
+        },
+        {
+         "id": 19441,
+         "texte": " downtown",
+         "logit": 9.519325
+        },
+        {
+         "id": 55066,
+         "texte": " pirate",
+         "logit": 9.509162
+        },
+        {
+         "id": 88035,
+         "texte": " Atlantis",
+         "logit": 9.378071
+        },
+        {
+         "id": 30571,
+         "texte": " silly",
+         "logit": 9.263065
+        },
+        {
+         "id": 42839,
+         "texte": " secretly",
+         "logit": 9.169051
+        },
+        {
+         "id": 89862,
+         "texte": " Titanic",
+         "logit": 9.1601
+        }
+       ],
+       "tete_mots": [
+        {
+         "id": 1193,
+         "texte": " only",
+         "logit": 12.542881
+        },
+        {
+         "id": 4619,
+         "texte": " instead",
+         "logit": 11.49532
+        },
+        {
+         "id": 12700,
+         "texte": " fake",
+         "logit": 11.071043
+        },
+        {
+         "id": 33288,
+         "texte": " bizarre",
+         "logit": 10.426939
+        },
+        {
+         "id": 18754,
+         "texte": " stupid",
+         "logit": 10.313611
+        },
+        {
+         "id": 75174,
+         "texte": " Disneyland",
+         "logit": 10.234907
+        },
+        {
+         "id": 78825,
+         "texte": " magically",
+         "logit": 10.081803
+        },
+        {
+         "id": 26359,
+         "texte": " conspiracy",
+         "logit": 10.030087
+        },
+        {
+         "id": 27785,
+         "texte": " ONLY",
+         "logit": 9.864648
+        },
+        {
+         "id": 6367,
+         "texte": " secret",
+         "logit": 9.858776
+        },
+        {
+         "id": 29512,
+         "texte": " backwards",
+         "logit": 9.826175
+        },
+        {
+         "id": 14289,
+         "texte": " evil",
+         "logit": 9.822686
+        },
+        {
+         "id": 49044,
+         "texte": " UFO",
+         "logit": 9.741589
+        },
+        {
+         "id": 67306,
+         "texte": " Elvis",
+         "logit": 9.650548
+        },
+        {
+         "id": 19441,
+         "texte": " downtown",
+         "logit": 9.519325
+        },
+        {
+         "id": 55066,
+         "texte": " pirate",
+         "logit": 9.509162
+        },
+        {
+         "id": 88035,
+         "texte": " Atlantis",
+         "logit": 9.378071
+        },
+        {
+         "id": 30571,
+         "texte": " silly",
+         "logit": 9.263065
+        },
+        {
+         "id": 42839,
+         "texte": " secretly",
+         "logit": 9.169051
+        },
+        {
+         "id": 89862,
+         "texte": " Titanic",
+         "logit": 9.1601
+        }
+       ],
+       "tete_debut_de_mot": [
+        {
+         "id": 1193,
+         "texte": " only",
+         "logit": 12.542881
+        },
+        {
+         "id": 4619,
+         "texte": " instead",
+         "logit": 11.49532
+        },
+        {
+         "id": 12700,
+         "texte": " fake",
+         "logit": 11.071043
+        },
+        {
+         "id": 33288,
+         "texte": " bizarre",
+         "logit": 10.426939
+        },
+        {
+         "id": 18754,
+         "texte": " stupid",
+         "logit": 10.313611
+        },
+        {
+         "id": 75174,
+         "texte": " Disneyland",
+         "logit": 10.234907
+        },
+        {
+         "id": 78825,
+         "texte": " magically",
+         "logit": 10.081803
+        },
+        {
+         "id": 26359,
+         "texte": " conspiracy",
+         "logit": 10.030087
+        },
+        {
+         "id": 27785,
+         "texte": " ONLY",
+         "logit": 9.864648
+        },
+        {
+         "id": 6367,
+         "texte": " secret",
+         "logit": 9.858776
+        },
+        {
+         "id": 29512,
+         "texte": " backwards",
+         "logit": 9.826175
+        },
+        {
+         "id": 14289,
+         "texte": " evil",
+         "logit": 9.822686
+        },
+        {
+         "id": 49044,
+         "texte": " UFO",
+         "logit": 9.741589
+        },
+        {
+         "id": 67306,
+         "texte": " Elvis",
+         "logit": 9.650548
+        },
+        {
+         "id": 19441,
+         "texte": " downtown",
+         "logit": 9.519325
+        },
+        {
+         "id": 55066,
+         "texte": " pirate",
+         "logit": 9.509162
+        },
+        {
+         "id": 88035,
+         "texte": " Atlantis",
+         "logit": 9.378071
+        },
+        {
+         "id": 30571,
+         "texte": " silly",
+         "logit": 9.263065
+        },
+        {
+         "id": 42839,
+         "texte": " secretly",
+         "logit": 9.169051
+        },
+        {
+         "id": 89862,
+         "texte": " Titanic",
+         "logit": 9.1601
+        }
+       ]
+      },
+      "moins": {
+       "tete": [
+        {
+         "id": 113012,
+         "texte": " ",
+         "logit": 8.76693
+        },
+        {
+         "id": 57352,
+         "texte": "�",
+         "logit": 8.521034
+        },
+        {
+         "id": 2485,
+         "texte": "https",
+         "logit": 8.311556
+        },
+        {
+         "id": 2366,
+         "texte": "202",
+         "logit": 8.232179
+        },
+        {
+         "id": 82350,
+         "texte": " �",
+         "logit": 7.971175
+        },
+        {
+         "id": 11199,
+         "texte": "】",
+         "logit": 7.648684
+        },
+        {
+         "id": 90900,
+         "texte": " ⓘ",
+         "logit": 7.565071
+        },
+        {
+         "id": 9468,
+         "texte": "�",
+         "logit": 7.285318
+        },
+        {
+         "id": 98990,
+         "texte": " impactful",
+         "logit": 7.216791
+        },
+        {
+         "id": 61917,
+         "texte": "often",
+         "logit": 7.140553
+        },
+        {
+         "id": 73329,
+         "texte": "…\n\n\n\n",
+         "logit": 6.930692
+        },
+        {
+         "id": 679,
+         "texte": "201",
+         "logit": 6.896062
+        },
+        {
+         "id": 61469,
+         "texte": " differing",
+         "logit": 6.789289
+        },
+        {
+         "id": 1473,
+         "texte": ":\n\n",
+         "logit": 6.720458
+        },
+        {
+         "id": 29865,
+         "texte": " varying",
+         "logit": 6.614056
+        },
+        {
+         "id": 45460,
+         "texte": "】\n\n",
+         "logit": 6.567837
+        },
+        {
+         "id": 93479,
+         "texte": "?\"\n\n\n\n",
+         "logit": 6.557256
+        },
+        {
+         "id": 75927,
+         "texte": "_]",
+         "logit": 6.527793
+        },
+        {
+         "id": 12982,
+         "texte": "ometimes",
+         "logit": 6.470958
+        },
+        {
+         "id": 112745,
+         "texte": "  ",
+         "logit": 6.368408
+        }
+       ],
+       "tete_mots": [
+        {
+         "id": 2485,
+         "texte": "https",
+         "logit": 8.311556
+        },
+        {
+         "id": 2366,
+         "texte": "202",
+         "logit": 8.232179
+        },
+        {
+         "id": 98990,
+         "texte": " impactful",
+         "logit": 7.216791
+        },
+        {
+         "id": 61917,
+         "texte": "often",
+         "logit": 7.140553
+        },
+        {
+         "id": 679,
+         "texte": "201",
+         "logit": 6.896062
+        },
+        {
+         "id": 61469,
+         "texte": " differing",
+         "logit": 6.789289
+        },
+        {
+         "id": 29865,
+         "texte": " varying",
+         "logit": 6.614056
+        },
+        {
+         "id": 12982,
+         "texte": "ometimes",
+         "logit": 6.470958
+        },
+        {
+         "id": 17430,
+         "texte": "Shared",
+         "logit": 6.368325
+        },
+        {
+         "id": 66251,
+         "texte": " contextual",
+         "logit": 6.300505
+        },
+        {
+         "id": 56062,
+         "texte": " resilience",
+         "logit": 6.158407
+        },
+        {
+         "id": 82891,
+         "texte": " nuanced",
+         "logit": 6.060108
+        },
+        {
+         "id": 57753,
+         "texte": "sometimes",
+         "logit": 6.040809
+        },
+        {
+         "id": 52227,
+         "texte": " vulnerabilities",
+         "logit": 6.039035
+        },
+        {
+         "id": 63660,
+         "texte": " webinar",
+         "logit": 6.007421
+        },
+        {
+         "id": 13893,
+         "texte": " potentially",
+         "logit": 5.998141
+        },
+        {
+         "id": 81360,
+         "texte": " unterschied",
+         "logit": 5.967631
+        },
+        {
+         "id": 78570,
+         "texte": " acknowledgment",
+         "logit": 5.9451
+        },
+        {
+         "id": 72849,
+         "texte": " facilitated",
+         "logit": 5.939496
+        },
+        {
+         "id": 77582,
+         "texte": " leveraging",
+         "logit": 5.881255
+        }
+       ],
+       "tete_debut_de_mot": [
+        {
+         "id": 98990,
+         "texte": " impactful",
+         "logit": 7.216791
+        },
+        {
+         "id": 61469,
+         "texte": " differing",
+         "logit": 6.789289
+        },
+        {
+         "id": 29865,
+         "texte": " varying",
+         "logit": 6.614056
+        },
+        {
+         "id": 66251,
+         "texte": " contextual",
+         "logit": 6.300505
+        },
+        {
+         "id": 56062,
+         "texte": " resilience",
+         "logit": 6.158407
+        },
+        {
+         "id": 82891,
+         "texte": " nuanced",
+         "logit": 6.060108
+        },
+        {
+         "id": 52227,
+         "texte": " vulnerabilities",
+         "logit": 6.039035
+        },
+        {
+         "id": 63660,
+         "texte": " webinar",
+         "logit": 6.007421
+        },
+        {
+         "id": 13893,
+         "texte": " potentially",
+         "logit": 5.998141
+        },
+        {
+         "id": 81360,
+         "texte": " unterschied",
+         "logit": 5.967631
+        },
+        {
+         "id": 78570,
+         "texte": " acknowledgment",
+         "logit": 5.9451
+        },
+        {
+         "id": 72849,
+         "texte": " facilitated",
+         "logit": 5.939496
+        },
+        {
+         "id": 77582,
+         "texte": " leveraging",
+         "logit": 5.881255
+        },
+        {
+         "id": 7170,
+         "texte": " sometimes",
+         "logit": 5.807392
+        },
+        {
+         "id": 94473,
+         "texte": " Rencontres",
+         "logit": 5.803098
+        },
+        {
+         "id": 32888,
+         "texte": " accessing",
+         "logit": 5.786459
+        },
+        {
+         "id": 20081,
+         "texte": " respective",
+         "logit": 5.76956
+        },
+        {
+         "id": 38697,
+         "texte": " contexts",
+         "logit": 5.707938
+        },
+        {
+         "id": 3629,
+         "texte": " often",
+         "logit": 5.699498
+        },
+        {
+         "id": 83416,
+         "texte": " interconnected",
+         "logit": 5.615802
+        }
+       ]
+      },
+      "diagnostics_z": {
+       "tromperie": {
+        "z": 1.7690697483397246,
+        "jetons_concept": 30,
+        "n_concept_tete_plus": 1,
+        "n_concept_tete_moins": 0,
+        "meilleur_rang_plus": 3,
+        "meilleur_rang_moins": 57746,
+        "isotropes": {
+         "n": 200,
+         "p_haut": 0.004975124378109453,
+         "p_bas": 1.0,
+         "p_bilateral": 0.004975124378109453,
+         "z_quantiles_5_50_95": [
+          -1.177519562561038,
+          -0.03442256013302996,
+          1.1151514310744768
+         ]
+        },
+        "planchers": {
+         "n": 200,
+         "p_haut": 0.03482587064676617,
+         "p_bas": 0.9701492537313433,
+         "p_bilateral": 0.04477611940298507,
+         "z_quantiles_5_50_95": [
+          -1.50314159689049,
+          -0.02387245695796566,
+          1.5993295388322564
+         ]
+        }
+       },
+       "enjeux": {
+        "z": 0.5910004189393654,
+        "jetons_concept": 43,
+        "n_concept_tete_plus": 0,
+        "n_concept_tete_moins": 0,
+        "meilleur_rang_plus": 410,
+        "meilleur_rang_moins": 2236,
+        "isotropes": {
+         "n": 200,
+         "p_haut": 0.21393034825870647,
+         "p_bas": 0.7910447761194029,
+         "p_bilateral": 0.4427860696517413,
+         "z_quantiles_5_50_95": [
+          -1.1725912876177027,
+          -0.15823853991118086,
+          0.9706372384569515
+         ]
+        },
+        "planchers": {
+         "n": 200,
+         "p_haut": 0.26865671641791045,
+         "p_bas": 0.736318407960199,
+         "p_bilateral": 0.5671641791044776,
+         "z_quantiles_5_50_95": [
+          -1.4579434265663302,
+          -0.018356557250538717,
+          1.5384169210619214
+         ]
+        }
+       }
+      }
+     },
+     "recouvrement": {
+      "plus": {
+       "intersection": 1,
+       "jaccard": 0.025641,
+       "communs": [
+        " secretly"
+       ]
+      },
+      "moins": {
+       "intersection": 0,
+       "jaccard": 0.0,
+       "communs": []
+      },
+      "plus_mots": {
+       "intersection": 1,
+       "jaccard": 0.025641,
+       "communs": [
+        " secretly"
+       ]
+      },
+      "moins_mots": {
+       "intersection": 0,
+       "jaccard": 0.0,
+       "communs": []
+      },
+      "plus_debut_de_mot": {
+       "intersection": 3,
+       "jaccard": 0.081081,
+       "communs": [
+        " only",
+        " secret",
+        " secretly"
+       ]
+      },
+      "cosinus_logits_centres": 0.33345038755058193
+     }
+    }
+   }
+  },
+  {
+   "nom": "tromperie-difference_moyennes-c23",
+   "concept": "tromperie",
+   "principale": false,
+   "famille": "difference_moyennes",
+   "couche": 23,
+   "classe": "SondeLineaireJetons",
+   "agregation": "max",
+   "empreinte": "fc4be9603a138dc48839db80e3a55e3450a4e0ac340aebcf31e49395fb6c2c21",
+   "biais_b": -28.97252648474567,
+   "norme_w": 6.307421264547462,
+   "norme_Jw_sur_norme_w": 1.9281179496571423,
+   "cosinus_w_Jw": 0.5053888413521106,
+   "regle": {
+    "logits": {
+     "S": 0,
+     "isotropes": {
+      "n": 200,
+      "quantile_0_99": 0.0,
+      "p_haut_diagnostic": 1.0,
+      "comptes": {
+       "0": 199,
+       "1": 1
+      }
+     },
+     "planchers": {
+      "statut": "absents à cette couche pour ce concept"
+     },
+     "comptes_par_concept_diagnostic": {
+      "tromperie": 0,
+      "enjeux": 0
+     },
+     "statut": "descriptif, hors règle primaire ; planchers absents : isotropes seules",
+     "verdict_descriptif": "non cohérent"
+    },
+    "jacobienne": {
+     "S": 0,
+     "isotropes": {
+      "n": 200,
+      "quantile_0_99": 0.0,
+      "p_haut_diagnostic": 1.0,
+      "comptes": {
+       "0": 199,
+       "2": 1
+      }
+     },
+     "planchers": {
+      "statut": "absents à cette couche pour ce concept"
+     },
+     "comptes_par_concept_diagnostic": {
+      "tromperie": 0,
+      "enjeux": 0
+     },
+     "statut": "descriptif, hors règle primaire ; planchers absents : isotropes seules",
+     "verdict_descriptif": "non cohérent"
+    }
+   },
+   "variantes": {
+    "direction": {
+     "logits": {
+      "plus": {
+       "tete": [
+        {
+         "id": 3604,
+         "texte": " actually",
+         "logit": 9.723592
+        },
+        {
+         "id": 29512,
+         "texte": " backwards",
+         "logit": 9.292894
+        },
+        {
+         "id": 1193,
+         "texte": " only",
+         "logit": 9.134299
+        },
+        {
+         "id": 6367,
+         "texte": " secret",
+         "logit": 8.794765
+        },
+        {
+         "id": 42839,
+         "texte": " secretly",
+         "logit": 8.766447
+        },
+        {
+         "id": 18266,
+         "texte": " moon",
+         "logit": 8.652541
+        },
+        {
+         "id": 15187,
+         "texte": " suddenly",
+         "logit": 8.328751
+        },
+        {
+         "id": 24121,
+         "texte": " exclusively",
+         "logit": 8.149835
+        },
+        {
+         "id": 38279,
+         "texte": " inferior",
+         "logit": 8.147264
+        },
+        {
+         "id": 87224,
+         "texte": " nef",
+         "logit": 7.969366
+        },
+        {
+         "id": 8769,
+         "texte": " Secret",
+         "logit": 7.609193
+        },
+        {
+         "id": 11951,
+         "texte": " specifically",
+         "logit": 7.604182
+        },
+        {
+         "id": 47827,
+         "texte": " [[[",
+         "logit": 7.588724
+        },
+        {
+         "id": 64278,
+         "texte": "SizePolicy",
+         "logit": 7.572137
+        },
+        {
+         "id": 51052,
+         "texte": " imaginary",
+         "logit": 7.537094
+        },
+        {
+         "id": 26685,
+         "texte": " Slo",
+         "logit": 7.509483
+        },
+        {
+         "id": 17781,
+         "texte": " Moon",
+         "logit": 7.440173
+        },
+        {
+         "id": 26018,
+         "texte": " theories",
+         "logit": 7.419085
+        },
+        {
+         "id": 88034,
+         "texte": " nonexistent",
+         "logit": 7.371592
+        },
+        {
+         "id": 1457,
+         "texte": " now",
+         "logit": 7.265511
+        }
+       ],
+       "tete_mots": [
+        {
+         "id": 3604,
+         "texte": " actually",
+         "logit": 9.723592
+        },
+        {
+         "id": 29512,
+         "texte": " backwards",
+         "logit": 9.292894
+        },
+        {
+         "id": 1193,
+         "texte": " only",
+         "logit": 9.134299
+        },
+        {
+         "id": 6367,
+         "texte": " secret",
+         "logit": 8.794765
+        },
+        {
+         "id": 42839,
+         "texte": " secretly",
+         "logit": 8.766447
+        },
+        {
+         "id": 18266,
+         "texte": " moon",
+         "logit": 8.652541
+        },
+        {
+         "id": 15187,
+         "texte": " suddenly",
+         "logit": 8.328751
+        },
+        {
+         "id": 24121,
+         "texte": " exclusively",
+         "logit": 8.149835
+        },
+        {
+         "id": 38279,
+         "texte": " inferior",
+         "logit": 8.147264
+        },
+        {
+         "id": 87224,
+         "texte": " nef",
+         "logit": 7.969366
+        },
+        {
+         "id": 8769,
+         "texte": " Secret",
+         "logit": 7.609193
+        },
+        {
+         "id": 11951,
+         "texte": " specifically",
+         "logit": 7.604182
+        },
+        {
+         "id": 64278,
+         "texte": "SizePolicy",
+         "logit": 7.572137
+        },
+        {
+         "id": 51052,
+         "texte": " imaginary",
+         "logit": 7.537094
+        },
+        {
+         "id": 26685,
+         "texte": " Slo",
+         "logit": 7.509483
+        },
+        {
+         "id": 17781,
+         "texte": " Moon",
+         "logit": 7.440173
+        },
+        {
+         "id": 26018,
+         "texte": " theories",
+         "logit": 7.419085
+        },
+        {
+         "id": 88034,
+         "texte": " nonexistent",
+         "logit": 7.371592
+        },
+        {
+         "id": 1457,
+         "texte": " now",
+         "logit": 7.265511
+        },
+        {
+         "id": 8681,
+         "texte": " Great",
+         "logit": 7.25039
+        }
+       ],
+       "tete_debut_de_mot": [
+        {
+         "id": 3604,
+         "texte": " actually",
+         "logit": 9.723592
+        },
+        {
+         "id": 29512,
+         "texte": " backwards",
+         "logit": 9.292894
+        },
+        {
+         "id": 1193,
+         "texte": " only",
+         "logit": 9.134299
+        },
+        {
+         "id": 6367,
+         "texte": " secret",
+         "logit": 8.794765
+        },
+        {
+         "id": 42839,
+         "texte": " secretly",
+         "logit": 8.766447
+        },
+        {
+         "id": 18266,
+         "texte": " moon",
+         "logit": 8.652541
+        },
+        {
+         "id": 15187,
+         "texte": " suddenly",
+         "logit": 8.328751
+        },
+        {
+         "id": 24121,
+         "texte": " exclusively",
+         "logit": 8.149835
+        },
+        {
+         "id": 38279,
+         "texte": " inferior",
+         "logit": 8.147264
+        },
+        {
+         "id": 87224,
+         "texte": " nef",
+         "logit": 7.969366
+        },
+        {
+         "id": 8769,
+         "texte": " Secret",
+         "logit": 7.609193
+        },
+        {
+         "id": 11951,
+         "texte": " specifically",
+         "logit": 7.604182
+        },
+        {
+         "id": 51052,
+         "texte": " imaginary",
+         "logit": 7.537094
+        },
+        {
+         "id": 26685,
+         "texte": " Slo",
+         "logit": 7.509483
+        },
+        {
+         "id": 17781,
+         "texte": " Moon",
+         "logit": 7.440173
+        },
+        {
+         "id": 26018,
+         "texte": " theories",
+         "logit": 7.419085
+        },
+        {
+         "id": 88034,
+         "texte": " nonexistent",
+         "logit": 7.371592
+        },
+        {
+         "id": 1457,
+         "texte": " now",
+         "logit": 7.265511
+        },
+        {
+         "id": 8681,
+         "texte": " Great",
+         "logit": 7.25039
+        },
+        {
+         "id": 77594,
+         "texte": " ect",
+         "logit": 7.19961
+        }
+       ]
+      },
+      "moins": {
+       "tete": [
+        {
+         "id": 78321,
+         "texte": "rone",
+         "logit": 9.755938
+        },
+        {
+         "id": 115151,
+         "texte": "ecko",
+         "logit": 9.410011
+        },
+        {
+         "id": 125135,
+         "texte": "ッカー",
+         "logit": 9.383301
+        },
+        {
+         "id": 45685,
+         "texte": " Rencontre",
+         "logit": 9.359484
+        },
+        {
+         "id": 14997,
+         "texte": "anes",
+         "logit": 9.346134
+        },
+        {
+         "id": 40072,
+         "texte": "abei",
+         "logit": 9.25396
+        },
+        {
+         "id": 124727,
+         "texte": " bazen",
+         "logit": 9.057931
+        },
+        {
+         "id": 89151,
+         "texte": "真",
+         "logit": 9.031334
+        },
+        {
+         "id": 91901,
+         "texte": "venes",
+         "logit": 8.981997
+        },
+        {
+         "id": 112327,
+         "texte": "圳",
+         "logit": 8.917239
+        },
+        {
+         "id": 37178,
+         "texte": "_INCLUDED",
+         "logit": 8.773539
+        },
+        {
+         "id": 125847,
+         "texte": " Περ",
+         "logit": 8.752892
+        },
+        {
+         "id": 77494,
+         "texte": " Seks",
+         "logit": 8.594048
+        },
+        {
+         "id": 2659,
+         "texte": "annel",
+         "logit": 8.493889
+        },
+        {
+         "id": 2429,
+         "texte": "rame",
+         "logit": 8.482176
+        },
+        {
+         "id": 83388,
+         "texte": "ongan",
+         "logit": 8.426691
+        },
+        {
+         "id": 31202,
+         "texte": "feld",
+         "logit": 8.308631
+        },
+        {
+         "id": 111244,
+         "texte": " chữ",
+         "logit": 8.213718
+        },
+        {
+         "id": 92572,
+         "texte": " Serialized",
+         "logit": 8.169882
+        },
+        {
+         "id": 104626,
+         "texte": " �",
+         "logit": 8.122802
+        }
+       ],
+       "tete_mots": [
+        {
+         "id": 78321,
+         "texte": "rone",
+         "logit": 9.755938
+        },
+        {
+         "id": 115151,
+         "texte": "ecko",
+         "logit": 9.410011
+        },
+        {
+         "id": 125135,
+         "texte": "ッカー",
+         "logit": 9.383301
+        },
+        {
+         "id": 45685,
+         "texte": " Rencontre",
+         "logit": 9.359484
+        },
+        {
+         "id": 14997,
+         "texte": "anes",
+         "logit": 9.346134
+        },
+        {
+         "id": 40072,
+         "texte": "abei",
+         "logit": 9.25396
+        },
+        {
+         "id": 124727,
+         "texte": " bazen",
+         "logit": 9.057931
+        },
+        {
+         "id": 89151,
+         "texte": "真",
+         "logit": 9.031334
+        },
+        {
+         "id": 91901,
+         "texte": "venes",
+         "logit": 8.981997
+        },
+        {
+         "id": 112327,
+         "texte": "圳",
+         "logit": 8.917239
+        },
+        {
+         "id": 125847,
+         "texte": " Περ",
+         "logit": 8.752892
+        },
+        {
+         "id": 77494,
+         "texte": " Seks",
+         "logit": 8.594048
+        },
+        {
+         "id": 2659,
+         "texte": "annel",
+         "logit": 8.493889
+        },
+        {
+         "id": 2429,
+         "texte": "rame",
+         "logit": 8.482176
+        },
+        {
+         "id": 83388,
+         "texte": "ongan",
+         "logit": 8.426691
+        },
+        {
+         "id": 31202,
+         "texte": "feld",
+         "logit": 8.308631
+        },
+        {
+         "id": 111244,
+         "texte": " chữ",
+         "logit": 8.213718
+        },
+        {
+         "id": 92572,
+         "texte": " Serialized",
+         "logit": 8.169882
+        },
+        {
+         "id": 87405,
+         "texte": "irut",
+         "logit": 8.077692
+        },
+        {
+         "id": 32248,
+         "texte": " anonym",
+         "logit": 8.071972
+        }
+       ],
+       "tete_debut_de_mot": [
+        {
+         "id": 45685,
+         "texte": " Rencontre",
+         "logit": 9.359484
+        },
+        {
+         "id": 124727,
+         "texte": " bazen",
+         "logit": 9.057931
+        },
+        {
+         "id": 125847,
+         "texte": " Περ",
+         "logit": 8.752892
+        },
+        {
+         "id": 77494,
+         "texte": " Seks",
+         "logit": 8.594048
+        },
+        {
+         "id": 111244,
+         "texte": " chữ",
+         "logit": 8.213718
+        },
+        {
+         "id": 92572,
+         "texte": " Serialized",
+         "logit": 8.169882
+        },
+        {
+         "id": 32248,
+         "texte": " anonym",
+         "logit": 8.071972
+        },
+        {
+         "id": 123677,
+         "texte": " Václav",
+         "logit": 7.858176
+        },
+        {
+         "id": 113445,
+         "texte": " trochu",
+         "logit": 7.718232
+        },
+        {
+         "id": 122152,
+         "texte": " anlamda",
+         "logit": 7.699882
+        },
+        {
+         "id": 108564,
+         "texte": " değişik",
+         "logit": 7.697088
+        },
+        {
+         "id": 93888,
+         "texte": " GetName",
+         "logit": 7.696111
+        },
+        {
+         "id": 54002,
+         "texte": " SelectList",
+         "logit": 7.656318
+        },
+        {
+         "id": 115580,
+         "texte": " Yaş",
+         "logit": 7.62543
+        },
+        {
+         "id": 123707,
+         "texte": " dahi",
+         "logit": 7.562427
+        },
+        {
+         "id": 63469,
+         "texte": " qp",
+         "logit": 7.54185
+        },
+        {
+         "id": 117265,
+         "texte": " belki",
+         "logit": 7.511018
+        },
+        {
+         "id": 114794,
+         "texte": " 真",
+         "logit": 7.508116
+        },
+        {
+         "id": 57661,
+         "texte": " Needed",
+         "logit": 7.471458
+        },
+        {
+         "id": 54138,
+         "texte": " launder",
+         "logit": 7.464444
+        }
+       ]
+      },
+      "diagnostics_z": {
+       "tromperie": {
+        "z": 0.37128961898058516,
+        "jetons_concept": 30,
+        "n_concept_tete_plus": 0,
+        "n_concept_tete_moins": 0,
+        "meilleur_rang_plus": 45,
+        "meilleur_rang_moins": 7190,
+        "isotropes": {
+         "n": 200,
+         "p_haut": 0.17412935323383086,
+         "p_bas": 0.8308457711442786,
+         "p_bilateral": 0.31343283582089554,
+         "z_quantiles_5_50_95": [
+          -0.5106953580519038,
+          0.02360413731870334,
+          0.6016644649933506
+         ]
+        },
+        "planchers": {
+         "statut": "pas de plancher de ce concept à cette couche"
+        }
+       },
+       "enjeux": {
+        "z": 0.9424693413334904,
+        "jetons_concept": 43,
+        "n_concept_tete_plus": 0,
+        "n_concept_tete_moins": 0,
+        "meilleur_rang_plus": 826,
+        "meilleur_rang_moins": 8510,
+        "isotropes": {
+         "n": 200,
+         "p_haut": 0.004975124378109453,
+         "p_bas": 1.0,
+         "p_bilateral": 0.004975124378109453,
+         "z_quantiles_5_50_95": [
+          -0.47008932338095033,
+          0.004097543709475621,
+          0.49618037267202697
+         ]
+        },
+        "planchers": {
+         "statut": "pas de plancher de ce concept à cette couche"
+        }
+       }
+      }
+     },
+     "jacobienne": {
+      "plus": {
+       "tete": [
+        {
+         "id": 18266,
+         "texte": " moon",
+         "logit": 13.284138
+        },
+        {
+         "id": 78825,
+         "texte": " magically",
+         "logit": 12.503552
+        },
+        {
+         "id": 50589,
+         "texte": " teleport",
+         "logit": 12.299743
+        },
+        {
+         "id": 65375,
+         "texte": " dinosaurs",
+         "logit": 12.106665
+        },
+        {
+         "id": 88034,
+         "texte": " nonexistent",
+         "logit": 11.25499
+        },
+        {
+         "id": 88035,
+         "texte": " Atlantis",
+         "logit": 11.074327
+        },
+        {
+         "id": 6367,
+         "texte": " secret",
+         "logit": 10.758345
+        },
+        {
+         "id": 36592,
+         "texte": " invented",
+         "logit": 10.687984
+        },
+        {
+         "id": 37219,
+         "texte": " aliens",
+         "logit": 10.611592
+        },
+        {
+         "id": 24632,
+         "texte": " magical",
+         "logit": 10.335093
+        },
+        {
+         "id": 63989,
+         "texte": " dinosaur",
+         "logit": 10.297928
+        },
+        {
+         "id": 24121,
+         "texte": " exclusively",
+         "logit": 10.224634
+        },
+        {
+         "id": 49044,
+         "texte": " UFO",
+         "logit": 10.160383
+        },
+        {
+         "id": 57811,
+         "texte": " lunar",
+         "logit": 10.008083
+        },
+        {
+         "id": 42839,
+         "texte": " secretly",
+         "logit": 10.00012
+        },
+        {
+         "id": 29512,
+         "texte": " backwards",
+         "logit": 9.983273
+        },
+        {
+         "id": 81260,
+         "texte": " moons",
+         "logit": 9.982788
+        },
+        {
+         "id": 18414,
+         "texte": " chocolate",
+         "logit": 9.869521
+        },
+        {
+         "id": 19441,
+         "texte": " downtown",
+         "logit": 9.823835
+        },
+        {
+         "id": 27785,
+         "texte": " ONLY",
+         "logit": 9.741037
+        }
+       ],
+       "tete_mots": [
+        {
+         "id": 18266,
+         "texte": " moon",
+         "logit": 13.284138
+        },
+        {
+         "id": 78825,
+         "texte": " magically",
+         "logit": 12.503552
+        },
+        {
+         "id": 50589,
+         "texte": " teleport",
+         "logit": 12.299743
+        },
+        {
+         "id": 65375,
+         "texte": " dinosaurs",
+         "logit": 12.106665
+        },
+        {
+         "id": 88034,
+         "texte": " nonexistent",
+         "logit": 11.25499
+        },
+        {
+         "id": 88035,
+         "texte": " Atlantis",
+         "logit": 11.074327
+        },
+        {
+         "id": 6367,
+         "texte": " secret",
+         "logit": 10.758345
+        },
+        {
+         "id": 36592,
+         "texte": " invented",
+         "logit": 10.687984
+        },
+        {
+         "id": 37219,
+         "texte": " aliens",
+         "logit": 10.611592
+        },
+        {
+         "id": 24632,
+         "texte": " magical",
+         "logit": 10.335093
+        },
+        {
+         "id": 63989,
+         "texte": " dinosaur",
+         "logit": 10.297928
+        },
+        {
+         "id": 24121,
+         "texte": " exclusively",
+         "logit": 10.224634
+        },
+        {
+         "id": 49044,
+         "texte": " UFO",
+         "logit": 10.160383
+        },
+        {
+         "id": 57811,
+         "texte": " lunar",
+         "logit": 10.008083
+        },
+        {
+         "id": 42839,
+         "texte": " secretly",
+         "logit": 10.00012
+        },
+        {
+         "id": 29512,
+         "texte": " backwards",
+         "logit": 9.983273
+        },
+        {
+         "id": 81260,
+         "texte": " moons",
+         "logit": 9.982788
+        },
+        {
+         "id": 18414,
+         "texte": " chocolate",
+         "logit": 9.869521
+        },
+        {
+         "id": 19441,
+         "texte": " downtown",
+         "logit": 9.823835
+        },
+        {
+         "id": 27785,
+         "texte": " ONLY",
+         "logit": 9.741037
+        }
+       ],
+       "tete_debut_de_mot": [
+        {
+         "id": 18266,
+         "texte": " moon",
+         "logit": 13.284138
+        },
+        {
+         "id": 78825,
+         "texte": " magically",
+         "logit": 12.503552
+        },
+        {
+         "id": 50589,
+         "texte": " teleport",
+         "logit": 12.299743
+        },
+        {
+         "id": 65375,
+         "texte": " dinosaurs",
+         "logit": 12.106665
+        },
+        {
+         "id": 88034,
+         "texte": " nonexistent",
+         "logit": 11.25499
+        },
+        {
+         "id": 88035,
+         "texte": " Atlantis",
+         "logit": 11.074327
+        },
+        {
+         "id": 6367,
+         "texte": " secret",
+         "logit": 10.758345
+        },
+        {
+         "id": 36592,
+         "texte": " invented",
+         "logit": 10.687984
+        },
+        {
+         "id": 37219,
+         "texte": " aliens",
+         "logit": 10.611592
+        },
+        {
+         "id": 24632,
+         "texte": " magical",
+         "logit": 10.335093
+        },
+        {
+         "id": 63989,
+         "texte": " dinosaur",
+         "logit": 10.297928
+        },
+        {
+         "id": 24121,
+         "texte": " exclusively",
+         "logit": 10.224634
+        },
+        {
+         "id": 49044,
+         "texte": " UFO",
+         "logit": 10.160383
+        },
+        {
+         "id": 57811,
+         "texte": " lunar",
+         "logit": 10.008083
+        },
+        {
+         "id": 42839,
+         "texte": " secretly",
+         "logit": 10.00012
+        },
+        {
+         "id": 29512,
+         "texte": " backwards",
+         "logit": 9.983273
+        },
+        {
+         "id": 81260,
+         "texte": " moons",
+         "logit": 9.982788
+        },
+        {
+         "id": 18414,
+         "texte": " chocolate",
+         "logit": 9.869521
+        },
+        {
+         "id": 19441,
+         "texte": " downtown",
+         "logit": 9.823835
+        },
+        {
+         "id": 27785,
+         "texte": " ONLY",
+         "logit": 9.741037
+        }
+       ]
+      },
+      "moins": {
+       "tete": [
+        {
+         "id": 84140,
+         "texte": " complexities",
+         "logit": 10.429508
+        },
+        {
+         "id": 57697,
+         "texte": " daunting",
+         "logit": 9.58549
+        },
+        {
+         "id": 23965,
+         "texte": " complexity",
+         "logit": 9.54163
+        },
+        {
+         "id": 3629,
+         "texte": " often",
+         "logit": 9.180216
+        },
+        {
+         "id": 13893,
+         "texte": " potentially",
+         "logit": 9.155308
+        },
+        {
+         "id": 71718,
+         "texte": " Complexity",
+         "logit": 8.843533
+        },
+        {
+         "id": 69063,
+         "texte": " imperfect",
+         "logit": 8.763735
+        },
+        {
+         "id": 20134,
+         "texte": " vulnerable",
+         "logit": 8.602504
+        },
+        {
+         "id": 52227,
+         "texte": " vulnerabilities",
+         "logit": 8.370562
+        },
+        {
+         "id": 69226,
+         "texte": " complic",
+         "logit": 8.152312
+        },
+        {
+         "id": 34104,
+         "texte": " vulnerability",
+         "logit": 8.117287
+        },
+        {
+         "id": 70342,
+         "texte": " scrutin",
+         "logit": 8.097735
+        },
+        {
+         "id": 13878,
+         "texte": " aspects",
+         "logit": 8.095514
+        },
+        {
+         "id": 61469,
+         "texte": " differing",
+         "logit": 8.056279
+        },
+        {
+         "id": 61917,
+         "texte": "often",
+         "logit": 8.042273
+        },
+        {
+         "id": 112913,
+         "texte": "arakter",
+         "logit": 7.993424
+        },
+        {
+         "id": 83379,
+         "texte": " contrasts",
+         "logit": 7.892555
+        },
+        {
+         "id": 43169,
+         "texte": " albeit",
+         "logit": 7.823396
+        },
+        {
+         "id": 17395,
+         "texte": " complicated",
+         "logit": 7.813125
+        },
+        {
+         "id": 56062,
+         "texte": " resilience",
+         "logit": 7.798744
+        }
+       ],
+       "tete_mots": [
+        {
+         "id": 84140,
+         "texte": " complexities",
+         "logit": 10.429508
+        },
+        {
+         "id": 57697,
+         "texte": " daunting",
+         "logit": 9.58549
+        },
+        {
+         "id": 23965,
+         "texte": " complexity",
+         "logit": 9.54163
+        },
+        {
+         "id": 3629,
+         "texte": " often",
+         "logit": 9.180216
+        },
+        {
+         "id": 13893,
+         "texte": " potentially",
+         "logit": 9.155308
+        },
+        {
+         "id": 71718,
+         "texte": " Complexity",
+         "logit": 8.843533
+        },
+        {
+         "id": 69063,
+         "texte": " imperfect",
+         "logit": 8.763735
+        },
+        {
+         "id": 20134,
+         "texte": " vulnerable",
+         "logit": 8.602504
+        },
+        {
+         "id": 52227,
+         "texte": " vulnerabilities",
+         "logit": 8.370562
+        },
+        {
+         "id": 69226,
+         "texte": " complic",
+         "logit": 8.152312
+        },
+        {
+         "id": 34104,
+         "texte": " vulnerability",
+         "logit": 8.117287
+        },
+        {
+         "id": 70342,
+         "texte": " scrutin",
+         "logit": 8.097735
+        },
+        {
+         "id": 13878,
+         "texte": " aspects",
+         "logit": 8.095514
+        },
+        {
+         "id": 61469,
+         "texte": " differing",
+         "logit": 8.056279
+        },
+        {
+         "id": 61917,
+         "texte": "often",
+         "logit": 8.042273
+        },
+        {
+         "id": 112913,
+         "texte": "arakter",
+         "logit": 7.993424
+        },
+        {
+         "id": 83379,
+         "texte": " contrasts",
+         "logit": 7.892555
+        },
+        {
+         "id": 43169,
+         "texte": " albeit",
+         "logit": 7.823396
+        },
+        {
+         "id": 17395,
+         "texte": " complicated",
+         "logit": 7.813125
+        },
+        {
+         "id": 56062,
+         "texte": " resilience",
+         "logit": 7.798744
+        }
+       ],
+       "tete_debut_de_mot": [
+        {
+         "id": 84140,
+         "texte": " complexities",
+         "logit": 10.429508
+        },
+        {
+         "id": 57697,
+         "texte": " daunting",
+         "logit": 9.58549
+        },
+        {
+         "id": 23965,
+         "texte": " complexity",
+         "logit": 9.54163
+        },
+        {
+         "id": 3629,
+         "texte": " often",
+         "logit": 9.180216
+        },
+        {
+         "id": 13893,
+         "texte": " potentially",
+         "logit": 9.155308
+        },
+        {
+         "id": 71718,
+         "texte": " Complexity",
+         "logit": 8.843533
+        },
+        {
+         "id": 69063,
+         "texte": " imperfect",
+         "logit": 8.763735
+        },
+        {
+         "id": 20134,
+         "texte": " vulnerable",
+         "logit": 8.602504
+        },
+        {
+         "id": 52227,
+         "texte": " vulnerabilities",
+         "logit": 8.370562
+        },
+        {
+         "id": 69226,
+         "texte": " complic",
+         "logit": 8.152312
+        },
+        {
+         "id": 34104,
+         "texte": " vulnerability",
+         "logit": 8.117287
+        },
+        {
+         "id": 70342,
+         "texte": " scrutin",
+         "logit": 8.097735
+        },
+        {
+         "id": 13878,
+         "texte": " aspects",
+         "logit": 8.095514
+        },
+        {
+         "id": 61469,
+         "texte": " differing",
+         "logit": 8.056279
+        },
+        {
+         "id": 83379,
+         "texte": " contrasts",
+         "logit": 7.892555
+        },
+        {
+         "id": 43169,
+         "texte": " albeit",
+         "logit": 7.823396
+        },
+        {
+         "id": 17395,
+         "texte": " complicated",
+         "logit": 7.813125
+        },
+        {
+         "id": 56062,
+         "texte": " resilience",
+         "logit": 7.798744
+        },
+        {
+         "id": 75867,
+         "texte": " confronting",
+         "logit": 7.754638
+        },
+        {
+         "id": 7170,
+         "texte": " sometimes",
+         "logit": 7.706599
+        }
+       ]
+      },
+      "diagnostics_z": {
+       "tromperie": {
+        "z": 0.8072178886834677,
+        "jetons_concept": 30,
+        "n_concept_tete_plus": 0,
+        "n_concept_tete_moins": 0,
+        "meilleur_rang_plus": 27,
+        "meilleur_rang_moins": 4168,
+        "isotropes": {
+         "n": 200,
+         "p_haut": 0.06467661691542288,
+         "p_bas": 0.9402985074626866,
+         "p_bilateral": 0.12437810945273632,
+         "z_quantiles_5_50_95": [
+          -0.8370253660667993,
+          0.014029219619623461,
+          0.8921812548684301
+         ]
+        },
+        "planchers": {
+         "statut": "pas de plancher de ce concept à cette couche"
+        }
+       },
+       "enjeux": {
+        "z": 0.1032472021566101,
+        "jetons_concept": 43,
+        "n_concept_tete_plus": 0,
+        "n_concept_tete_moins": 0,
+        "meilleur_rang_plus": 3141,
+        "meilleur_rang_moins": 293,
+        "isotropes": {
+         "n": 200,
+         "p_haut": 0.4527363184079602,
+         "p_bas": 0.5522388059701493,
+         "p_bilateral": 0.8407960199004975,
+         "z_quantiles_5_50_95": [
+          -0.6024667063923409,
+          0.05766987310377064,
+          0.7212865033395582
+         ]
+        },
+        "planchers": {
+         "statut": "pas de plancher de ce concept à cette couche"
+        }
+       }
+      }
+     },
+     "recouvrement": {
+      "plus": {
+       "intersection": 6,
+       "jaccard": 0.176471,
+       "communs": [
+        " backwards",
+        " exclusively",
+        " moon",
+        " nonexistent",
+        " secret",
+        " secretly"
+       ]
+      },
+      "moins": {
+       "intersection": 0,
+       "jaccard": 0.0,
+       "communs": []
+      },
+      "plus_mots": {
+       "intersection": 6,
+       "jaccard": 0.176471,
+       "communs": [
+        " backwards",
+        " exclusively",
+        " moon",
+        " nonexistent",
+        " secret",
+        " secretly"
+       ]
+      },
+      "moins_mots": {
+       "intersection": 0,
+       "jaccard": 0.0,
+       "communs": []
+      },
+      "plus_debut_de_mot": {
+       "intersection": 6,
+       "jaccard": 0.176471,
+       "communs": [
+        " backwards",
+        " exclusively",
+        " moon",
+        " nonexistent",
+        " secret",
+        " secretly"
+       ]
+      },
+      "cosinus_logits_centres": 0.5600305318445715
+     }
+    }
+   }
+  }
+ ]
+}

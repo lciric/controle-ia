@@ -1,0 +1,868 @@
+<!DOCTYPE html>
+<html lang="en-US">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width">
+  <title>Ubuntu 24.04 and Bubblewrap &#8211; etbe &#8211; Russell Coker</title>
+<meta name='robots' content='max-image-preview:large' />
+<link rel='dns-prefetch' href='//secure.gravatar.com' />
+<link rel='dns-prefetch' href='//fonts.googleapis.com' />
+<link rel='dns-prefetch' href='//v0.wordpress.com' />
+<link rel="alternate" type="application/rss+xml" title="etbe - Russell Coker &raquo; Feed" href="https://etbe.coker.com.au/feed/" />
+<link rel="alternate" type="application/rss+xml" title="etbe - Russell Coker &raquo; Comments Feed" href="https://etbe.coker.com.au/comments/feed/" />
+<link rel="alternate" type="application/rss+xml" title="etbe - Russell Coker &raquo; Ubuntu 24.04 and Bubblewrap Comments Feed" href="https://etbe.coker.com.au/2024/04/24/ubuntu-24-04-bubblewrap/feed/" />
+<link rel="alternate" title="oEmbed (JSON)" type="application/json+oembed" href="https://etbe.coker.com.au/wp-json/oembed/1.0/embed?url=https%3A%2F%2Fetbe.coker.com.au%2F2024%2F04%2F24%2Fubuntu-24-04-bubblewrap%2F" />
+<link rel="alternate" title="oEmbed (XML)" type="text/xml+oembed" href="https://etbe.coker.com.au/wp-json/oembed/1.0/embed?url=https%3A%2F%2Fetbe.coker.com.au%2F2024%2F04%2F24%2Fubuntu-24-04-bubblewrap%2F&#038;format=xml" />
+<style id="wp-img-auto-sizes-contain-inline-css">
+img:is([sizes=auto i],[sizes^="auto," i]){contain-intrinsic-size:3000px 1500px}
+/*# sourceURL=wp-img-auto-sizes-contain-inline-css */
+</style>
+<style id="wp-emoji-styles-inline-css">
+
+	img.wp-smiley, img.emoji {
+		display: inline !important;
+		border: none !important;
+		box-shadow: none !important;
+		height: 1em !important;
+		width: 1em !important;
+		margin: 0 0.07em !important;
+		vertical-align: -0.1em !important;
+		background: none !important;
+		padding: 0 !important;
+	}
+/*# sourceURL=wp-emoji-styles-inline-css */
+</style>
+<style id="wp-block-library-inline-css">
+:root{--wp-block-synced-color:#7a00df;--wp-block-synced-color--rgb:122,0,223;--wp-bound-block-color:var(--wp-block-synced-color);--wp-editor-canvas-background:#ddd;--wp-admin-theme-color:#007cba;--wp-admin-theme-color--rgb:0,124,186;--wp-admin-theme-color-darker-10:#006ba1;--wp-admin-theme-color-darker-10--rgb:0,107,160.5;--wp-admin-theme-color-darker-20:#005a87;--wp-admin-theme-color-darker-20--rgb:0,90,135;--wp-admin-border-width-focus:2px}@media (min-resolution:192dpi){:root{--wp-admin-border-width-focus:1.5px}}.wp-element-button{cursor:pointer}:root .has-very-light-gray-background-color{background-color:#eee}:root .has-very-dark-gray-background-color{background-color:#313131}:root .has-very-light-gray-color{color:#eee}:root .has-very-dark-gray-color{color:#313131}:root .has-vivid-green-cyan-to-vivid-cyan-blue-gradient-background{background:linear-gradient(135deg,#00d084,#0693e3)}:root .has-purple-crush-gradient-background{background:linear-gradient(135deg,#34e2e4,#4721fb 50%,#ab1dfe)}:root .has-hazy-dawn-gradient-background{background:linear-gradient(135deg,#faaca8,#dad0ec)}:root .has-subdued-olive-gradient-background{background:linear-gradient(135deg,#fafae1,#67a671)}:root .has-atomic-cream-gradient-background{background:linear-gradient(135deg,#fdd79a,#004a59)}:root .has-nightshade-gradient-background{background:linear-gradient(135deg,#330968,#31cdcf)}:root .has-midnight-gradient-background{background:linear-gradient(135deg,#020381,#2874fc)}:root{--wp--preset--font-size--normal:16px;--wp--preset--font-size--huge:42px}.has-regular-font-size{font-size:1em}.has-larger-font-size{font-size:2.625em}.has-normal-font-size{font-size:var(--wp--preset--font-size--normal)}.has-huge-font-size{font-size:var(--wp--preset--font-size--huge)}:root .has-text-align-center{text-align:center}:root .has-text-align-left{text-align:left}:root .has-text-align-right{text-align:right}.has-fit-text{white-space:nowrap!important}#end-resizable-editor-section{display:none}.aligncenter{clear:both}.items-justified-left{justify-content:flex-start}.items-justified-center{justify-content:center}.items-justified-right{justify-content:flex-end}.items-justified-space-between{justify-content:space-between}.screen-reader-text{word-wrap:normal!important;border:0;clip-path:inset(50%);height:1px;margin:-1px;overflow:hidden;padding:0;position:absolute;width:1px;word-break:normal!important}.screen-reader-text:focus{background-color:#ddd;clip-path:none;color:#444;display:block;font-size:1em;height:auto;left:5px;line-height:normal;padding:15px 23px 14px;text-decoration:none;top:5px;width:auto;z-index:100000}html :where(.has-border-color){border-style:solid}html :where([style^=border-color],[style*=";border-color"],[style*="; border-color"]){border-style:solid}html :where([style^=border-top-color],[style*=";border-top-color"],[style*="; border-top-color"]){border-top-style:solid}html :where([style^=border-right-color],[style*=";border-right-color"],[style*="; border-right-color"]){border-right-style:solid}html :where([style^=border-bottom-color],[style*=";border-bottom-color"],[style*="; border-bottom-color"]){border-bottom-style:solid}html :where([style^=border-left-color],[style*=";border-left-color"],[style*="; border-left-color"]){border-left-style:solid}html :where([style^=border-width],[style*=";border-width"],[style*="; border-width"]){border-style:solid}html :where([style^=border-top-width],[style*=";border-top-width"],[style*="; border-top-width"]){border-top-style:solid}html :where([style^=border-right-width],[style*=";border-right-width"],[style*="; border-right-width"]){border-right-style:solid}html :where([style^=border-bottom-width],[style*=";border-bottom-width"],[style*="; border-bottom-width"]){border-bottom-style:solid}html :where([style^=border-left-width],[style*=";border-left-width"],[style*="; border-left-width"]){border-left-style:solid}html :where(img[class*=wp-image-]){height:auto;max-width:100%}:where(figure){margin:0 0 1em}html :where(.is-position-sticky){--wp-admin--admin-bar--position-offset:var(--wp-admin--admin-bar--height,0px)}@media screen and (max-width:600px){html :where(.is-position-sticky){--wp-admin--admin-bar--position-offset:0px}}
+
+/*# sourceURL=/wp-includes/css/dist/block-library/common.min.css */
+</style>
+<style id="wp-block-library-inline-css-extra">
+.has-text-align-justify{text-align:justify;}
+/*# sourceURL=wp-block-library-inline-css */
+</style>
+
+<style id="classic-theme-styles-inline-css">
+/*! This file is auto-generated */
+.wp-block-button__link{color:#fff;background-color:#32373c;border-radius:9999px;box-shadow:none;text-decoration:none;padding:calc(.667em + 2px) calc(1.333em + 2px);font-size:1.125em}.wp-block-file__button{background:#32373c;color:#fff;text-decoration:none}
+/*# sourceURL=/wp-includes/css/classic-themes.min.css */
+</style>
+
+<style id="global-styles-inline-css">
+:root{--wp--preset--aspect-ratio--square: 1;--wp--preset--aspect-ratio--4-3: 4/3;--wp--preset--aspect-ratio--3-4: 3/4;--wp--preset--aspect-ratio--3-2: 3/2;--wp--preset--aspect-ratio--2-3: 2/3;--wp--preset--aspect-ratio--16-9: 16/9;--wp--preset--aspect-ratio--9-16: 9/16;--wp--preset--color--black: #000000;--wp--preset--color--cyan-bluish-gray: #abb8c3;--wp--preset--color--white: #ffffff;--wp--preset--color--pale-pink: #f78da7;--wp--preset--color--vivid-red: #cf2e2e;--wp--preset--color--luminous-vivid-orange: #ff6900;--wp--preset--color--luminous-vivid-amber: #fcb900;--wp--preset--color--light-green-cyan: #7bdcb5;--wp--preset--color--vivid-green-cyan: #00d084;--wp--preset--color--pale-cyan-blue: #8ed1fc;--wp--preset--color--vivid-cyan-blue: #0693e3;--wp--preset--color--vivid-purple: #9b51e0;--wp--preset--gradient--vivid-cyan-blue-to-vivid-purple: linear-gradient(135deg,rgb(6,147,227) 0%,rgb(155,81,224) 100%);--wp--preset--gradient--light-green-cyan-to-vivid-green-cyan: linear-gradient(135deg,rgb(122,220,180) 0%,rgb(0,208,130) 100%);--wp--preset--gradient--luminous-vivid-amber-to-luminous-vivid-orange: linear-gradient(135deg,rgb(252,185,0) 0%,rgb(255,105,0) 100%);--wp--preset--gradient--luminous-vivid-orange-to-vivid-red: linear-gradient(135deg,rgb(255,105,0) 0%,rgb(207,46,46) 100%);--wp--preset--gradient--very-light-gray-to-cyan-bluish-gray: linear-gradient(135deg,rgb(238,238,238) 0%,rgb(169,184,195) 100%);--wp--preset--gradient--cool-to-warm-spectrum: linear-gradient(135deg,rgb(74,234,220) 0%,rgb(151,120,209) 20%,rgb(207,42,186) 40%,rgb(238,44,130) 60%,rgb(251,105,98) 80%,rgb(254,248,76) 100%);--wp--preset--gradient--blush-light-purple: linear-gradient(135deg,rgb(255,206,236) 0%,rgb(152,150,240) 100%);--wp--preset--gradient--blush-bordeaux: linear-gradient(135deg,rgb(254,205,165) 0%,rgb(254,45,45) 50%,rgb(107,0,62) 100%);--wp--preset--gradient--luminous-dusk: linear-gradient(135deg,rgb(255,203,112) 0%,rgb(199,81,192) 50%,rgb(65,88,208) 100%);--wp--preset--gradient--pale-ocean: linear-gradient(135deg,rgb(255,245,203) 0%,rgb(182,227,212) 50%,rgb(51,167,181) 100%);--wp--preset--gradient--electric-grass: linear-gradient(135deg,rgb(202,248,128) 0%,rgb(113,206,126) 100%);--wp--preset--gradient--midnight: linear-gradient(135deg,rgb(2,3,129) 0%,rgb(40,116,252) 100%);--wp--preset--font-size--small: 13px;--wp--preset--font-size--medium: 20px;--wp--preset--font-size--large: 36px;--wp--preset--font-size--x-large: 42px;--wp--preset--spacing--20: 0.44rem;--wp--preset--spacing--30: 0.67rem;--wp--preset--spacing--40: 1rem;--wp--preset--spacing--50: 1.5rem;--wp--preset--spacing--60: 2.25rem;--wp--preset--spacing--70: 3.38rem;--wp--preset--spacing--80: 5.06rem;--wp--preset--shadow--natural: 6px 6px 9px rgba(0, 0, 0, 0.2);--wp--preset--shadow--deep: 12px 12px 50px rgba(0, 0, 0, 0.4);--wp--preset--shadow--sharp: 6px 6px 0px rgba(0, 0, 0, 0.2);--wp--preset--shadow--outlined: 6px 6px 0px -3px rgb(255, 255, 255), 6px 6px rgb(0, 0, 0);--wp--preset--shadow--crisp: 6px 6px 0px rgb(0, 0, 0);}.wp-block-button{--wp--preset--dimension--25: 25%;--wp--preset--dimension--50: 50%;--wp--preset--dimension--75: 75%;--wp--preset--dimension--100: 100%;}:where(body) { margin: 0; }:where(.is-layout-flex){gap: 0.5em;}:where(.is-layout-grid){gap: 0.5em;}body .is-layout-flex{display: flex;}.is-layout-flex{flex-wrap: wrap;align-items: center;}.is-layout-flex > :is(*, div){margin: 0;}body .is-layout-grid{display: grid;}.is-layout-grid > :is(*, div){margin: 0;}body{padding-top: 0px;padding-right: 0px;padding-bottom: 0px;padding-left: 0px;}:root :where(.wp-element-button, .wp-block-button__link){background-color: #32373c;border-width: 0;color: #fff;font-family: inherit;font-size: inherit;font-style: inherit;font-weight: inherit;letter-spacing: inherit;line-height: inherit;padding-top: calc(0.667em + 2px);padding-right: calc(1.333em + 2px);padding-bottom: calc(0.667em + 2px);padding-left: calc(1.333em + 2px);text-decoration: none;text-transform: inherit;}.has-black-color{color: var(--wp--preset--color--black) !important;}.has-cyan-bluish-gray-color{color: var(--wp--preset--color--cyan-bluish-gray) !important;}.has-white-color{color: var(--wp--preset--color--white) !important;}.has-pale-pink-color{color: var(--wp--preset--color--pale-pink) !important;}.has-vivid-red-color{color: var(--wp--preset--color--vivid-red) !important;}.has-luminous-vivid-orange-color{color: var(--wp--preset--color--luminous-vivid-orange) !important;}.has-luminous-vivid-amber-color{color: var(--wp--preset--color--luminous-vivid-amber) !important;}.has-light-green-cyan-color{color: var(--wp--preset--color--light-green-cyan) !important;}.has-vivid-green-cyan-color{color: var(--wp--preset--color--vivid-green-cyan) !important;}.has-pale-cyan-blue-color{color: var(--wp--preset--color--pale-cyan-blue) !important;}.has-vivid-cyan-blue-color{color: var(--wp--preset--color--vivid-cyan-blue) !important;}.has-vivid-purple-color{color: var(--wp--preset--color--vivid-purple) !important;}.has-black-background-color{background-color: var(--wp--preset--color--black) !important;}.has-cyan-bluish-gray-background-color{background-color: var(--wp--preset--color--cyan-bluish-gray) !important;}.has-white-background-color{background-color: var(--wp--preset--color--white) !important;}.has-pale-pink-background-color{background-color: var(--wp--preset--color--pale-pink) !important;}.has-vivid-red-background-color{background-color: var(--wp--preset--color--vivid-red) !important;}.has-luminous-vivid-orange-background-color{background-color: var(--wp--preset--color--luminous-vivid-orange) !important;}.has-luminous-vivid-amber-background-color{background-color: var(--wp--preset--color--luminous-vivid-amber) !important;}.has-light-green-cyan-background-color{background-color: var(--wp--preset--color--light-green-cyan) !important;}.has-vivid-green-cyan-background-color{background-color: var(--wp--preset--color--vivid-green-cyan) !important;}.has-pale-cyan-blue-background-color{background-color: var(--wp--preset--color--pale-cyan-blue) !important;}.has-vivid-cyan-blue-background-color{background-color: var(--wp--preset--color--vivid-cyan-blue) !important;}.has-vivid-purple-background-color{background-color: var(--wp--preset--color--vivid-purple) !important;}.has-black-border-color{border-color: var(--wp--preset--color--black) !important;}.has-cyan-bluish-gray-border-color{border-color: var(--wp--preset--color--cyan-bluish-gray) !important;}.has-white-border-color{border-color: var(--wp--preset--color--white) !important;}.has-pale-pink-border-color{border-color: var(--wp--preset--color--pale-pink) !important;}.has-vivid-red-border-color{border-color: var(--wp--preset--color--vivid-red) !important;}.has-luminous-vivid-orange-border-color{border-color: var(--wp--preset--color--luminous-vivid-orange) !important;}.has-luminous-vivid-amber-border-color{border-color: var(--wp--preset--color--luminous-vivid-amber) !important;}.has-light-green-cyan-border-color{border-color: var(--wp--preset--color--light-green-cyan) !important;}.has-vivid-green-cyan-border-color{border-color: var(--wp--preset--color--vivid-green-cyan) !important;}.has-pale-cyan-blue-border-color{border-color: var(--wp--preset--color--pale-cyan-blue) !important;}.has-vivid-cyan-blue-border-color{border-color: var(--wp--preset--color--vivid-cyan-blue) !important;}.has-vivid-purple-border-color{border-color: var(--wp--preset--color--vivid-purple) !important;}.has-vivid-cyan-blue-to-vivid-purple-gradient-background{background: var(--wp--preset--gradient--vivid-cyan-blue-to-vivid-purple) !important;}.has-light-green-cyan-to-vivid-green-cyan-gradient-background{background: var(--wp--preset--gradient--light-green-cyan-to-vivid-green-cyan) !important;}.has-luminous-vivid-amber-to-luminous-vivid-orange-gradient-background{background: var(--wp--preset--gradient--luminous-vivid-amber-to-luminous-vivid-orange) !important;}.has-luminous-vivid-orange-to-vivid-red-gradient-background{background: var(--wp--preset--gradient--luminous-vivid-orange-to-vivid-red) !important;}.has-very-light-gray-to-cyan-bluish-gray-gradient-background{background: var(--wp--preset--gradient--very-light-gray-to-cyan-bluish-gray) !important;}.has-cool-to-warm-spectrum-gradient-background{background: var(--wp--preset--gradient--cool-to-warm-spectrum) !important;}.has-blush-light-purple-gradient-background{background: var(--wp--preset--gradient--blush-light-purple) !important;}.has-blush-bordeaux-gradient-background{background: var(--wp--preset--gradient--blush-bordeaux) !important;}.has-luminous-dusk-gradient-background{background: var(--wp--preset--gradient--luminous-dusk) !important;}.has-pale-ocean-gradient-background{background: var(--wp--preset--gradient--pale-ocean) !important;}.has-electric-grass-gradient-background{background: var(--wp--preset--gradient--electric-grass) !important;}.has-midnight-gradient-background{background: var(--wp--preset--gradient--midnight) !important;}.has-small-font-size{font-size: var(--wp--preset--font-size--small) !important;}.has-medium-font-size{font-size: var(--wp--preset--font-size--medium) !important;}.has-large-font-size{font-size: var(--wp--preset--font-size--large) !important;}.has-x-large-font-size{font-size: var(--wp--preset--font-size--x-large) !important;}
+/*# sourceURL=global-styles-inline-css */
+</style>
+
+<link rel='stylesheet' id='eztoc-css' href='https://etbe.coker.com.au/wp-content/plugins/easy-table-of-contents/assets/css/screen.min.css?ver=2.0.89' media='all' />
+<style id="eztoc-inline-css">
+div#ez-toc-container .ez-toc-title, .ez-toc-split-section .ez-toc-title {font-size: 120%;}div#ez-toc-container .ez-toc-title, .ez-toc-split-section .ez-toc-title {font-weight: 500;}div#ez-toc-container ul li , div#ez-toc-container ul li a, .ez-toc-split-section ul li , .ez-toc-split-section ul li a {font-size: 95%;}div#ez-toc-container ul li , div#ez-toc-container ul li a, .ez-toc-split-section ul li , .ez-toc-split-section ul li a {font-weight: 500;}div#ez-toc-container nav ul ul li, .ez-toc-split-section nav ul ul li {font-size: 90%;}.ez-toc-box-title {font-weight: bold; margin-bottom: 10px; text-align: center; text-transform: uppercase; letter-spacing: 1px; color: #666; padding-bottom: 5px;position:absolute;top:-4%;left:5%;background-color: inherit;transition: top 0.3s ease;}.ez-toc-box-title.toc-closed {top:-25%;}
+.ez-toc-container-direction {direction: ltr;}.ez-toc-counter ul{counter-reset: item ;}.ez-toc-counter nav ul li a::before {content: counters(item, '.', decimal) '. ';display: inline-block;counter-increment: item;flex-grow: 0;flex-shrink: 0;margin-right: .2em; float: left; }.ez-toc-widget-direction {direction: ltr;}.ez-toc-widget-container ul{counter-reset: item ;}.ez-toc-widget-container nav ul li a::before {content: counters(item, '.', decimal) '. ';display: inline-block;counter-increment: item;flex-grow: 0;flex-shrink: 0;margin-right: .2em; float: left; }
+/*# sourceURL=eztoc-inline-css */
+</style>
+<link rel='stylesheet' id='multipurpose-blog-font-css' href='//fonts.googleapis.com/css?family=ABeeZee%3Aital%400%3B1%7CAbril%20Fatface%7CAcme%7CAllura%7CAnton%7CArchitects%20Daughter%7CArchivo%3Aital%2Cwght%400%2C100%3B0%2C200%3B0%2C300%3B0%2C400%3B0%2C500%3B0%2C600%3B0%2C700%3B0%2C800%3B0%2C900%3B1%2C100%3B1%2C200%3B1%2C300%3B1%2C400%3B1%2C500%3B1%2C600%3B1%2C700%3B1%2C800%3B1%2C900%7CArimo%3Aital%2Cwght%400%2C400%3B0%2C500%3B0%2C600%3B0%2C700%3B1%2C400%3B1%2C500%3B1%2C600%3B1%2C700%7CArsenal%3Aital%2Cwght%400%2C400%3B0%2C700%3B1%2C400%3B1%2C700%7CArvo%3Aital%2Cwght%400%2C400%3B0%2C700%3B1%2C400%3B1%2C700%7CAlegreya%3Aital%2Cwght%400%2C400%3B0%2C500%3B0%2C600%3B0%2C700%3B0%2C800%3B0%2C900%3B1%2C400%3B1%2C500%3B1%2C600%3B1%2C700%3B1%2C800%3B1%2C900%7CAlfa%20Slab%20One%7CAlex%20Brush%7CAveria%20Serif%20Libre%3Aital%2Cwght%400%2C300%3B0%2C400%3B0%2C700%3B1%2C300%3B1%2C400%3B1%2C700%7CBangers%7CBoogaloo%7CBad%20Script%7CBarlow%20Condensed%3Aital%2Cwght%400%2C100%3B0%2C200%3B0%2C300%3B0%2C400%3B0%2C500%3B0%2C600%3B0%2C700%3B0%2C800%3B0%2C900%3B1%2C100%3B1%2C200%3B1%2C300%3B1%2C400%3B1%2C500%3B1%2C600%3B1%2C700%3B1%2C800%3B1%2C900%7CBitter%3Aital%2Cwght%400%2C100%3B0%2C200%3B0%2C300%3B0%2C400%3B0%2C500%3B0%2C600%3B0%2C700%3B0%2C800%3B0%2C900%3B1%2C100%3B1%2C200%3B1%2C300%3B1%2C400%3B1%2C500%3B1%2C600%3B1%2C700%3B1%2C800%3B1%2C900%7CBree%20Serif%7CBenchNine%3Awght%40300%3B400%3B700%7CCabin%3Aital%2Cwght%400%2C400%3B0%2C500%3B0%2C600%3B0%2C700%3B1%2C400%3B1%2C500%3B1%2C600%3B1%2C700%7CCardo%3Aital%2Cwght%400%2C400%3B0%2C700%3B1%2C400%7CCourgette%7CCaveat%20Brush%7CCherry%20Swash%3Awght%40400%3B700%7CCormorant%20Garamond%3Aital%2Cwght%400%2C300%3B0%2C400%3B0%2C500%3B0%2C600%3B0%2C700%3B1%2C300%3B1%2C400%3B1%2C500%3B1%2C600%3B1%2C700%7CCrimson%20Text%3Aital%2Cwght%400%2C400%3B0%2C600%3B0%2C700%3B1%2C400%3B1%2C600%3B1%2C700%7CCuprum%3Aital%2Cwght%400%2C400%3B0%2C500%3B0%2C600%3B0%2C700%3B1%2C400%3B1%2C500%3B1%2C600%3B1%2C700%7CCookie%7CComing%20Soon%7CCharm%3Awght%40400%3B700%7CChewy%7CDays%20One%7CDosis%3Awght%40200%3B300%3B400%3B500%3B600%3B700%3B800%7CDM%20Sans%3Aital%2Cwght%400%2C400%3B0%2C500%3B0%2C700%3B1%2C400%3B1%2C500%3B1%2C700%7CEB%20Garamond%3Aital%2Cwght%400%2C400%3B0%2C500%3B0%2C600%3B0%2C700%3B0%2C800%3B1%2C400%3B1%2C500%3B1%2C600%3B1%2C700%3B1%2C800%7CEconomica%3Aital%2Cwght%400%2C400%3B0%2C700%3B1%2C400%3B1%2C700%7CFira%20Sans%3Aital%2Cwght%400%2C100%3B0%2C200%3B0%2C300%3B0%2C400%3B0%2C500%3B0%2C600%3B0%2C700%3B0%2C800%3B0%2C900%3B1%2C100%3B1%2C200%3B1%2C300%3B1%2C400%3B1%2C500%3B1%2C600%3B1%2C700%3B1%2C800%3B1%2C900%7CFredoka%20One%7CFjalla%20One%7CFrancois%20One%7CFrank%20Ruhl%20Libre%3Awght%40300%3B400%3B500%3B700%3B900%7CGabriela%7CGloria%20Hallelujah%7CGreat%20Vibes%7CHandlee%7CHammersmith%20One%7CHeebo%3Awght%40100%3B200%3B300%3B400%3B500%3B600%3B700%3B800%3B900%7CHind%3Awght%40300%3B400%3B500%3B600%3B700%7CInconsolata%3Awght%40200%3B300%3B400%3B500%3B600%3B700%3B800%3B900%7CIndie%20Flower%7CIM%20Fell%20English%20SC%7CJulius%20Sans%20One%7CJost%3Aital%2Cwght%400%2C100%3B0%2C200%3B0%2C300%3B0%2C400%3B0%2C500%3B0%2C600%3B0%2C700%3B0%2C800%3B0%2C900%3B1%2C100%3B1%2C200%3B1%2C300%3B1%2C400%3B1%2C500%3B1%2C600%3B1%2C700%3B1%2C800%3B1%2C900%7CKanit%3Aital%2Cwght%400%2C100%3B0%2C200%3B0%2C300%3B0%2C400%3B0%2C500%3B0%2C600%3B0%2C700%3B0%2C800%3B0%2C900%3B1%2C100%3B1%2C200%3B1%2C300%3B1%2C400%3B1%2C500%3B1%2C600%3B1%2C700%3B1%2C800%3B1%2C900%7CKrub%3Aital%2Cwght%400%2C200%3B0%2C300%3B0%2C400%3B0%2C500%3B0%2C600%3B0%2C700%3B1%2C200%3B1%2C300%3B1%2C400%3B1%2C500%3B1%2C600%3B1%2C700%7CLobster%7CLato%3Aital%2Cwght%400%2C100%3B0%2C300%3B0%2C400%3B0%2C700%3B0%2C900%3B1%2C100%3B1%2C300%3B1%2C400%3B1%2C700%3B1%2C900%7CLora%3Aital%2Cwght%400%2C400%3B0%2C500%3B0%2C600%3B0%2C700%3B1%2C400%3B1%2C500%3B1%2C600%3B1%2C700%7CLibre%20Baskerville%3Aital%2Cwght%400%2C400%3B0%2C700%3B1%2C400%7CLobster%20Two%3Aital%2Cwght%400%2C400%3B0%2C700%3B1%2C400%3B1%2C700%7CMerriweather%3Aital%2Cwght%400%2C300%3B0%2C400%3B0%2C700%3B0%2C900%3B1%2C300%3B1%2C400%3B1%2C700%3B1%2C900%7CMarck%20Script%7CMarcellus%7CMerienda%20One%7CMonda%3Awght%40400%3B700%7CMontserrat%3Aital%2Cwght%400%2C100%3B0%2C200%3B0%2C300%3B0%2C400%3B0%2C500%3B0%2C600%3B0%2C700%3B0%2C800%3B0%2C900%3B1%2C100%3B1%2C200%3B1%2C300%3B1%2C400%3B1%2C500%3B1%2C600%3B1%2C700%3B1%2C800%3B1%2C900%7CMulish%3Aital%2Cwght%400%2C200%3B0%2C300%3B0%2C400%3B0%2C500%3B0%2C600%3B0%2C700%3B0%2C800%3B0%2C900%3B0%2C1000%3B1%2C200%3B1%2C300%3B1%2C400%3B1%2C500%3B1%2C600%3B1%2C700%3B1%2C800%3B1%2C900%3B1%2C1000%7CNoto%20Serif%3Aital%2Cwght%400%2C400%3B0%2C700%3B1%2C400%3B1%2C700%7CNunito%20Sans%3Aital%2Cwght%400%2C200%3B0%2C300%3B0%2C400%3B0%2C600%3B0%2C700%3B0%2C800%3B0%2C900%3B1%2C200%3B1%2C300%3B1%2C400%3B1%2C600%3B1%2C700%3B1%2C800%3B1%2C900%7COverpass%3Aital%2Cwght%400%2C100%3B0%2C200%3B0%2C300%3B0%2C400%3B0%2C500%3B0%2C600%3B0%2C700%3B0%2C800%3B0%2C900%3B1%2C100%3B1%2C200%3B1%2C300%3B1%2C400%3B1%2C500%3B1%2C600%3B1%2C700%3B1%2C800%3B1%2C900%7COverpass%20Mono%3Awght%40300%3B400%3B500%3B600%3B700%7COxygen%3Awght%40300%3B400%3B700%7COswald%3Awght%40200%3B300%3B400%3B500%3B600%3B700%7COrbitron%3Awght%40400%3B500%3B600%3B700%3B800%3B900%7CPatua%20One%7CPacifico%7CPadauk%3Awght%40400%3B700%7CPlayball%7CPlayfair%20Display%3Aital%2Cwght%400%2C400%3B0%2C500%3B0%2C600%3B0%2C700%3B0%2C800%3B0%2C900%3B1%2C400%3B1%2C500%3B1%2C600%3B1%2C700%3B1%2C800%3B1%2C900%7CPrompt%3Aital%2Cwght%400%2C100%3B0%2C200%3B0%2C300%3B0%2C400%3B0%2C500%3B0%2C600%3B0%2C700%3B0%2C800%3B0%2C900%3B1%2C100%3B1%2C200%3B1%2C300%3B1%2C400%3B1%2C500%3B1%2C600%3B1%2C700%3B1%2C800%3B1%2C900%7CPT%20Sans%3Aital%2Cwght%400%2C400%3B0%2C700%3B1%2C400%3B1%2C700%7CPT%20Serif%3Aital%2Cwght%400%2C400%3B0%2C700%3B1%2C400%3B1%2C700%7CPhilosopher%3Aital%2Cwght%400%2C400%3B0%2C700%3B1%2C400%3B1%2C700%7CPermanent%20Marker%7CPoiret%20One%7CPoppins%3Aital%2Cwght%400%2C100%3B0%2C200%3B0%2C300%3B0%2C400%3B0%2C500%3B0%2C600%3B0%2C700%3B0%2C800%3B0%2C900%3B1%2C100%3B1%2C200%3B1%2C300%3B1%2C400%3B1%2C500%3B1%2C600%3B1%2C700%3B1%2C800%3B1%2C900%7CPrata%7CQuicksand%3Awght%40300%3B400%3B500%3B600%3B700%7CQuattrocento%20Sans%3Aital%2Cwght%400%2C400%3B0%2C700%3B1%2C400%3B1%2C700%7CRaleway%3Aital%2Cwght%400%2C100%3B0%2C200%3B0%2C300%3B0%2C400%3B0%2C500%3B0%2C600%3B0%2C700%3B0%2C800%3B0%2C900%3B1%2C100%3B1%2C200%3B1%2C300%3B1%2C400%3B1%2C500%3B1%2C600%3B1%2C700%3B1%2C800%3B1%2C900%7CRubik%3Aital%2Cwght%400%2C300%3B0%2C400%3B0%2C500%3B0%2C600%3B0%2C700%3B0%2C800%3B0%2C900%3B1%2C300%3B1%2C400%3B1%2C500%3B1%2C600%3B1%2C700%3B1%2C800%3B1%2C900%7CRoboto%3Aital%2Cwght%400%2C100%3B0%2C300%3B0%2C400%3B0%2C500%3B0%2C700%3B0%2C900%3B1%2C100%3B1%2C300%3B1%2C400%3B1%2C500%3B1%2C700%3B1%2C900%7CRoboto%20Condensed%3Aital%2Cwght%400%2C300%3B0%2C400%3B0%2C700%3B1%2C300%3B1%2C400%3B1%2C700%7CRokkitt%3Awght%40100%3B200%3B300%3B400%3B500%3B600%3B700%3B800%3B900%7CRusso%20One%7CRighteous%7CSaira%3Aital%2Cwght%400%2C100%3B0%2C200%3B0%2C300%3B0%2C400%3B0%2C500%3B0%2C600%3B0%2C700%3B0%2C800%3B0%2C900%3B1%2C100%3B1%2C200%3B1%2C300%3B1%2C400%3B1%2C500%3B1%2C600%3B1%2C700%3B1%2C800%3B1%2C900%7CSatisfy%7CSen%3Awght%40400%3B700%3B800%7CSlabo%2013px%7CSource%20Sans%20Pro%3Aital%2Cwght%400%2C200%3B0%2C300%3B0%2C400%3B0%2C600%3B0%2C700%3B0%2C900%3B1%2C200%3B1%2C300%3B1%2C400%3B1%2C600%3B1%2C700%3B1%2C900%7CShadows%20Into%20Light%20Two%7CShadows%20Into%20Light%7CSacramento%7CSail%7CShrikhand%7CLeague%20Spartan%3Awght%40100%3B200%3B300%3B400%3B500%3B600%3B700%3B800%3B900%7CStaatliches%7CStylish%7CTangerine%3Awght%40400%3B700%7CTitillium%20Web%3Aital%2Cwght%400%2C200%3B0%2C300%3B0%2C400%3B0%2C600%3B0%2C700%3B0%2C900%3B1%2C200%3B1%2C300%3B1%2C400%3B1%2C600%3B1%2C700%7CTrirong%3Aital%2Cwght%400%2C100%3B0%2C200%3B0%2C300%3B0%2C400%3B0%2C500%3B0%2C600%3B0%2C700%3B0%2C800%3B0%2C900%3B1%2C100%3B1%2C200%3B1%2C300%3B1%2C400%3B1%2C500%3B1%2C600%3B1%2C700%3B1%2C800%3B1%2C900%7CUbuntu%3Aital%2Cwght%400%2C300%3B0%2C400%3B0%2C500%3B0%2C700%3B1%2C300%3B1%2C400%3B1%2C500%3B1%2C700%7CUnica%20One%7CVT323%7CVarela%20Round%7CVampiro%20One%7CVollkorn%3Aital%2Cwght%400%2C400%3B0%2C500%3B0%2C600%3B0%2C700%3B0%2C800%3B0%2C900%3B1%2C400%3B1%2C500%3B1%2C600%3B1%2C700%3B1%2C800%3B1%2C900%7CVolkhov%3Aital%2Cwght%400%2C400%3B0%2C700%3B1%2C400%3B1%2C700%7CWork%20Sans%3Aital%2Cwght%400%2C100%3B0%2C200%3B0%2C300%3B0%2C400%3B0%2C500%3B0%2C600%3B0%2C700%3B0%2C800%3B0%2C900%3B1%2C100%3B1%2C200%3B1%2C300%3B1%2C400%3B1%2C500%3B1%2C600%3B1%2C700%3B1%2C800%3B1%2C900%7CYanone%20Kaffeesatz%3Awght%40200%3B300%3B400%3B500%3B600%3B700%7CZCOOL%20XiaoWei%7COpen%20Sans%3Aital%2Cwght%400%2C300%3B0%2C400%3B0%2C500%3B0%2C600%3B0%2C700%3B0%2C800%3B1%2C300%3B1%2C400%3B1%2C500%3B1%2C600%3B1%2C700%3B1%2C800%7CJosefin%20Slab%3Aital%2Cwght%400%2C100%3B0%2C200%3B0%2C300%3B0%2C400%3B0%2C500%3B0%2C600%3B0%2C700%3B1%2C100%3B1%2C200%3B1%2C300%3B1%2C400%3B1%2C500%3B1%2C600%3B1%2C700%7CJosefin%20Sans%3Aital%2Cwght%400%2C100%3B0%2C200%3B0%2C300%3B0%2C400%3B0%2C500%3B0%2C600%3B0%2C700%3B1%2C100%3B1%2C200%3B1%2C300%3B1%2C400%3B1%2C500%3B1%2C600%3B1%2C700&#038;ver=7.1.4' media='all' />
+<link rel='stylesheet' id='multipurpose-blog-block-style-css' href='https://etbe.coker.com.au/wp-content/themes/multipurpose-blog/css/blocks.css?ver=7.1.4' media='all' />
+<link rel='stylesheet' id='bootstrap-css-css' href='https://etbe.coker.com.au/wp-content/themes/multipurpose-blog/css/bootstrap.css?ver=7.1.4' media='all' />
+<link rel='stylesheet' id='multipurpose-blog-basic-style-css' href='https://etbe.coker.com.au/wp-content/themes/multipurpose-blog/style.css?ver=7.1.4' media='all' />
+<style id="multipurpose-blog-basic-style-inline-css">
+
+		body{
+		    color:!important;
+		    font-family:  !important;
+		    font-size: px !important;
+			font-weight: !important;
+		}
+		p,span{
+		    color:!important;
+		    font-family: ;
+		    font-size: px;
+			font-weight: !important;
+		}
+		a{
+		    color:!important;
+		    font-family: ;
+		}
+		li{
+		    color:!important;
+		    font-family: ;
+		}
+		h1{
+		    color:!important;
+		    font-family: !important;
+		    font-size: px!important;
+			font-weight: !important;
+		}
+		h2{
+		    color:!important;
+		    font-family: !important;
+		    font-size: px!important;
+			font-weight: !important;
+		}
+		h3{
+		    color:!important;
+		    font-family: !important;
+		    font-size: px!important;
+			font-weight: !important;
+		}
+		h4{
+		    color:!important;
+		    font-family: !important;
+		    font-size: px!important;
+			font-weight: !important;
+		}
+		h5{
+		    color:!important;
+		    font-family: !important;
+		    font-size: px!important;
+			font-weight: !important;
+		}
+		h6{
+		    color:!important;
+		    font-family: !important;
+		    font-size: px!important;
+			font-weight: !important;
+		}
+	
+body{max-width: 100%;}#slider img{opacity:0.7}#slider .inner_carousel h1{color: ;}#slider .inner_carousel p{color: ;}#slider .slide-button a{color: ;}#slider .slide-button a{background-color: ;}.woocommerce #respond input#submit, .woocommerce a.button, .woocommerce button.button, .woocommerce input.button, .woocommerce #respond input#submit.alt, .woocommerce a.button.alt, .woocommerce button.button.alt, .woocommerce input.button.alt{padding-top: 15px; padding-bottom: 15px;}.woocommerce #respond input#submit, .woocommerce a.button, .woocommerce button.button, .woocommerce input.button, .woocommerce #respond input#submit.alt, .woocommerce a.button.alt, .woocommerce button.button.alt, .woocommerce input.button.alt{padding-left: 15px; padding-right: 15px;}.woocommerce #respond input#submit, .woocommerce a.button, .woocommerce button.button, .woocommerce input.button, .woocommerce #respond input#submit.alt, .woocommerce a.button.alt, .woocommerce button.button.alt, .woocommerce input.button.alt{border-radius: px;}.woocommerce ul.products li.product, .woocommerce-page ul.products li.product{padding-top: 10px !important; padding-bottom: 10px !important;}.woocommerce ul.products li.product, .woocommerce-page ul.products li.product{padding-left: 10px !important; padding-right: 10px !important;}.woocommerce ul.products li.product, .woocommerce-page ul.products li.product{border-radius: px;}.woocommerce ul.products li.product, .woocommerce-page ul.products li.product{box-shadow: px px px #eee;}.woocommerce span.onsale{padding-top: 0px; padding-bottom: 0px; padding-left: 0px; padding-right: 0px; display:inline-block;}.woocommerce span.onsale {border-radius: 100%;}.woocommerce span.onsale{font-size: 14px;}.woocommerce ul.products li.product .onsale{ left:auto; right:0;}.footer-wp{background-color: ;}.footer-wp{}.footer-wp{background-attachment: scroll;}.footer-wp{background-position: center center!important;}.footer-wp h3{font-size: px;}.footer-wp h3{text-transform: capitalize;}.footer-wp{padding: px;}.footer-wp h3, .footer-wp .wp-block-search .wp-block-search__label{text-align: left;}.footer-wp .widget,.footer-wp caption{text-align: left;}.copyright-wrapper a i{font-size: 15px;}.top-contact i{font-size: 16px;}footer .socialicons{text-align:center !important;}footer .socialicons i{color:  !important;}#scrollbutton i{border-radius: px;}#scrollbutton i{font-size: 22px;}#scrollbutton i{color: ;}#scrollbutton i:hover{color: ;}#scrollbutton i{background-color: ;border-color: ;}#scrollbutton i:hover{background-color: ;border-color: ;}#scrollbutton i{padding-top: 12px; padding-bottom: 12px;}#scrollbutton i{padding-left: 17px; padding-right: 17px;}.frame{background-color: ;}.dot-1,.dot-2,.dot-3{background-color: ;}.dot-1, .dot-2, .dot-3{}#header .socialbox a{font-size: px;}footer .socialicons a i{padding-top: px;!important;padding-bottom: px;!important;}#header .socialbox a i{color:  !important;}.primary-navigation a{font-size: 12px;}.primary-navigation ul li a{}.primary-navigation a, .primary-navigation ul li a, #navbar-header .primary-navigation ul li:after{padding-top: px;padding-bottom: px;}.primary-navigation a, .primary-navigation ul li a, #navbar-header .primary-navigation ul li:after{padding-left: px;padding-right: px;}#slider{display:none;} @media screen and (max-width:575px) {#slider{display:block;} }@media screen and (max-width:575px) {.slide-button{display:block;} }@media screen and (max-width:575px) {#sidebar{display:block;} }@media screen and (max-width:575px) {#scrollbutton i{display:block;} }@media screen and (max-width:575px){.frame{display:none;} }@media screen and (max-width:575px) {.fixed-header{display:block;} }#comments textarea{width: %;}#slider img{height: px;}#header .logo a{font-size: 45px;}#header .logo p{font-size: 15px;}.logo{padding: px !important;}section, .main-box,#sidebar aside{background-color: transparent;}#slider{background-color: 1;}.copyright-wrapper p{text-align: center !important;}
+	@media screen and (max-width:575px) {
+		.copyright-wrapper p{text-align: center !important;center} }.layout2 .box-image img,.layout1 .box-image img,.layout3 .box-image img{border-radius: 0%;}.layout2 .box-image img,.layout1 .box-image img,.layout3 .box-image img{box-shadow: 0px 0px 0px #ccc;}.navigation nav.pagination{justify-content: left;}.inner-service.gridcontent .box-image img{border-radius: 0%;}.inner-service.gridcontent .box-image img{box-shadow: 0px 0px 0px #b5b5b5;}.feature-box img{border-radius: 0%;}.feature-box img{box-shadow: 0px 0px 0px #ccc;}.type-post .category ul li a{color: ;}.type-post .category ul li a:hover{color: ;}#slider .carousel-caption, #slider .inner_carousel, #slider .inner_carousel h1, #slider .inner_carousel p, #slider .readbutton{top: %; bottom: %;left: %;right: %;}.copyright-wrapper p, .copyright-wrapper a{font-size: 15px;}.copyright-wrapper{padding-top: 15px !important; padding-bottom: 15px !important;}.primary-navigation a{}.site-title a{color:  !important;}#header .logo p{color:  !important;}.toggle-menu i{color:  !important;}.copyright-wrapper p, .copyright-wrapper p a{color: ;}.copyright-wrapper{background-color: ;}.services .mainbox .new-text p:nth-of-type(1)::first-letter {display: none;}.primary-navigation a, .primary-navigation ul li a{font-weight: 600;}.primary-navigation a, .primary-navigation ul li a{color:  !important;}.primary-navigation ul.children a, .primary-navigation ul.children li a, .primary-navigation ul.sub-menu a, .primary-navigation ul.sub-menu li a{color:  !important;}.primary-navigation a:hover, .primary-navigation ul li a:hover{color:  !important;}.primary-navigation ul.children a:hover, .primary-navigation ul.children li a:hover, .primary-navigation ul.sub-menu a:hover, .primary-navigation ul.sub-menu li a:hover{color:  !important;}.primary-navigation ul.children li a, .primary-navigation ul.sub-menu li a{background-color: ;}.primary-navigation ul.children li a:hover, .primary-navigation ul.sub-menu li a:hover{background-color: ;}#comments input[type="submit"].submit{padding-top: px !important; padding-bottom: px !important;}#comments input[type="submit"].submit{padding-left: px !important; padding-right: px !important;}#comments input[type="submit"].submit{border-radius: px;}.logo{margin: px !important;}@media screen and (max-width:575px){.fixed-copyright{position:static;} }
+/*# sourceURL=multipurpose-blog-basic-style-inline-css */
+</style>
+<link rel='stylesheet' id='font-awesome-css-css' href='https://etbe.coker.com.au/wp-content/themes/multipurpose-blog/css/fontawesome-all.css?ver=7.1.4' media='all' />
+<link rel='stylesheet' id='animate-css-css' href='https://etbe.coker.com.au/wp-content/themes/multipurpose-blog/css/animate.css?ver=7.1.4' media='all' />
+<link rel='stylesheet' id='jetpack_css-css' href='https://etbe.coker.com.au/wp-content/plugins/wordpress-jetpack/css/jetpack.css?ver=9.7' media='all' />
+<script id="jquery-core-js" src="https://etbe.coker.com.au/wp-includes/js/jquery/jquery.min.js?ver=3.7.1"></script>
+<script id="jquery-migrate-js" src="https://etbe.coker.com.au/wp-includes/js/jquery/jquery-migrate.min.js?ver=3.4.1"></script>
+<script id="jquery-wow-js" src="https://etbe.coker.com.au/wp-content/themes/multipurpose-blog/js/wow.js?ver=7.1.4"></script>
+<script id="multipurpose-blog-customscripts-js" src="https://etbe.coker.com.au/wp-content/themes/multipurpose-blog/js/custom.js?ver=7.1.4"></script>
+<link rel="https://api.w.org/" href="https://etbe.coker.com.au/wp-json/" /><link rel="alternate" title="JSON" type="application/json" href="https://etbe.coker.com.au/wp-json/wp/v2/posts/5512" /><link rel="EditURI" type="application/rsd+xml" title="RSD" href="https://etbe.coker.com.au/xmlrpc.php?rsd" />
+<meta name="generator" content="WordPress 7.1.4" />
+<link rel="canonical" href="https://etbe.coker.com.au/2024/04/24/ubuntu-24-04-bubblewrap/" />
+<link rel='shortlink' href='https://wp.me/p7D8z-1qU' />
+<style data-context="foundation-flickity-css">/*! Flickity v2.0.2
+http://flickity.metafizzy.co
+---------------------------------------------- */.flickity-enabled{position:relative}.flickity-enabled:focus{outline:0}.flickity-viewport{overflow:hidden;position:relative;height:100%}.flickity-slider{position:absolute;width:100%;height:100%}.flickity-enabled.is-draggable{-webkit-tap-highlight-color:transparent;tap-highlight-color:transparent;-webkit-user-select:none;-moz-user-select:none;-ms-user-select:none;user-select:none}.flickity-enabled.is-draggable .flickity-viewport{cursor:move;cursor:-webkit-grab;cursor:grab}.flickity-enabled.is-draggable .flickity-viewport.is-pointer-down{cursor:-webkit-grabbing;cursor:grabbing}.flickity-prev-next-button{position:absolute;top:50%;width:44px;height:44px;border:none;border-radius:50%;background:#fff;background:hsla(0,0%,100%,.75);cursor:pointer;-webkit-transform:translateY(-50%);transform:translateY(-50%)}.flickity-prev-next-button:hover{background:#fff}.flickity-prev-next-button:focus{outline:0;box-shadow:0 0 0 5px #09f}.flickity-prev-next-button:active{opacity:.6}.flickity-prev-next-button.previous{left:10px}.flickity-prev-next-button.next{right:10px}.flickity-rtl .flickity-prev-next-button.previous{left:auto;right:10px}.flickity-rtl .flickity-prev-next-button.next{right:auto;left:10px}.flickity-prev-next-button:disabled{opacity:.3;cursor:auto}.flickity-prev-next-button svg{position:absolute;left:20%;top:20%;width:60%;height:60%}.flickity-prev-next-button .arrow{fill:#333}.flickity-page-dots{position:absolute;width:100%;bottom:-25px;padding:0;margin:0;list-style:none;text-align:center;line-height:1}.flickity-rtl .flickity-page-dots{direction:rtl}.flickity-page-dots .dot{display:inline-block;width:10px;height:10px;margin:0 8px;background:#333;border-radius:50%;opacity:.25;cursor:pointer}.flickity-page-dots .dot.is-selected{opacity:1}</style><style data-context="foundation-slideout-css">.slideout-menu{position:fixed;left:0;top:0;bottom:0;right:auto;z-index:0;width:256px;overflow-y:auto;-webkit-overflow-scrolling:touch;display:none}.slideout-menu.pushit-right{left:auto;right:0}.slideout-panel{position:relative;z-index:1;will-change:transform}.slideout-open,.slideout-open .slideout-panel,.slideout-open body{overflow:hidden}.slideout-open .slideout-menu{display:block}.pushit{display:none}</style><style type='text/css'>img#wpstats{display:none}</style>
+		
+<!-- Jetpack Open Graph Tags -->
+<meta property="og:type" content="article" />
+<meta property="og:title" content="Ubuntu 24.04 and Bubblewrap" />
+<meta property="og:url" content="https://etbe.coker.com.au/2024/04/24/ubuntu-24-04-bubblewrap/" />
+<meta property="og:description" content="When using Bubblewrap (the bwrap command) to create a container in Ubuntu 24.04 you can expect to get one of the following error messages: bwrap: loopback: Failed RTM_NEWADDR: Operation not permitt…" />
+<meta property="article:published_time" content="2024-04-24T07:46:34+00:00" />
+<meta property="article:modified_time" content="2024-04-24T05:58:12+00:00" />
+<meta property="og:site_name" content="etbe - Russell Coker" />
+<meta property="og:image" content="https://s0.wp.com/i/blank.jpg" />
+<meta property="og:locale" content="en_US" />
+<meta name="twitter:text:title" content="Ubuntu 24.04 and Bubblewrap" />
+<meta name="twitter:card" content="summary" />
+
+<!-- End Jetpack Open Graph Tags -->
+<style>.ios7.web-app-mode.has-fixed header{ background-color: rgba(45,53,63,.88);}</style>			<style type="text/css" id="wp-custom-css">
+				table, th, td {
+	border: 1px solid black;
+	border-collapse: collapse;
+}
+th, td {
+  padding: 3px;
+}			</style>
+		<link rel='stylesheet' id='yarppRelatedCss-css' href='https://etbe.coker.com.au/wp-content/plugins/yet-another-related-posts-plugin/style/related.css?ver=5.30.11' media='all' />
+
+</head>
+<body class="wp-singular post-template-default single single-post postid-5512 single-format-standard wp-embed-responsive wp-theme-multipurpose-blog">
+      <header role="banner">
+    <a class="screen-reader-text skip-link" href="#skip_content">Skip to content</a>
+    <div id="header">
+                        <div class="top_headbar py-2">
+            <div class="container">
+              <div class="row">
+                <div class="top-contact col-lg-2 col-md-2">
+                                  </div>   
+                <div class="top-contact col-lg-3 col-md-3">
+                                      <a class="email" href="mailto:russell@coker.com.au"><i class="fa fa-envelope me-1" aria-hidden="true"></i>russell@coker.com.au<span class="screen-reader-text"><i class="fa fa-envelope me-1" aria-hidden="true"></i>russell@coker.com.au</span></a>
+                                  </div>
+                                  <div class="col-lg-7 col-md-7 socialbox text-end">
+                                                                                                                                          </div>
+                                <div class="clearfix"></div>  
+              </div>
+            </div>
+          </div>
+                    <div class="logo_bar">
+        <div class="logo m-0 text-center py-lg-2 px-lg-0 p-0">
+                                                                        <p class="site-title m-0"><a href="https://etbe.coker.com.au/" rel="home">etbe &#8211; Russell Coker</a></p>
+                                                                            </div>
+      </div>
+      <div class="toggle-menu responsive-menu p-2 close-sticky ">
+        <button role="tab" class="mobiletoggle" onclick="multipurpose_blog_responsive_menu_open()"><i class="fas fa-bars"></i><span class="screen-reader-text">Open Menu</span>
+        </button>
+      </div>
+      <div id="navbar-header" class="menu-brand">
+        <div id="search">
+          <form method="get" class="search-form" action="https://etbe.coker.com.au/">
+	<label>
+		<span class="screen-reader-text">Search for:</span>
+		<input type="search" class="search-field" placeholder="Search" value="" name="s">
+	</label>
+	<input type="submit" class="search-submit" value="Search">
+</form>        </div>
+        <div class="responsive-menu close-sticky ">
+          <nav id="site-navigation" class="primary-navigation" role="navigation" aria-label="Top Menu">        
+          <div class="main-menu-navigation clearfix"><ul>
+<li class="page_item page-item-2"><a href="https://etbe.coker.com.au/about/">About</a></li>
+<li class="page_item page-item-260"><a href="https://etbe.coker.com.au/conferences/">Conferences</a></li>
+<li class="page_item page-item-343"><a href="https://etbe.coker.com.au/future-posts/">Future Posts</a></li>
+<li class="page_item page-item-2992"><a href="https://etbe.coker.com.au/hardware-i-need/">Hardware I Need</a></li>
+<li class="page_item page-item-289"><a href="https://etbe.coker.com.au/t-shirts-etc/">T-Shirts Etc</a></li>
+<li class="page_item page-item-338"><a href="https://etbe.coker.com.au/translation/">Translation</a></li>
+</ul></div>
+          </nav>
+        </div>
+        <div class="top-contact">
+                  </div>   
+        <div class="top-contact">
+                      <a class="email" href="mailto:russell@coker.com.au"><i class="fa fa-envelope me-1" aria-hidden="true"></i>russell@coker.com.au<span class="screen-reader-text"><i class="fa fa-envelope me-1" aria-hidden="true"></i>russell@coker.com.au</span></a>
+                  </div>
+        <div class="socialbox text-center">
+                                                                    </div>
+        <div class="clearfix"></div>
+          <a href="javascript:void(0)" class="closebtn responsive-menu p-2 ms-4" onclick="multipurpose_blog_responsive_menu_close()"><i class="fas fa-times"></i><span class="screen-reader-text">Close Menu</span></a>
+      </div>
+    </div>
+  </header>
+<div class="container">
+    <main id="skip_content" role="main" class="middle-align">
+    			    <div class="row">
+		       	<div class="col-lg-8 col-md-8">
+		       		<div class="content-blog py-3">
+                						<article id="post-5512" class="inner-services single-post-page wow bounceInLeft post-5512 post type-post status-publish format-standard hentry category-security">
+	<h1>Ubuntu 24.04 and Bubblewrap</h1>
+			<div class="metabox mb-3">
+							<span class="entry-date me-2"><i class="far fa-calendar-alt me-2 py-2"></i><a href="https://etbe.coker.com.au/2024/04/24/">April 24, 2024<span class="screen-reader-text">April 24, 2024</span></a><span class="ms-2">|</span></span>
+										<span class="entry-author me-2"><i class="fas fa-user me-2 py-2"></i><a href="https://etbe.coker.com.au/author/etbe/">etbe<span class="screen-reader-text">Ubuntu 24.04 and Bubblewrap</span></a><span class="ms-2">|</span></span>
+										<i class="fas fa-comments me-2 py-2"></i><span class="entry-comments me-2"> 3 Comments<span class="ms-2">|</span></span>
+							    		<span class="entry-time me-2"><i class="fas fa-clock me-2 py-2"></i> 17:46</span>
+	  			  				</div>
+					  		   <div class="category mb-2">
+	   	<span>Categories :</span><ul class="post-categories">
+	<li><a href="https://etbe.coker.com.au/category/security/" rel="category tag">Security</a></li></ul>	   </div>
+  				<div class="tags"></div>
+	    <div class="new-text">
+  		<p>When using Bubblewrap (the bwrap command) to create a container in Ubuntu 24.04 you can expect to get one of the following error messages:</p>
+<pre>bwrap: loopback: Failed RTM_NEWADDR: Operation not permitted
+bwrap: setting up uid map: Permission denied</pre>
+<p>This is due to Ubuntu developers deciding to use Apparmor to restrict the creation of user namespaces. <a href="https://ubuntu.com/blog/ubuntu-23-10-restricted-unprivileged-user-namespaces">Here is a Ubuntu blog post about it [1]</a>.</p>
+<p>To resolve that you could upgrade to SE Linux, but the other option is to create a file named /etc/apparmor.d/bwrap with the following contents:</p>
+<pre>abi &lt;abi/4.0&gt;,
+include &lt;tunables/global&gt;
+
+profile bwrap /usr/bin/bwrap flags=(unconfined) {
+  userns,
+
+  # Site-specific additions and overrides. See local/README for details.
+  include if exists &lt;local/bwrap&gt;
+}</pre>
+<p>Then run &#8220;<b>systemctl reload apparmor</b>&#8220;.</p>
+<ul>
+<li>[1]<a href="https://ubuntu.com/blog/ubuntu-23-10-restricted-unprivileged-user-namespaces"> https://ubuntu.com/blog/ubuntu-23-10-restricted-unprivileged-user-namespaces</a></li>
+</ul>
+<div class='yarpp yarpp-related yarpp-related-website yarpp-template-list'>
+<!-- YARPP List -->
+<p>Related posts:</p><ol>
+<li><a href="https://etbe.coker.com.au/2023/07/08/sandboxing-phone-apps/" rel="bookmark" title="Sandboxing Phone Apps">Sandboxing Phone Apps</a> <small>As a follow up to Wayland [1]: A difficult problem...</small></li>
+<li><a href="https://etbe.coker.com.au/2008/10/22/kernel-issues-with-debian-xen-and-centos-kernels/" rel="bookmark" title="Kernel issues with Debian Xen and CentOS Kernels">Kernel issues with Debian Xen and CentOS Kernels</a> <small>Last time I tried using a Debian 64bit Xen kernel...</small></li>
+<li><a href="https://etbe.coker.com.au/2019/12/09/systemd-nspawn-networking/" rel="bookmark" title="systemd-nspawn and Private Networking">systemd-nspawn and Private Networking</a> <small>Currently there&#8217;s two things I want to do with my...</small></li>
+<li><a href="https://etbe.coker.com.au/2007/04/08/se-linux-not-too-difficult-for-new-users/" rel="bookmark" title="SE Linux &#8211; not too difficult for new users">SE Linux &#8211; not too difficult for new users</a> <small>At http://tanso.net/selinux/ Jan-Frode Myklebust has documented his work in creating...</small></li>
+<li><a href="https://etbe.coker.com.au/2007/03/11/creating-a-new-se-linux-policy-module/" rel="bookmark" title="creating a new SE Linux policy module">creating a new SE Linux policy module</a> <small>Creating a simple SE Linux policy module is not difficult....</small></li>
+</ol>
+</div>
+    </div>
+    		
+	<nav class="navigation post-navigation" aria-label="Posts">
+		<h2 class="screen-reader-text">Post navigation</h2>
+		<div class="nav-links"><div class="nav-previous"><a href="https://etbe.coker.com.au/2024/04/13/software-needed-for-work/" rel="prev"><span class="meta-nav" aria-hidden="true">Previous page</span> <span class="screen-reader-text">Older Posts</span> <span class="post-title">Software Needed for Work</span></a></div><div class="nav-next"><a href="https://etbe.coker.com.au/2024/04/24/source-code-with-emoji/" rel="next"><span class="meta-nav" aria-hidden="true">Next page</span> <span class="screen-reader-text">Newer Posts</span> <span class="post-title">Source Code With Emoji</span></a></div></div>
+	</nav><div class="clearfix"></div>	
+	
+
+<div id="comments" class="comments-area mt-4">
+			<h2 class="comments-title pt-3 mb-0">
+
+    3 thoughts on &ldquo;Ubuntu 24.04 and Bubblewrap&rdquo;
+        </h2>
+
+		
+		<ol class="comment-list my-3">
+					<li id="comment-73368" class="comment even thread-even depth-1">
+			<article id="div-comment-73368" class="comment-body">
+				<footer class="comment-meta">
+					<div class="comment-author vcard">
+						<img alt='' src='https://secure.gravatar.com/avatar/3c744ba85232f981e385b2d7dd59211d63250f6e5dc99dd592f0809f4390cef0?s=42&#038;d=blank&#038;r=g' srcset='https://secure.gravatar.com/avatar/3c744ba85232f981e385b2d7dd59211d63250f6e5dc99dd592f0809f4390cef0?s=84&#038;d=blank&#038;r=g 2x' class='avatar avatar-42 photo' height='42' width='42' decoding='async'/>						<b class="fn"><a href="https://gedmin.as" class="url" rel="ugc external nofollow">Marius Gedminas</a></b> <span class="says">says:</span>					</div><!-- .comment-author -->
+
+					<div class="comment-metadata">
+						<a href="https://etbe.coker.com.au/2024/04/24/ubuntu-24-04-bubblewrap/#comment-73368"><time datetime="2024-04-26T17:12:47+10:00">April 26, 2024 at 17:12</time></a>					</div><!-- .comment-metadata -->
+
+									</footer><!-- .comment-meta -->
+
+				<div class="comment-content">
+					<p>Is there an Ubuntu bug about shipping apparmor configuration for bubblewrap in the appropriate deb package by default?</p>
+				</div><!-- .comment-content -->
+
+							</article><!-- .comment-body -->
+		</li><!-- #comment-## -->
+		<li id="comment-73389" class="comment byuser comment-author-etbe bypostauthor odd alt thread-odd thread-alt depth-1">
+			<article id="div-comment-73389" class="comment-body">
+				<footer class="comment-meta">
+					<div class="comment-author vcard">
+						<img alt='' src='https://secure.gravatar.com/avatar/35905f7006c535a034ab60592b3845fb5fadea38a18d280ad751611a72284360?s=42&#038;d=blank&#038;r=g' srcset='https://secure.gravatar.com/avatar/35905f7006c535a034ab60592b3845fb5fadea38a18d280ad751611a72284360?s=84&#038;d=blank&#038;r=g 2x' class='avatar avatar-42 photo' height='42' width='42' decoding='async'/>						<b class="fn"><a href="http://etbe.coker.com.au" class="url" rel="ugc">etbe</a></b> <span class="says">says:</span>					</div><!-- .comment-author -->
+
+					<div class="comment-metadata">
+						<a href="https://etbe.coker.com.au/2024/04/24/ubuntu-24-04-bubblewrap/#comment-73389"><time datetime="2024-04-26T19:59:46+10:00">April 26, 2024 at 19:59</time></a>					</div><!-- .comment-metadata -->
+
+									</footer><!-- .comment-meta -->
+
+				<div class="comment-content">
+					<p>I don&#8217;t know if someone filed a bug report about so many things failing to work, someone probably should. Would you like to?</p>
+				</div><!-- .comment-content -->
+
+							</article><!-- .comment-body -->
+		</li><!-- #comment-## -->
+		<li id="comment-73413" class="comment even thread-even depth-1">
+			<article id="div-comment-73413" class="comment-body">
+				<footer class="comment-meta">
+					<div class="comment-author vcard">
+						<img alt='' src='https://secure.gravatar.com/avatar/cc99e3a1282029912d5799e7f3177c991e98764ff5ef5aebc317282fe1e40139?s=42&#038;d=blank&#038;r=g' srcset='https://secure.gravatar.com/avatar/cc99e3a1282029912d5799e7f3177c991e98764ff5ef5aebc317282fe1e40139?s=84&#038;d=blank&#038;r=g 2x' class='avatar avatar-42 photo' height='42' width='42' decoding='async'/>						<b class="fn">Nick</b> <span class="says">says:</span>					</div><!-- .comment-author -->
+
+					<div class="comment-metadata">
+						<a href="https://etbe.coker.com.au/2024/04/24/ubuntu-24-04-bubblewrap/#comment-73413"><time datetime="2024-04-27T10:22:39+10:00">April 27, 2024 at 10:22</time></a>					</div><!-- .comment-metadata -->
+
+									</footer><!-- .comment-meta -->
+
+				<div class="comment-content">
+					<p>This fixed the Gnome Software app not launching Flatpaks for me on Ubuntu 24.04. Thank you!</p>
+				</div><!-- .comment-content -->
+
+							</article><!-- .comment-body -->
+		</li><!-- #comment-## -->
+		</ol>
+
+		
+	
+			<p class="no-comments">Comments are closed.</p>
+	
+	</div>
+	    <div class="related-posts">
+        <h3 class="mb-3">Related Post</h3>
+        <div class="row">
+                            <div class="col-lg-4 col-md-6">
+                    <div class="related-inner-box mb-3 p-3">
+                                                <h4 class="mb-2"><a href="https://etbe.coker.com.au/2016/02/04/unikernels/">Unikernels</a></h4>
+                                                    <div class="metabox mb-3">
+                                                                    <span class="entry-date me-1">
+                                        <i class="far fa-calendar-alt me-1 my-2"></i> 
+                                        <a href="https://etbe.coker.com.au/2026/10/31/">
+                                            February 4, 2016                                            <span class="screen-reader-text">February 4, 2016</span>
+                                            <span class="ms-1">|</span>
+                                        </a>
+                                    </span>
+                                
+                                                                    <span class="entry-author">
+                                        <i class="fas fa-user me-1 my-2"></i> 
+                                        <a href="https://etbe.coker.com.au/author/etbe/">
+                                            etbe                                            <span class="screen-reader-text">Unikernels</span>
+                                            <span class="ms-1">|</span>
+                                        </a>
+                                    </span>
+                                
+                                                                    <span class="entry-comments">
+                                        <i class="fas fa-comments me-1 my-2"></i>
+                                        <a href="https://etbe.coker.com.au/2016/02/04/unikernels/#comments">
+                                            1 
+                                            Comment                                            <span class="ms-1">|</span>
+                                        </a>
+                                    </span>
+                                
+                                                                    <span class="entry-time">
+                                        <i class="fas fa-clock me-1 my-2"></i>
+                                        19:48                                    </span>
+                                                            </div>
+                                                At LCA I attended a talk about Unikernels. Here are the reasons why I think [...]                                                    <div class="postbtn mt-2 text-start">
+                                <a href="https://etbe.coker.com.au/2016/02/04/unikernels/">View More<span class="screen-reader-text">View More</span></a>
+                            </div>
+                                            </div>
+                </div>
+                            <div class="col-lg-4 col-md-6">
+                    <div class="related-inner-box mb-3 p-3">
+                                                <h4 class="mb-2"><a href="https://etbe.coker.com.au/2007/04/08/se-linux-not-too-difficult-for-new-users/">SE Linux &#8211; not too difficult for new users</a></h4>
+                                                    <div class="metabox mb-3">
+                                                                    <span class="entry-date me-1">
+                                        <i class="far fa-calendar-alt me-1 my-2"></i> 
+                                        <a href="https://etbe.coker.com.au/2026/10/31/">
+                                            April 8, 2007                                            <span class="screen-reader-text">April 8, 2007</span>
+                                            <span class="ms-1">|</span>
+                                        </a>
+                                    </span>
+                                
+                                                                    <span class="entry-author">
+                                        <i class="fas fa-user me-1 my-2"></i> 
+                                        <a href="https://etbe.coker.com.au/author/etbe/">
+                                            etbe                                            <span class="screen-reader-text">SE Linux &#8211; not too difficult for new users</span>
+                                            <span class="ms-1">|</span>
+                                        </a>
+                                    </span>
+                                
+                                                                    <span class="entry-comments">
+                                        <i class="fas fa-comments me-1 my-2"></i>
+                                        <a href="https://etbe.coker.com.au/2007/04/08/se-linux-not-too-difficult-for-new-users/#respond">
+                                            0 
+                                            Comments                                            <span class="ms-1">|</span>
+                                        </a>
+                                    </span>
+                                
+                                                                    <span class="entry-time">
+                                        <i class="fas fa-clock me-1 my-2"></i>
+                                        10:54                                    </span>
+                                                            </div>
+                                                At http://tanso.net/selinux/ Jan-Frode Myklebust has documented his work in creating new SE Linux policy to [...]                                                    <div class="postbtn mt-2 text-start">
+                                <a href="https://etbe.coker.com.au/2007/04/08/se-linux-not-too-difficult-for-new-users/">View More<span class="screen-reader-text">View More</span></a>
+                            </div>
+                                            </div>
+                </div>
+                            <div class="col-lg-4 col-md-6">
+                    <div class="related-inner-box mb-3 p-3">
+                                                <h4 class="mb-2"><a href="https://etbe.coker.com.au/2010/05/29/logging-in-as-root/">Logging in as Root</a></h4>
+                                                    <div class="metabox mb-3">
+                                                                    <span class="entry-date me-1">
+                                        <i class="far fa-calendar-alt me-1 my-2"></i> 
+                                        <a href="https://etbe.coker.com.au/2026/10/31/">
+                                            May 29, 2010                                            <span class="screen-reader-text">May 29, 2010</span>
+                                            <span class="ms-1">|</span>
+                                        </a>
+                                    </span>
+                                
+                                                                    <span class="entry-author">
+                                        <i class="fas fa-user me-1 my-2"></i> 
+                                        <a href="https://etbe.coker.com.au/author/etbe/">
+                                            etbe                                            <span class="screen-reader-text">Logging in as Root</span>
+                                            <span class="ms-1">|</span>
+                                        </a>
+                                    </span>
+                                
+                                                                    <span class="entry-comments">
+                                        <i class="fas fa-comments me-1 my-2"></i>
+                                        <a href="https://etbe.coker.com.au/2010/05/29/logging-in-as-root/#comments">
+                                            19 
+                                            Comments                                            <span class="ms-1">|</span>
+                                        </a>
+                                    </span>
+                                
+                                                                    <span class="entry-time">
+                                        <i class="fas fa-clock me-1 my-2"></i>
+                                        22:08                                    </span>
+                                                            </div>
+                                                Martin Meredith wrote a blog post about logging in as root and the people who [...]                                                    <div class="postbtn mt-2 text-start">
+                                <a href="https://etbe.coker.com.au/2010/05/29/logging-in-as-root/">View More<span class="screen-reader-text">View More</span></a>
+                            </div>
+                                            </div>
+                </div>
+                    </div>
+    </div>
+</article>
+			        </div>
+		       	</div>
+				<div id="sidebar" class="col-lg-4 col-md-4"><div id="sidebar"class="wow bounceInDown">    
+    <aside id="archives-4" class="widget widget_archive"><h4 class="widget-title">Archives</h4>		<label class="screen-reader-text" for="archives-dropdown-4">Archives</label>
+		<select id="archives-dropdown-4" name="archive-dropdown">
+			
+			<option value="">Select Month</option>
+				<option value='https://etbe.coker.com.au/2026/10/'> October 2026 &nbsp;(10)</option>
+	<option value='https://etbe.coker.com.au/2026/09/'> September 2026 &nbsp;(3)</option>
+	<option value='https://etbe.coker.com.au/2026/08/'> August 2026 &nbsp;(6)</option>
+	<option value='https://etbe.coker.com.au/2026/07/'> July 2026 &nbsp;(5)</option>
+	<option value='https://etbe.coker.com.au/2026/06/'> June 2026 &nbsp;(7)</option>
+	<option value='https://etbe.coker.com.au/2026/05/'> May 2026 &nbsp;(10)</option>
+	<option value='https://etbe.coker.com.au/2026/04/'> April 2026 &nbsp;(5)</option>
+	<option value='https://etbe.coker.com.au/2026/03/'> March 2026 &nbsp;(5)</option>
+	<option value='https://etbe.coker.com.au/2026/02/'> February 2026 &nbsp;(1)</option>
+	<option value='https://etbe.coker.com.au/2026/01/'> January 2026 &nbsp;(4)</option>
+	<option value='https://etbe.coker.com.au/2025/12/'> December 2025 &nbsp;(2)</option>
+	<option value='https://etbe.coker.com.au/2025/11/'> November 2025 &nbsp;(5)</option>
+	<option value='https://etbe.coker.com.au/2025/10/'> October 2025 &nbsp;(3)</option>
+	<option value='https://etbe.coker.com.au/2025/09/'> September 2025 &nbsp;(2)</option>
+	<option value='https://etbe.coker.com.au/2025/08/'> August 2025 &nbsp;(5)</option>
+	<option value='https://etbe.coker.com.au/2025/07/'> July 2025 &nbsp;(5)</option>
+	<option value='https://etbe.coker.com.au/2025/06/'> June 2025 &nbsp;(5)</option>
+	<option value='https://etbe.coker.com.au/2025/05/'> May 2025 &nbsp;(7)</option>
+	<option value='https://etbe.coker.com.au/2025/04/'> April 2025 &nbsp;(6)</option>
+	<option value='https://etbe.coker.com.au/2025/03/'> March 2025 &nbsp;(3)</option>
+	<option value='https://etbe.coker.com.au/2025/02/'> February 2025 &nbsp;(2)</option>
+	<option value='https://etbe.coker.com.au/2025/01/'> January 2025 &nbsp;(2)</option>
+	<option value='https://etbe.coker.com.au/2024/12/'> December 2024 &nbsp;(3)</option>
+	<option value='https://etbe.coker.com.au/2024/11/'> November 2024 &nbsp;(6)</option>
+	<option value='https://etbe.coker.com.au/2024/10/'> October 2024 &nbsp;(3)</option>
+	<option value='https://etbe.coker.com.au/2024/09/'> September 2024 &nbsp;(3)</option>
+	<option value='https://etbe.coker.com.au/2024/08/'> August 2024 &nbsp;(4)</option>
+	<option value='https://etbe.coker.com.au/2024/07/'> July 2024 &nbsp;(8)</option>
+	<option value='https://etbe.coker.com.au/2024/06/'> June 2024 &nbsp;(1)</option>
+	<option value='https://etbe.coker.com.au/2024/05/'> May 2024 &nbsp;(4)</option>
+	<option value='https://etbe.coker.com.au/2024/04/'> April 2024 &nbsp;(10)</option>
+	<option value='https://etbe.coker.com.au/2024/03/'> March 2024 &nbsp;(3)</option>
+	<option value='https://etbe.coker.com.au/2024/02/'> February 2024 &nbsp;(2)</option>
+	<option value='https://etbe.coker.com.au/2024/01/'> January 2024 &nbsp;(6)</option>
+	<option value='https://etbe.coker.com.au/2023/12/'> December 2023 &nbsp;(3)</option>
+	<option value='https://etbe.coker.com.au/2023/11/'> November 2023 &nbsp;(1)</option>
+	<option value='https://etbe.coker.com.au/2023/10/'> October 2023 &nbsp;(7)</option>
+	<option value='https://etbe.coker.com.au/2023/09/'> September 2023 &nbsp;(2)</option>
+	<option value='https://etbe.coker.com.au/2023/08/'> August 2023 &nbsp;(2)</option>
+	<option value='https://etbe.coker.com.au/2023/07/'> July 2023 &nbsp;(4)</option>
+	<option value='https://etbe.coker.com.au/2023/06/'> June 2023 &nbsp;(8)</option>
+	<option value='https://etbe.coker.com.au/2023/05/'> May 2023 &nbsp;(3)</option>
+	<option value='https://etbe.coker.com.au/2023/04/'> April 2023 &nbsp;(4)</option>
+	<option value='https://etbe.coker.com.au/2023/03/'> March 2023 &nbsp;(5)</option>
+	<option value='https://etbe.coker.com.au/2023/02/'> February 2023 &nbsp;(5)</option>
+	<option value='https://etbe.coker.com.au/2023/01/'> January 2023 &nbsp;(2)</option>
+	<option value='https://etbe.coker.com.au/2022/12/'> December 2022 &nbsp;(5)</option>
+	<option value='https://etbe.coker.com.au/2022/11/'> November 2022 &nbsp;(1)</option>
+	<option value='https://etbe.coker.com.au/2022/09/'> September 2022 &nbsp;(2)</option>
+	<option value='https://etbe.coker.com.au/2022/08/'> August 2022 &nbsp;(2)</option>
+	<option value='https://etbe.coker.com.au/2022/07/'> July 2022 &nbsp;(3)</option>
+	<option value='https://etbe.coker.com.au/2022/06/'> June 2022 &nbsp;(2)</option>
+	<option value='https://etbe.coker.com.au/2022/05/'> May 2022 &nbsp;(2)</option>
+	<option value='https://etbe.coker.com.au/2022/04/'> April 2022 &nbsp;(5)</option>
+	<option value='https://etbe.coker.com.au/2022/03/'> March 2022 &nbsp;(9)</option>
+	<option value='https://etbe.coker.com.au/2022/02/'> February 2022 &nbsp;(2)</option>
+	<option value='https://etbe.coker.com.au/2022/01/'> January 2022 &nbsp;(7)</option>
+	<option value='https://etbe.coker.com.au/2021/12/'> December 2021 &nbsp;(3)</option>
+	<option value='https://etbe.coker.com.au/2021/11/'> November 2021 &nbsp;(5)</option>
+	<option value='https://etbe.coker.com.au/2021/10/'> October 2021 &nbsp;(3)</option>
+	<option value='https://etbe.coker.com.au/2021/09/'> September 2021 &nbsp;(2)</option>
+	<option value='https://etbe.coker.com.au/2021/08/'> August 2021 &nbsp;(1)</option>
+	<option value='https://etbe.coker.com.au/2021/07/'> July 2021 &nbsp;(3)</option>
+	<option value='https://etbe.coker.com.au/2021/06/'> June 2021 &nbsp;(4)</option>
+	<option value='https://etbe.coker.com.au/2021/05/'> May 2021 &nbsp;(8)</option>
+	<option value='https://etbe.coker.com.au/2021/04/'> April 2021 &nbsp;(9)</option>
+	<option value='https://etbe.coker.com.au/2021/02/'> February 2021 &nbsp;(1)</option>
+	<option value='https://etbe.coker.com.au/2021/01/'> January 2021 &nbsp;(6)</option>
+	<option value='https://etbe.coker.com.au/2020/12/'> December 2020 &nbsp;(9)</option>
+	<option value='https://etbe.coker.com.au/2020/11/'> November 2020 &nbsp;(1)</option>
+	<option value='https://etbe.coker.com.au/2020/10/'> October 2020 &nbsp;(2)</option>
+	<option value='https://etbe.coker.com.au/2020/09/'> September 2020 &nbsp;(8)</option>
+	<option value='https://etbe.coker.com.au/2020/08/'> August 2020 &nbsp;(1)</option>
+	<option value='https://etbe.coker.com.au/2020/07/'> July 2020 &nbsp;(6)</option>
+	<option value='https://etbe.coker.com.au/2020/06/'> June 2020 &nbsp;(5)</option>
+	<option value='https://etbe.coker.com.au/2020/05/'> May 2020 &nbsp;(4)</option>
+	<option value='https://etbe.coker.com.au/2020/03/'> March 2020 &nbsp;(3)</option>
+	<option value='https://etbe.coker.com.au/2020/02/'> February 2020 &nbsp;(6)</option>
+	<option value='https://etbe.coker.com.au/2020/01/'> January 2020 &nbsp;(1)</option>
+	<option value='https://etbe.coker.com.au/2019/12/'> December 2019 &nbsp;(1)</option>
+	<option value='https://etbe.coker.com.au/2019/11/'> November 2019 &nbsp;(2)</option>
+	<option value='https://etbe.coker.com.au/2019/06/'> June 2019 &nbsp;(1)</option>
+	<option value='https://etbe.coker.com.au/2019/01/'> January 2019 &nbsp;(2)</option>
+	<option value='https://etbe.coker.com.au/2018/09/'> September 2018 &nbsp;(5)</option>
+	<option value='https://etbe.coker.com.au/2018/07/'> July 2018 &nbsp;(1)</option>
+	<option value='https://etbe.coker.com.au/2018/06/'> June 2018 &nbsp;(2)</option>
+	<option value='https://etbe.coker.com.au/2018/03/'> March 2018 &nbsp;(3)</option>
+	<option value='https://etbe.coker.com.au/2018/02/'> February 2018 &nbsp;(2)</option>
+	<option value='https://etbe.coker.com.au/2018/01/'> January 2018 &nbsp;(1)</option>
+	<option value='https://etbe.coker.com.au/2017/12/'> December 2017 &nbsp;(3)</option>
+	<option value='https://etbe.coker.com.au/2017/11/'> November 2017 &nbsp;(1)</option>
+	<option value='https://etbe.coker.com.au/2017/10/'> October 2017 &nbsp;(2)</option>
+	<option value='https://etbe.coker.com.au/2017/09/'> September 2017 &nbsp;(3)</option>
+	<option value='https://etbe.coker.com.au/2017/08/'> August 2017 &nbsp;(1)</option>
+	<option value='https://etbe.coker.com.au/2017/07/'> July 2017 &nbsp;(3)</option>
+	<option value='https://etbe.coker.com.au/2017/04/'> April 2017 &nbsp;(1)</option>
+	<option value='https://etbe.coker.com.au/2017/02/'> February 2017 &nbsp;(1)</option>
+	<option value='https://etbe.coker.com.au/2016/12/'> December 2016 &nbsp;(1)</option>
+	<option value='https://etbe.coker.com.au/2016/11/'> November 2016 &nbsp;(1)</option>
+	<option value='https://etbe.coker.com.au/2016/10/'> October 2016 &nbsp;(4)</option>
+	<option value='https://etbe.coker.com.au/2016/08/'> August 2016 &nbsp;(3)</option>
+	<option value='https://etbe.coker.com.au/2016/07/'> July 2016 &nbsp;(3)</option>
+	<option value='https://etbe.coker.com.au/2016/06/'> June 2016 &nbsp;(2)</option>
+	<option value='https://etbe.coker.com.au/2016/05/'> May 2016 &nbsp;(2)</option>
+	<option value='https://etbe.coker.com.au/2016/02/'> February 2016 &nbsp;(3)</option>
+	<option value='https://etbe.coker.com.au/2016/01/'> January 2016 &nbsp;(3)</option>
+	<option value='https://etbe.coker.com.au/2015/10/'> October 2015 &nbsp;(2)</option>
+	<option value='https://etbe.coker.com.au/2015/09/'> September 2015 &nbsp;(2)</option>
+	<option value='https://etbe.coker.com.au/2015/08/'> August 2015 &nbsp;(2)</option>
+	<option value='https://etbe.coker.com.au/2015/06/'> June 2015 &nbsp;(4)</option>
+	<option value='https://etbe.coker.com.au/2015/04/'> April 2015 &nbsp;(1)</option>
+	<option value='https://etbe.coker.com.au/2015/01/'> January 2015 &nbsp;(4)</option>
+	<option value='https://etbe.coker.com.au/2014/12/'> December 2014 &nbsp;(2)</option>
+	<option value='https://etbe.coker.com.au/2014/10/'> October 2014 &nbsp;(2)</option>
+	<option value='https://etbe.coker.com.au/2014/09/'> September 2014 &nbsp;(3)</option>
+	<option value='https://etbe.coker.com.au/2014/08/'> August 2014 &nbsp;(5)</option>
+	<option value='https://etbe.coker.com.au/2014/07/'> July 2014 &nbsp;(10)</option>
+	<option value='https://etbe.coker.com.au/2014/06/'> June 2014 &nbsp;(6)</option>
+	<option value='https://etbe.coker.com.au/2014/05/'> May 2014 &nbsp;(6)</option>
+	<option value='https://etbe.coker.com.au/2014/04/'> April 2014 &nbsp;(11)</option>
+	<option value='https://etbe.coker.com.au/2014/03/'> March 2014 &nbsp;(7)</option>
+	<option value='https://etbe.coker.com.au/2014/02/'> February 2014 &nbsp;(4)</option>
+	<option value='https://etbe.coker.com.au/2014/01/'> January 2014 &nbsp;(4)</option>
+	<option value='https://etbe.coker.com.au/2013/12/'> December 2013 &nbsp;(8)</option>
+	<option value='https://etbe.coker.com.au/2013/11/'> November 2013 &nbsp;(4)</option>
+	<option value='https://etbe.coker.com.au/2013/10/'> October 2013 &nbsp;(3)</option>
+	<option value='https://etbe.coker.com.au/2013/09/'> September 2013 &nbsp;(7)</option>
+	<option value='https://etbe.coker.com.au/2013/08/'> August 2013 &nbsp;(6)</option>
+	<option value='https://etbe.coker.com.au/2013/07/'> July 2013 &nbsp;(3)</option>
+	<option value='https://etbe.coker.com.au/2013/06/'> June 2013 &nbsp;(1)</option>
+	<option value='https://etbe.coker.com.au/2013/05/'> May 2013 &nbsp;(9)</option>
+	<option value='https://etbe.coker.com.au/2013/03/'> March 2013 &nbsp;(2)</option>
+	<option value='https://etbe.coker.com.au/2013/02/'> February 2013 &nbsp;(6)</option>
+	<option value='https://etbe.coker.com.au/2013/01/'> January 2013 &nbsp;(10)</option>
+	<option value='https://etbe.coker.com.au/2012/12/'> December 2012 &nbsp;(14)</option>
+	<option value='https://etbe.coker.com.au/2012/11/'> November 2012 &nbsp;(3)</option>
+	<option value='https://etbe.coker.com.au/2012/10/'> October 2012 &nbsp;(5)</option>
+	<option value='https://etbe.coker.com.au/2012/09/'> September 2012 &nbsp;(6)</option>
+	<option value='https://etbe.coker.com.au/2012/08/'> August 2012 &nbsp;(9)</option>
+	<option value='https://etbe.coker.com.au/2012/07/'> July 2012 &nbsp;(6)</option>
+	<option value='https://etbe.coker.com.au/2012/06/'> June 2012 &nbsp;(8)</option>
+	<option value='https://etbe.coker.com.au/2012/05/'> May 2012 &nbsp;(6)</option>
+	<option value='https://etbe.coker.com.au/2012/04/'> April 2012 &nbsp;(10)</option>
+	<option value='https://etbe.coker.com.au/2012/03/'> March 2012 &nbsp;(9)</option>
+	<option value='https://etbe.coker.com.au/2012/02/'> February 2012 &nbsp;(8)</option>
+	<option value='https://etbe.coker.com.au/2012/01/'> January 2012 &nbsp;(6)</option>
+	<option value='https://etbe.coker.com.au/2011/12/'> December 2011 &nbsp;(9)</option>
+	<option value='https://etbe.coker.com.au/2011/11/'> November 2011 &nbsp;(5)</option>
+	<option value='https://etbe.coker.com.au/2011/10/'> October 2011 &nbsp;(12)</option>
+	<option value='https://etbe.coker.com.au/2011/09/'> September 2011 &nbsp;(2)</option>
+	<option value='https://etbe.coker.com.au/2011/08/'> August 2011 &nbsp;(3)</option>
+	<option value='https://etbe.coker.com.au/2011/07/'> July 2011 &nbsp;(5)</option>
+	<option value='https://etbe.coker.com.au/2011/06/'> June 2011 &nbsp;(7)</option>
+	<option value='https://etbe.coker.com.au/2011/05/'> May 2011 &nbsp;(6)</option>
+	<option value='https://etbe.coker.com.au/2011/04/'> April 2011 &nbsp;(7)</option>
+	<option value='https://etbe.coker.com.au/2011/03/'> March 2011 &nbsp;(7)</option>
+	<option value='https://etbe.coker.com.au/2011/02/'> February 2011 &nbsp;(6)</option>
+	<option value='https://etbe.coker.com.au/2011/01/'> January 2011 &nbsp;(8)</option>
+	<option value='https://etbe.coker.com.au/2010/12/'> December 2010 &nbsp;(5)</option>
+	<option value='https://etbe.coker.com.au/2010/11/'> November 2010 &nbsp;(12)</option>
+	<option value='https://etbe.coker.com.au/2010/10/'> October 2010 &nbsp;(5)</option>
+	<option value='https://etbe.coker.com.au/2010/09/'> September 2010 &nbsp;(7)</option>
+	<option value='https://etbe.coker.com.au/2010/08/'> August 2010 &nbsp;(12)</option>
+	<option value='https://etbe.coker.com.au/2010/07/'> July 2010 &nbsp;(9)</option>
+	<option value='https://etbe.coker.com.au/2010/06/'> June 2010 &nbsp;(15)</option>
+	<option value='https://etbe.coker.com.au/2010/05/'> May 2010 &nbsp;(14)</option>
+	<option value='https://etbe.coker.com.au/2010/04/'> April 2010 &nbsp;(12)</option>
+	<option value='https://etbe.coker.com.au/2010/03/'> March 2010 &nbsp;(20)</option>
+	<option value='https://etbe.coker.com.au/2010/02/'> February 2010 &nbsp;(17)</option>
+	<option value='https://etbe.coker.com.au/2010/01/'> January 2010 &nbsp;(20)</option>
+	<option value='https://etbe.coker.com.au/2009/12/'> December 2009 &nbsp;(9)</option>
+	<option value='https://etbe.coker.com.au/2009/11/'> November 2009 &nbsp;(18)</option>
+	<option value='https://etbe.coker.com.au/2009/10/'> October 2009 &nbsp;(8)</option>
+	<option value='https://etbe.coker.com.au/2009/09/'> September 2009 &nbsp;(7)</option>
+	<option value='https://etbe.coker.com.au/2009/08/'> August 2009 &nbsp;(17)</option>
+	<option value='https://etbe.coker.com.au/2009/07/'> July 2009 &nbsp;(14)</option>
+	<option value='https://etbe.coker.com.au/2009/06/'> June 2009 &nbsp;(16)</option>
+	<option value='https://etbe.coker.com.au/2009/05/'> May 2009 &nbsp;(7)</option>
+	<option value='https://etbe.coker.com.au/2009/04/'> April 2009 &nbsp;(15)</option>
+	<option value='https://etbe.coker.com.au/2009/03/'> March 2009 &nbsp;(19)</option>
+	<option value='https://etbe.coker.com.au/2009/02/'> February 2009 &nbsp;(9)</option>
+	<option value='https://etbe.coker.com.au/2009/01/'> January 2009 &nbsp;(15)</option>
+	<option value='https://etbe.coker.com.au/2008/12/'> December 2008 &nbsp;(8)</option>
+	<option value='https://etbe.coker.com.au/2008/11/'> November 2008 &nbsp;(17)</option>
+	<option value='https://etbe.coker.com.au/2008/10/'> October 2008 &nbsp;(21)</option>
+	<option value='https://etbe.coker.com.au/2008/09/'> September 2008 &nbsp;(24)</option>
+	<option value='https://etbe.coker.com.au/2008/08/'> August 2008 &nbsp;(30)</option>
+	<option value='https://etbe.coker.com.au/2008/07/'> July 2008 &nbsp;(24)</option>
+	<option value='https://etbe.coker.com.au/2008/06/'> June 2008 &nbsp;(24)</option>
+	<option value='https://etbe.coker.com.au/2008/05/'> May 2008 &nbsp;(17)</option>
+	<option value='https://etbe.coker.com.au/2008/04/'> April 2008 &nbsp;(24)</option>
+	<option value='https://etbe.coker.com.au/2008/03/'> March 2008 &nbsp;(6)</option>
+	<option value='https://etbe.coker.com.au/2008/02/'> February 2008 &nbsp;(18)</option>
+	<option value='https://etbe.coker.com.au/2008/01/'> January 2008 &nbsp;(31)</option>
+	<option value='https://etbe.coker.com.au/2007/12/'> December 2007 &nbsp;(13)</option>
+	<option value='https://etbe.coker.com.au/2007/11/'> November 2007 &nbsp;(28)</option>
+	<option value='https://etbe.coker.com.au/2007/10/'> October 2007 &nbsp;(38)</option>
+	<option value='https://etbe.coker.com.au/2007/09/'> September 2007 &nbsp;(33)</option>
+	<option value='https://etbe.coker.com.au/2007/08/'> August 2007 &nbsp;(50)</option>
+	<option value='https://etbe.coker.com.au/2007/07/'> July 2007 &nbsp;(48)</option>
+	<option value='https://etbe.coker.com.au/2007/06/'> June 2007 &nbsp;(16)</option>
+	<option value='https://etbe.coker.com.au/2007/05/'> May 2007 &nbsp;(22)</option>
+	<option value='https://etbe.coker.com.au/2007/04/'> April 2007 &nbsp;(38)</option>
+	<option value='https://etbe.coker.com.au/2007/03/'> March 2007 &nbsp;(35)</option>
+	<option value='https://etbe.coker.com.au/2007/02/'> February 2007 &nbsp;(9)</option>
+	<option value='https://etbe.coker.com.au/2007/01/'> January 2007 &nbsp;(24)</option>
+	<option value='https://etbe.coker.com.au/2006/12/'> December 2006 &nbsp;(26)</option>
+	<option value='https://etbe.coker.com.au/2006/11/'> November 2006 &nbsp;(12)</option>
+	<option value='https://etbe.coker.com.au/2006/10/'> October 2006 &nbsp;(29)</option>
+	<option value='https://etbe.coker.com.au/2006/09/'> September 2006 &nbsp;(30)</option>
+	<option value='https://etbe.coker.com.au/2006/08/'> August 2006 &nbsp;(21)</option>
+
+		</select>
+
+			<script>
+( ( dropdownId ) => {
+	const dropdown = document.getElementById( dropdownId );
+	function onSelectChange() {
+		setTimeout( () => {
+			if ( 'escape' === dropdown.dataset.lastkey ) {
+				return;
+			}
+			if ( dropdown.value ) {
+				document.location.href = dropdown.value;
+			}
+		}, 250 );
+	}
+	function onKeyUp( event ) {
+		if ( 'Escape' === event.key ) {
+			dropdown.dataset.lastkey = 'escape';
+		} else {
+			delete dropdown.dataset.lastkey;
+		}
+	}
+	function onClick() {
+		delete dropdown.dataset.lastkey;
+	}
+	dropdown.addEventListener( 'keyup', onKeyUp );
+	dropdown.addEventListener( 'click', onClick );
+	dropdown.addEventListener( 'change', onSelectChange );
+})( "archives-dropdown-4" );
+
+//# sourceURL=WP_Widget_Archives%3A%3Awidget
+</script>
+</aside><aside id="categories-4" class="widget widget_categories"><h4 class="widget-title">Categories</h4>
+			<ul>
+					<li class="cat-item cat-item-66"><a href="https://etbe.coker.com.au/category/ai/">AI</a> (9)
+</li>
+	<li class="cat-item cat-item-49"><a href="https://etbe.coker.com.au/category/asperger/">Asperger</a> (23)
+</li>
+	<li class="cat-item cat-item-34"><a href="https://etbe.coker.com.au/category/benchmark/">Benchmark</a> (15)
+</li>
+	<li class="cat-item cat-item-8"><a href="https://etbe.coker.com.au/category/blogging/">Blogging</a> (100)
+</li>
+	<li class="cat-item cat-item-25"><a href="https://etbe.coker.com.au/category/career/">Career</a> (41)
+</li>
+	<li class="cat-item cat-item-26"><a href="https://etbe.coker.com.au/category/cars/">Cars</a> (32)
+</li>
+	<li class="cat-item cat-item-28"><a href="https://etbe.coker.com.au/category/ha/">Ha</a> (48)
+</li>
+	<li class="cat-item cat-item-7"><a href="https://etbe.coker.com.au/category/health/">Health</a> (26)
+</li>
+	<li class="cat-item cat-item-23"><a href="https://etbe.coker.com.au/category/lca/">Lca</a> (6)
+</li>
+	<li class="cat-item cat-item-19"><a href="https://etbe.coker.com.au/category/liberty/">Liberty</a> (56)
+</li>
+	<li class="cat-item cat-item-44"><a href="https://etbe.coker.com.au/category/links/">Links</a> (149)
+</li>
+	<li class="cat-item cat-item-12"><a href="https://etbe.coker.com.au/category/linux/">Linux</a> (111)
+</li>
+	<li class="cat-item cat-item-24"><a href="https://etbe.coker.com.au/category/linuxconfau/">Linux.conf.au</a> (31)
+</li>
+	<li class="cat-item cat-item-54"><a href="https://etbe.coker.com.au/category/luv/">LUV</a> (7)
+</li>
+	<li class="cat-item cat-item-46"><a href="https://etbe.coker.com.au/category/misc-computer/">Misc Computer</a> (121)
+</li>
+	<li class="cat-item cat-item-65"><a href="https://etbe.coker.com.au/category/mobile-linux/">Mobile Linux</a> (22)
+</li>
+	<li class="cat-item cat-item-57"><a href="https://etbe.coker.com.au/category/mobile-phones/">Mobile Phones</a> (20)
+</li>
+	<li class="cat-item cat-item-17"><a href="https://etbe.coker.com.au/category/mta/">Mta</a> (20)
+</li>
+	<li class="cat-item cat-item-29"><a href="https://etbe.coker.com.au/category/mysql/">Mysql</a> (5)
+</li>
+	<li class="cat-item cat-item-11"><a href="https://etbe.coker.com.au/category/networking/">Networking</a> (83)
+</li>
+	<li class="cat-item cat-item-9"><a href="https://etbe.coker.com.au/category/politics/">Politics</a> (154)
+</li>
+	<li class="cat-item cat-item-13"><a href="https://etbe.coker.com.au/category/postal/">Postal</a> (4)
+</li>
+	<li class="cat-item cat-item-43"><a href="https://etbe.coker.com.au/category/prediction/">Prediction</a> (8)
+</li>
+	<li class="cat-item cat-item-36"><a href="https://etbe.coker.com.au/category/review/">Review</a> (161)
+</li>
+	<li class="cat-item cat-item-27"><a href="https://etbe.coker.com.au/category/school/">School</a> (28)
+</li>
+	<li class="cat-item cat-item-64"><a href="https://etbe.coker.com.au/category/science/">Science</a> (1)
+</li>
+	<li class="cat-item cat-item-4"><a href="https://etbe.coker.com.au/category/security/">Security</a> (245)
+</li>
+	<li class="cat-item cat-item-59"><a href="https://etbe.coker.com.au/category/society/">Society</a> (22)
+</li>
+	<li class="cat-item cat-item-35"><a href="https://etbe.coker.com.au/category/speech/">Speech</a> (21)
+</li>
+	<li class="cat-item cat-item-56"><a href="https://etbe.coker.com.au/category/storage/">storage</a> (22)
+</li>
+	<li class="cat-item cat-item-10"><a href="https://etbe.coker.com.au/category/terrorism/">Terrorism</a> (11)
+</li>
+	<li class="cat-item cat-item-1"><a href="https://etbe.coker.com.au/category/uncategorized/">Uncategorized</a> (118)
+</li>
+	<li class="cat-item cat-item-32"><a href="https://etbe.coker.com.au/category/unix-tips/">unix-tips</a> (18)
+</li>
+	<li class="cat-item cat-item-22"><a href="https://etbe.coker.com.au/category/virt/">Virtualisation</a> (61)
+</li>
+	<li class="cat-item cat-item-42"><a href="https://etbe.coker.com.au/category/wtf/">WTF</a> (13)
+</li>
+			</ul>
+
+			</aside><aside id="tag_cloud-2" class="widget widget_tag_cloud"><h4 class="widget-title">Tags</h4><div class="tagcloud"><a href="https://etbe.coker.com.au/tag/android/" class="tag-cloud-link tag-link-55 tag-link-position-1" style="font-size: 11.154929577465pt;" aria-label="android (5 items)">android</a>
+<a href="https://etbe.coker.com.au/tag/beard/" class="tag-cloud-link tag-link-15 tag-link-position-2" style="font-size: 14.30985915493pt;" aria-label="Beard (17 items)">Beard</a>
+<a href="https://etbe.coker.com.au/tag/best-posts/" class="tag-cloud-link tag-link-39 tag-link-position-3" style="font-size: 21.014084507042pt;" aria-label="Best Posts (190 items)">Best Posts</a>
+<a href="https://etbe.coker.com.au/tag/btrfs/" class="tag-cloud-link tag-link-60 tag-link-position-4" style="font-size: 15.230046948357pt;" aria-label="btrfs (24 items)">btrfs</a>
+<a href="https://etbe.coker.com.au/tag/bug/" class="tag-cloud-link tag-link-30 tag-link-position-5" style="font-size: 8pt;" aria-label="Bug (1 item)">Bug</a>
+<a href="https://etbe.coker.com.au/tag/camera/" class="tag-cloud-link tag-link-53 tag-link-position-6" style="font-size: 13.586854460094pt;" aria-label="camera (13 items)">camera</a>
+<a href="https://etbe.coker.com.au/tag/conference/" class="tag-cloud-link tag-link-37 tag-link-position-7" style="font-size: 8pt;" aria-label="Conference (1 item)">Conference</a>
+<a href="https://etbe.coker.com.au/tag/debian/" class="tag-cloud-link tag-link-61 tag-link-position-8" style="font-size: 18.779342723005pt;" aria-label="Debian (86 items)">Debian</a>
+<a href="https://etbe.coker.com.au/tag/dns/" class="tag-cloud-link tag-link-52 tag-link-position-9" style="font-size: 11.943661971831pt;" aria-label="dns (7 items)">dns</a>
+<a href="https://etbe.coker.com.au/tag/environment/" class="tag-cloud-link tag-link-14 tag-link-position-10" style="font-size: 18.253521126761pt;" aria-label="Environment (71 items)">Environment</a>
+<a href="https://etbe.coker.com.au/tag/fedora/" class="tag-cloud-link tag-link-45 tag-link-position-11" style="font-size: 9.1830985915493pt;" aria-label="Fedora (2 items)">Fedora</a>
+<a href="https://etbe.coker.com.au/tag/free-software/" class="tag-cloud-link tag-link-33 tag-link-position-12" style="font-size: 11.154929577465pt;" aria-label="free software (5 items)">free software</a>
+<a href="https://etbe.coker.com.au/tag/insight10/" class="tag-cloud-link tag-link-50 tag-link-position-13" style="font-size: 8pt;" aria-label="insight10 (1 item)">insight10</a>
+<a href="https://etbe.coker.com.au/tag/lazyweb/" class="tag-cloud-link tag-link-41 tag-link-position-14" style="font-size: 11.154929577465pt;" aria-label="Lazyweb (5 items)">Lazyweb</a>
+<a href="https://etbe.coker.com.au/tag/lca2009/" class="tag-cloud-link tag-link-48 tag-link-position-15" style="font-size: 11.943661971831pt;" aria-label="lca2009 (7 items)">lca2009</a>
+<a href="https://etbe.coker.com.au/tag/linuxconfau/" class="tag-cloud-link tag-link-63 tag-link-position-16" style="font-size: 11.943661971831pt;" aria-label="Linux.conf.au (7 items)">Linux.conf.au</a>
+<a href="https://etbe.coker.com.au/tag/mobile/" class="tag-cloud-link tag-link-51 tag-link-position-17" style="font-size: 9.9718309859155pt;" aria-label="mobile (3 items)">mobile</a>
+<a href="https://etbe.coker.com.au/tag/most-popular/" class="tag-cloud-link tag-link-38 tag-link-position-18" style="font-size: 22pt;" aria-label="Most Popular (271 items)">Most Popular</a>
+<a href="https://etbe.coker.com.au/tag/politics/" class="tag-cloud-link tag-link-62 tag-link-position-19" style="font-size: 9.1830985915493pt;" aria-label="Politics (2 items)">Politics</a>
+<a href="https://etbe.coker.com.au/tag/selinux/" class="tag-cloud-link tag-link-16 tag-link-position-20" style="font-size: 19.830985915493pt;" aria-label="Selinux (125 items)">Selinux</a>
+<a href="https://etbe.coker.com.au/tag/tech/" class="tag-cloud-link tag-link-47 tag-link-position-21" style="font-size: 13.586854460094pt;" aria-label="tech (13 items)">tech</a>
+<a href="https://etbe.coker.com.au/tag/thinkpad/" class="tag-cloud-link tag-link-58 tag-link-position-22" style="font-size: 11.943661971831pt;" aria-label="thinkpad (7 items)">thinkpad</a></div>
+</aside>  
+</div>
+</div>
+			</div>
+			    <div class="clearfix"></div>
+    </main>
+</div>
+
+                <a href="#" id="scrollbutton"><i class="fas fa-long-arrow-alt-up"></i><span class="screen-reader-text">Back to Top</span></a>
+    <footer role="contentinfo">
+             <div class="close-sticky">
+    <div class="copyright-wrapper inner">
+        <div class="container">
+            <p><a href=https://www.buywptemplates.com/products/wp-multipurpose-blog-WordPress-theme>Blog WordPress Theme</a> By Buywptemplate</p>
+                    </div>
+        <div class="clear"></div>
+    </div>
+    </footer>
+     
+<script type="speculationrules">
+{"prefetch":[{"source":"document","where":{"and":[{"href_matches":"/*"},{"not":{"href_matches":["/wp-*.php","/wp-admin/*","/wp-content/uploads/*","/wp-content/*","/wp-content/plugins/*","/wp-content/themes/multipurpose-blog/*","/*\\?(.+)"]}},{"not":{"selector_matches":"a[rel~=\"nofollow\"]"}},{"not":{"selector_matches":".no-prefetch, .no-prefetch a"}}]},"eagerness":"conservative"}]}
+</script>
+<!-- Powered by WPtouch: 4.3.62 -->	<div style="display:none">
+	<div class="grofile-hash-map-5faa8f7f53d3ac658c4dfa4bd04a2ee3">
+	</div>
+	<div class="grofile-hash-map-7914813af5f894a484607de9353ada50">
+	</div>
+	<div class="grofile-hash-map-077c2bc2e813efe83d63136518f86465">
+	</div>
+	</div>
+<script id="grofiles-cards-js" src="https://secure.gravatar.com/js/gprofiles.js?ver=202644"></script>
+<script id="wpgroho-js-extra">
+var WPGroHo = {"my_hash":""};
+//# sourceURL=wpgroho-js-extra
+</script>
+<script id="wpgroho-js" src="https://etbe.coker.com.au/wp-content/plugins/wordpress-jetpack/modules/wpgroho.js?ver=9.7"></script>
+<script id="tether-js-js" src="https://etbe.coker.com.au/wp-content/themes/multipurpose-blog/js/tether.js?ver=7.1.4"></script>
+<script id="bootstrap-js-js" src="https://etbe.coker.com.au/wp-content/themes/multipurpose-blog/js/bootstrap.js?ver=7.1.4"></script>
+<script id="jquery-superfish-js" src="https://etbe.coker.com.au/wp-content/themes/multipurpose-blog/js/jquery.superfish.js?ver=7.1.4"></script>
+<script id="wp-emoji-settings" type="application/json">
+{"baseUrl":"https://s.w.org/images/core/emoji/17.0.2/72x72/","ext":".png","svgUrl":"https://s.w.org/images/core/emoji/17.0.2/svg/","svgExt":".svg","source":{"concatemoji":"https://etbe.coker.com.au/wp-includes/js/wp-emoji-release.min.js?ver=7.1.4"}}
+</script>
+<script type="module">
+/*! This file is auto-generated */
+var e="script#wp-emoji-settings",t=document.querySelector(e);if(!(t instanceof HTMLScriptElement))throw new Error("Element missing: "+e);const r=JSON.parse(t.text),s=(window._wpemojiSettings=r,"wpEmojiSettingsSupports"),o=["flag","emoji"];function i(e){try{var t={supportTests:e,timestamp:(new Date).valueOf()};sessionStorage.setItem(s,JSON.stringify(t))}catch(e){}}function c(e,t,n){e.clearRect(0,0,e.canvas.width,e.canvas.height),e.fillText(t,0,0);t=new Uint32Array(e.getImageData(0,0,e.canvas.width,e.canvas.height).data);e.clearRect(0,0,e.canvas.width,e.canvas.height),e.fillText(n,0,0);const r=new Uint32Array(e.getImageData(0,0,e.canvas.width,e.canvas.height).data);return t.every((e,t)=>e===r[t])}function p(e,t){e.clearRect(0,0,e.canvas.width,e.canvas.height),e.fillText(t,0,0);var n=e.getImageData(16,16,1,1);for(let e=0;e<n.data.length;e++)if(0!==n.data[e])return!1;return!0}function u(e,t,n,r){switch(t){case"flag":return n(e,"\ud83c\udff3\ufe0f\u200d\u26a7\ufe0f","\ud83c\udff3\ufe0f\u200b\u26a7\ufe0f")?!1:!n(e,"\ud83c\udde8\ud83c\uddf6","\ud83c\udde8\u200b\ud83c\uddf6")&&!n(e,"\ud83c\udff4\udb40\udc67\udb40\udc62\udb40\udc65\udb40\udc6e\udb40\udc67\udb40\udc7f","\ud83c\udff4\u200b\udb40\udc67\u200b\udb40\udc62\u200b\udb40\udc65\u200b\udb40\udc6e\u200b\udb40\udc67\u200b\udb40\udc7f");case"emoji":return!r(e,"\ud83e\u1fac8")}return!1}function f(e,t,n,r){let a;const s=(a="undefined"!=typeof WorkerGlobalScope&&self instanceof WorkerGlobalScope?new OffscreenCanvas(300,150):document.createElement("canvas")).getContext("2d",{willReadFrequently:!0}),o=(s.textBaseline="top",s.font="600 32px Arial",{});return e.forEach(e=>{o[e]=t(s,e,n,r)}),o}function a(e){var t=document.createElement("script");t.src=e,t.defer=!0,document.head.appendChild(t)}r.supports={everything:!0,everythingExceptFlag:!0},new Promise(t=>{let n=function(){try{var e=JSON.parse(sessionStorage.getItem(s));if("object"==typeof e&&"number"==typeof e.timestamp&&(new Date).valueOf()<e.timestamp+604800&&"object"==typeof e.supportTests)return e.supportTests}catch(e){}return null}();if(!n){if("undefined"!=typeof Worker&&"undefined"!=typeof OffscreenCanvas&&"undefined"!=typeof URL&&URL.createObjectURL&&"undefined"!=typeof Blob)try{var e="postMessage("+f.toString()+"("+[JSON.stringify(o),u.toString(),c.toString(),p.toString()].join(",")+"));",r=new Blob([e],{type:"text/javascript"});const a=new Worker(URL.createObjectURL(r),{name:"wpTestEmojiSupports"});return void(a.onmessage=e=>{i(n=e.data),a.terminate(),t(n)})}catch(e){}i(n=f(o,u,c,p))}t(n)}).then(e=>{for(const n in e)r.supports[n]=e[n],r.supports.everything=r.supports.everything&&r.supports[n],"flag"!==n&&(r.supports.everythingExceptFlag=r.supports.everythingExceptFlag&&r.supports[n]);var t;r.supports.everythingExceptFlag=r.supports.everythingExceptFlag&&!r.supports.flag,r.supports.everything||((t=r.source||{}).concatemoji?a(t.concatemoji):t.wpemoji&&t.twemoji&&(a(t.twemoji),a(t.wpemoji)))});
+//# sourceURL=https://etbe.coker.com.au/wp-includes/js/wp-emoji-loader.min.js
+</script>
+<script src='https://stats.wp.com/e-202644.js' defer></script>
+<script>
+	_stq = window._stq || [];
+	_stq.push([ 'view', {v:'ext',j:'1:9.7',blog:'1818743',post:'5512',tz:'10',srv:'etbe.coker.com.au'} ]);
+	_stq.push([ 'clickTrackerInit', '1818743', '5512' ]);
+</script>
+</body>
+</html>

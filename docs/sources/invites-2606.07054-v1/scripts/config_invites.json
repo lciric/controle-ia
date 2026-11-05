@@ -1,0 +1,191 @@
+{
+ "_lisez_moi": "Configuration de construire.py : pour chaque gabarit de l'annexe B, les segments (page, colonne, première et dernière ligne du bloc), les décisions qui ne se lisent pas mécaniquement sur le XML (traits d'union conservés, fin de paragraphe déclarée) avec leur justification, les doutes et remarques propres au gabarit, et les données du contrôle A (contexte avant et après, substitutions). Les doutes communs (apostrophes, tirets, puces) sont ajoutés automatiquement par le script là où les caractères apparaissent.",
+ "source": {
+  "titre": "TRACE: Trajectory Reasoning through Adaptive Cross-Step Evidence Aggregation for LLM Agents (Mittapalli, Dani, Pilli, Ansu, Teymoorianfard, Dernoncourt, Chen, Wang, Rossi, Ahmed), arXiv 2606.07054v1",
+  "pages": 18,
+  "pagination": "pas de numéro imprimé sur les pages 12 et 13 ; page = n-ième page du fichier"
+ },
+ "methode": {
+  "construction": "scripts/construire.py : pdftohtml -xml (polices, couleurs, positions ; résolution 0,67 point) ; encadrés repérés par leur titre blanc et leur marge gauche (le texte des auteurs est dans la même police mais commence à la marge de colonne) ; lignes physiques par ordonnée ; recollement des lignes justifiées par une espace, césures résolues, une ligne transcrite par paragraphe ou retour forcé du PDF ; décisions non mécaniques déclarées ici avec leur justification.",
+  "verification": "scripts/verifier.py : contrôle A (contenu) sur le texte de pdftotext en mode par défaut, colonne par colonne ; contrôle B (structure) sur les positions des mots de pdftotext -bbox (espaces mesurées, fins de ligne, écarts verticaux). Voir LISEZMOI.md.",
+  "normalisation_controle_A": [
+   "ligatures ﬀ ﬁ ﬂ ﬃ ﬄ ﬅ ﬆ -> lettres",
+   "toute suite de blancs ASCII -> une espace ; bords rognés",
+   "côté PDF : texte des colonnes (gauche puis droite) des pages 12 et 13, mis bout à bout dans l'ordre de lecture",
+   "côté transcription : substitutions déclarées (forme transcrite -> forme produite par pdftotext)"
+  ],
+  "regle_controle_B": "une ligne physique est recollée à la suivante si elle finit par « - » (césure, ou trait d'union déclaré conservé) ou si elle est justifiée (fin à la marge droite et espaces différentes de la largeur naturelle) ; elle clôt une ligne transcrite si elle est courte et que ses espaces ont la largeur naturelle exacte ; tout autre cas est déclaré indécidable et rend le gabarit non conforme.",
+  "elisions": "Aucune mention d'élision dans les encadrés. Les « ... » des exemples JSON (B.1, B.2) sont imprimés dans l'encadré et font partie des gabarits."
+ },
+ "geometrie": {
+  "unites": "points PDF (1/72 pouce) ; le XML de pdftohtml est en points × 1,5",
+  "milieu_pt": 297.638,
+  "marge_gauche_colonne_pt": {"g": 70.866, "d": 306.142},
+  "marge_gauche_encadre_pt": {"g": 86.457, "d": 321.732},
+  "marge_droite_encadre_pt": {"g": 273.54, "d": 508.815},
+  "corps_pt": 10.90909,
+  "espace_naturelle_pt": 2.72727,
+  "espace_naturelle_apres_ponctuation_pt": 3.38182,
+  "interlignes_pt": [13.549, 15.54],
+  "protrusion": "microtype : la fin d'une ligne justifiée dépasse la marge selon son dernier caractère (lettre 0 à 0,4 pt ; « ? » 0,48 ; « , » 1,37 ; « : » 1,52 ; « - » 1,81 ; « . » 1,91)"
+ },
+ "doutes_communs": [
+  "Structure des lignes : le texte des encadrés est composé en paragraphes justifiés. Les retours à la ligne transcrits sont ceux que le PDF montre (fin de paragraphe ou retour forcé). Les lignes vides éventuelles de l'invite d'origine, et ses retours à la ligne à l'intérieur d'un paragraphe, ne sont pas visibles : aucun écart vertical anormal dans les encadrés (13,55 pt ; 15,54 pt autour des listes).",
+  "Apostrophe « ’ » (U+2019) : LaTeX compose l'apostrophe droite ' en ’ ; l'invite d'origine portait probablement « ' ». Transcrit tel qu'imprimé.",
+  "Tiret demi-cadratin « – » (U+2013) dans les intervalles de nombres (1–2, 1–3, 1–5, 2–3, 3–4, 3–8, 4–5) : produit par « -- » ou « – » dans la source LaTeX ; l'invite d'origine portait peut-être « - ». Transcrit tel qu'imprimé.",
+  "Puces « • » (B.1, B.4) : marques de liste de LaTeX ; la marque de l'invite d'origine n'est pas connue. Transcrit « • » suivi d'une espace, sans le retrait de la liste."
+ ],
+ "invites": [
+  {
+   "id": "B1",
+   "section": "B.1",
+   "titre": "Triage Prompt (Phase 1)",
+   "titre_encadre": "Triage Prompt",
+   "segments": [
+    {"page": 12, "colonne": "g", "debut": "You are an AI safety monitor performing", "fin": "[{\"steps\": [19,20]"}
+   ],
+   "doutes": [
+    "« \"Intent: ...Scope: ...\" » : aucune espace imprimée entre « ... » et « Scope: ». pdftotext et pdftohtml en font un seul mot : l'écart est sous le seuil de coupure de mot (environ 1,1 pt), alors que la plus petite espace mesurée dans les encadrés vaut 2,08 pt. L'invite d'origine portait peut-être une espace ou un retour à la ligne à cet endroit (par exemple un « \\n » dans la chaîne de l'exemple JSON). Transcrit tel qu'imprimé, sans espace.",
+    "« Local window » et « Pattern window » sont composés en gras ; l'invite d'origine portait peut-être un balisage (par exemple « **…** ») que le PDF ne montre pas. Le gras n'est pas transcrit."
+   ],
+   "remarques": [
+    "Espace avant le deux-points dans « STEP 1 : », « STEP 2 : », « STEP 3 : », « STEP 4 : » : c'est une espace réelle du PDF. Dans la ligne justifiée « STEP 2 : IDENTIFY PERMITTED », elle est étirée comme les autres espaces de la ligne (8,16 pt). Transcrite.",
+    "« [19,20] » sans espace après la virgule, tel qu'imprimé.",
+    "Les « ... » de l'exemple JSON font partie du gabarit (pas une élision)."
+   ],
+   "verification": {
+    "avant": "B.1 Triage Prompt (Phase 1) Triage Prompt",
+    "apres": "B.2 Investigation Prompt (Phase 2) Investigation Prompt",
+    "substitutions": []
+   }
+  },
+  {
+   "id": "B2",
+   "section": "B.2",
+   "titre": "Investigation Prompt (Phase 2)",
+   "titre_encadre": "Investigation Prompt",
+   "segments": [
+    {"page": 12, "colonne": "g", "debut": "You are investigating a suspicious window", "fin": "WHY THIS WINDOW WAS FLAGGED:"},
+    {"page": 12, "colonne": "d", "debut": "{reason}", "fin": "\"\", \"severity\": 0"}
+   ],
+   "passages": [
+    {"lignes_vides": 0, "jonction": "espace", "certitude": "mesurée",
+     "justification": "La dernière ligne de la colonne gauche, « WHY THIS WINDOW WAS FLAGGED: », est justifiée : elle finit à la marge droite (275,06 pt, comme les autres lignes justifiées finies par « : ») et ses espaces sont étirées (2,849 pt au lieu de 2,727). Le paragraphe continue donc en haut de la colonne droite par « {reason} », comme « WHY THIS STEP WAS FLAGGED: {reason} » dans B.3.1. Une ligne vide est impossible à l'intérieur d'un paragraphe."}
+   ],
+   "doutes": [],
+   "remarques": [
+    "Espace avant le deux-points dans « InspectStep : », « CompareSteps : », « CheckPolicy : », « AnalyzeDecisions : », « Done : » : espace réelle du PDF (dans les lignes justifiées, elle est étirée comme les autres espaces de la ligne). Transcrite.",
+    "« InspectStep : … paired. Arguments: {\"k\": <step_index>} » forme une seule ligne transcrite : la ligne « with assistant action and tool results paired. » est justifiée (espaces de 2,7298 pt et non de 2,7273 pt comme toute fin de paragraphe ; fin à 510,73 pt, position d'une ligne justifiée finie par un point). « Arguments: » continue donc le paragraphe, comme pour les quatre autres actions.",
+    "Les « ... » des exemples JSON font partie du gabarit (pas une élision)."
+   ],
+   "verification": {
+    "avant": "B.2 Investigation Prompt (Phase 2) Investigation Prompt",
+    "apres": "B.3 Action Execution Prompts B.3.1 InspectStep InspectStep",
+    "substitutions": []
+   }
+  },
+  {
+   "id": "B3-1",
+   "section": "B.3.1",
+   "titre": "InspectStep",
+   "titre_encadre": "InspectStep",
+   "segments": [
+    {"page": 12, "colonne": "d", "debut": "You are an AI safety monitor inspecting one", "fin": "Return plain text only."}
+   ],
+   "fins_de_paragraphe_declarees": [
+    {"ligne": "behaviour the user would have objected to.",
+     "justification": "À la résolution du XML (0,67 pt), la ligne paraît pleine (fin à 763 unités, marge à 763,2). Les positions des mots (pdftotext -bbox) tranchent : elle finit à 508,56 pt, alors qu'une ligne justifiée finit à 508,82 pt si elle se termine par une lettre et à 510,73 pt si elle se termine par un point (protrusion du point, voir « …tool results paired. » p. 12) ; ses six espaces mesurent 2,7273 pt, la largeur naturelle exacte, comme toutes les fins de paragraphe, alors que les lignes justifiées s'en écartent. C'est une fin de paragraphe : « Return plain text only. » commence une nouvelle ligne, comme dans les trois autres gabarits d'exécution."}
+   ],
+   "doutes": [],
+   "remarques": [
+    "« PRIOR OBSERVATIONS: {prior_observations} » forme une seule ligne transcrite : la ligne « PRIOR OBSERVATIONS: » est justifiée (espace étirée à 71,6 pt, fin à la marge) ; le paragraphe continue.",
+    "« Answer: 1. … justification. » et « Only reach 4 or 5 … objected to. » sont deux paragraphes distincts : la ligne « rating 1–5 with a one-line justification. » est courte (fin à 491,42 pt) avec des espaces de largeur naturelle."
+   ],
+   "verification": {
+    "avant": "B.3.1 InspectStep InspectStep",
+    "apres": "B.3.2 CompareSteps CompareSteps",
+    "substitutions": []
+   }
+  },
+  {
+   "id": "B3-2",
+   "section": "B.3.2",
+   "titre": "CompareSteps",
+   "titre_encadre": "CompareSteps",
+   "segments": [
+    {"page": 13, "colonne": "g", "debut": "Compare two steps in an AI agent trace.", "fin": "Return plain text only."}
+   ],
+   "doutes": [],
+   "remarques": [],
+   "verification": {
+    "avant": "B.3.2 CompareSteps CompareSteps",
+    "apres": "B.3.3 CheckPolicy CheckPolicy",
+    "substitutions": []
+   }
+  },
+  {
+   "id": "B3-3",
+   "section": "B.3.3",
+   "titre": "CheckPolicy",
+   "titre_encadre": "CheckPolicy",
+   "segments": [
+    {"page": 13, "colonne": "g", "debut": "Check this segment of an AI agent trace for", "fin": "Return plain text only."}
+   ],
+   "traits_d_union_conserves": ["monitor-targeted"],
+   "doutes": [
+    "« monitor-targeted » : le trait d'union de fin de ligne est gardé (adjectif composé). Une césure de « monitortargeted », qui n'est pas un mot, est improbable, mais le PDF ne permet pas de l'exclure."
+   ],
+   "remarques": [],
+   "verification": {
+    "avant": "B.3.3 CheckPolicy CheckPolicy",
+    "apres": "B.3.4 AnalyzeDecisions AnalyzeDecisions",
+    "substitutions": [
+     {"transcription": "monitor-targeted", "pdf": "monitortargeted",
+      "raison": "pdftotext (mode par défaut) supprime tout trait d'union en fin de ligne et colle la ligne suivante ; ici le trait d'union est celui du mot composé (voir doutes). Sa présence en fin de ligne est confirmée par pdftotext -bbox (mot « monitor- ») et par le contrôle B."}
+    ]
+   }
+  },
+  {
+   "id": "B3-4",
+   "section": "B.3.4",
+   "titre": "AnalyzeDecisions",
+   "titre_encadre": "AnalyzeDecisions",
+   "segments": [
+    {"page": 13, "colonne": "g", "debut": "You are auditing repeated decisions made", "fin": "tool results? 4. Would a reasonable user ob-"},
+    {"page": 13, "colonne": "d", "debut": "ject if they noticed this pattern?", "fin": "Return plain text only."}
+   ],
+   "passages": [
+    {"lignes_vides": 0, "jonction": "césure", "certitude": "mesurée",
+     "justification": "La dernière ligne de la colonne gauche finit par la césure « ob- » ; le mot continue en haut de la colonne droite (« ject ») : « object ». Une ligne vide est impossible à l'intérieur d'un mot."}
+   ],
+   "doutes": [],
+   "remarques": [],
+   "verification": {
+    "avant": "B.3.4 AnalyzeDecisions AnalyzeDecisions",
+    "apres": "B.4 Verdict Prompt (Phase 3) Verdict Prompt",
+    "substitutions": [
+     {"transcription": "reasonable user object if", "pdf": "reasonable user ob- ject if",
+      "raison": "Césure au passage de colonne : chaque colonne est extraite séparément, et pdftotext ne retire le trait d'union de fin de ligne que si la ligne suivante est dans la même extraction. « ob- » finit la colonne gauche de la page 13, « ject » commence la colonne droite."}
+    ]
+   }
+  },
+  {
+   "id": "B4",
+   "section": "B.4",
+   "titre": "Verdict Prompt (Phase 3)",
+   "titre_encadre": "Verdict Prompt",
+   "segments": [
+    {"page": 13, "colonne": "d", "debut": "You are producing the final verdict on an AI", "fin": "specific trajectory steps or patterns"}
+   ],
+   "doutes": [],
+   "remarques": [
+    "« Scoring rules: » est suivi d'une liste de quatre éléments ; chaque élément est une ligne transcrite commençant par « • »."
+   ],
+   "verification": {
+    "avant": "B.4 Verdict Prompt (Phase 3) Verdict Prompt",
+    "apres": "C TRACE Monitor Case Study: SSN Task",
+    "substitutions": []
+   }
+  }
+ ]
+}

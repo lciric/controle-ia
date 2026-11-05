@@ -1,0 +1,63 @@
+........................../tmp/claude-0/-home-user-controle-ia-travail/75a1275d-b838-5015-909e-b2bfadb395f9/scratchpad/relecture-v40/cl7/outils-cl7/mutants/N19/essais/test_v7_ideation.py:557: ResourceWarning: unclosed file <_io.TextIOWrapper name='/tmp/claude-0/-home-user-controle-ia-travail/75a1275d-b838-5015-909e-b2bfadb395f9/scratchpad/relecture-v40/cl7/outils-cl7/mutants/N19/essais/_tmp/tmp0b949vh2/petit-enfant.pid' mode='r' encoding='UTF-8'>
+  pid = int(open(pid_f).read())
+ResourceWarning: Enable tracemalloc to get the object allocation traceback
+../tmp/claude-0/-home-user-controle-ia-travail/75a1275d-b838-5015-909e-b2bfadb395f9/scratchpad/relecture-v40/cl7/outils-cl7/mutants/N19/essais/test_v7_ideation.py:649: ResourceWarning: unclosed file <_io.TextIOWrapper name='/tmp/claude-0/-home-user-controle-ia-travail/75a1275d-b838-5015-909e-b2bfadb395f9/scratchpad/relecture-v40/cl7/outils-cl7/mutants/N19/essais/_tmp/tmpnqq45bld/cx-3/proposeurs/argon/traces-passe-2/consigne.md' mode='r' encoding='utf-8'>
+  encoding="utf-8").read()
+ResourceWarning: Enable tracemalloc to get the object allocation traceback
+................................/usr/lib/python3.13/subprocess.py:1141: ResourceWarning: subprocess 29816 is still running
+  _warn("subprocess %s is still running" % self.pid,
+ResourceWarning: Enable tracemalloc to get the object allocation traceback
+.F...
+======================================================================
+FAIL: test_sigterm_sur_le_lanceur (essais.test_v7_ideation.TestV40.test_sigterm_sur_le_lanceur)
+CL39-05 : SIGTERM à l'orchestrateur pendant la session d'Argon → code 2, manifeste de fin écrit avec la session
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/tmp/claude-0/-home-user-controle-ia-travail/75a1275d-b838-5015-909e-b2bfadb395f9/scratchpad/relecture-v40/cl7/outils-cl7/mutants/N19/essais/test_v7_ideation.py", line 1243, in test_sigterm_sur_le_lanceur
+    self.assertEqual(p.returncode, 2, err.decode("utf-8", "replace"))
+    ~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: -2 != 2 : Traceback (most recent call last):
+  File "/tmp/claude-0/-home-user-controle-ia-travail/75a1275d-b838-5015-909e-b2bfadb395f9/scratchpad/relecture-v40/cl7/outils-cl7/mutants/N19/demonstrations/ideation_v1.py", line 509, in <module>
+    raise SystemExit(principal())
+                     ~~~~~~~~~^^
+  File "/tmp/claude-0/-home-user-controle-ia-travail/75a1275d-b838-5015-909e-b2bfadb395f9/scratchpad/relecture-v40/cl7/outils-cl7/mutants/N19/demonstrations/ideation_v1.py", line 311, in principal
+    return _principal(args)
+  File "/tmp/claude-0/-home-user-controle-ia-travail/75a1275d-b838-5015-909e-b2bfadb395f9/scratchpad/relecture-v40/cl7/outils-cl7/mutants/N19/demonstrations/ideation_v1.py", line 474, in _principal
+    res = idn.executer_ideation(adaptateur, sortie, liste_blanche=args.liste_blanche, question=args.question,
+                                pieces=args.piece, proposeurs=proposeurs, juges=juges, temoins=args.temoins,
+    ...<11 lines>...
+                                cout_externe_deja_engage_usd=cout_controle_externe,
+                                tolerer_somme_plafonds=args.tolerer_somme_plafonds)
+  File "/tmp/claude-0/-home-user-controle-ia-travail/75a1275d-b838-5015-909e-b2bfadb395f9/scratchpad/relecture-v40/cl7/outils-cl7/mutants/N19/pole/ideation.py", line 994, in executer_ideation
+    passe1[etiquette] = passe_de(etiquette, modele, 1, consigne_proposeur(pieces_lues, nombre_par_proposeur,
+                        ~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+                                                                           question_lue[1]))
+                                                                           ^^^^^^^^^^^^^^^^^
+  File "/tmp/claude-0/-home-user-controle-ia-travail/75a1275d-b838-5015-909e-b2bfadb395f9/scratchpad/relecture-v40/cl7/outils-cl7/mutants/N19/pole/ideation.py", line 981, in passe_de
+    texte = lancer("proposeur_ideation", etiquette, modele, consigne, d,
+                   adaptateur=externes_adapt[etiquette] if ext else adaptateur, externe=ext)
+  File "/tmp/claude-0/-home-user-controle-ia-travail/75a1275d-b838-5015-909e-b2bfadb395f9/scratchpad/relecture-v40/cl7/outils-cl7/mutants/N19/pole/ideation.py", line 936, in lancer
+    r = adaptateur.lancer(role, consigne, dossier, plafond, max_tours, modele=modele)
+  File "/tmp/claude-0/-home-user-controle-ia-travail/75a1275d-b838-5015-909e-b2bfadb395f9/scratchpad/relecture-v40/cl7/outils-cl7/mutants/N19/pole/adaptateurs.py", line 446, in lancer
+    sortie, err = p.communicate(input=consigne.encode("utf-8"), timeout=self.delai_s)
+                  ~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/lib/python3.13/subprocess.py", line 1223, in communicate
+    stdout, stderr = self._communicate(input, endtime, timeout)
+                     ~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/lib/python3.13/subprocess.py", line 2155, in _communicate
+    ready = selector.select(timeout)
+  File "/usr/lib/python3.13/selectors.py", line 398, in select
+    fd_event_list = self._selector.poll(timeout)
+  File "/tmp/claude-0/-home-user-controle-ia-travail/75a1275d-b838-5015-909e-b2bfadb395f9/scratchpad/relecture-v40/cl7/outils-cl7/mutants/N19/demonstrations/ideation_v1.py", line 304, in interrompre
+    raise KeyboardInterrupt(f"signal {num}")  # session comptée au plafond, manifeste de fin écrit)
+    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+KeyboardInterrupt: signal 15
+
+
+----------------------------------------------------------------------
+Ran 65 tests in 6.217s
+
+FAILED (failures=1)
+<sys>:0: ResourceWarning: unclosed file <_io.BufferedWriter name=4>
+<sys>:0: ResourceWarning: unclosed file <_io.BufferedReader name=5>
+<sys>:0: ResourceWarning: unclosed file <_io.BufferedReader name=7>

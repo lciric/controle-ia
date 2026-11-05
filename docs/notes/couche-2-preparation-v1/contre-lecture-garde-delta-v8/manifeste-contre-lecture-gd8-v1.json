@@ -1,0 +1,57 @@
+{
+ "version": "manifeste-contre-lecture-gd8-v1",
+ "objet": "contre-lecture GD8 (R2) de la simulation de puissance de la garde δ, v8 (origin/canal/conv-audit-n04, commit e1707aa4413396d4131f35efa651669e87d28916, dossier simulation-puissance-garde-delta-v8, extrait par git archive)",
+ "commit_du_depot_local_au_lancement": "317f670853fcd29cff5a8b590782e2221abe32c6",
+ "python": "3.13.17",
+ "numpy": "2.4.6",
+ "scipy": "1.17.1",
+ "versions_v8": {
+  "python": "3.13.18",
+  "numpy": "2.5.3",
+  "scipy": "1.18.1"
+ },
+ "graines": {
+  "rejeu (rejeu-gd8-v1.sh)": "20261029 (graine maîtresse de la v8, défaut du script), dérivée par le script : SeedSequence([20261029, sha256(étiquette)])",
+  "independant-gd8-v1.py": "20261030, SeedSequence([20261030, sha256(étiquette)]), graines dérivées écrites dans la sortie",
+  "ajustement-n80-gd8-v1.py, regle-table-lecture-gd8-v1.py, comparer-rejeu-gd8-v1.py": "aucune (calcul déterministe)",
+  "essai-nulle-neuf-gd8": "20261029 (défaut)"
+ },
+ "commandes": [
+  "sh rejeu-gd8-v1.sh <copie du script v8> .venv/bin/python {meme-rho0.17|meme-rho0.10|neuf-k9-g0.05-nulle|neuf-k9-g0.05-rho0.17} (quatre processus en parallèle)",
+  "python -I -B ajustement-n80-gd8-v1.py <dossier v8> ajustement-n80-gd8-v1-sortie.json",
+  "python -I -B regle-table-lecture-gd8-v1.py <v8>/tableaux-v8-sortie.json <v8>/precision-rho-pilote-v8-sortie.json regle-table-lecture-gd8-v1-sortie.json",
+  "python -I -B independant-gd8-v1.py independant-gd8-v1-sortie.json",
+  "python -I -B comparer-rejeu-gd8-v1.py <rejeu> <v8> comparer-rejeu-gd8-v1-sortie.json",
+  "python -I -B simulation-puissance-garde-delta-v8.py --repetitions 100 --taux 0.01 --deltas 0.05 --biais 0 --lecture-ebh A --m 8,2 --sans-n80 --comparateurs 9 --K 5 --K-s 10 --tailles 64 --ecart-contraste-neuvieme 0.05 --fiches-nulles 1 > rejeu-v1/essai-nulle-neuf-gd8.json (code 0, aucun refus)"
+ ],
+ "depense": "aucune ; processeur seul (4 cœurs locaux)",
+ "fichiers": {
+  "ajustement-n80-gd8-v1-sortie.json": "e65a641ecb70ff140fa3647137d33fae9611c16a1ddf8671cf6bfde8fb4a78d4",
+  "ajustement-n80-gd8-v1.py": "5fa513ae5877ae159f01bd49f83cbc669fa597eae60d44425e15257e6ea5232d",
+  "comparer-rejeu-gd8-v1-sortie.json": "19a3099da4187bbb902f1ca8e0fae40d870162b8d9f670b5a8407214277602d3",
+  "comparer-rejeu-gd8-v1.py": "db4f1faa8e92d5496bcbead75d7757d6565d6f618d31934f03ae8a497486bb09",
+  "independant-gd8-v1-sortie.json": "abec12a8d7ad880734174eedc96b4c6ce7777ad43a7a4243934d9e944ba323e7",
+  "independant-gd8-v1.py": "5e08a6d34a78c8c9391667b07f2f7a9f8fc7dc39d16c6f2a9d3b36b78e584954",
+  "regle-table-lecture-gd8-v1-sortie.json": "9912624f8d86b90ea5561377105e1a6b416803aa97674f468958cb91f9254ae5",
+  "regle-table-lecture-gd8-v1.py": "dc67a2c361d9d7e0825e0c1fbd7952f2cb6c7638db6ebddeac9f73932ba2f080",
+  "rejeu-gd8-v1.sh": "311b52eaba9e8e891f8776ef9e54036493b8596738d3d15e37b65e0273a0f0a3",
+  "rejeu-v1/essai-nulle-neuf-gd8-journal.txt": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+  "rejeu-v1/essai-nulle-neuf-gd8.json": "fc73c57e8f9d4e5c33032d33083b0d59fc3fc1d7e6f46683c55d94db48e69890",
+  "rejeu-v1/lanceur-meme-rho0.10.txt": "16be47f10be502f5087d737c11458f57d3af689c62b5019c94c233ca1624a1a5",
+  "rejeu-v1/lanceur-meme-rho0.17.txt": "5a21d6c247b149b207b48b0c17a4aaf2f9457e55e842630a109758243a5426d1",
+  "rejeu-v1/lanceur-neuf-k9-g0.05-nulle.txt": "85068261dfc6a7918c14e83fe8aec7263f7e67e1ed913719c9c938eec0383e3b",
+  "rejeu-v1/lanceur-neuf-k9-g0.05-rho0.17.txt": "afb2e8093d96d923527e995b39a186c3709281cac0dfc901d6469164561d6328",
+  "rejeu-v1/manifeste-rejeu-gd8-meme-rho0.10.json": "49fb3b461f0610b07b327e8366bb871606b9ad4b8d5fb81be466b02334311c87",
+  "rejeu-v1/manifeste-rejeu-gd8-meme-rho0.17.json": "c1a000d0fe609eb897e3846fbc2184e4ef98d95e6f0ee4c54d625269b3f76738",
+  "rejeu-v1/manifeste-rejeu-gd8-neuf-k9-g0.05-nulle.json": "e794ae21742c89266fa19b90f23103fbe65806d56656a729898776a8586babb9",
+  "rejeu-v1/manifeste-rejeu-gd8-neuf-k9-g0.05-rho0.17.json": "97ad515c7ad3b5ee71319d2cf336e09f89795551342792486c14371fb51cb3d6",
+  "rejeu-v1/rejeu-gd8-meme-rho0.10-journal.txt": "5747804f90b7e18f08f39d13d9d8a20efa71ac99a6c637fcb58aeacfe20f3f20",
+  "rejeu-v1/rejeu-gd8-meme-rho0.10.json": "4534d8100c1acf227108b17fa4d777e7fcd0fcb1a5fc2a46b73267fc5bf2b78e",
+  "rejeu-v1/rejeu-gd8-meme-rho0.17-journal.txt": "d55075c4b9b23aaf7463a9ad5741cec7475e2459143c6c2de5b1801ea7de9db2",
+  "rejeu-v1/rejeu-gd8-meme-rho0.17.json": "45237b3d6bba07ca7d47042cd4d9602fd2268d9976f44ad55ec22105359260bd",
+  "rejeu-v1/rejeu-gd8-neuf-k9-g0.05-nulle-journal.txt": "62a7261af7ef86727b642aab2d73f811709a7c2fdf451a98d6ca7e1eac30df7b",
+  "rejeu-v1/rejeu-gd8-neuf-k9-g0.05-nulle.json": "4ea702b26aa3fb6b91691bd994b4c0ad75da73df1a67b22afa65a6586952afa9",
+  "rejeu-v1/rejeu-gd8-neuf-k9-g0.05-rho0.17-journal.txt": "1bce1791b8a7b119fd6247bd0e2a037fd8e84b83d394d2f5b973c2162eb86364",
+  "rejeu-v1/rejeu-gd8-neuf-k9-g0.05-rho0.17.json": "186697c56b1d7467d58da716494e8dc8196b4119c9654c354314ba8327129194"
+ }
+}

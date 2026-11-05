@@ -1,0 +1,18 @@
+audit R4 des formes — comparaison d'échelle v10 ; activations de 7b0f84d
+petit : 3072 identifiants ; modèle meta-llama/Llama-3.1-8B-Instruct ; révision 0e9e39f249a1
+  activations-L12.npy : forme (3072, 4096), type float16, finies True, norme min/méd/max 5.7/6.2/6.7, lignes distinctes 3072, écart type moyen par dimension 0.0361
+  activations-L16.npy : forme (3072, 4096), type float16, finies True, norme min/méd/max 8.0/8.8/9.4, lignes distinctes 3072, écart type moyen par dimension 0.0644
+  activations-L20.npy : forme (3072, 4096), type float16, finies True, norme min/méd/max 11.0/12.4/13.4, lignes distinctes 3072, écart type moyen par dimension 0.0954
+  activations-L8.npy : forme (3072, 4096), type float16, finies True, norme min/méd/max 4.2/4.6/4.9, lignes distinctes 3072, écart type moyen par dimension 0.0193
+grand : 3072 identifiants ; modèle meta-llama/Llama-3.1-70B-Instruct ; révision 1605565b47bb
+  activations-L20.npy : forme (3072, 8192), type float16, finies True, norme min/méd/max 5.7/6.2/6.8, lignes distinctes 3072, écart type moyen par dimension 0.0279
+  activations-L30.npy : forme (3072, 8192), type float16, finies True, norme min/méd/max 8.4/9.2/10.8, lignes distinctes 3072, écart type moyen par dimension 0.0515
+  activations-L40.npy : forme (3072, 8192), type float16, finies True, norme min/méd/max 11.6/12.9/14.0, lignes distinctes 3072, écart type moyen par dimension 0.0835
+  activations-L50.npy : forme (3072, 8192), type float16, finies True, norme min/méd/max 16.1/17.8/20.5, lignes distinctes 3072, écart type moyen par dimension 0.1209
+
+Conclusion (session-depot, 27 octobre 2026) : formes conformes — 3 072 lignes par couche, 4 096 (petit) et 8 192 (grand)
+dimensions, float16, toutes finies, aucune ligne en double, normes sans valeur aberrante et croissantes avec la profondeur ;
+manifestes du bon modèle et de la bonne révision. Le déclenchement de R4 (A_conf_T1 du 8B en a→b ≈ 0,00 avec λ < 1) ne
+vient pas d'un défaut de forme : A_conf_T1 est bas dans les quatre cas (0,001 à 0,061 selon le lecteur), A_conf normal
+(0,91 à 0,996) ; cela tient au témoin T1, non à une inversion propre au 8B. Réserve R4 gardée avec l'issue, sans effet
+sur « indécis ».

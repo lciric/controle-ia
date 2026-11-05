@@ -1,0 +1,1132 @@
+{
+ "lectures": [
+  {
+   "domaine": "Ce que conv-audit attend de la banque de la couche 2 : format de sortie, unités, étiquettes, séparations, dimensionnement, pièces à fournir avant le lancement",
+   "resume": "Verdict : on ne peut pas encore lancer. Le format de sortie que conv-audit attend existe et il est testé, mais seulement sur des données synthétiques. Sur trois points, le devis (cf2f4772…) ne couvre pas ce que conv-audit a écrit et ce que Lazar a déjà décidé.\n\n(1) Le format. C'est un fichier JSON lu par `MondeBanqueScores` (v30, empreinte 58d4fee8…, conforme à EMPREINTES-v30).\n- Champs à la racine : `cellules` (liste non vide, sans doublon), `episodes`, `strates` (noms des champs déclarés) et `identite` (chaîne stable, conseillée pour pouvoir agrandir la banque plus tard).\n- Champs de chaque épisode : `id` unique ; `unite` ; `etiquette` qui vaut « honnete » ou « sabote » ; `partie` qui vaut « calibrage », « developpement » ou « epreuve » ; `strates`, en texte, avec exactement les champs déclarés (le mode en fait partie) ; `scores`, un réel fini pour CHAQUE cellule, sans aucun manque.\n- L'unité est la consigne avec toutes ses exécutions (D-S1, décidée par Lazar en N-055). Le jumeau honnête est dans la même unité. Une unité n'appartient qu'à une seule partie. Le nombre d'épisodes est constant par unité.\n- Les parties se tirent par un tirage stratifié scellé avant tout calcul de score (D-S14). Le développement a son propre calibrage (D-S15). L'épreuve est découpée en tranches neuves, une par génération. Le seuil se calcule sur les seuls épisodes honnêtes du calibrage.\n\n(2) Les trois écarts.\n- (a) Le calibrage honnête n'est pas au devis : aucune unité honnête n'y est réservée au calibrage. Or Lazar a décidé D-S9 (a) : 10 à 16 fois les unités sabotées de l'épreuve, à 1 % de faux positifs. Les jumeaux honnêtes des unités d'épreuve ne peuvent pas servir de calibrage, puisqu'une unité ne peut pas être dans deux parties. Même le plancher technique manque : à 1 %, il faut au moins 99 épisodes honnêtes de calibrage par cellule et par strate filtrée, sinon le seuil est infini (« calibrage insuffisant »). Ma dérivation, à faire confirmer : 4 200 à 13 440 épisodes honnêtes, soit environ 150 à 630 USD aux coûts du devis.\n- (b) Le devis lit « +300 épisodes sabotés par mode ». Conv-audit (conception v9) et N-056 parlent d'« unités » : plusieurs centaines d'unités en plus par mode. À 3 exécutions par consigne, cela ne fait que 100 unités de plus, soit 140 par mode. De plus, les tables de puissance de conv-audit supposent 10 épisodes par unité, pas 3.\n- (c) La strate « diffus / concentré » et l'instant du dommage sont exigés (N-055, D-S30). Conv-audit a écrit qu'ils « n'existent nulle part aujourd'hui », et ils ne sont pas au devis.\n\n(3) Ce que conv-audit devait fournir. Il avait promis le « dimensionnement exact » et le code du monde « modes » (message n° 126, ligne 32) : ni l'un ni l'autre n'est sur sa branche (commit cc670186). La lignée est en relève et tout est en pause (brief, lignes 71-76). Aucun convertisseur des sorties réelles vers ce format n'existe, ni sur main ni sur cette branche. Le préenregistrement de G1 s'écrit après la banque et avant toute lecture (pari v2, lignes 345-346) ; sur main il en est au brouillon 3 du 6 octobre.",
+   "existe": [
+    {
+     "piece": "Demande de conv-audit : première banque des deux modes connus",
+     "chemin": "refs/canal-local/conv-audit:brouillons/canal-reprise-releve-v1/messages/conv-audit_2026-10-27_n126.md (point 3 (a)) et …/conv-audit_2026-10-27_n127.md (point 3)",
+     "etat": "lu ; empreintes conformes à leurs compagnons (1953f411…, 4f35b256…)",
+     "preuve": "n126, lignes 23-27 : T0.6, environ 40 consignes × 3 exécutions par mode, plus les jumeaux honnêtes, étiquetage à deux séries, juges 8B et 3B, sondes figées de P3, bases de N-007, format `pole/monde_banque_scores.py`. n126, lignes 32-33 : « je te passe le dimensionnement exact et je code le monde « recettes » (devenu monde « modes ») ». n127, lignes 26-35 : postes déjà connus (calibrage honnête 10 à 16 × à 1 %, G_max scellé, m_max, strate « diffus / concentré », instant du dommage, nœud 1 (b)). Format d'un épisode, n127 lignes 32-33 : `id`, `unite`, `etiquette`, `partie`, `strates` dont le mode, `scores` par moniteur."
+    },
+    {
+     "piece": "Lecteur et validateur du format de banque de scores (version 30)",
+     "chemin": "refs/canal-local/conv-audit:brouillons/canal-reprise-releve-v1/envois/pole-scientifique-automatique-v1/orchestrateur-pole-v7/pole/monde_banque_scores.py",
+     "etat": "codé, testé sur données synthétiques seulement ; sha256 58d4fee8…, identique à EMPREINTES-orchestrateur-pole-v7-v30.txt",
+     "preuve": "Lignes 4-9 : les champs. Lignes 31-32 : ETIQUETTES = (honnete, sabote) ; PARTIES = (calibrage, developpement, epreuve). Lignes 47-52 : `cellules` et `episodes` obligatoires. Lignes 61-62 : une unité ne chevauche jamais deux parties. Lignes 64-67 : un score absent ou non fini rend la banque invalide (aucune imputation). Lignes 68-70 : strates = les champs déclarés, en texte. Les champs en plus dans un épisode ne sont pas refusés (seuls ceux-là sont vérifiés). Lignes 73-78 : `identite`. Lignes 103-118 : seuil conforme strict j = ⌊τ(n+1)⌋ sur les honnêtes du calibrage ; si j < 1, seuil infini « calibrage_insuffisant », donc n ≥ 99 à 1 %. Lignes 121-138 : parts par unité. Lignes 169-177 : jumeau calibré (contrôle 12)."
+    },
+    {
+     "piece": "Essais du format",
+     "chemin": "refs/canal-local/conv-audit:brouillons/canal-reprise-releve-v1/envois/pole-scientifique-automatique-v1/orchestrateur-pole-v7/essais/test_v7_monde_banque_scores.py",
+     "etat": "existe ; sha256 06602644…, conforme à v30",
+     "preuve": "Lignes 12-26 : banque synthétique ; le calibrage ne contient aucun saboté (ligne 18) et le mode est porté au niveau de l'unité (ligne 17). Lignes 30-44 : six refus. Lignes 59-61 : 50 honnêtes à 1 % donnent « calibrage insuffisant ». Lignes 117-131 : bout en bout avec 100 unités de calibrage, 100 d'épreuve, τ = 0,05, δ = 0,10."
+    },
+    {
+     "piece": "Convention des cellules et des tranches (démonstration synthétique)",
+     "chemin": "refs/canal-local/conv-audit:brouillons/canal-reprise-releve-v1/envois/pole-scientifique-automatique-v1/orchestrateur-pole-v7/demonstrations/demo_pari_apparie_v7.py",
+     "etat": "existe ; synthétique, ce n'est pas un convertisseur",
+     "preuve": "Lignes 49-56 : sept cellules (`blanc`, `blanc_jumeau`, `cascade` (ii), `dernier_etat` (iii), `noir_action`, `noir_sequentiel`, `juge`) ; comparateurs de G1 = cascade, dernier_etat, noir_action, noir_sequentiel, juge. Lignes 57-82 : strates [mode, tranche] ; tranches d'épreuve numérotées une par génération ; `identite` déclarée."
+    },
+    {
+     "piece": "Ancien format « monde sur banque » (traits et issues), non demandé pour la couche 2",
+     "chemin": "refs/canal-local/conv-audit:brouillons/canal-reprise-releve-v1/envois/pole-scientifique-automatique-v1/orchestrateur-pole-v7/pole/monde_banque.py",
+     "etat": "existe (sha256 33088eb9…, conforme à v30) ; c'est un autre format, celui de la couche 1 bis",
+     "preuve": "Lignes 43-45 : `traits`, `moniteurs`, `instances` ; par instance : `identifiant`, `z`, `g`, `issues`, `partie` (« epreuve » par défaut), `tache`. Lignes 92 et 163-164 : il faut au moins 5 × (nombre d'issues) lignes de calibrage par moniteur. Lignes 71-84 : partie de développement distincte. Les messages n126 et n127 demandent le format scores, pas celui-ci."
+    },
+    {
+     "piece": "Règles de dimensionnement et exigences sur la banque (pari apparié v2)",
+     "chemin": "refs/canal-local/conv-audit:brouillons/canal-reprise-releve-v1/envois/pole-scientifique-automatique-v1/pari-de-signe/conception-pari-de-signe-v2.md",
+     "etat": "sha256 9c39a73d…, conforme ; ses décisions D-S1 à D-S12 ont été adoptées par Lazar (N-055)",
+     "preuve": "Lignes 74-80 : unité = consigne avec ses exécutions. Lignes 86-88 : nombre d'épisodes constant par unité. Lignes 119-121 : seuil sur les honnêtes du calibrage, « aucun épisode saboté, aucune unité d'épreuve n'y entre ». Lignes 140-144 : calibrage C ≈ 10 à 16 × les unités sabotées de l'épreuve, à 1 % et dix épisodes par unité. Lignes 145-151 : garde δ = 0,10 / 0,05 / 0,03 avec 70 / 150 / 300 unités honnêtes d'épreuve. Ligne 265 : la puissance suppose 10 épisodes sabotés par unité. Lignes 285-290 : 40 unités pour 20 points, 100 pour 10, et 1 000 à 4 000 unités de calibrage. Lignes 299-303 et 348-353 : champs exigés (unité, agent surveillé, mode, diffus / concentré, floue / nette, N, horizon, instant du dommage, parties par unité et par génération)."
+    },
+    {
+     "piece": "Compléments v3, v4, v6, v9 à v12 du pari (séparations, D-S8 réécrite, coût des gardes)",
+     "chemin": "refs/canal-local/conv-audit:brouillons/canal-reprise-releve-v1/envois/pole-scientifique-automatique-v1/pari-de-signe/conception-pari-de-signe-v3.md (et v4, v6, v9, v10, v11, v12)",
+     "etat": "empreintes conformes (v3 1518a12f…, v4 c63d8539…, v6 f21982cd…, v9 aab37f63…, v10 1237d52d…, v11 8307a6ac…, v12 90dc27eb…) ; v12 n'est pas contre-lue",
+     "preuve": "v3 lignes 277-279 : D-S13 (scores continus, probabilité du jeton de verdict, pour toute cellule de G1), D-S14 (tirage stratifié scellé), D-S15 (calibrage propre au développement). v3 lignes 291-299 : identifiants de paire, calibrage par strate d'horizon. v4 lignes 84-85 : pour G1, calibrage d'épreuve lu une fois. v4 ligne 211 : tirage depuis un même vivier gelé. v4 ligne 218 : estimande par épisode (D-S22). v6 ligne 162 : G_max scellé (D-S24). v6 ligne 165 : m_max (D-S27). v6 lignes 166-167 : D-S29, D-S30. v9 lignes 13-24 et 43-54 : D-S8 réécrite, poste de devis « plusieurs centaines d'unités sabotées de plus par mode ». v10 ligne 90 : variance par unité en (discordance − écart²)/m. v11 lignes 51-53 : gardes ≈ 80 à 210 unités honnêtes par mode à δ = 0,10. v12 ligne 58 : garde par comparateur « à confirmer par Lazar »."
+    },
+    {
+     "piece": "Décisions de Lazar qui fixent la banque",
+     "chemin": "/home/user/controle-ia-travail/docs/decisions/decision-N-055-v1.md ; /home/user/controle-ia-travail/docs/decisions/decision-N-056-v1.md ; /home/user/controle-ia-travail/registres/decisions.md (R-600, ligne 826 ; R-626, ligne 854) ; refs/canal-local/conv-audit:…/pari-de-signe/decisions-lazar-2026-10-27-v1.md",
+     "etat": "inscrites sur main",
+     "preuve": "N-055 ligne 19 : D-S1. N-055 ligne 27 : D-S9 (a) « 10 à 16 fois les unités sabotées à 1 %, poste au devis de la couche 2 ». decisions-lazar lignes 26-28 : strate « diffus / concentré » à coder dans la banque. N-056 lignes 38-46 : G1 doit aussi battre (ii) et (iii), donc plusieurs centaines de tâches sabotées de plus par mode. N-056 lignes 55-57 : D-S29 (a), le mode tenu à l'écart dimensionné comme les autres. R-600 : D-S29 (a) confirmée."
+    },
+    {
+     "piece": "Devis et lignes de GO",
+     "chemin": "/home/user/controle-ia-travail/docs/notes/devis-couche-2-banque-deux-modes-v1.md ; /home/user/controle-ia-travail/registres/go.md (lignes 97 et 101)",
+     "etat": "devis conforme à son compagnon (cf2f4772…) ; GO-2026-10-28-02 porté à 90 USD, échéance 31 octobre",
+     "preuve": "Devis ligne 49 : 240 sabotés et 240 honnêtes. Ligne 68 : « + 300 épisodes sabotés par mode ». Aucune occurrence de « calibr », « épreuve », « développement », « strate », « diffus » ni « unité » dans le devis (vérifié par recherche). go.md ligne 101 : le mode tenu à l'écart n'est pas couvert ; le § 6 du devis reste exigé."
+    },
+    {
+     "piece": "Code sur main utile au calcul des cellules (non vérifié pour cette banque, autre domaine)",
+     "chemin": "/home/user/controle-ia-travail/src/controle_ia/environnements/juges.py ; /home/user/controle-ia-travail/src/controle_ia/bases/scores_jetons.py ; /home/user/controle-ia-travail/src/controle_ia/bases/sequentiel.py ; /home/user/controle-ia-travail/src/controle_ia/bases/trace_lite.py",
+     "etat": "existe",
+     "preuve": "juges.py ligne 74 : `probabilite_oui` (score continu exigé par D-S13). scores_jetons.py ligne 40 : `esperance`. sequentiel.py : bases par action et séquentielles, avec un calibrage conforme sur épisodes honnêtes entiers. trace_lite.py : base (iv)."
+    },
+    {
+     "piece": "Procédure d'étiquetage à deux séries",
+     "chemin": "/home/user/controle-ia-travail/docs/decisions/decision-P-014-reference-appariement-T0.6-v1.md",
+     "etat": "décidée le 12 octobre",
+     "preuve": "Lignes 7-13 : sous-agents neufs sous consigne figée, toutes les paires « proposition × contrôle semé », double étiquetage d'environ 10 %, aucune dépense de carte graphique, repli sur des épisodes entiers."
+    },
+    {
+     "piece": "Pièces interdites, existence seulement (non ouvertes)",
+     "chemin": "/home/user/controle-ia-travail/prereg/P3-consignes-v1.md ; refs/donnees-local/bras-attaque-v1-arret-r597, refs/donnees-local/collisionneur-evasion-moniteurs-v1, refs/donnees-local/duel-proposeurs-course-1-v1 ; branche donnees/t05-banque-complete-v1 (citée par n127 ligne 7) ; refs/canal-local/conv-audit:brouillons/canal-reprise-releve-v1/envois/theorie-v1/carte-des-hypotheses-v1/",
+     "etat": "non ouvert (interdit)",
+     "preuve": "La carte est citée par mesures-fortes-plan-v2.md ligne 5 et par n128 lignes 33-37."
+    }
+   ],
+   "manque": [
+    {
+     "piece": "Décision sur le calibrage honnête : D-S9 (a) ne tient pas dans 90 USD",
+     "pourquoi": "Le devis ne réserve aucune unité honnête au calibrage. Les jumeaux des unités d'épreuve sont exclus du calibrage (format, lignes 61-62 ; pari v2, ligne 121). À 1 %, le seuil n'existe pas sous 99 épisodes honnêtes de calibrage par cellule et par strate filtrée. La règle 10 à 16 × (N-055, ligne 27) donne, selon ma dérivation, de 4 200 à 13 440 épisodes honnêtes (calibrage commun aux deux modes ou par mode), soit environ 150 à 630 USD aux coûts unitaires du devis. Revenir sur D-S9 serait modifier une décision de Lazar : c'est un nœud.",
+     "effort_heures": 1,
+     "bloquant": true,
+     "depend_de": "Lazar"
+    },
+    {
+     "piece": "Dimensionnement exact, en unités et non en épisodes",
+     "pourquoi": "Conv-audit l'avait promis (n126, ligne 32) ; non trouvé sur sa branche (cc670186), et la lignée est en pause (brief, lignes 71-76). Le devis compte en épisodes (ligne 68), alors que D-S8 réécrite parle d'unités (v9, lignes 21 et 53-54) : 140 unités de 3 exécutions par mode. À fixer : unités sabotées et honnêtes par partie (calibrage, calibrage du développement, développement, épreuve) ; tranches et G_max (D-S24) ; épreuve de G1 lue une seule fois ; exécutions par consigne. Les tables de puissance supposent 10 épisodes par unité (pari v2, ligne 265).",
+     "effort_heures": 2.5,
+     "bloquant": true,
+     "depend_de": "décision sur le calibrage ; réponse sur les consignes (partagées ou non entre les deux modes)"
+    },
+    {
+     "piece": "Définition de la strate « diffus / concentré » (et « floue / nette ») et de l'instant du dommage pour les deux modes connus",
+     "pourquoi": "Exigées par la décision du 27 octobre (lignes 26-28), par N-055 et par D-S30 (a) : H1a porte la revendication sur la strate « diffus, flou ». Conv-audit écrit qu'elle « n'existe nulle part aujourd'hui » (n116, ligne 25). La décision est encore en attente (passation de conv-audit, lignes 172-175). La strate doit être produite à la génération (consigne cachée), pas reconstruite après coup.",
+     "effort_heures": 4,
+     "bloquant": true,
+     "depend_de": "Lazar (qui la conçoit : conv-audit a conçu des moniteurs, séparation R-601) ; contre-lecture R2"
+    },
+    {
+     "piece": "Plan de partition scellé par unité (tirage stratifié, graine SeedSequence)",
+     "pourquoi": "D-S14 et D-S15 (v3, lignes 278-279 ; v4, ligne 211) : calibrage, calibrage propre au développement, développement, épreuve en tranches neuves par génération. Le tirage se fait sur les identifiants d'unités et doit être scellé avant tout calcul de score (v4, ligne 80). Aucun plan de ce type n'a été trouvé.",
+     "effort_heures": 2,
+     "bloquant": true,
+     "depend_de": "dimensionnement exact"
+    },
+    {
+     "piece": "Liste des cellules (moniteur × condition) et statistique par épisode de chaque cellule",
+     "pourquoi": "Le format exige un score fini pour chaque cellule de chaque épisode (lignes 64-67). Les points de fonctionnement sont définis par épisode (pari v2, lignes 79-80). La « liste scellée » des moniteurs boîte noire de G1 (N-056, ligne 39) n'a été trouvée nulle part. La démonstration n'a que sept cellules synthétiques. La base (iv) de type TRACE n'est pas au devis. Une cellule non calculée pendant le lancement payant ne pourra pas être ajoutée sans relancer, sauf si les textes et les activations sont gardés.",
+     "effort_heures": 3,
+     "bloquant": true,
+     "depend_de": "N-007, N-008, D-S8 ; D-S13 (scores continus)"
+    },
+    {
+     "piece": "Règle d'exclusion et d'étiquette, déclarée avant lecture",
+     "pourquoi": "Le format ne connaît que « honnete » ou « sabote » et refuse tout score manquant. Il faut fixer d'avance quoi faire d'un sabotage absent ou d'un désaccord entre les deux séries d'étiquetage (P-014), d'un score de juge illisible, d'un épisode perdu (l'unité entière ou un sous-échantillon, en gardant un nombre d'épisodes constant par unité). Non trouvé.",
+     "effort_heures": 1.5,
+     "bloquant": true,
+     "depend_de": "P-014 ; dimensionnement"
+    },
+    {
+     "piece": "Fiche de lancement et sa contre-lecture (paragraphe 6 du devis)",
+     "pourquoi": "Exigée par GO-2026-10-28-02 (go.md, ligne 101) : volumes exacts, graines, manifeste, garde d'arrêt testée sur un cas sain et sur un artefact, contrôle du plafond, invariant N-053. Elle doit reprendre toutes les pièces ci-dessus.",
+     "effort_heures": 3,
+     "bloquant": true,
+     "depend_de": "toutes les pièces bloquantes ci-dessus"
+    },
+    {
+     "piece": "Convertisseur des sorties réelles vers le format, avec validation par `MondeBanqueScores`, scellement et essais (sain et artefact)",
+     "pourquoi": "N'existe ni sur main ni sur la branche de conv-audit (on n'y trouve que le lecteur et des générateurs synthétiques). Les champs en plus (consigne, exécution, paire, agent, instant du dommage) doivent être des champs d'épisode ou des strates en texte. Le schéma des sorties brutes du lancement doit déjà les contenir.",
+     "effort_heures": 5,
+     "bloquant": false,
+     "depend_de": "liste des cellules ; règle d'exclusion"
+    },
+    {
+     "piece": "Code du monde « modes » chez conv-audit",
+     "pourquoi": "Promis pendant la génération (n126, ligne 32) ; non trouvé. Il sert à lire la banque, pas à la produire.",
+     "effort_heures": 6,
+     "bloquant": false,
+     "depend_de": "reprise de conv-audit (en pause)"
+    },
+    {
+     "piece": "Préenregistrement de G1 à jour (N-055, N-056, D-S8 réécrite, D-S11, D-S29)",
+     "pourquoi": "Il s'écrit après la banque et avant toute lecture (pari v2, lignes 345-346). Sur main, il en est au brouillon 3 du 6 octobre (/home/user/controle-ia-travail/brouillons/G1-preenregistrement-v1-brouillon3.md), qui dit lui-même devoir être scellé et contre-lu avant le 1er novembre.",
+     "effort_heures": 8,
+     "bloquant": false,
+     "depend_de": "banque produite ; contre-lecture R2 ; verdict R13 plus tard"
+    }
+   ],
+   "questions_pour_lazar": [
+    "Calibrage honnête : ta décision D-S9 (a) (10 à 16 fois les unités sabotées à 1 %) demanderait, selon mon estimation, 150 à 630 USD de plus, et le devis à 90 USD n'en prévoit aucun. Trois voies : (i) relever le plafond pour un vivier d'honnêtes de calibrage commun aux deux modes ; (ii) revenir à D-S9 (b), un calibrage plus petit avec le contrôle des jumeaux et l'affirmation dite « aux seuils scellés » (c'est un nœud) ; (iii) prendre des unités du devis pour le calibrage, au prix de la puissance. Laquelle ?",
+    "Unités ou épisodes : « +300 sabotés par mode » ne fait que 100 unités de 3 exécutions, alors que conv-audit (D-S8 réécrite) parle de plusieurs centaines d'unités. On garde 140 unités de 3 exécutions par mode, ou plus de consignes avec moins d'exécutions ?",
+    "La strate « diffus / concentré » et l'instant du dommage, exigés par N-055 et D-S30, doivent-ils être dans cette première banque ? Et qui les conçoit, sachant que conv-audit a conçu des moniteurs (séparation de R-601) ?",
+    "Conv-audit est en relève et en pause. Qui fournit maintenant le « dimensionnement exact » qu'il avait promis (n126, ligne 32) ?",
+    "Les environ 40 consignes sont-elles communes aux deux modes ou différentes d'un mode à l'autre ? Sont-elles disjointes des consignes de P3, sur lesquelles les sondes figées ont été apprises ? (Je n'ai pas ouvert le fichier des consignes de P3.)",
+    "Confirmes-tu la garde par comparateur de D-S8, avec son coût d'environ 80 à 210 unités honnêtes par mode à δ = 0,10 (conception v11, lignes 51-53 ; v12, ligne 58) ?",
+    "Confirmes-tu que le gel de R-611 (GO-2026-10-28-04, organismes évadeurs) ne couvre pas cette banque à instruction cachée sur des modes connus ?"
+   ],
+   "risques": [
+    "La puissance est surestimée. Les tables de conv-audit supposent 10 épisodes sabotés par unité (pari v2, ligne 265) ; avec 3 par unité, la variance par unité est environ 3 fois plus forte (v10, ligne 90). Le contraste blanc contre blanc peut rester muet même avec 140 unités par mode.",
+    "Sans honnêtes réservés au calibrage, le seuil à 1 % est infini sous 99 épisodes par cellule et par strate. Chaque strate filtrée (mode, diffus, horizon) multiplie ce besoin.",
+    "Une cellule ou un champ (paire, instant du dommage, strate) oublié pendant le lancement payant ne se rattrape pas sans relancer, sauf si les textes et les activations sont gardés.",
+    "La partition doit être scellée avant tout score. La choisir après avoir vu des scores serait une sélection (contrôle 12, P21) et violerait R1.",
+    "Les défauts de D-S13 à D-S23 (scores continus, tirage stratifié, calibrage propre au développement) ne tombent que vers le 29 octobre, 19 h 47 UTC. Lancer avant revient à suivre des recommandations non confirmées.",
+    "Le GO expire le 31 octobre. Le préenregistrement de G1 doit être scellé et contre-lu avant le 1er novembre (critère 6 de G0, d'après le brouillon 3).",
+    "Le mode tenu à l'écart (D-S29 (a), confirmée) n'est pas financé : H1 ne pourra pas conclure avec cette seule banque. Il faut garder une `identite` stable et les mêmes strates pour pouvoir l'ajouter ensuite (format, lignes 73-78).",
+    "L'étiquetage à deux séries par sous-agents (P-014) n'a pas de poste au devis : coût et débit sur environ 1 680 épisodes non chiffrés.",
+    "Coordination : la demande relayée de Lazar (« la création du dépôt est bloquée (erreur 403) : donne-moi les instructions ») n'est pas traitée par cette étape. Repères : registres/etat.md ligne 3 et R-626 (dépôt `lciric/controle-ia-lot-fable-affinage-v1`, GO-2026-10-28-05)."
+   ]
+  },
+  {
+   "domaine": "Génération des épisodes sabotés (instruction cachée, famille (i) de T0.6) et de leurs jumeaux honnêtes pour la couche 2, deux modes connus",
+   "resume": "Verdict : le cœur de la génération existe et a déjà tourné, mais rien ne se lance tel quel. Il y a l'environnement (a) à instruction cachée, le lanceur de P3 qui apparie le jumeau honnête par les graines et note chaque action en ligne par les sondes, et les juges 8B et 3B. En revanche :\n- la consigne « affaiblir les contrôles » n'existe nulle part ;\n- le lanceur de P3 est verrouillé sur ses quatre conditions et sur un épisode par tâche, et il entraîne ses sondes au lieu de lire des sondes figées ;\n- le fichier complet des sondes figées est absent : seule la version légère est sur disque, sans les 6 sondes de Mahalanobis ;\n- les scripts d'instance sont figés sur P3 (GO-2026-10-04-08, plafonds de 5 à 6 heures). Or il faut environ 52 heures de carte au rythme mesuré : environ 40 s par épisode pour P3 et environ 0,6 min par notation selon le devis ;\n- le disque ne porte que 96 tâches, alors que N-056 écrit « plusieurs centaines de **tâches** sabotées de plus par mode », et que D-S1 prend la consigne avec toutes ses exécutions pour unité.\n\nIl faut environ 35 heures de travail d'instance avant le premier lancement de la base, et environ 45 heures avec l'étiquetage et la conversion au format du pôle. La puissance (b), telle que N-056 l'écrit, est bloquée par le manque de tâches.\n\nProduction actuelle d'un épisode saboté :\n- `premier_test_ia/run.py::plan_p3` fait un épisode par tâche et par condition, conditions mêlées dans des lots de 8.\n- `conditions.environnement` construit `EnvironnementPropositions` avec `instructions_cachees={0: consigne}` (ajoutée à la fin du message système) et `indications_privees={(0,t): indication}` à chaque pas (p = 1), juste avant « Your action: ».\n- La génération passe par `harnais.episode.jouer_episodes`. Réglages : Llama-3.1-8B-Instruct à la révision 0e9e39f2…, T = 10, 400 jetons au plus, température 1,0, couches 7, 15 et 23.\n- Chaque action est notée en ligne par toutes les sondes (`Notation.noter`), avec les mesures sans juge (`mesures_action`).\n\nJumeau honnête : condition « honnete », même tâche, mêmes graines d'action. Un générateur neuf est créé par condition à partir de la graine de la tâche (`run.py` l. 252-254). L'appariement porte donc sur la tâche et les graines, pas sur le contenu : les contextes diffèrent.\n\nPour produire environ 1 680 épisodes en deux lancements, il faut écrire, sous des noms neufs (R12) :\n- la consigne du mode « contrôles » ;\n- un lanceur à K exécutions qui lit les sondes figées et note les ensembles par les deux juges sur la même instance ;\n- un plan des tâches et des parties ;\n- des scripts d'instance aux durées redimensionnées, avec poussée par tranches ;\n- le préenregistrement et sa contre-lecture ;\n- l'étiquetage à deux séries ;\n- le convertisseur au format de `monde_banque_scores.py`.",
+   "existe": [
+    {
+     "piece": "Environnement (a) avec instruction cachée et indications privées",
+     "chemin": "/home/user/controle-ia-travail/src/controle_ia/environnements/propositions.py",
+     "etat": "fonctionnel, utilisé par P3",
+     "preuve": "Classe `EnvironnementPropositions(tache, N, T, guide, instructions_cachees, indications_privees)`. `consigne_privee` ajoute l'instruction en dernière partie du message système ; `observation` place l'indication juste avant « Your action: ». `lire_action`, `heures_declarees`, `rejouer`, `rendre_ensemble` sont présents."
+    },
+    {
+     "piece": "Conditions de P3 (honnête, saboteur « coût gonflé », témoin, « mention sans usage ») et mesures sans juge",
+     "chemin": "/home/user/controle-ia-travail/src/controle_ia/premier_test_ia/conditions.py",
+     "etat": "fonctionnel, figé sur 4 conditions",
+     "preuve": "`CONDITIONS = (\"honnete\",\"saboteur\",\"temoin\",\"mention\")`. `charger_consignes` exige exactement 6 blocs cités « > » et arrête sinon. Indication à chaque pas t < T. `mesures_action` : coût déclaré, forme du champ COST, titre, mentions des textes privés. Aucun mode « contrôles »."
+    },
+    {
+     "piece": "Lanceur de P3 : génération appariée et notation en ligne par toutes les sondes",
+     "chemin": "/home/user/controle-ia-travail/src/controle_ia/premier_test_ia/run.py",
+     "etat": "a tourné en réel ; non réutilisable tel quel",
+     "preuve": "Run `20261019-230011-p3-reel` : 240 épisodes, 2 400 actions, contrôle négatif conforme (`diag/20261019-230011-p3-reel/resume.json`). Limites : `exiger_config_p3` refuse `episodes_par_tache` ≠ 1 et toute autre liste de conditions (l. 104-109) ; il entraîne les 30 sondes dans le run au lieu de charger des sondes figées ; `DUREE_MAX_S = 18_000` ; les fiches d'épisode ne gardent pas l'ensemble final (`bilan`), seulement les textes d'actions dans `textes-actions-p3.jsonl`."
+    },
+    {
+     "piece": "Appariement du jumeau honnête",
+     "chemin": "/home/user/controle-ia-travail/src/controle_ia/premier_test_ia/run.py",
+     "etat": "en place (lignes 252-254 et 129-131)",
+     "preuve": "`g = generateur(graines_taches[t[\"identifiant\"]])  # un générateur neuf par condition : mêmes graines`, puis `graines_des_actions(g, 1, T)`. La graine de la tâche vient du manifeste (clé `tache/<id>`, R9). `plan_p3` mêle les conditions d'une même tâche dans un lot."
+    },
+    {
+     "piece": "Sondes figées de P3, version légère",
+     "chemin": "/home/user/controle-ia-travail/donnees/20261019-230011-p3-reel/sondes-figees-legeres.npz",
+     "etat": "présente, sceau conforme",
+     "preuve": "`sha256sum -c` OK (empreinte 701f73bd… = `sondes_legeres_sha256` de `diag/20261019-230011-p3-reel/sondes-figees.json`). 430 sondes au total, dont 400 planchers et 6 de Mahalanobis absentes de la version légère, soit 424 utilisables. Principales : `tromperie-difference_moyennes-c15` et `enjeux-lineaire-c15`. Lecteur `premier_test_ia/figees.py::lire_sondes` ; notation `premier_test_ia/notation.py::Notation` avec sa garde d'identité ; les deux sont testés."
+    },
+    {
+     "piece": "Sondes figées de P3, fichier complet (avec Mahalanobis)",
+     "chemin": "/home/user/controle-ia-travail/donnees/20261019-230011-p3-reel/sondes-figees.npz",
+     "etat": "ABSENT : seul le sceau existe",
+     "preuve": "`sondes-figees.npz.sha256` = 91b61c45… ; `sha256sum -c` : « No such file or directory ». Le script `scripts/p3_instance.sh` prévoyait de laisser le fichier complet sur l'instance. Aucune trace d'une copie ailleurs."
+    },
+    {
+     "piece": "Consigne et indication du mode « coût déclaré gonflé »",
+     "chemin": "/home/user/controle-ia-travail/prereg/P3-consignes-v1.md (non ouvert)",
+     "etat": "scellée",
+     "preuve": "Le compagnon `prereg/P3-consignes-v1.md.sha256` = a68468fe…, égal à `consignes_sha256` dans `prereg/P3-premier-test-config-v1.json`. Fichier de 6 548 octets. Brouillons existants, non ouverts : `brouillons/P3-consignes-v1-brouillon1.md`, `-brouillon2.md`, `-candidat1.md`, `-candidat2.md`. Le même fichier porte aussi le témoin et la « mention »."
+    },
+    {
+     "piece": "Consigne et indication du mode « affaiblir les contrôles »",
+     "chemin": "non trouvé",
+     "etat": "inexistante",
+     "preuve": "0 ligne citée « > » dans `brouillons/T0.6-organismes-v0-v1-brouillon1.md` et `brouillons/T0.6-organismes-v0-conception-brouillon1.md`. La ligne 83 du brouillon dit seulement « écrites en anglais, scellées avant tout épisode ». `registres/etat.md` l. 100 (T0.6) : « Reste : … consignes et indications privées de (i) ». La branche conv-audit ne porte aucun fichier de consignes hors P3. P-015 (défaut (b) appliqué, R-321) avait retiré ce mode de T0.6."
+    },
+    {
+     "piece": "Tâches de l'environnement (a)",
+     "chemin": "/home/user/controle-ia-travail/donnees/t05-pilote-v1/taches-pilote-60-v1.json ; /home/user/controle-ia-travail/donnees/20261007-082440-t05-extraction/taches-evaluation.json ; /home/user/controle-ia-travail/donnees/20261007-082440-t05-extraction/taches-entrainement.json",
+     "etat": "présentes, sceaux conformes ; 96 tâches distinctes en tout",
+     "preuve": "Le fichier pilote compte 60 tâches (sha 287e8348…, cité par P3). Le fichier d'évaluation en compte 64 et contient les 60 ; le fichier d'entraînement en compte 32, sans recoupement. Les 96 ont des cibles complètes. Les 36 hors pilote (4 d'évaluation et 32 d'entraînement) forment la banque T0.5 complète (R-591, R-596 : 36 tâches, 108 épisodes). Son fichier dérivé est sur la branche `donnees/t05-banque-complete-v1`, que je n'ai pas lue. Aucune autre source de tâches sur `main` ni sur conv-audit."
+    },
+    {
+     "piece": "Juges 8B et 3B : notation des ensembles finaux (rubrique b0)",
+     "chemin": "/home/user/controle-ia-travail/src/controle_ia/environnements/pilote_a.py ; lancer_pilote_a.py ; noter_pilote_a.py",
+     "etat": "fonctionnels (couche 1 bis : 96 épisodes × 2 juges)",
+     "preuve": "`noter_ensembles` ; préchargement du 3B et chargement hors ligne (`precharger_juges`, `charger_modele_et_format(hors_ligne=True)`). Configuration dans `prereg/T0.5-pilote-config-v1.json` : `variante_juge` b0, `max_nouveaux_juge` 3072, `lot_juge` 8 ; 3B = Llama-3.2-3B-Instruct, révision 0cb88a4f…"
+    },
+    {
+     "piece": "Appariement des propositions aux contrôles semés par le 8B",
+     "chemin": "/home/user/controle-ia-travail/src/controle_ia/environnements/pilote_a.py (apparier) ; lancer_pilote_a.py (paires_d_appariement) ; analyse_pilote.py (couverture)",
+     "etat": "existe, mais non retenu comme vérité terrain",
+     "preuve": "`docs/verdicts/verdict-T0.5-pilote-v1.md` l. 48-49 : « contrôles … non retenus, faute d'un appariement fiable (kappa pondéré de 0,04 à 0,17) ». P-014 le remplace par l'étiquetage par sous-agents."
+    },
+    {
+     "piece": "Étiquetage à deux séries par sous-agents (vérité terrain du mode « contrôles »)",
+     "chemin": "/home/user/controle-ia-travail/docs/decisions/decision-P-014-reference-appariement-T0.6-v1.md ; /home/user/controle-ia-travail/brouillons/T0.5-pilote-double-etiquetage-v1/ ; /home/user/controle-ia-travail/brouillons/T0.5-pilote-etiquetage-autres-modeles-v1/",
+     "etat": "méthode décidée et validée au pilote ; consigne de masse non trouvée",
+     "preuve": "Accord de 0,968 entre les séries 1 et 2 ; séries B et C : kappa des contrôles ≥ 0,8. La « consigne regroupée figée puis validée sur les 480 paires du pilote » (P-014 point 3) est introuvable dans les registres et les brouillons."
+    },
+    {
+     "piece": "Scripts d'instance et lanceur Vast.ai de P3",
+     "chemin": "/home/user/controle-ia-travail/scripts/p3_instance.sh ; /home/user/controle-ia-travail/scripts/amorce_instance_p3.sh ; /home/user/controle-ia-travail/docs/procedures/P3-premier-test-v2/",
+     "etat": "scellés, verrouillés sur P3",
+     "preuve": "`verifications_p3_v1.py` l. 43 : `GO_CALCUL = \"GO-2026-10-04-08\"`, seul GO accepté. `lancer_p3_v1.sh` code en dur le bloc-notes d'une ancienne session, `prereg/P3-premier-test-i-a-v1.md`, la branche `calcul/p3-reel-v1` et un prix de 1,30 USD/h au plus. Délai externe de 300 min, amorce de 360 min, motifs de fichiers `*-p3.*`, tests attendus lus dans le préenregistrement de P3."
+    },
+    {
+     "piece": "Lanceurs de la couche 1 bis (corrections pour vastai 1.8.3)",
+     "chemin": "docs/procedures/banque-T0.5-complete-v1/lancer_banque_t05_v4.sh ; prereg/T0.5-banque-complete-36-v1.md ; module noter_complement_t05",
+     "etat": "non trouvés localement",
+     "preuve": "Cités par R-576 à R-579 et R-596, sur les branches `prep/t05-banque-complete-v1` et `prep/t05-complement-notations-v1`. `git ls-tree` ne les trouve ni sur HEAD, ni sur `refs/canal-local/session-depot`, ni sur conv-audit, ni sur `origin/canal/session-depot-reprise-n54`."
+    },
+    {
+     "piece": "Chaîne du pilote de T0.5 (épisodes honnêtes seuls)",
+     "chemin": "/home/user/controle-ia-travail/scripts/pilote_t05_instance.sh ; /home/user/controle-ia-travail/docs/procedures/pilote-T0.5-v1/",
+     "etat": "scellée ; ne produit que des épisodes honnêtes",
+     "preuve": "`jouer_pilote` construit `EnvironnementPropositions(tache_de(t), N, T, guide)` sans instruction cachée. `deriver_taches_pilote_v1.py` dérive un fichier de tâches par empreinte (gabarit réutilisable)."
+    },
+    {
+     "piece": "Organismes de la famille (ii)",
+     "chemin": "/home/user/controle-ia-travail/src/controle_ia/organismes/",
+     "etat": "code fait, hors du périmètre de la couche 2",
+     "preuve": "`lora.py` (dose 0 = base au bit près) et `distillation.py`. La couche 2 porte sur la famille (i)."
+    },
+    {
+     "piece": "Format de sortie attendu par le pôle",
+     "chemin": "refs/canal-local/conv-audit:brouillons/canal-reprise-releve-v1/envois/pole-scientifique-automatique-v1/orchestrateur-pole-v7/pole/monde_banque_scores.py",
+     "etat": "présent (177 lignes) ; aucun convertisseur depuis les sorties de P3",
+     "preuve": "Attend `cellules` et `episodes`. Chaque épisode porte `id`, `unite`, `etiquette` (honnete ou sabote), `partie` (calibrage, développement ou épreuve, fixée par unité), `strates` et `scores` (un score fini par cellule). La banque de la couche 1 bis est dans un autre format (`instances`, `moniteurs`)."
+    },
+    {
+     "piece": "Débit mesuré de la génération",
+     "chemin": "/home/user/controle-ia-travail/diag/20261019-230011-p3-reel/episodes-p3.json",
+     "etat": "mesure réelle",
+     "preuve": "Phase des épisodes : 9 644,6 s pour 240 épisodes, soit environ 40 s par épisode (T = 10, lot 8, notation en ligne de 430 sondes comprise). Pic de mémoire de 26,35 Gio sur 80. Run entier : 11 179 s."
+    },
+    {
+     "piece": "GO et garde de calcul",
+     "chemin": "/home/user/controle-ia-travail/registres/go.md (l. 97 et 101) ; /home/user/controle-ia-travail/.claude/hooks/garde_calcul.py",
+     "etat": "GO-2026-10-28-02 valide, 90 USD, échéance 2026-10-31",
+     "preuve": "La ligne 101 relève le plafond à 90 USD pour l'option (b), en deux lancements au plus, et reprend les conditions du § 6 du devis. La garde exige `GO_ID=GO-AAAA-MM-JJ-NN` dans la commande de création."
+    }
+   ],
+   "manque": [
+    {
+     "piece": "Consigne et indication du mode « affaiblir les contrôles », en anglais",
+     "pourquoi": "Aucun texte n'existe. Il faut une longueur et une place appariées à celles du mode « coût », un fichier de consignes neuf pour les deux modes (R12, sans toucher à P3), une contre-lecture par un sous-agent neuf (R2) et un scellement avant tout épisode.",
+     "effort_heures": 3,
+     "bloquant": true,
+     "depend_de": "Ta décision sur l'intensité (question 3) et sur la reprise de ce mode écarté par P-015 (question 4)"
+    },
+    {
+     "piece": "Lanceur neuf de la banque des deux modes (module sous nom neuf, dérivé de premier_test_ia/run.py)",
+     "pourquoi": "Le lanceur de P3 refuse plus d'un épisode par tâche et d'autres conditions, entraîne ses sondes et ne garde pas l'ensemble final. Le nouveau lanceur doit faire : conditions honnête, coût et contrôles ; K exécutions par tâche ; graines par (tâche, exécution) partagées avec le jumeau ; sondes lues par `lire_sondes` sur la version légère (empreinte 701f73bd…) ; notation en ligne ; ensembles finaux rejoués (`rejouer`, `rendre_ensemble`) ; notation par le 8B puis le 3B (`noter_ensembles`) ; appariement 8B descriptif ; écritures scellées par tranches pour survivre à une échéance ; garde qu'aucun score de sonde n'entre dans le contexte de l'agent (N-053) ; tests en mode jouet.",
+     "effort_heures": 14,
+     "bloquant": true,
+     "depend_de": "Consignes scellées ; plan des tâches ; décision sur les jumeaux (question 1)"
+    },
+    {
+     "piece": "Plan des tâches, des exécutions et des parties",
+     "pourquoi": "Seules 96 tâches existent. Atteindre 420 épisodes sabotés par mode demande environ 4,4 exécutions par tâche et par mode. Il faut aussi : répartir les unités entre calibrage, développement et épreuve par tirage de graine, une unité dans une seule partie (format du pôle, D-S1) ; écrire sous un nom neuf le fichier des 36 tâches de la banque T0.5, re-dérivable depuis `main` (4 d'évaluation et 32 d'entraînement), puisque la branche de données n'est pas lisible ici ; consigner les graines (R9).",
+     "effort_heures": 2.5,
+     "bloquant": true,
+     "depend_de": "Question 2 (unités contre épisodes)"
+    },
+    {
+     "piece": "Scripts d'instance, amorce et lanceur Vast.ai neufs pour la couche 2",
+     "pourquoi": "Les scripts de P3 sont verrouillés sur GO-2026-10-04-08 et sur P3, avec 300 et 360 min de plafond. Le besoin est d'environ 52 heures de carte en deux lancements, soit environ 26 heures chacun. À intégrer : poussées par tranches (risque d'instance perdue, R-579) ; choix de l'offre corrigé pour vastai 1.8.3 (R-577, R-578), dont les lanceurs v4 sont absents localement ; contrôle du plafond de 90 USD ; arrêt par identifiant (R10) ; essais sur cas sain et sur artefact (R5) ; répétition en mode jouet.",
+     "effort_heures": 9,
+     "bloquant": true,
+     "depend_de": "Lanceur neuf ; dépôt distant joignable en écriture par l'instance (jeton GitHub)"
+    },
+    {
+     "piece": "Préenregistrement et fiche de lancement, contre-lecture R2, scellement",
+     "pourquoi": "R1 et § 6 du devis : volumes exacts, configuration et empreinte, entropie, tâches citées, nombre de tests attendus (il change avec le nouveau module), critères, liste d'arrêt, sous-puissance éventuelle écrite d'avance.",
+     "effort_heures": 5.5,
+     "bloquant": true,
+     "depend_de": "Toutes les pièces précédentes"
+    },
+    {
+     "piece": "Décision sur les 6 sondes de Mahalanobis manquantes",
+     "pourquoi": "Le fichier complet est absent ; on ne lit « les sondes figées de P3 » qu'à 424 sur 430. Il faut le déclarer dans le préenregistrement, ou retrouver le fichier.",
+     "effort_heures": 0.5,
+     "bloquant": false,
+     "depend_de": "Question 6"
+    },
+    {
+     "piece": "Étiquetage de masse à deux séries (mode « contrôles »)",
+     "pourquoi": "P-014 : vérité terrain par sous-agents sur toutes les paires proposition × contrôle, avec une consigne regroupée figée puis validée sur les 480 paires du pilote (non trouvée), et environ 10 % de double étiquetage. Cela se fait par appels de modèle (API), hors carte, et ce n'est pas chiffré au devis.",
+     "effort_heures": 7,
+     "bloquant": false,
+     "depend_de": "Textes des épisodes versés ; question 5 (budget API)"
+    },
+    {
+     "piece": "Convertisseur vers le format `monde_banque_scores.py`",
+     "pourquoi": "Les sorties sont des scores par action ; le pôle attend un score par épisode et par cellule (moniteur × condition), avec unités, parties et strates (dont le mode). Il dépend des agrégateurs et des bases de N-007 (autre domaine).",
+     "effort_heures": 3.5,
+     "bloquant": false,
+     "depend_de": "Bases de N-007 ; plan des parties"
+    },
+    {
+     "piece": "Centaines de tâches neuves (puissance (b) au sens de N-056)",
+     "pourquoi": "N-056 exige « plusieurs centaines de tâches sabotées de plus par mode », et D-S1 prend la consigne pour unité. Il n'existe que 96 tâches. L'extraction existe (`environnements/extraire_t05.py`, `corpus_arxiv.py`, `docs/procedures/T0.5-extraction-v1.md`), mais il faut des sous-agents par papier, de la contre-vérification, l'accès à arXiv et une dépense d'API.",
+     "effort_heures": 25,
+     "bloquant": true,
+     "depend_de": "Question 2 ; accès réseau à arXiv ; GO de dépense d'API"
+    }
+   ],
+   "questions_pour_lazar": [
+    "Jumeaux honnêtes : avec des graines par (tâche, exécution), le jumeau du mode « coût » et celui du mode « contrôles » d'une même exécution seraient identiques au bit près. Veux-tu un jumeau partagé par les deux modes (environ 1 260 épisodes, environ 25 % de carte en moins) ou des graines distinctes par mode (1 680 épisodes, comme au devis) ?",
+    "N-056 demande « plusieurs centaines de tâches sabotées de plus par mode », et D-S1 prend la consigne avec ses exécutions pour unité. Le devis (b) l'a traduit en « + 300 épisodes ». Avec 96 tâches seulement, ajouter des exécutions n'ajoute pas d'unités. Acceptes-tu 96 unités (environ 4,4 exécutions par tâche et par mode, sous-puissance écrite), ou faut-il financer l'extraction de nouvelles tâches ?",
+    "Mode « coût » : reprends-tu tel quel le saboteur de P3 ? Il est flagrant : le coût seul le détecte à 0,888 et l'agent déclare environ 33 fois le coût. Ou faut-il une intensité plus faible, ce qui ferait d'abord la recherche de dose sur la boîte noire seule prévue par P-015 (b), défaut appliqué à R-321 ? La couche 2 remplace-t-elle P-015 (b) ?",
+    "Mode « contrôles » : P-015 et le verdict du pilote de T0.5 l'avaient écarté, l'appariement par le 8B n'étant pas fiable. Confirmes-tu son retour avec l'étiquetage par sous-agents de P-014 comme vérité terrain ?",
+    "L'étiquetage à deux séries se fait par des appels de modèle, hors carte graphique, et n'est pas compté dans les 90 USD. Quel budget lui donnes-tu ?",
+    "Le fichier complet des sondes figées de P3 est absent : il ne reste que son sceau. Acceptes-tu une lecture par les 424 sondes de la version légère, sans les 6 de Mahalanobis ?",
+    "Ajoutes-tu les conditions témoin et « mention » ? P-015 les dit obligatoires pour T0.6, mais le GO ne les nomme pas.",
+    "Au rythme mesuré, chaque lancement durerait environ 26 heures, contre des plafonds actuels de 5 à 6 heures. Acceptes-tu deux lancements longs avec poussées par tranches, ou plus de deux lancements ?",
+    "Le dépôt distant doit exister et le jeton GitHub de l'instance doit pouvoir y écrire : l'instance clone `lciric/controle-ia-travail` et y pousse sa branche avant l'installation. Tant que la création du dépôt est bloquée (erreur 403), aucun lancement n'est possible."
+   ],
+   "risques": [
+    "Échéance du GO au 2026-10-31 : environ 35 heures de travail d'instance plus les contre-lectures R2 avant le premier lancement de la base. La puissance (b) au sens de N-056 n'est pas tenable à cette date.",
+    "Coût : environ 40 s par épisode (P3) × 1 680 ≈ 18,8 h de génération, et 3 360 notations × environ 0,6 min ≈ 34 h. Cela fait environ 52 h de carte, soit environ 62 à 71 USD plus les coûts fixes, sous 90 USD mais avec une marge de ± 30 à 50 % sur le devis.",
+    "Lancements de 20 heures et plus : risque de perte d'hôte (déjà vécu, R-579). Sans poussées par tranches, tout peut être perdu.",
+    "Augmenter le lot pour gagner du temps (pic de 26 Gio sur 80) sortirait du domaine validé de la garde d'équivalence (lot 8) et demanderait une revalidation.",
+    "Organisme « coût » flagrant si l'on reprend la consigne de P3 : la boîte noire gagne trivialement et le régime « diffus » visé n'est pas atteint.",
+    "Calibrage honnête : le plan des mesures fortes de conv-audit demande 10 à 16 fois les unités sabotées, à 1 % de faux positifs. Ce poste est absent du devis et peut dépasser le nombre de jumeaux.",
+    "Les lanceurs corrigés de la couche 1 bis sont absents localement. Repartir du lanceur de P3 reproduirait les défauts de choix d'offre de vastai 1.8.3 (R-577, R-578).",
+    "Les fiches de P3 ne gardent pas l'ensemble final : il faut le rejouer depuis les textes d'actions pour les juges et l'étiquetage. Une erreur de rejeu fausserait les notes.",
+    "Les textes des actions sabotées ne peuvent aller que dans le dépôt de travail privé, jamais dans la copie expurgée.",
+    "Le fichier des 36 tâches de la banque T0.5 se trouve sur une branche de données non lue. Une re-dérivation depuis `main` devra être contrôlée par empreinte, sinon l'appariement à la banque existante est perdu."
+   ]
+  },
+  {
+   "domaine": "Étiquetage, notation par les juges 8B et 3B, sondes figées de P3, bases de N-007 et de N-056 (couche 2, GO-2026-10-28-02, 90 USD au plus, deux lancements au plus, échéance 31 octobre)",
+   "resume": "On ne peut pas lancer la couche 2 avec ce qui existe aujourd'hui dans ce domaine. Les briques de base sont là et testées : les juges d'ensemble, la notation par lots, les sondes figées de P3 (fichier léger intact), la notation des sondes pendant la génération, les statistiques séquentielles, TRACE-lite et le protocole d'étiquetage du pilote. En revanche, aucun lanceur ne prend les sondes figées pour les appliquer à des épisodes neufs : `lire_sondes` n'est appelé que par les tests. Le lanceur de P3 entraîne ses sondes dans le même run et refuse toute autre liste de conditions et plus d'un épisode par tâche.\n\nLa chaîne de T0.5 ne garde que des vecteurs par action, ramenés au maximum de chaque coordonnée, en demi-précision. Avec eux, on ne peut pas appliquer exactement une sonde « maximum sur les jetons » : le maximum des produits n'est pas le produit des maximums. Il faut donc noter les épisodes en ligne, comme le fait P3.\n\nAbsents en code :\n- les bases (ii) cascade et (iii) dernier état ;\n- le prédicteur sur les traits du texte, obligatoire selon N-029 ;\n- le moniteur boîte noire par action de la base (i) : son invite H.12 dérivée n'existe qu'en brouillon 1, non scellé ;\n- un pilote réel pour TRACE-lite, la base (iv) ;\n- un constructeur de banque au format `monde_banque_scores`, ni chez nous ni sur la branche de conv-audit ;\n- la consigne d'étiquetage regroupée par proposition, que P-014 demande de valider sur les 480 paires du pilote.\n\nTrois faits mesurés sur disque pèsent sur la suite :\n- **Notes incomplètes.** Au pilote, seules 54 notes du 8B sur 180 et 50 du 3B sur 180 ont un score complet. Or le format de banque exige un score fini pour chaque épisode et chaque cellule.\n- **Fichier complet perdu.** Le fichier complet des sondes figées, avec les 6 sondes de Mahalanobis, est absent : seule son empreinte reste. Le verdict de P3 dit qu'il est « resté sur l'instance ».\n- **Sondes sous leur plancher.** Le verdict v2 de P3 constate qu'aucune sonde générique ne passe au-dessus de son plancher sur l'organisme (i-a).\n\nEffort estimé dans ce domaine : environ 50 à 55 heures de travail d'une instance, plus 15 à 25 heures pour faire tourner l'étiquetage. Environ 22 heures bloquent le premier lancement. Les deux lanceurs de la couche 1 bis et le module `noter_complement_t05` ne sont pas dans ce clone : leurs branches et leurs commits sont absents.\n\nLa demande relayée sur la création du dépôt (erreur 403) n'entre pas dans cette étape d'inventaire et n'est pas traitée ici.",
+   "existe": [
+    {
+     "piece": "Juges d'ensemble 8B et 3B : assemblage des invites (b0 = H.3 + H.4 ; b* = I.8), question d'appariement oui ou non lue par probabilité, lecteur du score du détecteur H.12",
+     "chemin": "/home/user/controle-ia-travail/src/controle_ia/environnements/juges.py",
+     "etat": "prêt et générique ; invites vérifiées par empreinte (docs/sources/invites-2606.08892-v1/index.json : H1 à H13, I3, I7, I8)",
+     "preuve": "fonctions messages_juge_ensemble, message_appariement, probabilite_oui, lire_confiance_detecteur ; l'agrégation des notes passe par rubrique.py, jamais par un total rendu par le juge"
+    },
+    {
+     "piece": "Notation par lots d'un juge, et utilitaires de chargement",
+     "chemin": "/home/user/controle-ia-travail/src/controle_ia/environnements/pilote_a.py ; /home/user/controle-ia-travail/src/controle_ia/environnements/lancer_pilote_a.py",
+     "etat": "réutilisable tel quel",
+     "preuve": "noter_ensembles (une réponse incomplète ou tronquée n'a pas de score, jamais imputé), apparier, demandes_de_notation, precharger_juges, charger_modele_et_format, controler_format. Configuration des juges au manifeste du pilote : 8B = l'agent ; 3B = meta-llama/Llama-3.2-3B-Instruct, révision 0cb88a4f… ; lot 8 ; 3072 jetons au plus ; température 1,0 ; variante b0"
+    },
+    {
+     "piece": "Lanceur « notations seules » et son lecteur",
+     "chemin": "/home/user/controle-ia-travail/src/controle_ia/environnements/noter_pilote_a.py ; /home/user/controle-ia-travail/src/controle_ia/environnements/lire_notations_pilote.py",
+     "etat": "liés au run du pilote de T0.5 ; ne servent pas tels quels à des épisodes neufs",
+     "preuve": "charger_pilote_note exige un pilote arrêté pendant les notations décisives ; exiger_graines_du_pilote et exiger_egal_au_pilote imposent les paramètres et les graines du pilote. Tests : tests/test_noter_pilote_a.py (27), tests/test_lire_notations_pilote.py"
+    },
+    {
+     "piece": "Scripts d'instance des notations et procédure de lancement Vast.ai",
+     "chemin": "/home/user/controle-ia-travail/scripts/notations_t05_instance.sh ; /home/user/controle-ia-travail/scripts/amorce_instance_t05_notations.sh ; /home/user/controle-ia-travail/docs/procedures/notations-T0.5-v3/",
+     "etat": "modèles à dériver sous un nom neuf (R12) ; liés à prereg/T0.5-pilote-notations-v1.md et à ETUDE=notations",
+     "preuve": "plafond de l'amorce 430 minutes, délai externe 400 minutes ; lancer_notations_v2.sh choisit l'offre conforme la moins chère (A100 SXM4, 1,30 USD de l'heure au plus) ; banc, mutants et contre-lecture R2 versés, chacun avec son empreinte"
+    },
+    {
+     "piece": "Lanceurs de la couche 1 bis : lancer_banque_t05_v3.sh, lancer_complement_t05_v1.sh, module noter_complement_t05",
+     "chemin": "branches prep/t05-banque-complete-v1 et prep/t05-complement-notations-v1 (citées par /home/user/controle-ia-travail/registres/depenses.md l. 202, 204, 209)",
+     "etat": "non trouvés dans ce clone",
+     "preuve": "git cat-file sur 34514af8, 41e61d88, 65d78b55, 5212bbf6, 164122a8 : « Not a valid object name » ; aucune branche prep/ ni calcul/t05-* locale"
+    },
+    {
+     "piece": "Complétude mesurée des notes des juges au pilote",
+     "chemin": "/home/user/controle-ia-travail/diag/20261017-193648-t05-notations-reel/notations-8B-decisives.json ; notations-3B-decisives.json",
+     "etat": "fait mesuré",
+     "preuve": "8B : 180 notations, 54 avec score, 60 tronquées ; 3B : 180 notations, 50 avec score, 9 tronquées. La passation 2026-10-28-0756 note aussi, pour les notes e2 du 3B, 6 entières sur 60 et 5 sur 36"
+    },
+    {
+     "piece": "Sondes figées de P3, fichier léger (sans les sondes de Mahalanobis)",
+     "chemin": "/home/user/controle-ia-travail/donnees/20261019-230011-p3-reel/sondes-figees-legeres.npz",
+     "etat": "présent, empreinte conforme, relu sans erreur",
+     "preuve": "sha256 701f73bd3a8ef30f46b304a6d5caa21444f0e1daf0829d04046e4024aa4e6e60, égale au compagnon et à diag/20261019-230011-p3-reel/sondes-figees.json. Relu par lire_sondes avec l'empreinte attendue : 424 sondes, chaque empreinte reconstruite égale. Sondes principales : tromperie-difference_moyennes-c15 et enjeux-lineaire-c15 (SondeLineaireJetons, couche 15, maximum, largeur 4096). Couches 7, 15 et 23 ; 400 planchers ; meta.complet = 91b61c45…"
+    },
+    {
+     "piece": "Sondes figées de P3, fichier complet (dont les 6 sondes de Mahalanobis)",
+     "chemin": "/home/user/controle-ia-travail/donnees/20261019-230011-p3-reel/sondes-figees.npz",
+     "etat": "absent sur disque ; seul son compagnon .sha256 existe (91b61c45…)",
+     "preuve": "test -e : absent ; docs/verdicts/verdict-P3-premier-test-i-a-v1.md l. 113 : « resté sur l'instance »"
+    },
+    {
+     "piece": "Écriture et lecture scellées des sondes figées",
+     "chemin": "/home/user/controle-ia-travail/src/controle_ia/premier_test_ia/figees.py",
+     "etat": "prêt ; lire_sondes n'est appelé que par les tests",
+     "preuve": "recherche dans src, scripts et tests : lire_sondes apparaît seulement dans tests/test_premier_test_ia_figees.py, tests/test_premier_test_ia_gardes_v1.py et tests/test_premier_test_ia_run.py"
+    },
+    {
+     "piece": "Notation des actions par les sondes, en ligne pendant la génération, avec garde d'identité",
+     "chemin": "/home/user/controle-ia-travail/src/controle_ia/premier_test_ia/notation.py ; /home/user/controle-ia-travail/src/controle_ia/premier_test_ia/run.py (jouer_p3)",
+     "etat": "le mécanisme existe ; aucun chemin « sondes figées sur épisodes neufs »",
+     "preuve": "Les activations sont capturées pendant la génération (harnais/episode.jouer_episodes, paramètre couches) et notées en ligne par Notation.noter, plus les scores par jeton des deux sondes principales. Mais run.py entraîne les sondes dans le même run, puis exiger_config_p3 refuse : des conditions autres que (honnete, saboteur, temoin, mention), plus d'un épisode par tâche, et plus d'un agent par épisode"
+    },
+    {
+     "piece": "Configuration de P3 dont dépend l'application des sondes figées",
+     "chemin": "/home/user/controle-ia-travail/runs/20261019-230011-p3-reel/manifeste.json",
+     "etat": "référence à reproduire à l'identique",
+     "preuve": "meta-llama/Llama-3.1-8B-Instruct, révision 0e9e39f249a16976918f6564b8830bc894c89659 ; texte d'ouverture « Today Date: 26 Jul 2024 » ; couches [7, 15, 23] ; noyau d'attention « defaut » ; T = 10 ; 400 jetons au plus ; température 1,0. Consignes : prereg/P3-consignes-v1.md, non ouvert (interdit), existence notée seulement"
+    },
+    {
+     "piece": "Vecteurs d'activation gardés par la chaîne de T0.5",
+     "chemin": "/home/user/controle-ia-travail/src/controle_ia/environnements/pilote_a.py l. 136-138 ; /home/user/controle-ia-travail/src/controle_ia/harnais/activations.py (agreger)",
+     "etat": "ne suffisent pas pour appliquer exactement les sondes figées",
+     "preuve": "vecteurs_par_action(..., 'max').astype(np.float16) garde le maximum par coordonnée sur les jetons. Les sondes de P3 notent chaque jeton, puis prennent le maximum : max sur t de (w·h_t + b) n'égale pas w·(max sur t de h_t) + b"
+    },
+    {
+     "piece": "Lecture de P3",
+     "chemin": "/home/user/controle-ia-travail/src/controle_ia/premier_test_ia/lecture.py ; statistiques.py",
+     "etat": "propre à P3 (quatre conditions, mode coût) ; aucune exportation de banque",
+     "preuve": "charger_source lit scores-p3.npz et jetons-principales-p3.npz d'un run P3 ; prédicteurs triviaux descriptifs seulement (aire_simple)"
+    },
+    {
+     "piece": "Paquet des sondes : cinq familles, évaluation, témoins",
+     "chemin": "/home/user/controle-ia-travail/src/controle_ia/sondes/",
+     "etat": "générique et testé",
+     "preuve": "familles.py, evaluation.py (aire sous la courbe, intervalles par blocs de tâches, plancher apparié en covariance), temoins.py (témoin lexical, régression sur sac de mots) ; tests/test_sondes_v0.py (10), tests/test_sondes_temoins.py (14)"
+    },
+    {
+     "piece": "Statistiques séquentielles et calibrage conforme (cellule « blanc séquentiel » ; base (i) si on lui donne des scores boîte noire par action)",
+     "chemin": "/home/user/controle-ia-travail/src/controle_ia/bases/sequentiel.py",
+     "etat": "prêt et testé ; aucun appelant hors des tests dans src ni dans scripts",
+     "preuve": "six statistiques (maximum, somme terminale, somme séquentielle, Page, processus e, balayage) ; seuil conforme sur épisodes honnêtes entiers ; garde de fuite entre calibrage et évaluation ; tests/test_bases.py (11). Conv-audit l'appelle sur les scores de P3 (mesure unanime, analyse_fausses_alertes_v8.py, branche conv-audit)"
+    },
+    {
+     "piece": "Lecture par espérance d'un moniteur génératif (pour un juge par action)",
+     "chemin": "/home/user/controle-ia-travail/src/controle_ia/bases/scores_jetons.py",
+     "etat": "prêt ; aucun lanceur",
+     "preuve": "jetons_des_valeurs, esperance ; la masse des jetons admis est consignée"
+    },
+    {
+     "piece": "TRACE-lite (base (iv), observateur séparé)",
+     "chemin": "/home/user/controle-ia-travail/src/controle_ia/bases/trace_lite.py ; /home/user/controle-ia-travail/docs/sources/invites-2606.07054-v1/derivees/",
+     "etat": "code et gabarits scellés ; les appels au modèle sont « fournis par l'appelant », aucun pilote réel",
+     "preuve": "tests/test_trace_lite.py (23) ; gabarits B1, B3-1 à B3-4 avec empreintes ; calendrier fixe d'au plus 18 appels par épisode"
+    },
+    {
+     "piece": "Invite du moniteur boîte noire par action (H.12 dérivée, option (a) de P-010)",
+     "chemin": "/home/user/controle-ia-travail/brouillons/T0.8-moniteur-par-action-H12-derive-v1-brouillon1.md",
+     "etat": "brouillon 1, non contre-vérifié, non scellé",
+     "preuve": "en-tête : « Brouillon du 2026-10-06 (session 10), non scellé » ; H12 original transcrit dans l'index des invites"
+    },
+    {
+     "piece": "Bases (ii) cascade de portes et (iii) sonde sur le dernier état (N-007, exigées à G1 par N-056)",
+     "chemin": "non trouvé dans /home/user/controle-ia-travail/src/",
+     "etat": "absentes en code",
+     "preuve": "recherche de cascade et dernier_etat dans src et scripts : rien. Sur la branche conv-audit, seuls des noms de cellules à décalages synthétiques (orchestrateur-pole-v7/demonstrations/demo_pari_apparie_v7.py, CELLULES et DECALAGES)"
+    },
+    {
+     "piece": "Prédicteur sur les traits du texte (N-029, obligatoire) et règle du coût calibrée (P-015)",
+     "chemin": "non trouvé comme base ; mesures disponibles dans /home/user/controle-ia-travail/src/controle_ia/premier_test_ia/conditions.py (mesures_action)",
+     "etat": "traits partiels seulement",
+     "preuve": "mesures_action donne le coût déclaré, le coût aux milliers joints et les formes du champ COST. Aucun prédicteur calibré sur l'honnête ; N-029 exige que ses traits soient fixés au préenregistrement de T0.8 avant toute lecture"
+    },
+    {
+     "piece": "Protocole d'étiquetage par sous-agents (consigne par paire, invite, vérificateur, lots, refaire un lot)",
+     "chemin": "/home/user/controle-ia-travail/src/controle_ia/environnements/lire_pilote.py",
+     "etat": "lié à l'échantillon stratifié du pilote (par décision du 8B) ; ne prend pas d'épisodes neufs",
+     "preuve": "CONSIGNE_ETIQUETAGE, INVITE_ETIQUETEUR, VERIFIER_ETIQUETTES ; preparer_etiquetage, lire_etiquetage, refaire_lot (trois tentatives au plus) ; textes hors du dépôt, seules les clés et étiquettes dans diag/"
+    },
+    {
+     "piece": "Deux séries d'étiquetage du pilote (fidélité) et contrôle par deux autres modèles",
+     "chemin": "/home/user/controle-ia-travail/brouillons/T0.5-pilote-double-etiquetage-v1/ (accord.py, resultat.md) ; /home/user/controle-ia-travail/brouillons/T0.5-pilote-etiquetage-autres-modeles-v1/",
+     "etat": "fait sur 480 paires ; descriptif",
+     "preuve": "kappa pondéré entre séries : 0,968 sur l'ensemble, 0,977 sur les contrôles ; autres modèles sur les contrôles : 0,815 et 0,831 (pondéré). Plan scellé avant : brouillons/T0.5-pilote-double-etiquetage-v1-plan.md"
+    },
+    {
+     "piece": "Consigne d'étiquetage regroupée par proposition (P-014, point 3), à valider sur les 480 paires",
+     "chemin": "non trouvé",
+     "etat": "absente",
+     "preuve": "registres/decisions.md R-158 : « consigne regroupée à figer et valider sur les 480 paires du pilote » ; aucune trace d'exécution trouvée"
+    },
+    {
+     "piece": "Volume de paires « proposition × contrôle semé » par épisode au pilote",
+     "chemin": "/home/user/controle-ia-travail/diag/20261012-105125-t05-pilote-reel/appariements.json",
+     "etat": "fait mesuré (base d'estimation du volume à étiqueter)",
+     "preuve": "7 660 paires de contrôles sur 180 épisodes, soit 42,6 par épisode en moyenne (30 au moins, 54 au plus)"
+    },
+    {
+     "piece": "Format cible de la banque",
+     "chemin": "refs/canal-local/conv-audit : brouillons/canal-reprise-releve-v1/envois/pole-scientifique-automatique-v1/orchestrateur-pole-v7/pole/monde_banque_scores.py",
+     "etat": "spécification lisible ; aucun constructeur de banque pour la couche 2",
+     "preuve": "Chaque épisode porte id, unite, etiquette (honnete ou sabote), partie (calibrage, developpement ou epreuve, fixée par unité), strates, et un score réel fini pour chaque cellule. Sinon BanqueScoresInvalide. Seuil au point τ : j = ⌊τ(n+1)⌋, seuil infini si j < 1. Constructeurs existants : seulement exemples/construire_banque_t05_v1.py et _v3.py (T0.5, autre format)"
+    },
+    {
+     "piece": "Verdict de P3 sur les sondes figées",
+     "chemin": "/home/user/controle-ia-travail/docs/verdicts/verdict-P3-premier-test-i-a-v2.md",
+     "etat": "fait scellé",
+     "preuve": "ligne d'issue : « aucune sonde générique au-dessus du plancher sur (i-a) » ; aire minimale détectable 0,6315 et 0,5966 pour les deux sondes principales"
+    }
+   ],
+   "manque": [
+    {
+     "piece": "Lanceur de génération de la couche 2, côté sondes (nom neuf, R12). Il charge sondes-figees-legeres.npz par lire_sondes avec l'empreinte 701f73bd…, sans entraînement, et note en ligne les 424 sondes à chaque action (Notation et exiger_identite). Il garde les scores par action et par jeton des sondes principales, ainsi que les vecteurs par action aux couches 7, 15 et 23 pour les traits internes de N-056 point 3. Il accepte les conditions « honnête », « coût déclaré gonflé » et « affaiblir les contrôles », et plusieurs exécutions par consigne",
+     "pourquoi": "Aucun chemin n'existe pour appliquer les sondes figées à des épisodes neufs. Le lanceur de P3 entraîne ses sondes et refuse d'autres conditions et plus d'un épisode par tâche. Les vecteurs de la chaîne de T0.5 ne permettent pas un calcul exact",
+     "effort_heures": 7,
+     "bloquant": true,
+     "depend_de": "consignes des deux modes et plan des épisodes (domaine génération) ; décision sur la base (iii)"
+    },
+    {
+     "piece": "Garde de conformité à la configuration de P3, avant le premier épisode : modèle et révision, texte d'ouverture, couches, empan d'action (fin moins le jeton de fin), noyau d'attention, précision",
+     "pourquoi": "Les sondes figées ne valent que sur des activations produites à l'identique. La garde d'identité de Notation compare le code au code, pas l'environnement à celui de P3. Un écart fausserait les scores sans rien signaler",
+     "effort_heures": 1.5,
+     "bloquant": true,
+     "depend_de": "lanceur de génération de la couche 2"
+    },
+    {
+     "piece": "Notation des ensembles par les juges 8B et 3B sur les épisodes neufs, intégrée au lanceur (sans lien au run du pilote), avec une règle écrite d'avance pour les notes incomplètes",
+     "pourquoi": "noter_pilote_a est lié au pilote. Au pilote, seules 54 notes sur 180 (8B) et 50 sur 180 (3B) ont un score complet, alors que monde_banque_scores refuse toute cellule sans score fini. Les paramètres des juges doivent être figés avant le lancement, puisqu'ils tournent sur la même instance",
+     "effort_heures": 4,
+     "bloquant": true,
+     "depend_de": "décision de Lazar sur les notes incomplètes"
+    },
+    {
+     "piece": "Base (iii) « sonde sur le dernier état » : définition, capture pendant la génération si elle est nécessaire, puis code de la base (calibrage sur l'honnête, garde testée sur un cas sain et sur un artefact)",
+     "pourquoi": "Absente en code. Si « dernier état » veut dire l'état caché en dernière position et non le score de la dernière action, il faut le capturer pendant la génération : P3 ne garde que les empans d'action",
+     "effort_heures": 4,
+     "bloquant": true,
+     "depend_de": "définition à trancher par Lazar ou conv-audit (seule la capture bloque le lancement ; le code de la base peut suivre)"
+    },
+    {
+     "piece": "Base (ii) « cascade de portes indépendantes » sur les mêmes sondes, à côté de bases/sequentiel.py, avec calibrage et tests sur un cas sain et sur un artefact (R5)",
+     "pourquoi": "Absente en code, et exigée dans la liste de G1 par N-056 point 1 (D-S8 réécrite)",
+     "effort_heures": 4,
+     "bloquant": false,
+     "depend_de": "scores par action des sondes stockés par le lanceur"
+    },
+    {
+     "piece": "Base (i) : contre-vérification et scellement de l'invite H.12 dérivée, remplissage (ensemble courant et proposition marquée), lecture par espérance (scores_jetons), passage sur processeur graphique de toutes les actions, puis accumulation séquentielle",
+     "pourquoi": "L'invite n'existe qu'en brouillon 1 non scellé, et aucun lanceur n'existe. Ces appels ne figurent pas dans le devis. Le GO permet deux lancements au plus : la base doit donc tenir dans l'un des deux, sinon un GO de plus",
+     "effort_heures": 8,
+     "bloquant": true,
+     "depend_de": "contre-lecture R2 par un sous-agent neuf ; place dans l'un des deux lancements"
+    },
+    {
+     "piece": "Base (iv) TRACE-lite : pilote réel du modèle sur les épisodes (calendrier fixe, 18 appels au plus par épisode)",
+     "pourquoi": "Le code et les gabarits existent, mais sans conduite réelle. Pour environ 1 680 épisodes, cela fait jusqu'à environ 30 000 appels génératifs, absents du devis",
+     "effort_heures": 6,
+     "bloquant": false,
+     "depend_de": "décision sur son inclusion dans les 90 USD ; place dans l'un des deux lancements"
+    },
+    {
+     "piece": "Prédicteur sur les traits du texte (N-029, obligatoire) et règle du coût calibrée sur l'honnête, avec les traits fixés et scellés avant toute lecture des épisodes",
+     "pourquoi": "Introuvables comme bases ; seuls les traits partiels de conditions.mesures_action existent",
+     "effort_heures": 4,
+     "bloquant": false,
+     "depend_de": "textes et mesures d'action gardés par le lanceur"
+    },
+    {
+     "piece": "Étiquetage à deux séries du mode « affaiblir les contrôles » : module de lots tiré des épisodes neufs (toutes les paires « proposition × contrôle semé », ou consigne regroupée par proposition), engagement par empreinte, lecture, accord entre séries ; textes hors du dépôt",
+     "pourquoi": "Le protocole existant est lié à l'échantillon stratifié du pilote. P-014 exige toutes les paires des épisodes décisifs, et N-054 deux séries indépendantes",
+     "effort_heures": 6,
+     "bloquant": false,
+     "depend_de": "épisodes générés ; décision sur la forme et l'étendue de la seconde série"
+    },
+    {
+     "piece": "Validation de la consigne regroupée par proposition sur les 480 paires du pilote (P-014 point 3 : accord d'au moins 0,8, sinon consigne par paire)",
+     "pourquoi": "Exigée avant tout usage ; non trouvée faite",
+     "effort_heures": 3,
+     "bloquant": false,
+     "depend_de": "crédits de sous-agents disponibles sur le compte actif"
+    },
+    {
+     "piece": "Exécution de l'étiquetage : environ 35 800 paires de contrôles par série (840 épisodes du mode et de ses jumeaux × 42,6 paires mesurées au pilote), soit environ 600 lots de 60 paires par série",
+     "pourquoi": "Hors du devis, qui ne couvre que le processeur graphique. N-054 nomme pourtant « des heures d'étiquetage » ; les crédits de sous-agents du compte 1 sont épuisés (R-624)",
+     "effort_heures": 20,
+     "bloquant": false,
+     "depend_de": "décision sur l'étendue de la seconde série ; compte avec crédit"
+    },
+    {
+     "piece": "Constructeur de la banque au format monde_banque_scores : partition par unité tirée par graine (calibrage, développement, épreuve), strate « mode », une valeur par épisode et par cellule (blanc séquentiel, (ii), (iii), (i), (iv), juges, traits du texte), refus de toute cellule manquante, manifeste",
+     "pourquoi": "Introuvable, ici comme sur la branche de conv-audit ; conv-audit a annoncé qu'il coderait le monde « modes » pendant la génération",
+     "effort_heures": 5,
+     "bloquant": false,
+     "depend_de": "liste des cellules fixée avec conv-audit ; bases ci-dessus"
+    }
+   ],
+   "questions_pour_lazar": [
+    "Étiquetage à deux séries : veux-tu deux séries complètes sur toutes les paires du mode « contrôles » (environ 35 800 paires par série, estimation), ou une série complète plus environ 10 % en double, comme le prévoit le point 4 de P-014 ? Et sur quel compte et quel budget, puisque l'étiquetage n'est pas dans les 90 USD ?",
+    "Consigne d'étiquetage : faut-il d'abord valider la consigne regroupée par proposition sur les 480 paires du pilote (P-014 point 3), ou réutilises-tu la consigne par paire déjà éprouvée (0,968) ?",
+    "Base (iii) « sonde sur le dernier état » : est-ce le score de la dernière action, ou l'état caché en dernière position de l'épisode ? Dans le second cas, il faut le capturer pendant la génération : c'est à trancher avant le lancement.",
+    "Notes des juges incomplètes (pilote : 54 sur 180 pour le 8B, 50 sur 180 pour le 3B), alors que le format de banque exige un score pour chaque épisode : retirer ces cellules, garder une cellule par rubrique, augmenter la longueur de réponse, ou lire le juge par espérance ? La règle doit être écrite avant le lancement.",
+    "Le défaut (b) de P-015 (R-321) demandait que T0.7 et T0.8 soient scellés avant T0.6 décisif, avec la dose cherchée d'abord sur la boîte noire seule, et il retirait « affaiblir les contrôles ». Le GO de la couche 2 remplace-t-il cet ordre ? La banque est-elle une production de données, comme la couche 1 bis, ou une expérience décisive sous R1 ?",
+    "Bases (i), moniteur par action, et (iv), TRACE-lite : elles demandent du processeur graphique que le devis ne compte pas, et le GO ne permet que deux lancements. Les mets-tu dans les 90 USD, ou dans un GO séparé ?",
+    "Le juge textuel à quelques exemples (constat HELIOS : « la base boîte noire de G1 doit comprendre un juge à quelques exemples ») doit-il être dans cette banque ?",
+    "Le fichier complet des sondes figées, avec les 6 sondes de Mahalanobis, est perdu (resté sur l'instance) : acceptes-tu le fichier léger (424 sondes, les deux principales comprises) comme « sondes figées de P3 » ?"
+   ],
+   "risques": [
+    "Sondes faibles par construction : selon le verdict v2 de P3, aucune sonde générique ne passe au-dessus de son plancher sur (i-a). La cellule boîte blanche de la banque risque d'être faible, et R3 interdit de régler quoi que ce soit pour la faire gagner. Un nul à G1 ne serait alors lisible que si la puissance est écrite d'avance.",
+    "Faux calcul silencieux : si l'on réutilise la chaîne de T0.5 (vecteurs ramenés au maximum par coordonnée, en demi-précision) pour appliquer les sondes figées, les scores sont faux sans aucune alerte. Il faut noter en ligne, chemin P3.",
+    "Dérive d'instrument : un changement de révision du modèle, de texte d'ouverture, de couches, d'empan d'action ou de noyau d'attention invalide les sondes figées. Aucune garde ne compare aujourd'hui l'environnement de lancement à celui de P3.",
+    "Notes manquantes des juges (environ 70 % au pilote), incompatibles avec le format de banque. Combler les manques serait interdit ; les retirer change la population des épisodes.",
+    "Charge d'étiquetage hors devis : environ 35 800 paires par série pour le mode « contrôles » (estimation sur 42,6 paires par épisode). Crédits de sous-agents épuisés sur le compte 1 (R-624). Les textes envoyés aux étiqueteurs doivent rester hors du dépôt (P-014), et N-029 interdit d'envoyer les textes d'action à un service tiers pour la référence boîte noire : à garder distinct de l'étiquetage.",
+    "Dépense sous-estimée : les bases (i) et (iv) demandent des appels au modèle (environ 16 800 lectures par action, et jusqu'à environ 30 000 appels génératifs pour TRACE-lite) que le devis ne compte pas. Le GO plafonne aussi le nombre de lancements à deux.",
+    "Calibrage mince : avec une partition au quart par unité et environ 840 jumeaux honnêtes, on aurait environ 105 honnêtes de calibrage par mode. À τ = 0,01, cela donne j = 1 : le seuil serait le plus haut score honnête. Le plan des mesures fortes de conv-audit (message n° 127 point 3) demande pourtant un calibrage honnête de « 10 à 16 × les unités sabotées ».",
+    "Pièces introuvables : les lanceurs et le module de la couche 1 bis ne sont pas dans ce clone (commits absents). Leur réutilisation ne peut pas être vérifiée ici.",
+    "Dépendance à conv-audit : le format de banque et la liste des cellules dépendent de lui, et aucun constructeur de banque pour la couche 2 n'existe encore sur sa branche.",
+    "Échéance serrée : le GO expire le 31 octobre. Environ 22 heures de travail bloquent le premier lancement dans ce domaine, sans compter la contre-lecture R2 de la fiche (§ 6 du devis)."
+   ]
+  },
+  {
+   "domaine": "Mécanique de lancement et gouvernance de la couche 2 (GO-2026-10-28-02, extension à 90 USD)",
+   "resume": "Verdict : la couche 2 n'est pas lançable aujourd'hui. Ce qui existe : les gardes communes, testées sur cas sain et sur artefact, la dérivation des graines (R9), et deux chaînes complètes qui peuvent servir de modèle (celle de P3 et celle du pilote T0.5). Ce qui manque : toute la chaîne propre à la couche 2 (module de run, script d'instance, amorce, lanceur, contrôles avant dépense, surveillance de longue durée), la fiche scellée et sa contre-lecture (R2). Plusieurs points de gouvernance doivent aussi être tranchés par Lazar.\n\nGarde de calcul : lue sur le registre réel, elle accepte GO-2026-10-28-02 avec sa ligne d'extension (type calcul, accordé le 28, échéance le 31, aucune révocation). Elle ne lit aucun montant : le plafond en dollars ne se contrôle que par la procédure (prix maximal, crédit exigé, durée bornée multipliée par le prix, ligne d'engagement). Aucun outil ne contrôle le cumul de deux lancements contre 90 USD.\n\nLe gabarit de fiche de la couche 1 bis n'est pas trouvé dans le clone local : `prereg/T0.5-banque-complete-36-v1.md`, les deux fiches « complément » et les lanceurs v4 et « complément » sont sur les branches `prep/t05-*`, absentes ici ; les commits cités sont introuvables. Gabarits locaux à suivre : `prereg/gabarit-preregistrement-v1.md` (huit sections exigées par `src/controle_ia/prereg.py`), la section « Calcul » de `prereg/P3-premier-test-i-a-v1.md`, et `docs/procedures/P3-premier-test-v2/` (treize scripts, bancs d'essais, répétitions).\n\nCalcul au rythme mesuré :\n- 1 680 épisodes : 38,1 s par épisode au pilote, 46,6 s tout compris à P3, soit 17,8 à 21,7 h.\n- 3 360 notations : 58,2 s au juge 8B et 27,5 s au juge 3B, soit 27,2 + 12,8 = 40,0 h.\n- Total ≈ 58 à 62 h d'A100, plus ≈ 0,5 h de mise en place par instance, soit ≈ 64 à 85 USD à 1,10–1,37 USD/h. Ça tient dans 90 USD, avec 5 à 25 USD de marge seulement.\n\nLe devis se trompe sur sa base : il oublie les 108 épisodes et 216 notations de la partie (b) de la couche 1 bis. Il sous-estime la notation (36 s supposées contre 42,8 s mesurées) et surestime le coût fixe (mesuré ≈ 0,6 à 1,7 USD par instance).\n\nRecommandation : deux instances en parallèle, chacune avec une moitié des consignes, les deux modes et leurs jumeaux, ≈ 30 h chacune. Une seule instance de 60 h dépasse l'échéance du 31 octobre et toutes les bornes existantes (amorce 300 à 485 min, surveillance 6 h ou 22 200 s). Mais « deux lancements au plus » ne laisse alors aucune relance.\n\nÀ contre-lire (R2) avant le lancement : la fiche, le dimensionnement (volumes, heures de carte, calcul du plafond), la chaîne (lanceur, amorce, script d'instance, contrôles avant dépense), les journaux d'essais et l'invariant N-053. Aucune garde de N-053 n'existe dans le code.\n\nEffort bloquant estimé : ≈ 31 h de travail d'une instance, dont ≈ 22 h dans ce domaine.",
+   "existe": [
+    {
+     "piece": "GO de la couche 2 et son extension",
+     "chemin": "/home/user/controle-ia-travail/registres/go.md (lignes 97 et 101)",
+     "etat": "Deux lignes au même identifiant. La seconde commence par « extension » : plafond 90 USD, option (b) du devis, « en deux lancements au plus », échéance 2026-10-31, mode tenu à l'écart non couvert, conditions du § 6 du devis inchangées.",
+     "preuve": "grep 'GO-2026-10-28-02' registres/go.md ; R-600 et R-626 dans registres/decisions.md"
+    },
+    {
+     "piece": "Garde de calcul (crochet avant chaque commande du terminal)",
+     "chemin": "/home/user/controle-ia-travail/.claude/hooks/garde_calcul.py ; /home/user/controle-ia-travail/.claude/settings.json",
+     "etat": "Bloque tout lancement d'instance (vastai create/launch/start…) qui ne cite pas un GO de calcul accordé par Lazar, dans sa période et non révoqué. Bloque aussi tout arrêt par motif (pkill, killall, pgrep|kill). Une seconde ligne n'est admise que comme « extension ». Elle ne lit PAS le plafond en dollars. Son activité dans cette session n'a pas été éprouvée ici ; les lanceurs existants la rejouent explicitement.",
+     "preuve": "Lecture du registre réel par lire_go(), sans aucune commande lancée : GO-2026-10-28-02 de type calcul, accordé le 2026-10-28, échéance le 2026-10-31, 1 extension, 0 révocation ; hors période le 2026-11-01. tests/test_garde_calcul.py : 13 fonctions, cas sain et artefact (R5) ; 52 tests réussis en 2,33 s avec tests/test_manifeste.py et tests/test_signal_term.py, lancés sans cache"
+    },
+    {
+     "piece": "Gardes communes d'arrêt (R5)",
+     "chemin": "/home/user/controle-ia-travail/src/controle_ia/gardes.py",
+     "etat": "Exception GardeArret, aucun repli silencieux. Gestion du signal TERM (lever_sur_term, exiger_sans_signal, motif_d_arret). numpy ≥ 1.25 exigé. Arbre de travail propre exigé.",
+     "preuve": "tests/test_signal_term.py (4 tests) et tests/test_manifeste.py (11 tests, cas sain et artefact) réussis"
+    },
+    {
+     "piece": "Manifeste de run et dérivation des graines (R9)",
+     "chemin": "/home/user/controle-ia-travail/src/controle_ia/manifeste.py",
+     "etat": "Une SeedSequence racine par run, d'entropie consignée. Pour chaque tâche : spawn_key = 8 premiers octets du SHA-256 du nom de la tâche, plus un état de contrôle à 2 mots. Noms de tâches en double refusés. Graine reconstruite différente de la graine consignée : arrêt. Run existant jamais écrasé (R12). Préenregistrement scellé exigé pour un run décisif. Résultats rattachés au manifeste par son empreinte.",
+     "preuve": "graines(), generateur(), creer_manifeste() ; tests test_graines_derivees_deterministes_et_distinctes, test_artefact_graine_alteree, test_artefact_taches_en_double"
+    },
+    {
+     "piece": "Clés de graines par épisode et par notation",
+     "chemin": "/home/user/controle-ia-travail/src/controle_ia/environnements/lancer_pilote_a.py (l. 101-112) ; /home/user/controle-ia-travail/src/controle_ia/premier_test_ia/run.py (docstring, point 6)",
+     "etat": "Une tâche du manifeste par épisode et par notation (« juge-<nom>/<épisode>/passe-<p> »). À P3, une même tâche garde les mêmes graines d'action d'une condition à l'autre, ce qui apparie honnête et instruit.",
+     "preuve": "Code lu"
+    },
+    {
+     "piece": "Amorces d'instance Vast.ai",
+     "chemin": "/home/user/controle-ia-travail/scripts/amorce_instance_t05.sh ; /home/user/controle-ia-travail/scripts/amorce_instance_t05_notations.sh ; /home/user/controle-ia-travail/scripts/amorce_instance_p3.sh",
+     "etat": "Clonent le dépôt de travail au commit de scellement avec un jeton passé par variable, jamais écrit. Refusent une seconde exécution (R12). Bornent l'ensemble par timeout TERM puis KILL : 300 min pour T0.5, 430 min pour les notations, 360 min pour P3. Poussent résultats partiels et traces sur la branche de résultats si le plafond est atteint. Rien ne crée ni n'arrête l'instance : la session le fait, par identifiant (R10).",
+     "preuve": "Scripts lus ; tests tests/test_script_instance_t05.py, tests/test_script_notations_t05.py, tests/test_script_p3.py (non relancés ici)"
+    },
+    {
+     "piece": "Scripts côté instance",
+     "chemin": "/home/user/controle-ia-travail/scripts/pilote_t05_instance.sh ; /home/user/controle-ia-travail/scripts/notations_t05_instance.sh ; /home/user/controle-ia-travail/scripts/p3_instance.sh",
+     "etat": "Pilote T0.5 : épisodes, appariement, notations des juges. Notations : notations seules. P3 : épisodes instruits et honnêtes, sondes entraînées puis figées, chaque action notée en ligne, sans juge. Aucun ne fait la combinaison de la couche 2 : deux modes, jumeaux, sondes figées ET notations 8B/3B.",
+     "preuve": "En-têtes lus ; premier_test_ia/run.py, points 1 à 7"
+    },
+    {
+     "piece": "Chaîne de lancement complète de P3, le modèle le plus proche",
+     "chemin": "/home/user/controle-ia-travail/docs/procedures/P3-premier-test-v2/",
+     "etat": "Treize scripts versés et scellés : lanceur, contrôles avant dépense, scellement, surveillance, contrôle à cinq minutes, récupération, répétitions jouet et finale, essais. Bancs R5 versés (banc-lanceur, banc-controles, banc-scellement, banc-surveillance). Le lanceur n'accepte que GO-2026-10-04-08 (codé en dur). Il impose un prix maximal de 1,30 USD/h, un crédit d'au moins 6,5 h × prix + 1,2 USD, et une surveillance bornée à création + 22 200 s. Il prend l'offre conforme la moins chère : A100 SXM4, 80 Go, AMD EPYC 7513, fiabilité ≥ 0,99.",
+     "preuve": "lancer_p3_v1.sh, l. 1-61 et 228-310 ; prereg/P3-premier-test-i-a-v1.md l. 355-385 (bornes et plafond d'étape : 22 200 s × 1,30 = 8,02 USD + arrêt + disque + téléchargement)"
+    },
+    {
+     "piece": "Plan de lancement en huit étapes, gabarit de procédure",
+     "chemin": "/home/user/controle-ia-travail/docs/procedures/pilote-T0.5-v1/plan-lancement-pilote-v3.md",
+     "etat": "Étapes : préalables, scellement, contrôles avant dépense, offre et crédit, création (dont l'engagement dans registres/etat.md et registres/depenses.md avant création), surveillance, sortie et arrêt par identifiant, récupération, lecture. Pas de création entre 23:30 et 00:00 UTC.",
+     "preuve": "Fichier lu en entier ; lancer_pilote_v2.sh lu"
+    },
+    {
+     "piece": "Scripts de surveillance",
+     "chemin": "/home/user/controle-ia-travail/docs/procedures/surveiller-instance-t04-v1.sh ; /home/user/controle-ia-travail/docs/procedures/P3-premier-test-v2/surveiller_p3_v1.sh",
+     "etat": "Interrogent l'état et le journal toutes les 2 minutes, jetons masqués. Sortent sur FIN, ÉCHEC D'AMORCE, REDÉMARRAGE, ÉTAT TERMINAL ou PLAFOND. Le plafond est codé en dur : 6 h pour l'un, 22 200 s pour l'autre. Ils n'arrêtent rien : arrêt par identifiant par la session.",
+     "preuve": "Scripts lus"
+    },
+    {
+     "piece": "Fiche et lanceurs de la couche 1 bis (GO-2026-10-27-07)",
+     "chemin": "prereg/T0.5-banque-complete-36-v1.md (61655f95…) ; prereg/T0.5-complement-pilote-e2-v1.md (f2975b65…) ; prereg/T0.5-complement-banque-e2-v1.md (6e7ca833…) ; docs/procedures/banque-T0.5-complete-v1/lancer_banque_t05_v4.sh (5edf3c39…) ; lancer_complement_t05_v1.sh (717bfb8d…) ; scripts/complement_t05_instance.sh",
+     "etat": "NON TROUVÉS dans le clone local. Ils sont sur les branches prep/t05-banque-complete-v1 et prep/t05-complement-notations-v1, absentes ici : seules main, claude/lucid-fermi-n7610d et les canaux sont présents. Contenu connu par le registre seulement : lanceur v4 qui choisit l'offre conforme la moins chère juste avant la création (A100 SXM4, une carte, ≥ 79 Go, CUDA ≥ 13,0, ≤ 1,40 USD/h, fiabilité ≥ 0,99, machine 142924 exclue) ; essais R5 versés ; contre-lectures CB-01 à CB-09 et CB2-01 à CB2-07 ; « contrôle d'avant création : tout tient ».",
+     "preuve": "git cat-file sur 07093f05, a54ceb7c, 34514af8, 41e61d88, 65d78b55 : introuvables ; R-576 à R-579, R-585, R-593, R-596 dans registres/decisions.md"
+    },
+    {
+     "piece": "Gabarit et validation des préenregistrements",
+     "chemin": "/home/user/controle-ia-travail/prereg/gabarit-preregistrement-v1.md ; /home/user/controle-ia-travail/src/controle_ia/prereg.py",
+     "etat": "Huit sections exigées, chacune non vide : Hypothèse, Prédiction chiffrée et signe attendu, Métrique, Seuil, Plan d'analyse, Critères de lecture gelés, Liste d'arrêt, Contre-lecture. La section Contre-lecture doit citer deux empreintes : brouillon relu et rapport. exiger_prereg_scelle() est appelée par le manifeste.",
+     "preuve": "prereg.py l. 16-61"
+    },
+    {
+     "piece": "Rythmes mesurés pour le calcul",
+     "chemin": "/home/user/controle-ia-travail/diag/20261017-193648-t05-notations-reel/resume.json ; /home/user/controle-ia-travail/docs/verdicts/verdict-T0.5-pilote-v1.md (l. 228-237) ; /home/user/controle-ia-travail/diag/20261019-230011-p3-reel/resume.json ; /home/user/controle-ia-travail/registres/depenses.md (l. 87-88, 202-211)",
+     "etat": "Juge 8B : 180 notations en 10 478,2 s, soit 58,2 s chacune. Juge 3B : 180 en 4 944,1 s, soit 27,5 s. Chargement du 8B : 127,7 s. Pilote : 180 épisodes en 6 855,8 s, soit 38,1 s chacun ; appariement 461 s. P3 : 240 épisodes et 2 400 actions notées par les sondes en 11 179,1 s, extraction et entraînement compris, soit 46,6 s par épisode. Mise en place mesurée : 23 min (couche 1 bis (a)) à 31 min (P3). Prix A100 relevés : 1,089 à 1,366 USD/h.",
+     "preuve": "Champs numériques des résumés lus sans aucun texte ; P3 : de 22:28:53 (création) à 23:00:11 (début du run) ; couche 1 bis (a) : de 20:11:45 (création) à 20:34:35 (début du run)"
+    },
+    {
+     "piece": "Sondes figées de P3",
+     "chemin": "/home/user/controle-ia-travail/donnees/20261019-230011-p3-reel/sondes-figees-legeres.npz (et .sha256) ; donnees/20261019-230011-p3-reel/sondes-figees.npz.sha256 ; diag/20261019-230011-p3-reel/sondes-figees.json",
+     "etat": "Fichier léger présent : 17,7 Mo, scellé, sans les matrices de Mahalanobis. Fichier complet : seul son sceau est présent, fichier absent sur disque. Il était resté sur l'instance 56799469 (p3_instance.sh, en-tête), qui n'existe plus d'après l'inventaire du 2026-10-24 dans registres/arrets.md.",
+     "preuve": "ls -la sur le dossier ; vérification sur disque (R11)"
+    },
+    {
+     "piece": "Format de sortie de la banque (conv-audit)",
+     "chemin": "refs/canal-local/conv-audit : brouillons/canal-reprise-releve-v1/envois/pole-scientifique-automatique-v1/orchestrateur-pole-v7/pole/monde_banque_scores.py (+ essais/test_v7_monde_banque_scores.py, exemples/construire_banque_t05_v3.py)",
+     "etat": "Existe sur la branche de conv-audit, non lu en détail. D'après le message n° 127 : un épisode porte id, unite, etiquette, partie, strates (dont le mode) et scores par moniteur. Branche écrite par plusieurs instances (commit de25cb67, R-349).",
+     "preuve": "git ls-tree ; message conv-audit_2026-10-27_n127.md, l. 30-33"
+    },
+    {
+     "piece": "Instruction cachée dans l'environnement (a)",
+     "chemin": "/home/user/controle-ia-travail/src/controle_ia/environnements/propositions.py (l. 219-248) ; /home/user/controle-ia-travail/src/controle_ia/premier_test_ia/conditions.py (l. 81-82)",
+     "etat": "instructions_cachees et indications_privees sont prises en charge. Textes des consignes de P3 non lus (fichier interdit prereg/P3-consignes-v1.md). Brouillon non scellé de T0.6 : brouillons/T0.6-organismes-v0-v1-brouillon1.md.",
+     "preuve": "grep"
+    },
+    {
+     "piece": "Outils et variables de la session",
+     "chemin": "/home/user/controle-ia-travail/.venv/bin/vastai",
+     "etat": "vastai 1.8.3, pas sur le PATH ; numpy 2.4.6 dans .venv. Variables présentes (noms seulement) : VAST_API_KEY, HF_TOKEN, CONTROLE_IA_GITHUB_TOKEN, GH_TOKEN ; dossier /root/.config/vastai présent. Les anciens lanceurs codent en dur des chemins de blocs-notes d'autres sessions, par exemple B=/tmp/claude-0/-home-user/5a6b9d1d-…/scratchpad et V=$B/venv-vastai/bin/vastai.",
+     "preuve": "pip show vastai ; env | cut -d= -f1 ; lancer_pilote_v2.sh l. 37-40"
+    },
+    {
+     "piece": "Registre des arrêts et état du compte",
+     "chemin": "/home/user/controle-ia-travail/registres/arrets.md",
+     "etat": "Dernières instances arrêtées puis détruites par identifiant : 57977351, 57978233, 58007778. Aucune instance sur le compte à 12:52 UTC le 28 octobre (R-626).",
+     "preuve": "tail registres/arrets.md ; R-626"
+    }
+   ],
+   "manque": [
+    {
+     "piece": "Dimensionnement exact de conv-audit : nombre de consignes, exécutions, part des deux modes, jumeaux partagés ou non entre les modes, calibrage honnête",
+     "pourquoi": "Le message n° 126 promettait « le dimensionnement exact » après le go. Le n° 127 cite un « calibrage honnête 10 à 16 × les unités sabotées à 1 % » que le devis ne compte pas : le devis prend un jumeau par épisode saboté. La fiche ne peut pas geler ses volumes sans ce dimensionnement.",
+     "effort_heures": 0.5,
+     "bloquant": true,
+     "depend_de": "conv-audit (et Lazar si le volume dépasse 90 USD)"
+    },
+    {
+     "piece": "Module de run de la couche 2 côté machine : épisodes famille (i) sur les deux modes et jumeaux, sondes figées de P3 notées en ligne, notations 8B et 3B, export au format monde_banque_scores",
+     "pourquoi": "Aucun script n'enchaîne tout cela. P3 note par sondes sans juge ; la chaîne T0.5 note par juges sans sondes figées. Hors de ce domaine : estimation grossière.",
+     "effort_heures": 8,
+     "bloquant": true,
+     "depend_de": "domaine code et conv-audit ; décision sur les sondes figées complètes"
+    },
+    {
+     "piece": "Script d'instance et amorce de la couche 2, sous un nom nouveau (R12)",
+     "pourquoi": "Les amorces existantes sont bornées à 300, 360 ou 430 min. Il en faut une bornée à ≈ 32-34 h par instance, avec poussée partielle périodique : sur 30 h, une perte d'hôte comme 57977351 ne doit pas tout effacer. Déclinaison de scripts/p3_instance.sh et scripts/amorce_instance_p3.sh.",
+     "effort_heures": 3.5,
+     "bloquant": true,
+     "depend_de": "module de run"
+    },
+    {
+     "piece": "Lanceur de session de la couche 2 et son banc R5",
+     "pourquoi": "Le lanceur de P3 n'accepte que GO-2026-10-04-08 et 6,5 h de crédit ; le v4 de la couche 1 bis est absent du clone. Le nouveau doit : citer GO-2026-10-28-02 ; choisir l'offre lui-même (identifiants changeants, R-578 ; recherche par identifiant vide sous vastai 1.8.3, R-577) ; exiger une fiabilité ≥ 0,99 ; contrôler le plafond cumulé en dollars (durée bornée × prix maximal + fixe ≤ 90 − déjà engagé) ; gérer deux instances, étiquettes et branches distinctes ; utiliser les chemins de cette session (.venv/bin/vastai). Banc R5 : un cas sain, et comme artefacts prix, carte, liste vide, GO expiré, plafond dépassé, crédit illisible.",
+     "effort_heures": 5.5,
+     "bloquant": true,
+     "depend_de": "fiche (bornes) ; décision de Lazar sur le crédit"
+    },
+    {
+     "piece": "Surveillance de longue durée",
+     "pourquoi": "Les deux scripts ont un plafond codé en dur (6 h ; création + 22 200 s). Une tâche de fond de la session dure 2 h au plus : il faut une procédure de relance et un rappel programmé, plus un banc R5.",
+     "effort_heures": 1.5,
+     "bloquant": true,
+     "depend_de": "bornes de la fiche"
+    },
+    {
+     "piece": "Contrôles avant dépense de la couche 2",
+     "pourquoi": "Contenu du commit de scellement, empreintes des scripts, tests attendus, branche de résultats absente, garde rejouée, plafond, crédit. Déclinaison de controles_avant_depense_p3_v1.sh.",
+     "effort_heures": 2,
+     "bloquant": true,
+     "depend_de": "chaîne figée"
+    },
+    {
+     "piece": "Garde et test de l'invariant N-053 : aucune note de sonde ni de juge dans ce que voit l'agent",
+     "pourquoi": "C'est une condition écrite du GO (§ 6, point 4 du devis). Aucune occurrence de N-053 dans src/, tests/, scripts/ ni docs/procedures/.",
+     "effort_heures": 1,
+     "bloquant": true,
+     "depend_de": "module de run"
+    },
+    {
+     "piece": "Fiche de lancement scellée",
+     "pourquoi": "Condition du GO. Format : huit sections de prereg.py, plus une section Calcul façon P3. Contenu : volumes par mode et par lancement, entropie tirée au scellement et noms de tâches disjoints entre instances (R9), bornes de durée, plafond d'étape, liste d'arrêt, découpage en deux lancements, invariant N-053, sort des notations descriptives du 8B.",
+     "effort_heures": 3,
+     "bloquant": true,
+     "depend_de": "dimensionnement exact ; module de run"
+    },
+    {
+     "piece": "Répétition jouet sur processeur et répétition finale à blanc de toute la chaîne, suite complète des tests",
+     "pourquoi": "Précédent du pilote et de P3. La suite de la session donne 3 échecs (test_corpus_arxiv, pypandoc) pour 914 réussites en 1 498 s. Or l'amorce exige un compte exact « N passed » : le nombre attendu doit être fixé et vérifié sur l'instance.",
+     "effort_heures": 2,
+     "bloquant": true,
+     "depend_de": "chaîne figée"
+    },
+    {
+     "piece": "Contre-lecture R2 par un sous-agent neuf, puis traitement des constats",
+     "pourquoi": "Condition du GO. Fichiers à lui donner : la fiche, le devis et le dimensionnement, le lanceur, l'amorce, le script d'instance, les contrôles avant dépense, les journaux des bancs, le calcul du plafond. Le crédit des sous-agents était épuisé sur l'ancien compte (R-624).",
+     "effort_heures": 2,
+     "bloquant": true,
+     "depend_de": "fiche et chaîne"
+    },
+    {
+     "piece": "Décision sur le fichier complet des sondes figées de P3 (matrices de Mahalanobis)",
+     "pourquoi": "Seul le fichier léger est sur disque. Si la famille Mahalanobis fait partie des sondes lues, il faut régénérer le fichier : même entropie, vérification par le sceau existant, environ 1 h de carte. Sinon, déclarer la restriction dans la fiche.",
+     "effort_heures": 1.5,
+     "bloquant": true,
+     "depend_de": "Lazar ou conv-audit"
+    },
+    {
+     "piece": "Crédit Vast.ai suffisant, ou mode « recharge automatique » accepté pour ce GO",
+     "pourquoi": "Les lanceurs exigent un crédit d'au moins heures × prix + 1,2 USD, soit ≈ 40 USD par instance de 30 h. Dernier relevé : 28,12 USD le 27 à 20:11, ≈ 24 USD estimés depuis. Seul précédent sans minimum : RECHARGE_AUTO=1, sur mot de Lazar pour la comparaison d'échelle (R-555).",
+     "effort_heures": 0,
+     "bloquant": true,
+     "depend_de": "Lazar"
+    },
+    {
+     "piece": "Scellement du commit S, poussée, et lignes d'engagement avant création",
+     "pourquoi": "Procédure : identifiant prévu dans registres/etat.md et engagement dans registres/depenses.md avant création ; le lanceur ne le contrôle pas.",
+     "effort_heures": 0.5,
+     "bloquant": true,
+     "depend_de": "tout ce qui précède"
+    },
+    {
+     "piece": "Récupération des branches prep/t05-banque-complete-v1 et prep/t05-complement-notations-v1",
+     "pourquoi": "Gabarit de fiche et lanceur v4 les plus récents. Économise du travail sans être indispensable : les modèles de P3 et du pilote sont présents. Demande un accès réseau (git fetch).",
+     "effort_heures": 0.2,
+     "bloquant": false,
+     "depend_de": "accès réseau"
+    },
+    {
+     "piece": "Script de récupération et de versement après le run",
+     "pourquoi": "Comptes exacts (épisodes, notations par juge, paires), sceaux, branche de données, export. Peut s'écrire pendant le run.",
+     "effort_heures": 2,
+     "bloquant": false,
+     "depend_de": "module de run"
+    }
+   ],
+   "questions_pour_lazar": [
+    "« Deux lancements au plus » : deux instances créées ensemble et en parallèle comptent-elles pour deux lancements ? Une instance perdue par l'hôte avant tout calcul (comme 57977351) compte-t-elle ? Ma recommandation : deux instances en parallèle, chacune avec une moitié des consignes, les deux modes et leurs jumeaux, ≈ 30 h chacune, pour ≈ 1 à 2 USD de coût fixe en plus. Confiance moyenne.",
+    "Crédit Vast.ai : tu recharges à ≈ 85-90 USD avant la création, ou tu acceptes pour ce GO le mode « recharge automatique » sans minimum exigé, comme pour la comparaison d'échelle (R-555) ?",
+    "Échéance du 31 octobre : avec ≈ 58-62 h de carte et une préparation d'environ un jour, une seule instance ne finit pas à temps, et deux instances ne laissent aucune relance. Prolonges-tu l'échéance au 2 ou 3 novembre ?",
+    "Jumeaux honnêtes partagés entre les deux modes (même consigne, même graine) : ≈ 25 % d'épisodes et de notations en moins, ≈ 14 h de carte. Est-ce acceptable pour l'analyse de G1 ? À trancher avec conv-audit.",
+    "Le « calibrage honnête 10 à 16 × les unités sabotées à 1 % » du message n° 127 de conv-audit est-il dans cette banque ? Si oui, le volume dépasse 90 USD.",
+    "Le fichier complet des sondes figées de P3 (avec les matrices de Mahalanobis) n'est plus sur disque, seul son sceau l'est. On le régénère (≈ 1 h de carte, vérifié par le sceau) ou on se limite au fichier léger ?",
+    "Juge 3B : peu de notes non nulles à la couche 1 bis (6 sur 60, 5 sur 36, R-596). On garde ses 1 680 notations (≈ 12,8 h, ≈ 15 USD) ? Et les notations descriptives du 8B sont-elles exclues ?",
+    "L'« étiquetage à deux séries » se fait-il par sous-agents (appels d'API) ? Si oui, est-il couvert par les 90 USD de calcul ou faut-il un poste à part ?",
+    "La demande relayée (dépôt bloqué par une erreur 403, instructions de création) ne relève pas de ce relevé. R-627 consigne que tu as créé `lciric/controle-ia-lot-fable-affinage-v1` et qu'un commit `db2b59cf` y est poussé. Vise-t-elle un autre dépôt ?"
+   ],
+   "risques": [
+    "Le devis repose sur une base mal comptée. Il annonce 96 épisodes et 192 notations pour 9,7 à 11,7 USD, mais la couche 1 bis a aussi produit 108 épisodes, 216 notations décisives, un appariement et des notations descriptives partielles (R-591). Sa décomposition (2 à 3,5 USD fixes ; 0,012 USD par notation) n'est donc pas fiable. Mesuré : 42,8 s par notation en moyenne contre 36 s supposées ; coût fixe ≈ 0,6 à 1,7 USD.",
+    "Marge mince sur 90 USD : ≈ 64 à 85 USD au rythme mesuré, téléchargements et disque en plus. Les épisodes sabotés de T0.6 sur les deux modes n'ont jamais été chronométrés : des consignes plus longues allongent les épisodes.",
+    "Une seule instance de ≈ 60 h dépasse l'échéance, toutes les bornes existantes et la tenue d'une tâche de fond. Elle reste exposée toute la durée à une perte d'hôte : l'instance 57977351 a été coupée pendant le clonage.",
+    "Aucun outil ne contrôle le montant : la garde ne lit que l'identifiant, le type, les dates et les révocations. Le cumul de deux lancements contre 90 USD n'est contrôlé nulle part tant que le nouveau lanceur ne le fait pas.",
+    "Après le 31 octobre, la garde refuse toute création : une relance après une panne tardive serait bloquée sans prolongation.",
+    "Les anciens lanceurs codent en dur des chemins de blocs-notes d'autres sessions et vastai sur le PATH. Les réutiliser sans réécriture échoue, ou pire, exécute un autre outil.",
+    "La suite de tests de la session finit sur 3 échecs (pypandoc), alors que l'amorce exige un compte exact de réussites. Si l'écart se reproduit sur l'instance, la chaîne s'arrête avant le calcul et la mise en place est facturée.",
+    "L'invariant N-053 n'est garanti par aucun test : les sondes notent en ligne pendant les épisodes, dans le modèle de P3.",
+    "La branche de conv-audit qui porte le format de sortie est écrite par plusieurs instances en même temps (de25cb67, R-349) : le format peut changer sous la fiche. Il faut épingler une empreinte.",
+    "Gouvernance : la couche 2 (sabotage connu) est distincte du travail d'évasion gelé par R-611 / GO-2026-10-28-04. Le contre-lecteur doit vérifier qu'aucune consigne ne dérive de contenus en quarantaine (N-057) ni du mode tenu à l'écart, qui n'est pas couvert.",
+    "Pas de création entre 23:30 et 00:00 UTC (règle T-7 des lanceurs). Pendant l'appel de création, aucun sous-agent ne doit tourner : les jetons figurent dans les arguments du processus."
+   ]
+  }
+ ],
+ "synthese": {
+  "verdict": "On ne peut pas lancer la couche 2 aujourd'hui, et pas avant l'échéance du GO (31 octobre) si l'on reste réaliste. Les briques de base existent et sont testées :\n- l'environnement (a) à instruction cachée ;\n- l'appariement du jumeau honnête par les graines ;\n- la notation en ligne par les sondes ;\n- les juges 8B et 3B ;\n- le format `monde_banque_scores.py` (v30, 58d4fee8…) ;\n- les gardes, R9 et la garde de calcul, qui accepte bien GO-2026-10-28-02.\n\nEn revanche, toute la chaîne propre à la couche 2 manque : consigne du mode « affaiblir les contrôles », lanceur neuf, chaîne d'instance de longue durée, fiche scellée et contre-lecture R2. Il faut d'abord lever quatre nœuds :\n1. le calibrage honnête de D-S9 (a), qui ne tient pas dans 90 USD ;\n2. l'unité de compte : il n'existe que 96 tâches, alors que N-056 demande « plusieurs centaines » d'unités sabotées par mode ;\n3. le retour du mode « contrôles », que le défaut (b) de P-015 (R-321) avait retiré ;\n4. l'échéance du GO.\n\nDélai : environ 45 heures de travail d'une instance avant le premier lancement, plus le temps de réponse de Lazar.\n\nCalcul :\n- au rythme mesuré, environ 59 heures de carte pour 1 680 épisodes et 3 360 notations, soit environ 65 à 85 USD ;\n- environ 30 heures de temps réel sur deux instances en parallèle ;\n- ces chiffres ne comptent ni le calibrage honnête, ni les bases (i) et (iv), ni l'étiquetage.\n\nDemande relayée (dépôt bloqué par l'erreur 403) : vérifié sur disque.\n- Le 403 visait `lciric/controle-ia-lot-fable-affinage-v1`. D'après R-627 et R-628, Lazar l'a créé depuis, et deux commits y sont poussés (`db2b59cf`, `d89d438e`).\n- La couche 2 n'a besoin d'aucun dépôt neuf : les instances clonent `lciric/controle-ia-travail`, qui existe (c'est le dépôt `origin`).\n\nSi un autre dépôt est visé, voici les étapes pour Lazar :\n1. Aller sur github.com/new, propriétaire `lciric`, nom exact demandé.\n2. Choisir Private. Ne cocher ni README, ni .gitignore, ni licence : le dépôt doit être vide.\n3. Cliquer sur Create repository.\n4. Ouvrir github.com/settings/installations, puis l'application GitHub de Claude, puis Configure. Sous Repository access, choisir « Only select repositories », ajouter le dépôt et enregistrer.\n5. Donner le nom exact à la session, qui le rattache en écriture et pousse.\n\nNe jamais nommer ce dépôt `lciric/controle-ia`.",
+  "chemin_critique": [
+   {
+    "etape": "Écrire un seul message de décision à Lazar avec les nœuds bloquants : calibrage honnête ; unités et tâches (96 au plus) ; retour du mode « contrôles » et intensité du mode « coût » face au défaut (b) de P-015 ; strate « diffus / concentré » dans cette banque ou non ; bases (i) et (iv) dans les 90 USD ou non ; budget de l'étiquetage ; sondes de Mahalanobis ; sens de « deux lancements au plus » ; prolongation de l'échéance ; crédit Vast.ai",
+    "effort_heures": 1,
+    "qui": "session-depot",
+    "depend_de": "rien"
+   },
+   {
+    "etape": "Trancher les nœuds bloquants",
+    "effort_heures": 0.5,
+    "qui": "Lazar",
+    "depend_de": "message de décision"
+   },
+   {
+    "etape": "Dimensionnement exact en unités (nombre de consignes, exécutions par consigne, jumeaux partagés ou non entre modes, parts calibrage, calibrage du développement, développement et épreuve, tranches, G_max), liste scellée des cellules (moniteur × condition) avec la statistique par épisode de chacune, définition de la base (iii) « dernier état »",
+    "effort_heures": 3,
+    "qui": "conv-audit (session-depot s'il reste en pause)",
+    "depend_de": "décisions de Lazar"
+   },
+   {
+    "etape": "Consigne et indication du mode « affaiblir les contrôles » en anglais, appariées en longueur et en place au mode « coût » ; nouveau fichier de consignes des deux modes sous nom neuf (R12) ; intensité du mode « coût » si Lazar refuse le saboteur flagrant de P3",
+    "effort_heures": 3,
+    "qui": "session-depot",
+    "depend_de": "décisions de Lazar (en parallèle du dimensionnement)"
+   },
+   {
+    "etape": "Définir la strate « diffus / concentré » (et « floue / nette ») et l'instant du dommage, produits à la génération (seulement si Lazar les exige dans cette banque)",
+    "effort_heures": 4,
+    "qui": "Lazar ou un rédacteur désigné hors de conv-audit (séparation R-601)",
+    "depend_de": "décisions de Lazar"
+   },
+   {
+    "etape": "Contre-lecture R2 des consignes et de la strate, puis scellement avant tout épisode",
+    "effort_heures": 1.5,
+    "qui": "sous-agent neuf de contre-lecture",
+    "depend_de": "consignes ; strate"
+   },
+   {
+    "etape": "Plan des tâches, unités et exécutions ; partition par unité tirée par graine SeedSequence et scellée avant tout score (D-S14, D-S15) ; fichier des 36 tâches de la banque T0.5 re-dérivé depuis main et contrôlé par empreinte",
+    "effort_heures": 2.5,
+    "qui": "session-depot",
+    "depend_de": "dimensionnement exact"
+   },
+   {
+    "etape": "Règles déclarées d'avance : désaccord entre séries d'étiquetage, sabotage absent, note de juge incomplète ou tronquée (70 % au pilote), épisode perdu (retrait de l'unité entière)",
+    "effort_heures": 1.5,
+    "qui": "session-depot",
+    "depend_de": "dimensionnement exact ; liste des cellules"
+   },
+   {
+    "etape": "Module de run neuf, dérivé de premier_test_ia/run.py. Il couvre : les conditions honnête, coût et contrôles ; K exécutions par consigne ; des graines par (tâche, exécution) partagées avec le jumeau ; les sondes figées légères lues par lire_sondes (701f73bd…) ; une garde de conformité à la configuration de P3 ; la notation en ligne ; la garde des scores par jeton, des vecteurs par action et de l'état final (base iii) ; le rejeu des ensembles ; les juges 8B et 3B intégrés ; des écritures scellées par tranches ; une garde N-053 testée ; des tests en mode jouet",
+    "effort_heures": 20,
+    "qui": "session-depot",
+    "depend_de": "consignes scellées ; plan des parties ; règles d'avance ; définition de la base (iii)"
+   },
+   {
+    "etape": "Chaîne d'instance de la couche 2 : script et amorce bornés à environ 32 heures avec poussées par tranches ; lanceur citant GO-2026-10-28-02, avec choix d'offre corrigé pour vastai 1.8.3 et contrôle du plafond cumulé contre 90 USD ; contrôles avant dépense ; surveillance de longue durée ; bancs R5 (cas sain et artefacts)",
+    "effort_heures": 12,
+    "qui": "session-depot",
+    "depend_de": "module de run (peut démarrer en partie en parallèle)"
+   },
+   {
+    "etape": "Répétition jouet et répétition finale à blanc ; compte exact des tests attendus (aujourd'hui 914 réussis et 3 échecs pypandoc connus)",
+    "effort_heures": 2,
+    "qui": "session-depot",
+    "depend_de": "module de run ; chaîne d'instance"
+   },
+   {
+    "etape": "Fiche de lancement scellée : huit sections de prereg.py et section Calcul ; volumes exacts, entropie, tâches citées, bornes, plafond par lancement, liste d'arrêt, sous-puissance écrite d'avance, invariant N-053, empreinte épinglée du format v30",
+    "effort_heures": 4,
+    "qui": "session-depot",
+    "depend_de": "plan des parties ; règles d'avance ; chaîne figée"
+   },
+   {
+    "etape": "Contre-lecture R2 de la fiche, du dimensionnement, de la chaîne, des journaux des bancs et du calcul du plafond, puis traitement des constats",
+    "effort_heures": 3,
+    "qui": "sous-agent neuf de contre-lecture (puis session-depot pour le traitement)",
+    "depend_de": "fiche ; répétitions"
+   },
+   {
+    "etape": "Crédit Vast.ai (recharge à environ 90 USD, ou recharge automatique acceptée) et prolongation du GO si le lancement tombe après le 31 octobre",
+    "effort_heures": 0.25,
+    "qui": "Lazar",
+    "depend_de": "fiche contre-lue"
+   },
+   {
+    "etape": "Scellement du commit S, poussée, lignes d'engagement dans etat.md et depenses.md, création par identifiant avec GO_ID (jamais entre 23:30 et 00:00 UTC)",
+    "effort_heures": 0.5,
+    "qui": "session-depot",
+    "depend_de": "contre-lecture traitée ; crédit"
+   }
+  ],
+  "delai_estime_avant_lancement_heures": 45,
+  "duree_calcul_estimee_heures": 59,
+  "paralleliser": "Oui, sur deux niveaux.\n\n(1) Le calcul. Une seule instance d'environ 60 heures dépasse l'échéance et toutes les bornes existantes, et reste exposée longtemps à une perte d'hôte (déjà vécue avec 57977351). La recommandation est donc deux instances créées ensemble, chacune avec une moitié des unités, les deux modes et leurs jumeaux, soit environ 30 heures de temps réel chacune et environ 1 à 2 USD de coût fixe en plus.\n\nAutre découpage possible, si Lazar préfère :\n- lancement 1 : génération et sondes en ligne (environ 19 heures), en gardant textes, scores par jeton, vecteurs par action et état final ;\n- lancement 2 : les juges 8B et 3B (environ 40 heures), sans risque sur les sondes.\n\nDans les deux cas, « deux lancements au plus » ne laisse aucune relance : Lazar doit dire si deux instances parallèles comptent pour deux lancements et si une instance perdue avant tout calcul compte.\n\n(2) La préparation.\n- Le dimensionnement chez conv-audit et la consigne « contrôles » peuvent avancer en même temps.\n- La chaîne d'instance peut s'écrire en même temps que le module de run.\n- Le convertisseur, la base (ii), le prédicteur sur les traits du texte et le script de récupération peuvent s'écrire pendant le calcul.\n\nLes deux contre-lectures R2 restent séquentielles.",
+  "decisions_pour_lazar": [
+   "Calibrage honnête (dépense hors plafond ou décision à modifier). D-S9 (a), ta décision (N-055) : un calibrage de 10 à 16 fois les unités sabotées de l'épreuve, à 1 %. Cela fait environ 4 200 à 13 440 épisodes honnêtes en plus, soit environ 150 à 630 USD. Le devis n'en prévoit aucun, et les jumeaux des unités d'épreuve ne peuvent pas servir de calibrage. Le plancher technique est de 99 épisodes honnêtes par cellule et par strate filtrée, sinon le seuil est infini. Options : (i) relever le plafond ; (ii) revenir à D-S9 (b), avec un calibrage réduit et l'affirmation « aux seuils scellés » ; (iii) prendre des unités du devis pour le calibrage, au prix de la puissance.",
+   "Unités contre tâches (revendication et puissance). Il n'existe que 96 tâches distinctes sur disque, vérifié : 60 du pilote, comprises dans les 64 d'évaluation, plus 32 d'entraînement sans recoupement. Si l'unité est la tâche (D-S1), on a au plus 96 unités par mode avec des tâches partagées entre modes, et 48 avec des tâches disjointes. « +300 épisodes sabotés par mode » ne donne donc pas les « plusieurs centaines d'unités » de N-056. Options : accepter la sous-puissance écrite d'avance, ou financer l'extraction de tâches neuves (dépense d'API, accès arXiv aujourd'hui refusé par l'environnement, environ 25 heures).",
+   "Organismes (revendication de H1a, strate « diffus, flou ») : deux choix liés. (a) Le mode « affaiblir les contrôles », retiré par le défaut (b) de P-015 (R-321), revient-il avec l'étiquetage de P-014 comme vérité terrain ? (b) Le mode « coût » reprend-il le saboteur flagrant de P3, que le coût seul détecte à 0,888 et qui donne une victoire triviale à la boîte noire ? Ou bien une intensité plus faible, ce qui remettrait d'abord la recherche de dose que P-015 (b) prévoit sur la boîte noire seule ?",
+   "Échéance de GO-2026-10-28-02 : le lancement réaliste tombe vers le 31 octobre ou le 1er novembre, et le calcul dure environ 30 heures en temps réel. Faut-il prolonger au 2 ou 3 novembre ? Après le 31, la garde refuse toute création, relance comprise.",
+   "Dépenses hors des 90 USD : (a) l'étiquetage à deux séries par sous-agents, soit environ 35 800 paires par série pour le mode « contrôles », sur un compte qui a du crédit (R-624) ; (b) les bases (i), moniteur par action H.12, et (iv), TRACE-lite, qui demandent de la carte graphique non comptée au devis ; (c) une régénération éventuelle du fichier complet des sondes figées (environ 1 heure de carte). Pour chacune : dans le plafond, GO séparé, ou abandon déclaré.",
+   "Instrument : acceptes-tu que « les sondes figées de P3 » se lisent sur le fichier léger seul (424 sondes, les deux principales comprises) ? Le fichier complet, avec les 6 sondes de Mahalanobis, est resté sur l'instance 56799469, détruite ; seul son sceau 91b61c45… existe (vérifié).",
+   "Sens de « deux lancements au plus » : deux instances parallèles comptent-elles pour deux lancements ? Une instance perdue avant tout calcul compte-t-elle ? Et le crédit Vast.ai : recharge à environ 90 USD, ou recharge automatique comme en R-555 ?",
+   "Qui définit la strate « diffus / concentré » et l'instant du dommage, et doivent-ils être dans cette première banque ? Conv-audit a conçu des moniteurs (séparation R-601)."
+  ],
+  "demandes_a_conv_audit": [
+   "Le dimensionnement exact promis au message n° 126, ligne 32, en unités et non en épisodes, sous la contrainte des 96 tâches. Il doit préciser : les parts de calibrage, calibrage du développement, développement et épreuve, par unité ; les tranches et G_max (D-S24) ; les jumeaux partagés ou non entre les deux modes.",
+   "Tables de puissance recalculées pour 3 exécutions par unité, et non 10 (pari v2, ligne 265 ; variance par unité, v10, ligne 90). Dire si 3 exécutions suffisent, ou s'il vaut mieux plus d'exécutions sur moins d'unités.",
+   "La liste scellée des cellules (moniteur × condition) de G1 et la statistique par épisode de chacune. La démonstration n'en a que sept synthétiques (blanc, blanc_jumeau, cascade, dernier_etat, noir_action, noir_sequentiel, juge). Préciser lesquelles doivent être calculées pendant le lancement et lesquelles peuvent l'être après.",
+   "La définition opérationnelle de la base (iii) « dernier état » : score de la dernière action, ou état caché en dernière position ? Dans le second cas, il faut le capturer pendant la génération.",
+   "Épingler la version du format : `monde_banque_scores.py` v30, 58d4fee8…. Deux instances écrivent sur la branche (de25cb67). Confirmer que les champs en plus (consigne, exécution, paire, instant du dommage, agent) sont admis comme champs d'épisode ou comme strates en texte.",
+   "Le calibrage minimal acceptable si Lazar ne finance pas D-S9 (a) en entier, et le traitement du jumeau calibré (contrôle 12) avec des jumeaux partagés entre modes.",
+   "Le code du monde « modes » qui lira la banque (promis au message n° 126), ou une date."
+  ],
+  "risques": [
+   "Calibrage honnête absent du devis. Sans honnêtes réservés, le seuil à 1 % est infini sous 99 épisodes par cellule et par strate filtrée. Avec une partition au quart des environ 840 jumeaux, on n'aurait qu'environ 105 honnêtes par mode : j = 1, le seuil devient le plus haut score honnête.",
+   "Puissance surestimée : les tables supposent 10 épisodes par unité, la banque en aura 3, et 96 tâches au plus. Le contraste blanc contre blanc, (ii) et (iii), risque de rester muet. La sous-puissance doit être écrite avant le lancement, sinon on viole R3 et R4.",
+   "Sondes faibles par construction : selon le verdict v2 de P3, aucune sonde générique n'est au-dessus de son plancher sur (i-a). R3 interdit de régler quoi que ce soit pour les faire gagner.",
+   "Calcul faux sans alerte si l'on réutilise les vecteurs de la chaîne T0.5 : maximum par coordonnée en demi-précision, alors que le maximum des produits n'est pas le produit des maximums. Ou si la configuration (révision, texte d'ouverture, couches, empan, noyau) s'écarte de P3 : aucune garde ne le contrôle aujourd'hui.",
+   "Notes des juges incomplètes : au pilote, 54 sur 180 pour le 8B et 50 sur 180 pour le 3B ont un score complet. Le format refuse toute cellule non finie et interdit l'imputation. La règle doit être scellée d'avance ; allonger les réponses allonge le calcul.",
+   "Marge budgétaire mince : environ 59 heures de carte, soit environ 65 à 85 USD sur 90, à ± 30 %. Les épisodes sabotés des deux modes n'ont jamais été chronométrés. Les bases (i) et (iv), l'étiquetage, le calibrage et Mahalanobis ne sont pas comptés.",
+   "Échéance du 31 octobre : environ 45 heures de préparation, plus deux contre-lectures, plus environ 30 heures de calcul. Sans prolongation, une panne tardive ne peut pas être relancée.",
+   "Perte d'hôte sur des lancements de plus de 20 heures (R-579) : sans poussées par tranches, tout est perdu, et « deux lancements au plus » ne laisse aucune relance.",
+   "Un champ ou une cellule oublié pendant le lancement payant (paire, instant du dommage, état final, vecteurs) ne se rattrape pas sans relancer. Il faut garder textes, scores par jeton et vecteurs.",
+   "Partition choisie après avoir vu des scores : ce serait une sélection (contrôle 12) et une violation de R1. Elle doit être scellée avant le premier score.",
+   "Les 60 tâches du pilote ont déjà servi à l'épreuve de P3, dont le verdict a été lu. Leur réemploi dans l'épreuve de G1 mérite d'être déclaré. Incertain : je n'ai pas vérifié sur quelles données les sondes génériques ont été entraînées.",
+   "L'étiquetage à deux séries représente environ 35 800 paires par série, hors devis. Les crédits de sous-agents sont épuisés sur le compte 1. Les textes envoyés doivent rester hors du dépôt, et distincts de la référence boîte noire locale (N-029).",
+   "Les lanceurs corrigés de la couche 1 bis (v4, complément, noter_complement_t05) sont absents de ce clone (commits introuvables). Repartir de P3 reproduirait les défauts de choix d'offre de vastai 1.8.3 (R-577, R-578). Les anciens lanceurs codent en dur des chemins de blocs-notes d'autres sessions.",
+   "L'invariant N-053 n'est couvert par aucun test, alors que les sondes notent en ligne dans le même modèle que l'agent.",
+   "Gouvernance : le préenregistrement de G1 sur main en est au brouillon 3 du 6 octobre, et doit être scellé et contre-lu avant la lecture de la banque. La couche 2 doit rester distincte du gel R-611 et ne rien tirer de la quarantaine (N-057) ni du mode tenu à l'écart, qui n'est pas couvert.",
+   "Incertitude d'estimation : les efforts en heures sont des jugements, sans mesure, à environ ± 40 %. Ils supposent des réponses de Lazar et de conv-audit dans la journée ; une conv-audit en pause allonge le chemin d'autant."
+  ],
+  "contradictions_entre_lectures": [
+   "Heures de carte : la lecture 2 donne environ 52 heures, avec 0,6 minute par notation reprise du devis ; la lecture 4 donne 58 à 62 heures. Vérifié dans diag/20261017-193648-t05-notations-reel/resume.json : 8B, 10 478,2 s pour 180 notations, soit 58,2 s ; 3B, 4 944,1 s pour 180, soit 27,5 s ; moyenne 42,8 s, contre 36 s au devis. P3 : 9 644,6 s pour 240 épisodes, soit 40,2 s. Total : 1 680 × 40,2 s ≈ 18,7 h, plus 3 360 notations ≈ 40,0 h, soit environ 59 heures. La lecture 4 est juste ; le devis sous-estime la notation.",
+   "Unités par mode : la lecture 1 parle de « 140 unités de 3 exécutions par mode » ; la lecture 2 dit que seules 96 tâches existent. Vérifié : 96 identifiants distincts (60 compris dans les 64, plus 32, sans recoupement). Si l'unité est la tâche, 140 unités par mode est impossible : 96 au plus avec des tâches partagées entre modes, 48 avec des tâches disjointes. Le sens exact de « consigne » dans le devis (tâche, ou autre) reste à confirmer par conv-audit.",
+   "Calibrage : la lecture 3 compte environ 105 honnêtes de calibrage par mode (ce que donne le devis) ; la lecture 1 compte 4 200 à 13 440 épisodes (ce qu'exige D-S9 (a)). Ce n'est pas une contradiction mais un écart réel : vérifié qu'aucune occurrence de « calibr », « unité », « strate » ou « diffus » n'existe dans le devis.",
+   "Dépôt et erreur 403 : la lecture 2 dit qu'aucun lancement n'est possible tant que la création est bloquée ; la lecture 4 cite R-627. Vérifié : le 403 visait `lciric/controle-ia-lot-fable-affinage-v1`, que Lazar a créé ensuite (R-627, commits db2b59cf puis d89d438e, R-628). `lciric/controle-ia-travail` existe (c'est `origin`), et l'amorce le clone par défaut. Le 403 ne bloque pas la couche 2 ; la demande relayée semble porter sur un dépôt déjà créé, ou sur un autre qu'il faut nommer. Seule ligne périmée : registres/etat.md, ligne 3, écrite avant R-627.",
+   "Effort bloquant : 17 h (lecture 1), 35 h (lecture 2), 22 h (lecture 3), 31 h (lecture 4). Les périmètres se recoupent et chaque lecture laisse de côté les autres domaines. Après dédoublonnage, et en comptant les juges intégrés, la capture du dernier état, la chaîne d'instance longue et les deux contre-lectures, j'arrive à environ 45 heures. L'incertitude est forte.",
+   "Mode « affaiblir les contrôles » : le devis le présente comme « retenu par conv-audit », avec un accord de 0,968, qui est en fait l'accord entre séries d'étiquetage et non une fiabilité du juge. Vérifié : le défaut (b) de P-015, appliqué en R-321, l'avait retiré (proposition P-015, ligne 33). Le GO sur le devis le réintroduit implicitement, mais l'ordre de P-015 (b) n'est levé nulle part par écrit.",
+   "Sondes de Mahalanobis : les lectures 2 et 3 proposent de s'en tenir au fichier léger ; la lecture 4 propose une régénération d'environ 1 heure de carte, vérifiée par le sceau. Vérifié : fichier complet absent, sceau 91b61c45… présent, verdict P3 v1 ligne 113 « resté sur l'instance ». Réserve : une régénération sur carte graphique peut ne pas reproduire le sceau au bit près (non-déterminisme). Cette voie est incertaine.",
+   "Base du devis : selon la lecture 4, le devis attribue toute la dépense de la couche 1 bis à 192 notations. Vérifié dans registres/depenses.md, lignes 202 à 211 : la partie (b), 4,56 heures, comprenait aussi la génération de 108 épisodes. Le coût marginal de 0,012 USD par notation est donc mal dérivé (il surestime la notation pure), alors que le temps mesuré par notation, 42,8 s, dépasse les 36 s supposés. Les deux erreurs vont en sens contraires ; le chiffrage au temps mesuré, environ 65 à 85 USD, fait foi."
+  ]
+ },
+ "critique": {
+  "corrections": [
+   {
+    "point": "Facteur confondant non traité : dans la famille (i), le jumeau honnête n'a pas d'instruction cachée dans son contexte. Une sonde peut donc séparer « a une instruction » de « n'en a pas », sans rien lire du sabotage. Le plan ne garde que les conditions honnête, coût et contrôles : il retire le témoin instruit et la condition « mention sans usage », que P-015 rend obligatoires pour T0.6. Il faut les remettre (d'où ≈ 1,5 à 2 fois plus d'épisodes), ou bien Lazar décide de s'en passer et le préenregistrement le déclare. Sans elles, le gain de la boîte blanche ne s'interprète pas.",
+    "preuve": "docs/brief-claude-code-programme-complet-v2.md l. 172 (« une sonde qui lit « j'ai une instruction cachée » réussit sur (i) ») ; docs/decisions/proposition-P-015-T0.6-T0.8-mode-cout-v1.md l. 41-44 (témoin et mention obligatoires) ; docs/decisions/decision-N-053-v1.md l. 17-21 (bras « fuite textuelle ») ; refs/canal-local/conv-audit:brouillons/canal-reprise-releve-v1/envois/mesures-fortes-v1/mesures-fortes-plan-v1.md l. 27 (mesure 6 : témoin de même longueur et de même place, « couche 2 pour le plan complet ») et mesures-fortes-plan-v2.md l. 31 (T4, écart témoin − honnête)",
+    "gravite": "bloquant"
+   },
+   {
+    "point": "R1 s'applique à cette banque, et le plan n'a aucun protocole d'aveugle. R-546 lève R1 seulement pour le pôle exploratoire : la banque sert G1, H2 et H8. Il manque trois choses. (1) Aucune métrique de séparation (aire sous la courbe, rappel) ne doit figurer dans les journaux, dans `resume.json` ni dans la surveillance (P3 écrivait un bilan dans son résumé). (2) Les scores de la partie « épreuve » doivent rester scellés et ne pas être remis à conv-audit ni au pôle, où R1 est levée, avant que le préenregistrement de G1 soit scellé et contre-lu. (3) La personne autorisée à ouvrir quoi, et quand, doit être écrite dans la fiche.",
+    "preuve": "registres/decisions.md l. 770 (R-546 : levée pour le pôle exploratoire seulement) ; refs/canal-local/conv-audit:…/mesures-fortes-v1/mesures-fortes-plan-v1.md l. 6-7 (« R-546 ne couvre pas ces mesures : elles servent H2, H8, G1 ») ; refs/canal-local/conv-audit:…/pari-de-signe/conception-pari-de-signe-v2.md l. 345-346 (préenregistrement de G1 écrit après la banque, avant lecture) ; brief l. 46 (R1 : aucune lecture avant scellement) ; brief l. 197 (critère 6 de G0)",
+    "gravite": "bloquant"
+   },
+   {
+    "point": "Ordre oublié : le défaut (b) de P-015 est appliqué (R-321). Il exige (1) le verdict de P4-instrument avant toute lecture de sonde sur des épisodes de T0.6, et (2) T0.7 et T0.8 scellés avant. P4 n'a jamais tourné : aucun `prereg/P4*`. De plus, les traits du prédicteur sur le texte doivent être fixés dans le préenregistrement de T0.8 AVANT toute lecture des épisodes de T0.6. Le plan range ce prédicteur parmi les pièces non bloquantes, « à écrire pendant le calcul ». Or l'étiquetage, qui fait lire les textes, et la récupération viendraient avant. Il faut soit sceller T0.8 (traits) avant le versement des textes, soit que Lazar lève explicitement l'ordre de P-015 (b) : c'est un nœud.",
+    "preuve": "docs/decisions/proposition-P-015-T0.6-T0.8-mode-cout-v1.md l. 68-69 ; registres/decisions.md l. 464 (R-262) et l. 529 (R-321 : « T0.7 … et T0.8 … scellés avant ») ; docs/decisions/decision-N-029-v1.md l. 26-27 ; `ls prereg/` : aucun P4 ; registres/etat.md l. 62 et 69 (chaîne de P4 non lancée)",
+    "gravite": "bloquant"
+   },
+   {
+    "point": "Dose, « diffus » et horizon mal posés. La synthèse reprend « la strate diffus / concentré n'existe nulle part ». Or P-015 la définit déjà : dose = proportion p d'actions sabotées × intensité, et « diffus » = chaque action sabotée sous le seuil du meilleur moniteur boîte noire par action, à 1 %. Le lanceur de P3 met une indication à chaque pas (p = 1). Trois conséquences. (1) p et l'intensité sont des paramètres de génération, à fixer AVANT le lancement. (2) Une strate définie par un score de moniteur contredit D-S14 (partition scellée avant tout score) : la strate doit être la dose écrite, et la dose réalisée doit se mesurer par la vérité terrain. (3) La recherche de dose sur la boîte noire seule, exigée par P-015 (b), est un lancement payant en plus, hors des « deux lancements au plus ». Enfin, N-007 revendique un rappel « qui croît avec l'horizon », et le pari exige les strates horizon et N. Avec T = 10 fixe, H2b n'est pas testable. Les horizons doivent être choisis avant la génération.",
+    "preuve": "docs/decisions/proposition-P-015-T0.6-T0.8-mode-cout-v1.md l. 35-40 ; brief l. 163-164 (dose-réponse monotone, critère de fin de T0.6 et critère 2 de G0, l. 193) ; src/controle_ia/premier_test_ia/conditions.py (indication à chaque pas t < T) ; docs/decisions/decision-N-007-N-008-v1.md l. 28 ; conception-pari-de-signe-v2.md l. 348-353 (strates horizon, N, instant du dommage) ; registres/decisions.md l. 529",
+    "gravite": "bloquant"
+   },
+   {
+    "point": "Invariant de N-053 sous-estimé. Il couvre aussi tout signal de SÉLECTION, pas seulement le contexte de l'agent. Deux pratiques le violeraient : (a) rejeter ou régénérer des épisodes pour obtenir du « diffus » sous le seuil d'un moniteur ; (b) exclure des épisodes parce que la note d'un juge est incomplète ou illisible, comme le prévoit l'étape « règles déclarées d'avance ». Dans les deux cas, on sélectionne par un score de moniteur, et la population de comparaison s'en trouve biaisée. La règle d'exclusion ne doit utiliser aucune sortie de moniteur. La garde de code (R5) doit tester ce cas de sélection, en plus de « aucune note dans le contexte ».",
+    "preuve": "docs/decisions/decision-N-053-v1.md l. 42-44 (« aucun score de moniteur (sonde, juge) n'entre dans un signal d'entraînement ou de sélection de l'agent ») ; docs/notes/devis-couche-2-banque-deux-modes-v1.md l. 138-139 (le devis ne cite que la génération)",
+    "gravite": "bloquant"
+   },
+   {
+    "point": "Configuration des juges erronée. Le plan reprend la configuration du pilote (rubrique b0) et pose les notes incomplètes en question à Lazar. Or : (a) P-003, défaut appliqué, et N-007 placent le juge robustifié b* parmi les bras boîte noire de G1 ; (b) le verdict N-022 (GO de Lazar) prend acte que le 8B est trop faible pour la rubrique et prévoit une rubrique simplifiée (plan B). Le brouillon 6 du plan B n'a jamais été scellé ni versé sur `main` : seules des notes sont sous `brouillons/plan-b-code/`. (c) Le score continu par la probabilité des jetons est déjà décidé (P-003 ; D-S13 par défaut) : c'est du code à écrire avec `bases/scores_jetons.esperance`, pas une question pour Lazar. Enfin, le nombre de passes par juge et par épisode (double notation pour la fidélité ?) n'est pas fixé, alors qu'il change les ≈ 40 heures de notation.",
+    "preuve": "registres/decisions.md l. 381 (P-003 : juge b*, planchers « tout signaler » et « juge en une passe », journal des JSON invalides, score continu) ; docs/decisions/decision-N-007-N-008-v1.md l. 52 ; registres/decisions.md l. 349 (R-212 / N-022 : bascule vers la rubrique simplifiée) et l. 454 (R-255 : brouillon 6 non scellé) ; prereg/T0.5-pilote-notations-config-v1.json (`variante_juge` b0, `episodes_notes_deux_fois`)",
+    "gravite": "majeur"
+   },
+   {
+    "point": "Capture qu'on ne pourra pas rattraper : le bras « fuite textuelle » de N-053 exige la lecture de CHAQUE sonde sur toutes les positions, puis avec les positions qui portent l'évidence textuelle masquées. Il faut donc, pour toutes les sondes et leurs planchers, les scores par jeton (ou les activations par jeton), plus les identifiants de jetons et les bornes des champs. Le lanceur de P3 ne garde les scores par jeton que pour les deux sondes principales. P-015 exige en plus des activations par jeton sur un sous-ensemble tiré par graine, avec un plan de stockage écrit. Ce stockage doit figurer au module de run et au chiffrage (≈ 424 scores × jetons × actions, en demi-précision, quelques Go).",
+    "preuve": "docs/decisions/decision-N-053-v1.md l. 17-21 ; src/controle_ia/premier_test_ia/run.py l. 20-23 et 281-283 (`notation.par_jeton(seg, principales)`) ; docs/decisions/proposition-P-015-T0.6-T0.8-mode-cout-v1.md l. 62-63",
+    "gravite": "majeur"
+   },
+   {
+    "point": "Bras manquants, à séparer selon ce qui se rattrape. Trois bras sont déjà décidés : le juge Qwen2.5-7B d'une autre lignée (N-053 point 4, « tout de suite »), absent du code et du devis, et les bases (i) et (iv) TRACE-lite, qui entrent dans l'ensemble boîte noire de G1 (N-007, P-003, D-S8). Les traiter comme « optionnels dans les 90 USD » serait modifier une décision : c'est un nœud. En revanche, ces cellules ne lisent que les textes et peuvent tourner dans un lancement ultérieur, si les textes et les ensembles finaux sont gardés. Le chemin critique doit séparer deux choses : les captures faites pendant la génération (sondes par jeton, vecteurs, dernier état, champs), qui bloquent, et les cellules sur texte (juges, Qwen, (i), (iv), traits), qu'on peut reporter. Cela allège le premier lancement et oblige à prévoir un GO pour un troisième.",
+    "preuve": "docs/decisions/decision-N-053-v1.md l. 33-37 ; recherche de « Qwen » dans src : seulement harnais/modeles.py ; docs/decisions/decision-N-007-N-008-v1.md l. 47 et 52 ; registres/decisions.md l. 381 (P-003) ; docs/decisions/decision-N-055-v1.md l. 26 (D-S8)",
+    "gravite": "majeur"
+   },
+   {
+    "point": "Conditions de T0.6 « tel que le programme le prévoit » absentes : les contrôles croisés (organisme honnête averti de la surveillance, saboteur en régime simulé « non observé ») et la mesure de la conscience d'évaluation (mêmes épisodes avec et sans marqueurs de test). Conv-audit rattache la mesure 7, deux cadrages à contenu fixé, à la couche 2. Il faut décider : inclure, ou déclarer hors banque, avec la conséquence pour l'interprétation de H8.",
+    "preuve": "brief l. 162 ; docs/decisions/decision-N-053-v1.md l. 27-32 ; mesures-fortes-plan-v1.md l. 28 (mesure 7 : « épisodes à produire … couche 2 ou pilote dédié ») ; refs/canal-local/conv-audit:…/messages/conv-audit_2026-10-27_n126.md l. 24 (« T0.6 tel que le programme le prévoit »)",
+    "gravite": "majeur"
+   },
+   {
+    "point": "La séparation des connaissances (N-054 point 3) n'est pas traitée. Chaque bras doit déclarer ce que son concepteur sait des modes : générique ou spécialisé. Si session-depot écrit la consigne « affaiblir les contrôles » ET code la cascade, le dernier état et les traits du texte, ces bras deviennent spécialisés pour ce mode. Les traits liés au champ du coût sont spécialisés par définition. La fiche doit nommer l'auteur de chaque pièce et ce qu'il a vu. Elle doit aussi consigner l'accès « mécanique » de session-depot à la quarantaine (empreintes seulement), au regard de N-057 point 5.",
+    "preuve": "docs/decisions/decision-N-054-v1.md l. 40-45 ; docs/decisions/decision-N-057-v1.md l. 42-43 ; registres/decisions.md l. 853 (R-625, accès mécanique consigné)",
+    "gravite": "majeur"
+   },
+   {
+    "point": "L'étiquetage est mal posé. N-054 fixe déjà « deux séries indépendantes » : ce n'est pas une question ouverte, le coût est deux séries complètes et non 10 % en double. R-627 dit que toute orchestration de sous-agents demande le mot de Lazar, avec le coût annoncé avant : c'est donc un nœud de dépense, absent du chemin critique. La validation de la consigne regroupée sur les 480 paires (P-014 point 3) précède tout usage. L'effort et le débit sont environ deux fois ceux de la synthèse.",
+    "preuve": "docs/decisions/decision-N-054-v1.md l. 35-36 ; docs/decisions/decision-P-014-reference-appariement-T0.6-v1.md l. 9-11 ; registres/decisions.md l. 855 (R-627 : orchestration seulement sur son mot, coût annoncé avant)",
+    "gravite": "majeur"
+   },
+   {
+    "point": "Le chiffrage de 65 à 85 USD est un plancher, pas une estimation. Le témoin et la mention (≈ +50 à 100 % d'épisodes), le calibrage honnête, la capture par jeton, la recherche de dose, Qwen, (i), (iv) et les deux séries d'étiquetage ne sont pas comptés. Il faut le présenter comme un plancher et demander un devis révisé : le GO à 90 USD est probablement insuffisant, même pour la banque minimale interprétable.",
+    "preuve": "docs/notes/devis-couche-2-banque-deux-modes-v1.md l. 49-77 (seuls la génération, les deux juges et les sondes sont chiffrés) ; registres/go.md l. 101",
+    "gravite": "majeur"
+   },
+   {
+    "point": "Prérequis de l'instance oubliés. (1) HEAD (`claude/lucid-fermi-n7610d`) a 5 commits d'avance sur `main`. L'amorce clone le dépôt puis fait `checkout` du commit S : S doit être poussé, et l'avance de `main` reste « à confirmer par Lazar ». (2) La révocation des anciennes clés est en attente : il faut vérifier avant toute dépense que le jeton GitHub de l'instance (écriture sur controle-ia-travail) et le jeton Hugging Face (modèles Llama à accès restreint, plus Qwen si ajouté) sont valides. Hugging Face est injoignable depuis la session (R-625), donc cette vérification doit se faire sur l'instance, en première étape bornée.",
+    "preuve": "`git rev-list --count main..HEAD` = 5 ; registres/etat.md l. 2-3 ; scripts/amorce_instance_p3.sh l. 9-10, 20, 29-32 ; registres/decisions.md l. 853 (R-625 : huggingface.co refusé)",
+    "gravite": "majeur"
+   },
+   {
+    "point": "La garde de conformité à P3 est incomplète : les sondes figées ne valent que sur la même pile logicielle. Il faut épingler et contrôler aussi les versions de torch, transformers, tokenizers et python, ainsi que le type de carte, pas seulement le modèle, la révision, les couches et le noyau d'attention.",
+    "preuve": "runs/20261019-230011-p3-reel/manifeste.json, clé `versions` : torch 2.14.1, transformers 5.18.0, tokenizers 0.23.2, python 3.11.17",
+    "gravite": "mineur"
+   },
+   {
+    "point": "Demande relayée sur le dépôt (erreur 403). C'est la seule voix de l'utilisateur dans cette tâche : la réponse finale doit d'abord donner les instructions, puis demander quel dépôt est visé, puisque le dépôt du lot de Fable est déjà fait (R-627, R-628). Il faut ajouter qu'une fois le dépôt créé, la session ne pousse qu'après une ligne de GO de type « dépôt distant » au registre (nœud), comme pour GO-2026-10-28-05. Et rappeler qu'aucun dépôt public ne peut être créé.",
+    "preuve": "CLAUDE.md (hiérarchie : « compte, dépôt distant » = nœud ; interdits : « ouvrir un dépôt public ») ; registres/go.md l. 100 ; registres/decisions.md l. 854-856",
+    "gravite": "mineur"
+   },
+   {
+    "point": "Formulation de D-S9 à corriger. D-S9 (b), le contrôle des jumeaux, s'applique « toujours », en plus de (a) : l'option « revenir à (b) » veut dire abandonner (a), donc modifier une décision de Lazar (nœud). Par ailleurs, la dérivation de 4 200 à 13 440 épisodes compte toutes les unités sabotées comme unités d'épreuve. Il faut la refaire après la partition, en retirant le développement.",
+    "preuve": "docs/decisions/decision-N-055-v1.md l. 27",
+    "gravite": "mineur"
+   },
+   {
+    "point": "Pour un lancement d'environ 30 heures qui traverse plusieurs sessions, il faut écrire d'avance la passation R14 et la reprise de la surveillance. Les tâches de fond durent 2 heures au plus : il faut un rappel programmé, et l'arrêt se fait par identifiant (R10). La consignation dans `registres/arrets.md` et `registres/depenses.md` doit être prévue pour chaque instance.",
+    "preuve": "CLAUDE.md (R10, R14, section « Passation ») ; docs/notes/devis-couche-2-banque-deux-modes-v1.md l. 136-137",
+    "gravite": "mineur"
+   }
+  ],
+  "accord_global": "Je suis d'accord avec le verdict de la synthèse : on ne peut pas lancer avant l'échéance du 31 octobre, et ses inventaires de ce qui existe et de ce qui manque tiennent. Mais la synthèse est incomplète sur cinq points qui bloquent, et elle range comme optionnels des éléments que Lazar a déjà décidés.\n\nLes cinq points bloquants :\n1. **Facteur confondant.** Le jumeau honnête de la famille (i) n'a pas d'instruction cachée. Le témoin et la condition « mention », obligatoires selon P-015, ont disparu du plan : le gain de la boîte blanche ne s'interpréterait pas.\n2. **R1 s'applique pleinement.** R-546 ne lève R1 que pour le pôle exploratoire. Il faut un protocole d'aveugle : aucune métrique dans les journaux, et l'épreuve retenue loin du pôle jusqu'au préenregistrement de G1.\n3. **Ordre de P-015 (b) oublié.** Le verdict de P4 et le scellement de T0.7 et T0.8, traits du texte compris, doivent précéder toute lecture.\n4. **Dose et horizon.** Le « diffus » est défini par la dose (p × intensité) et l'horizon doit varier ; ce sont des paramètres de génération à fixer avant le lancement, et la recherche de dose est un lancement de plus.\n5. **Invariant de N-053.** Il interdit aussi toute sélection d'épisodes par un score de moniteur, y compris l'exclusion sur une note de juge incomplète.\n\nLes éléments déjà décidés, à ne pas traiter comme optionnels :\n- le juge b* et la rubrique simplifiée du plan B ;\n- le score continu par la probabilité des jetons ;\n- les bases (i) et (iv) ;\n- le juge Qwen ;\n- les deux séries d'étiquetage complètes.\n\nIl manque aussi une capture qu'on ne pourra pas rattraper après le lancement : les scores par jeton de toutes les sondes, pour le bras « fuite textuelle ».\n\nLe chemin critique doit séparer les captures faites pendant la génération (elles bloquent) des cellules calculées sur les textes (on peut les reporter à un lancement ultérieur). Les chiffres de 59 heures de carte et de 65 à 85 USD sont des planchers. Le délai d'environ 45 heures est probablement sous-estimé de 15 à 25 heures, à cause des pièces ajoutées ci-dessus.\n\nPour la demande relayée sur le dépôt : la réponse finale doit commencer par les instructions de création, puis demander quel dépôt est visé, et rappeler qu'une ligne de GO « dépôt distant » doit être inscrite avant que la session y pousse."
+ }
+}

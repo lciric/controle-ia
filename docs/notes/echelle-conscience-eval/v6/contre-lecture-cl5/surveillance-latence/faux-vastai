@@ -1,0 +1,8 @@
+#!/usr/bin/env bash
+# faux vastai (cl5) : « show » et « logs » répondent en 59 s (sous le délai de 60 s de la surveillance v5) ;
+# « stop » consigne l'heure de la demande d'arrêt.
+case "$1 $2" in
+  "show instance") sleep 59; echo '{"actual_status": "running", "cur_state": "running", "dph_total": 3.5, "status_msg": ""}' ;;
+  "logs "*) sleep 59; echo "ECHELLE 2026 : mesure" ;;
+  "stop instance") echo "arret demande $(date -u +%s)" >> "$ARRETS_FAUX"; echo "arrêt demandé" ;;
+esac

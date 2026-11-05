@@ -1,0 +1,52 @@
+--- echelle-v6/scripts/choisir_offre_v6.py	2026-10-27 07:08:16.123717007 +0000
++++ echelle-v7/scripts/choisir_offre_v7.py	2026-10-27 07:26:39.961225068 +0000
+@@ -1,14 +1,14 @@
+ #!/usr/bin/env python3
+-"""Choix de l'offre, plafond de durée et contrôle du prix relu, comparaison d'échelle v6 (lignée « session-depot »,
+-27 octobre 2026), copie de `choisir_offre_v5.py` sous un nom nouveau (R12) après la contre-lecture n° 5, sans
+-changement de calcul. Depuis la v5 (contre-lecture n° 4) : descente comptée pour 165 Go (157,19 Go de poids relus sur
++"""Choix de l'offre, plafond de durée et contrôle du prix relu, comparaison d'échelle v7 (lignée « session-depot »,
++27 octobre 2026), copie de `choisir_offre_v6.py` sous un nom nouveau (R12) après la contre-lecture n° 6, sans
++changement de calcul ; le commentaire de MARGE dit la latence qu'elle couvre (CLU-03). Depuis la v5 (contre-lecture n° 4) : descente comptée pour 165 Go (157,19 Go de poids relus sur
+ le Hub, trace `tailles-modeles-v1.json`, plus les roues pip et l'image ; CLW-10). Depuis la v4 (contre-lecture n° 3) :
+   - CLZ-03 : le prix relu après la création est admis jusqu'à TOLERANCE_PRIX × l'offre ; la durée plafonnée et la
+     dépense au pire sont donc calculées à ce prix majoré, location, stockage, descente et remontée comprises ;
+   - CLZ-05 : la remontée des résultats (≈ 0,3 Go, comptée 1 Go) entre dans le pire ; débit de descente d'au moins
+     DEBIT_MIN_MBPS (le 70B pèse ≈ 141 Go : ≈ 10 min à 2 000 Mb/s, ≈ 27 min à 700) ;
+   - CLZ-04 : la comparaison du prix relu est une fonction testée (`verifier_prix_relu`), appelée par
+-    `controler_prix_v6.sh` (option --prix-relu).
++    `controler_prix_v7.sh` (option --prix-relu).
+ Unités de Vast : gpu_ram en Mo ; inet_down en Mb/s ; dph_total = location + stockage, en USD/h ; storage_total_cost
+ = stockage seul, en USD/h, qui court encore entre l'arrêt et la destruction ; inet_down_cost et inet_up_cost en USD/Go.
+ 
+@@ -16,9 +16,9 @@
+   durée plafonnée = min(7 200 s, (plafond − fixe) / (T × dph_total)), au moins DUREE_MIN_S
+   pire = durée plafonnée × T × dph_total + fixe ≤ plafond
+ 
+-    python -I -B choisir_offre_v6.py OFFRES_BRUT OFFRE_SORTIE PRIX_MAX DESCENTE_MAX PLAFOND_GO JOURNAL OFFRES_RELUES
++    python -I -B choisir_offre_v7.py OFFRES_BRUT OFFRE_SORTIE PRIX_MAX DESCENTE_MAX PLAFOND_GO JOURNAL OFFRES_RELUES
+       sortie standard : « id dph_total inet_down_cost duree_max_s pire » ; codes : 0 choisie ; 3 aucune ; 2 illisible.
+-    python -I -B choisir_offre_v6.py --prix-relu OFFRE_JSON < réponse de « vastai show instance ID --raw »
++    python -I -B choisir_offre_v7.py --prix-relu OFFRE_JSON < réponse de « vastai show instance ID --raw »
+       lignes de contrôle sur la sortie standard ; codes : 0 conforme ; 1 non conforme ou illisible.
+ """
+ import json
+@@ -28,7 +28,8 @@
+ DESCENTE_GO = 165          # Go descendus : poids 16,07 + 141,12 Go (trace tailles-modeles-v1.json), roues et image
+ MONTEE_GO = 1              # Go remontés (résultats ≈ 0,3 Go, comptés large ; CLZ-05)
+ STOCKAGE_APRES_H = 24.0    # heures de stockage entre l'arrêt et la destruction, au plus (CLY-03)
+-MARGE = 0.20               # USD (latence de la surveillance, ≈ 0,08 USD)
++MARGE = 0.20               # USD : latence de la surveillance ; couvre 195,9 s au prix le plus haut admis (1,05 × 3,5 USD/h),
++                           # la surveillance demande l'arrêt au plus 60 s après le plafond, puis 30 s d'appel : 90 s (CLU-03)
+ TOLERANCE_PRIX = 1.05      # prix relu admis jusqu'à 5 % au-dessus de l'offre ; tout le pire est compté à ce prix (CLZ-03)
+ DUREE_PLAFOND_S = 7200
+ DUREE_MIN_S = 4500         # en dessous, le run (≈ 1 h attendue) n'a pas la marge voulue
+@@ -103,7 +104,7 @@
+ def principal(argv):
+     if argv[:1] == ["--prix-relu"]:
+         if len(argv) != 2:
+-            print("usage : choisir_offre_v6.py --prix-relu OFFRE_JSON < instance", file=sys.stderr)
++            print("usage : choisir_offre_v7.py --prix-relu OFFRE_JSON < instance", file=sys.stderr)
+             return 1
+         try:
+             offre = json.load(open(argv[1], encoding="utf-8"))

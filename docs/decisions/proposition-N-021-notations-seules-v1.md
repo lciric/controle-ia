@@ -1,0 +1,21 @@
+# Proposition N-021 — notations décisives refaites du pilote de T0.5 : voie, écart et coût réels — v1
+
+Date : 2026-10-12 (UTC), session 13. Hiérarchie : **nœud** (écart à un préenregistrement scellé ; dépense). Suite de N-020, point 1, tranché (a) par Lazar (R-155) sur une estimation de la session (« lanceur limité aux notations… environ 3 à 5 heures de carte, 3 à 6 USD ») que l'état des lieux corrige. Pièces : `brouillons/T0.5-notations-seules-etat-des-lieux-v1/` (six rapports de sous-agents neufs : chaîne d'instance, lecture gelée, texte et règles, étiquetage pour T0.6, plan, critique adverse « tenable avec corrections »).
+
+**Décision.** Confirmer, réorganiser ou retirer la notation refaite des juges 8B et 3B, compte tenu de son coût réel et de l'écart de procédure qu'elle impose.
+
+**Enjeu.**
+- **Écart inévitable.** Le code de lecture gelé (`lire_pilote.py`, commit cité `2660b07`) ne lit les notations que dans le dossier du pilote, par un seul run d'analyse. Des notations refaites par un run distinct ne peuvent être lues qu'en sortant du texte scellé : soit par un module de lecture neuf et mince qui n'appelle que les fonctions gelées (voie recommandée par le plan), soit en copiant les notations dans le dossier du pilote et en refaisant une analyse complète (quatre écarts cumulés, sur un comportement non écrit de `verifier_resultat`). Modifier `charger_pilote` toucherait un module gelé : écarté.
+- **Travail.** Nouveau lanceur `noter_pilote_a.py` (échéance par juge, une ligne par lot, compteurs), tests (un cas sain et un artefact par garde, R5), scripts d'instance (`ETUDE=notations`), préenregistrement complémentaire, contre-lecture R2, scellement, chaîne déclinée (contrôles avant dépense, lanceur, récupération), répétition jouet et bancs : **environ 3,5 à 4,5 jours de session avant le GO, puis environ 1,5 jour jusqu'au verdict**.
+- **Calcul.** Débit des juges jamais mesuré (le 8B a noté plus de 7 565 s sans finir) : **environ 4,5 heures de carte attendues** (3,5 à 6,1) ; plafond par la surveillance ≈ 7,5 heures, soit **≈ 10,5 USD au plus** au prix maximal du filtre (au-dessus des 3 à 6 USD annoncés en R-155) ; crédit exigé par le lanceur ≈ 7,5 × (prix + instances d'autres projets en marche) + 1,2 USD.
+- **Gel prolongé.** Les modules de lecture du pilote (`MODULES_LECTURE`, dont `propositions.py`, `juges.py`, `manifeste.py`) restent gelés jusqu'au verdict complémentaire : la correction du lecteur de coût et toute adaptation de ces modules pour T0.6 attendent, ou se font dans des modules neufs.
+- **Chemin critique de G0** (1er novembre) : le critère 2 dépend de T0.6, dont la vérité terrain est à refonder (appariement par sous-agents, R-156 ; contrôle par d'autres modèles en cours).
+
+**Options.**
+- **(a) Confirmer, voie autonome** : module de lecture neuf et mince (écart minimal déclaré, éprouvé par un test d'équivalence avec `analyser`), lancement dédié. Avantage : P2 et P3 deviennent lisibles ; la rubrique de départ de chaque juge est fondée. Inconvénients : 5 à 6 jours de session sur le chemin critique ; ≈ 10,5 USD au plus ; gel prolongé.
+- **(b) Greffer sur la première session de calcul de T0.6** : même module de lecture neuf ; notation des ensembles du pilote comme étape préliminaire du run de T0.6, sous son préenregistrement. Avantage : une seule chaîne de lancement (2 à 3 jours de moins). Inconvénients : la décomposition des juges arrive plus tard ; deux mesures dans un même lancement ; gel prolongé jusque-là.
+- **(c) Retirer la notation refaite** (revenir à l'option (b) du point 1 de N-020) : rubrique H.4 gardée pour les deux juges, chaque usager (T0.6, T0.8) requalifiant son juge sous son propre mode de lecture dans son préenregistrement, ce que le texte du pilote prévoit déjà (« Hypothèse », D-10). Avantage : 5 à 6 jours et ≈ 5 à 10 USD rendus au chemin critique ; la lecture du pilote est finie, le gel des modules se lève. Inconvénients : P2 et P3 restent non concluantes ; la rubrique de départ n'est pas éprouvée par le pilote.
+
+**Recommandation.** (c), confiance ≈ 60 % : le maillon faible révélé par le pilote est la vérité terrain (appariement), pas la rubrique des juges, que chaque usager requalifie de toute façon ; les jours gagnés vont à T0.6. À défaut, (b).
+
+**Sans défaut** (nœud) : rien n'est engagé (ni code, ni dépense) avant la réponse de Lazar.

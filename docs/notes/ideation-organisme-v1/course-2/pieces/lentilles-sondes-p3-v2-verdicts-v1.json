@@ -1,0 +1,71 @@
+{
+ "source": "docs/notes/lentilles-sondes-p3-v1/execution-v2/sortie-jlens-sondes-p3-v2.json",
+ "source_sha256": "51056ca42fd796c6d77c7ae5dde8ecfefe98a4ba631cb29ef27a69c889401038",
+ "statut": "exploratoire, non opposable ; seule la règle primaire porte un verdict",
+ "run_sondes": "20261019-230011-p3-reel",
+ "principales": {
+  "enjeux": "enjeux-lineaire-c15",
+  "tromperie": "tromperie-difference_moyennes-c15"
+ },
+ "convention_couche": "couche ℓ de P3 = clé ℓ de la lentille (sortie du bloc décodeur ℓ, indice à partir de 0) ; voir note-convention-couche-jlens-p3-v1.md",
+ "regle_primaire": {
+  "enonce": "Règle primaire unique, gelée avant toute exécution réelle (v2, 29 octobre 2026). Pour chaque sonde principale de P3 (une par concept, à sa couche : tromperie-difference_moyennes-c15, enjeux-lineaire-c15) et pour chacune des deux lentilles (logits, jacobienne), on décode la direction +w (variante « direction », sens de la classe 1). S = nombre de jetons de la liste du concept propre (concepts-sondes-p3-v2.json, jetons de début de mot) parmi les 20 jetons de tête, la tête étant restreinte aux jetons de début de mot (un espace initial, puis une lettre, puis lettres ou chiffres). On calcule la même statistique, par la même lentille et à la même couche, pour deux distributions nulles : 200 directions isotropes (graine 20261029, numpy.random.SeedSequence) et les planchers appariés en covariance de P3 pour ce concept (200 dans le run 20261019-230011-p3-reel ; refus en dessous de 100). Verdict « cohérent » si S >= 2 et si S est strictement supérieur au quantile 0,99 (méthode inverted_cdf de numpy) de chacune des deux distributions nulles ; sinon « non cohérent ». Quatre verdicts, lus tels quels, sans correction, sans seuil de rechange, sans autre liste de mots. Tout le reste de la sortie (scores z, p, têtes brutes, sens moins, autre concept, autres sondes et couches, variantes) est descriptif et ne sert pas de critère.",
+  "empreinte_enonce": "c1b21cd6f67bb4b46f9d4514abd1d00757226b28d35604ad87d780f30e250339",
+  "parametres": {
+   "k": 20,
+   "n_isotropes": 200,
+   "graine": 20261029,
+   "quantile": 0.99,
+   "methode_quantile": "inverted_cdf",
+   "min_jetons": 2,
+   "n_planchers_min": 100
+  },
+  "complete": true,
+  "verdicts": [
+   {
+    "sonde": "enjeux-lineaire-c15",
+    "concept": "enjeux",
+    "couche": 15,
+    "lentille": "jacobienne",
+    "S": 2,
+    "quantile_0_99_isotropes": 1.0,
+    "quantile_0_99_planchers": 3.0,
+    "n_planchers": 200,
+    "verdict": "non cohérent"
+   },
+   {
+    "sonde": "enjeux-lineaire-c15",
+    "concept": "enjeux",
+    "couche": 15,
+    "lentille": "logits",
+    "S": 0,
+    "quantile_0_99_isotropes": 0.0,
+    "quantile_0_99_planchers": 1.0,
+    "n_planchers": 200,
+    "verdict": "non cohérent"
+   },
+   {
+    "sonde": "tromperie-difference_moyennes-c15",
+    "concept": "tromperie",
+    "couche": 15,
+    "lentille": "jacobienne",
+    "S": 1,
+    "quantile_0_99_isotropes": 0.0,
+    "quantile_0_99_planchers": 1.0,
+    "n_planchers": 200,
+    "verdict": "non cohérent"
+   },
+   {
+    "sonde": "tromperie-difference_moyennes-c15",
+    "concept": "tromperie",
+    "couche": 15,
+    "lentille": "logits",
+    "S": 0,
+    "quantile_0_99_isotropes": 1.0,
+    "quantile_0_99_planchers": 0.0,
+    "n_planchers": 200,
+    "verdict": "non cohérent"
+   }
+  ]
+ }
+}

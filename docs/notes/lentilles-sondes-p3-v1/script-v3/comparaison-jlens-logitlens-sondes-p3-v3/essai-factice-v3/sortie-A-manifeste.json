@@ -1,0 +1,205 @@
+{
+ "script": "comparaison_jlens_logitlens_sondes_p3_v3.py",
+ "script_sha256": "25a377ee4682e3b53d60b06499ac13b80fe9157b702d7b7b8fa94f057227b5e2",
+ "version": "v3",
+ "essai_factice": true,
+ "interpreteur": "/home/user/controle-ia-travail/.venv/bin/python",
+ "commande": [
+  "/home/user/controle-ia-travail/.venv/bin/python",
+  "/home/user/controle-ia-travail/docs/notes/lentilles-sondes-p3-v1/script-v3/comparaison-jlens-logitlens-sondes-p3-v3/comparaison_jlens_logitlens_sondes_p3_v3.py",
+  "comparer",
+  "--sondes",
+  "non-principales-lineaires",
+  "--sondes-json",
+  "/tmp/claude-0/-home-user/75a1275d-b838-5015-909e-b2bfadb395f9/scratchpad/v3/essai-factice-v3/entrees/A-sain/sondes-figees.json",
+  "--sondes-npz",
+  "/tmp/claude-0/-home-user/75a1275d-b838-5015-909e-b2bfadb395f9/scratchpad/v3/essai-factice-v3/entrees/A-sain/sondes-figees-legeres.npz",
+  "--lentille",
+  "/tmp/claude-0/-home-user/75a1275d-b838-5015-909e-b2bfadb395f9/scratchpad/v3/essai-factice-v3/entrees/lentille-factice.npz",
+  "--lentille-config",
+  "/tmp/claude-0/-home-user/75a1275d-b838-5015-909e-b2bfadb395f9/scratchpad/v3/essai-factice-v3/entrees/lentille-config.yaml",
+  "--desembedding",
+  "/tmp/claude-0/-home-user/75a1275d-b838-5015-909e-b2bfadb395f9/scratchpad/v3/essai-factice-v3/entrees/modele/model.safetensors.index.json:lm_head.weight",
+  "--norme-finale",
+  "/tmp/claude-0/-home-user/75a1275d-b838-5015-909e-b2bfadb395f9/scratchpad/v3/essai-factice-v3/entrees/modele/model.safetensors.index.json:model.norm.weight",
+  "--vocabulaire",
+  "/tmp/claude-0/-home-user/75a1275d-b838-5015-909e-b2bfadb395f9/scratchpad/v3/essai-factice-v3/entrees/modele/tokenizer.json",
+  "--concepts",
+  "/home/user/controle-ia-travail/docs/notes/lentilles-sondes-p3-v1/regle-primaire-v3/concepts-sondes-p3-v3.json",
+  "--enonce-regle",
+  "/home/user/controle-ia-travail/docs/notes/lentilles-sondes-p3-v1/regle-primaire-v3/enonce-regle-primaire-v3.txt",
+  "--empreintes-attendues",
+  "/tmp/claude-0/-home-user/75a1275d-b838-5015-909e-b2bfadb395f9/scratchpad/v3/essai-factice-v3/entrees/empreintes-entrees-factices.txt",
+  "--revision-modele",
+  "0e9e39f249a16976918f6564b8830bc894c89659",
+  "--essai-factice",
+  "--sortie",
+  "/tmp/claude-0/-home-user/75a1275d-b838-5015-909e-b2bfadb395f9/scratchpad/v3/essai-factice-v3/sortie/sortie-A.json"
+ ],
+ "drapeaux_python": {
+  "isolated": 1,
+  "dont_write_bytecode": 1
+ },
+ "cree_le_utc": "2026-10-29T10:11:36Z",
+ "duree_s": 6.9,
+ "durees_par_etape_s": {
+  "lecture_sondes": 0.046,
+  "lecture_lentille": 0.002,
+  "lecture_poids_vocabulaire": 0.043,
+  "controle_empreintes": 0.004,
+  "cases": 0.001,
+  "desembedding": 0.008,
+  "nulle_isotrope": 5.099,
+  "nulle_planchers": 0.061,
+  "cases_et_descriptif": 0.093,
+  "ensemble": 0.006,
+  "ecriture_sortie": 1.535
+ },
+ "versions": {
+  "python": "3.13.17",
+  "numpy": "2.4.6",
+  "torch": "2.14.1+cu130",
+  "plateforme": "Linux-6.18.44-fc-v185-x86_64-with-glibc2.39"
+ },
+ "depot": {
+  "commit": "02dc7f5e04d3ec675e31818feb56b21892dc792e",
+  "source": "git rev-parse HEAD dans /home/user/controle-ia-travail/docs/notes/lentilles-sondes-p3-v1/script-v3/comparaison-jlens-logitlens-sondes-p3-v3",
+  "etat_du_script": "?? docs/notes/lentilles-sondes-p3-v1/script-v3/comparaison-jlens-logitlens-sondes-p3-v3/comparaison_jlens_logitlens_sondes_p3_v3.py"
+ },
+ "revision_modele": "0e9e39f249a16976918f6564b8830bc894c89659",
+ "lentille_config": {
+  "chemin": "/tmp/claude-0/-home-user/75a1275d-b838-5015-909e-b2bfadb395f9/scratchpad/v3/essai-factice-v3/entrees/lentille-config.yaml",
+  "sha256": "322f2a37773175097968ff4a2b1fc2793e9a95c72ccfc0c5241d8c99a2e73640",
+  "cles": {
+   "np_model_id": "llama3.1-8b-it",
+   "hf_model_name": "meta-llama/Llama-3.1-8B-Instruct",
+   "dataset": {
+    "name": "Salesforce/wikitext"
+   },
+   "fit": {
+    "n_prompts": 1000,
+    "target_layer": null,
+    "levels": "1e-2,5e-3,1e-3"
+   },
+   "gpus": {
+    "gpu_0": {}
+   },
+   "environment": {
+    "jlens_commit": null
+   },
+   "results": {
+    "prompts_fitted": 461,
+    "final_identity_distance": 0.636485
+   },
+   "command": "fit_lens.py --n_prompts 1000"
+  },
+  "ajustee_sur": "ajustée sur 461 textes (lentille-config.yaml, clé results.prompts_fitted)"
+ },
+ "empreintes_attendues": {
+  "fichier": "empreintes-entrees-factices.txt",
+  "entrees": {
+   "enonce_regle": "contrôlée par empreinte en dur be02039011c5… et égalité avec la constante du script",
+   "concepts": "contrôlée par empreinte en dur aac34d5cb526… et sceau compagnon",
+   "sondes_json": "contrôlée par sceau compagnon",
+   "sondes_npz": "contrôlée par sondes_legeres_sha256 de sondes-figees.json",
+   "lentille": "conforme",
+   "lentille_config": "conforme",
+   "desembedding_0": "conforme",
+   "desembedding_1": "conforme",
+   "norme_finale_0": "conforme",
+   "norme_finale_1": "conforme",
+   "vocabulaire": "conforme"
+  }
+ },
+ "regle_primaire_v3": {
+  "empreinte_enonce": "be02039011c50c50a4eca0c38c26c7d31c38f6fc7315567659e8fd6cb7b64820",
+  "empreinte_liste_de_mots": "aac34d5cb52637fef6ebdd0d36009f8842efdef52d5e5298334e3a84f388bf6c"
+ },
+ "entrees": {
+  "enonce_regle": {
+   "chemin": "/home/user/controle-ia-travail/docs/notes/lentilles-sondes-p3-v1/regle-primaire-v3/enonce-regle-primaire-v3.txt",
+   "sha256": "be02039011c50c50a4eca0c38c26c7d31c38f6fc7315567659e8fd6cb7b64820",
+   "octets": 2789
+  },
+  "concepts": {
+   "chemin": "/home/user/controle-ia-travail/docs/notes/lentilles-sondes-p3-v1/regle-primaire-v3/concepts-sondes-p3-v3.json",
+   "sha256": "aac34d5cb52637fef6ebdd0d36009f8842efdef52d5e5298334e3a84f388bf6c",
+   "octets": 6232
+  },
+  "sondes_json": {
+   "chemin": "/tmp/claude-0/-home-user/75a1275d-b838-5015-909e-b2bfadb395f9/scratchpad/v3/essai-factice-v3/entrees/A-sain/sondes-figees.json",
+   "sha256": "fa8317e9fb29aeb18f2b5401be441f5d8410a3ca6e90bbff05268916dfff7ea2",
+   "octets": 114830
+  },
+  "sondes_npz": {
+   "chemin": "/tmp/claude-0/-home-user/75a1275d-b838-5015-909e-b2bfadb395f9/scratchpad/v3/essai-factice-v3/entrees/A-sain/sondes-figees-legeres.npz",
+   "sha256": "6362ec41c55e324f9008c4a9bac46c21ff4c8ef8c47febf2d4021f3d36f5ba3b",
+   "octets": 713890
+  },
+  "lentille": {
+   "chemin": "/tmp/claude-0/-home-user/75a1275d-b838-5015-909e-b2bfadb395f9/scratchpad/v3/essai-factice-v3/entrees/lentille-factice.npz",
+   "sha256": "5345ea0acf40cabfcab189c82300d6cb02ea5bc9d0dd059a5a40767bbe31719f",
+   "octets": 100062
+  },
+  "lentille_config": {
+   "chemin": "/tmp/claude-0/-home-user/75a1275d-b838-5015-909e-b2bfadb395f9/scratchpad/v3/essai-factice-v3/entrees/lentille-config.yaml",
+   "sha256": "322f2a37773175097968ff4a2b1fc2793e9a95c72ccfc0c5241d8c99a2e73640",
+   "octets": 458
+  },
+  "desembedding_0": {
+   "chemin": "/tmp/claude-0/-home-user/75a1275d-b838-5015-909e-b2bfadb395f9/scratchpad/v3/essai-factice-v3/entrees/modele/model.safetensors.index.json",
+   "sha256": "8ee474bd3293b6cadfe7c93a9d0bfe068bfd0ee8522a03fc2984fe45eecb2f43",
+   "octets": 127
+  },
+  "desembedding_1": {
+   "chemin": "/tmp/claude-0/-home-user/75a1275d-b838-5015-909e-b2bfadb395f9/scratchpad/v3/essai-factice-v3/entrees/modele/model-00002-of-00002.safetensors",
+   "sha256": "fb963bf6e0dcac1ed783319311b9a4e964f7b978a3bd7904eaf4c7fcf00081bd",
+   "octets": 2048136
+  },
+  "norme_finale_0": {
+   "chemin": "/tmp/claude-0/-home-user/75a1275d-b838-5015-909e-b2bfadb395f9/scratchpad/v3/essai-factice-v3/entrees/modele/model.safetensors.index.json",
+   "sha256": "8ee474bd3293b6cadfe7c93a9d0bfe068bfd0ee8522a03fc2984fe45eecb2f43",
+   "octets": 127
+  },
+  "norme_finale_1": {
+   "chemin": "/tmp/claude-0/-home-user/75a1275d-b838-5015-909e-b2bfadb395f9/scratchpad/v3/essai-factice-v3/entrees/modele/model-00001-of-00002.safetensors",
+   "sha256": "cc6aae842c1978fc815a045ca7407bba25354e7fdd8d0ebfa7353e6ab3bcdd72",
+   "octets": 640
+  },
+  "vocabulaire": {
+   "chemin": "/tmp/claude-0/-home-user/75a1275d-b838-5015-909e-b2bfadb395f9/scratchpad/v3/essai-factice-v3/entrees/modele/tokenizer.json",
+   "sha256": "9d232f0c1e7d7b0bbc558c5cb1dbbfccb6546cadbdee4124a15c7973cc9cc7b0",
+   "octets": 156209
+  },
+  "empreintes_attendues": {
+   "chemin": "/tmp/claude-0/-home-user/75a1275d-b838-5015-909e-b2bfadb395f9/scratchpad/v3/essai-factice-v3/entrees/empreintes-entrees-factices.txt",
+   "sha256": "3befdd3dee5660e753f95afdd691b3d89c780705aab1125f28f30ec1caa40349",
+   "octets": 646
+  }
+ },
+ "graines": {
+  "mode": "numpy.random.SeedSequence(entropy=20261029, spawn_key=(int.from_bytes(sha256(etiquette)[:8], 'little'),)) ; default_rng ; standard_normal((1000, d)) dix fois de suite ; direction i = ligne i",
+  "isotropes-v3/c7": {
+   "entropie": "20261029",
+   "spawn_key": [
+    "12283272211551564132"
+   ]
+  },
+  "isotropes-v3/c15": {
+   "entropie": "20261029",
+   "spawn_key": [
+    "4983666508871566958"
+   ]
+  },
+  "isotropes-v3/c23": {
+   "entropie": "20261029",
+   "spawn_key": [
+    "11232877175101125465"
+   ]
+  }
+ },
+ "sortie": {
+  "chemin": "sortie-A.json",
+  "sha256": "12dbb79dbdf2b8ce2579ecbf9c3e9bae859e28841a23b411fe8605ef9783b5db"
+ }
+}

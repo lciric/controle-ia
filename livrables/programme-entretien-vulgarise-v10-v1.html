@@ -1,0 +1,483 @@
+<!doctype html>
+<html lang="fr">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Le programme en clair</title>
+<style>
+:root{
+  --encre:#1d232b; --doux:#4a5563; --pale:#6b7684;
+  --fond:#fbfaf7; --carte:#ffffff; --trait:#d9d4ca;
+  --accent:#1f5f7a; --accent-pale:#e6f0f4;
+  --chaud:#a8562a; --chaud-pale:#f8ece4;
+  --vert:#2f6b45; --vert-pale:#e8f2ea;
+  --gris-pale:#f1efea;
+}
+*{box-sizing:border-box}
+html{-webkit-print-color-adjust:exact;print-color-adjust:exact}
+body{margin:0;background:var(--fond);color:var(--encre);
+  font-family:Georgia,"Charter","Bitstream Charter","DejaVu Serif","Times New Roman",serif;
+  font-size:16.5px;line-height:1.62}
+main{max-width:46rem;margin:0 auto;padding:2.5rem 16px 3rem}
+h1,h2,h3,.sans{font-family:"Helvetica Neue",Helvetica,Arial,"DejaVu Sans",sans-serif}
+h1{font-size:2.05rem;line-height:1.18;margin:.2rem 0 .6rem;letter-spacing:-.01em}
+h2{font-size:1.42rem;line-height:1.25;margin:2.6rem 0 .8rem;padding-top:.6rem;border-top:3px solid var(--accent);color:var(--accent)}
+h2 .num{display:inline-block;min-width:1.6em;color:var(--encre)}
+h3{font-size:1.08rem;margin:1.7rem 0 .45rem;color:var(--encre)}
+p{margin:.55rem 0}
+.sur-titre{font-size:.82rem;letter-spacing:.08em;text-transform:uppercase;color:var(--chaud);font-weight:700}
+.chapeau{font-size:1.08rem;color:var(--doux);margin-top:.3rem}
+.meta{font-size:.82rem;color:var(--pale);margin-top:1rem;border-top:1px solid var(--trait);padding-top:.6rem}
+.encadre{border-radius:8px;padding:.85rem 1.1rem .9rem;margin:1.1rem 0;break-inside:avoid}
+.encadre .etiquette{display:block;font-size:.74rem;letter-spacing:.09em;text-transform:uppercase;font-weight:700;margin-bottom:.25rem}
+.en-clair{background:var(--accent-pale);border-left:5px solid var(--accent)}
+.en-clair .etiquette{color:var(--accent)}
+.prudence{background:var(--chaud-pale);border-left:5px solid var(--chaud)}
+.prudence .etiquette{color:var(--chaud)}
+.acquis{background:var(--vert-pale);border-left:5px solid var(--vert)}
+.acquis .etiquette{color:var(--vert)}
+.essentiel{background:var(--carte);border:1px solid var(--trait);border-radius:10px;padding:1rem 1.25rem;margin:1.4rem 0;break-inside:avoid}
+.essentiel h3{margin-top:.1rem;color:var(--accent)}
+.essentiel ol{margin:.3rem 0 0 1.1rem;padding:0}
+.essentiel li{margin:.3rem 0}
+ul,ol{padding-left:1.3rem}
+li{margin:.25rem 0}
+.bloc{background:var(--carte);border:1px solid var(--trait);border-radius:10px;padding:.95rem 1.2rem 1rem;margin:1.2rem 0}
+.bloc h3{margin-top:.1rem;display:flex;gap:.6rem;align-items:baseline}
+.bloc h3 .pastille{flex:none;font-size:.78rem;background:var(--accent);color:#fff;border-radius:999px;padding:.1rem .55rem}
+.bloc .image{font-style:italic;color:var(--doux);border-left:3px solid var(--trait);padding-left:.7rem;margin:.5rem 0}
+.bloc .etat{font-family:"Helvetica Neue",Helvetica,Arial,sans-serif;font-size:.8rem;color:var(--doux);margin-top:.5rem;border-top:1px dashed var(--trait);padding-top:.4rem}
+.etat b{color:var(--encre)}
+figure{margin:1.3rem 0;break-inside:avoid;background:var(--carte);border:1px solid var(--trait);border-radius:10px;padding:.8rem .8rem .6rem}
+figure svg{display:block;width:100%;height:auto}
+figcaption{font-size:.86rem;color:var(--doux);margin-top:.45rem;line-height:1.45}
+table{width:100%;border-collapse:collapse;font-size:.93rem;margin:.8rem 0;break-inside:avoid}
+th,td{text-align:left;vertical-align:top;padding:.45rem .55rem;border-bottom:1px solid var(--trait)}
+th{font-family:"Helvetica Neue",Helvetica,Arial,sans-serif;font-size:.8rem;text-transform:uppercase;letter-spacing:.05em;color:var(--doux);background:var(--gris-pale)}
+td.montant{text-align:right;white-space:nowrap;font-variant-numeric:tabular-nums}
+tr.total td{font-weight:700;border-top:2px solid var(--encre)}
+.trois{display:grid;grid-template-columns:repeat(3,1fr);gap:.8rem;margin:1rem 0}
+.trois > div{border-radius:8px;padding:.75rem .9rem;font-size:.92rem;break-inside:avoid}
+.trois h4{font-family:"Helvetica Neue",Helvetica,Arial,sans-serif;font-size:.86rem;margin:0 0 .35rem;text-transform:uppercase;letter-spacing:.05em}
+.trois ul{margin:.2rem 0 0;padding-left:1.05rem}
+.col-vert{background:var(--vert-pale)} .col-vert h4{color:var(--vert)}
+.col-chaud{background:var(--chaud-pale)} .col-chaud h4{color:var(--chaud)}
+.col-bleu{background:var(--accent-pale)} .col-bleu h4{color:var(--accent)}
+.qr{margin:.9rem 0;break-inside:avoid}
+.qr .q{font-weight:700}
+.qr .r{margin:.2rem 0 0 0;padding-left:.9rem;border-left:3px solid var(--accent-pale)}
+.qr .r.ouvert{border-left-color:var(--chaud)}
+.ouverte{font-family:"Helvetica Neue",Helvetica,Arial,sans-serif;font-size:.74rem;font-weight:700;letter-spacing:.06em;text-transform:uppercase;color:var(--chaud);background:var(--chaud-pale);border-radius:4px;padding:.05rem .4rem;white-space:nowrap}
+dl.glossaire{margin:.6rem 0}
+dl.glossaire dt{font-family:"Helvetica Neue",Helvetica,Arial,sans-serif;font-weight:700;margin-top:.7rem;color:var(--accent)}
+dl.glossaire dd{margin:.1rem 0 0 0}
+.pied{font-size:.8rem;color:var(--pale);border-top:1px solid var(--trait);margin-top:2.5rem;padding-top:.7rem}
+.chiffre{font-family:"Helvetica Neue",Helvetica,Arial,sans-serif;font-weight:700;color:var(--accent)}
+@media (max-width:640px){
+  body{font-size:16px}
+  h1{font-size:1.6rem}
+  .trois{grid-template-columns:1fr}
+  table{font-size:.85rem}
+}
+@page{size:A4;margin:12mm 13mm 13mm}
+@media print{
+  body{background:#fff;font-size:10pt;line-height:1.4}
+  main{max-width:none;padding:0}
+  h1{font-size:1.75rem}
+  h2{font-size:1.25rem;margin-top:1.1rem;margin-bottom:.5rem;break-after:avoid}
+  h3{margin-top:1rem;break-after:avoid}
+  p{margin:.4rem 0}
+  li{margin:.15rem 0}
+  figure{padding:.5rem .6rem .4rem;margin:.8rem 0}
+  figure svg{max-width:82%;margin:0 auto}
+  .encadre{padding:.6rem .9rem .65rem;margin:.75rem 0}
+  .qr{margin:.6rem 0}
+  table{break-inside:auto;font-size:.88rem}
+  tr{break-inside:avoid}
+  th,td{padding:.3rem .45rem}
+  figure,.encadre,.essentiel,.trois > div{break-inside:avoid}
+  .bloc{break-inside:auto;padding:.7rem 1rem .75rem;margin:.8rem 0}
+  .bloc h3{break-after:avoid}
+  dl.glossaire{columns:2;column-gap:1.6rem}
+  dl.glossaire dt{break-after:avoid;margin-top:.5rem}
+  dl.glossaire dd{break-inside:avoid}
+}
+</style>
+</head>
+<body>
+<main>
+
+<header>
+  <div class="sur-titre sans">Version vulgarisée · programme préparé pour l’entretien de financement</div>
+  <h1>Savoir d’avance ce qu’un surveillant ne peut pas voir</h1>
+  <p class="chapeau">Ce que nous demandons au Transformative AI Fund, pourquoi, ce qui est déjà en main, ce qui ne l’est pas encore, et les questions difficiles auxquelles il faut s’attendre.</p>
+  <p class="chapeau"><b>L’entretien a lieu demain, vendredi 30 octobre 2026.</b></p>
+  <p class="meta sans">Version 1, écrite le 29 octobre 2026 pour un lecteur non spécialiste. Elle vulgarise la version 10 du programme préparé pour l’entretien. <b>Cette version 10 est encore en relecture</b>&nbsp;: elle ne fait foi qu’après une relecture indépendante et le mot de Lazar, le directeur du programme. Ce document n’avance que ce que la version 10 dit avec sa source&nbsp;; ce qu’elle laisse ouvert est marqué <span class="ouverte">question ouverte</span>. Les chiffres sont arrondis&nbsp;; rien ici n’ajoute de résultat. Un seul fait est plus récent que la version 10&nbsp;: Lazar veut lancer aujourd’hui même la première course de l’«&nbsp;organisme&nbsp;» (voir la partie 4).</p>
+</header>
+
+<!-- ============================================================ -->
+<h2><span class="num">1</span>Ce que nous demandons, et pourquoi — en une page</h2>
+
+<p>Les intelligences artificielles ne se contentent plus de répondre à une question. On leur confie des tâches longues, qu’elles mènent seules&nbsp;: écrire du code, préparer une expérience scientifique. On les appelle des <b>agents</b>. Pour les surveiller, on place à côté d’eux un <b>moniteur</b>&nbsp;: un surveillant automatique qui lit ce qu’ils produisent et donne l’alerte quand quelque chose cloche.</p>
+<p>Le cas difficile est la <b>menace diffuse</b>&nbsp;: un mauvais comportement découpé en dizaines de petits gestes, dont aucun n’est alarmant pris seul. Comme un comptable qui détournerait quelques centimes sur des milliers de lignes&nbsp;: chaque ligne paraît juste, c’est l’addition qui est fausse. Un surveillant qui lit seulement le texte, geste par geste, est mal placé pour le voir.</p>
+<p>Notre pari&nbsp;: <b>regarder à l’intérieur</b>. Pendant qu’il travaille, un modèle d’intelligence artificielle calcule des milliers de nombres à chaque mot. De petits détecteurs, les <b>sondes</b>, peuvent lire cette activité interne. Même si chaque geste paraît innocent à l’extérieur, il pourrait laisser une petite trace à l’intérieur — et ces traces, elles, peuvent <b>s’additionner</b> dans le temps.</p>
+
+<figure>
+<svg viewBox="0 0 720 200" role="img" aria-label="Schéma : douze gestes anodins ; lus de l'extérieur, chacun passe ; lus de l'intérieur, les petites traces s'additionnent jusqu'au seuil d'alerte.">
+  <rect width="720" height="200" fill="#ffffff"/>
+  <g font-family="Helvetica,Arial,sans-serif">
+    <text x="14" y="34" font-size="12.5" font-weight="700" fill="#1d232b">Lu de l’extérieur</text>
+    <text x="14" y="50" font-size="10.5" fill="#6b7684">(le texte, geste par geste)</text>
+    <g fill="#2f6b45" font-size="15" text-anchor="middle">
+      <text x="179" y="44">✓</text><text x="223" y="44">✓</text><text x="267" y="44">✓</text><text x="311" y="44">✓</text><text x="355" y="44">✓</text><text x="399" y="44">✓</text><text x="443" y="44">✓</text><text x="487" y="44">✓</text><text x="531" y="44">✓</text><text x="575" y="44">✓</text><text x="619" y="44">✓</text><text x="663" y="44">✓</text>
+    </g>
+    <text x="14" y="122" font-size="12.5" font-weight="700" fill="#1d232b">Lu de l’intérieur</text>
+    <text x="14" y="138" font-size="10.5" fill="#6b7684">(les sondes, puis le cumul)</text>
+    <line x1="160" y1="182" x2="700" y2="182" stroke="#d9d4ca"/>
+    <g fill="#a8562a" opacity="0.55">
+      <rect x="171" y="173" width="16" height="9"/><rect x="215" y="171" width="16" height="11"/><rect x="259" y="174" width="16" height="8"/><rect x="303" y="170" width="16" height="12"/><rect x="347" y="172" width="16" height="10"/><rect x="391" y="171" width="16" height="11"/><rect x="435" y="173" width="16" height="9"/><rect x="479" y="170" width="16" height="12"/><rect x="523" y="172" width="16" height="10"/><rect x="567" y="171" width="16" height="11"/><rect x="611" y="173" width="16" height="9"/><rect x="655" y="171" width="16" height="11"/>
+    </g>
+    <line x1="160" y1="96" x2="700" y2="96" stroke="#1d232b" stroke-dasharray="5 4" stroke-width="1.2"/>
+    <text x="162" y="90" font-size="10.5" fill="#1d232b">seuil d’alerte</text>
+    <polyline fill="none" stroke="#1f5f7a" stroke-width="3" stroke-linejoin="round" points="179,173 223,164 267,156 311,146 355,138 399,129 443,121 487,112 531,104 575,95 619,87 663,79"/>
+    <circle cx="575" cy="95" r="7" fill="none" stroke="#a8562a" stroke-width="2.4"/>
+    <text x="590" y="122" font-size="11.5" font-weight="700" fill="#a8562a">alerte</text>
+    <text x="430" y="197" text-anchor="middle" font-size="10" fill="#6b7684">barres&nbsp;: petite trace interne à chaque geste · courbe&nbsp;: les traces additionnées</text>
+  </g>
+</svg>
+<figcaption><b>L’idée de départ, en image.</b> Ce n’est encore qu’une hypothèse&nbsp;: le programme existe pour savoir si elle est vraie sur de vrais modèles, et surtout <b>à quelles conditions elle ne l’est pas</b>.</figcaption>
+</figure>
+
+<div class="encadre en-clair">
+  <span class="etiquette sans">La demande, en trois paliers</span>
+  La candidature envoyée le 7 octobre demande <b>58&nbsp;630 dollars</b> pour sept mois. La même candidature décrivait déjà un scénario ambitieux à <b>138&nbsp;600 dollars</b> sur douze mois. Nous présentons un troisième palier, à <b>176&nbsp;550 dollars</b>, qui ajoute ce que le programme a gagné depuis&nbsp;: une théorie des angles morts des surveillants, un volet d’épreuves adverses tenu sous une revue de sécurité extérieure, et un laboratoire automatique. L’argent finance surtout du <b>temps de recherche</b>, très peu de calcul. <b>Ces chiffres et le choix des paliers restent à confirmer par Lazar.</b>
+</div>
+
+<!-- ============================================================ -->
+<h2><span class="num">2</span>Ce qui a changé d’ambition depuis la candidature</h2>
+
+<p>La candidature présentait trois articles de recherche sur les menaces diffuses. Depuis le 28 octobre, le programme se présente plus haut&nbsp;: comme une <b>théorie des angles morts des surveillants</b>. La question n’est plus seulement «&nbsp;nos sondes marchent-elles&nbsp;?&nbsp;», mais&nbsp;: <b>pour chaque surveillant, dans quelles conditions mesurables est-il aveugle, preuve à l’appui — et lequel reste debout quand plusieurs conditions s’additionnent&nbsp;?</b></p>
+<p>L’image est celle d’une <b>notice</b>. Un appareil de mesure sérieux est vendu avec ses limites&nbsp;: «&nbsp;ne mesure pas sous zéro degré&nbsp;». Personne ne fournit aujourd’hui cette notice pour les surveillants d’intelligence artificielle. Nous voulons l’écrire, d’avance et avec des démonstrations. La phrase prévue pour l’entretien le dit ainsi&nbsp;: <i>nous construisons la partie du contrôle de l’intelligence artificielle qui vous dit, d’avance et preuve à l’appui, ce que votre surveillant ne peut pas voir.</i></p>
+
+<h3>Le programme n’est pas borné par les deux questions envoyées</h3>
+<p>La candidature posait deux questions étroites, choisies parce qu’elles étaient finançables et démontrables en sept mois. Elles restent vraies et restent au programme. Mais elles ne le bornent pas&nbsp;: le périmètre bouge quand un outil nouveau le permet. Ce n’est pas de l’opportunisme, parce que trois freins restent en place&nbsp;:</p>
+<ol>
+  <li><b>Une porte ne bouge pas.</b> Les critères de l’examen de passage de fin novembre sont gelés depuis le 5 octobre. Élargir le périmètre n’en dispense pas.</li>
+  <li><b>Un engagement écrit ne se réécrit pas.</b> Toute question nouvelle entre par un document neuf, figé avant l’expérience et relu par quelqu’un qui ne l’a pas écrit.</li>
+  <li><b>Une revendication ne s’étend pas sans décision</b> du directeur.</li>
+</ol>
+<p>Devant le fonds, cela veut dire&nbsp;: nous ne demandons pas de financer deux questions, mais une <b>capacité à poser les bonnes</b>, avec des freins qui empêchent que ce soit un chèque en blanc. Si le fonds ne veut financer que le plancher, le plancher est tenu tel qu’il a été envoyé.</p>
+
+<h3>L’«&nbsp;organisme&nbsp;» qui cherche lui-même des idées</h3>
+<p>Le second changement s’appelle l’<b>organisme</b>&nbsp;: un ensemble d’intelligences artificielles qui proposent des idées, les mettent à l’épreuve et gardent les meilleures, génération après génération — un petit laboratoire automatique, tenu par des règles et des plafonds de dépense. Sans lui, on teste les sabotages qu’un humain a su imaginer, sur les tâches qu’un humain a su écrire. Avec lui, on peut poser des questions d’une autre taille, par exemple&nbsp;: un détecteur marche-t-il sur des familles de tâches <b>jamais vues</b> pendant sa conception&nbsp;? C’est la différence entre un résultat et une loi.</p>
+<p>Il y a une ironie voulue&nbsp;: dans la version la plus ambitieuse, l’agent que l’on surveille est lui-même un <b>chercheur automatique</b>. Concevoir l’organisme devient donc une question de recherche en soi.</p>
+
+<!-- ============================================================ -->
+<h2 class="saut"><span class="num">3</span>Ce qui est en main aujourd’hui, et vérifiable</h2>
+<p>Tout ce qui suit est consigné dans les registres du programme, avec une empreinte numérique (une sorte de code-barres qui change si un seul caractère du fichier change). Les déceptions sont mises <b>au même rang</b> que les avancées&nbsp;: un programme qui ne montre que ses succès ne mérite pas qu’on le croie.</p>
+
+<div class="trois">
+  <div class="col-vert">
+    <h4>Avancées</h4>
+    <ul>
+      <li>Une théorie testée en simulation, prédictions écrites d’avance&nbsp;: <b>31 sur 31</b> tenues.</li>
+      <li>L’outil qui lit l’activité interne <b>validé sur un vrai modèle</b> (premier critère de la porte de novembre).</li>
+      <li>Un banc d’essai de sabotage de recherche <b>reconstruit</b> d’après un article publié sans code ni données&nbsp;; 180 épisodes d’un vrai agent enregistrés et scellés.</li>
+      <li>Environ 3&nbsp;500 citations contrôlées, aucun échec&nbsp;; environ 900 tests automatiques.</li>
+    </ul>
+  </div>
+  <div class="col-bleu">
+    <h4>Nouveau</h4>
+    <ul>
+      <li>La <b>carte des angles morts</b>&nbsp;: 23 hypothèses que nos surveillants font sur l’agent, un résultat maître démontré, 21 résultats secondaires démontrés, deux esquisses et une conjecture, <b>7 questions ouvertes</b> déclarées comme telles.</li>
+      <li>Une <b>boucle automatique</b> de test d’hypothèses, qui a tourné de bout en bout sur des données réelles.</li>
+      <li>Les détecteurs <b>refaits à l’identique</b>&nbsp;: 424 sur 424, au dernier chiffre près.</li>
+    </ul>
+  </div>
+  <div class="col-chaud">
+    <h4>Déceptions</h4>
+    <ul>
+      <li>Le premier vrai test intérieur est <b>revenu nul</b>.</li>
+      <li>Nos <b>juges automatiques</b> ne notent pas toutes les copies.</li>
+      <li>Notre <b>garde-fou statistique</b> est presque muet à petite taille.</li>
+      <li>Un défaut trouvé dans le juge de la boucle automatique.</li>
+    </ul>
+  </div>
+</div>
+
+<div class="bloc">
+  <h3><span class="pastille sans">1</span>Un premier test qui n’a rien trouvé — et ce qu’il vaut</h3>
+  <p>Le premier vrai test «&nbsp;boîte blanche&nbsp;» (lire l’intérieur) a été écrit et scellé avant d’être lu. Il est revenu <b>négatif</b>&nbsp;: aucune sonde générique n’a dépassé le plancher fixé d’avance. Nous avons calculé sa <b>sensibilité</b>, comme on vérifie qu’un détecteur de métaux silencieux était bien allumé&nbsp;: il aurait vu un effet net, mais il ne pouvait pas exclure un effet faible. Nous le disons ainsi, ni plus ni moins. C’est ce nul qui nous a envoyés vers la théorie&nbsp;: la carte des angles morts existe parce que nous voulions savoir quelle hypothèse il avait cassée.</p>
+</div>
+
+<div class="bloc">
+  <h3><span class="pastille sans">2</span>Des juges qui ne notent pas toutes les copies</h3>
+  <p>Nos juges automatiques sont de petits modèles qui lisent un travail et le notent selon une grille. La future grande expérience exige une note utilisable <b>99 fois sur 100</b>. Avant de bâtir dessus, nous leur avons fait passer un examen blanc de 180 copies déjà notées. Résultat&nbsp;: le meilleur rend une note utilisable <b>87 fois sur 100</b>&nbsp;; le plus petit, entre 39 et 64 fois sur 100. Les juges tenaient mal l’échelle, et l’un lisait les demi-points trop bas.</p>
+  <p>Découvrir cela a coûté <b>deux dollars</b>, au lieu de quelques centaines plus tard. La consigne a été réécrite&nbsp;; le nouveau juge repassera l’examen avant tout usage.</p>
+  <div class="etat"><b>État&nbsp;:</b> second examen autorisé (4 dollars au plus), relu, pas encore lancé.</div>
+</div>
+
+<div class="bloc">
+  <h3><span class="pastille sans">3</span>Un garde-fou presque muet à petite taille</h3>
+  <p>Un surveillant peut «&nbsp;gagner&nbsp;» de façon tricheuse&nbsp;: en criant au loup plus souvent que ses concurrents. Un garde-fou statistique l’en empêche. Nos simulations montrent qu’il ne donne presque <b>jamais</b> son feu vert sous environ 150 exemples honnêtes, et qu’un petit biais suffit à le faire tomber à 160. Nous l’avons écrit <b>avant</b> d’acheter la moindre donnée. Lazar a donc fixé la règle d’avance&nbsp;: plusieurs centaines d’unités d’épreuve par type de sabotage, chacune portant des épisodes honnêtes et sabotés, et une seule lecture. Dans nos simulations, <b>environ trois cents unités tiennent dans toutes les variations essayées</b>&nbsp;; cent soixante, non. Ce sont des simulations, présentées comme telles.</p>
+</div>
+
+<div class="bloc">
+  <h3><span class="pastille sans">4</span>Des détecteurs refaits à l’identique</h3>
+  <p>Selon le registre, les 424 détecteurs du premier test ont été reconstruits de zéro, avec le même code, les mêmes graines de hasard, les mêmes versions et les mêmes réglages de calcul&nbsp;: identiques à l’original au dernier chiffre près, pour 1,76 dollar. On dit «&nbsp;reproduit&nbsp;», pas «&nbsp;confirmé&nbsp;»&nbsp;: on a refait les détecteurs, pas une nouvelle lecture du test.</p>
+</div>
+
+<div class="bloc">
+  <h3><span class="pastille sans">5</span>Une boucle automatique, et le défaut trouvé dedans</h3>
+  <p>La boucle automatique de test d’hypothèses a tourné sur 120 épisodes d’un modèle réel, avec deux juges. Un défaut a été trouvé ensuite dans son juge&nbsp;: dans un cas rare, il comptait la valeur la plus favorable. Il est corrigé. Dans les journaux disponibles, aucune conclusion n’en dépend — mais c’est une preuve indirecte, et la même famille de défaut existe ailleurs dans le code, sans chemin qui l’atteigne aujourd’hui. Nous le disons.</p>
+</div>
+
+<div class="bloc">
+  <h3><span class="pastille sans">6</span>Savoir qu’un sabotage a vraiment fait du tort</h3>
+  <p>Dans notre banc, l’agent écrit des <b>plans d’expérience en texte</b>. Pour noter un détecteur, il faut savoir si chaque plan a vraiment été abîmé, sans demander l’avis des surveillants eux-mêmes. La solution&nbsp;: une <b>référence cachée</b> (les vérifications que contenait l’étude publiée), deux lecteurs automatiques d’autres familles que nos surveillants, des citations vérifiées mot pour mot par un programme, et la comparaison avec le même plan écrit honnêtement. Si ce dispositif échoue à ses propres épreuves, nous ne revendiquerons aucun dommage.</p>
+  <div class="encadre prudence" style="margin:.6rem 0 .2rem">
+    <span class="etiquette sans">Une erreur corrigée</span>
+    Une première version supposait des tâches que l’on peut exécuter. Elle ne convenait pas à notre banc&nbsp;; la décision, prise sur une base trop optimiste, a été revue. Que l’agent ne voie jamais la référence cachée est une propriété à <b>vérifier avant usage</b>, pas un fait acquis.
+  </div>
+</div>
+
+<div class="bloc">
+  <h3><span class="pastille sans">7</span>Les débats entre trois intelligences artificielles, et leurs refus</h3>
+  <p>Pour les questions de méthode difficiles, nous utilisons le <b>collisionneur</b>&nbsp;: trois modèles d’entreprises différentes répondent chacun seul, se critiquent, puis une synthèse garde les accords et les désaccords, sans consensus forcé. Lazar tranche. C’est utile&nbsp;: un débat a trouvé le point le plus fragile de notre futur pilote. C’est aussi faillible&nbsp;: un débat a annoncé une sensibilité de 65 à 80&nbsp;% là où le calcul vérifié donnait 33&nbsp;%. Tout ce qui en sort est donc une <b>piste à vérifier</b>, jamais un résultat.</p>
+  <p><b>Les refus, racontés honnêtement.</b> Il arrive que des modèles refusent nos questions — depuis le 24 octobre, régulièrement. Et des <b>filtres de sécurité automatiques</b> ont arrêté notre propre travail plus d’une fois, dont, le 27 octobre, la préparation d’un volet d’épreuves adverses. L’histoire de notre règle compte autant que la règle&nbsp;:</p>
+  <ul>
+    <li><b>Avant le 28 octobre</b>, sur consigne du directeur, on <b>reformulait parfois</b> une question refusée, une fois, en termes plus techniques&nbsp;; certaines ont obtenu une réponse. Cela s’est arrêté quand un filtre de sécurité a stoppé une de ces reformulations pendant sa rédaction, et que l’agent a refusé d’en écrire une autre.</li>
+    <li><b>Depuis le 28 octobre</b>, un refus <b>arrête le tour</b>, consigné tel quel. Le directeur peut autoriser au plus <b>une question différente, plus étroite</b> — jamais la même question rhabillée — ou décider par écrit de finir sans ce modèle. Il est arrivé que la question plus étroite obtienne une réponse du modèle qui avait refusé.</li>
+    <li>Certaines questions refusées étaient <b>défensives</b> (mesure, dimensionnement)&nbsp;; d’autres touchaient des volets d’attaque ou les faiblesses de nos propres surveillants. <b>Nous disons les deux.</b></li>
+  </ul>
+  <div class="etat"><b>À noter&nbsp;:</b> nous ne citons aucun nombre de refus, car le nombre total de tours lancés n’a pas été compté. <span class="ouverte">question ouverte</span> La phrase exacte à dire au fonds sur les refus est à valider par Lazar.</div>
+</div>
+
+<div class="encadre prudence">
+  <span class="etiquette sans">Ce qui n’existe pas encore</span>
+  Aucun agent saboteur n’a encore été fabriqué. Aucune sonde n’a encore battu une méthode concurrente. Aucune des six mesures «&nbsp;gratuites&nbsp;» (partie 4, front B) n’a été lue. Aucune idée de l’organisme n’a encore été lue ni retenue. Treize études voisines ont été rassemblées, mais pas encore lues page par page&nbsp;: aucun de leurs chiffres n’est cité. Plus de vingt relectures indépendantes en deux jours, c’est de la rigueur montrable, pas un résultat.
+</div>
+
+<!-- ============================================================ -->
+<h2 class="saut"><span class="num">4</span>Les pistes de recherche&nbsp;: cinq fronts</h2>
+<p>Les fronts A à D existent sans l’organisme. Le front E est l’organisme lui-même&nbsp;: il les accélère tous et fournit l’adversaire contre lequel on éprouve les surveillants.</p>
+
+<figure>
+<svg viewBox="0 0 720 230" role="img" aria-label="Schéma : l'organisme (front E) au centre alimente quatre fronts : théorie, mesures gratuites, épreuves adverses sous frein, articles.">
+  <rect width="720" height="230" fill="#ffffff"/>
+  <defs><marker id="fl" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto"><path d="M0,0 L10,5 L0,10 z" fill="#4a5563"/></marker></defs>
+  <g font-family="Helvetica,Arial,sans-serif" text-anchor="middle">
+    <g fill="#e6f0f4" stroke="#1f5f7a" stroke-width="1.3">
+      <rect x="10" y="14" width="200" height="66" rx="9"/>
+      <rect x="510" y="14" width="200" height="66" rx="9"/>
+      <rect x="10" y="150" width="200" height="66" rx="9"/>
+    </g>
+    <rect x="510" y="150" width="200" height="66" rx="9" fill="#f8ece4" stroke="#a8562a" stroke-width="1.3"/>
+    <rect x="270" y="80" width="180" height="70" rx="35" fill="#1f5f7a"/>
+    <text x="360" y="108" font-size="13" font-weight="700" fill="#ffffff">E · l’organisme</text>
+    <text x="360" y="126" font-size="10.5" fill="#ffffff">laboratoire automatique</text>
+    <text x="360" y="140" font-size="10" fill="#e6f0f4">et adversaire à surveiller</text>
+    <g font-size="12.5" font-weight="700" fill="#1d232b">
+      <text x="110" y="40">A · La théorie</text><text x="610" y="40">B · Mesures gratuites</text>
+      <text x="110" y="176">D · Les articles</text>
+    </g>
+    <text x="610" y="176" font-size="12.5" font-weight="700" fill="#a8562a">C · Épreuves adverses</text>
+    <g font-size="10.5" fill="#4a5563">
+      <text x="110" y="58">notice des angles morts</text><text x="110" y="72">ordinateur ordinaire</text>
+      <text x="610" y="58">données déjà payées</text><text x="610" y="72">zéro dollar de calcul en plus</text>
+      <text x="110" y="194">surveillant détourné, essaim,</text><text x="110" y="208">étude voisine lue de près</text>
+      <text x="610" y="194">sous revue de sécurité extérieure</text><text x="610" y="208">méthode, jamais mode d’emploi</text>
+    </g>
+    <g stroke="#4a5563" stroke-width="1.5" fill="none" marker-end="url(#fl)">
+      <line x1="285" y1="96" x2="212" y2="66"/><line x1="435" y1="96" x2="508" y2="66"/>
+      <line x1="285" y1="136" x2="212" y2="168"/><line x1="435" y1="136" x2="508" y2="168"/>
+    </g>
+  </g>
+</svg>
+<figcaption><b>La carte des fronts.</b> Le front C, en orange, est le seul qui demande un frein particulier&nbsp;: il est gouverné par une revue de sécurité extérieure, qui n’a pas encore commencé.</figcaption>
+</figure>
+
+<div class="bloc">
+  <h3><span class="pastille sans">A</span>La théorie des angles morts — le cœur de l’ambition</h3>
+  <p class="image">Image&nbsp;: un bilan médical. Chaque examen est aveugle à certaines maladies. On choisit une batterie d’examens telle qu’aucune combinaison réaliste de maladies n’échappe à tous.</p>
+  <p>La carte actuelle dit, pour chaque surveillant, quelle hypothèse il fait sur l’agent et quel écart le rend aveugle. Trois résultats parlent d’eux-mêmes&nbsp;: (1) si les épisodes sont hétérogènes, <b>regarder plus longtemps ne sauve pas</b> un surveillant — sa sensibilité plafonne, quelle que soit la durée&nbsp;; (2) un surveillant qui définit lui-même la population «&nbsp;sous le seuil&nbsp;» est aveugle à cette population <b>par construction</b>&nbsp;; (3) une sonde qui ne réagit qu’à l’indice donné dans la consigne ne détecte rien face à des exemples qui portent le même indice, et son score global peut le cacher.</p>
+  <p><b>À faire avec le financement&nbsp;:</b> passer de «&nbsp;aveugle ou non&nbsp;» à «&nbsp;de combien&nbsp;»&nbsp;; dresser le tableau qui dit quels surveillants restent clairvoyants quand plusieurs écarts se cumulent — ce qui permet de composer une batterie au lieu de tâtonner, et ce qui manque, à notre connaissance, au domaine&nbsp;; faire vérifier les démonstrations par un logiciel de preuve&nbsp;; instruire les 7 questions ouvertes, chacune annoncée comme question, pas comme trou du domaine.</p>
+  <div class="etat"><b>Coût&nbsp;:</b> ordinateur ordinaire seulement. La partie la plus ambitieuse est la moins chère.</div>
+</div>
+
+<div class="bloc">
+  <h3><span class="pastille sans">B</span>Mesurer ces hypothèses sur des épisodes réels, sans dépenser</h3>
+  <p class="image">Image&nbsp;: réécouter un enregistrement déjà fait pour y chercher ce qu’on n’avait pas pensé à écouter.</p>
+  <p>Six mesures sur un fichier de scores <b>déjà payé</b>, chacune avec un signe annoncé d’avance, écrite, figée, relue, puis lue une seule fois. La première dit, par exemple, à quel point les épisodes honnêtes diffèrent entre eux — c’est exactement ce dont dépend le plafond du résultat (1) ci-dessus. C’est l’argument «&nbsp;rapide et tolérant à l’échec&nbsp;»&nbsp;: zéro dollar de calcul en plus.</p>
+  <div class="etat"><b>État&nbsp;:</b> mesures conçues&nbsp;; chacune sera figée avant lecture. <span class="ouverte">question ouverte</span> Leur avancement exact est tenu par une autre équipe du programme et reste à vérifier.</div>
+</div>
+
+<div class="bloc">
+  <h3><span class="pastille sans">C</span>Les épreuves adverses — et le frein qui va avec</h3>
+  <p class="image">Image&nbsp;: le serrurier qui publie quel type de serrure est faible et comment la renforcer — jamais la technique pour l’ouvrir.</p>
+  <p>Un surveillant n’a de valeur que s’il résiste à un adversaire. Neuf voies de mesure sont inscrites au programme&nbsp;; la prioritaire consiste à <b>prédire où une faille peut se loger sans en construire une</b>. Un type de sabotage est conçu à part, par une instance qui n’a conçu aucun surveillant, gardé sous scellés et révélé seulement le jour de l’examen.</p>
+  <p>La règle de sortie&nbsp;: tout ce qui sort reste au <b>niveau de la méthode</b> — quelle hypothèse est violée, dans quelles conditions, quelle défense — jamais une recette réutilisable. Tout passage à une chaîne opérationnelle est <b>gelé</b> jusqu’à une <b>revue de sécurité extérieure</b>&nbsp;; le contenu adversarial détaillé reste sous scellés, non lu par ceux qui conçoivent les détecteurs. Aucune note de surveillant n’entre jamais dans l’entraînement d’un agent.</p>
+  <div class="etat"><b>État&nbsp;:</b> la revue extérieure n’a pas encore commencé&nbsp;: ni relecteur choisi, ni calendrier. Elle est une ligne du budget et une porte, pas une formalité.</div>
+</div>
+
+<div class="bloc">
+  <h3><span class="pastille sans">D</span>Les deux autres articles, et une étude voisine lue de près</h3>
+  <p class="image">Image&nbsp;: une caméra qui prend une photo à chaque passage, contre une caméra qui filme et additionne les indices.</p>
+  <p><b>L’article sur le surveillant détourné</b> se demande si l’on peut pousser le surveillant lui-même à se tromper, et comment le mesurer avant de le déployer. Vingt-neuf études voisines ont été lues&nbsp;: aucune ne fait la même chose. Il attend un document hors des archives habituelles, puis une relecture, puis un pilote. <b>L’article sur l’essaim</b> étudie plusieurs agents ensemble&nbsp;; il ajoute une question&nbsp;: un agent qui délègue <b>transmet-il ses consignes de sécurité</b>&nbsp;? (sous réserve qu’on ne la trouve pas déjà traitée ailleurs).</p>
+  <p><b>L’étude la plus proche</b>, publiée cette année, a été lue page par page. Elle occupe une bonne part du terrain&nbsp;: elle aussi lit l’intérieur de plusieurs agents. Il reste trois différences, dont elle nomme elle-même la première&nbsp;: elle juge en <b>une seule fois</b> (une photo), là où nous accumulons les indices dans le temps (un film)&nbsp;; elle lit <b>un seul mot</b> par réponse, nous les lisons tous&nbsp;; et nous travaillons sur des modèles <b>plus petits</b>. Sur ce dernier point, ses résultats vont <b>contre nous</b>&nbsp;: son plus petit modèle est son plus faible. Et sur l’un de ses jeux d’essai, un juge qui lit seulement le texte, avec quelques exemples, fait 20 sur 20 sans fausse alerte — c’est le genre de concurrent que nous devons battre. Nous le dirons avant qu’on nous le demande.</p>
+  <div class="etat"><span class="ouverte">question ouverte</span> La zone qui reste libre est plus étroite qu’annoncé&nbsp;; c’est à Lazar de dire si elle vaut encore la revendication.</div>
+</div>
+
+<div class="bloc">
+  <h3><span class="pastille sans">E</span>L’organisme&nbsp;: un chercheur automatique, gouverné</h3>
+  <p class="image">Image&nbsp;: un laboratoire d’apprentis qui conçoivent leurs propres expériences, sous un chef de laboratoire qui fixe les budgets et ne regarde la copie finale qu’une seule fois.</p>
+  <p>Ce qui est décidé&nbsp;: viser l’<b>universalité</b>, mesurée sur des familles de tâches jamais vues&nbsp;; des tâches fraîches à chaque génération&nbsp;; la répartition des rôles <b>apprise</b> plutôt que fixée, avec le coût compté dans la note&nbsp;; l’examen final lu <b>une seule fois</b>, à la fin&nbsp;; un relecteur d’un autre modèle&nbsp;; jamais de note de surveillant dans l’entraînement d’un agent.</p>
+  <p>Ce qu’il rend mesurable&nbsp;: la loi plutôt que le cas (familles inédites)&nbsp;; s’il faut vraiment séparer «&nbsp;celui qui propose&nbsp;» et «&nbsp;celui qui juge&nbsp;»&nbsp;; la survie des consignes de sécurité quand un agent délègue&nbsp;; si un chercheur automatique <b>sait qu’on l’évalue</b> et change de conduite&nbsp;; et le débit&nbsp;: transformer 23 hypothèses en 23 mesures.</p>
+  <div class="etat"><b>État&nbsp;:</b> la première course, celle qui invente des idées de surveillants, n’était pas lancée au moment d’écrire. Son programme de pilotage a été relu dix fois par des relecteurs neufs, dont quatre fois jugé «&nbsp;pas lançable en l’état&nbsp;». <b>Fait récent&nbsp;:</b> Lazar veut la lancer <b>aujourd’hui, avant l’entretien</b>, sous réserve d’une dernière correction du code et de sa propre relecture. Plafond de la course&nbsp;: 52,80 dollars, dans une enveloppe autorisée de 60. Devant le fonds, on dira selon l’état réel&nbsp;: «&nbsp;gouvernée, pas encore lancée&nbsp;», ou «&nbsp;lancée sous un plafond de 60 dollars, sortie pas encore lue&nbsp;», ou «&nbsp;une première sortie existe, exploratoire&nbsp;» — jamais «&nbsp;elle produit des idées&nbsp;». <b>Risque connu&nbsp;:</b> le modèle de taille moyenne pourrait être trop faible&nbsp;; une solution de repli est écrite d’avance, et changer de modèle demande l’accord de Lazar.</div>
+</div>
+
+<!-- ============================================================ -->
+<h2 class="saut"><span class="num">5</span>La porte interne, dite honnêtement</h2>
+<p>Le programme avance par <b>portes</b>&nbsp;: des examens de passage dont les critères sont gelés d’avance, et dont le verdict est rendu par un relecteur qui n’a écrit ni le plan ni l’analyse.</p>
+
+<h3>Première porte&nbsp;: fin novembre 2026 au plus tard</h3>
+<p>Huit critères. <b>Deux sont remplis</b>&nbsp;: l’outil de lecture interne validé sur un vrai modèle, et les méthodes de cumul validées en simulation. <b>Six restent</b>&nbsp;: des agents saboteurs de dosage contrôlé, des sondes en état, une méthode concurrente «&nbsp;boîte noire&nbsp;» de référence, le plan figé de la porte suivante, le plan figé de l’article sur le surveillant détourné, et un état de la recherche vérifié page par page. «&nbsp;Deux sur huit&nbsp;», c’est ce qu’il faut dire — une ancienne note disait «&nbsp;deux sur sept&nbsp;».</p>
+<div class="encadre prudence">
+  <span class="etiquette sans">Question ouverte</span>
+  Si les huit critères ne sont pas tous remplis fin novembre, juste avant le début du financement, <b>aucune règle de repli n’est écrite</b>. Les critères ne bougeront pas&nbsp;; ce que devient alors le palier financé reste à trancher par Lazar.
+</div>
+
+<h3>Deuxième porte&nbsp;: la vraie épreuve</h3>
+<p>C’est là que se jouera la revendication centrale. La candidature envoyée la place à la fin du <b>quatrième mois</b> du plan financé&nbsp;; le programme interne disait fin du deuxième. Devant le fonds, on dit la version envoyée&nbsp;; la mise en accord se fera après l’entretien. Les règles sont écrites <b>avant</b> tout résultat&nbsp;:</p>
+<ul>
+  <li><b>Battre tout le monde.</b> Lire l’intérieur en cumulant dans le temps doit attraper davantage de sabotages, à fausses alertes égales et rares (une sur cent), que la meilleure méthode qui lit seulement le texte, <b>et</b> que deux méthodes intérieures plus simples.</li>
+  <li><b>Gagner dans chaque type de sabotage</b>, séparément, y compris celui gardé sous scellés. Un échec ne peut pas se cacher dans une moyenne.</li>
+  <li><b>Ne pas tricher par les fausses alertes&nbsp;:</b> au plus 5 points de fausses alertes de plus que chaque concurrent, sur les épisodes honnêtes.</li>
+  <li><b>Une seule lecture</b>, sur plusieurs centaines d’unités d’épreuve par type de sabotage (en simulation, environ trois cents tiennent dans toutes les variations essayées)&nbsp;; pas de seconde chance.</li>
+</ul>
+<p><b>Ce qui menace cette porte</b>, dit sans détour&nbsp;: les juges (s’ils ne tiennent pas 99 notes sur 100, le format de l’épreuve est à revoir)&nbsp;; la taille (des centaines d’unités, pas des dizaines)&nbsp;; les agents saboteurs, qui n’existent pas encore&nbsp;; et le coût de la banque d’épisodes, de l’ordre de <b>300 à 1&nbsp;400 dollars</b>, au-delà des 90 accordés aujourd’hui, donc à décider étape par étape.</p>
+
+<!-- ============================================================ -->
+<h2><span class="num">6</span>La demande&nbsp;: trois paliers, et ce qu’on a déjà dépensé</h2>
+
+<figure>
+<svg viewBox="0 0 720 250" role="img" aria-label="Escalier de trois paliers : 58 630, 138 600 et 176 550 dollars.">
+  <rect width="720" height="250" fill="#ffffff"/>
+  <g font-family="Helvetica,Arial,sans-serif">
+    <line x1="30" y1="225" x2="700" y2="225" stroke="#d9d4ca"/>
+    <rect x="40" y="166" width="200" height="59" fill="#e6f0f4" stroke="#1f5f7a" stroke-width="1.3"/>
+    <rect x="260" y="85" width="200" height="140" fill="#e6f0f4" stroke="#1f5f7a" stroke-width="1.3"/>
+    <rect x="480" y="85" width="200" height="140" fill="#e6f0f4" stroke="#1f5f7a" stroke-width="1.3"/>
+    <rect x="480" y="47" width="200" height="38" fill="#f8ece4" stroke="#a8562a" stroke-width="1.3"/>
+    <g text-anchor="middle">
+      <text x="140" y="155" font-size="17" font-weight="700" fill="#1f5f7a">58 630 $</text>
+      <text x="140" y="190" font-size="11.5" font-weight="700" fill="#1d232b">Plancher envoyé</text>
+      <text x="140" y="206" font-size="10.5" fill="#4a5563">7 mois · 2 articles</text>
+      <text x="360" y="74" font-size="17" font-weight="700" fill="#1f5f7a">138 600 $</text>
+      <text x="360" y="150" font-size="11.5" font-weight="700" fill="#1d232b">Scénario ambitieux envoyé</text>
+      <text x="360" y="166" font-size="10.5" fill="#4a5563">12 mois · 3 articles</text>
+      <text x="360" y="181" font-size="10.5" fill="#4a5563">modèles plus grands</text>
+      <text x="580" y="36" font-size="17" font-weight="700" fill="#a8562a">176 550 $</text>
+      <text x="580" y="63" font-size="10.5" font-weight="700" fill="#a8562a">+ extension ≈ 37 950</text>
+      <text x="580" y="78" font-size="10" fill="#a8562a">ce qui n’existait pas le 7 octobre</text>
+      <text x="580" y="150" font-size="11.5" font-weight="700" fill="#1d232b">Version la plus ambitieuse</text>
+      <text x="580" y="166" font-size="10.5" fill="#4a5563">le scénario ambitieux</text>
+      <text x="580" y="181" font-size="10.5" fill="#4a5563">plus l’extension</text>
+    </g>
+  </g>
+</svg>
+<figcaption><b>Trois chiffres cohérents entre eux.</b> Les deux premiers figurent déjà dans la candidature envoyée&nbsp;; le troisième s’y ajoute. Le saut du plancher au troisième palier est d’environ trois fois&nbsp;: il faut le dire tel quel, avec les paliers, jamais le glisser. <b>Montants et choix des paliers à confirmer par Lazar.</b></figcaption>
+</figure>
+
+<table>
+  <thead><tr><th>Palier</th><th>Ce qu’il achète</th><th style="text-align:right">Dollars</th></tr></thead>
+  <tbody>
+    <tr><td><b>Plancher</b> (sur le formulaire)</td><td>Sept mois, du 1<sup>er</sup> décembre 2026 au 30 juin 2027&nbsp;: l’article sur le temps (le sabotage étalé) et l’article sur le surveillant détourné, avec la première porte.</td><td class="montant">58 630</td></tr>
+    <tr><td><b>Scénario ambitieux</b> (dans la candidature)</td><td>Douze mois&nbsp;; ajoute l’article sur l’essaim, des agents sur des modèles beaucoup plus grands, une seconde famille de modèles, des épreuves plus poussées, un consultant en statistique, un ingénieur à mi-temps pendant six mois, plus de validation humaine.</td><td class="montant">138 600</td></tr>
+    <tr><td colspan="3" style="background:var(--gris-pale);font-family:Helvetica,Arial,sans-serif;font-size:.8rem;text-transform:uppercase;letter-spacing:.05em;color:var(--doux)">L’extension, ligne par ligne</td></tr>
+    <tr><td>Revue de sécurité extérieure</td><td>Deux revues par un évaluateur indépendant, environ cinq jours de travail&nbsp;; taux à fixer avec lui</td><td class="montant">7 500</td></tr>
+    <tr><td>Adversaire sous scellés</td><td>Les épreuves adverses, exécutées seulement après la revue</td><td class="montant">4 000</td></tr>
+    <tr><td>Tableau complet et preuves vérifiées</td><td>La notice des angles morts, vérifiée par logiciel de preuve</td><td class="montant">5 000</td></tr>
+    <tr><td>L’organisme</td><td>Environ 1&nbsp;000 dollars par mois d’appels à des modèles</td><td class="montant">12 000</td></tr>
+    <tr><td>Le collisionneur comme méthode</td><td>Environ 500 dollars par mois</td><td class="montant">6 000</td></tr>
+    <tr><td>Réserve déclarée</td><td>10&nbsp;%, même règle que la candidature</td><td class="montant">3 450</td></tr>
+    <tr class="total"><td>Version la plus ambitieuse</td><td>138 600 + 37 950</td><td class="montant">176 550</td></tr>
+  </tbody>
+</table>
+
+<div class="encadre prudence">
+  <span class="etiquette sans">Ce qui reste à trancher par Lazar, aujourd’hui</span>
+  <ul style="margin:.2rem 0 0">
+    <li>Confirmer que l’extension s’ajoute au <b>scénario ambitieux</b> (176&nbsp;550) et non au plancher (ce qui ferait environ 86&nbsp;130).</li>
+    <li>Présenter <b>trois</b> paliers ou deux (la recommandation est trois).</li>
+    <li>Le taux et le nombre de jours de la revue extérieure.</li>
+    <li>Une variante doublerait la ligne du collisionneur (183&nbsp;150 au total)&nbsp;; la recommandation est de <b>ne pas</b> l’appliquer.</li>
+  </ul>
+  Sans décision, on dit le plancher et le scénario ambitieux envoyés, et l’on présente l’extension comme «&nbsp;ce que le programme mérite désormais, environ 38&nbsp;000 dollars de plus&nbsp;».
+</div>
+
+<h3>Ce qu’on a déjà dépensé</h3>
+<p>Depuis le début, le programme entier a coûté <b>quelques centaines de dollars</b>, dont <b>environ cent</b> pour la location de cartes de calcul (des processeurs spécialisés loués à l’heure). Le reste, ce sont surtout des appels à des modèles commerciaux&nbsp;: les débats du collisionneur et les premiers essais de l’organisme. Les dépenses se décident sur devis, par un accord écrit du directeur, le plus souvent plafonné. Le rapprochement avec les factures n’est pas terminé&nbsp;: c’est pourquoi on donne un ordre de grandeur, pas un nombre.</p>
+<p>Deux précisions honnêtes. La candidature parlait d’«&nbsp;environ 20 dollars&nbsp;» de calcul au 7 octobre&nbsp;: le chiffre a bougé, et nous préférons le dire. Et les petites dépenses d’octobre et de novembre (pilote, premiers examens) sont engagées <b>avant</b> le début du financement, sous des accords déjà donnés&nbsp;; elles ne sont pas dans la demande.</p>
+<p><span class="ouverte">question ouverte</span> Ce que chaque palier <b>livre, et à quelle date</b>, n’est pas encore écrit&nbsp;: la ventilation dit ce que chaque palier finance, pas le calendrier de ses livrables.</p>
+
+<!-- ============================================================ -->
+<h2 class="saut"><span class="num">7</span>Les questions difficiles, et nos réponses courtes</h2>
+<p>Les réponses ci-dessous sont celles que prépare la version 10, traduites et raccourcies. Celles qui sont marquées <span class="ouverte">à valider</span> attendent le mot de Lazar.</p>
+
+<div class="qr"><div class="q">«&nbsp;Votre test phare est revenu nul. Le programme échoue-t-il&nbsp;?&nbsp;»</div>
+<div class="r">Le nul est un produit. Il était écrit d’avance, lu une seule fois, et nous avons chiffré ce qu’il exclut&nbsp;: un effet net, oui&nbsp;; un effet faible, non. Il est reproductible au dernier chiffre près. Et c’est lui qui nous a menés à la théorie.</div></div>
+
+<div class="qr"><div class="q">«&nbsp;Vos juges automatiques donnent-ils seulement des notes utilisables&nbsp;?&nbsp;»</div>
+<div class="r">Pas assez souvent, et nous l’avons mesuré avant de bâtir&nbsp;: au mieux 87 fois sur 100, contre 99 exigées. Deux dollars pour l’apprendre tôt plutôt que quelques centaines pour l’apprendre tard. La consigne est réécrite et repassera l’examen.</div></div>
+
+<div class="qr"><div class="q">«&nbsp;Votre garde-fou ne certifie rien aux tailles que vous pouvez payer.&nbsp;»</div>
+<div class="r">À petite taille, c’est vrai, et nous l’avons écrit avant d’acheter des données. D’où la règle fixée d’avance&nbsp;: plusieurs centaines d’unités par type de sabotage, une seule lecture. En simulation, environ trois cents unités tiennent dans toutes les variations essayées, cent soixante non. Ce sont des simulations, et nous le disons.</div></div>
+
+<div class="qr"><div class="q">«&nbsp;Combien avez-vous dépensé&nbsp;? Votre candidature disait vingt dollars.&nbsp;»</div>
+<div class="r ouvert">Quelques centaines de dollars en tout, dont une centaine de calcul. Le gros n’est pas du calcul&nbsp;: ce sont des débats entre modèles et des essais de l’organisme. Le chiffre a bougé depuis la candidature, et nous préférons le dire. Le rapprochement avec les factures n’est pas fini&nbsp;: d’où un ordre de grandeur, pas un nombre. <span class="ouverte">à valider</span> La formulation exacte reste à fixer par Lazar.</div></div>
+
+<div class="qr"><div class="q">«&nbsp;Un modèle a refusé votre outil. L’avez-vous contourné&nbsp;?&nbsp;»</div>
+<div class="r ouvert">Avant le 28 octobre, de façon bornée, oui, et le registre le montre&nbsp;: sur consigne du directeur, on a parfois reformulé une question refusée, une fois, en termes plus techniques, jusqu’à ce qu’un filtre de sécurité arrête une de ces reformulations. Depuis le 28, un refus arrête le tour, consigné tel quel&nbsp;; au plus une question différente et plus étroite, jamais la même rhabillée, ou l’on continue sans ce modèle sur décision écrite. Certaines questions refusées étaient défensives, d’autres non&nbsp;: nous disons les deux. <span class="ouverte">à valider</span></div></div>
+
+<div class="qr"><div class="q">«&nbsp;Vous construisez des outils d’attaque. Pourquoi un fonds de sécurité paierait-il cela&nbsp;?&nbsp;»</div>
+<div class="r ouvert">Nous ne construisons pas d’outil réutilisable&nbsp;: ce qui sort reste au niveau de la méthode et de la défense. Et le frein n’est pas un document&nbsp;: des filtres de sécurité ont arrêté notre propre travail plus d’une fois, tout est consigné, et toute chaîne opérationnelle attend une revue de sécurité extérieure. <span class="ouverte">à valider</span></div></div>
+
+<div class="qr"><div class="q">«&nbsp;Une étude publiée fait déjà de la détection intérieure entre agents. Que vous reste-t-il&nbsp;?&nbsp;»</div>
+<div class="r">Nous l’avons lue page par page. Il reste le film plutôt que la photo (elle le nomme elle-même comme sa prochaine étape), la lecture de tous les mots plutôt que d’un seul, et la petite taille — sur laquelle ses résultats vont contre nous. Et sur l’un de ses jeux, un juge textuel bien construit gagne&nbsp;: c’est le concurrent que notre porte nous oblige à battre.</div></div>
+
+<div class="qr"><div class="q">«&nbsp;Sept de vos vingt-trois hypothèses sont des “questions ouvertes”. N’est-ce pas un trou inventé&nbsp;?&nbsp;»</div>
+<div class="r">C’est une règle que nous nous imposons&nbsp;: une zone vide est une question, pas un trou du domaine, et les zones vides séduisantes se vérifient plus durement. Chacune se fermera soit sur un résultat connu que nous citerons, soit sur un court article.</div></div>
+
+<div class="qr"><div class="q">«&nbsp;Quelle part de ce travail est de vous, et quelle part d’agents d’intelligence artificielle&nbsp;?&nbsp;»</div>
+<div class="r">Les questions, les portes et toute décision qui change le programme ou dépense de l’argent sont du directeur&nbsp;; les choix d’exécution courants sont aux agents, consignés et vérifiables. Les agents travaillent sous un protocole qu’ils ne peuvent pas assouplir, parce que le risque de ce montage est une machine qui se persuade elle-même d’un résultat.</div></div>
+
+<div class="qr"><div class="q">«&nbsp;Vos agents obéissent-ils toujours&nbsp;?&nbsp;» <span class="ouverte">à valider</span></div>
+<div class="r ouvert">Réponse en réserve, à ne dire que si on la pose. Le 26 octobre, l’agent a refusé de lancer une course qui aurait reposé une demande refusée, autrement cadrée, aux modèles qui l’avaient refusée, et refusé d’écrire une reformulation après un arrêt par filtre. Deux jours plus tard, la règle qui le permettait a été remplacée. Dire ou non que l’agent «&nbsp;avait raison&nbsp;» est un jugement que seul Lazar peut porter.</div></div>
+
+<div class="qr"><div class="q">«&nbsp;Et si la porte de fin novembre échoue&nbsp;?&nbsp;» · «&nbsp;Qui fera la revue de sécurité&nbsp;?&nbsp;»</div>
+<div class="r ouvert">Pour la porte&nbsp;: les critères ne bougeront pas, mais aucune règle de repli n’est écrite — à dire tel quel, ou à trancher. Pour la revue&nbsp;: elle n’est pas encore commandée&nbsp;; c’est une ligne du budget et une porte, pas une formalité. <span class="ouverte">question ouverte</span></div></div>
+
+<div class="qr"><div class="q">«&nbsp;Pourquoi 12&nbsp;000 dollars de calcul dans le scénario ambitieux, quand vous en avez dépensé cent&nbsp;?&nbsp;»</div>
+<div class="r ouvert">Éléments vrais&nbsp;: la banque d’épisodes de la deuxième porte (de l’ordre de 400 à 2&nbsp;100 dollars pour une première banque, aux prix d’octobre), des agents sur des modèles beaucoup plus grands, une seconde famille de modèles. La ligne de calcul détaillée reste <span class="ouverte">à préparer</span>.</div></div>
+
+<!-- ============================================================ -->
+<h2><span class="num">8</span>Petit glossaire</h2>
+<dl class="glossaire">
+  <dt>Agent</dt><dd>Une intelligence artificielle à qui l’on confie une tâche longue, qu’elle mène seule en plusieurs étapes.</dd>
+  <dt>Moniteur (surveillant)</dt><dd>Un programme qui observe un agent et donne l’alerte s’il soupçonne un mauvais comportement.</dd>
+  <dt>Boîte noire, boîte blanche</dt><dd>Surveiller seulement ce que l’agent écrit (boîte noire), ou aussi ce qui se passe à l’intérieur de son calcul (boîte blanche).</dd>
+  <dt>Menace diffuse</dt><dd>Un mauvais comportement réparti en nombreux petits gestes, dont aucun n’est alarmant pris seul.</dd>
+  <dt>Sonde</dt><dd>Un petit détecteur qui lit l’activité interne d’un modèle et renvoie un score à chaque étape.</dd>
+  <dt>Angle mort</dt><dd>Une situation où un surveillant est aveugle par construction, quelle que soit la façon dont on le règle.</dd>
+  <dt>Préenregistrement scellé</dt><dd>Le plan d’une expérience, figé par une empreinte numérique avant qu’elle ait lieu&nbsp;: prédiction, seuil et façon de lire les résultats.</dd>
+  <dt>Porte</dt><dd>Un examen de passage aux critères gelés d’avance, jugé par un relecteur qui n’a rien écrit de ce qu’il juge.</dd>
+  <dt>Collisionneur</dt><dd>Notre outil où trois intelligences artificielles différentes répondent à une question de méthode puis se critiquent, avant qu’un humain tranche.</dd>
+  <dt>Organisme</dt><dd>Un petit laboratoire automatique&nbsp;: des intelligences artificielles qui proposent, testent et sélectionnent des idées, sous des règles et des plafonds fixés.</dd>
+</dl>
+
+<p class="pied sans">Source&nbsp;: le programme préparé pour l’entretien, version 10 (29 octobre 2026, en relecture), et sa ventilation de la demande&nbsp;; contexte&nbsp;: le programme de recherche, version 2. Seul fait plus récent que la version 10&nbsp;: l’intention de Lazar de lancer la course de l’organisme aujourd’hui. Ce document ne décrit aucune méthode d’attaque, de sabotage ou de contournement des surveillants&nbsp;; il dit seulement que les surveillants seront éprouvés, sous un frein. Document interne, non envoyé.</p>
+
+</main>
+</body>
+</html>

@@ -1,0 +1,68 @@
+--- echelle-v5/scripts/repeter_instance_v5.sh	2026-10-27 03:54:35.823273598 +0000
++++ echelle-v6/scripts/repeter_instance_v6.sh	2026-10-27 05:29:49.893925388 +0000
+@@ -1,22 +1,23 @@
+ #!/usr/bin/env bash
+-# Répétition locale de la chaîne d'instance de la comparaison d'échelle v5 (R5, CLX-10, CLY-03, CLY-14, CLZ-04, CLW-08),
+-# lignée « session-depot », 27 octobre 2026 ; déclinée de `repeter_instance_v4.sh` (R12). Aucune carte, aucune
++# Répétition locale de la chaîne d'instance de la comparaison d'échelle v6 (R5, CLX-10, CLY-03, CLY-14, CLZ-04, CLW-08),
++# lignée « session-depot », 27 octobre 2026 ; copie de `repeter_instance_v5.sh` (R12), sans changement des cas.
++# Aucune carte, aucune
+ # instance, aucune clé réelle : un dépôt nu local tient lieu de dépôt de travail, le modèle minuscule local tient lieu
+ # des deux modèles, les jetons sont factices. Un cas sain et treize artefacts ; chaque cas écrit son journal ;
+ # RESUME.txt donne le code attendu et le code obtenu. Nouveau depuis la v4 (CLW-08) : chaque refus précoce de l'amorce
+ # doit écrire sa ligne « fin, code 1 », que la surveillance relit ; vérifié sur les six refus précoces.
+-# Usage : repeter_instance_v5.sh DOSSIER_NEUF COMMIT MODELE_MINUSCULE VENV
+-#   COMMIT : commit de la branche d'outils outils/echelle-conscience-eval-v5 (déjà présent dans le dépôt courant)
++# Usage : repeter_instance_v6.sh DOSSIER_NEUF COMMIT MODELE_MINUSCULE VENV
++#   COMMIT : commit de la branche d'outils outils/echelle-conscience-eval-v6 (déjà présent dans le dépôt courant)
+ set -uo pipefail
+-[ $# -eq 4 ] || { echo "usage : repeter_instance_v5.sh DOSSIER_NEUF COMMIT MODELE_MINUSCULE VENV"; exit 2; }
++[ $# -eq 4 ] || { echo "usage : repeter_instance_v6.sh DOSSIER_NEUF COMMIT MODELE_MINUSCULE VENV"; exit 2; }
+ E=$(realpath -m "$1"); C=$2; MIN=$3; VENV=$4
+ [ -e "$E" ] && { echo "$E existe déjà (R12)"; exit 2; }
+ ICI=$(cd "$(dirname "$0")" && pwd)
+ DEPOT_SRC=$(git -C "$ICI" rev-parse --show-toplevel)
+ mkdir -p "$E"
+ git init -q --bare "$E/depot.git"
+-git -C "$DEPOT_SRC" push -q "$E/depot.git" "$C:refs/heads/outils/echelle-conscience-eval-v5" 2>/dev/null
+-A="$ICI/amorce_echelle_v5.sh"
++git -C "$DEPOT_SRC" push -q "$E/depot.git" "$C:refs/heads/outils/echelle-conscience-eval-v6" 2>/dev/null
++A="$ICI/amorce_echelle_v6.sh"
+ resume() { printf '%-32s attendu %s ; obtenu %s ; %s\n' "$1" "$2" "$3" "$4" | tee -a "$E/RESUME.txt"; }
+ cas() {  # $1 nom, $2 code attendu, puis variables d'environnement, puis la commande
+     local nom=$1 attendu=$2; shift 2
+@@ -44,8 +45,8 @@
+ cas branche-presente 1 "${COMMUN[@]}" COMMIT="$C" BRANCHE=donnees/essai-sain RACINE_AMORCE="$E/branche-presente" \
+     MODELE_LOCAL="$MIN" bash "$A"
+ # 4. stimuli altérés (commit d'essai sur une branche d'essai du dépôt nu)
+-git clone -q "$E/depot.git" "$E/clone-altere" && git -C "$E/clone-altere" checkout -q outils/echelle-conscience-eval-v5 \
+-    && printf ' ' >> "$E/clone-altere/echelle-v5/stimuli/echelle-v2.json" \
++git clone -q "$E/depot.git" "$E/clone-altere" && git -C "$E/clone-altere" checkout -q outils/echelle-conscience-eval-v6 \
++    && printf ' ' >> "$E/clone-altere/echelle-v6/stimuli/echelle-v2.json" \
+     && git -C "$E/clone-altere" -c user.name=essai -c user.email=essai@invalid commit -q -am "essai : stimuli altérés" \
+     && git -C "$E/clone-altere" push -q origin HEAD:refs/heads/outils/essai-altere
+ CA=$(git -C "$E/clone-altere" rev-parse HEAD)
+@@ -56,10 +57,10 @@
+     MODELE_LOCAL="$MIN" HF_TOKEN="modele-minuscule" bash "$A"
+ absente "clé" donnees/essai-a5
+ # 6. git ls-remote en échec (origine injoignable après le clonage) : arrêt avant tout calcul
+-git clone -q --branch outils/echelle-conscience-eval-v5 "$E/depot.git" "$E/ls-remote/depot"
++git clone -q --branch outils/echelle-conscience-eval-v6 "$E/depot.git" "$E/ls-remote/depot"
+ git -C "$E/ls-remote/depot" remote set-url origin "$E/inexistant.git"
+ cas ls-remote-en-echec 1 "${COMMUN[@]}" COMMIT="$C" BRANCHE=donnees/essai-a6 TRAVAIL="$E/ls-remote/travail" \
+-    MODELE_LOCAL="$MIN" bash "$E/ls-remote/depot/echelle-v5/scripts/echelle_instance_v5.sh"
++    MODELE_LOCAL="$MIN" bash "$E/ls-remote/depot/echelle-v6/scripts/echelle_instance_v6.sh"
+ # 7. téléchargement refusé (jeton factice sur un modèle à licence ; aucune carte : PERMETTRE_SANS_CARTE)
+ cas telechargement-refuse 1 "${COMMUN[@]}" COMMIT="$C" BRANCHE=donnees/essai-a7 RACINE_AMORCE="$E/telechargement-refuse" \
+     HF_TOKEN=hf_jeton_factice_essai PERMETTRE_SANS_CARTE=1 HF_HOME="$E/telechargement-refuse/cache-hf" bash "$A"
+@@ -77,8 +78,8 @@
+ cas creation-trop-ancienne 1 "${SANS_TEMPS[@]}" DUREE_MAX_S=4500 CREATION_S=$((MAINTENANT - 1300)) COMMIT="$C" \
+     BRANCHE=donnees/essai-a12 RACINE_AMORCE="$E/creation-trop-ancienne" MODELE_LOCAL="$MIN" bash "$A"
+ # 13. compagnon d'empreinte d'un script faux sur l'instance : le script de mesure change, son compagnon non (CLY-14)
+-git clone -q "$E/depot.git" "$E/clone-compagnon" && git -C "$E/clone-compagnon" checkout -q outils/echelle-conscience-eval-v5 \
+-    && printf '# essai\n' >> "$E/clone-compagnon/echelle-v5/scripts/mesurer_echelle_v5.py" \
++git clone -q "$E/depot.git" "$E/clone-compagnon" && git -C "$E/clone-compagnon" checkout -q outils/echelle-conscience-eval-v6 \
++    && printf '# essai\n' >> "$E/clone-compagnon/echelle-v6/scripts/mesurer_echelle_v6.py" \
+     && git -C "$E/clone-compagnon" -c user.name=essai -c user.email=essai@invalid commit -q -am "essai : compagnon faux" \
+     && git -C "$E/clone-compagnon" push -q origin HEAD:refs/heads/outils/essai-compagnon
+ CC=$(git -C "$E/clone-compagnon" rev-parse HEAD)

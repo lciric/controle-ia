@@ -1,0 +1,12 @@
+#!/usr/bin/env bash
+# Faux vastai 1.8.3 pour le banc du lanceur : réponses tirées de variables d'environnement ; consigne chaque appel.
+J=${FAUX_JOURNAL:-/dev/null}
+printf '%s\n' "$*" | sed -E 's/(HF_TOKEN|GH_TOKEN)=[^ ]+/\1=***/g' >> "$J"
+case "$1 $2" in
+  "--version "*) echo "1.8.3" ;;
+  "show instances") echo "${FAUX_INSTANCES:-[]}" ;;
+  "show user") echo "{\"credit\": ${FAUX_CREDIT:-10.0}}" ;;
+  "search offers") cat "${FAUX_OFFRES:?}" ;;
+  "create instance") echo "${FAUX_CREATION:-{\"success\": true, \"new_contract\": 99887766, \"msg\": \"faux\"}}" ;;
+  *) echo "faux vastai : commande inconnue $*" >&2; exit 9 ;;
+esac

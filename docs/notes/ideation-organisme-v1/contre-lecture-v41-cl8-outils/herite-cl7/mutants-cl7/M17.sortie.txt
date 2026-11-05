@@ -1,0 +1,46 @@
+........................../tmp/claude-0/-home-user-controle-ia-travail/75a1275d-b838-5015-909e-b2bfadb395f9/scratchpad/relecture-v40/cl7/outils-cl7/mutants/M17/essais/test_v7_ideation.py:557: ResourceWarning: unclosed file <_io.TextIOWrapper name='/tmp/claude-0/-home-user-controle-ia-travail/75a1275d-b838-5015-909e-b2bfadb395f9/scratchpad/relecture-v40/cl7/outils-cl7/mutants/M17/essais/_tmp/tmp02sduvmh/petit-enfant.pid' mode='r' encoding='UTF-8'>
+  pid = int(open(pid_f).read())
+ResourceWarning: Enable tracemalloc to get the object allocation traceback
+../tmp/claude-0/-home-user-controle-ia-travail/75a1275d-b838-5015-909e-b2bfadb395f9/scratchpad/relecture-v40/cl7/outils-cl7/mutants/M17/essais/test_v7_ideation.py:649: ResourceWarning: unclosed file <_io.TextIOWrapper name='/tmp/claude-0/-home-user-controle-ia-travail/75a1275d-b838-5015-909e-b2bfadb395f9/scratchpad/relecture-v40/cl7/outils-cl7/mutants/M17/essais/_tmp/tmp45ioou5u/cx-3/proposeurs/argon/traces-passe-2/consigne.md' mode='r' encoding='utf-8'>
+  encoding="utf-8").read()
+ResourceWarning: Enable tracemalloc to get the object allocation traceback
+................................/usr/lib/python3.13/subprocess.py:1141: ResourceWarning: subprocess 28218 is still running
+  _warn("subprocess %s is still running" % self.pid,
+ResourceWarning: Enable tracemalloc to get the object allocation traceback
+./tmp/claude-0/-home-user-controle-ia-travail/75a1275d-b838-5015-909e-b2bfadb395f9/scratchpad/relecture-v40/cl7/outils-cl7/mutants/M17/essais/test_v7_ideation.py:1248: ResourceWarning: unclosed file <_io.TextIOWrapper name='/tmp/claude-0/-home-user-controle-ia-travail/75a1275d-b838-5015-909e-b2bfadb395f9/scratchpad/relecture-v40/cl7/outils-cl7/mutants/M17/essais/_tmp/tmp1r97dof7/pe.pid' mode='r' encoding='UTF-8'>
+  pe = int(open(pid_f).read())
+ResourceWarning: Enable tracemalloc to get the object allocation traceback
+.E..
+======================================================================
+ERROR: test_sommes_et_plafonds_non_finis (essais.test_v7_ideation.TestV40.test_sommes_et_plafonds_non_finis)
+M12 à M14, M17, M19 : somme externe (contrôle du bras compris) refusée au cœur et par verifier_reglages ;
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/tmp/claude-0/-home-user-controle-ia-travail/75a1275d-b838-5015-909e-b2bfadb395f9/scratchpad/relecture-v40/cl7/outils-cl7/mutants/M17/essais/test_v7_ideation.py", line 1041, in test_sommes_et_plafonds_non_finis
+    c.lancer(ad, f"nan-{champ}", **{champ: float("nan")})
+    ~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/tmp/claude-0/-home-user-controle-ia-travail/75a1275d-b838-5015-909e-b2bfadb395f9/scratchpad/relecture-v40/cl7/outils-cl7/mutants/M17/essais/test_v7_ideation.py", line 306, in lancer
+    return idn.executer_ideation(ad, os.path.join(self.tmp, sortie), **args)
+           ~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/tmp/claude-0/-home-user-controle-ia-travail/75a1275d-b838-5015-909e-b2bfadb395f9/scratchpad/relecture-v40/cl7/outils-cl7/mutants/M17/pole/ideation.py", line 918, in executer_ideation
+    ecrire_json_scelle(os.path.join(sortie, "manifeste-depart.json"), depart)
+    ~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/tmp/claude-0/-home-user-controle-ia-travail/75a1275d-b838-5015-909e-b2bfadb395f9/scratchpad/relecture-v40/cl7/outils-cl7/mutants/M17/pole/outils.py", line 68, in ecrire_json_scelle
+    texte = json.dumps(objet, ensure_ascii=False, indent=2, sort_keys=True, allow_nan=False) + "\n"
+            ~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/lib/python3.13/json/__init__.py", line 242, in dumps
+    **kw).encode(obj)
+          ~~~~~~^^^^^
+  File "/usr/lib/python3.13/json/encoder.py", line 202, in encode
+    chunks = self.iterencode(o, _one_shot=True)
+  File "/usr/lib/python3.13/json/encoder.py", line 263, in iterencode
+    return _iterencode(o, 0)
+ValueError: Out of range float values are not JSON compliant: nan
+
+----------------------------------------------------------------------
+Ran 65 tests in 5.593s
+
+FAILED (errors=1)
+<sys>:0: ResourceWarning: unclosed file <_io.BufferedWriter name=4>
+<sys>:0: ResourceWarning: unclosed file <_io.BufferedReader name=5>
+<sys>:0: ResourceWarning: unclosed file <_io.BufferedReader name=7>

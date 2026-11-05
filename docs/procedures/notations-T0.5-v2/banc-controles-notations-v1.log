@@ -1,0 +1,220 @@
+C = 6c96075dffc8e81f65e35781191eae396be2b8b2
+script éprouvé : controles_avant_depense_notations_v1.sh b62fd0fff1277874b4fb647318fb753c4c2cb4d73125662f9db8cd2c71ecd0ca
+script éprouvé : verifications_notations_v1.py 25d7faf1b71a7b0fab16e15dbf206273db023d80d73e65d2c520d1300640ff03
+script éprouvé : essais_controles_notations_v1.sh dd2826523e6ec3603062075d760f4eec88e3e4ada3015d3f987f7abac746551d
+lignes changées dans la copie des contrôles : 3
+tests 763 ; commit antérieur au dernier changement du lanceur des notations : e39b3fb6e3150948e624c5578d26f722ab329b4a ; un rapport : T0.5-notations-v1-relecture-texte-code-v1.json
+A00-sain : code 0 ; 55 OK, 0 KO ; CONFORME
+A01-go-absent : code 1 ; 54 OK, 1 KO ; CONFORME
+    KO  décision de Lazar sur N-021 (GO, révocation, N-021 ou registre) : GO-2026-10-12-02 absent, en double ou mal formé
+A02-go-autre-type : code 1 ; 54 OK, 1 KO ; CONFORME
+    KO  décision de Lazar sur N-021 (GO, révocation, N-021 ou registre) : GO-2026-10-12-02 : calcul, Lazar : GO de type « revendication », accordé par Lazar, sur N-021 (a), attendu
+A03-go-option-b : code 1 ; 54 OK, 1 KO ; CONFORME
+    KO  décision de Lazar sur N-021 (GO, révocation, N-021 ou registre) : GO-2026-10-12-02 : revendication, Lazar : GO de type « revendication », accordé par Lazar, sur N-021 (a), attendu
+A04-go-revoque : code 1 ; 54 OK, 1 KO ; CONFORME
+    KO  décision de Lazar sur N-021 (GO, révocation, N-021 ou registre) : GO-2026-10-12-02 révoqué
+A05-go-calcul-revoque : code 1 ; 53 OK, 2 KO ; CONFORME
+    KO  décision de Lazar sur N-021 (GO, révocation, N-021 ou registre) : GO-2026-10-04-08 révoqué
+    KO  garde de calcul sur le registre de S
+A05b-go-revoque-ligne-mal-formee : code 1 ; 53 OK, 2 KO ; CONFORME
+    KO  décision de Lazar sur N-021 (GO, révocation, N-021 ou registre) : GO-2026-10-12-02 révoqué
+    KO  garde de calcul sur le registre de S
+A05c-ligne-go-qui-mentionne-une-revocation : code 0 ; 55 OK, 0 KO ; CONFORME
+A06-n021-forme-inexacte : code 1 ; 54 OK, 1 KO ; CONFORME
+    KO  décision de Lazar sur N-021 (GO, révocation, N-021 ou registre) : N-021 : colonne d'état ≠ « tranché (a) par Lazar : GO-2026-10-12-02 (R-160) »
+A07-n021-suite-ajoutee : code 1 ; 54 OK, 1 KO ; CONFORME
+    KO  décision de Lazar sur N-021 (GO, révocation, N-021 ou registre) : N-021 : colonne d'état ≠ « tranché (a) par Lazar : GO-2026-10-12-02 (R-160) »
+A08-n021-en-attente : code 1 ; 54 OK, 1 KO ; CONFORME
+    KO  décision de Lazar sur N-021 (GO, révocation, N-021 ou registre) : N-021 : colonne d'état ≠ « tranché (a) par Lazar : GO-2026-10-12-02 (R-160) »
+A09-registre-absent : code 1 ; 54 OK, 1 KO ; CONFORME
+    KO  décision de Lazar sur N-021 (GO, révocation, N-021 ou registre) : R-160 absent, en double ou sans GO-2026-10-12-02
+A10-texte-autre-go : code 1 ; 53 OK, 2 KO ; CONFORME
+    KO  décision de Lazar sur N-021 (GO, révocation, N-021 ou registre) : GO-2026-10-12-98 absent, en double ou mal formé
+    KO  préenregistrement de S ≠ candidat relu
+A10b-texte-sans-decision : code 1 ; 53 OK, 2 KO ; CONFORME
+    KO  décision de Lazar sur N-021 (GO, révocation, N-021 ou registre) : ligne « Décision de Lazar sur N-021 » absente, en double ou mal formée
+    KO  préenregistrement de S ≠ candidat relu
+A11-texte-autre-que-le-candidat : code 1 ; 54 OK, 1 KO ; CONFORME
+    KO  préenregistrement de S ≠ candidat relu
+A12-configuration-autre-que-la-relue : code 1 ; 53 OK, 2 KO ; CONFORME
+    KO  configuration de S ≠ configuration relue
+    KO  gardes du lanceur, valeurs ou première lecture : controle_ia.gardes.GardeArret: lot_juge ≠ celui du pilote : aucun paramètre des juges ne change (N-021)
+A13-commit-du-code-cite-deux-fois : code 1 ; 52 OK, 3 KO ; CONFORME
+    KO  commit du code cité illisible, cité 2 fois, ou non ancêtre de S
+    KO  préenregistrement de S ≠ candidat relu
+    KO  intitulés absents ou cités plusieurs fois : « Commit du code d'analyse »
+A14-code-modifie-apres-cite : code 1 ; 52 OK, 3 KO ; CONFORME
+    KO  arbre gelé modifié depuis le commit du code
+    KO  arbre gelé de S ≠ code relu épinglé (c63d4f1c073f3b6146729dae0086cd7205cdfa57)
+    KO  gardes du lanceur, valeurs ou première lecture : controle_ia.gardes.GardeArret: arbre gelé (code, tests, scripts, dépendances, configuration) modifié depuis le commit cité c63d4f1c073f
+A15-module-de-lecture-modifie : code 1 ; 51 OK, 4 KO ; CONFORME
+    KO  arbre gelé modifié depuis le commit du code
+    KO  arbre gelé de S ≠ code relu épinglé (c63d4f1c073f3b6146729dae0086cd7205cdfa57)
+    KO  modules de lecture du pilote modifiés depuis 2660b07220ec (code 1) : la lecture des notations s'arrêterait
+    KO  gardes du lanceur, valeurs ou première lecture : controle_ia.gardes.GardeArret: arbre gelé (code, tests, scripts, dépendances, configuration) modifié depuis le commit cité c63d4f1c073f
+A16-script-de-l-instance-modifie : code 1 ; 51 OK, 4 KO ; CONFORME
+    KO  arbre gelé modifié depuis le commit du code
+    KO  arbre gelé de S ≠ code relu épinglé (c63d4f1c073f3b6146729dae0086cd7205cdfa57)
+    KO  empreinte de scripts/notations_t05_instance.sh (e7e08d41ef2db033fa8629f276d9bcf78e1bf213af2c2be493418219029d0cfc) non citée
+    KO  gardes du lanceur, valeurs ou première lecture : controle_ia.gardes.GardeArret: arbre gelé (code, tests, scripts, dépendances, configuration) modifié depuis le commit cité c63d4f1c073f
+A17-arret-du-pilote-altere : code 1 ; 53 OK, 2 KO ; CONFORME
+    KO  diag/20261012-105125-t05-pilote-reel/arret.json non cité par son empreinte
+    KO  gardes du lanceur, valeurs ou première lecture : controle_ia.gardes.GardeArret: arrêt 958e2b4a8fc8 ≠ arrêt cité c133ae40cf40
+A18-notations-dans-le-pilote : code 1 ; 54 OK, 1 KO ; CONFORME
+    KO  gardes du lanceur, valeurs ou première lecture : controle_ia.gardes.GardeArret: pilote 20261012-105125-t05-pilote-reel : ['notations-8B-decisives.json'] déjà présents ; aucune notation n'est refaite par-dessu
+A19-verdict-sans-sceau : code 1 ; 53 OK, 2 KO ; CONFORME
+    KO  docs/verdicts/verdict-T0.5-pilote-v1.md ou son sceau absent ou non conforme
+    KO  verifier-arbre : ÉCHEC docs/verdicts/verdict-T0.5-pilote-v1.md : docs/verdicts/verdict-T0.5-pilote-v1.md : empreinte compagnon verdict-T0.5-pilote-v1.md.sha256 absente 
+A20-premiere-lecture-retiree : code 1 ; 52 OK, 3 KO ; CONFORME
+    KO  diag/20261012-150724-t05-pilote-analyse/lecture.json ou son sceau absent ou non conforme
+    KO  diag/20261012-150724-t05-pilote-analyse/lecture.json non cité par son empreinte
+    KO  gardes du lanceur, valeurs ou première lecture : controle_ia.gardes.GardeArret: diag/20261012-150724-t05-pilote-analyse/lecture.json : fichier absent sur disque
+A21-s-ajoute-un-autre-fichier : code 1 ; 51 OK, 4 KO ; CONFORME
+    KO  contenu de S inattendu : README.md prereg/T0.5-pilote-notations-config-v1.json prereg/T0.5-pilote-notations-config-v1.json.sha256 prereg/T0.5-pilote-notations-v1.md prereg/T0.5-pilote-notations-v1.md.sha256 
+    KO  arbre gelé modifié depuis le commit du code
+    KO  arbre gelé de S ≠ code relu épinglé (c63d4f1c073f3b6146729dae0086cd7205cdfa57)
+    KO  gardes du lanceur, valeurs ou première lecture : controle_ia.gardes.GardeArret: arbre gelé (code, tests, scripts, dépendances, configuration) modifié depuis le commit cité c63d4f1c073f
+A22-lecture-precoce-citation-en-double : code 1 ; 52 OK, 3 KO ; CONFORME
+    KO  préenregistrement de S ≠ candidat relu
+    KO  lecture précoce : citation absente, en double, ou chemin inattendu
+    KO  intitulés absents ou cités plusieurs fois : « Chemin des épisodes du pilote noté »
+A22b-intitule-en-double : code 1 ; 53 OK, 2 KO ; CONFORME
+    KO  préenregistrement de S ≠ candidat relu
+    KO  intitulés absents ou cités plusieurs fois : « Tâches du pilote »
+A23-problemes-non-vide : code 1 ; 53 OK, 2 KO ; CONFORME
+    KO  préenregistrement de S ≠ candidat relu
+    KO  problemes() non vide
+A24-ligne-lancement-autre : code 1 ; 53 OK, 2 KO ; CONFORME
+    KO  préenregistrement de S ≠ candidat relu
+    KO  PREREG ou BRANCHE : la ligne « Lancement » cite autre chose
+A25-suite-autre-nombre : code 1 ; 54 OK, 1 KO ; CONFORME
+    KO  suite complète : « 764 passed in 1.00s » (code 0 ; 763 attendus)
+A26-rapport-altere : code 1 ; 54 OK, 1 KO ; CONFORME
+    KO  rapport T0.5-notations-v1-relecture-texte-code-v1.json absent, non scellé, d'empreinte différente ou non cité
+A27-rapport-de-trop : code 1 ; 54 OK, 1 KO ; CONFORME
+    KO  rapports présents « T0.5-notations-v1-relecture-autre-v1.md T0.5-notations-v1-relecture-chaine-v1.json T0.5-notations-v1-relecture-scripts-v1.tar T0.5-notations-v1-relecture-texte-code-v1.json T0.5-notations-v1
+A28-journal-repetition-altere : code 1 ; 54 OK, 1 KO ; CONFORME
+    KO  répétition jouet : journal absent de S, d'une autre empreinte que l'épingle, ou sceau différent
+A29-copie-versee-du-pilote-jouet-modifiee : code 1 ; 54 OK, 1 KO ; CONFORME
+    KO  répétition jouet : script répété ≠ copie versée à S : construire_pilote_jouet_v1.py
+A30-code-relu-autre : code 1 ; 53 OK, 2 KO ; CONFORME
+    KO  arbre gelé de S ≠ code relu épinglé (e39b3fb6e3150948e624c5578d26f722ab329b4a)
+    KO  répétition jouet : ligne absente ou en double : commit du code répété : e39b3fb6e3150948e624c5578d26f722ab329b4a
+A31-journal-autre-commit : code 1 ; 54 OK, 1 KO ; CONFORME
+    KO  répétition jouet : ligne absente ou en double : commit du code répété : c63d4f1c073f3b6146729dae0086cd7205cdfa57
+A30b-candidat-relu-autre : code 1 ; 52 OK, 3 KO ; CONFORME
+    KO  candidat relu absent, non scellé ou d'empreinte différente
+    KO  préenregistrement de S ≠ candidat relu
+    KO  répétition jouet : ligne absente ou en double : candidat répété : T0.5-pilote-notations-v1-candidat7.md e996f291499ef4190e47d296e2d958987f3dbc7be497f56aabb63c3a629cdab6
+A30c-configuration-relue-autre : code 1 ; 53 OK, 2 KO ; CONFORME
+    KO  configuration relue absente, non scellée ou d'empreinte différente
+    KO  configuration de S ≠ configuration relue
+Z1a-candidat-non-epingle : code 2 ; 0 OK, 0 KO ; CONFORME
+    | candidat relu non épinglé
+Z1b-candidat-hors-des-brouillons : code 2 ; 0 OK, 0 KO ; CONFORME
+    | candidat relu non épinglé
+Z1c-configuration-non-epinglee : code 2 ; 0 OK, 0 KO ; CONFORME
+    | configuration relue non épinglée
+Z1d-rapports-mal-formes : code 2 ; 0 OK, 0 KO ; CONFORME
+    | rapports attendus mal formés : T0.5-notations-v1-mal-forme.txt=00
+Z1e-un-seul-rapport : code 2 ; 0 OK, 0 KO ; CONFORME
+    | rapports attendus : au moins le rapport de la contre-lecture et ses fichiers de travail
+Z1f-code-non-epingle : code 2 ; 0 OK, 0 KO ; CONFORME
+    | code relu ou répétition jouet non épinglés
+Z1g-repetition-non-epinglee : code 2 ; 0 OK, 0 KO ; CONFORME
+    | code relu ou répétition jouet non épinglés
+Z2a-dossier-existant : code 2 ; CONFORME
+    | /tmp/claude-0/-home-user/1cc16375-a2bd-54b9-a03f-27d43b6f26a6/scratchpad/c1v2/banc-controles/existant existe déjà
+Z2b-dossier-de-travail-existant : code 2 ; CONFORME
+    | /tmp/claude-0/-home-user/1cc16375-a2bd-54b9-a03f-27d43b6f26a6/scratchpad/c1v2/banc-controles/travail-existe.travail existe déjà
+    dossier de travail existant gardé : CONFORME
+Z2c-troisieme-argument-autre : code 2 ; CONFORME
+    | troisième argument : relance, ou rien
+Z2d-dossier-absent : code 2 ; CONFORME
+    | dossier neuf absent
+Z2e-s-invalide : code 2 ; CONFORME
+    | S invalide
+Z2f-trace-de-la-suite-existante : code 2 ; CONFORME
+    | /tmp/claude-0/-home-user/1cc16375-a2bd-54b9-a03f-27d43b6f26a6/scratchpad/c1v2/banc-controles/suite-existe.suite.txt existe déjà (R12)
+A50-candidat-relu-sans-sceau : code 1 ; 54 OK, 1 KO ; CONFORME
+    KO  candidat relu absent, non scellé ou d'empreinte différente
+A51-configuration-relue-sans-sceau : code 1 ; 54 OK, 1 KO ; CONFORME
+    KO  configuration relue absente, non scellée ou d'empreinte différente
+A44b-borne-non-citee : code 1 ; 53 OK, 2 KO ; CONFORME
+    KO  préenregistrement de S ≠ candidat relu
+    KO  gardes du lanceur, valeurs ou première lecture : AssertionError: valeur non citée par le texte : 26 400 s
+A53-dependances-autres : code 1 ; 51 OK, 4 KO ; CONFORME
+    KO  arbre gelé modifié depuis le commit du code
+    KO  arbre gelé de S ≠ code relu épinglé (c63d4f1c073f3b6146729dae0086cd7205cdfa57)
+    KO  dépendances différentes de celles du pilote (1c6c90081964), code 1
+    KO  gardes du lanceur, valeurs ou première lecture : controle_ia.gardes.GardeArret: arbre gelé (code, tests, scripts, dépendances, configuration) modifié depuis le commit cité c63d4f1c073f
+A52-go-de-calcul-echu : code 1 ; 54 OK, 1 KO ; CONFORME
+    KO  garde de calcul sur le registre de S
+A39-sceau-ajoute-avant-s : code 1 ; 53 OK, 2 KO ; CONFORME
+    KO  S n'est pas le commit qui ajoute prereg/T0.5-pilote-notations-v1.md.sha256
+    KO  contenu de S inattendu : prereg/T0.5-pilote-notations-config-v1.json prereg/T0.5-pilote-notations-config-v1.json.sha256 
+A40-sceau-des-taches-altere : code 1 ; 52 OK, 3 KO ; CONFORME
+    KO  donnees/t05-pilote-v1/taches-pilote-60-v1.json ou son sceau absent ou non conforme
+    KO  sceaux
+    KO  gardes du lanceur, valeurs ou première lecture : controle_ia.gardes.GardeArret: donnees/t05-pilote-v1/taches-pilote-60-v1.json.sha256 : ligne illisible '0000  autre'
+A41-delai-du-run-change : code 1 ; 51 OK, 4 KO ; CONFORME
+    KO  arbre gelé modifié depuis le commit du code
+    KO  arbre gelé de S ≠ code relu épinglé (c63d4f1c073f3b6146729dae0086cd7205cdfa57)
+    KO  empreinte de scripts/notations_t05_instance.sh (9109a56dcd86a1a6e0e6e87374b12a0839d6f7070c71c239d2f7f0e5e6fcc83a) non citée
+    KO  gardes du lanceur, valeurs ou première lecture : AssertionError: délai externe du run
+A42-plafond-de-l-amorce-change : code 1 ; 51 OK, 4 KO ; CONFORME
+    KO  arbre gelé modifié depuis le commit du code
+    KO  arbre gelé de S ≠ code relu épinglé (c63d4f1c073f3b6146729dae0086cd7205cdfa57)
+    KO  empreinte de scripts/amorce_instance_t05_notations.sh (5a72bf154d18fb4c620a568417f0036be4c84b0cc8fea12060a49134a89a0e40) non citée
+    KO  gardes du lanceur, valeurs ou première lecture : AssertionError: plafond de l'amorce
+A43-credit-change : code 1 ; 54 OK, 1 KO ; CONFORME
+    KO  gardes du lanceur, valeurs ou première lecture : AssertionError: heures du crédit exigé
+A44-plafond-de-la-surveillance-change : code 1 ; 54 OK, 1 KO ; CONFORME
+    KO  gardes du lanceur, valeurs ou première lecture : AssertionError: plafond de la surveillance
+A44c-plafond-ecrit-par-le-lanceur-change : code 1 ; 54 OK, 1 KO ; CONFORME
+    KO  gardes du lanceur, valeurs ou première lecture : AssertionError: plafond de la surveillance écrit par le lanceur
+A32-branche-presente : code 1 ; 54 OK, 1 KO ; CONFORME
+    KO  branche calcul/t05-notations-reel-v1 : code 0 (2 attendu)
+A33-relance-sans-premier : code 1 ; 55 OK, 1 KO ; CONFORME
+    KO  -v1 absente, illisible ou non descendante de S : pas de relancement
+A34-relance-saine : code 0 ; 58 OK, 0 KO ; CONFORME
+A35-relance-apres-notations : code 1 ; 57 OK, 1 KO ; CONFORME
+    KO  -v1 porte un fichier de notations : relancement interdit (préséance)
+A37-relance-apres-un-juge-echu : code 1 ; 57 OK, 1 KO ; CONFORME
+    KO  -v1 : arrêt consigné avec un juge fini ou de statut inconnu (échu) : relancement interdit
+A38-relance-apres-un-arret-sans-juge-fini : code 0 ; 58 OK, 0 KO ; CONFORME
+A45-relance-apres-un-resume : code 1 ; 57 OK, 1 KO ; CONFORME
+    KO  -v1 porte un résumé : run fini, relancement interdit
+A46-relance-apres-un-juge-ecrit : code 1 ; 57 OK, 1 KO ; CONFORME
+    KO  -v1 : arrêt consigné avec un juge fini ou de statut inconnu (écrit) : relancement interdit
+A47-relance-apres-un-arret-illisible : code 1 ; 57 OK, 1 KO ; CONFORME
+    KO  -v1 : arrêt illisible sur -v1 (JSONDecodeError) : relancement interdit
+A48-relance-apres-une-fin-dans-les-traces : code 1 ; 57 OK, 1 KO ; CONFORME
+    KO  -v1 : traces avec une ligne de fin de juge ou de dernier lot (PROGRES 2026-10-13T09:00:00Z juge=8B fin=échu lots_faits=3/23 duree_s=12000.0) : relancement interdit
+A48b-relance-apres-un-dernier-lot : code 1 ; 57 OK, 1 KO ; CONFORME
+    KO  -v1 : traces avec une ligne de fin de juge ou de dernier lot (PROGRES 2026-10-13T09:00:00Z juge=8B lot=23/23 duree_s=344.0) : relancement interdit
+A48d-relance-apres-une-fin-dans-run-err : code 1 ; 57 OK, 1 KO ; CONFORME
+    KO  -v1 : traces avec une ligne de fin de juge ou de dernier lot (PROGRES 2026-10-13T09:00:00Z juge=8B fin=échu lots_faits=3/23 duree_s=12000.0) : relancement interdit
+A48c-relance-apres-un-lot-intermediaire : code 0 ; 58 OK, 0 KO ; CONFORME
+A36-relance-branche-v2-presente : code 1 ; 57 OK, 1 KO ; CONFORME
+    KO  branche de relance : code 0 (2 attendu)
+M00-journal-sain : code 0 ; CONFORME
+M01-candidat-absent : code 1 ; CONFORME
+M02-candidat-autre : code 1 ; CONFORME
+M03-deux-lignes-candidat : code 1 ; CONFORME
+M04-passage-manquant : code 1 ; CONFORME
+M05-passage-autre-code : code 1 ; CONFORME
+M06-recuperation-conforme-absente : code 1 ; CONFORME
+M07-ko-dans-un-cas-sain : code 1 ; CONFORME
+M08-artefact-a-deux-ko : code 1 ; CONFORME
+M09-artefact-autre-ko : code 1 ; CONFORME
+M10-ko-hors-du-bloc : code 1 ; CONFORME
+M11-script-mal-forme : code 1 ; CONFORME
+M12-script-en-double : code 1 ; CONFORME
+M13-script-manquant : code 1 ; CONFORME
+M14-fin-absente : code 1 ; CONFORME
+P00-preuves-saines : code 0 ; CONFORME
+P01-preuves-ligne-d-echec : code 1 ; CONFORME
+P02-preuves-ligne-d-echec : code 1 ; CONFORME
+P03-preuves-ligne-d-echec : code 1 ; CONFORME
+FIN DU BANC DES CONTRÔLES DES NOTATIONS ; cas non conformes : 0

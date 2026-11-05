@@ -1,0 +1,19 @@
+3c3
+< Rédigée le 2026-10-05, scellée avec le préenregistrement qu'elle applique : `prereg/T0.4-validation-modele-reel-v2.md` (empreinte compagnon au scellement).
+---
+> Rédigée le 2026-10-05, scellée le même jour avec le préenregistrement qu'elle applique : `prereg/T0.4-validation-modele-reel-v2.md` (empreinte compagnon). Brouillon 2 relu par la contre-lecture 2 (`prereg/contre-lectures/T0.4-v2-rapport-contre-lecture-2-v1.md`), corrections W-1 et W-2 intégrées.
+19c19
+< | 3 | Préenregistrement v2 scellé et contre-lu | à sceller |
+---
+> | 3 | Préenregistrement v2 scellé et contre-lu | scellé le 2026-10-05 après deux contre-lectures (empreinte compagnon) |
+77c77
+< GO_ID=GO-2026-10-04-08 vastai create instance <offre> --image python:3.11-bookworm --disk 80 \
+---
+> GO_ID=GO-2026-10-04-08 vastai create instance <offre> --raw --image python:3.11-bookworm --disk 80 \
+80c80
+<   --raw 2>&1 | python3 -c 'import json, sys
+---
+>   2>&1 | python3 -c 'import json, sys
+88a89,90
+> - `--raw` se place avant `--args`, qui reste le dernier argument : l'outil donne au conteneur tout ce qui suit `--args` (contre-lecture 2, W-1). Une réponse « illisible » ne prouve pas un échec : vérifier par `vastai show instances` avant toute nouvelle création, pour ne pas payer une seconde instance.
+> - Si les jetons sont des variables du compte Vast.ai (et non de la session), `--env` ne porte que `-e COMMIT=$COMMIT` (consigne de la v2, contre-lecture 2, W-2).

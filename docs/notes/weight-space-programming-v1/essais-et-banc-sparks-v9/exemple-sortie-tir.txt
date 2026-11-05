@@ -1,0 +1,48 @@
+# Exemple FACTICE (offres et GO inventés, hors réseau, 2026-11-05T05:49:38Z) ; SPARKS_ETAT_DIR=$HOME/.sparks-exp7-nul-v5 remplacé par un dossier d'essai
+$ bash scripts/lancer_sparks_exp7_nul_v9.sh recherche
+Recherche d'offres (lecture seule ; sortie brute effacée après filtrage) :
+timeout -k 10 120 env -i PATH="$PATH" HOME="$HOME" LANG=C.UTF-8 vastai search offers 'num_gpus=1 rentable=true verified=true' -o dph_total --raw > "/ETAT/offres-brutes.json" 2> "/ETAT/offres-brutes.json.err"; bash scripts/lancer_sparks_exp7_nul_v9.sh offres "/ETAT/offres-brutes.json"
+$ bash scripts/lancer_sparks_exp7_nul_v9.sh offres <brut>
+RÈGLE : PRIX_CARTE = dph_total ; PRIX_STOCKAGE = storage_cost × 20 ÷ 730 ; resource_type gpu, num_gpus 1 ; dph_total croissant ; au plus 4 offres
+rang 1 : id 11111111, dph_total 0.25, storage_cost 0.15, resource_type gpu → PRIX_CARTE 0.25 PRIX_STOCKAGE 0.00411
+rang 2 : id 22222222, dph_total 0.31, storage_cost 0.1, resource_type gpu → PRIX_CARTE 0.31 PRIX_STOCKAGE 0.00274
+$ bash scripts/lancer_sparks_exp7_nul_v9.sh tir 4d07d2a6830ab09cb91250016284efb5cbe8a91c GO-2026-11-05-09 25 1
+LISTE FERMÉE CONFORME : 188 fichiers
+TIR CONFORME : offre 11111111 (rang 1), PRIX_CARTE 0.25, PRIX_STOCKAGE 0.00411 ; ECHEANCE_UTC_S=1793859278 DEVIS_USD=0.2142 PLAFOND_USD=5
+Tir réel v9, à jouer pas à pas par la session ; aucun modèle, aucune donnée, aucun jeton Hugging Face.
+Offre 11111111 (rang 1 des offres retenues, /ETAT-ESSAI/etat/offres-retenues.json) ; prix tirés de l'offre : PRIX_CARTE = dph_total ; PRIX_STOCKAGE = storage_cost × 20 ÷ 730 ; resource_type gpu, num_gpus 1 ; dph_total croissant ; au plus 4 offres.
+0. Commit de tir (code 4d07d2a6830a + registre des GO de main, SANS addendum : la création s'arrête d'elle-même à la garde du code) :
+   T=$(mktemp -d); git worktree add -q --no-checkout -b essai/sparks-v9-tir-4d07d2a6830a "$T/tir" 4d07d2a6830ab09cb91250016284efb5cbe8a91c
+   git -C "$T/tir" sparse-checkout set --no-cone '/*' '!/*/' '/registres/go.md' && git -C "$T/tir" checkout -q essai/sparks-v9-tir-4d07d2a6830a
+   cp "/ETAT-ESSAI/go.md" "$T/tir/registres/go.md" && git -C "$T/tir" commit -qam "essai : tir v9 (sans addendum)" && timeout 300 git -C "$T/tir" push -q origin essai/sparks-v9-tir-4d07d2a6830a
+   TIR=$(git -C "$T/tir" rev-parse HEAD)
+1. Création (échéance de la minuterie dans 25 min ; étiquette de tir ; disque de 20 Go ; jeton de l'instance : CONTROLE_IA_GITHUB_TOKEN) :
+GO_ID=GO-2026-11-05-09 timeout -k 10 300 env -i PATH="$PATH" HOME="$HOME" LANG=C.UTF-8 vastai create instance 11111111 --image pytorch/pytorch:2.9.1-cuda12.8-cudnn9-runtime --disk 20 --label sparks-exp7-nul-tir-4d07d2a6830a \
+  --env "-e COMMIT=$TIR -e COMMIT_CODE=4d07d2a6830ab09cb91250016284efb5cbe8a91c -e PRIX_HEURE_USD=0.25 -e PRIX_STOCKAGE_HEURE_USD=0.00411 -e ECHEANCE_UTC_S=1793859278 -e GH_TOKEN=$CONTROLE_IA_GITHUB_TOKEN -e DEPOT_URL=https://github.com/lciric/controle-ia-travail.git" \
+  --args bash -c "$(git show "4d07d2a6830ab09cb91250016284efb5cbe8a91c:scripts/amorce_instance_sparks_exp7_nul_v9.sh")" > "/ETAT-ESSAI/etat/tir-creation-4d07d2a6830a-20261105T054938.txt" 2>&1; bash scripts/lancer_sparks_exp7_nul_v9.sh apres-creation "/ETAT-ESSAI/etat/tir-creation-4d07d2a6830a-20261105T054938.txt" $? 4d07d2a6830ab09cb91250016284efb5cbe8a91c GO-2026-11-05-09 25 1
+   ID=<identifiant rendu> ; sur « OFFRE RETIRÉE » : la commande de l'offre suivante est imprimée (au plus 4 offres).
+2. Boucle ou arrêt : trois inventaires, à T+5, T+8 et T+11 min au moins (5 minutes au moins entre le premier et le troisième) :
+   timeout -k 10 120 env -i PATH="$PATH" HOME="$HOME" LANG=C.UTF-8 vastai show instances --raw > "/ETAT-ESSAI/etat/inventaire-$ID.json" 2> "/ETAT-ESSAI/etat/inventaire-$ID.json.err"; bash scripts/lancer_sparks_exp7_nul_v9.sh inventaire "/ETAT-ESSAI/etat/inventaire-$ID.json" $ID exited
+   (la même commande, deux fois encore, aux heures dites), puis le verdict :
+   bash scripts/lancer_sparks_exp7_nul_v9.sh boucle $ID
+   Journal de l'amorce (lignes « AMORCE V5 » seules, sans ancre ; nombre de redémarrages ; sortie brute effacée) :
+   timeout -k 10 120 env -i PATH="$PATH" HOME="$HOME" LANG=C.UTF-8 vastai logs $ID --tail 400 > "/ETAT-ESSAI/etat/tir-logs.txt" 2>&1; bash scripts/lancer_sparks_exp7_nul_v9.sh journal-amorce "/ETAT-ESSAI/etat/tir-logs.txt"
+3. Selon le verdict :
+   « arretee » (trois « exited », cur_state « stopped », REDEMARRAGES=0) : pas de boucle ; étapes 4 à 6.
+   « boucle » : la commande de destruction imprimée par le verdict (vastai destroy instance $ID -y), son inventaire
+     « absente », puis NŒUD de Lazar : aucune création sous ce texte (points 8 et 9).
+   « absente » : l'amorce v9 a détecté la boucle et s'est détruite (le journal dit « boucle de redémarrage présumée ») :
+     boucle confirmée, NŒUD de Lazar.
+   « indecis » : un inventaire de plus.
+4. Ordre « fin » pour cette instance, sur la branche des ordres du commit de tir :
+   O=$(mktemp -d); git -C "$O" init -q; git -C "$O" remote add origin https://github.com/lciric/controle-ia-travail.git; mkdir "$O/ordres"
+   echo "{\"numero\": 1, \"instance\": \"$ID\", \"phase\": \"fin\", \"deja_usd\": 0}" > "$O/ordres/ordre-001.json"
+   git -C "$O" add ordres && git -C "$O" -c user.name=essai -c user.email=essai@invalid commit -qm "essai : ordre de tir" && timeout 300 git -C "$O" push -q origin "HEAD:refs/heads/ordres/sparks-exp7-nul-v5-${TIR:0:12}"
+5. Relance (même environnement) ; la machine lit l'ordre « fin » et se détruit par la clé du conteneur :
+GO_ID=GO-2026-11-05-09 timeout -k 10 300 env -i PATH="$PATH" HOME="$HOME" LANG=C.UTF-8 vastai start instance $ID > "/ETAT-ESSAI/etat/tir-start.txt" 2>&1; bash scripts/lancer_sparks_exp7_nul_v9.sh apres-commande start "/ETAT-ESSAI/etat/tir-start.txt" $? $ID
+6. Après 3 à 5 min : inventaire attendu « absente » (destruction par la machine, aucune par la session) :
+   timeout -k 10 120 env -i PATH="$PATH" HOME="$HOME" LANG=C.UTF-8 vastai show instances --raw > "/ETAT-ESSAI/etat/inventaire-$ID.json" 2> "/ETAT-ESSAI/etat/inventaire-$ID.json.err"; bash scripts/lancer_sparks_exp7_nul_v9.sh inventaire "/ETAT-ESSAI/etat/inventaire-$ID.json" $ID absente
+7. Repli si l'instance existe encore à l'échéance + 10 min : bash scripts/lancer_sparks_exp7_nul_v9.sh destruction $ID (puis l'inventaire qu'il imprime).
+8. vastai copy : non éprouvé par ce tir (aucun lot sans fabrication) ; risque déclaré. Aucune sortie brute de vastai n'est versée.
+Devis : 0.2142 USD au plus, sous GO-2026-11-05-09.
+code 0

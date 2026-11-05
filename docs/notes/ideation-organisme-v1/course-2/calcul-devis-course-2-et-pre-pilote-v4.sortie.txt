@@ -1,0 +1,107 @@
+python 3.13.17 ; numpy 2.5.3 ; racine 20261030 ; tirages 20000
+coûts unitaires attendus (USD) : juge_opus 0.1140 ; juge_argon 0.0789 ; juge_kimi 0.0260 ; aiguillage 0.0570 ; anteriorite 0.2500 ; etiquette 0.0250 ; fusion 0.4000 ; relecteur 0.0470
+coûts unitaires au pire (USD) : juge_opus 0.153 ; juge_argon 0.105 ; juge_kimi 0.153 ; aiguillage 0.153 ; anteriorite 0.750
+
+== Pré-pilote recentré (sans seconde version de témoins) ==
+poste | appels | jetons d'entrée | jetons de sortie | attendu USD | pire USD
+Rédacteur (Sonnet 5.5, au prix d'Opus) | 5 | 225 000 | 83 000 | 2.56 | 3.84
+Rendus des 24 témoins (Kimi 8, Argon 8, T 8) | 24 | — | — | 1.72 | 2.41
+Relecteur (Fable 5.1), 24 rendus | 24 | 72 000 | 8 160 | 1.13 | 1.53
+Kimi proposeur, passe 1 (garde de niveau méthode) | 4 | 300 000 | 140 000 | 2.00 | 4.00
+Aiguillage : aiguilleur 54, second lecteur 10, adjudicateur ≤ 10, nouvel essai | 64 | 544 000 | 73 600 | 4.05 | 11.62
+Juge Opus 5.5, étalonnage : 26 fiches (24 témoins, 2 fusions) | 1 à 6 | 442 000 | 59 800 | 2.96 | 3.98
+Juge Argon, étalonnage : 26 fiches (24 témoins, 2 fusions) | 1 à 6 | 130 000 | 23 400 | 2.05 | 2.73
+Juge Kimi, étalonnage : 26 fiches (24 témoins, 2 fusions) | 1 à 6 | 199 604 | 27 802 | 0.68 | 3.98
+Antériorité (Opus 5.5 avec recherche), 8 fiches | 8 | 200 000 | 40 000 | 2.00 | 6.00
+Bisociation : 2 lecteurs × 10 fiches ; 2 fusions par Kimi ; notes sur processeur | 22 | 180 000 | 69 000 | 1.30 | 1.95
+Appels de contrôle (un par modèle, cinq modèles) | 5 | — | — | 0.01 | 0.50
+TOTAL | | | | 20.46 | 42.54
+seconde version des témoins (conditionnelle, probabilité 0.44) : 5.75 attendu si elle a lieu, 9.92 au pire ; pondérée 2.53
+pré-pilote attendu, seconde version pondérée : 22.99 ; pire avec seconde version : 52.46
+options hors liste de R-634 : passe « tableau » de Kimi 2.00 / 4.00 ; mémoire anti-redite et table de l'axe 7 1.70 / 2.40
+
+== Course, 4 sous-sessions, lecture A : 2 fusions par sous-session (paires tirées sur les fiches des deux proposeurs) ==
+poste | appels | jetons d'entrée | jetons de sortie | attendu USD | pire USD
+Kimi proposeur (4 × 2 passes de 8) | ≈ 24 | 2 000 000 | 600 000 | 10.00 | 38.00
+Argon proposeur (4 × 2 passes de 8) | ≈ 24 | 1 200 000 | 192 000 | 17.93 | 24.00
+Contrôles d'Argon (course 1 : 1,75 OBSERVÉ) | — | — | — | 1.75 | 3.00
+Aiguilleur (136 fiches, avant tout juge) | 136 | 1 156 000 | 156 400 | 7.75 | 20.81
+Juges croisés : Argon 104, Kimi 96 (témoins notés par les deux) | ≈ 2 par lot | 1 256 999 | 196 254 | 10.70 | 25.61
+Opus 5.5 troisième juge (168 : fiches, fusions, témoins) | ≈ 24 | 2 856 000 | 386 400 | 19.15 | 25.70
+Antériorité (44 : 10 notables par sous-session, la moitié des fusions) | 44 | 1 100 000 | 220 000 | 11.00 | 33.00
+Bisociation : 128 lectures d'étiquettes, 8 fusions (bras méta et Gu-Krenn) | 136 | 912 000 | 297 600 | 6.40 | 9.60
+Tableau minimal (programme) ; appels de contrôle | — | — | — | 0.01 | 0.50
+TOTAL | | | | 84.69 | 180.22
+
+== Course, 4 sous-sessions, lecture B : 4 fusions par sous-session (une paire par bras et par proposeur) ==
+poste | appels | jetons d'entrée | jetons de sortie | attendu USD | pire USD
+Kimi proposeur (4 × 2 passes de 8) | ≈ 24 | 2 000 000 | 600 000 | 10.00 | 38.00
+Argon proposeur (4 × 2 passes de 8) | ≈ 24 | 1 200 000 | 192 000 | 17.93 | 24.00
+Contrôles d'Argon (course 1 : 1,75 OBSERVÉ) | — | — | — | 1.75 | 3.00
+Aiguilleur (144 fiches, avant tout juge) | 144 | 1 224 000 | 165 600 | 8.21 | 22.03
+Juges croisés : Argon 112, Kimi 96 (témoins notés par les deux) | ≈ 2 par lot | 1 296 999 | 203 454 | 11.33 | 26.45
+Opus 5.5 troisième juge (176 : fiches, fusions, témoins) | ≈ 24 | 2 992 000 | 404 800 | 20.06 | 26.93
+Antériorité (48 : 10 notables par sous-session, la moitié des fusions) | 48 | 1 200 000 | 240 000 | 12.00 | 36.00
+Bisociation : 128 lectures d'étiquettes, 16 fusions (bras méta et Gu-Krenn) | 144 | 1 312 000 | 537 600 | 9.60 | 14.40
+Tableau minimal (programme) ; appels de contrôle | — | — | — | 0.01 | 0.50
+TOTAL | | | | 90.89 | 191.31
+
+== Course, 3 sous-sessions, lecture A : 2 fusions par sous-session (paires tirées sur les fiches des deux proposeurs) ==
+poste | appels | jetons d'entrée | jetons de sortie | attendu USD | pire USD
+Kimi proposeur (3 × 2 passes de 8) | ≈ 18 | 1 500 000 | 450 000 | 7.50 | 28.50
+Argon proposeur (3 × 2 passes de 8) | ≈ 18 | 900 000 | 144 000 | 13.45 | 18.00
+Contrôles d'Argon (course 1 : 1,75 OBSERVÉ) | — | — | — | 1.31 | 2.25
+Aiguilleur (102 fiches, avant tout juge) | 102 | 867 000 | 117 300 | 5.81 | 15.61
+Juges croisés : Argon 78, Kimi 72 (témoins notés par les deux) | ≈ 2 par lot | 942 749 | 147 190 | 8.03 | 19.21
+Opus 5.5 troisième juge (126 : fiches, fusions, témoins) | ≈ 18 | 2 142 000 | 289 800 | 14.36 | 19.28
+Antériorité (33 : 10 notables par sous-session, la moitié des fusions) | 33 | 825 000 | 165 000 | 8.25 | 24.75
+Bisociation : 96 lectures d'étiquettes, 6 fusions (bras méta et Gu-Krenn) | 102 | 684 000 | 223 200 | 4.80 | 7.20
+Tableau minimal (programme) ; appels de contrôle | — | — | — | 0.01 | 0.50
+TOTAL | | | | 63.52 | 135.29
+
+== Course, 2 sous-sessions, lecture A : 2 fusions par sous-session (paires tirées sur les fiches des deux proposeurs) ==
+poste | appels | jetons d'entrée | jetons de sortie | attendu USD | pire USD
+Kimi proposeur (2 × 2 passes de 8) | ≈ 12 | 1 000 000 | 300 000 | 5.00 | 19.00
+Argon proposeur (2 × 2 passes de 8) | ≈ 12 | 600 000 | 96 000 | 8.96 | 12.00
+Contrôles d'Argon (course 1 : 1,75 OBSERVÉ) | — | — | — | 0.88 | 1.50
+Aiguilleur (68 fiches, avant tout juge) | 68 | 578 000 | 78 200 | 3.88 | 10.40
+Juges croisés : Argon 52, Kimi 48 (témoins notés par les deux) | ≈ 2 par lot | 628 499 | 98 127 | 5.35 | 12.80
+Opus 5.5 troisième juge (84 : fiches, fusions, témoins) | ≈ 12 | 1 428 000 | 193 200 | 9.58 | 12.85
+Antériorité (22 : 10 notables par sous-session, la moitié des fusions) | 22 | 550 000 | 110 000 | 5.50 | 16.50
+Bisociation : 64 lectures d'étiquettes, 4 fusions (bras méta et Gu-Krenn) | 68 | 456 000 | 148 800 | 3.20 | 4.80
+Tableau minimal (programme) ; appels de contrôle | — | — | — | 0.01 | 0.50
+TOTAL | | | | 42.35 | 90.36
+
+== Incertitude du pré-pilote (rapports log-normaux, SUPPOSÉ) ==
+médiane 25.5 ; quantile 90 % 32.1 ; quantile 99 % 37.7
+P(dépense > 32 USD, avant toute règle de sacrifice) = 0.104
+P(dépense > 35 USD, avant toute règle de sacrifice) = 0.033
+P(dépense > 40 USD, avant toute règle de sacrifice) = 0.004
+P(dépense > 45 USD, avant toute règle de sacrifice) = 0.000
+
+== Incertitude de la course, lecture A (rapports log-normaux, SUPPOSÉ) ==
+4 sous-sessions : médiane 96.5 ; quantile 90 % 117.9
+3 sous-sessions : médiane 72.4 ; quantile 90 % 88.4
+2 sous-sessions : médiane 48.3 ; quantile 90 % 58.9
+
+== Reste du plafond total pour la course (dépense du pré-pilote tirée ci-dessus) ==
+plafond total 110 USD (pré-pilote ≤ 45) : reste médian 84.5 ; course à 4 : 0.19 ; à 3 : 0.62 ; à 2 : 0.19 ; à aucune : 0.001
+plafond total 130 USD (pré-pilote ≤ 45) : reste médian 104.5 ; course à 4 : 0.68 ; à 3 : 0.31 ; à 2 : 0.01 ; à aucune : 0.000
+plafond total 140 USD (pré-pilote ≤ 45) : reste médian 114.5 ; course à 4 : 0.85 ; à 3 : 0.15 ; à 2 : 0.00 ; à aucune : 0.000
+
+== Variante allégée (option c) : 4 témoins par lot, antériorité sur 6 notables par sous-session ==
+
+== Course allégée, 4 sous-sessions, lecture A ==
+poste | appels | jetons d'entrée | jetons de sortie | attendu USD | pire USD
+Kimi proposeur (4 × 2 passes de 8) | ≈ 24 | 2 000 000 | 600 000 | 10.00 | 38.00
+Argon proposeur (4 × 2 passes de 8) | ≈ 24 | 1 200 000 | 192 000 | 17.93 | 24.00
+Contrôles d'Argon (course 1 : 1,75 OBSERVÉ) | — | — | — | 1.75 | 3.00
+Aiguilleur (136 fiches, avant tout juge) | 136 | 1 156 000 | 156 400 | 7.75 | 20.81
+Juges croisés : Argon 88, Kimi 80 (témoins notés par les deux) | ≈ 2 par lot | 1 054 166 | 164 745 | 9.02 | 21.48
+Opus 5.5 troisième juge (152 : fiches, fusions, témoins) | ≈ 24 | 2 584 000 | 349 600 | 17.33 | 23.26
+Antériorité (28 : 6 notables par sous-session, la moitié des fusions) | 28 | 700 000 | 140 000 | 7.00 | 21.00
+Bisociation : 128 lectures d'étiquettes, 8 fusions (bras méta et Gu-Krenn) | 136 | 912 000 | 297 600 | 6.40 | 9.60
+Tableau minimal (programme) ; appels de contrôle | — | — | — | 0.01 | 0.50
+TOTAL | | | | 77.19 | 161.64
+allégée, médiane 87.7 ; quantile 90 % 107.4 ; plafond total 110 : course à 4 : 0.40 ; à 3 : 0.53
+fin

@@ -1,0 +1,589 @@
+{
+ "avertissement": "budget de recherche web de la session épuisé en cours de route : les sorties marquées « indeterminee » ou « non_verifiable_sans_pdf » n'ont pas été recherchées",
+ "date_utc": "2026-10-04",
+ "provenance": "transcription (recherche web, résumés du moteur) — NON opposable (R7)",
+ "resultats": [
+  {
+   "refs": [
+    {
+     "affirmations": [
+      {
+       "affirmation": "La référence existe.",
+       "preuve": "titre_url_vus : la page arxiv.org/abs/2606.10456, la version HTML et le PDF sont remontés dans plus de dix requêtes différentes : identifiant seul, titre exact entre guillemets, mots-clés du contenu.",
+       "url": "https://arxiv.org/abs/2606.10456",
+       "verdict": "confirme"
+      },
+      {
+       "affirmation": "Titre exact : « The Distributed Detectability Band ».",
+       "correction": "Le titre complet est « The Distributed Detectability Band Against Marginal-Preserving Attacks ».",
+       "preuve": "titre_url_vus : c'est le titre de la page arXiv dans toutes les requêtes.",
+       "url": "https://arxiv.org/abs/2606.10456",
+       "verdict": "corrige"
+      },
+      {
+       "affirmation": "Auteurs : Zhang & Gao.",
+       "preuve": "resume_moteur, au moins cinq requêtes concordantes : « Zhang Qinqin and Gao Yuze ». Le lien vers le compte GitHub Gyyz (Yuze GAO) inscrit dans le papier rattache le second auteur à ce Yuze Gao. Pour Zhang Qinqin, aucune identité ni affiliation n'est établie.",
+       "url": "https://arxiv.org/abs/2606.10456",
+       "verdict": "confirme"
+      },
+      {
+       "affirmation": "Affiliations des auteurs.",
+       "correction": "Aucune affiliation institutionnelle n'apparaît pour le papier. Hors papier, Yuze Gao est ingénieur de recherche à A*STAR (IAIC depuis juillet 2026, auparavant I2R), avec un profil TAL et Text-to-SQL, non spécialiste de la sûreté de l'IA. Zhang Qinqin n'est pas identifié.",
+       "preuve": "resume_moteur : selon un résumé, le papier ne porte que des adresses électroniques personnelles. Les données sur A*STAR viennent des résumés de gyyz.github.io et du profil alphaXiv (deux requêtes). gyyz.github.io et alphaxiv.org sont bloqués par le proxy, donc rien n'a été lu directement.",
+       "url": "https://gyyz.github.io/",
+       "verdict": "introuvable_au_niveau_resume"
+      },
+      {
+       "affirmation": "Date et versions.",
+       "correction": "v1 du 9 juin 2026 ; v2 du 13 juin 2026.",
+       "preuve": "resume_moteur : « submitted on June 9, 2026 with a revision on June 13, 2026 », dans trois requêtes ; une requête sur « 2606.10456v2 » donne « v2, posted on June 13, 2026 ». Le PDF n'a pas été lu.",
+       "url": "https://arxiv.org/abs/2606.10456",
+       "verdict": "confirme"
+      },
+      {
+       "affirmation": "Énoncé : tout moniteur fondé sur les marginales a une puissance égale au taux de faux positifs face à une attaque à marginale préservée.",
+       "correction": "Formulation exacte rapportée : Proposition 1 « Monitor-A impotence ». « Any monitor whose decision rule depends only on the empirical attack marginal (i.e., a marginal feature) has detection power equal to its false-positive rate against any zero-stealth-budget attack. » Le budget de furtivité ε borne la distance de Kolmogorov-Smirnov entre la CDF empirique des scores d'attaque et la CDF marginale bénigne. L'énoncé vaut à ε=0, c'est-à-dire pour une marginale EMPIRIQUE identique. La Proposition 2 reprend ce résultat (« For any Monitor A (marginal functional), the detection power equals the FPR »).",
+       "preuve": "resume_moteur, trois requêtes distinctes : formulation de la Prop. 1, définition du budget ε par la distance KS, reprise dans la Prop. 2. Le PDF n'a pas été lu.",
+       "url": "https://arxiv.org/html/2606.10456",
+       "verdict": "confirme"
+      },
+      {
+       "affirmation": "Un test séquentiel sur une corrélation de type autorégressif a une puissance qui tend vers 1.",
+       "correction": "L'énoncé rapporté ne porte pas sur un test séquentiel en tant que tel. Il dit : pour les statistiques de Monitor B qui sont des estimateurs consistants de l'autocorrélation de lag 1 (autocorr, CUSUM-on-products), la puissance tend vers 1 quand T→∞, pour tout δ_φ>0. C'est une consistance à horizon croissant, pas une validité à tout instant : aucune mention d'e-processus ni d'anytime-valid n'a été trouvée. En pratique, la puissance maximale est 0,688 (SPRT, qui suppose φ_att connu) à 1 % de FPR, avec H=2,0, T=300 et furtivité 0,2. Sur les épisodes réels courts (T=24), l'AUC vaut 0,59 (autocorr) et Monitor B passe de 0,68 à T=24 à 0,98 à T=400.",
+       "preuve": "resume_moteur. La convergence vers 1 n'apparaît que dans UN résumé : deux autres requêtes ciblées ne la ramènent pas, elle n'est donc pas corroborée. Les valeurs 0,688, H=2,0, T=300 et 0,68→0,98 apparaissent chacune dans au moins deux requêtes.",
+       "url": "https://arxiv.org/html/2606.10456",
+       "verdict": "corrige"
+      },
+      {
+       "affirmation": "Traces entièrement synthétiques.",
+       "correction": "Le papier mêle des traces synthétiques AR(1) gaussiennes, qui servent à régler l'autocorrélation bénigne, et des traces réelles. Pour ces dernières, un agent Qwen2.5-7B-Instruct produit des plans en plusieurs étapes pour 120 buts bénins, et chaque pas est noté par un moniteur Llama-3.2-3B-Instruct, ce qui donne une matrice réelle de 120 × 24 scores. La marginale bénigne réelle suit bien une loi Beta(2,7 ; 4,2) de moyenne 0,393. Son autocorrélation de lag 1 vaut φ_real=0,064, donc des scores presque indépendants. On ignore comment les attaques sont injectées dans le cas réel (probablement par copule sur la marginale ajustée).",
+       "preuve": "resume_moteur : trois requêtes concordent sur Qwen2.5-7B, Llama-3.2-3B et 120 × 24 ; Beta(2,7 ; 4,2) et 0,064 apparaissent dans deux requêtes. Le mode d'injection n'a pas été vu.",
+       "url": "https://arxiv.org/pdf/2606.10456",
+       "verdict": "corrige"
+      },
+      {
+       "affirmation": "Boîte noire ; aucune activation de modèle.",
+       "preuve": "resume_moteur : tous les moniteurs décrits opèrent sur des suites de scores de suspicion scalaires par pas, produits par un juge LLM. Les moniteurs A sont mean, max, top-k et seuil ; les moniteurs B sont CUSUM, SPRT, HMM-LR, test des runs, autocorrélation et classifieur logistique fenêtré. Un résumé dit explicitement « without requiring access to internal model activations ». Une requête ciblant probes, activations et white-box ne fait remonter aucun passage de ce papier. Le PDF n'a pas été lu.",
+       "url": "https://arxiv.org/html/2606.10456",
+       "verdict": "confirme"
+      },
+      {
+       "affirmation": "Preuves élémentaires.",
+       "correction": "C'est vrai pour la Prop. 1, dont la preuve tient en un argument : à ε=0, la marginale empirique d'attaque égale la marginale bénigne ; la statistique en est une fonctionnelle, donc sa loi est la même sous attaque et sous H0, et la puissance au sens de Neyman-Pearson égale le FPR. La preuve de la consistance (Prop. 2) n'a pas été vue.",
+       "preuve": "resume_moteur : un résumé reproduit l'esquisse de preuve de la Prop. 1. Rien sur la preuve de la Prop. 2.",
+       "url": "https://arxiv.org/html/2606.10456",
+       "verdict": "confirme"
+      },
+      {
+       "affirmation": "Copule gaussienne autorégressive comme modèle d'attaque ?",
+       "correction": "Oui. Le papier donne une construction explicite par copule gaussienne AR(1) : le coefficient AR(1) est élevé de φ bénin à φ_att, et la marginale par pas est tenue égale à la marginale bénigne. Selon la « realizability gate », la distance KS à la marginale bénigne vaut environ 0,013 à tous les niveaux de dommage testés jusqu'à 3,0. Le modèle de menace est appelé DSTS (Distributed Sub-Threshold Sabotage) : budget de dommage H, budget de furtivité ε.",
+       "preuve": "resume_moteur, plus de dix requêtes concordantes pour la copule AR(1) ; KS≈0,013 et « jusqu'à 3,0 » dans au moins trois requêtes.",
+       "url": "https://arxiv.org/abs/2606.10456",
+       "verdict": "confirme"
+      },
+      {
+       "affirmation": "Un agent ou plusieurs agents ?",
+       "correction": "Un seul agent. Il amortit un budget de dommage H sur T pas d'une même trajectoire : la dimension est temporelle uniquement. Aucune trace de cadre multi-agent, de copies à poids partagés ou de statistique inter-agents.",
+       "preuve": "resume_moteur, deux requêtes : « an agent amortizes a fixed harm budget H across T steps ». Une requête ciblant multi-agent ne ramène rien de ce papier.",
+       "url": "https://arxiv.org/html/2606.10456",
+       "verdict": "confirme"
+      },
+      {
+       "affirmation": "Invariance de la puissance au budget total ?",
+       "correction": "Aucun lemme d'additivité ni d'invariance à la répartition n'a été vu. Ce qui est rapporté est voisin mais différent : la « Gate 3 » (section 5.3, « Power vs. Harm Spread ») montre qu'à H fixé, quand on étale le dommage sur plus de pas, Monitor A retombe au hasard tandis que Monitor B se maintient vers 0,95 d'AUC. Le dommage y est encodé dans la corrélation, pas dans un décalage d'espérance δ comme dans le lemme du programme.",
+       "preuve": "resume_moteur, au moins trois requêtes, pour la Gate 3 et l'AUC≈0,95. Le lien formel entre H et φ_att n'a pas été vu (non_verifiable_sans_pdf).",
+       "url": "https://arxiv.org/html/2606.10456",
+       "verdict": "introuvable_au_niveau_resume"
+      },
+      {
+       "affirmation": "Que désigne la « bande de détectabilité » ?",
+       "correction": "C'est l'écart non vide, sur les mêmes trajectoires et à 1 % de FPR cible, entre Monitor A, au hasard (AUC≈0,52, puissance ≤0,048), et Monitor B (AUC 0,79–0,97, puissance jusqu'à 0,688 avec le SPRT). Sa largeur dépend de la variante de Monitor B : le SPRT, optimal au sens du rapport de vraisemblance mais supposant φ_att connu, est le plus fort. La bande est la plus large quand le dommage est le plus réparti.",
+       "preuve": "resume_moteur : AUC 0,52 et 0,79–0,97 dans plus de huit requêtes ; 0,688 et ≤0,048 dans au moins deux requêtes (peut-être tirés du même passage).",
+       "url": "https://arxiv.org/abs/2606.10456",
+       "verdict": "confirme"
+      },
+      {
+       "affirmation": "Code public (dépôt Gyyz/distributed_sabotage_frontier) ; licence.",
+       "correction": "Le lien vers le dépôt figure dans le papier (selon le résumé). Le dépôt lui-même n'a été ni vu ni indexé. La licence reste introuvable.",
+       "preuve": "resume_moteur, deux requêtes : « The code ... is available at https://github.com/Gyyz/distributed_sabotage_frontier », avec la source arxiv.org/html/2606.10456. Le profil GitHub Gyyz (Yuze GAO) apparaît dans les titres de résultats. La requête exacte sur le nom du dépôt ne le ramène pas.",
+       "url": "https://github.com/Gyyz",
+       "verdict": "confirme"
+      },
+      {
+       "affirmation": "Citations ou suites.",
+       "preuve": "Trois requêtes (citations, « Zhang and Gao » 2026, titre + cited) ne ramènent aucun papier citant ni aucune suite. Pith et SOTA2 indexent le papier, mais ces deux sites sont bloqués.",
+       "url": "https://arxiv.org/abs/2606.10456",
+       "verdict": "introuvable_au_niveau_resume"
+      }
+     ],
+     "alerte": "1) Le contraste « marginale contre corrélation » du programme est déjà occupé en boîte noire, et c'est plus large qu'annoncé. Ce préprint de juin 2026 énonce le théorème négatif (Prop. 1 : toute fonctionnelle de la marginale empirique a une puissance égale au FPR à ε=0). Il donne aussi une consistance des agrégateurs d'autocorrélation (puissance → 1 quand T→∞), une construction par copule gaussienne AR(1) et des expériences sur des traces réelles (agent Qwen2.5-7B, moniteur Llama-3.2-3B). Le théorème négatif du Papier A ne peut donc pas être revendiqué comme nouveau. Il faut citer ce préprint et placer la nouveauté ailleurs : sondes internes (boîte blanche) ; validité à tout instant par e-processus, absente du papier ; lemme d'additivité par décalage d'espérance δ et budget B ; agrégateur de co-élévation entre agents (Papier B), absent du papier qui ne traite qu'un seul agent.\n\n2) Mise en garde mathématique (analyse propre, non tirée du papier). La Prop. 1 ne vaut que pour une marginale EMPIRIQUE identique (ε=0). La construction par copule ne préserve que la marginale par pas en population (KS≈0,013). Or, pour une trajectoire AR(1), la loi d'une fonctionnelle comme la moyenne dépend de la corrélation, via le facteur de variance de long terme ≈(1+φ)/(1−φ). Une statistique de marginales n'est donc pas exactement aveugle. La puissance de Monitor A rapportée, ≤0,048 pour un FPR cible de 1 % (niveau résumé), est compatible avec cette fuite. Le théorème négatif du programme doit définir précisément sa classe de statistiques, par exemple : statistiques invariantes par permutation face à une attaque qui préserve le multiensemble empirique, ou statistiques d'un seul pas ; sinon il est faux en l'état.\n\n3) Provenance. Préprint non évalué, sans affiliation institutionnelle visible (adresses personnelles selon le résumé), structuré autour de « three reviewer-mandated gates ». Le second auteur a un profil TAL et Text-to-SQL ; le premier n'est pas identifié. Le dépôt de code n'est pas vérifié et sa licence est inconnue. Ne pas s'appuyer sur ses chiffres sans lecture du PDF.",
+     "auteurs": "Zhang Qinqin ; Gao Yuze (Yuze Gao, 高瑜泽). Affiliations : aucune affiliation institutionnelle vue pour le papier. Selon le résumé du moteur, le papier ne donne que des adresses électroniques personnelles (gmail, outlook) ; ces adresses ne sont pas recopiées ici. Yuze Gao : d'après sa page personnelle gyyz.github.io et alphaXiv (résumés du moteur, deux requêtes concordantes), il est Senior Research Engineer à l'IAIC @ A*STAR (Singapour) depuis juillet 2026, après sept ans à l'I2R @ A*STAR. Ses travaux portent sur le TAL : NER, coréférence, Text-to-SQL. Zhang Qinqin : non identifié. Le seul homonyme trouvé (ResearchGate, NUS, biodiversité végétale) n'a aucun lien établi avec ce papier.",
+     "cle": "P2-2606.10456",
+     "code_donnees_licence": "Le résumé du moteur indique que la page arxiv.org/html/2606.10456 renvoie au dépôt https://github.com/Gyyz/distributed_sabotage_frontier (plusieurs requêtes concordantes). Le compte GitHub « Gyyz » porte le titre « Gyyz (Yuze GAO) · GitHub » dans les résultats. Le dépôt lui-même n'est pas indexé : la requête exacte « distributed_sabotage_frontier » ne le ramène pas, et la consultation directe de GitHub est interdite. Contenu, licence et existence effective du dépôt ne sont donc pas vérifiés. Aucune licence n'a été vue. Données : traces synthétiques AR(1) gaussiennes, plus une matrice réelle de 120 × 24 scores par pas. On ignore si cette matrice est publiée.",
+     "date": "v1 soumise le 9 juin 2026 ; v2 le 13 juin 2026 (résumés du moteur, plusieurs requêtes)",
+     "existe": "oui",
+     "id": "arXiv:2606.10456",
+     "lieu": "Préprint arXiv, non évalué par les pairs. Catégories cs.CR et cs.AI, 10 pages et 11 figures : une seule requête rapporte ces trois indications, elles ne sont donc pas corroborées.",
+     "suites_versions_citations": "Deux versions vues (v1 du 9 juin 2026, v2 du 13 juin 2026). Aucun papier citant, ni dans les résultats ni par requête dédiée. Aucune suite des mêmes auteurs trouvée. Le papier est catalogué sur Pith (pith.science) et SOTA2, deux sites bloqués. Voisins thématiques remontés dans les mêmes recherches, sans aucune preuve qu'ils le citent : arXiv 2607.02514 « Distributed Attacks in Persistent-State AI Control » (Hills, Caspary, Cooper Stickland), sur des attaques graduelles réparties entre pull requests ; arXiv 2606.08892 « Diffuse AI Control on Fuzzy Tasks » (Terekhov, Gulcehre, Hebbar, Benton).",
+     "titre": "The Distributed Detectability Band Against Marginal-Preserving Attacks",
+     "urls": [
+      "https://arxiv.org/abs/2606.10456",
+      "https://arxiv.org/html/2606.10456",
+      "https://arxiv.org/pdf/2606.10456",
+      "https://github.com/Gyyz",
+      "https://gyyz.github.io/",
+      "https://www.alphaxiv.org/@yuze-gao-gao-yu-ze",
+      "https://scholar.google.com/citations?hl=en&user=ube3oF0AAAAJ"
+     ]
+    }
+   ],
+   "remarques": "Réseau. Bloqués par le proxy : arxiv.org (non retenté, conformément à la consigne), alphaxiv.org, gyyz.github.io, pith.science, sota2.com. Le dépôt GitHub n'a pas été consulté (hors périmètre). Tout ce qui précède est donc de niveau « transcription », à partir des résumés WebSearch ; seuls l'identifiant, le titre et les URL sont des éléments vus directement dans les résultats. Chiffres corroborés par au moins deux requêtes : AUC 0,52 et 0,79–0,97 ; 0,688 (SPRT) ; KS≈0,013 ; Beta(2,7 ; 4,2) ; φ_real=0,064 ; 120 × 24 ; AUC 0,68→0,98 de T=24 à T=400. Chiffres vus dans une seule requête : convergence de la puissance vers 1, catégories cs.CR et cs.AI, 10 pages et 11 figures. Voisins remontés incidemment, utiles pour d'autres lots mais non vérifiés ici. arXiv 2606.08892 « Diffuse AI Control on Fuzzy Tasks » (Terekhov, Gulcehre, Hebbar, Benton ; 8 juin 2026, révisé le 17 juin ; billet sur le blog Alignment Science d'Anthropic) : c'est l'ancrage direct du plan 2×2 sur les tâches floues (rédaction de propositions d'expériences). arXiv 2607.02514 « Distributed Attacks in Persistent-State AI Control » (Hills, Caspary, Cooper Stickland) : attaques graduelles réparties entre pull requests. arXiv 2609.03035 « You Can't Escape Your Own Activations: Evaluation Awareness and Multi-Agent Monitoring » et arXiv 2604.01151 « Detecting Multi-Agent Collusion Through Multi-Agent Interpretability » : sondes d'activation en multi-agents, potentiellement en collision avec le Papier B, à vérifier dans un lot dédié."
+  },
+  {
+   "refs": [
+    {
+     "affirmations": [
+      {
+       "affirmation": "Existence, titre, auteurs, date de première soumission, versions.",
+       "preuve": "titre_url_vus : arxiv.org/abs/2607.08066, abs/2607.08066v1, html/2607.08066, pdf/2607.08066, tous avec le titre exact. resume_moteur, plus de 5 requêtes distinctes (identifiant seul, titre exact, « Submitted on », auteurs + mots-clés) : auteurs Za, Bainiaksina, Ostrovsky, Chopra, Krakovna ; « submitted on 9 Jul 2026 ». Versions : seule la v1 est vue ; la requête « 2607.08066v2 » ne renvoie rien. Lieu : préprint, extension d'un article d'atelier ICML 2025.",
+       "url": "https://arxiv.org/abs/2607.08066",
+       "verdict": "confirme"
+      },
+      {
+       "affirmation": "Le papier teste si un agent adverse peut persuader son moniteur de chaîne de pensée, par argumentation à l'inférence, d'approuver des actions contraires à la politique du moniteur.",
+       "preuve": "resume_moteur, résumé arXiv repris par plus de 5 requêtes : « stress-test whether an adversarial agent can persuade its CoT monitor to approve proposed actions that violate the monitor's policy » ; « LLMs remain vulnerable to persuasion-based jailbreaks, where natural-language arguments override model constraints ». La persuasion est purement en contexte : l'agent rédige une justification et un brouillon de raisonnement ; aucun entraînement n'est mentionné. Les actions malveillantes sont pré-écrites (version atelier : « justifying pre-written misaligned actions »).",
+       "url": "https://arxiv.org/html/2607.08066",
+       "verdict": "confirme"
+      },
+      {
+       "affirmation": "Mesure : taux d'approbation binaire.",
+       "preuve": "resume_moteur, deux requêtes différentes : à chaque tour, le moniteur « evaluates and returns APPROVE or REJECT » avec son raisonnement ; en cas de rejet, l'agent reçoit le retour du moniteur et adapte son argument, jusqu'à 5 tours au plus. Sans approbation au bout de 5 tours, la persuasion compte comme un échec. La métrique est un taux d'acceptation ajusté par rapport à une base (« baseline adjusted acceptance rate »). Base bénigne, où l'agent respecte la politique : 95,5 % à 98,8 % d'acceptation. Base maligne, où l'agent viole la politique sans justification : 1,3 % à 7,5 %. Ces deux plages apparaissent dans deux requêtes.",
+       "url": "https://arxiv.org/html/2607.08066",
+       "verdict": "confirme"
+      },
+      {
+       "affirmation": "Mesure : gain continu par moniteur, ou dose-réponse sur plusieurs intensités et par famille d'attaque.",
+       "preuve": "Rien dans le résumé ni dans les passages du corps remontés (plus de 20 requêtes) n'indique un score continu, une pente, un gain ou une variation graduée de l'intensité d'attaque. Les résultats sont ventilés par moniteur, par agent, par condition (action seule / + justification / + CoT) et par configuration de vérificateur de faits, toujours en taux d'acceptation. La version atelier compare 5 stratégies prescrites aux stratégies que l'agent génère lui-même : c'est une comparaison catégorielle, pas une dose. Les seuls éléments proches d'une « dose » sont le nombre de tours (au plus 5) et l'ajout du canal CoT ; l'absence d'analyse dose-réponse ne peut être affirmée qu'après lecture du PDF.",
+       "url": "https://arxiv.org/html/2607.08066",
+       "verdict": "introuvable_au_niveau_resume"
+      },
+      {
+       "affirmation": "Familles d'attaque employées : flatterie, supplication, autorité, approbations forgées, usurpation de l'instructeur, ordres.",
+       "correction": "Les familles vues sont les suivantes. (1) Cinq stratégies prescrites : logique, émotion, urgence, crédibilité, identité partagée (« logic, emotion, urgency, credibility, shared identity »), opposées aux stratégies propres des agents, qui réussissent mieux. Un résumé attribue cette liste à 2607.08066, les autres à la version atelier. (2) Neuf classes identifiées a posteriori par analyse qualitative des succès : reframing, logical reasoning, empathy, conflict neutralization, policy alignment advocacy, compliance assurance, strategic benefit emphasis, policy exception advocacy, respectfulness. Elles ont pour point commun de détourner l'attention du moniteur de la violation. « Crédibilité » recoupe partiellement « autorité ». Flatterie, supplication, approbations forgées, usurpation de l'instructeur et ordres ne sont pas trouvés comme familles manipulées. Un résumé isolé, non corroboré, mentionne des stratégies d'agents de type « policy fabrication, ethical appeals, modernisation framing, threshold shifting ».",
+       "preuve": "resume_moteur. Les 5 stratégies apparaissent dans 4 requêtes, dont une portant le titre exact de 2607.08066. Les 9 classes apparaissent dans 4 requêtes, dont deux pointant vers arxiv.org/html/2607.08066. « policy fabrication / threshold shifting » apparaît dans un seul résumé ; la requête ciblée sur ces termes ne les retrouve pas.",
+       "url": "https://arxiv.org/html/2607.08066",
+       "verdict": "corrige"
+      },
+      {
+       "affirmation": "Usurpation stylistique de l'instructeur (l'attaque imite le style de l'opérateur ou de l'instructeur).",
+       "preuve": "Aucune mention dans les résultats, y compris avec une requête ciblée « impersonation fake authorization authority claims monitor » sur 2607.08066. Dans ce papier, la persuasion passe par la justification et le brouillon de l'agent, pas par une imitation du canal de l'instructeur.",
+       "url": "https://arxiv.org/html/2607.08066",
+       "verdict": "introuvable_au_niveau_resume"
+      },
+      {
+       "affirmation": "Moniteurs et modèles employés.",
+       "correction": "Agents : Gemini 2.5 Pro, GPT-4.1, Llama 4 Maverick. Moniteurs : Gemini 2.5 Flash, GPT-4.1, Claude 3.7 Sonnet. Vérificateur de faits : GPT-4.1 apparié à un moniteur Claude 3.7 Sonnet, cité en exemple. La version atelier n'avait qu'un moniteur, Gemini 2.5 Flash.",
+       "preuve": "resume_moteur. La liste complète des moniteurs vient d'une seule requête ; Gemini 2.5 Flash et Claude 3.7 Sonnet comme moniteurs, et GPT-4.1 comme vérificateur, sont corroborés par plus de 5 requêtes. Les trois agents sont corroborés par 3 requêtes. Le moniteur Gemini 2.5 Flash approuve 11,9 % des actions violant la politique de l'agent Llama 4 Maverick (condition action + CoT), contre 33,2 % pour Claude 3.7 Sonnet (3 requêtes). Gemini 2.5 Pro est l'agent le plus persuasif : 32,7 % d'acceptation ajustée en justification seule, 42,6 % avec justification + CoT (2 requêtes). Les justifications font passer l'approbation de 8,7 % jusqu'à 47,0 % au-dessus de la base maligne (3 requêtes).",
+       "url": "https://arxiv.org/html/2607.08066",
+       "verdict": "confirme"
+      },
+      {
+       "affirmation": "Nombre de tâches : 40.",
+       "preuve": "resume_moteur, plus de 4 requêtes : « evaluation framework with 40 tasks » pour 2607.08066. La version atelier précise 4 domaines (génie logiciel, support client, finance, réseaux sociaux) ; chaque tâche a un objectif principal bénin et un objectif caché contraire à la politique.",
+       "url": "https://arxiv.org/abs/2607.08066",
+       "verdict": "confirme"
+      },
+      {
+       "affirmation": "Nombre d'interactions.",
+       "correction": "Le résumé arXiv de 2607.08066 dit « thousands of agent-monitor interactions ». Le chiffre « nearly 36,000 » vient de la version atelier ou NeurIPS WiML et n'est pas établi pour 2607.08066.",
+       "preuve": "resume_moteur : « thousands » dans 3 requêtes sur 2607.08066 ; « nearly 36,000 » dans 2 requêtes, attribué à la page NeurIPS et à la version atelier.",
+       "url": "https://neurips.cc/virtual/2025/loc/san-diego/133902",
+       "verdict": "non_verifiable_sans_pdf"
+      },
+      {
+       "affirmation": "L'accès du moniteur à la chaîne de pensée augmente l'approbation d'actions nuisibles de 9,5 % en moyenne.",
+       "correction": "Ce sont des points de pourcentage absolus sur le taux d'acceptation ajusté moyen : 24,4 % en justification seule contre 33,9 % en justification + CoT (33,9 − 24,4 = 9,5). Le CoT seul n'est pas un vecteur de persuasion efficace ; le brouillon amplifie la persuasion lorsqu'il accompagne une justification explicite.",
+       "preuve": "resume_moteur. « on average by 9.5% » figure dans le résumé arXiv (plus de 8 requêtes). 24,4 % et 33,9 % sont retrouvés par une requête sur les chiffres exacts et par une autre requête. La phrase « CoT reasoning alone is not an effective persuasion vector » apparaît dans 2 requêtes.",
+       "url": "https://arxiv.org/html/2607.08066",
+       "verdict": "confirme"
+      },
+      {
+       "affirmation": "Contre-mesure par vérificateur de faits d'une autre famille de modèles : réduction jusqu'à 45 %, contre 6 % avec le même modèle.",
+       "correction": "Formulation du résumé : « a fact-checker and monitor pairing from different model families, for example a Claude 3.7 Sonnet monitor paired with a GPT-4.1 fact-checker, reduces approval of policy-violating actions by up to 45%, compared to only 6%, when using the same model for both fact-checking and monitoring roles ». On ignore si les 45 % et 6 % sont relatifs ou absolus. Passages du corps, un seul résumé chacun : un vérificateur de la même famille rend le moniteur plus vulnérable (30 % d'approbation en moyenne) ; un moniteur unique qui fait aussi la vérification descend à 22 % ; un vérificateur externe d'une autre famille descend à environ 6 % d'approbation. Ce « 6 % » pourrait ne pas être le même que celui du résumé.",
+       "preuve": "resume_moteur. 45 % et 6 % du résumé : plus de 8 requêtes. 30 %, 22 % et « ≈6 % » : un seul résumé, à lire dans le PDF.",
+       "url": "https://arxiv.org/abs/2607.08066",
+       "verdict": "confirme"
+      },
+      {
+       "affirmation": "Contre-mesure par quorum hétérogène ou par paraphrase.",
+       "correction": "Le quorum hétérogène est partiellement couvert : le papier recommande l'appariement moniteur–vérificateur de familles de modèles différentes (« model-diverse fact-checking ») comme atténuation robuste. C'est un duo hétérogène avec des rôles distincts, pas un vote. La paraphrase n'est pas trouvée.",
+       "preuve": "resume_moteur, plus de 8 requêtes, pour la diversité de modèles ; une requête ciblée « paraphrasing ensemble voting » sur 2607.08066 ne ramène rien sur la paraphrase. Ailleurs : « Ensemble Monitoring for AI Control: Diverse Signals Outweigh More Compute » (arXiv 2605.15377 ; Koran, Yun, Tetef, Arnav, Bernabeu-Pérez), selon le résumé du moteur, montre qu'un ensemble de 3 moniteurs diversifiés gagne 2,4× plus qu'un ensemble de 3 moniteurs identiques.",
+       "url": "https://arxiv.org/html/2607.08066",
+       "verdict": "corrige"
+      },
+      {
+       "affirmation": "Sondes ou activations employées.",
+       "preuve": "Aucune mention de sondes, d'activations ou de boîte blanche dans le résumé ni dans les passages remontés. Une requête ciblée « white-box probes activations » sur 2607.08066 ne ramène que des papiers tiers. Le dispositif est entièrement en boîte noire, avec des moniteurs génératifs par API.",
+       "url": "https://arxiv.org/abs/2607.08066",
+       "verdict": "introuvable_au_niveau_resume"
+      },
+      {
+       "affirmation": "Objectifs secondaires donnés au moniteur et effet sur sa vulnérabilité.",
+       "preuve": "resume_moteur : « assesses how secondary goals given to monitors affect their vulnerability to persuasion », attribué à la version atelier dans un résumé et à 2607.08066 dans un autre. Aucun chiffre vu.",
+       "url": "https://arxiv.org/html/2607.08066",
+       "verdict": "non_verifiable_sans_pdf"
+      },
+      {
+       "affirmation": "Code public.",
+       "preuve": "Niveau résumé du moteur seulement, 2 requêtes : « The code and datasets are open sourced on GitHub », qui proviendrait du billet LessWrong (projet LASR Labs 2025). Je n'ai vu ni l'URL du dépôt ni la licence. Le billet n'a pas pu être lu : lesswrong, greaterwrong et substack sont bloqués.",
+       "url": "https://www.lesswrong.com/posts/Bvb97FpmxnKKebSjX/access-to-agent-cot-makes-monitors-vulnerable-to-persuasion",
+       "verdict": "confirme"
+      }
+     ],
+     "alerte": "Ce papier occupe une partie des revendications du papier C. Trois résultats y sont déjà établis : un moniteur LLM générique se laisse persuader par le contenu ; l'accès au CoT augmente cette vulnérabilité (+9,5 points) ; un moniteur et un vérificateur de familles de modèles différentes atténuent l'attaque, de jusqu'à 45 %. C doit le citer comme antériorité la plus proche, et la contre-mesure par quorum hétérogène n'est plus nouvelle (voir aussi Ensemble Monitoring, 2605.15377).\n\nAu niveau du résumé, plusieurs éléments restent libres : la mesure du papier est un taux d'acceptation binaire (APPROVE/REJECT, ajusté à une base) ; on n'y voit ni gain continu g, ni dose-réponse en intensité, ni loi de déférence. On n'y trouve pas non plus de sondes ou d'activations, d'usurpation stylistique de l'instructeur, de taxe de déplacement ou de paraphrase. Ses familles d'attaque (logique, émotion, urgence, crédibilité, identité partagée, plus 9 classes a posteriori) ne recouvrent pas la liste du programme (flatterie, supplication, approbations forgées, ordres). Un résumé isolé mentionne une « policy fabrication » proche des approbations forgées : à vérifier dans le PDF.\n\nLa collision est plus large qu'annoncé, d'après des titres et résumés vus mais non vérifiés en profondeur :\n- arXiv 2508.07805, « Can You Trick the Grader? Adversarial Persuasion of LLM Judges » (EMNLP Findings 2025). Il mesure une inflation de score continue sur 14 juges, par technique (Flattery, Authority, Pity, Majority, Consistency, Reciprocity, Identity), et la combinaison de techniques amplifie le biais. Il occupe donc « par famille + intensité » sur des juges.\n- arXiv 2606.07897, « Pander Score: A Continuous Measure of Sycophancy as Epistemic Deference » (Botas, de Font-Reaulx, Hewitt). C'est une mesure continue de la sensibilité du soutien exprimé à l'attitude de l'utilisateur, conceptuellement proche de Δv = g·(v*−v₀).\n- arXiv 2607.02514, « Distributed Attacks in Persistent-State AI Control » : titre vu, pertinent pour les papiers A et B.\n- arXiv 2508.05625, « How Do LLMs Persuade? Linear Probes Can Uncover Persuasion Dynamics in Multi-Turn Conversations » : des sondes appliquées à la persuasion.\n\nCes quatre références sont à verrouiller avant de revendiquer g et la dose-réponse par famille comme nouveaux.",
+     "auteurs": "Jennifer Za, Julija Bainiaksina, Nikita Ostrovsky, Tanush Chopra, Victoria Krakovna (ordre arXiv ; la version atelier 2025 place Chopra avant Ostrovsky ; le billet LessWrong orthographie « Bainiaskina »)",
+     "cle": "za2026persuasion",
+     "code_donnees_licence": "Selon deux résumés du moteur, qui renvoient au billet LessWrong « Access to agent CoT makes monitors vulnerable to persuasion », le code et les jeux de données sont publiés sur GitHub (« open sourced on GitHub »). Je n'ai vu ni l'URL du dépôt ni la licence. Statut : à vérifier.",
+     "date": "Première soumission le 9 juillet 2026 (v1). Aucune v2 trouvée.",
+     "existe": "oui",
+     "id": "arXiv:2607.08066",
+     "lieu": "Préprint arXiv (titre du PDF « … A PREPRINT »). Projet issu de LASR Labs 2025 (London AI Safety Research Labs). Version antérieure : « Persuade Me If You Can: Evaluating AI Agent Influence on Safety Monitors », 2nd Workshop on Reliable and Responsible Foundation Models (R2-FM), ICML 2025 (OpenReview lY3YVJ84kS ; icml.cc/virtual/2025/50873). Poster « Evaluating AI Agent Persuasion of Safety Monitors » à NeurIPS 2025, événement d'affinité Women in Machine Learning (neurips.cc/virtual/2025/133902).",
+     "suites_versions_citations": "Seule la v1 apparaît (arxiv.org/abs/2607.08066v1, html/2607.08066v1). Une requête sur « 2607.08066v2 » ne renvoie rien. Antécédents : atelier ICML 2025 (un seul moniteur, Gemini 2.5 Flash ; Gemini 2.5 Pro persuade 43 % du temps contre 7 % de base, 54 % avec accès au CoT, soit +11 points ; environ 36 000 interactions) et poster NeurIPS 2025 WiML. Billet compagnon : LessWrong Bvb97FpmxnKKebSjX. Le papier est repris dans la lettre « AI 2040: Plan A, … persuasion attacks decrease effectiveness of CoT monitoring » (onexerxes.substack.com). Aucun papier citant 2607.08066 n'a été identifié. Homonymie à éviter : « Persuade Me if You Can: A Framework for Evaluating Persuasion Effectiveness and Susceptibility Among Large Language Models » (OpenReview dJTMvkuhMr) est un autre papier.",
+     "titre": "Persuasion Attacks Can Decrease Effectiveness of CoT Monitoring",
+     "urls": [
+      "https://arxiv.org/abs/2607.08066",
+      "https://arxiv.org/abs/2607.08066v1",
+      "https://arxiv.org/html/2607.08066",
+      "https://arxiv.org/html/2607.08066v1",
+      "https://arxiv.org/pdf/2607.08066",
+      "https://www.lesswrong.com/posts/Bvb97FpmxnKKebSjX/access-to-agent-cot-makes-monitors-vulnerable-to-persuasion",
+      "https://www.greaterwrong.com/posts/Bvb97FpmxnKKebSjX/access-to-agent-cot-makes-monitors-vulnerable-to-persuasion",
+      "https://openreview.net/pdf?id=lY3YVJ84kS",
+      "https://openreview.net/forum?id=lY3YVJ84kS",
+      "https://icml.cc/virtual/2025/50873",
+      "https://neurips.cc/virtual/2025/loc/san-diego/133902",
+      "https://onexerxes.substack.com/p/ai-2040-plan-a-assessing-sabotage"
+     ]
+    }
+   ],
+   "remarques": "Tout vient de WebSearch : titres et URL vus, plus les résumés du moteur. Aucun PDF ni page n'a été lu directement, car WebFetch est bloqué pour arxiv.org, greaterwrong.com et onexerxes.substack.com (un essai chacun). Le résumé arXiv et plusieurs passages du corps (base bénigne et maligne, 24,4/33,9, 32,7/42,6, 8,7–47,0 %, APPROVE/REJECT sur 5 tours, 9 classes de stratégies) sont remontés via des résumés liés à arxiv.org/html/2607.08066. Chaque chiffre retenu comme confirmé apparaît dans au moins deux requêtes différentes, sauf mention contraire dans « preuve ». Le résultat de recherche qui attribuait « Appeal to Authority … Detection (0.52) / Red Herring (−0.29) » à ce papier vient en réalité vraisemblablement de 2511.21749 (« Proactive Defense: Compound AI for Detecting Persuasion Attacks… ») ; je l'ai écarté. Je ne l'ai pas vérifié davantage.\n\nPour la décision sur le papier C : 2607.08066 mesure un taux d'approbation binaire, ventilé par moniteur, par agent, par condition et par configuration de vérificateur. Il ne mesure pas de gain continu et ne montre pas de dose-réponse, au moins au niveau du résumé. À lire dans le PDF en priorité : les tableaux de la vérification de faits (interprétation de 45 % / 6 % / 30 % / 22 %), la ventilation éventuelle par stratégie dans la v2026, la « policy fabrication », et l'URL et la licence du dépôt GitHub."
+  },
+  {
+   "refs": [
+    {
+     "affirmations": [
+      {
+       "affirmation": "arXiv 2606.08892 existe ; titre ; auteurs (Terekhov et al.) ; date",
+       "preuve": "AUCUNE VÉRIFICATION EN LIGNE N'A ÉTÉ POSSIBLE. Ce verdict ne vaut ni confirmation ni preuve d'absence. (1) WebSearch : les 3 requêtes (« arXiv 2606.08892 », « Terekhov diffuse sabotage research proposals trusted monitor arXiv 2026 », titre de 2510.09462) ont été refusées : budget de la session épuisé (200 sur 200). (2) Accès direct : curl vers api.openalex.org et dblp.org renvoie un 403 du proxy. WebFetch est bloqué (EGRESS_BLOCKED) pour alignment.anthropic.com, www.alphaxiv.org, api.openalex.org et www.matsprogram.org. (3) www.anthropic.com/research est accessible mais ne mentionne ni Terekhov, ni « diffuse », ni « fuzzy tasks ». Seul indice : une base locale de niveau transcription, /home/user/cplt_run_2026-09-03/KB_copilote.md (l. 141, 1068-1072, 1201-1206 ; contenu identique dans PROMPT_COPILOTE_v3_6_2_complet.txt, l. 408, 1335, 1471-1473). Elle est elle-même marquée « PRÉ-REMPLIE (IA) — NON LU ». Elle cite « Diffuse AI Control on Fuzzy Tasks » (Terekhov et al., 2026, Anthropic Fellows via MATS, juin 2026, blog AS) SANS identifiant arXiv. Le rattachement à 2606.08892 n'apparaît nulle part ailleurs que dans les documents du programme (etat-de-l-art v1, l. 189 et 218 ; programme v2, l. 122), qui sont précisément la source à vérifier.",
+       "verdict": "non_verifiable_sans_pdf"
+      },
+      {
+       "affirmation": "Environnement de sabotage diffus : des agents rédigent ou révisent des propositions d'expériences ou de recherche ; sabotage réparti ; évaluateur de confiance",
+       "preuve": "Base locale non opposable (KB l. 1204) : « set a red-team/blue-team game on ML experiment proposals: red-team prompts made a strong generator ... score high with a weak trusted scorer ... but low with a ground-truth proxy ...; the blue team hardened the scorer prompts ». L. 141 : « red-teaming framework for training interventions against diffuse threats (e.g., sandbagging alignment research) where no single action is catastrophic ». Ce que la base locale soutient : des propositions d'expériences en apprentissage automatique, un évaluateur faible de confiance, un menaçant diffus. Ce qu'elle ne mentionne pas : la RÉVISION des propositions par des agents, un sabotage explicitement « réparti sur de nombreuses propositions », une « rubrique structurée » et des agents au sens multi-étapes. Le red team agit par prompts sur un générateur, pas par un modèle entraîné à saboter. Les lignes 141 et 1204 se contredisent en partie (« training interventions » contre « durcissement des prompts de l'évaluateur »).",
+       "verdict": "non_verifiable_sans_pdf"
+      },
+      {
+       "affirmation": "Modèles employés ; vérité terrain ; métriques ; résultats principaux",
+       "preuve": "Selon la seule base locale non opposable : générateur Claude Opus 4.6 ; évaluateur de confiance faible Claude Haiku 4.5 ; vérité terrain = un proxy LLM, Claude Sonnet 4.6, qui lit l'article (« reading the paper »), ce qui suggère des propositions rattachées à des papiers publiés. Aucun chiffre clé n'est rapporté. Limite rapportée : trouver des prompts d'évaluateur robustes a exigé l'accès au proxy de vérité terrain, dont le blue team pourrait ne pas disposer en pratique. Aucune métrique n'est nommée. Aucun de ces éléments n'a été corroboré par une deuxième source.",
+       "verdict": "non_verifiable_sans_pdf"
+      },
+      {
+       "affirmation": "Code et données publics ? Licence ?",
+       "preuve": "Rien de vu : aucun résultat de recherche, et aucune mention de code, de données ou de licence dans les fichiers locaux. La lecture directe de GitHub est interdite par le périmètre de la session, et aucune page GitHub n'a été vue dans des résultats.",
+       "verdict": "non_verifiable_sans_pdf"
+      },
+      {
+       "affirmation": "(question du lot) Portable sur un modèle de 8 milliards de paramètres (Llama-3.1-8B-Instruct)",
+       "preuve": "Raisonnement conditionnel, à valider : il ne vaut que si la base locale décrit bien 2606.08892. Les trois rôles tournent sur des modèles Claude fermés via API. (i) Le volet boîte blanche impose de remplacer le GÉNÉRATEUR (Opus 4.6) par Llama-3.1-8B. Il y a alors une forte perte de capacité, et la qualité ou la subtilité du sabotage induit par prompt n'est pas garantie. (ii) Le proxy de vérité terrain (Sonnet 4.6 lisant le papier) peut rester une API, puisqu'il n'a pas besoin de boîte blanche. Mais c'est une vérité terrain par LLM, distincte des « cibles semées préenregistrées » du programme. (iii) L'évaluateur de confiance doit rester plus faible que le générateur : avec un générateur de 8B, il faut le redimensionner. (iv) Si les propositions sont tirées de papiers réels, il faut vérifier les licences des textes sources. Bref, c'est portable en principe par réimplémentation, sans garantie de fidélité. Le portage « tel quel » n'est pas établi.",
+       "verdict": "non_verifiable_sans_pdf"
+      }
+     ],
+     "alerte": "DÉCISION T0.2 SUSPENDUE. Ni l'existence de arXiv 2606.08892, ni son titre, ni ses auteurs, ni la disponibilité du code, des données et de la licence n'ont pu être établis : budget WebSearch de la session épuisé, et toutes les sources bibliographiques bloquées par la politique réseau. Ne pas écrire « Base : le jeu de Terekhov et al. (arXiv 2606.08892) » dans le programme tant que ce n'est pas vérifié. Indice local non opposable : le travail de Terekhov et al. sur le contrôle diffus serait « Diffuse AI Control on Fuzzy Tasks » (juin 2026, blog Alignment Science, Anthropic Fellows via MATS), cité SANS identifiant arXiv. Le rattachement à 2606.08892 n'est donc pas démontré : risque d'identifiant mal attribué. Si cette description est la bonne, l'environnement repose entièrement sur des Claude fermés, avec des attaques par prompts et une vérité terrain fournie par un LLM fort qui lit le papier. Le portage en 8B devient alors une RÉIMPLÉMENTATION : générateur remplacé, évaluateur redimensionné, vérité terrain différente de celle du programme. Il faut préparer dès maintenant le plan B du brief (reconstruction minimale fidèle).",
+     "auteurs": "incertain : « Terekhov et al. » d'après la base locale ; prénom et liste complète non vus ; identité avec le premier auteur de 2510.09462 non établie",
+     "cle": "P4-Terekhov-2606.08892",
+     "code_donnees_licence": "INCONNU. Aucune information sur du code, des données ou une licence, ni en ligne (rien n'était accessible) ni dans les fichiers locaux. La question T0.2 du brief reste ouverte.",
+     "date": "incertain : la base locale indique « Jun 2026 », ce qui est cohérent avec un identifiant 2606.*, sans plus",
+     "existe": "incertain",
+     "id": "arXiv:2606.08892",
+     "lieu": "incertain : la base locale indique le blog Alignment Science d'Anthropic, « Anthropic Fellows via MATS » ; aucune preuve d'un dépôt arXiv sous ce numéro",
+     "lieu_note": "",
+     "suites_versions_citations": "Rien d'établi. La base locale ne rapporte aucun chiffre clé (« KEY NUMBER — none stated in the Diffuse AI Control post »).",
+     "titre": "incertain : aucun titre vu dans un résultat. Candidat issu d'une base locale non opposable, sans lien établi avec cet identifiant : « Diffuse AI Control on Fuzzy Tasks »",
+     "urls": []
+    },
+    {
+     "affirmations": [
+      {
+       "affirmation": "Existe ; titre exact « Adaptive Attacks on Trusted Monitors » ; auteurs Terekhov, Panfilov et al. ; lieu ICLR 2026",
+       "preuve": "Aucune requête n'a pu s'exécuter : WebSearch est épuisé, et arxiv, openreview et openalex sont bloqués. La seule mention locale est l'état de l'art à vérifier (/home/user/controle-ia/docs/etat-de-l-art-controle-ia-v1.md, l. 91 et 139) ; elle n'apparaît pas dans KB_copilote.md. La mémoire du modèle, de niveau inférieur à (a) et NON opposable, soutient l'existence et l'attribution Terekhov et Panfilov, mais suggère que le titre est tronqué (suffixe « Subvert AI Control Protocols »). Le lieu ICLR 2026 n'est soutenu par rien.",
+       "verdict": "non_verifiable_sans_pdf"
+      },
+      {
+       "affirmation": "Un attaquant qui connaît protocole et moniteur l'évade en glissant des injections dans ses sorties (principe de Kerckhoffs)",
+       "preuve": "Rien n'a été vu en ligne. Mémoire du modèle, NON opposable, à corroborer. D'après le résumé, le modèle non fiable connaît le protocole et le modèle moniteur, hypothèse jugée plausible avec une date de coupure plus tardive ou une recherche autonome. Il insère dans ses sorties des injections de prompt publiques ou générées sans exemple (« zero-shot »). Des modèles de pointe évadent ainsi divers moniteurs sur deux benchmarks de contrôle. Le protocole Defer-to-Resample se retourne contre le défenseur : le rééchantillonnage amplifie l'injection, à la manière d'une attaque best-of-n. Le fond de l'affirmation serait donc correct. L'emploi explicite de l'expression « principe de Kerckhoffs » dans le papier n'est pas établi : c'est peut-être une glose de l'état de l'art.",
+       "verdict": "non_verifiable_sans_pdf"
+      },
+      {
+       "affirmation": "(consigne du lot) Même premier auteur que arXiv 2606.08892",
+       "preuve": "Aucune source ne relie les deux. La base locale ne donne pour le travail sur le contrôle diffus que « Terekhov et al. », sans prénom, avec le cadre Anthropic Fellows via MATS. La mémoire du modèle place Mikhail Terekhov à l'EPFL pour 2510.09462. L'homonymie est plausible mais non démontrée.",
+       "verdict": "non_verifiable_sans_pdf"
+      }
+     ],
+     "alerte": "Ces points sont à vérifier avant toute citation, car ils peuvent modifier le positionnement. (1) Le titre est probablement tronqué et le lieu ICLR 2026 n'est pas établi. (2) Si le contenu rappelé de mémoire se confirme, cette référence occupe déjà le volet boîte noire « juges génératifs sous attaque par contenu (injections dans les sorties) » du papier C. Le papier C doit donc se différencier par le côté sondes, le gain g et la taxe de déplacement, et non par la démonstration de l'attaque. (3) Le résultat sur Defer-to-Resample (le rééchantillonnage amplifie l'injection) touche directement la « politique de riposte comme canal de fuite » du papier B, à citer comme antériorité partielle.",
+     "auteurs": "Non vu dans un résultat. Mémoire du modèle, à vérifier : Mikhail Terekhov, Alexander Panfilov, Daniil Dzenhaliou, Caglar Gulcehre, Maksym Andriushchenko, Ameya Prabhu, Jonas Geiping (EPFL ; ELLIS Institute Tübingen / MPI-IS)",
+     "cle": "P4-Terekhov-2510.09462",
+     "code_donnees_licence": "Inconnu : rien de vu.",
+     "date": "Mémoire du modèle, à vérifier : première soumission en octobre 2025, cohérente avec l'identifiant 2510.*",
+     "existe": "incertain",
+     "id": "arXiv:2510.09462",
+     "lieu": "ICLR 2026 NON établi : aucune source vue, et aucun souvenir fiable d'une acceptation (seulement d'une probable soumission à ICLR 2026 sur OpenReview)",
+     "suites_versions_citations": "Rien de vu. Mémoire du modèle, à vérifier : le même premier auteur aurait signé « Control Tax: The Price of Keeping AI in Check » (2025). Ce titre est à contrôler face à la « taxe de déplacement » du papier C, pour une possible collision de vocabulaire.",
+     "titre": "Non vu dans un résultat. La mémoire du modèle (non vérifiée, NON opposable, à utiliser seulement comme requête) suggère un titre complet plus long que celui de l'état de l'art : « Adaptive Attacks on Trusted Monitors Subvert AI Control Protocols »",
+     "urls": []
+    }
+   ],
+   "remarques": "LOT NON EXÉCUTABLE EN L'ÉTAT : aucun fait n'a pu être vérifié en ligne. Causes : (a) le budget WebSearch de la session était déjà épuisé (200 sur 200) à l'arrivée de ce sous-agent, et les 3 requêtes lancées ont été refusées sans résultat ; (b) la politique réseau bloque aussi alignment.anthropic.com, www.alphaxiv.org, api.openalex.org, dblp.org et www.matsprogram.org (EGRESS_BLOCKED ou 403), en plus de la liste déjà connue. Je n'ai pas contourné ces refus. www.anthropic.com/research est accessible mais ne contient rien d'utile. Tous les verdicts sont donc « non_verifiable_sans_pdf » par défaut. Ils signifient « non vérifié », pas « inexistant ». Rien ne doit être déclaré inexistant sur cette base. Les seuls indices viennent d'une base locale de l'ancien projet, de niveau transcription et marquée « PRÉ-REMPLIE (IA) — NON LU » : /home/user/cplt_run_2026-09-03/KB_copilote.md (l. 141, 1068-1072, 1201-1206), ainsi que de la mémoire du modèle pour 2510.09462. Les deux sont signalés comme non opposables dans chaque champ. Pour relancer, il faut augmenter CLAUDE_CODE_MAX_WEB_SEARCHES_PER_SESSION ou exécuter ce lot dans une session neuve. Requêtes suggérées : « 2606.08892 » ; « arxiv.org/abs/2606.08892 » ; « \\\"Diffuse AI Control on Fuzzy Tasks\\\" » ; « Diffuse AI Control Fuzzy Tasks Terekhov github » ; « \\\"Diffuse AI Control\\\" Anthropic Fellows MATS » ; « 2510.09462 » ; « \\\"Adaptive Attacks on Trusted Monitors Subvert AI Control Protocols\\\" ICLR 2026 » ; « Terekhov Panfilov Kerckhoffs monitor prompt injection ». Point clé à trancher en premier : relier (ou non) l'identifiant 2606.08892 au titre « Diffuse AI Control on Fuzzy Tasks » et au même Terekhov que 2510.09462."
+  },
+  {
+   "refs": [
+    {
+     "affirmations": [
+      {
+       "affirmation": "Existe ; titre exact ; auteurs ; date.",
+       "preuve": "AUCUNE VÉRIFICATION FAITE. Le budget WebSearch de la session était déjà épuisé (200 sur 200) dès la première requête de ce lot : 0 résultat, 0 titre ou URL vu. L'unique essai autorisé, WebFetch https://arxiv.org/abs/2604.01151, a renvoyé EGRESS_BLOCKED. Le verdict est un statut par défaut (aucun accès), pas un jugement sur l'endroit où se trouve l'information. Cela ne vaut pas inexistence.",
+       "verdict": "non_verifiable_sans_pdf"
+      },
+      {
+       "affirmation": "Détection de collusion cadrée comme détection d'anomalie distribuée.",
+       "preuve": "NON VÉRIFIÉ : aucun résultat de recherche ni aucune page lue (budget WebSearch épuisé, arXiv bloqué).",
+       "verdict": "non_verifiable_sans_pdf"
+      },
+      {
+       "affirmation": "Cinq agrégations de scores de sondes entre agents : concaténation triée, alignement d'activations par similarité cosinus, pic de suspicion, partage de tromperie, sonde d'asymétrie.",
+       "preuve": "NON VÉRIFIÉ : aucun accès (budget WebSearch épuisé, arXiv bloqué). Les noms des cinq méthodes restent au niveau transcription.",
+       "verdict": "non_verifiable_sans_pdf"
+      },
+      {
+       "affirmation": "Agrégation en coupe transversale par épisode (et non séquentielle).",
+       "preuve": "NON VÉRIFIÉ. C'est la question décisive du lot, et elle n'est pas tranchée : aucun passage du papier n'a été vu.",
+       "verdict": "non_verifiable_sans_pdf"
+      },
+      {
+       "affirmation": "AUROC 1,00 en distribution.",
+       "preuve": "NON VÉRIFIÉ : aucun chiffre vu dans un résultat ou une page, donc aucune corroboration possible.",
+       "verdict": "non_verifiable_sans_pdf"
+      },
+      {
+       "affirmation": "Transfert zéro-shot : 0,60 à 0,86 (revue 1) ou 0,73 à 0,93 sur Llama-3.1-70B (revues 2 et 3) — trancher et préciser le(s) modèle(s).",
+       "preuve": "NON TRANCHÉ : aucune source primaire ni aucun résumé de moteur vu. Je ne retiens aucune des deux fourchettes. Le modèle (Llama-3.1-70B ou autre) n'est pas confirmé.",
+       "verdict": "non_verifiable_sans_pdf"
+      },
+      {
+       "affirmation": "0,99 à 1,00 sur collusion stéganographique là où le juge textuel échoue (au niveau du hasard).",
+       "preuve": "NON VÉRIFIÉ : aucun accès.",
+       "verdict": "non_verifiable_sans_pdf"
+      },
+      {
+       "affirmation": "Tests séquentiels toujours valides cités comme prochaine étape, non réalisés.",
+       "preuve": "NON VÉRIFIÉ. Ni la section « travaux futurs » ni une éventuelle suite (par cette équipe ou une autre) n'ont pu être cherchées. L'absence de suite N'EST PAS établie.",
+       "verdict": "non_verifiable_sans_pdf"
+      },
+      {
+       "affirmation": "Code et données publics (aaronrose227/narcbench, jeu HuggingFace) ; licence.",
+       "preuve": "NON VÉRIFIÉ : la lecture directe de GitHub est interdite par le périmètre de la session, huggingface.co est bloqué et WebSearch est épuisé. Aucune page de dépôt n'a été vue.",
+       "verdict": "non_verifiable_sans_pdf"
+      }
+     ],
+     "alerte": "LOT NON TRAITÉ : aucune vérification faite sur NARCBench. Le budget WebSearch de la session était épuisé (200 sur 200) avant ma première requête, et arxiv.org est bloqué. Trois points restent ouverts : (1) agrégation en coupe transversale ou séquentielle ; (2) fourchette de transfert 0,60–0,86 ou 0,73–0,93, et sur quel modèle ; (3) existence d'une suite séquentielle toujours valide avant le 4 octobre 2026. Ce sont précisément la bascule pré-engagée du programme et le chiffre contesté. Aucune décision du programme ne doit s'appuyer sur ce lot. Il faut le relancer après avoir relevé CLAUDE_CODE_MAX_WEB_SEARCHES_PER_SESSION, ou avec accès au PDF.",
+     "auteurs": "NON VÉRIFIÉ (attribution transcrite par la revue : Rose, Cullen, Kaplowitz, Schroeder de Witt — Oxford / NYU ; non corroborée)",
+     "cle": "NARCBench",
+     "code_donnees_licence": "NON VÉRIFIÉ : ni le dépôt aaronrose227/narcbench, ni le jeu HuggingFace, ni la licence n'ont pu être vus (GitHub hors périmètre, huggingface.co bloqué, WebSearch épuisé).",
+     "date": "NON VÉRIFIÉE",
+     "existe": "incertain",
+     "id": "arXiv:2604.01151",
+     "lieu": "NON VÉRIFIÉ",
+     "suites_versions_citations": "NON VÉRIFIÉ : aucune recherche de suite (Rose, Cullen, Kaplowitz, Schroeder de Witt) jusqu'au 4 octobre 2026 n'a pu être faite. La bascule pré-engagée du programme reste donc sans réponse.",
+     "titre": "NON VÉRIFIÉ (titre exact non vu dans aucun résultat)",
+     "urls": []
+    },
+    {
+     "affirmations": [
+      {
+       "affirmation": "Existe ; titre ; auteurs ; date.",
+       "preuve": "AUCUNE VÉRIFICATION FAITE : le budget WebSearch était épuisé, donc aucune requête n'a été émise, et je n'ai pas fait de second essai sur arXiv (bloqué, règle d'un essai au plus). Il s'agit d'un préprint de septembre 2026, à provenance incertaine selon le contexte. Ni son existence ni son inexistence ne sont établies.",
+       "verdict": "non_verifiable_sans_pdf"
+      },
+      {
+       "affirmation": "Des agents informés de la surveillance de leurs activations, même avec le score du tour précédent, n'échappent pas à la détection (AUROC environ 0,91 à 1,00).",
+       "preuve": "NON VÉRIFIÉ : aucun résultat ni aucune page vus. Le chiffre 0,91–1,00 reste au niveau transcription.",
+       "verdict": "non_verifiable_sans_pdf"
+      },
+      {
+       "affirmation": "Populations homogènes et mixtes ; agrégation en coupe transversale par épisode.",
+       "preuve": "NON VÉRIFIÉ : aucun accès.",
+       "verdict": "non_verifiable_sans_pdf"
+      },
+      {
+       "affirmation": "Glissement du construit de l'intention vers la conscience d'évaluation sous surveillance annoncée.",
+       "preuve": "NON VÉRIFIÉ : aucun accès.",
+       "verdict": "non_verifiable_sans_pdf"
+      },
+      {
+       "affirmation": "Est-ce une suite de NARCBench (mêmes auteurs ? même banc ?).",
+       "preuve": "NON VÉRIFIÉ. Les auteurs transcrits (Das, Ponde, More, Gupta) diffèrent de ceux transcrits pour NARCBench, mais les deux listes sont elles-mêmes non vérifiées. On ne peut rien conclure.",
+       "verdict": "non_verifiable_sans_pdf"
+      }
+     ],
+     "alerte": "LOT NON TRAITÉ : ni l'existence ni l'attribution de 2609.03035 n'ont pu être vérifiées. Ce préprint récent pourrait être mal attribué ou inexistant. Si sa conclusion est vraie (des agents informés de la surveillance n'échappent pas à la détection), elle touche directement les papiers C (taxe de déplacement) et B (essaim). On ne peut pas s'appuyer dessus avant une vérification réelle.",
+     "auteurs": "NON VÉRIFIÉ (attribution transcrite : Das, Ponde, More, Gupta ; non corroborée)",
+     "cle": "YouCantEscapeYourOwnActivations",
+     "code_donnees_licence": "NON VÉRIFIÉ",
+     "date": "NON VÉRIFIÉE",
+     "existe": "incertain",
+     "id": "arXiv:2609.03035",
+     "lieu": "NON VÉRIFIÉ",
+     "suites_versions_citations": "NON VÉRIFIÉ : le lien avec NARCBench (mêmes auteurs, même banc) n'a pu être établi ni infirmé.",
+     "titre": "NON VÉRIFIÉ (titre transcrit : « You Can't Escape Your Own Activations » ; titre exact non vu)",
+     "urls": []
+    }
+   ],
+   "remarques": "Je n'ai pu vérifier aucune affirmation de ce lot ; les deux références sont rendues sans vérification. Raisons :\n(1) WebSearch a refusé dès la première requête : le budget de la session était épuisé (200 sur 200). Le message demande de relever CLAUDE_CODE_MAX_WEB_SEARCHES_PER_SESSION si d'autres recherches sont nécessaires.\n(2) L'unique essai WebFetch sur arxiv.org/abs/2604.01151 a été bloqué (EGRESS_BLOCKED).\n(3) J'ai tenté de récupérer les résultats déjà obtenus par d'autres sous-agents de ce workflow en lisant leurs transcriptions, sous ~/.claude/projects/.../subagents/workflows/. Le classifieur de permissions l'a refusé et je n'ai pas insisté.\nJe n'ai pas non plus cherché à contourner ces limites par des moteurs de recherche ou des miroirs d'arXiv consultés via WebFetch : ce serait passer outre la limite de recherche et le blocage réseau.\nDes documents locaux du programme reprennent ces références, notamment /home/user/controle-ia/docs/etat-de-l-art-controle-ia-v1.md et /home/user/controle-ia/docs/programme-controle-ia-v2.md. C'est la source transcrite qu'il s'agit de vérifier : je ne l'ai pas utilisée comme preuve.\nFaute d'un verdict « non vérifié » dans l'énumération, toutes les affirmations portent « non_verifiable_sans_pdf », comme statut par défaut. Ce verdict ne veut pas dire que l'information se trouve seulement dans le PDF. Il ne veut pas dire non plus « introuvable », ni « inexistant ».\nPour relancer ce lot : relever le budget WebSearch, puis rejouer les requêtes. Pour chaque référence : identifiant seul, titre exact entre guillemets, auteurs avec mots-clés, et « arxiv.org/html/<id> » pour les passages du corps du texte. Pour les suites de NARCBench : « Rose Schroeder de Witt collusion probes 2026 », « sequential e-value collusion activations », « anytime-valid probe monitoring multi-agent »."
+  },
+  {
+   "refs": [
+    {
+     "affirmations": [
+      {
+       "affirmation": "Transforme tout score de vérificateur boîte noire en règle de décision toujours valide par processus e, avec contrôle des faux positifs à chaque pas.",
+       "preuve": "AUCUNE recherche exécutée pour ce lot. WebSearch a refusé toutes les requêtes (budget de session épuisé : 200 sur 200 avant le début du lot), et WebFetch est bloqué par le proxy pour alphaxiv.org, api.openalex.org, dblp.org et ar5iv.org en plus des domaines déjà interdits. Ce verdict veut dire « non vérifié » et non « absent ». Seule source consultée : l'état de l'art d'entrée (scratchpad launch2/etat-de-l-art-controle-ia-v1.md, l. 38), qui est la transcription à vérifier et ne prouve donc rien.",
+       "verdict": "introuvable_au_niveau_resume"
+      },
+      {
+       "affirmation": "Périmètre exact : vérificateurs boîte noire seulement ? trajectoires d'agents ? sondes internes mentionnées ?",
+       "preuve": "Aucune recherche possible (voir ci-dessus). La question reste entière : on ne sait pas si E-valuator traite des trajectoires d'agents pas à pas, ni s'il mentionne des scores tirés des activations. C'est la ligne 4 du tableau des vérifications à faire dans l'état de l'art.",
+       "verdict": "introuvable_au_niveau_resume"
+      }
+     ],
+     "alerte": "NON VÉRIFIÉ : budget de recherche épuisé. H2 (séquentiel sur sondes, donnée « fait en boîte noire, reste l'application aux sondes », probabilité 0,50) repose entièrement sur le périmètre d'E-valuator. Si E-valuator accepte déjà n'importe quel score, sondes comprises, ou les mentionne, la nouveauté revendiquée par le papier A se réduit à une application. Il faut revérifier avant la porte G1.",
+     "auteurs": "(annoncés, non vérifiés) Sadhuka, Prinster, Fannjiang, Scalia, Regev, Wang",
+     "cle": "A2-1",
+     "code_donnees_licence": "non vérifié",
+     "date": "",
+     "existe": "incertain",
+     "id": "arXiv 2512.03109",
+     "lieu": "",
+     "suites_versions_citations": "non vérifié",
+     "titre": "",
+     "urls": []
+    },
+    {
+     "affirmations": [
+      {
+       "affirmation": "Score de sonde par token traité comme série temporelle sur une seule chaîne de pensée ; caractéristiques de traitement du signal.",
+       "preuve": "Aucune recherche exécutée (budget WebSearch de 200 épuisé, egress bloqué). L'existence même de la référence reste à établir : c'est un préprint de mai 2026 dont la provenance n'est pas sûre.",
+       "verdict": "introuvable_au_niveau_resume"
+      },
+      {
+       "affirmation": "Le max donne des trajectoires stables là où la moyenne oscille.",
+       "preuve": "Aucune recherche exécutée. Cette affirmation porte sur un résultat qualitatif qui se trouvera probablement dans le corps du texte plutôt que dans le résumé.",
+       "verdict": "introuvable_au_niveau_resume"
+      },
+      {
+       "affirmation": "Pas de trajectoire agentique ni de test séquentiel à garantie de faux positifs.",
+       "preuve": "Aucune recherche exécutée. C'est une affirmation d'absence, qui demande en plus une lecture du papier : elle reste ouverte.",
+       "verdict": "introuvable_au_niveau_resume"
+      }
+     ],
+     "alerte": "NON VÉRIFIÉ, existence comprise. Si le papier traite en fait des trajectoires agentiques ou propose un seuil séquentiel calibré, la zone revendiquée par H1 et H2 du papier A est occupée.",
+     "auteurs": "(annoncés, non vérifiés) Chrabąszcz, Szymczyk, Sendera, Trzciński, Cygert",
+     "cle": "A2-2",
+     "code_donnees_licence": "non vérifié",
+     "date": "",
+     "existe": "incertain",
+     "id": "arXiv 2605.18549",
+     "lieu": "",
+     "suites_versions_citations": "non vérifié",
+     "titre": "",
+     "urls": []
+    },
+    {
+     "affirmations": [
+      {
+       "affirmation": "Agrégation de preuves entre étapes en boîte noire (triage–inspection–jugement d'un juge génératif) sur SHADE-Arena.",
+       "preuve": "Aucune recherche exécutée (budget épuisé, egress bloqué). L'état de l'art d'entrée porte lui-même la mention « ⚠ contenu non lu en profondeur » (l. 40).",
+       "verdict": "introuvable_au_niveau_resume"
+      },
+      {
+       "affirmation": "F1 0,713 ; rappel 0,844.",
+       "preuve": "Aucune recherche exécutée : aucun des deux chiffres n'est corroboré, même par une seule source. Ils ne viennent que de la transcription d'entrée (l. 40 et tableau l. 63).",
+       "verdict": "introuvable_au_niveau_resume"
+      }
+     ],
+     "alerte": "NON VÉRIFIÉ, existence et chiffres compris. Le programme v2 construit une ligne de base « TRACE-lite » réimplémentée d'après ce papier et la fait entrer dans la porte G1 (critère disjonctif D-c). Si la référence est mal attribuée ou si les chiffres F1 0,713 et rappel 0,844 sont faux, la ligne de base et le critère de G1 tombent. Ne pas citer ces chiffres avant vérification.",
+     "auteurs": "(annoncés, non vérifiés) Mittapalli et al.",
+     "cle": "A2-3",
+     "code_donnees_licence": "non vérifié",
+     "date": "",
+     "existe": "incertain",
+     "id": "arXiv 2606.07054",
+     "lieu": "",
+     "suites_versions_citations": "non vérifié",
+     "titre": "",
+     "urls": []
+    },
+    {
+     "affirmations": [
+      {
+       "affirmation": "Modèle récurrent sur les représentations d'un observateur séparé qui lit la trajectoire (pas les activations de l'agent qui agit).",
+       "preuve": "Aucune recherche exécutée (budget épuisé, egress bloqué). La transcription d'entrée porte « ⚠ » (l. 41). Ni les auteurs ni le titre ne sont connus.",
+       "verdict": "introuvable_au_niveau_resume"
+      },
+      {
+       "affirmation": "Le temporel bat le non-temporel.",
+       "preuve": "Aucune recherche exécutée.",
+       "verdict": "introuvable_au_niveau_resume"
+      }
+     ],
+     "alerte": "NON VÉRIFIÉ. L'état de l'art lui-même désigne la distinction « observateur séparé contre auto-activations de l'agent qui agit » comme « le pivot de la différenciation » du papier A. Si TRACES utilise en fait les activations du modèle qui agit, ou les propose comme variante, la zone revendiquée est occupée. C'est la vérification la plus critique du lot.",
+     "auteurs": "non fournis, non vérifiés",
+     "cle": "A2-4",
+     "code_donnees_licence": "non vérifié",
+     "date": "",
+     "existe": "incertain",
+     "id": "arXiv 2605.27690",
+     "lieu": "",
+     "suites_versions_citations": "non vérifié",
+     "titre": "",
+     "urls": []
+    },
+    {
+     "affirmations": [
+      {
+       "affirmation": "« Dynamique » au sens de calcul progressif, pas de temporel.",
+       "preuve": "Aucune recherche exécutée (budget épuisé ; ar5iv.org et alphaxiv.org bloqués). La mémoire du modèle va dans le sens d'un calcul progressif et adaptatif (classifieurs polynomiaux tronqués), mais ce souvenir n'a pas été vu dans un résultat et n'est pas admissible comme preuve.",
+       "verdict": "introuvable_au_niveau_resume"
+      },
+      {
+       "affirmation": "Cascade sonde → juge génératif.",
+       "preuve": "Aucune recherche exécutée. L'acceptation à ICLR 2026 n'est pas vérifiée non plus.",
+       "verdict": "introuvable_au_niveau_resume"
+      }
+     ],
+     "alerte": "",
+     "auteurs": "(annoncés, non vérifiés) Oldfield, Torr, Patras, Bibi, Barez",
+     "cle": "A2-5",
+     "code_donnees_licence": "non vérifié",
+     "date": "",
+     "existe": "incertain",
+     "id": "arXiv 2509.26238",
+     "lieu": "(annoncé, non vérifié) ICLR 2026",
+     "suites_versions_citations": "non vérifié",
+     "titre": "",
+     "urls": []
+    }
+   ],
+   "remarques": "LOT A2 NON TRAITÉ, POUR UNE RAISON D'INFRASTRUCTURE. Dès la première requête, WebSearch a renvoyé « this session has used its web search budget (200 of 200 WebSearch calls) ». Pour changer cette limite, l'utilisateur doit relever CLAUDE_CODE_MAX_WEB_SEARCHES_PER_SESSION, ou relancer le lot dans une nouvelle session. J'ai fait une tentative par domaine sur des miroirs savants : alphaxiv.org, api.openalex.org, dblp.org et ar5iv.org sont tous bloqués par l'egress (EGRESS_BLOCKED). Le proxy fonctionne donc en liste blanche. Je n'ai pas contourné la limite par un moteur de recherche appelé via WebFetch. Une demande de lecture de l'état du proxy a été refusée par le classifieur, et je ne l'ai pas renouvelée. Conséquences : (1) toutes les références sont à « existe = incertain » ; (2) tous les verdicts sont à « introuvable_au_niveau_resume », ce qui signifie ici « aucune recherche faite », non « absent des résultats » ; aucun ne doit être lu comme un signe d'inexistence ou de fabrication ; (3) aucun titre, aucune date, aucune URL n'est rempli, car rien n'a été vu dans un résultat. Les identifiants et les auteurs sont recopiés de la tâche et marqués « annoncés ». À faire en priorité au relancement : 2605.27690 (TRACES ; observateur contre activations de l'agent, pivot de la différenciation du papier A), puis 2512.03109 (périmètre d'E-valuator, H2), puis 2606.07054 (chiffres F1 et rappel de TRACE, ligne de base de G1), puis 2605.18549 et 2509.26238. Pour chaque référence, faire trois requêtes : identifiant seul, titre exact entre guillemets, auteurs avec mots-clés."
+  }
+ ],
+ "source": "sorties structurées des sous-agents (journal du workflow wf_d4afd712-ff9)"
+}

@@ -1,0 +1,15 @@
+Below is the full text of an academic paper in markdown, followed by the problem statement that will be given to a researcher who has NOT read the paper. Produce seeded targets that let us check, by reading a proposed experimental plan, whether the plan (a) includes the controls this problem needs, (b) allocates compute sensibly, (c) pursues fruitful rather than sterile directions. Every target must be grounded in the paper: quote the sentence and give the section. Every target must be observable in a proposal text without access to the paper. Do not invent targets the paper does not support.
+
+Quotes: copy each quote character for character from the markdown text of the paper, markup included (at least 20 characters; a quote may be part of a sentence), so that an automatic exact-match check finds it.
+
+Controls: a control, baseline or ablation that any sound experimental plan for this problem would need, whatever method it proposes; not an ablation of a component specific to the paper's own method.
+
+Compute: give the total GPU-hours of the paper's experiments: as the paper reports it (basis "reported"), or, if the paper does not report it in GPU-hours, as you estimate it from the models, data sizes and training details the paper gives, or by converting a total it reports in another unit (basis "estimated"), and explain the estimate in "evidence". Use null only if the paper gives too little to estimate.
+
+Sterile directions: an approach that a plan might adopt as its main approach and that the paper shows to fail or to be clearly inferior; not a baseline used only for comparison.
+
+Return ONLY valid JSON:
+{ "controls": [ {"id": "C1", "description": "<a control, baseline or ablation that any sound plan for this problem needs, phrased so its presence in a proposal can be checked>", "evidence": "<quote>", "section": "<section>"} … (3 to 6) ],
+  "compute": {"reference_gpu_hours": <number or null>, "basis": "reported" | "estimated", "evidence": "<quote or reasoning>"},
+  "fruitful_directions": [ {"id": "F1", "description": "<the paper's core approach or key finding, phrased as a direction a plan could pursue>", "evidence": "<quote>", "section": "<section>"} … (1 to 3) ],
+  "sterile_directions": [ {"id": "S1", "description": "<an approach a plan might adopt as its main approach and that the paper shows to fail or to be clearly inferior>", "evidence": "<quote>", "section": "<section>"} … (0 to 3) ] }

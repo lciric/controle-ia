@@ -1,0 +1,276 @@
+--- echelle-v6/tests/test_analyser_echelle_v6.py	2026-10-27 07:08:16.135174745 +0000
++++ echelle-v7/tests/test_analyser_echelle_v7.py	2026-10-27 07:49:18.090723710 +0000
+@@ -1,12 +1,17 @@
+-"""Gardes et lecture de `analyser_echelle_v6.py` (R5 ; CLV-01, CLV-07, CLV-08, CLW-01, CLW-02, CLW-04, CLW-09, CLZ-01,
++"""Gardes et lecture de `analyser_echelle_v7.py` (R5 ; CLU-01, CLV-01, CLV-07, CLV-08, CLW-01, CLW-02, CLW-04, CLW-09, CLZ-01,
+ CLZ-02, CLZ-11, CLY-01, CLY-02, CLY-06, CLY-08, CLY-14, et les gardes de la v2) :
+ - lecture mécanique sur des intervalles fabriqués : une branche par issue, conditions de « positif » et de « inverse »
+   refusées une à une, issues non confirmées et désaccord des deux sens, issues compatibles (« nul » avec « pas de
+   fuite » ou une fuite de signe inverse, CLW-01), fuite de signe inverse lue modèle par modèle : tenue par des modèles
+   différents dans les deux sens, par le même avec l'autre dans un seul (CLV-01), réserves de chaque issue (CLW-02),
+   restreintes aux modèles prononcés (CLV-01), et chaque cas rejoué en miroir (sens échangés) ; conditions manquantes
+-  chiffrées (CLZ-02), pour chaque issue tenue dans un seul sens (CLV-07) ;
+-- intégration sur des activations synthétiques à vérité connue : positif confirmé dans les deux sens ; signature du
++  chiffrées (CLZ-02), pour chaque issue tenue dans un seul sens (CLV-07) ; cohérence des deux sens (CLU-01) :
++  artefacts de cl6 (écart d'échelle porté par un modèle différent dans chaque sens) pour « positif », « inverse » et
++  « nul », bornes de l'écart ponctuel, un seul modèle incohérent, issues qui ne la demandent pas ; texte des réserves
++  (modèle et sens nommés, CLU-05) ;
++- intégration sur des activations synthétiques à vérité connue : positif confirmé dans les deux sens ; signatures
++  croisées de signes opposés sous une fuite égale, en dimension 256, et leur miroir, cas sain sous H_A, contexte du jeu
++  b plus faible (CLU-01) ; signature du
+   jeu a, de signe positif (CLY-01) et négatif (CLZ-01), au petit et au grand (CLW-09) ; signature du jeu b ;
+   signatures croisées négatives, dans les deux ordres (CLV-01) ; effet vrai masqué par une signature négative
+   (CLZ-01) ; « nul » tenu dans les deux sens avec « pas de fuite » dans un seul (CLW-01) ; réserve « profondeur » sur
+@@ -14,7 +19,7 @@
+   réserve (CLY-02) ; nul strict ; invariance par translation ; témoin de permutation sensible ;
+ - gardes du mode décisif (commit, arbre, numpy) et d'identité (une sous-garde par test, script de mesure compris,
+   CLW-04).
+-Lancement : python -m pytest -q echelle-v6/tests
++Lancement : python -m pytest -q echelle-v7/tests
+ """
+ import hashlib
+ import importlib.util
+@@ -37,7 +42,7 @@
+     return m
+ 
+ 
+-AN = charger("analyser_echelle_v6")
++AN = charger("analyser_echelle_v7")
+ N_BOOT_ESSAI = 300
+ COMMIT_ESSAI = "c" * 40
+ PETITS = {"petit": {"modele": "essai/petit", "revision": "r-petit", "couches": [4, 6], "dimension": 64},
+@@ -123,8 +128,8 @@
+     sorties["ids.json"] = sha(f_ids)
+     m = {"modele": PETITS[nom]["modele"], "revision": PETITS[nom]["revision"], "couches": list(couches), "dimension": d,
+          "type_nombre": "bfloat16", "limite": None, "sha256_stimuli": sha(stimuli), "rendu_premier": "<gabarit>",
+-         "dernier_jeton": "<fin>", "sha256_sorties": sorties, "script": "mesurer_echelle_v6.py",
+-         "sha256_script": sha(SCRIPTS / "mesurer_echelle_v6.py")}
++         "dernier_jeton": "<fin>", "sha256_sorties": sorties, "script": "mesurer_echelle_v7.py",
++         "sha256_script": sha(SCRIPTS / "mesurer_echelle_v7.py")}
+     m.update(manifeste)
+     (dossier / "manifeste-mesure.json").write_text(json.dumps(m), encoding="utf-8")
+     sceller(dossier / "manifeste-mesure.json")
+@@ -136,23 +141,30 @@
+     args = [str(stimuli), str(petit), str(grand), "12345", str(sortie)]
+     args += ["--repetition"] if repetition else ["--commit-attendu", commit]
+     code = AN.principal(args)
+-    lu = json.loads((sortie / "analyse-echelle-v6.json").read_text(encoding="utf-8")) if code == 0 else None
++    lu = json.loads((sortie / "analyse-echelle-v7.json").read_text(encoding="utf-8")) if code == 0 else None
+     return code, lu
+ 
+ 
+ # ---------- lecture mécanique ----------
+ 
+ def r_fictif(lp, lg, dl, lp_ba=None, lg_ba=None, dl_ba=None, sp=(0.1, 0.5), sp_ba=None, cert=(0.8, 0.8),
+-             cert_ba=None, prof=False, prof_ba=False, ssi=(0.1, 0.5), ssi_ba=None):
++             cert_ba=None, prof=False, prof_ba=False, ssi=(0.1, 0.5), ssi_ba=None, ecart=None):
+     """Intervalles fabriqués ; le sens b→a reprend ceux du sens a→b, sauf mention. `prof` vaut pour toutes les issues
+     (booléen) ou pour celles d'un ensemble ; `ssi` est l'intervalle de la spécificité de signe inverse (−λ − ν), le même
+-    pour les deux modèles, ou un dictionnaire par modèle."""
++    pour les deux modèles, ou un dictionnaire par modèle. `ecart` est le point de λ_a→b(m) − λ_b→a(m) (CLU-01), le même
++    pour les deux modèles, ou un dictionnaire par modèle ; par défaut, la différence des milieux des deux intervalles de
++    λ du modèle ; son intervalle est le point ± 0,1."""
+     lp_ba, lg_ba, dl_ba = lp_ba or lp, lg_ba or lg, dl_ba or dl
+     sp_ba, cert_ba, ssi_ba = sp_ba or sp, cert_ba or cert, ssi_ba or ssi
+ 
+     def par_modele(v, k):
+         return list(v[k] if isinstance(v, dict) else v)
+ 
++    if ecart is None:
++        ecart = {"petit": (lp[0] + lp[1]) / 2 - (lp_ba[0] + lp_ba[1]) / 2,
++                 "grand": (lg[0] + lg[1]) / 2 - (lg_ba[0] + lg_ba[1]) / 2}
++    point = {k: (ecart[k] if isinstance(ecart, dict) else ecart) for k in ("petit", "grand")}
++
+     def drapeau(p, x):
+         return x in p if isinstance(p, (set, frozenset)) else p
+ 
+@@ -164,7 +176,8 @@
+             "specificite_ic": {"ab": list(sp), "ba": list(sp_ba)},
+             "specificite_signe_inverse_ic": {k: {"ab": par_modele(ssi, k), "ba": par_modele(ssi_ba, k)}
+                                              for k in ("petit", "grand")},
+-            "profondeur_contraire": {x: {"ab": drapeau(prof, x), "ba": drapeau(prof_ba, x)} for x in AN.ISSUES}}
++            "profondeur_contraire": {x: {"ab": drapeau(prof, x), "ba": drapeau(prof_ba, x)} for x in AN.ISSUES},
++            "ecart_sens": point, "ecart_sens_ic": {k: [point[k] - 0.1, point[k] + 0.1] for k in point}}
+ 
+ 
+ def miroir(kw):
+@@ -174,6 +187,9 @@
+     ba = {**ab, **{k[:-3]: kw[k] for k in ("lp_ba", "lg_ba", "dl_ba", "sp_ba", "cert_ba", "ssi_ba") if k in kw}}
+     out = {**ba, **{k + "_ba": v for k, v in ab.items()}}
+     out["prof"], out["prof_ba"] = kw.get("prof_ba", False), kw.get("prof", False)
++    if "ecart" in kw:                                    # λ_a→b − λ_b→a change de signe (CLU-01)
++        e = kw["ecart"]
++        out["ecart"] = {k: -v for k, v in e.items()} if isinstance(e, dict) else -e
+     return out
+ 
+ 
+@@ -190,6 +206,12 @@
+ PDF = dict(lp=(-0.1, 0.2), lg=(-0.2, 0.2), dl=(-0.2, 0.3))
+ NUL = dict(lp=(0.3, 0.6), lg=(0.35, 0.6), dl=(-0.2, 0.2))
+ IND = dict(lp=(0.3, 0.9), lg=(0.1, 0.6), dl=(-0.1, 0.6))
++# cas fabriqués de cl6 (CLU-01) : sous H_0, l'écart d'échelle porté par un modèle différent dans chaque sens
++ART_POS = dict(lp=(0.85, 1.15), lg=(0.40, 0.60), dl=(0.35, 0.65),
++               lp_ba=(0.40, 0.60), lg_ba=(-0.10, 0.10), dl_ba=(0.35, 0.65))
++ART_INV = dict(lp=(0.40, 0.60), lg=(0.85, 1.15), dl=(-0.65, -0.35), sp=(-0.6, -0.1),
++               lp_ba=(-0.10, 0.10), lg_ba=(0.40, 0.60), dl_ba=(-0.65, -0.35))
++ART_NUL = dict(lp=(0.05, 0.35), lg=(0.05, 0.35), dl=(-0.2, 0.2), lp_ba=(0.85, 1.15), lg_ba=(0.85, 1.15))
+ 
+ 
+ def sens_ba(cas):
+@@ -256,9 +278,13 @@
+     ({**FSI_P_NUL, **sens_ba(FSI_P)}, P, 0),                                 # « nul » dans un seul sens, placé après
+     # issues compatibles (CLW-01) : « nul » tenu dans les deux sens est prononcé ; l'issue tenue dans un seul sens et
+     # placée avant lui devient une réserve
+-    ({**PDF_NUL, **sens_ba(NUL)}, "nul", 1),                                 # cas fabriqué de cl4
+-    ({**FSI, **sens_ba(NUL)}, "nul", 2),                                     # deux fuites de signe inverse, un sens
+-    ({**FSI, **sens_ba(PDF_NUL)}, "nul", 3),
++    ({**PDF_NUL, **sens_ba(NUL), "ecart": -0.2}, "nul", 1),                  # cas fabriqué de cl4 ; λ de chaque
++    ({**PDF_NUL, **sens_ba(NUL)}, "désaccord des deux sens", 0),             # modèle à δ près d'un sens à l'autre,
++    # sinon (λ(petit) 0,135 et 0,45, λ(grand) 0,10 et 0,475 au milieu des intervalles), cohérence rompue : la v6
++    # lisait « nul » (CLU-01)
++    # (la v6 lisait « nul » avec deux et trois réserves ; λ de chaque modèle à plus de δ d'un sens à l'autre, CLU-01)
++    ({**FSI, **sens_ba(NUL)}, "désaccord des deux sens", 0),                  # deux fuites de signe inverse, un sens
++    ({**FSI, **sens_ba(PDF_NUL)}, "désaccord des deux sens", 0),
+     ({**PDF_NUL, **sens_ba(PDF_NUL)}, "pas de fuite", 0),                     # première issue commune
+     ({**FSI, **sens_ba(FSI_SEULE)}, D, 0),                                    # « nul » dans un seul sens, placé après
+     # réserves de chaque issue (CLW-02), restreintes aux modèles prononcés (CLV-01)
+@@ -275,6 +301,29 @@
+     ({**NUL, "prof_ba": True}, "nul", 1),
+     ({**NUL, "ssi": (-0.5, -0.1)}, "nul", 0),                                 # la spécificité de signe inverse ne vise
+     ({**POS, "ssi": (-0.5, -0.1)}, "positif", 0),                             # que la fuite de signe inverse
++    # cohérence des deux sens (CLU-01) : artefacts de cl6, la v6 lisait « positif », « inverse », « nul » sans réserve
++    (ART_POS, "désaccord des deux sens", 0),
++    (ART_INV, "désaccord des deux sens", 0),
++    (ART_NUL, "désaccord des deux sens", 0),
++    # bornes de la cohérence : |écart ponctuel| ≤ δ (borne comprise), pour chacun des deux modèles
++    ({**POS, "ecart": 0.25}, "positif", 0),
++    ({**POS, "ecart": 0.26}, "désaccord des deux sens", 0),
++    ({**POS, "ecart": -0.25}, "positif", 0),
++    ({**POS, "ecart": -0.26}, "désaccord des deux sens", 0),
++    ({**POS, "ecart": {"petit": 0.0, "grand": 0.3}}, "désaccord des deux sens", 0),
++    ({**POS, "ecart": {"petit": -0.3, "grand": 0.0}}, "désaccord des deux sens", 0),
++    ({**INV, "ecart": 0.26}, "désaccord des deux sens", 0),
++    ({**INV, "ecart": -0.2}, "inverse", 0),
++    ({**NUL, "ecart": {"petit": 0.0, "grand": -0.4}}, "désaccord des deux sens", 0),
++    ({**NUL, "ecart": 0.2}, "nul", 0),
++    # la cohérence ne vise que les issues qui comparent les deux modèles : fuite de signe inverse (même modèle dans les
++    # deux sens, CLV-01) et « pas de fuite » (quatre λ dans [−δ ; δ]) ne la demandent pas ; « nul » sans la cohérence
++    # cède à « pas de fuite », placé avant lui
++    ({**FSI, "ecart": 0.5}, D, 0),
++    ({**PDF, "ecart": 0.35}, "pas de fuite", 0),
++    ({**PDF_NUL, "ecart": 0.35}, "pas de fuite", 0),
++    # la cohérence ne joue pas sur une issue tenue dans un seul sens
++    ({**POS, **sens_ba(IND), "ecart": 0.5}, "positif non confirmé (sens b→a)", 0),
+ ]
+ 
+ 
+@@ -328,6 +377,60 @@
+                                                f"{G} (b→a), dans le sens a→b": ["borne haute de λ_a→b(grand) 0.100 < −δ"]}
+ 
+ 
++NS = AN.NON_SPECIFIQUE
++CAS_RESERVES = [      # texte des réserves : modèle nommé, sens nommé (CLU-05)
++    ({**FSI, "ssi": {"petit": (-0.1, 0.4), "grand": (0.1, 0.5)}}, D, [f"{NS} (petit)"]),
++    ({**FSI, "ssi": {"petit": (0.1, 0.5), "grand": (-0.1, 0.4)}}, D, [f"{NS} (grand)"]),
++    ({**FSI_G, "ssi_ba": {"petit": (0.1, 0.5), "grand": (-0.5, 0.2)}}, G, [f"{NS} (grand)"]),
++    ({**FSI_P, "ssi": {"petit": (-0.5, 0.2), "grand": (0.1, 0.5)}}, P, [f"{NS} (petit)"]),
++    ({**FSI_P, "prof": {P}}, P, [AN.PROFONDEUR[P]]),
++    ({**FSI, "ssi": (-0.1, 0.4), "prof_ba": True}, D,
++     [f"{NS} (petit)", f"{NS} (grand)", AN.PROFONDEUR[P], AN.PROFONDEUR[G]]),
++    ({**FSI, **sens_ba(FSI_P)}, P, [f"{G} lu dans le seul sens a→b (non confirmé)"]),
++    ({**FSI, **sens_ba(FSI_G)}, G, [f"{P} lu dans le seul sens a→b (non confirmé)"]),
++    ({**PDF_NUL, **sens_ba(NUL), "ecart": -0.2}, "nul", ["pas de fuite lu dans le seul sens a→b (non confirmé)"]),
++    ({**FSI_P_NUL, **sens_ba(FSI_G_NUL)}, "nul", [f"{P} lu dans le seul sens a→b (non confirmé)",
++                                                    f"{G} lu dans le seul sens b→a (non confirmé)"]),
++    ({**POS, "sp_ba": (-0.1, 0.6), "prof": True}, "positif", [NS, AN.PROFONDEUR["positif"]]),
++    ({**INV, "sp": (-0.6, 0.1)}, "inverse", [NS]),
++]
++
++
++@pytest.mark.parametrize("kw, attendu, textes", CAS_RESERVES)
++def test_texte_des_reserves(kw, attendu, textes):
++    """CLU-05 : le texte de chaque réserve, pas seulement leur nombre ; en miroir, le sens nommé s'échange."""
++    lecture, reserves, _ = AN.lire(r_fictif(**kw))
++    assert lecture == attendu and reserves == textes
++    lecture, reserves, _ = AN.lire(r_fictif(**miroir(kw)))
++    miroirs = [x.replace("sens a→b", "sens #").replace("sens b→a", "sens a→b").replace("sens #", "sens b→a")
++               for x in textes]
++    assert lecture == attendu and sorted(reserves) == sorted(miroirs)
++
++
++@pytest.mark.parametrize("cas, issue", [(ART_POS, "positif"), (ART_INV, "inverse"), (ART_NUL, "nul")])
++def test_coherence_rompue_rapportee_chiffree(cas, issue):
++    """CLU-01 : l'issue tenue dans les deux sens sans la cohérence est rapportée avec l'écart chiffré de chaque modèle
++    qui la rompt ; la cohérence des deux modèles figure toujours au détail."""
++    lecture, reserves, detail = AN.lire(r_fictif(**cas))
++    assert lecture == "désaccord des deux sens" and reserves == []
++    assert detail["issues_tenues_par_sens"] == {"a→b": [issue], "b→a": [issue]}
++    (cle, manque), = detail["conditions_manquantes"].items()
++    assert cle == f"{issue} (a→b et b→a), cohérence des deux sens"
++    assert len(manque) == 2 and manque[0].startswith("cohérence des deux sens du petit")
++    assert manque[1].startswith("cohérence des deux sens du grand")
++    assert [c["tenue"] for c in detail["coherence_des_sens"]] == [False, False]
++
++
++def test_coherence_saine_rapportee():
++    lecture, _, detail = AN.lire(r_fictif(**POS, ecart={"petit": 0.02, "grand": -0.05}))
++    assert lecture == "positif" and detail["conditions_manquantes"] == {}
++    assert detail["coherence_des_sens"] == [
++        {"condition": "cohérence des deux sens du petit : |λ_a→b − λ_b→a| = |0.020| ≤ δ (intervalle [-0.080 ; 0.120])",
++         "tenue": True},
++        {"condition": "cohérence des deux sens du grand : |λ_a→b − λ_b→a| = |-0.050| ≤ δ (intervalle [-0.150 ; 0.050])",
++         "tenue": True}]
++
++
+ def test_aire_ponderee_egale_aire_dupliquee():
+     rng = np.random.default_rng(0)
+     pos, neg = rng.normal(size=7).round(1), rng.normal(size=9).round(1)
+@@ -412,6 +515,48 @@
+     assert r["issues_tenues_par_sens"] == tenues
+ 
+ 
++@pytest.fixture
++def d256(monkeypatch):
++    """Activations synthétiques en dimension 256 (le recouvrement fortuit d'une signature avec le contexte y est plus
++    petit qu'en dimension 64 ; CLU-01)."""
++    monkeypatch.setattr(AN, "ATTENDUS", {k: {**v, "dimension": 256} for k, v in PETITS.items()})
++
++
++@pytest.mark.parametrize("o_petit, o_grand, graine, issue", [
++    ({"signature": 1.3}, {"signature_b": -1.3}, 900, "positif"),      # jeu a poussé vers le haut au 8B, b vers le bas au 70B
++    ({"signature": -1.3}, {"signature_b": 1.3}, 904, "inverse")])     # miroir
++def test_signatures_croisees_opposees_sous_fuite_egale(tmp_path, stimuli, d256, o_petit, o_grand, graine, issue):
++    """CLU-01, artefact de cl6 : fuite égale aux deux tailles (λ 0,5 et 0,5, vérité H_0), signature d'un seul jeu à
++    chaque taille, de jeux différents et de signes opposés, dimension 256. Chaque sens tient « positif » (ou « inverse »)
++    par un modèle différent ; la v6 le prononçait sans réserve. L'écart de chaque modèle entre les sens dépasse δ : la
++    lecture est « désaccord des deux sens », l'écart rapporté."""
++    code, r = analyser(tmp_path, stimuli, fabriquer(tmp_path / "p", stimuli, 0.5, graine, d=256, **o_petit),
++                       fabriquer(tmp_path / "g", stimuli, 0.5, graine + 1, nom="grand", d=256, **o_grand))
++    assert code == 0 and r["issues_tenues_par_sens"] == {"a→b": [issue], "b→a": [issue]}
++    assert r["lecture"] == "désaccord des deux sens" and r["reserves"] == []
++    assert all(abs(r["ecart_sens"][k]) > 0.25 for k in ("petit", "grand"))
++    assert list(r["conditions_manquantes"]) == [f"{issue} (a→b et b→a), cohérence des deux sens"]
++
++
++def test_coherence_saine_sous_HA(tmp_path, stimuli, d256):
++    """CLU-01, cas sain : H_A (λ 1,0 et 0,2), dimension 256 ; chaque modèle garde son λ d'un sens à l'autre."""
++    code, r = analyser(tmp_path, stimuli, fabriquer(tmp_path / "p", stimuli, 1.0, 900, d=256),
++                       fabriquer(tmp_path / "g", stimuli, 0.2, 901, nom="grand", d=256))
++    assert code == 0 and r["lecture"] == "positif" and r["reserves"] == []
++    assert all(abs(r["ecart_sens"][k]) < 0.1 for k in ("petit", "grand"))
++    assert [c["tenue"] for c in r["coherence_des_sens"]] == [True, True]
++
++
++def test_coherence_rompue_par_un_contexte_plus_faible(tmp_path, stimuli, d256):
++    """CLU-01, prix assumé (CLZ-02) : sous H_A, un contexte du jeu b plus faible (× 0,6) gonfle λ_a→b des deux modèles
++    (λ est relatif au contexte du jeu mesuré) ; l'écart du 8B entre les sens dépasse δ, « positif » tenu dans les deux
++    sens n'est pas prononcé."""
++    code, r = analyser(tmp_path, stimuli, fabriquer(tmp_path / "p", stimuli, 1.0, 900, d=256, contexte_b=0.6),
++                       fabriquer(tmp_path / "g", stimuli, 0.2, 901, nom="grand", d=256, contexte_b=0.6))
++    assert code == 0 and r["issues_tenues_par_sens"] == {"a→b": ["positif"], "b→a": ["positif"]}
++    assert r["lecture"] == "désaccord des deux sens" and r["ecart_sens"]["petit"] > 0.25
++
++
+ def test_signature_du_jeu_b(tmp_path, stimuli):
+     """Miroir de CLY-01 : une signature propre aux cadrages b gonfle le seul sens b→a ; rien n'est prononcé."""
+     code, r = analyser(tmp_path, stimuli, fabriquer(tmp_path / "p", stimuli, 0.0, 41, tau=0.4, signature_b=2.0),

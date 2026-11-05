@@ -1,0 +1,111 @@
+# HELIOS — arXiv:2604.01151v5 (Rose, Cullen, Abdelnabi, Torr, Schroeder de Witt, 2026), pages 18 et 27, texte extrait par pdftotext -layout, PDF docs/sources/pdf/2604.01151v5.pdf, empreinte 02527fd4f62ad9b996669275f0837697cbe288b253c9aa521f72a10e6dcf1849 ; extrait le 2026-10-29T11:12Z ; chiffres à relire sur le PDF (R7).
+
+## [p.18]
+Preprint
+
+
+
+
+Figure 2: Per-test AUROC for each model on TRANSFER (solid; mean over six OOD families,
+three for gpt-oss) and STEGO (hatched; twenty blackjack shoes). Means are taken across the model’s
+probe-layer range and 10 seeds.
+
+
+                                   AUROC does not capture performance at the strict false-
+                                   positive rates required for deployment. On T RANSFER, even
+                                   the best method (Deception Split) achieves only 0.38 recall
+                                   at 1% FPR. On S TEGO, by contrast, all methods perform
+                                   well, with Activation Alignment achieving perfect separa-
+                                   tion (1.00 recall at 1% FPR), confirming that steganographic
+                                   collusion produces a qualitatively stronger activation sig-
+Figure 3: ROC curves on Llama- nal than structural collusion. One-shot detection at strict
+3.1-70B. Bands: 95% bootstrap CIs. thresholds is therefore insufficient for structural collusion.
+Parentheses: AUROC.                Sequential detection that accumulates evidence across inter-
+                                   actions (Wald, 1945; Ramdas et al., 2023; Xie & Siegmund,
+2013) is a natural next step.
+
+6.3   E MERGENT C OLLUSION
+
+In NARCBench, agents are explicitly told to collude. Therefore, to control for prompt differences and
+collusion instructions, we carried out further experiments on datasets with emergent collusion. We
+followed the environment set-up from Shi et al. (2026) where 2 agents need to accept or reject each
+other’s work, but due to a character count bug, cannot send each other enough information to verify
+correctly. Even with this limitation, in some cases agents will mark each other’s work as accept.
+In Shi et al., agents judge each other’s work over 10 rounds. Table 1: Zero-shot AUROC (mean ± std)
+Our dataset (Verdict) had 48 runs × 10 = 480. 229/480 of the five NARCBench Core detection
+rounds had at least one agent colluding, leaving 251 with methods on Verdict (Reflection phase).
+honest agents. Table 1 shows the AUROC scores of our
+probe methods trained on Qwen32b-generated Core and
+                                                               Method                  AUROC
+transferred zero-shot to Verdict also using Qwen3. It is a
+mixed result, three probes perform no better than chance,      Sorted Concat        0.728 ± 0.006
+while Sorted Concat shows a weak positive signal. This         Activation Alignment 0.638 ± 0.002
+experiment along with another in Appendix M, shows             Deception Split      0.512 ± 0.002
+further work is needed to demonstrate if probes trained        Asymmetry   Probe    0.495 ± 0.003
+                                                               Peak Suspicion       0.490 ± 0.004
+on instructed collusion can transfer to emergent collusion
+robustly.
+Out of the 229 episodes with agent collusion, only 2 had verbalised collusion reasoning in the verdict
+justification and reflection phases as judged by Claude Sonnet 5. Further analysis is needed to
+
+
+                                                 18
+
+## [p.27]
+Preprint
+
+
+
+
+C       ACTIVATION EXTRACTION AND PROBE TRAINING
+We evaluate four open-weight models: Qwen3-32B-AWQ (Qwen Team, 2025), Llama-3.1-70B-
+Instruct-AWQ-INT4 (Meta AI, 2024), DeepSeek-R1-Distill-Qwen-32B (DeepSeek-AI, 2025), and
+GPT-OSS-20B (OpenAI, 2025a) (compute details in Appendix I). Qwen3-32B was used for hyper-
+parameter tuning; the resulting probe configuration transfers unchanged to the other models. We
+extract activations at the last token position of each agent’s public responses, across a five-layer band
+in the middle of each model (e.g. layers 26–30 of 64 for Qwen3-32B), where semantic represen-
+tations are strongest (Zou et al., 2023b); we report mean AUROC across these layers. For C ORE,
+for each agent we extract the last token of system_prompt + round-N user_prompt +
+round-N public message averaged over rounds N=1,2,3. For T RANSFER and S TEGO, we use
+final-round activations only, where all agents receive identical user prompts, i.e. we extract the last to-
+ken of system_prompt + final-phase user_prompt + final response text.
+
+Deception probe. Following Goldowsky-Dill et al. (2025), we fit a linear probe to distinguish collud-
+ing agents from honest agents. We collect activations from NARCB ENCH -C ORE collusion runs only
+(public channel), giving a dataset of activation vectors xi ∈ Rd with labels yi ∈ {honest, colluder},
+balanced by downsampling the majority class. We standardise activations to zero mean and unit
+variance, then train a logistic regression classifier. The normalised weight vector defines a deception
+direction. For a new agent j, we compute a scalar deception score:
+                                                  sj = z̄j · d                                               (8)
+where higher scores indicate a more colluder-like internal state. A null probe trained on a random split
+of honest agents scores near chance, confirming the probe is not picking up incidental differences.
+Figure 1 illustrates the full pipeline.
+
+D       F ULL NARCB ENCH R ESULTS
+Tables 2–5 give the per-tier breakdown that underlies Figure 2. This consists of the AUROC of
+each of the five probing techniques on C ORE, each T RANSFER family, and S TEGO, for each of
+the four models. All values are means across the model’s probe-layer range and ten random seeds.
+For GPT-OSS-20B, three T RANSFER families (News Framing, Pump & Dump, RAG Poisoning)
+produced no analysable collusion runs because every attempt was refused or failed audit; those rows
+are marked “–”.
+Table 2: Per-method AUROC across NARCB ENCH tiers for Qwen3-32B. Bold = best per row.
+OOD Mean is computed across the available out-of-distribution scenarios (T RANSFER families plus
+S TEGO).
+
+                       Sorted Concatenation   Act Alignment   Peak Suspicion   Deception Split   Asymmetry Probe
+C ORE                         1.00                1.00            1.00              1.00              1.00
+T RANSFER (all)               0.82                0.48            0.84              0.88              0.87
+   CI/CD                      0.53                0.28            0.32              0.73              0.48
+   Code Review                0.94                0.39            1.00              0.99              0.99
+   News Framing               0.71                0.71            0.94              0.96              0.94
+   Pump & Dump                0.99                0.32            0.97              0.83              0.96
+   RAG Poisoning              0.77                0.47            0.82              0.77              0.83
+   Research Pipeline          0.99                0.68            1.00              1.00              1.00
+S TEGO                        1.00                1.00            1.00              0.99              1.00
+OOD Mean                      0.85                0.55            0.86              0.89              0.89
+
+
+
+
+                                                         27
+

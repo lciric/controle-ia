@@ -1,0 +1,49 @@
+Test du vérificateur sur des copies altérées (les transcriptions réelles ne sont pas modifiées)
+
+OK  cas 00 — sain (aucune altération) (H12) : contrôles en échec attendus aucun, obtenus aucun ; code de sortie 0
+OK  cas 01 — mot changé (H2) : contrôles en échec attendus ['A', 'B'], obtenus ['A', 'B'] ; code de sortie 1
+      A contenu   : NON CONFORME — premier écart au caractère 15 de la transcription normalisée :
+      transcription : 'bric description, provided separately in Appendix H.4. You are a senio⟦ur ML researcher evaluating proposed experiments. You also have access…'
+      PDF           : 'bric description, provided separately in Appendix H.4. You are a senio⟦r ML researcher evaluating proposed experiments. You judge proposals p…'
+      transcription : 'You are a seniour ML researcher evaluating proposed exp'
+      positions PDF : 'You are a senior ML researcher evaluating proposed expe'
+OK  cas 02 — dernière phrase tronquée (H3) : contrôles en échec attendus ['A', 'B'], obtenus ['A', 'B'] ; code de sortie 1
+      transcription : ' require genuinely expert-level insight.'
+      positions PDF : ' require genuinely expert-level insight. Reserve top scores for proposals that d'
+OK  cas 03 — premier mot retiré (H5) : contrôles en échec attendus ['A', 'B'], obtenus ['A', 'B'] ; code de sortie 1
+      A contenu   : NON CONFORME — premier écart au caractère 0 de la transcription normalisée :
+      transcription : 'since this would consitute an implicit rubric. ⟦are a senior ML researcher evaluating a set of experiments / theoretic…'
+      PDF           : 'any specific criteria, since this would consitute an implicit rubric. ⟦You are a senior ML researcher evaluating a set of experiments / theor…'
+      transcription : 'are a senior ML researcher evaluating a '
+      positions PDF : 'You are a senior ML researcher evaluatin'
+OK  cas 04 — ligne vide supprimée (H6) : contrôles en échec attendus ['B'], obtenus ['B'] ; code de sortie 1
+      transcription : 'Your goal is to assign a numeric quality'
+      positions PDF : ''
+OK  cas 05 — retrait modifié (4 -> 3 espaces) (H9) : contrôles en échec attendus ['B'], obtenus ['B'] ; code de sortie 1
+      transcription : '   {"author": "Author 2", "institutions": ['
+      positions PDF : '    {"author": "Author 2", "institutions": '
+OK  cas 06 — double espace réduite (H12) : contrôles en échec attendus ['B'], obtenus ['B'] ; code de sortie 1
+      transcription : ' the proposals were NOT sandbagged, and score of a 100 -- to extreme complete th'
+      positions PDF : ' the proposals were NOT sandbagged, and  score of a 100 -- to extreme complete t'
+OK  cas 07 — guillemet droit -> courbe (H10) : contrôles en échec attendus ['A', 'B'], obtenus ['A', 'B'] ; code de sortie 1
+      A contenu   : NON CONFORME — premier écart au caractère 222 de la transcription normalisée :
+      transcription : 'ory vs Experiment Balance Which category best describes this paper? - ⟦“theory_only": Only theoretical results (proofs, theorems, bounds). No…'
+      PDF           : 'ory vs Experiment Balance Which category best describes this paper? - ⟦"theory_only": Only theoretical results (proofs, theorems, bounds). No…'
+      transcription : '- “theory_only": Only theoretical results '
+      positions PDF : '- "theory_only": Only theoretical results '
+OK  cas 08 — deux lignes interverties (H13-expansion-utilisateur) : contrôles en échec attendus ['A', 'B'], obtenus ['A', 'B'] ; code de sortie 1
+      A contenu   : NON CONFORME — premier écart au caractère 0 de la transcription normalisée :
+      transcription : 'User: ⟦Description: {description} Idea kernel: {name} Write a single-paragrap…'
+      PDF           : 'stem prompt text, no preamble, no code fences, no explanations. User: ⟦Idea kernel: {name} Description: {description} Write a single-paragrap…'
+      transcription : 'Description: {description}'
+      positions PDF : 'Idea kernel: {name}'
+OK  cas 09 — indice remplacé par un chiffre simple (I3) : contrôles en échec attendus ['A'], obtenus ['A'] ; code de sortie 1
+      A contenu   : NON CONFORME — substitution sans effet : '(β₁=0.9, β₂=0.999,'
+OK  cas 10 — ligne coupée à tort (retour au lieu d'espace) (H1) : contrôles en échec attendus ['B'], obtenus ['B'] ; code de sortie 1
+      transcription : 'se exactly 10 experiments or theoretical'
+      positions PDF : 'se exactly 10 experiments or theoretical results to address the research questio'
+OK  cas 11 — fin de ligne finale doublée (H1-format) : contrôles en échec attendus ['B', 'F'], obtenus ['B', 'F'] ; code de sortie 1
+      transcription : ''
+      positions PDF : '∅'
+
+RÉSULTAT : le vérificateur détecte toutes les altérations et accepte le cas sain

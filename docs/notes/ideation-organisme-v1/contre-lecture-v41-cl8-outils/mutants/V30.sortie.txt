@@ -1,0 +1,26 @@
+..................FE..............................................................................
+======================================================================
+ERROR: test_richesse_et_parts_refusent_les_booleens (essais.test_v7_pari_apparie.TestV41.test_richesse_et_parts_refusent_les_booleens) (part=None)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/tmp/claude-0/-home-user-controle-ia-travail/75a1275d-b838-5015-909e-b2bfadb395f9/scratchpad/relecture-v41/cl8/outils-cl8/mutants/V30/essais/test_v7_pari_apparie.py", line 469, in test_richesse_et_parts_refusent_les_booleens
+    pa.contraste({"A": r, "B": 0.5}, {"A": 1, "B": -1})
+    ~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/tmp/claude-0/-home-user-controle-ia-travail/75a1275d-b838-5015-909e-b2bfadb395f9/scratchpad/relecture-v41/cl8/outils-cl8/mutants/V30/pole/pari_apparie.py", line 112, in contraste
+    if not 0.0 <= r <= 1.0:
+           ^^^^^^^^^^^^^^^
+TypeError: '<=' not supported between instances of 'float' and 'NoneType'
+
+======================================================================
+FAIL: test_richesse_et_parts_refusent_les_booleens (essais.test_v7_pari_apparie.TestV41.test_richesse_et_parts_refusent_les_booleens) (part=True)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/tmp/claude-0/-home-user-controle-ia-travail/75a1275d-b838-5015-909e-b2bfadb395f9/scratchpad/relecture-v41/cl8/outils-cl8/mutants/V30/essais/test_v7_pari_apparie.py", line 468, in test_richesse_et_parts_refusent_les_booleens
+    with self.subTest(part=r), self.assertRaises(pa.ContrasteInvalide):
+                               ~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: ContrasteInvalide not raised
+
+----------------------------------------------------------------------
+Ran 97 tests in 25.365s
+
+FAILED (failures=1, errors=1)

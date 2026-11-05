@@ -1,0 +1,44 @@
+........................../tmp/claude-0/-home-user-controle-ia-travail/75a1275d-b838-5015-909e-b2bfadb395f9/scratchpad/relecture-v41/cl8/outils-cl8/mutants/V10/essais/test_v7_ideation.py:557: ResourceWarning: unclosed file <_io.TextIOWrapper name='/tmp/claude-0/-home-user-controle-ia-travail/75a1275d-b838-5015-909e-b2bfadb395f9/scratchpad/relecture-v41/cl8/outils-cl8/mutants/V10/essais/_tmp/tmpi_j_1o4o/petit-enfant.pid' mode='r' encoding='UTF-8'>
+  pid = int(open(pid_f).read())
+ResourceWarning: Enable tracemalloc to get the object allocation traceback
+../tmp/claude-0/-home-user-controle-ia-travail/75a1275d-b838-5015-909e-b2bfadb395f9/scratchpad/relecture-v41/cl8/outils-cl8/mutants/V10/essais/test_v7_ideation.py:649: ResourceWarning: unclosed file <_io.TextIOWrapper name='/tmp/claude-0/-home-user-controle-ia-travail/75a1275d-b838-5015-909e-b2bfadb395f9/scratchpad/relecture-v41/cl8/outils-cl8/mutants/V10/essais/_tmp/tmpvwi4klu2/cx-3/proposeurs/argon/traces-passe-2/consigne.md' mode='r' encoding='utf-8'>
+  encoding="utf-8").read()
+ResourceWarning: Enable tracemalloc to get the object allocation traceback
+................................./tmp/claude-0/-home-user-controle-ia-travail/75a1275d-b838-5015-909e-b2bfadb395f9/scratchpad/relecture-v41/cl8/outils-cl8/mutants/V10/essais/test_v7_ideation.py:1254: ResourceWarning: unclosed file <_io.TextIOWrapper name='/tmp/claude-0/-home-user-controle-ia-travail/75a1275d-b838-5015-909e-b2bfadb395f9/scratchpad/relecture-v41/cl8/outils-cl8/mutants/V10/essais/_tmp/tmpz51uvu7j/pe.pid' mode='r' encoding='UTF-8'>
+  pe = int(open(pid_f).read())
+ResourceWarning: Enable tracemalloc to get the object allocation traceback
+...F........FF...
+======================================================================
+FAIL: test_tentatives_de_controle_scellees (essais.test_v7_ideation.TestV40.test_tentatives_de_controle_scellees)
+CL39-02, CL39-07, CL39-08, M16 : un contrôle refusé est scellé avec son coût dans SORTIE-controle, imputé à la
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/tmp/claude-0/-home-user-controle-ia-travail/75a1275d-b838-5015-909e-b2bfadb395f9/scratchpad/relecture-v41/cl8/outils-cl8/mutants/V10/essais/test_v7_ideation.py", line 1085, in test_tentatives_de_controle_scellees
+    self.assertEqual(r["relancable"], n < 3)
+    ~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: True != False
+
+======================================================================
+FAIL: test_relancable_calcule_avec_un_controle_claude_paye (essais.test_v7_ideation.TestV41.test_relancable_calcule_avec_un_controle_claude_paye)
+CL40-01 (code), point 6 : contrôle Claude payé (0,01 puis 0,2 par modèle), Argon « KO » à 0,15, réglages du devis
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/tmp/claude-0/-home-user-controle-ia-travail/75a1275d-b838-5015-909e-b2bfadb395f9/scratchpad/relecture-v41/cl8/outils-cl8/mutants/V10/essais/test_v7_ideation.py", line 1646, in test_relancable_calcule_avec_un_controle_claude_paye
+    self.assertFalse(r["relancable"], r)  # v40 : vrai
+    ~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^
+AssertionError: True is not false : {'cout_claude_usd': 0.02, 'cout_externe_usd': 0.15, 'erreur': "ControleRefuse : appel de contrôle refusé pour gemini-argon : texte 'KO' ≠ OK", 'horodatage': {'source': 'horloge du processus (aucun --horodatage fourni)', 'valeur': '2026-10-29T04:04:59Z'}, 'lectures': {'claude-fable-5-1': {'cout_compte_usd': 0.01, 'cout_declare_usd': 0.01, 'cout_inconnu': False, 'non_lance': False, 'problemes': [], 'relais_apres': None, 'relais_avant': None, 'role': 'juge_ideation', 'statut': 'ok', 'taille_consigne': 41, 'texte': 'OK'}, 'claude-opus-5-5': {'cout_compte_usd': 0.01, 'cout_declare_usd': 0.01, 'cout_inconnu': False, 'non_lance': False, 'problemes': [], 'relais_apres': None, 'relais_avant': None, 'role': 'juge_ideation', 'statut': 'ok', 'taille_consigne': 41, 'texte': 'OK'}, 'externe:argon': {'cout_compte_usd': 0.15, 'cout_declare_usd': 0.15, 'cout_inconnu': False, 'non_lance': False, 'problemes': ["texte 'KO' ≠ OK"], 'relais_apres': None, 'relais_avant': None, 'role': 'proposeur_ideation', 'statut': 'ok', 'taille_consigne': 356784, 'texte': 'KO'}}, 'motifs_relance': ['somme des plafonds Claude de la relance 40.0200 > total 40.0'], 'phase': 'controle-tentative', 'relancable': True, 'sommes_de_cette_course': {'claude': 40.0, 'externe': 11.2}, 'tolerances': {'claude': False, 'externe': False, 'option_ancienne_les_deux': False}}
+
+======================================================================
+FAIL: test_s9_meme_controle_du_bras_et_refus_du_coeur_scelle (essais.test_v7_ideation.TestV41.test_s9_meme_controle_du_bras_et_refus_du_coeur_scelle)
+CL40-03 (S9) : `--budget-controle-usd 0.1 --budget-externe-usd 11.1`, Argon au pire cas, seconde passe : le
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/tmp/claude-0/-home-user-controle-ia-travail/75a1275d-b838-5015-909e-b2bfadb395f9/scratchpad/relecture-v41/cl8/outils-cl8/mutants/V10/essais/test_v7_ideation.py", line 1521, in test_s9_meme_controle_du_bras_et_refus_du_coeur_scelle
+    self.assertFalse(r["relancable"])
+    ~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^
+AssertionError: True is not false
+
+----------------------------------------------------------------------
+Ran 78 tests in 8.458s
+
+FAILED (failures=3)

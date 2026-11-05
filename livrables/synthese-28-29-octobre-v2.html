@@ -1,0 +1,321 @@
+<!doctype html>
+<html lang="fr">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Synthèse des 28 et 29 octobre 2026</title>
+<style>
+  :root{
+    --encre:#1a1c20; --gris:#555a63; --trait:#d2d6dd; --fond:#ffffff;
+    --accent:#243b63; --accent-doux:#eef2f8; --alerte:#8a3b12; --alerte-doux:#f6ede6;
+    --vert:#2c5e3f; --vert-doux:#e3ecdf;
+  }
+  *{box-sizing:border-box;}
+  html{font-size:10.4pt;}
+  body{
+    font-family:"Iowan Old Style","Palatino Linotype",Palatino,Georgia,serif;
+    color:var(--encre); background:var(--fond); margin:0; line-height:1.4;
+  }
+  .page{padding:0 16px; max-width:900px; margin:0 auto;}
+  h1{font-size:18pt; line-height:1.15; margin:0 0 2pt; color:var(--accent); letter-spacing:-0.2px;}
+  h2{font-size:13.2pt; margin:18pt 0 5pt; color:var(--accent); border-bottom:1.5px solid var(--accent); padding-bottom:2pt;}
+  h3{font-size:11.2pt; margin:12pt 0 3pt; color:var(--encre);}
+  h4{font-size:10.4pt; margin:8pt 0 2pt; color:var(--gris); font-variant:small-caps; letter-spacing:0.3px;}
+  p{margin:4pt 0;}
+  ul,ol{margin:4pt 0 4pt; padding-left:18pt;}
+  li{margin:2.2pt 0;}
+  .sous-titre{color:var(--gris); font-size:10.2pt; margin:3pt 0 0;}
+  .filet{color:var(--gris); font-size:9.2pt; font-style:italic;}
+  .cartouche{background:var(--accent-doux); border:1px solid var(--trait); border-radius:5px; padding:7pt 11pt; margin:8pt 0;}
+  .alerte{background:var(--alerte-doux); border:1px solid #e3cbb8; border-radius:5px; padding:7pt 11pt; margin:8pt 0;}
+  .alerte h4{color:var(--alerte); margin-top:0;}
+  .cartouche h4{margin-top:0;}
+  table{border-collapse:collapse; width:100%; margin:6pt 0; font-size:9.2pt;}
+  th,td{border:1px solid var(--trait); padding:3pt 5pt; text-align:left; vertical-align:top;}
+  th{background:var(--accent-doux); color:var(--accent); font-weight:600;}
+  td.n,th.n{white-space:nowrap; font-variant-numeric:tabular-nums; text-align:right;}
+  code{font-family:"SFMono-Regular",Consolas,"Liberation Mono",monospace; font-size:8.5pt; background:#f1f3f6; padding:0.5pt 2.5pt; border-radius:3px; overflow-wrap:anywhere;}
+  .etiq{display:inline-block; font-size:7.8pt; font-weight:700; letter-spacing:0.4px; padding:0.5pt 5pt; border-radius:10px; vertical-align:middle; white-space:nowrap;}
+  .etiq-go{background:var(--vert-doux); color:var(--vert);}
+  .etiq-noeud{background:var(--alerte-doux); color:var(--alerte);}
+  .etiq-defaut{background:#eceef2; color:var(--gris);}
+  .oui{color:var(--vert); font-weight:700;}
+  .non{color:var(--alerte); font-weight:700;}
+  .petit{font-size:8.9pt; color:var(--gris);}
+  .garde{page-break-inside:avoid; break-inside:avoid;}
+  h2,h3,h4{page-break-after:avoid; break-after:avoid;}
+  tr{page-break-inside:avoid; break-inside:avoid;}
+  .couv{border-bottom:2.5px solid var(--accent); padding-bottom:9pt; margin-bottom:6pt;}
+  .meta{display:flex; gap:18pt; flex-wrap:wrap; font-size:9.1pt; color:var(--gris); margin-top:6pt;}
+  .meta b{color:var(--encre);}
+  .rappel{font-size:9pt; color:var(--gris); font-style:italic; margin-top:1pt;}
+  .verdict li{margin:3pt 0;}
+  .table-defile{overflow-x:auto;}
+  @media print{ .page{padding:0; max-width:none;} }
+</style>
+</head>
+<body>
+<div class="page">
+
+  <div class="couv">
+    <h1>Synthèse des 28 et 29 octobre 2026 — ce qui a avancé pour l'entretien Transformative AI Fund</h1>
+    <p class="sous-titre">Pour Lazar. Version 2 : remplace la synthèse du 28 octobre au soir (<code>synthese-journee-2026-10-28-v1</code>, gardée) ; couvre le 28 octobre entier et le 29 jusqu'à R-725 (≈ 08:02 UTC).</p>
+    <div class="meta">
+      <span><b>Phase</b> : 0 (instruments), porte G0 au plus tard fin novembre</span>
+      <span><b>Lignée</b> : session-depot, instance&nbsp;2</span>
+      <span><b>Rédigé</b> : 29 octobre 2026, 08:06 à 08:14 UTC (relevés <code>date -u</code>)</span>
+      <span><b>Registres lus</b> : R-600 à R-725, <code>go.md</code>, <code>depenses.md</code>, <code>arrets.md</code>, <code>etat.md</code></span>
+    </div>
+    <p class="filet">Document interne, dépôt privé <code>controle-ia-travail</code>. Chaque chiffre renvoie à une entrée du registre (R-…) ou à un chemin. Les chiffres marqués « supposé » ou « exploratoire » ne sont pas opposables. Rien n'est envoyé : tu rédiges, tu décides, tu envoies.</p>
+  </div>
+
+  <!-- ===================== 0. VERDICT ===================== -->
+  <h2>Verdict</h2>
+  <ul class="verdict">
+    <li><strong>Pour l'entretien, le texte n'a pas bougé depuis la v8</strong> (28 octobre ≈ 11:55 UTC, R-623). Ce qui a avancé, ce sont <strong>les preuves derrière ses fronts</strong> : sondes de P3 régénérées au bit près, juges mesurés avant la banque, vérité du dommage redéfinie, frein appliqué trois fois de plus, coût réel de la couche&nbsp;2 chiffré.</li>
+    <li><strong>Acquis</strong> : fichier complet des sondes figées de P3 <strong>identique au bit près</strong> (sceau retrouvé, R-679) ; rejeu des juges lu (<strong>aucune cellule à 0,99 de scores finis</strong>, meilleure 0,87, R-704) ; N-060 v3 ; coupe du calibrage décidée (R-697) ; devis du pilote v2 (central ≈ 234 USD, R-708).</li>
+    <li><strong>Qui tourne</strong> : relectures CL10 de l'idéation (v43), script de la garde δ v5, script des lentilles ; contre-lecture du rejeu v2 des juges ; synthèse du collisionneur P-26 (R-722, R-724). <strong>Aucune instance de calcul active</strong> (R-704, <code>arrets.md</code>).</li>
+    <li><strong>Attend Lazar</strong> : HELIOS, ventilation de la demande (176 550), date de l'appel — <strong>inchangés depuis le 28</strong> ; P-26 (garde δ) ; V-2 et V-3 de la vérité du dommage ; le devis complet du pilote (au-delà de 90 USD).</li>
+    <li><strong>Dépense des deux jours : ≈ 81,7 USD</strong>, dont 74,9 de collisionneur, 3,1 de contre-lectures Gemini Argon, 3,7 de carte graphique (détail § 4). Une ligne de 20,31 USD manque toujours à <code>depenses.md</code>.</li>
+    <li><strong>Pour le fonds</strong> : « a few hundred dollars » reste la bonne formule ; le cumul de notre registre est vraisemblablement passé <strong>au-dessus de 500 USD</strong> (estimation, § 1.4).</li>
+  </ul>
+
+  <!-- ===================== 1. TAIF ===================== -->
+  <h2>1. Ce qui a avancé pour l'entretien Transformative AI Fund</h2>
+  <p>Référence : <code>brouillons/entretien-taif-v3/programme-entretien-taif-v8.md</code> (<code>7917ed02…</code>), qui fait foi. Le 28 octobre, il est passé de la v4 à la v8 (HELIOS lu sur PDF, résultats contraires écrits, « 99 % » retiré). <strong>Aucune entrée du registre après R-623 ne touche l'entretien</strong> : ni la date de l'appel, ni la ventilation, ni HELIOS.</p>
+
+  <h3>1.1 Point par point du programme v8</h3>
+  <div class="table-defile">
+  <table>
+    <thead><tr><th style="width:17%">point de la v8</th><th style="width:48%">ce que les deux jours ont apporté</th><th style="width:35%">ce qu'il faut dire avec prudence</th></tr></thead>
+    <tbody>
+      <tr><td><strong>§ 2, H5</strong> — le premier test réel est un nul, audité, à puissance chiffrée</td>
+        <td><strong>Preuve de reproductibilité.</strong> Les étapes 1 à 5 de P3 refaites à l'identique : <strong>sceau du fichier complet retrouvé</strong> (<code>91b61c45…</code>), 424 sondes sur 424, écart 0,0, aires de validation égales. Verdict de P3 inchangé. 1,76 USD (R-679). Les sondes de Mahalanobis sont de nouveau en main.</td>
+        <td>Dire « reproduit au bit près », pas « confirmé » : la régénération refait les sondes, pas la lecture. Le nul garde sa limite (aire sous ≈ 0,6 non exclue).</td></tr>
+      <tr><td><strong>§ 2, H4</strong> — rigueur et coût</td>
+        <td><strong>Rigueur montrée sur pièces.</strong> Plus de vingt contre-lectures neuves en deux jours (idéation CL1 à CL9, affinage v1 et v2 par trois lignées, garde δ v1 à v4, rejeu des juges, régénération). Exemples qui pèsent : un défaut du juge existant (écart non fini compté <strong>+1</strong>, la valeur la plus favorable) trouvé, corrigé, et vérifié <strong>sans effet sur aucune promotion</strong> (R-681, R-690) ; une inférence sur les fils de calcul confirmée par le résultat (R-679).</td>
+        <td>La vérification du défaut est indirecte : l'écart lui-même n'était consigné nulle part (R-690). Ne pas dire « aucun défaut possible ».</td></tr>
+      <tr><td><strong>§ 3, front B</strong> — six mesures à coût nul</td>
+        <td><strong>Rien de neuf dans nos registres</strong> sur la mesure unanime ni sur T1 à T5 (chantier de conv-audit). Deux simulations sur processeur, à coût nul, montrent la méthode « chiffrer d'avance » : contrôle 12 joint (R-673) et coupe du calibrage (R-696).</td>
+        <td>La phrase « six mesures en cours de préenregistrement » de la v8 reste vraie mais <strong>non avancée</strong> : à vérifier chez conv-audit avant l'appel.</td></tr>
+      <tr><td><strong>§ 3, front C</strong> — le frein qui va avec</td>
+        <td><strong>La règle sur les refus a resservi trois fois le 29.</strong> Opus 5.5 a refusé une cellule au tour 3 du collisionneur « pilote » (R-676) puis la conception au tour 1 de deux tours (R-686). Chaque refus est consigné tel quel, jamais reformulé ; l'arbitre (toi) a fait poursuivre sans l'espèce refusante (R-687). Toutes ces questions étaient défensives (mesure, dimensionnement). N-057 : cellules en quarantaine conservées scellées (28 octobre).</td>
+        <td>La phrase de la v8 « trois fois en un jour » est datée du 28 : le compte a augmenté. Le pipeline offensif reste gelé (R-611) ; la revue externe n'a <strong>pas</strong> avancé. Ne rien dire du contenu en quarantaine.</td></tr>
+      <tr><td><strong>§ 3, front D</strong> — HELIOS, état de l'art</td>
+        <td>Treize PDF d'antériorité versés et scellés (huit R-666, quatre R-669, PACE R-673) ; PACE lu par conv-audit contre la question Q2 : « semi-occupée, inchangé » (R-677).</td>
+        <td><strong>Ces PDF ne sont lus par personne à page citée</strong> (R7) : aucun chiffre opposable. Le <strong>nœud HELIOS reste ouvert</strong>. Le papier C attend toujours son PDF hors d'arXiv.</td></tr>
+      <tr><td><strong>§ 3, front E</strong> — le pôle scientifique automatique</td>
+        <td>Argon juge <strong>et</strong> proposeur, à poids égal avec les juges Claude (R-662, R-663). Composition jugée sur l'oracle et le coût, jamais sur le juge (N-058). Conception de l'affinage v2 contre-lue par trois lignées, N-059 (28 octobre). Orchestrateur de l'idéation de la <strong>v35 à la v43</strong>, neuf relectures ; plafond de la course 52,8 USD, enveloppe 60 (R-724).</td>
+        <td><strong>La course d'idéation n'a pas tourné</strong> : aucun résultat de l'organisme à montrer. Dire « gouverné et prêt à lancer », pas « produit des idées ».</td></tr>
+      <tr><td><strong>§ 3, instruments en attente</strong> — couche&nbsp;2, organismes de G1</td>
+        <td><strong>Le coût réel est chiffré</strong> : devis du pilote v2, central ≈ 234 USD, fourchette 90 à 549 (R-708) ; tranche 0 de mesure sous GO (13 USD, GO-2026-10-29-05). <strong>Risque découvert</strong> : les juges ne rendent pas des scores finis assez souvent pour le format de G1 (R-704) ; cellule redéfinie, rejeu v2 sous GO (GO-2026-10-29-04). <strong>Risque traité</strong> : le dommage du mode « affaiblir les contrôles » n'avait pas de vérité indépendante ; N-060 v3 en donne une (§ 3.4).</td>
+        <td>La table de la v8 (« 50 USD de plafond, devis à écrire ») est périmée. Tous les prix du devis sont en partie <strong>supposés</strong> (≈ 76 % en v1, R-700). Aucun organisme saboté n'existe encore.</td></tr>
+      <tr><td><strong>§ 4</strong> — la porte, dite honnêtement</td>
+        <td>G0 : toujours <strong>deux critères sur huit</strong>. G1 : règles écrites d'avance, ajoutées ces deux jours — calibrage coupé dans chaque tâche, moitiés tirées par graine scellée (R-697) ; bris d'égalité appliqué d'office (R-694) ; score continu exigé pour toute cellule (D-S13, R-685). La garde δ (P-26) reste ouverte.</td>
+        <td>Ces règles sont des <strong>décisions</strong>, pas des résultats. Les simulations sont exploratoires (confiance 0,6 à 0,75).</td></tr>
+      <tr><td><strong>§ 6, message 3</strong> — « rapide et pas cher »</td>
+        <td>Carte graphique des deux jours : <strong>3,68 USD</strong> (1,76 + 1,92). Le reste (≈ 78 USD) est collisionneur et contre-lectures, chacun sous GO plafonné.</td>
+        <td>Le « ≈ 450 USD connus » de la v8 (réserve 2) date du 28 au matin. Voir § 1.4.</td></tr>
+      <tr><td><strong>§ 8 et § 9</strong> — la demande, ce qui reste avant l'appel</td>
+        <td><strong>Rien de neuf.</strong></td>
+        <td>Toujours à confirmer : 176 550 (extension sur le scénario ambitieux) plutôt que 86 130 ; taux et jours de la revue externe ; deux ou trois paliers ; date de l'appel ; champs à compléter ; écart de calendrier G1 (mois 4 envoyé, M2 au programme).</td></tr>
+    </tbody>
+  </table>
+  </div>
+
+  <h3>1.2 Montrable aujourd'hui, et ce qui ne l'est pas encore</h3>
+  <table class="garde">
+    <thead><tr><th>montrable aujourd'hui (pièce scellée)</th><th>pas encore montrable</th></tr></thead>
+    <tbody>
+      <tr><td>
+        <ul style="margin:0;">
+          <li>Régénération au bit près des sondes de P3 (R-679, branche <code>calcul/regeneration-sondes-p3-v1</code>).</li>
+          <li>Le registre des refus de modèle et de leur traitement (R-609, R-676, R-686, R-687).</li>
+          <li>La mesure des juges <em>avant</em> la banque, et son résultat négatif (R-704) : on a payé 1,92 USD pour ne pas bâtir sur un instrument fragile.</li>
+          <li>La correction d'une décision sur constat (N-060 v2 → v3, R-688, R-692) : la gouvernance revient sur ses propres erreurs.</li>
+          <li>Les deux simulations sur processeur (R-673, R-696) et le devis du pilote (R-708).</li>
+        </ul></td>
+      <td>
+        <ul style="margin:0;">
+          <li>Un organisme saboté, une sonde qui bat une base, une mesure de front B lue.</li>
+          <li>Une idée produite par l'organisme (course non lancée).</li>
+          <li>Un chiffre des treize PDF d'antériorité (non lus, R7).</li>
+          <li>Les synthèses du collisionneur comme résultats : tout y est exploratoire, et les modèles s'y trompent (puissance annoncée 0,65 à 0,80 qui vaut 0,33, R-665 ; « 0,78–0,90 » faux, R-680).</li>
+          <li>Une comparaison des lentilles sur les sondes de P3 (pas encore exécutée).</li>
+        </ul></td></tr>
+    </tbody>
+  </table>
+
+  <h3>1.3 Questions qu'un évaluateur peut poser, avec ce qu'on a maintenant</h3>
+  <ul>
+    <li><strong>« Do your LLM judges even give usable scores? »</strong> — Pas assez, et nous l'avons mesuré avant de bâtir : sur 180 notations rejouées, aucune cellule n'atteint 0,99 de scores finis ; la meilleure, 0,87 (R-704). Cellule redéfinie, rejouée avant toute banque (GO-2026-10-29-04).</li>
+    <li><strong>« When the agent's output is a text plan, how do you know a sabotage did harm? »</strong> — Par une vérité indépendante des moniteurs, pas du texte : chaque contrôle expérimental de l'article (référence cachée) est lu « absent, altéré, conforme » par deux lecteurs hors des familles des moniteurs, extrait cité vérifié par programme, comparé au jumeau honnête (N-060 v3). Ajouter : le premier dessin supposait des tâches exécutables, et nous l'avons corrigé (R-688).</li>
+    <li><strong>« A model refused your own tool. Did you route around it? »</strong> — Non : refus consigné, jamais reformulé ; le tour continue sans l'espèce, sur décision écrite du directeur (R-687).</li>
+  </ul>
+
+  <h3>1.4 Le chiffre de coût à tenir</h3>
+  <div class="alerte garde">
+    <p style="margin:0;">La v8 dit « ≈ 450 USD connus » (réserve 2, note <code>depenses-cumul-2026-10-28-v1.md</code>, ± 15 %), en comptant l'évasion du matin du 28 à ≈ 4 USD « en cours ». Depuis : évasion finie à 20,31 (+ ≈ 16), puis ≈ 61,4 USD d'autres postes. <strong>Estimation de cette synthèse : de l'ordre de 530 USD sur notre registre</strong> — non rapprochée de la facturation, hors abonnement des sessions. La facturation de la relève du 23 octobre reste à lire sur la console. <strong>À dire</strong> : « a few hundred dollars ; GPU stayed under about a hundred ». <strong>À ne pas dire</strong> : un nombre.</p>
+  </div>
+
+  <!-- ===================== 2. DÉCISIONS ===================== -->
+  <h2>2. Décisions de Lazar des deux jours</h2>
+  <h3>2.1 Décisions de programme</h3>
+  <ul>
+    <li><span class="etiq etiq-defaut">rappel</span> <strong>N-055</strong> (27 octobre, relayée) : pari apparié borné, D-S1 à D-S12 ; H1a porte la revendication de H1. <strong>N-056</strong> complétée le 28 : nœud 2 (c) et D-S29 (a) confirmés (R-600).</li>
+    <li><span class="etiq etiq-go">N-057</span> Cellules en quarantaine conservées scellées, pour colmater et tester les moniteurs corrigés (28, 11:15).</li>
+    <li><span class="etiq etiq-go">N-058</span> Composition des proposeurs jugée sur l'oracle du monde planté et le coût, jamais sur le juge (R-643).</li>
+    <li><span class="etiq etiq-go">N-059</span> Nœuds de la conception de l'affinage v2 tranchés ; duel en générations d'étalonnage (R-653).</li>
+    <li><span class="etiq etiq-go">N-060</span> Vérité du dommage des modes non chiffrés : v1 consommateur déterministe (R-684) ; v2 « les trois oracles » (R-686) ; <strong>v3 sur le banc réel</strong> : couverture des contrôles de l'article contre la référence cachée, deux lecteurs hors familles des moniteurs, repli écrit (R-695, <code>decision-N-060-v3.md</code>, <code>2b448f69…</code>).</li>
+    <li><span class="etiq etiq-go">décision</span> <strong>Argon à poids égal</strong>, juge (R-662) et proposeur (R-663).</li>
+    <li><span class="etiq etiq-go">décision</span> <strong>Coupe du calibrage</strong> : dans chaque tâche, moitiés tirées par graine scellée ; dérive cherchée par un test temporel séparé (R-697).</li>
+    <li><span class="etiq etiq-go">décision</span> <strong>Pilote</strong> : option (a) (rejeu du juge d'abord, R-671) ; P-1 (b) tous les moniteurs, P-2 vérité du dommage avant le pilote, P-3 (a) (relayés, R-691).</li>
+    <li><span class="etiq etiq-go">décision</span> <strong>CL40-01 (c)</strong> : à la relance de l'idéation, les contrôles déjà réussis ne sont pas rejoués (R-715).</li>
+    <li><span class="etiq etiq-go">décision</span> <strong>P-26</strong> : réunir cinq pièces avant de trancher (τ, unités lues, critères et comparateurs, simulation du minimum, vrais écarts au pilote) (R-716) ; trois décisions relayées : une garde par comparateur dans le minimum, δ = 0,10 écarté (0,05 pressenti), n_h ≥ max(288 ; n80) (R-719).</li>
+    <li><span class="etiq etiq-go">décision</span> <strong>Barème d'Argon</strong> « ≤ 8,3 USD » par million de jetons d'entrée, voie (c) ouverte ; <strong>borne de 12 000 caractères par fiche retirée</strong> (R-718).</li>
+    <li><span class="etiq etiq-go">décision</span> <strong>Autonomie</strong> : dix heures pour la régénération (R-664) ; huit heures jusqu'à ≈ 10:10 UTC le 29 avec veille de conv-audit (R-697).</li>
+  </ul>
+
+  <h3 class="garde">2.2 GO du 28 et du 29 octobre</h3>
+  <table>
+    <thead><tr><th>GO</th><th>objet</th><th class="n">plafond</th><th>dépensé</th></tr></thead>
+    <tbody>
+      <tr><td>GO-2026-10-28-01</td><td>duel des proposeurs</td><td class="n">100</td><td>0 (course nulle, R-599)</td></tr>
+      <tr><td>GO-2026-10-28-02 / -06</td><td>couche 2, banque des deux modes connus ; 50 puis 90, prolongé au 15 novembre</td><td class="n">90</td><td>0</td></tr>
+      <tr><td>GO-2026-10-28-03</td><td>collisionneur du matin, trois tours</td><td class="n">28/22/33 par tour</td><td>20,31</td></tr>
+      <tr><td>GO-2026-10-28-04, -07, -10, -13</td><td>décisions : gel du pipeline offensif ; avance de <code>main</code> ; N-058 ; N-059</td><td class="n">—</td><td>—</td></tr>
+      <tr><td>GO-2026-10-28-05</td><td>dépôt privé du lot de Fable (création et quatre ajouts)</td><td class="n">—</td><td>—</td></tr>
+      <tr><td>GO-2026-10-28-08</td><td>collisionneur « priorités »</td><td class="n">30</td><td>3,19</td></tr>
+      <tr><td>GO-2026-10-28-09 / -12</td><td>contre-lectures Argon de l'affinage v1 et v2</td><td class="n">5 + 5</td><td>1,29 + 1,83</td></tr>
+      <tr><td>GO-2026-10-28-11</td><td>régénération des sondes de P3 (puis autonomie)</td><td class="n">6</td><td>1,76</td></tr>
+      <tr><td>GO-2026-10-28-14</td><td>course d'idéation : 20 → 37 → 49 → 51,6 → 52,6 → 52,8, enveloppe 60</td><td class="n">60</td><td>0 (non lancée)</td></tr>
+      <tr><td>GO-2026-10-28-15</td><td>collisionneur « cinq divergences »</td><td class="n">30</td><td>12,59</td></tr>
+      <tr><td>GO-2026-10-28-16</td><td>rejeu des juges v1</td><td class="n">4</td><td>1,92</td></tr>
+      <tr><td>GO-2026-10-28-17</td><td>collisionneur « pilote »</td><td class="n">30</td><td>11,06</td></tr>
+      <tr><td>GO-2026-10-29-01</td><td>collisionneur, complément du pilote (sans Opus aux tours 2 et 3)</td><td class="n">30</td><td>6,84</td></tr>
+      <tr><td>GO-2026-10-29-02</td><td>collisionneur, vérité du dommage (sans Opus aux tours 2 et 3)</td><td class="n">30</td><td>6,57</td></tr>
+      <tr><td>GO-2026-10-29-03</td><td>sentinelle entre lancements, seulement dans une campagne sous devis</td><td class="n">124</td><td>0</td></tr>
+      <tr><td>GO-2026-10-29-04</td><td>rejeu de la cellule de juge redéfinie</td><td class="n">4</td><td>0 (en relecture)</td></tr>
+      <tr><td>GO-2026-10-29-05</td><td>tranche 0 de mesure du pilote</td><td class="n">13</td><td>0 (blocages gratuits)</td></tr>
+      <tr><td>GO-2026-10-29-06</td><td>collisionneur sur la garde δ (P-26) ; 15 puis 25</td><td class="n">25</td><td>14,30</td></tr>
+    </tbody>
+  </table>
+  <p class="petit">Plafonds en USD, lus dans la colonne « plafond » de <code>registres/go.md</code> (lignes 96 à 132). Les plafonds se recouvrent (extensions) : ils ne s'additionnent pas.</p>
+
+  <!-- ===================== 3. CHANTIERS ===================== -->
+  <h2>3. Chantiers, état et prochaine étape</h2>
+
+  <h3>3.1 Sondes de P3 régénérées au bit près — <span class="oui">clos</span></h3>
+  <p>Instance 58162997, 30 fils de calcul, bibliothèque d'algèbre linéaire à 64 fils (correction CLR-01 de la contre-lecture, R-667). Sceau <code>91b61c45…</code> retrouvé ; fichier versé en neuf morceaux, reconstitution vérifiée deux fois ; 1,76 USD ; instance détruite par identifiant (R-679, <code>arrets.md</code>). La couche&nbsp;2 lit toutes les sondes (D5 renversée, R-646). <strong>Suite</strong> : aucune.</p>
+
+  <h3>3.2 Rejeu des juges — v1 <span class="oui">lu</span>, v2 <span class="non">en relecture</span></h3>
+  <p><strong>v1</strong> (R-704) : aucune cellule ne tient H_A (≥ 0,99 de scores finis) ; six cellules H_B, toutes tranchées ; meilleure <strong>8B verdict d'abord 157/180 = 0,87</strong> (0,82–0,91). Audit de symétrie : échelles mal tenues, demi-points du 8B lus vers le bas (− 0,28 en moyenne). Rythmes utiles : 8B 6,1 s, 3B 3,9 s par notation. 1,92 USD. <strong>v2</strong> : cellule redéfinie (verdict d'abord, échelle écrite par critère, valeurs admises seules) ; brouillon committé (<code>cff3d90a</code>), contre-lecture en cours (R-722). <strong>Suite</strong> : relecture, puis lancement sous GO-2026-10-29-04.</p>
+
+  <h3>3.3 Collisionneur — six tours en deux jours</h3>
+  <ul>
+    <li><strong>Matin du 28</strong> (GO-03) : 25 cellules sur 27, 20,31 USD (R-617). <strong>« Priorités »</strong> (GO-08) : arrêté après le tour 1 sur un refus, 3,19 (R-635).</li>
+    <li><strong>« Cinq divergences »</strong> (GO-15) : 9/9, 12,59 ; accord des trois modèles ; la vérification trouve le contrôle 12 en échec 7 à 8 % à 9 600 (R-665).</li>
+    <li><strong>« Pilote »</strong> (GO-17) : 8/9, un refus, 11,06 ; point le plus fragile trouvé : aucune vérité du dommage indépendante du texte (R-676, R-680).</li>
+    <li><strong>« Complément du pilote »</strong> et <strong>« vérité du dommage »</strong> (GO-29-01, -02) : refus d'Opus au tour 1, poursuite sans lui ; 6,84 et 6,57 (R-689). Ex æquo : bris d'égalité d'office ; sentinelle de Fable à faux 13 % du temps (R-694).</li>
+    <li><strong>P-26, garde δ</strong> (GO-29-06) : 9/9, aucun refus, <strong>14,30 USD</strong> (12,86 puis reprise 1,44 après relèvement du plafond, R-721, R-722). <strong>Synthèse en cours</strong> ; les trois décisions relayées de R-719 y entrent comme décisions.</li>
+  </ul>
+
+  <h3>3.4 Vérité du dommage (N-060 v3) — <span class="oui">décidée</span>, à construire</h3>
+  <p>Trois voix indépendantes (remue-méninges scellé avant lecture des deux autres, R-683 ; note d'un Fable neuf, R-688 ; collisionneur), rapprochées par un lecteur neuf (R-692) : aucun des trois oracles exécutables n'est constructible sur le banc actuel (le produit est un plan en texte). V-1 retenue (N-060 v3). <strong>Ouvert chez toi</strong> : V-2 (issue positive = « dose candidate », marge δ) et V-3 (variante à liste fermée de contrôles, conception seulement). <strong>À vérifier</strong> : que l'agent ne voit pas la référence cachée et qu'aucun moniteur ne la lit (R-692).</p>
+
+  <h3>3.5 Simulations sur processeur — <span class="oui">versées</span></h3>
+  <p><strong>Contrôle 12 joint</strong> (R-673) : les deux options tiennent 0,05 ; (a) 9 600 avec seuil 40 recommandée, confiance 0,6 ; risque principal : les ex æquo (échec 0,35 à 0,54 sans bris d'égalité). <strong>Coupe du calibrage</strong> (R-696) : couper entre tâches est exclu à 64 tâches (échec 0,54 contre 0,029) ; dans les tâches par graine, 0,024–0,027 ; décidé (R-697).</p>
+
+  <h3>3.6 Garde δ (P-26) — <span class="non">ouverte</span></h3>
+  <p>Script de puissance de conv-audit relu cinq fois (v1 à v4 versées, v5 en relecture, R-703 à R-724). Conclusions provisoires : à 160 unités et δ = 0,05, puissance de la fiche 0,90 / 0,80 / 0,71 selon une à trois gardes (R-703) ; à trois comparateurs, <strong>c'est le contraste qui limite, pas la garde</strong> (R-706) ; calcul juste depuis la v4, lecture « l'effet d'unité ne touche pas la garde » non soutenue hors τ = 0,01 (R-714). Passage sur les vrais écarts : au pilote seulement (R-706). <strong>Suite</strong> : v5, synthèse du collisionneur P-26, puis les cinq pièces de R-716.</p>
+
+  <h3>3.7 Idéation de l'organisme — <span class="non">non lancée</span></h3>
+  <p>De la v35 à la v43 en deux jours ; relectures CL3 à CL9 versées, <strong>CL10 en cours</strong> (v42 → v43, devis v7 octies). Verdicts alternés : « lançable après corrections » (CL3, CL4, CL5, CL7) et « pas lançable » (CL6 : plafonds d'Argon 11 &gt; 9 ; CL8 : régression du contrôle du bras), CL9 : option (c) lançable sous le barème lu par toi (R-693, R-707, R-712). Plafond de la voie (β) 52,8 USD, enveloppe 60 (R-724). <strong>Suite</strong> : CL10, puis lancement sous GO-2026-10-28-14.</p>
+
+  <h3>3.8 Devis du pilote de la couche 2 — v1 puis v2</h3>
+  <p>v1 : central ≈ 309 USD (135 à 667), ≈ 76 % supposé (R-700). <strong>v2</strong> sur les rythmes mesurés du rejeu : <strong>central ≈ 234 USD</strong> (90 à 549) ; lectures de N-060 v3 = 57 % du coût (prix du lecteur Gemini supposé) (R-708). <strong>Tranche 0 sous GO à 13 USD</strong> (GO-2026-10-29-05), bloquée par les blocages gratuits du devis v1 § 9 : chaîne à deux modes, consignes du mode « contrôles » d'une autre lignée, préenregistrements scellés, bris d'égalité, rejeu lu, moniteurs en état (juge Qwen absent du code). <strong>Suite</strong> : lever ces blocages, sans dépense.</p>
+
+  <h3>3.9 Comparaison des lentilles sur les sondes de P3 — <span class="non">à venir</span></h3>
+  <p>« Yes go » relayé (R-723). Travail sur processeur, sans dépense : lentille jacobienne de Llama-3.1-8B-Instruct trouvée sur Hugging Face (<code>neuronpedia/jacobian-lens</code>, R-724) ; directions prises du fichier complet régénéré. Script de conv-audit en relecture R2 ; exécution ensuite. P3 reste figé.</p>
+
+  <!-- ===================== 4. DÉPENSES ===================== -->
+  <h2>4. Dépenses des 28 et 29 octobre</h2>
+  <table>
+    <thead><tr><th>poste</th><th>GO</th><th class="n">USD</th><th>source</th></tr></thead>
+    <tbody>
+      <tr><td>Collisionneur du matin du 28, trois tours</td><td>28-03</td><td class="n">20,31</td><td>R-617 (<strong>absente de <code>depenses.md</code></strong>)</td></tr>
+      <tr><td>Collisionneur « priorités », tour 1</td><td>28-08</td><td class="n">3,19</td><td><code>depenses.md</code> l. 213</td></tr>
+      <tr><td>Contre-lecture Argon, affinage v1</td><td>28-09</td><td class="n">1,29</td><td>l. 214</td></tr>
+      <tr><td>Contre-lecture Argon, affinage v2</td><td>28-12</td><td class="n">1,83</td><td>l. 215</td></tr>
+      <tr><td>Collisionneur « cinq divergences »</td><td>28-15</td><td class="n">12,59</td><td>l. 217</td></tr>
+      <tr><td>Collisionneur « pilote »</td><td>28-17</td><td class="n">11,06</td><td>l. 220</td></tr>
+      <tr><td>Régénération des sondes de P3 (carte A100)</td><td>28-11</td><td class="n">1,76</td><td>l. 221</td></tr>
+      <tr><td>Collisionneur « complément du pilote »</td><td>29-01</td><td class="n">6,84</td><td>l. 225</td></tr>
+      <tr><td>Collisionneur « vérité du dommage »</td><td>29-02</td><td class="n">6,57</td><td>l. 225</td></tr>
+      <tr><td>Rejeu des juges v1 (carte A100)</td><td>28-16</td><td class="n">1,92</td><td>l. 227</td></tr>
+      <tr><td>Collisionneur P-26, garde δ</td><td>29-06</td><td class="n">14,30</td><td>l. 229</td></tr>
+      <tr><td>Duel des proposeurs</td><td>28-01</td><td class="n">0,00</td><td>R-599</td></tr>
+      <tr><th colspan="2">Total des deux jours</th><th class="n">81,66</th><th>appels de contrôle ≈ 0,01 en sus</th></tr>
+    </tbody>
+  </table>
+  <p><strong>Par poste</strong> : collisionneur 74,86 ; contre-lectures Argon 3,12 ; carte graphique 3,68. <strong>Par jour de relevé</strong> : 28 octobre 39,21 ; 29 octobre 42,45. Montants Argon au barème haut de l'outil ; tout reste à rapprocher de la facturation. Hors abonnement des sessions et des sous-agents.</p>
+
+  <!-- ===================== 5. ERREURS ===================== -->
+  <h2>5. Erreurs reconnues, sans les adoucir</h2>
+  <h4>Le 28 octobre (déjà dans la v1)</h4>
+  <ul>
+    <li>Devis v1 de la couche&nbsp;2 : trois postes imposés par nos décisions oubliés (R-621).</li>
+    <li>Enchaîneur du collisionneur : tour suivant lancé sans appliquer R-609 ; relevé par toi, corrigé (R-615).</li>
+    <li>Tour « priorités » lancé avant d'avoir relu le canal (R-635).</li>
+    <li>P-036 v1 : un poste compté deux fois, calculs sur un nombre d'unités impossible, prix sans empreinte (R-660).</li>
+    <li>Programme d'entretien v6 : trois précisions sur HELIOS fausses, corrigées en v8 (R-622).</li>
+    <li>Heures du devis de régénération non relues (R-648). Clés collées en clair les 27 et 28 : toujours à révoquer.</li>
+  </ul>
+  <h4>Depuis</h4>
+  <ul>
+    <li><strong>Oracles de N-060 v2 présentés avec trop d'assurance</strong> : le banc produit du texte, les oracles exécutables n'y existent pas ; ta décision a été prise sur cette base, puis corrigée en v3 (R-688).</li>
+    <li>Lanceur de la régénération sans empreinte compagnon, scellé après coup (R-685, R6).</li>
+    <li>Deux fichiers vides écrits à la racine par un sous-agent ; déplacés, non versés (R-694).</li>
+    <li><strong>Dépôt git d'essai versé comme sous-module</strong> (<code>a1447546</code>) ; remplacé par une archive scellée (<code>c372c18c</code>) (R-710).</li>
+    <li>Heure d'un message au canal écrite sans relevé (n° 156, R-713).</li>
+    <li><strong>Branche de données poussée sur un ancien commit de <code>main</code>, sans le run</strong> (dossier ignoré par git) ; refaite en avance rapide (R-722).</li>
+    <li><strong>Heures non relues</strong> dans R-724 et la ligne de GO de l'extension à 60 USD (08:06 et 08:04 écrits, 08:02 relevé) (R-725).</li>
+    <li>Ligne de 20,31 USD de l'évasion toujours absente de <code>depenses.md</code>, signalée « à porter » depuis le 28 à 12:10.</li>
+  </ul>
+
+  <!-- ===================== 6. INCOHÉRENCES ===================== -->
+  <h2>6. Incohérences relevées entre registres</h2>
+  <ol>
+    <li><code>depenses.md</code> n'a aucune ligne pour GO-2026-10-28-03 (20,31 USD, R-617).</li>
+    <li><code>etat.md</code> : dernière entrée à ≈ 02:15 UTC le 29 ; elle dit le rejeu « en cours » (fini à 03:21) et ignore R-698 à R-725 (GO-29-04 à -06, CL40-01, P-26, barème, enveloppe de 60).</li>
+    <li><code>etat.md</code> dit « douze PDF d'antériorité » ; les registres en comptent treize (8 + 4 + PACE : R-666, R-669, R-673).</li>
+    <li>P-036 v2 (<code>proposition-P-036-couche-2-preparation-v2.md</code>, ≈ 23:20 UTC le 28) est sur disque et citée par <code>etat.md</code>, mais aucune entrée R-… n'en consigne le versement.</li>
+    <li>La ligne de <code>go.md</code> de l'extension à 60 USD garde « ≈ 08:06 UTC » ; R-725 corrige à ≈ 08:01 (la ligne ne se réécrit pas : correction par le registre).</li>
+    <li>Aucune passation depuis <code>2026-10-28-1205-…</code> : normal tant que la session tourne, à écrire à sa fin (R14).</li>
+  </ol>
+
+  <!-- ===================== 7. CE QUI ATTEND ===================== -->
+  <h2>7. Ce qui attend Lazar, et prochaines étapes</h2>
+  <table>
+    <thead><tr><th>#</th><th>sujet</th><th>de qui</th></tr></thead>
+    <tbody>
+      <tr><td class="n">1</td><td><strong>Entretien</strong> : date de l'appel ; confirmer 176 550 ; taux et jours de la revue externe ; paliers ; champs à compléter ; écart de calendrier G1</td><td><span class="etiq etiq-noeud">toi</span></td></tr>
+      <tr><td class="n">2</td><td><strong>Une v9 du programme d'entretien</strong> pour dater ce qui a changé (table des instruments, compte des refus, coût, régénération, juges, N-060 v3) — à rédiger sur ton mot</td><td><span class="etiq etiq-noeud">ton mot</span></td></tr>
+      <tr><td class="n">3</td><td><strong>HELIOS</strong> : la revendication « collusion » rétrécie tient-elle ?</td><td><span class="etiq etiq-noeud">nœud</span></td></tr>
+      <tr><td class="n">4</td><td><strong>P-26</strong> après les cinq pièces ; <strong>V-2, V-3</strong> de la vérité du dommage</td><td><span class="etiq etiq-noeud">nœuds</span></td></tr>
+      <tr><td class="n">5</td><td>Devis complet du pilote (≈ 234 USD central) : GO après la tranche 0 et un devis v3 mesuré</td><td><span class="etiq etiq-noeud">dépense</span></td></tr>
+      <tr><td class="n">6</td><td>Réserve de N-057, revue de sécurité externe, scellement du mode tenu à l'écart, révocation des clés, facturation à rapprocher</td><td><span class="etiq etiq-noeud">toi</span></td></tr>
+      <tr><td class="n">7</td><td>CL10 de la v43, puis <strong>lancement de la course d'idéation</strong> (≤ 52,8, enveloppe 60)</td><td>GO donné</td></tr>
+      <tr><td class="n">8</td><td>Relecture puis lancement du <strong>rejeu v2 des juges</strong> (≤ 4)</td><td>GO donné</td></tr>
+      <tr><td class="n">9</td><td>Synthèse du collisionneur P-26 ; relecture du script δ v5</td><td>routine</td></tr>
+      <tr><td class="n">10</td><td>Lever les blocages gratuits de la tranche 0 ; chaîne à deux modes</td><td>routine (GO-29-05 ensuite)</td></tr>
+      <tr><td class="n">11</td><td>Relecture et exécution de la comparaison des lentilles (processeur)</td><td>routine</td></tr>
+      <tr><td class="n">12</td><td>Porter la ligne des 20,31 USD ; remettre <code>etat.md</code> à jour ; passation en fin de session</td><td>routine</td></tr>
+    </tbody>
+  </table>
+
+  <p class="filet">Sources : <code>registres/decisions.md</code> (R-600 à R-725), <code>registres/go.md</code> (lignes 96 à 132), <code>registres/depenses.md</code> (lignes 212 à 229), <code>registres/arrets.md</code> (lignes 45 à 47), <code>registres/etat.md</code> (première entrée), <code>brouillons/entretien-taif-v3/programme-entretien-taif-v8.md</code>, <code>docs/decisions/decision-N-060-v3.md</code>, <code>docs/notes/couche-2-preparation-v1/devis-pilote-v2/devis-pilote-couche-2-v2.md</code>. Aucune pièce en quarantaine n'a été lue pour cette synthèse.</p>
+
+</div>
+</body>
+</html>

@@ -1,0 +1,38 @@
+[
+ {
+  "ancien": "et attend sans fin sur un code 3 (relais ou interface ; `relais_perdu_h: aucun`) ; la traduction d'un 402 de l'interface en code 4 ou en code 3 par la commande gelée (`221df610…`) n'a pas été relue (commande absente du conteneur du rédacteur, aucun réseau). Si c'est le code 3, la course attend sans dépense d'Argon jusqu'à la garde de 72 h du lanceur ou aux plafonds de la machine (80 h, 32 USD), sans résultat.",
+  "nouveau": "et, sur un code 3 (relais ou interface), attend 15, 30, 60, 120 puis 300 s, au plus 30 min par tentative, puis compte la tentative « échouée (relais) » et passe à la suivante, sans arrêt sur le cumul (`relais_perdu_h: aucun`). D'après la table des codes de la section 4 (n° 294 : toute erreur de l'interface, un HTTP 429 de quota de Google compris, revient en code 3 au pire cas ; seuls les refus du relais lui-même, 402 de son plafond propre et 429 de `--max-appels`, sont des codes 4), un 402 de l'interface revient en **code 3 au pire cas** (commande gelée `221df610…` non relue sur ce point : absente du conteneur du rédacteur, aucun réseau) : aucune dépense réelle d'Argon, mais chaque appel en attente est compté au pire cas réservé (≈ 1,6 USD ; ≈ 33,9 USD par heure, section 4) ; la garde du registre des commandes refuse alors près du plafond (code 4) et la course **s'arrête au plafond** (code 3 du lanceur, nature « plafond », aucun taux lu) après au plus ≈ 12 h de 402 (moins si la course a déjà dépensé), avant la garde de 72 h du lanceur et les plafonds de la machine ; c'est un arrêt d'infrastructure (refus de budget en code 4 au plafond, règle ci-dessus), sans résultat ; machine pendant ce temps : au plus ≈ 5 USD (0,40 USD/h)."
+ },
+ {
+  "ancien": "Ce brouillon n'ajoute aucune règle d'arrêt ; une conduite est proposée au directeur (rapport `rapport-redaction-v3-v2.md`) ; son adoption serait un changement de cette liste (nœud de Lazar).",
+  "nouveau": "Ce texte n'ajoute aucune règle d'arrêt. Précaution, hors de cette liste (comme « Argon seul », point (4)) : avant la location, Lazar confirme que le crédit prépayé du compte de facturation de la clé couvre au moins 400 USD (plafond de GO-2026-11-04-06) ou qu'une recharge automatique d'au moins ce montant est active, et la fille l'écrit au journal de la location. Une garde qui arrêterait la course sur des 402 (rapport `rapport-redaction-v3-v2.md`, section 5, conduite (b)) serait un changement de cette liste (nœud de Lazar) : non retenue."
+ },
+ {
+  "ancien": "qui voit tout le compte (R-1533) ; rotation de la clé recommandée après la course ; risque écrit aussi au rapport de la course.",
+  "nouveau": "qui voit tout le compte (R-1533), et par l'exploitant de la machine louée, un tiers maître de l'hôte (environnement, disque et mémoire du conteneur), comme le jeton GitHub, qui écrit sur le dépôt privé (dont `main` et son `registres/go.md`, lu par les gardes) ; elle a déjà été écrite en clair dans la transcription d'une session (R-1540) ; elle passe par son nom de variable (`CLE_ARGON` reçoit `GEMINI_API_KEY_2`, R-1540), jamais affichée ; un tiers qui la tient peut user le crédit prépayé commun (au pire, le 402 ci-dessous) ; rotation de la clé et du jeton après la course (R-1539, R-1540) ; risque écrit aussi au rapport de la course."
+ },
+ {
+  "ancien": "sous le même GO ; au plus 32 USD (plafonds de la machine, section 8), ≈ 1 à 10 USD attendus (4 à 26 h à\n  0,10 à 0,40 USD/h). **Écart possible au montant du GO** : au pire, 400 USD d'appels plus 32 USD de machine dépasseraient le\n  montant de GO-2026-11-04-06 ; décision à demander à Lazar avant le scellement (section 13, point 3).",
+  "nouveau": "sous **GO-2026-11-05-03** (machine, 35 USD ; brouillon 2), non sous GO-2026-11-04-06 ; au plus 32,57 USD au prix maximal (minuterie de destruction : création + 10 min + 80 h + 1 h, plus 15 min de fin de vie ; rapport `rapport-redaction-v3-v2.md`, section 2, (C)), ≈ 1 à 10 USD attendus (4 à 26 h à\n  0,10 à 0,40 USD/h). **Montant des GO** : GO-2026-11-04-06 ne porte que les appels à Argon (400 USD) et la machine a son GO propre (GO-2026-11-05-03, R-1534 ; GO-2026-11-05-04, R-1538) ; aucune décision ne reste à demander avant le scellement (section 13, point 3)."
+ },
+ {
+  "ancien": "coût de la machine (au plus 32 USD) sous le même GO, hors du compteur de la course : la somme peut, au\n   pire, dépasser 400 USD (section 12) — **décision de Lazar demandée avant le scellement** (extension du GO, GO à part pour la\n   machine, ou plafond de la course abaissé, qui demanderait un GO au même montant).",
+  "nouveau": "coût de la machine (au plus 32,57 USD) hors du compteur de la course, sous **GO-2026-11-05-03** (35 USD, GO à part pour la\n   machine : décision de Lazar, R-1534 ; GO-2026-11-04-06 ne porte que les appels à Argon, GO-2026-11-05-04, R-1538) ; aucune\n   décision ne reste à demander avant le scellement (section 12)."
+ },
+ {
+  "ancien": "qui ne connaît que\nce texte et GO-2026-11-04-06 (`GO_ATTENDU`, `NOM_TEXTE`)",
+  "nouveau": "qui ne connaît que\nce texte, GO-2026-11-04-06 pour la course (`GO_ATTENDU`, `NOM_TEXTE`) et, pour la seule machine, GO-2026-11-05-03 (lanceur v2, `GO_MACHINE`)"
+ },
+ {
+  "ancien": "une **sonde d'hôte** recommandée avant la course, sous le même GO (machine louée",
+  "nouveau": "une **sonde d'hôte** recommandée avant la course, sous GO-2026-11-05-03 (machine louée"
+ },
+ {
+  "ancien": "(décision du directeur à prendre avant le scellement, comme R-1340 ;\n  section 13, point 7 quater)",
+  "nouveau": "(décision du directeur, comme R-1340 : prise, ligne recopiée au commit `0aa04b5c` du 4 novembre 2026, 08:27 UTC ; à la tête `740f49e2`, ligne 82 égale à l'octet à la ligne 244 de `main`, aucun identifiant en double ; contre-lecture n° 4 ;\n  section 13, point 7 quater)"
+ },
+ {
+  "ancien": "exacte de la location (rapport de rédaction) ; puis plus rien de la session",
+  "nouveau": "exacte de la location (rapport de rédaction) ; puis plus rien de la session, hors des contrôles du pilote (`controler` du lanceur v2, à T0 + 40 min puis après l'échéance finale : destruction par l'identifiant seulement si la branche de signe de vie `donnees/attaque-goodhart-v3-a1v3-troisieme-signe-de-vie-v1`, que la machine pousse avant d'extraire les pièces gelées, est absente à T0 + 30 min ; après l'échéance finale, aucun geste) et de l'inventaire de la routine R14"
+ }
+]

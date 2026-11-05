@@ -1,0 +1,144 @@
+AMORCE 2026-10-10T22:27:36Z : commit 4014e57ebfd6d6621f313e7afc00208edb5d0584
+2026-10-10T22:27:49Z début : ETUDE=revalidation MODE=reel COMMIT=4014e57ebfd6d6621f313e7afc00208edb5d0584 BRANCHE=calcul/t05-revalidation-reel-v1
+2026-10-10T22:28:02Z préenregistrement lu : 670 tests attendus ; configuration prereg/T0.5-revalidation-config-v1.json ; tâches donnees/20261007-082440-t05-extraction/taches-entrainement.json donnees/20261007-082440-t05-extraction/taches-evaluation.json présentes et scellées
+2026-10-10T22:28:03Z branche calcul/t05-revalidation-reel-v1 poussée avant l'installation (droit d'écriture éprouvé)
+name, driver_version, memory.total [MiB]
+NVIDIA A100-SXM4-80GB, 580.173.02, 81920 MiB
+[notice] A new release of pip is available: 24.0 -> 26.2.1
+[notice] To update, run: pip install --upgrade pip
+torch 2.14.1+cu130 cuda 13.0 disponible True
+==> /root/t05/tests.txt <==
+tests/test_validation_reelle.py:492: Failed
+=========================== short test summary info ============================
+FAILED tests/test_validation_reelle.py::test_p4_contraire_se_lit_au_vu_du_repere
+1 failed, 669 passed in 501.51s (0:08:21)
+==> /root/t05/tests.err <==
+2026-10-10T22:38:01Z tests en échec : arrêt
+2026-10-10T22:38:01Z ARRÊT pendant tests : aucun résultat à committer
+2026-10-10T22:38:03Z branche calcul/t05-revalidation-reel-v1 poussée
+AMORCE 2026-10-10T22:38:03Z : fin, code 1
+----- /root/t05/journal.txt
+2026-10-10T22:27:49Z début : ETUDE=revalidation MODE=reel COMMIT=4014e57ebfd6d6621f313e7afc00208edb5d0584 BRANCHE=calcul/t05-revalidation-reel-v1
+2026-10-10T22:28:02Z préenregistrement lu : 670 tests attendus ; configuration prereg/T0.5-revalidation-config-v1.json ; tâches donnees/20261007-082440-t05-extraction/taches-entrainement.json donnees/20261007-082440-t05-extraction/taches-evaluation.json présentes et scellées
+2026-10-10T22:28:03Z branche calcul/t05-revalidation-reel-v1 poussée avant l'installation (droit d'écriture éprouvé)
+name, driver_version, memory.total [MiB]
+NVIDIA A100-SXM4-80GB, 580.173.02, 81920 MiB
+torch 2.14.1+cu130 cuda 13.0 disponible True
+==> /root/t05/tests.txt <==
+tests/test_validation_reelle.py:492: Failed
+=========================== short test summary info ============================
+FAILED tests/test_validation_reelle.py::test_p4_contraire_se_lit_au_vu_du_repere
+1 failed, 669 passed in 501.51s (0:08:21)
+==> /root/t05/tests.err <==
+2026-10-10T22:38:01Z tests en échec : arrêt
+2026-10-10T22:38:01Z ARRÊT pendant tests : aucun résultat à committer
+2026-10-10T22:38:03Z branche calcul/t05-revalidation-reel-v1 poussée
+----- /root/t05/tests.txt
+........................................................................ [ 64%]
+........................................................................ [ 75%]
+........................................................................ [ 85%]
+.............................................................F.......... [ 96%]
+......................                                                   [100%]
+=================================== FAILURES ===================================
+___________________ test_p4_contraire_se_lit_au_vu_du_repere ___________________
+depot = PosixPath('/tmp/pytest-of-root/pytest-0/test_p4_contraire_se_lit_au_vu0')
+    def test_p4_contraire_se_lit_au_vu_du_repere(depot):
+        """M-1 : un écart de production au-dessus du seuil arrête le run après le repère, le rejeu et le stockage."""
+        stricte = dict(PETITE, production=dict(PETITE["production"], tolerance=1e-9))
+>       with pytest.raises(GardeArret, match="production : .* faute"):
+E       Failed: DID NOT RAISE GardeArret
+tests/test_validation_reelle.py:492: Failed
+=========================== short test summary info ============================
+FAILED tests/test_validation_reelle.py::test_p4_contraire_se_lit_au_vu_du_repere
+1 failed, 669 passed in 501.51s (0:08:21)
+AMORCE 2026-10-10T22:38:06Z : commit 4014e57ebfd6d6621f313e7afc00208edb5d0584
+AMORCE : dossiers d'un essai précédent présents (R12) : relancer sur une instance neuve
+AMORCE 2026-10-10T22:38:08Z : commit 4014e57ebfd6d6621f313e7afc00208edb5d0584
+AMORCE : dossiers d'un essai précédent présents (R12) : relancer sur une instance neuve
+AMORCE 2026-10-10T22:38:09Z : commit 4014e57ebfd6d6621f313e7afc00208edb5d0584
+AMORCE : dossiers d'un essai précédent présents (R12) : relancer sur une instance neuve
+AMORCE 2026-10-10T22:38:12Z : commit 4014e57ebfd6d6621f313e7afc00208edb5d0584
+AMORCE : dossiers d'un essai précédent présents (R12) : relancer sur une instance neuve
+AMORCE 2026-10-10T22:38:23Z : commit 4014e57ebfd6d6621f313e7afc00208edb5d0584
+AMORCE : dossiers d'un essai précédent présents (R12) : relancer sur une instance neuve
+AMORCE 2026-10-10T22:38:25Z : commit 4014e57ebfd6d6621f313e7afc00208edb5d0584
+AMORCE : dossiers d'un essai précédent présents (R12) : relancer sur une instance neuve
+AMORCE 2026-10-10T22:38:27Z : commit 4014e57ebfd6d6621f313e7afc00208edb5d0584
+AMORCE : dossiers d'un essai précédent présents (R12) : relancer sur une instance neuve
+AMORCE 2026-10-10T22:38:29Z : commit 4014e57ebfd6d6621f313e7afc00208edb5d0584
+AMORCE : dossiers d'un essai précédent présents (R12) : relancer sur une instance neuve
+AMORCE 2026-10-10T22:38:30Z : commit 4014e57ebfd6d6621f313e7afc00208edb5d0584
+AMORCE : dossiers d'un essai précédent présents (R12) : relancer sur une instance neuve
+AMORCE 2026-10-10T22:38:32Z : commit 4014e57ebfd6d6621f313e7afc00208edb5d0584
+AMORCE : dossiers d'un essai précédent présents (R12) : relancer sur une instance neuve
+AMORCE 2026-10-10T22:38:34Z : commit 4014e57ebfd6d6621f313e7afc00208edb5d0584
+AMORCE : dossiers d'un essai précédent présents (R12) : relancer sur une instance neuve
+AMORCE 2026-10-10T22:38:35Z : commit 4014e57ebfd6d6621f313e7afc00208edb5d0584
+AMORCE : dossiers d'un essai précédent présents (R12) : relancer sur une instance neuve
+AMORCE 2026-10-10T22:38:37Z : commit 4014e57ebfd6d6621f313e7afc00208edb5d0584
+AMORCE : dossiers d'un essai précédent présents (R12) : relancer sur une instance neuve
+AMORCE 2026-10-10T22:38:49Z : commit 4014e57ebfd6d6621f313e7afc00208edb5d0584
+AMORCE : dossiers d'un essai précédent présents (R12) : relancer sur une instance neuve
+AMORCE 2026-10-10T22:38:51Z : commit 4014e57ebfd6d6621f313e7afc00208edb5d0584
+AMORCE : dossiers d'un essai précédent présents (R12) : relancer sur une instance neuve
+AMORCE 2026-10-10T22:38:53Z : commit 4014e57ebfd6d6621f313e7afc00208edb5d0584
+AMORCE : dossiers d'un essai précédent présents (R12) : relancer sur une instance neuve
+AMORCE 2026-10-10T22:38:55Z : commit 4014e57ebfd6d6621f313e7afc00208edb5d0584
+AMORCE : dossiers d'un essai précédent présents (R12) : relancer sur une instance neuve
+AMORCE 2026-10-10T22:38:56Z : commit 4014e57ebfd6d6621f313e7afc00208edb5d0584
+AMORCE : dossiers d'un essai précédent présents (R12) : relancer sur une instance neuve
+AMORCE 2026-10-10T22:38:57Z : commit 4014e57ebfd6d6621f313e7afc00208edb5d0584
+AMORCE : dossiers d'un essai précédent présents (R12) : relancer sur une instance neuve
+AMORCE 2026-10-10T22:39:00Z : commit 4014e57ebfd6d6621f313e7afc00208edb5d0584
+AMORCE : dossiers d'un essai précédent présents (R12) : relancer sur une instance neuve
+AMORCE 2026-10-10T22:39:01Z : commit 4014e57ebfd6d6621f313e7afc00208edb5d0584
+AMORCE : dossiers d'un essai précédent présents (R12) : relancer sur une instance neuve
+AMORCE 2026-10-10T22:39:02Z : commit 4014e57ebfd6d6621f313e7afc00208edb5d0584
+AMORCE : dossiers d'un essai précédent présents (R12) : relancer sur une instance neuve
+AMORCE 2026-10-10T22:39:05Z : commit 4014e57ebfd6d6621f313e7afc00208edb5d0584
+AMORCE : dossiers d'un essai précédent présents (R12) : relancer sur une instance neuve
+AMORCE 2026-10-10T22:39:07Z : commit 4014e57ebfd6d6621f313e7afc00208edb5d0584
+AMORCE : dossiers d'un essai précédent présents (R12) : relancer sur une instance neuve
+AMORCE 2026-10-10T22:39:08Z : commit 4014e57ebfd6d6621f313e7afc00208edb5d0584
+AMORCE : dossiers d'un essai précédent présents (R12) : relancer sur une instance neuve
+AMORCE 2026-10-10T22:39:09Z : commit 4014e57ebfd6d6621f313e7afc00208edb5d0584
+AMORCE : dossiers d'un essai précédent présents (R12) : relancer sur une instance neuve
+AMORCE 2026-10-10T22:39:12Z : commit 4014e57ebfd6d6621f313e7afc00208edb5d0584
+AMORCE : dossiers d'un essai précédent présents (R12) : relancer sur une instance neuve
+AMORCE 2026-10-10T22:39:13Z : commit 4014e57ebfd6d6621f313e7afc00208edb5d0584
+AMORCE : dossiers d'un essai précédent présents (R12) : relancer sur une instance neuve
+AMORCE 2026-10-10T22:39:14Z : commit 4014e57ebfd6d6621f313e7afc00208edb5d0584
+AMORCE : dossiers d'un essai précédent présents (R12) : relancer sur une instance neuve
+AMORCE 2026-10-10T22:39:15Z : commit 4014e57ebfd6d6621f313e7afc00208edb5d0584
+AMORCE : dossiers d'un essai précédent présents (R12) : relancer sur une instance neuve
+AMORCE 2026-10-10T22:39:17Z : commit 4014e57ebfd6d6621f313e7afc00208edb5d0584
+AMORCE : dossiers d'un essai précédent présents (R12) : relancer sur une instance neuve
+AMORCE 2026-10-10T22:39:18Z : commit 4014e57ebfd6d6621f313e7afc00208edb5d0584
+AMORCE : dossiers d'un essai précédent présents (R12) : relancer sur une instance neuve
+AMORCE 2026-10-10T22:39:20Z : commit 4014e57ebfd6d6621f313e7afc00208edb5d0584
+AMORCE : dossiers d'un essai précédent présents (R12) : relancer sur une instance neuve
+AMORCE 2026-10-10T22:39:22Z : commit 4014e57ebfd6d6621f313e7afc00208edb5d0584
+AMORCE : dossiers d'un essai précédent présents (R12) : relancer sur une instance neuve
+AMORCE 2026-10-10T22:39:23Z : commit 4014e57ebfd6d6621f313e7afc00208edb5d0584
+AMORCE : dossiers d'un essai précédent présents (R12) : relancer sur une instance neuve
+AMORCE 2026-10-10T22:39:24Z : commit 4014e57ebfd6d6621f313e7afc00208edb5d0584
+AMORCE : dossiers d'un essai précédent présents (R12) : relancer sur une instance neuve
+AMORCE 2026-10-10T22:39:25Z : commit 4014e57ebfd6d6621f313e7afc00208edb5d0584
+AMORCE : dossiers d'un essai précédent présents (R12) : relancer sur une instance neuve
+AMORCE 2026-10-10T22:39:27Z : commit 4014e57ebfd6d6621f313e7afc00208edb5d0584
+AMORCE : dossiers d'un essai précédent présents (R12) : relancer sur une instance neuve
+AMORCE 2026-10-10T22:39:38Z : commit 4014e57ebfd6d6621f313e7afc00208edb5d0584
+AMORCE : dossiers d'un essai précédent présents (R12) : relancer sur une instance neuve
+AMORCE 2026-10-10T22:39:40Z : commit 4014e57ebfd6d6621f313e7afc00208edb5d0584
+AMORCE : dossiers d'un essai précédent présents (R12) : relancer sur une instance neuve
+AMORCE 2026-10-10T22:39:42Z : commit 4014e57ebfd6d6621f313e7afc00208edb5d0584
+AMORCE : dossiers d'un essai précédent présents (R12) : relancer sur une instance neuve
+AMORCE 2026-10-10T22:39:44Z : commit 4014e57ebfd6d6621f313e7afc00208edb5d0584
+AMORCE : dossiers d'un essai précédent présents (R12) : relancer sur une instance neuve
+AMORCE 2026-10-10T22:39:45Z : commit 4014e57ebfd6d6621f313e7afc00208edb5d0584
+AMORCE : dossiers d'un essai précédent présents (R12) : relancer sur une instance neuve
+AMORCE 2026-10-10T22:39:47Z : commit 4014e57ebfd6d6621f313e7afc00208edb5d0584
+AMORCE : dossiers d'un essai précédent présents (R12) : relancer sur une instance neuve
+AMORCE 2026-10-10T22:39:52Z : commit 4014e57ebfd6d6621f313e7afc00208edb5d0584
+AMORCE : dossiers d'un essai précédent présents (R12) : relancer sur une instance neuve
+

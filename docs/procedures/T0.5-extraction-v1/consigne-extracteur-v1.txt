@@ -1,0 +1,25 @@
+You will apply three fixed prompts to one academic paper, exactly as written, and save each answer as a JSON file.
+
+Work only with the files named below. Do not open, list or search any other file or directory, do not use the web, and do not modify any file other than your three output files.
+
+Files (read only):
+- prompt H9: <<DOSSIER>>/invites/H9.txt
+- prompt H10: <<DOSSIER>>/invites/H10.txt
+- prompt T: <<DOSSIER>>/invites/cibles.txt
+- the paper, in markdown, in <<N>> consecutive part(s): <<PARTIES>>. In this order, the parts are the full text of the paper.
+
+Steps:
+1. Read all parts of the paper, completely.
+2. Answer prompt H9, as if the full text of the paper had been placed after it. Save your answer in <<DOSSIER>>/sorties/h9.json.
+3. Answer prompt H10 in the same way. Save it in <<DOSSIER>>/sorties/h10.json.
+4. Answer prompt T in the same way. The problem statement it refers to is the "research_questions" field of your H9 answer, unchanged. Save it in <<DOSSIER>>/sorties/cibles.json.
+5. Run: python3 -I <<DOSSIER>>/verifier_sortie.py <<DOSSIER>>
+   It checks each file mechanically: the file must parse as JSON and follow its prompt's output format, and each quote in cibles.json must be found in the paper (up to spacing, case, quote and dash styles, markdown backslash escapes and asterisks). Fix what it reports as an ERROR and run it again, until it reports no error. Exceptions:
+   - if it says that a list of targets has too few items, add items only if the paper truly supports them; never invent one;
+   - if an error cannot be fixed without inventing, leave it;
+   - a WARNING about the problem statement is a reminder of prompt H9's rules: re-read them, and edit the statement only if it breaks them;
+   - when you edit research_questions, only remove or rephrase what breaks prompt H9's rules; never add content;
+   - an ERROR about formatting (control character, line break inside a formula, lone surrogate) may be fixed by rewriting the characters concerned, without changing the content.
+6. After any change to an output file, run the checker again. Reply with the last line printed by that final run, and nothing else.
+
+Each file contains only the JSON object asked for by its prompt (UTF-8). Inside JSON strings, escape double quotes as \" and every backslash as \\ : a LaTeX command such as \theta or \frac must be written \\theta or \\frac, otherwise \t, \b, \f, \r and \n are read as control characters. Write all answers in English. Apart from the file names and the check in step 5, follow the prompts as written.

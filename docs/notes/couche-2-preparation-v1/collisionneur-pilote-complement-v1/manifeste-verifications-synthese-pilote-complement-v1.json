@@ -1,0 +1,42 @@
+{
+ "manifeste": "verifications-synthese-pilote-complement-v1",
+ "date": "2026-10-29",
+ "statut": "exploratoire, processeur seul, non préenregistré, non opposable",
+ "lecteur": "lecteur neuf (Opus 5.5), synthèse du collisionneur, pilote, question complémentaire",
+ "graines": {
+  "verifications": 202610290121,
+  "relance_scripts_du_rapport": 202610290114,
+  "derivation": "SeedSequence([graine] + étiquettes réduites par SHA-256), une suite par vérification ou par point"
+ },
+ "commandes": [
+  "python3 -I -B verifications-synthese-pilote-complement-v1.py > verifications-synthese-pilote-complement-v1-sortie.json 2> verifications-journal.txt",
+  "python3 -I -B controle-12-joint-v1.py simulation-couche-2-executions-v1.py --graine 202610290114 > reexecution-principal-graine-202610290114-sortie.json",
+  "python3 -I -B controle-12-joint-v1-complement-ex-aequo.py simulation-couche-2-executions-v1.py --graine 202610290114 > reexecution-ex-aequo-graine-202610290114-sortie.json"
+ ],
+ "copies_conformes": {
+  "simulation-couche-2-executions-v1.py": "20bb005c4f607d643c0eb4e6396891eb69752d6b1d5d8435da5f091e362c903e",
+  "controle-12-joint-v1.py": "ae936edab99d6b468017847d9b5bb52231d684a25c3749892a3e2bc682986b2e",
+  "controle-12-joint-v1-complement-ex-aequo.py": "ad85985b696c32fc5ea26fd43249081fa4ca044788988616280a337a3d4c043f"
+ },
+ "source_des_copies": "/home/user/controle-ia-travail/docs/notes/couche-2-preparation-v1/simulation-controle-12-joint-v1/",
+ "versions": {
+  "python": "3.13.17",
+  "numpy": "2.5.3",
+  "plateforme": "Linux-6.18.44-fc-v185-x86_64-with-glibc2.39"
+ },
+ "commit": "aucun (dossier de travail hors dépôt)",
+ "empreintes": {
+  "synthese-pilote-complement-v1.md": "5bde106ab5e7a5952efd500b752b5b39b4a629db601febedd1537fa6b986ccc2",
+  "verifications-synthese-pilote-complement-v1.py": "6ae503939e3dd2975c47e89fa6e416d19a31eeb2b55581747c40dacb18e2708c",
+  "verifications-synthese-pilote-complement-v1-sortie.json": "80e4ccf8e62e20b9f9248abb346e4ce7a10439f740aab5ee55216da2ea81fe8b",
+  "verifications-journal.txt": "252b6e20d7944e2d7b9141987a6755a9eba21c8adec39c2bc86ce49a05aa463d",
+  "simulation-couche-2-executions-v1.py": "20bb005c4f607d643c0eb4e6396891eb69752d6b1d5d8435da5f091e362c903e",
+  "controle-12-joint-v1.py": "ae936edab99d6b468017847d9b5bb52231d684a25c3749892a3e2bc682986b2e",
+  "controle-12-joint-v1-complement-ex-aequo.py": "ad85985b696c32fc5ea26fd43249081fa4ca044788988616280a337a3d4c043f",
+  "reexecution-principal-graine-202610290114-sortie.json": "8ffc4d901e7524df151b0271565c6583d47bd1250973a2a7c248814e1fc6b5e9",
+  "reexecution-principal-journal.txt": "f26aee8e3a042f4d40e115b2867752c775daa52e1d7720ffb28875b47b88c706",
+  "reexecution-ex-aequo-graine-202610290114-sortie.json": "7cd81b13bb35a5be187139cfd5f960589dd0a985648d5948f8447c6fa00c3f50",
+  "reexecution-ex-aequo-journal.txt": "82878b907dcae740cda22ad5de193b0d36b0e88ae93aa8d290d9e9081019f73b"
+ },
+ "egares": "egares-depot/ : deux fichiers d'une relance mal lancée (sortie vide, journal d'erreur), écrits par erreur à la racine du dépôt puis retirés ; non scellés"
+}

@@ -1,0 +1,54 @@
+.......................F../tmp/claude-0/-home-user-controle-ia-travail/75a1275d-b838-5015-909e-b2bfadb395f9/scratchpad/relecture-v42/cl9/outils-cl9/mutants/W13/essais/test_v7_ideation.py:557: ResourceWarning: unclosed file <_io.TextIOWrapper name='/tmp/claude-0/-home-user-controle-ia-travail/75a1275d-b838-5015-909e-b2bfadb395f9/scratchpad/relecture-v42/cl9/outils-cl9/mutants/W13/essais/_tmp/tmp777tjci4/petit-enfant.pid' mode='r' encoding='UTF-8'>
+  pid = int(open(pid_f).read())
+ResourceWarning: Enable tracemalloc to get the object allocation traceback
+../tmp/claude-0/-home-user-controle-ia-travail/75a1275d-b838-5015-909e-b2bfadb395f9/scratchpad/relecture-v42/cl9/outils-cl9/mutants/W13/essais/test_v7_ideation.py:649: ResourceWarning: unclosed file <_io.TextIOWrapper name='/tmp/claude-0/-home-user-controle-ia-travail/75a1275d-b838-5015-909e-b2bfadb395f9/scratchpad/relecture-v42/cl9/outils-cl9/mutants/W13/essais/_tmp/tmp_16h7s50/cx-3/proposeurs/argon/traces-passe-2/consigne.md' mode='r' encoding='utf-8'>
+  encoding="utf-8").read()
+ResourceWarning: Enable tracemalloc to get the object allocation traceback
+................................./tmp/claude-0/-home-user-controle-ia-travail/75a1275d-b838-5015-909e-b2bfadb395f9/scratchpad/relecture-v42/cl9/outils-cl9/mutants/W13/essais/test_v7_ideation.py:1254: ResourceWarning: unclosed file <_io.TextIOWrapper name='/tmp/claude-0/-home-user-controle-ia-travail/75a1275d-b838-5015-909e-b2bfadb395f9/scratchpad/relecture-v42/cl9/outils-cl9/mutants/W13/essais/_tmp/tmpyk626g_m/pe.pid' mode='r' encoding='UTF-8'>
+  pe = int(open(pid_f).read())
+ResourceWarning: Enable tracemalloc to get the object allocation traceback
+..F..............F..F............
+======================================================================
+FAIL: test_bras_non_joue_relancable (essais.test_v7_ideation.TestCommandeExterne.test_bras_non_joue_relancable)
+CL36-01 : commande introuvable ou clé dans l'environnement → rien envoyé, rien dépensé : manifeste « non joué »
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/tmp/claude-0/-home-user-controle-ia-travail/75a1275d-b838-5015-909e-b2bfadb395f9/scratchpad/relecture-v42/cl9/outils-cl9/mutants/W13/essais/test_v7_ideation.py", line 873, in test_bras_non_joue_relancable
+    self.assertIn("tentatives", str(cm.exception))
+    ~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: 'tentatives' not found in 'le bras a déjà été joué pour cette course (manifeste-bras-rapporte.json existe) : jamais rejoué après dépense (CL34-04)'
+
+======================================================================
+FAIL: test_tentative_payee_imputee_et_non_lance (essais.test_v7_ideation.TestV40.test_tentative_payee_imputee_et_non_lance)
+M07, M09 : « rien envoyé » exige « aucun processus parti » ; le coût d'une tentative payée réduit le plafond.
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/tmp/claude-0/-home-user-controle-ia-travail/75a1275d-b838-5015-909e-b2bfadb395f9/scratchpad/relecture-v42/cl9/outils-cl9/mutants/W13/essais/test_v7_ideation.py", line 1173, in test_tentative_payee_imputee_et_non_lance
+    self.assertIn("plafond externe", str(cm.exception))
+    ~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: 'plafond externe' not found in 'le bras a déjà été joué pour cette course (manifeste-bras-rapporte.json existe) : jamais rejoué après dépense (CL34-04)'
+
+======================================================================
+FAIL: test_cl41_01_classement_apres_le_dernier_bras_non_joue (essais.test_v7_ideation.TestV42.test_cl41_01_classement_apres_le_dernier_bras_non_joue)
+CL41-01 : trois tentatives « non jouées » (commande introuvable : rien envoyé, rien payé) — la troisième est
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/tmp/claude-0/-home-user-controle-ia-travail/75a1275d-b838-5015-909e-b2bfadb395f9/scratchpad/relecture-v42/cl9/outils-cl9/mutants/W13/essais/test_v7_ideation.py", line 2252, in test_cl41_01_classement_apres_le_dernier_bras_non_joue
+    self.assertFalse(os.path.exists(os.path.join(sortie, "manifeste-bras-rapporte.json")))
+    ~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: True is not false
+
+======================================================================
+FAIL: test_cl41_01_plafond_externe_donne_au_bras_et_classement_si_non_relancable (essais.test_v7_ideation.TestV42.test_cl41_01_plafond_externe_donne_au_bras_et_classement_si_non_relancable)
+CL41-01 : une tentative du bras scellée non relançable écrit tout de suite le classement à deux juges (« sans
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/tmp/claude-0/-home-user-controle-ia-travail/75a1275d-b838-5015-909e-b2bfadb395f9/scratchpad/relecture-v42/cl9/outils-cl9/mutants/W13/essais/test_v7_ideation.py", line 2211, in test_cl41_01_plafond_externe_donne_au_bras_et_classement_si_non_relancable
+    self.assertFalse(os.path.exists(os.path.join(sortie, "manifeste-bras-rapporte.json")))  # pas de verrou
+    ~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: True is not false
+
+----------------------------------------------------------------------
+Ran 94 tests in 17.242s
+
+FAILED (failures=4)

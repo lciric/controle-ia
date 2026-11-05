@@ -1,0 +1,36 @@
+Essai exploratoire de la v8 (non décisif, activations synthétiques, aucun modèle) — 27 octobre 2026, lignée
+« session-depot », de 10:32 à 10:37 UTC (heures des fichiers). Deux usages :
+
+1. Choisir les graines des tests d'intégration v8 qui jouent les voisins de la classe de cl6 relevés par la
+   contre-lecture n° 7 (CLT-01), avec le générateur des tests (`fabriquer` de `test_analyser_echelle_v8.py`, qui n'est
+   pas celui du banc de cl7) : `chercher.py`, sortie `sortie.txt` (les lignes JSON de l'analyse elle-même s'y mêlent
+   parfois à celles du script : seules comptent les lignes qui commencent par ["B_pos", ["B_inv" ou ["D_k133").
+   Dimension 256, tau 0,15, 300 tirages, douze graines par famille (1000 à 1022) :
+     - B_pos, écart vrai 0,2 sous δ (λ 0,6 et 0,4), jeu a +0,6 au petit, jeu b −0,6 au grand : « positif » 3 fois
+       (graines 1004, 1016, 1018), chaque fois avec la réserve « λ change d'un sens à l'autre » (deux modèles, ou le
+       grand seul) ; « désaccord des deux sens (cohérence) » 4, « positif non confirmé » 3, « indécis » 2 ;
+     - B_inv, le miroir : « inverse » 8 fois, toutes avec les deux réserves « λ change » ; « inverse non confirmé » 2,
+       « désaccord des deux sens (cohérence) » 1, « indécis » 1 ;
+     - D_k133, fuite égale (0,7 et 0,7), contexte du jeu b × 1,333, jeu b −1,2 au petit, jeu a +1,2 au grand :
+       « inverse » 1 fois (graine 1012 : réserves « λ change » du grand et « contexte inégal » des deux modèles,
+       rapport des Ec 1,29 et 1,26) ; « indécis » 7, « inverse non confirmé » 4.
+   La v7 aurait prononcé ces 12 « positif » et « inverse » sans réserve (la cohérence tenait dans chacun).
+
+2. Fixer la bande du rapport des Ec (réserve « jeux de force de contexte inégale ») : `intervalle_rapport.py`, sortie
+   `sortie-intervalle-rapport.txt`. Fuite égale (0,7 et 0,7), dimension 256, trois graines (2000 à 2004) par réglage du
+   contexte du jeu b (× 1 ; × 1,15 ; × 1,333 ; × 0,75), rapport des Ec en point et son intervalle :
+     - le rapport mesuré est tiré vers 1 : × 1,333 donne 1,22 à 1,39 ; × 0,75 donne 0,75 à 0,90 ; × 1 donne 0,95 à 1,10 ;
+     - son intervalle est large (± 0,12 à 0,15) et le contient souvent sous × 0,75 : la règle « l'intervalle exclut 1 »
+       n'en voit qu'une partie ;
+     - la bande [0,8 ; 1,25], d'abord envisagée (R-541, proposée par cl7), laisse passer, à × 1,333, environ la moitié
+       des valeurs d'un modèle (D_k133 ci-dessus : 1,20 à 1,35) : 2 des 12 analyses de D_k133 n'ont aucun modèle hors
+       bande ; à × 0,75, 1 analyse sur 3 ;
+     - la bande symétrique en logarithme [1/1,15 ; 1,15] signale (au moins un modèle) les 12 analyses de D_k133, les 3
+       à × 1,333 et les 3 à × 0,75 de cet essai, 2 des 3 à × 1,15, et aucune des 3 à contextes égaux (six valeurs, de
+       0,945 à 1,102) ; la règle « l'intervalle exclut 1 » en manque 1 à × 0,75.
+   Décision (routine, R-545) : la v8 retient max(q, 1/q) > 1,15 (`SEUILS["rapport_Ec_max"]`), fixée ici, sur des
+   données synthétiques, avant toute mesure réelle ; la simulation scellée en chiffre le prix et la portée.
+
+État du code : l'essai a tourné sur l'arbre de travail de la branche `outils/echelle-conscience-eval-v8`, **avant tout
+commit** (CLT-05 : comme l'exploration de la v7) ; empreintes de l'analyse et des tests à ce moment dans
+`etat-du-code-exploration.txt` (la bande y valait encore [0,8 ; 1,25] ; le reste de l'analyse est celui du commit).

@@ -1,0 +1,535 @@
+# Préenregistrement — la fuite du format dans la direction « évaluation » diminue-t-elle avec l'échelle ? Llama-3.1 8B contre 70B (brouillon v8)
+
+- **Auteur** : lignée « session-depot » (Claude), nouvelle instance sur un autre compte (R-536, R-538), le 27 octobre 2026, vers 09:07 UTC (`date -u`). Mode rapide d'exploration (R-522, option (a) : R1 et R3 gardées, le reste élagué).
+- **Remplace** le brouillon v7 (`prereg/brouillon-test-echelle-conscience-eval-v7.md`, `e6e8a864…`, jamais scellé ni lancé), après sa contre-lecture n° 6.
+  - Rapport : `prereg/contre-lectures/brouillon-test-echelle-conscience-eval-v7-cl6.md` (`3d7a60fc…`), verdict « scellable après corrections », un bloquant (CLU-01). Pièces du contre-lecteur : `docs/notes/echelle-conscience-eval/v7/contre-lecture-cl6/`.
+  - Le traitement de chaque constat (CLU-01 à CLU-05) est en fin de texte. Ceux des contre-lectures n° 1 à 5 (CLX, CLY, CLZ, CLW, CLV) restent traités comme aux brouillons v3 à v7.
+  - **Ce qui change depuis le v7** :
+    - « positif », « inverse » et « nul » ne sont communs aux deux sens que sous la **cohérence des deux sens** : chaque modèle garde son λ d'un sens à l'autre, à δ près (CLU-01) ;
+    - la surveillance contrôle ses réglages et les consigne (CLU-02) ;
+    - preuve de latence aux réglages réels, et test du plafond avec toute la latence que couvre la marge (CLU-03) ;
+    - le clonage sur l'instance est borné à 600 s (CLU-04) ;
+    - phrases et tests relevés par la contre-lecture n° 6 (CLU-05).
+  - **Le calcul des mesures, les stimuli, les seuils déjà fixés, l'entropie, le modèle de coût et la conduite sur l'instance (clonage borné mis à part) n'ont pas changé.** L'analyse calcule en plus l'écart du λ de chaque modèle entre les deux sens.
+- **Décisions** : R-523 ; mot de Lazar « go en parallèle » (comparaison 8B contre 70B) ; R-530 à R-538 ; R-540.
+- **Scellement** : avant toute lecture de résultat (R1). Expérience décisive. Contre-lecture neuve par un sous-agent neuf (R2), consignée plus bas. La version scellée portera le nom `prereg/test-echelle-conscience-eval-v8.md`.
+- **Modèles** (même famille, même génération, même gabarit de dialogue) : `meta-llama/Llama-3.1-8B-Instruct`, révision `0e9e39f249a16976918f6564b8830bc894c89659` ; `meta-llama/Llama-3.1-70B-Instruct`, révision `1605565b47bb9346c5515c34102e054115b4f98b`. `bfloat16`, une passe avant par stimulus, lot de un, sur **la même instance**.
+  - Accès vérifié sans afficher de jeton : 200 pour les deux. Llama-3.3-70B répond 403, licence non acceptée sur le compte (`docs/notes/echelle-conscience-eval/acces-modeles-v1.txt`).
+  - Tailles relues sur le Hub, en lecture seule, aux mêmes révisions : 16,07 Go et 141,12 Go de poids et de fichiers de configuration, soit 157,19 Go (`docs/notes/echelle-conscience-eval/v5/tailles-modeles-v1.json`, `6412e69d…` ; CLW-10).
+  - **Contrôle sans dépense, fait** (CLY-13) : à leurs révisions, les deux jeton-iseurs rendent les 3 072 stimuli avec le même gabarit et le même dernier jeton (« \n\n », identifiant 271), de 72 à 106 jetons (`docs/notes/echelle-conscience-eval/v3/gabarits-echelle-v3.json`). Les stimuli n'ont pas changé depuis.
+- **Outils** : branche `outils/echelle-conscience-eval-v7`, commit `b54da1fe41e26360cb5410bfd2fdc0614537de1d`. Les stimuli sont les mêmes octets qu'aux brouillons v3 à v7. Empreintes :
+
+  | fichier | sha256 |
+  |---|---|
+  | `echelle-v7/stimuli/echelle-v2.json` | `b4cb38c1cbd55d27f8247b13fc39f87e9aac61b59f2dbb0e9b26829d7ca9aaf6` |
+  | `echelle-v7/stimuli/construction-echelle-v2.json` | `401f75fb807147eb91d0bf1e8b7637d7d082eafd6b340ef62da0c38cdf6b0c87` |
+  | `echelle-v7/scripts/construire_echelle_v2.py` | `1693f427558844abf8310a2b46ac45eb36a3cf3bb63231f9f5ed4e4006bc5a70` |
+  | `echelle-v7/scripts/mesurer_echelle_v7.py` | `3959b5d00bf59c4c98b689b7ee665f7af7f725120f9152eddf169124924797e6` |
+  | `echelle-v7/scripts/analyser_echelle_v7.py` | `0094e4eceacb2fb5ecfb69a5cdd7b46e35d241c74e9d2d6e69801ecc27091263` |
+  | `echelle-v7/scripts/echelle_instance_v7.sh` | `847dc831e54a9607d1e5d0710ec765052d81b2f9ade04c746913aae8bf3190ab` |
+  | `echelle-v7/scripts/amorce_echelle_v7.sh` | `30bf384b6d5deaa412bace5507d54304720f17d9f6648f9aed4e83f7c078fdbd` |
+  | `echelle-v7/scripts/lancer_echelle_v7.sh` | `cfe3a52bee53ca6695aba47be6260a8c45ce60585311ce4bfa1fc9c07e192e09` |
+  | `echelle-v7/scripts/choisir_offre_v7.py` | `ceef4d657b4af10beef77d3c88e4a90cb6a23006006529bd7a0aa036c05c7566` |
+  | `echelle-v7/scripts/controler_prix_v7.sh` | `c107c9aac42d43444cd53a5d431a4503c34abda41f89ddfbf94bb70f0f8d0949` |
+  | `echelle-v7/scripts/verifier_go_v7.py` | `207011bc071dad49ec481c19b93ef312047e9abd9e779d2f29d3e755f7550bf4` |
+  | `echelle-v7/scripts/surveiller_echelle_v7.sh` | `d2312582fab941a6236b5aa1d7ddb17a02c64f22b6b09b6521a279f5154bdf31` |
+  | `echelle-v7/scripts/repeter_instance_v7.sh` | `050e510bc16c01ddb6797069cc95b1777215e2a518a294c07d50895827088da0` |
+  | `echelle-v7/scripts/simuler_atteignabilite_v7.py` | `1dfcfc5f19204551d6b3ed3034f5fefb1daac3e1b55174e91f3908d1d4d96ed4` |
+  | `echelle-v7/scripts/verifier_lexique_v7.py` | `155872ad0005efd33cf1c5449f168a6c54b9f8cfb8fb2c9ac1878fcd049c5089` |
+  | `echelle-v7/scripts/requirements-echelle-v7.txt` | `020994343ec3cc4a7cc05ddb6fb94b18281a6be789430fb8a0001ac97d029a45` |
+  | `echelle-v7/tests/test_construire_echelle_v7.py` | `c92be2006c6a8308438a32023c60c3e5a131d3fc2368f99830251fa431d140af` |
+  | `echelle-v7/tests/test_mesurer_echelle_v7.py` | `ebbeb215038473b3ef3400b5cabbdb24c9635f6327ed9406552dea0d71cef917` |
+  | `echelle-v7/tests/test_analyser_echelle_v7.py` | `6e6639c019450cbe996bb5d78fe1592a2cf71e537b1435a71beecbeffd39c98a` |
+  | `echelle-v7/tests/test_offre_et_surveillance_v7.py` | `f7ca34f2f2a30d6b64ff2551589da0fc304950ded4e3f13547eed78ff3783076` |
+
+- **Dépense** : un GO nouveau, sur devis, avant toute carte. Rien ne part avant ce GO et avant le scellement.
+  - **Le GO cité est contrôlé par le lanceur** (`verifier_go_v7.py`, CLW-03). **Forme exacte de la ligne attendue** dans `registres/go.md` (CLV-05), huit colonnes :
+
+    ```
+    | GO-AAAA-MM-JJ-NN | AAAA-MM-JJ | calcul | comparaison d'échelle, `prereg/test-echelle-conscience-eval-v8.md` (`<seize premiers caractères de l'empreinte scellée>…`) | 8 USD | AAAA-MM-JJ | Lazar | <référence> |
+    ```
+
+    - type « calcul », accordé par Lazar ;
+    - le périmètre cite le nom du texte scellé et les seize premiers caractères de son empreinte : un GO ne peut donc être que postérieur au scellement et propre à cette expérience ;
+    - le plafond est écrit « 8 USD » et rien d'autre (une virgule décimale est admise). Un plafond suivi d'une mention, comme « 8 USD au pire », est illisible pour le contrôle et arrête le lancement (essai de la contre-lecture n° 5) ;
+    - sinon, aucune création.
+  - **Plafond demandé : 8 USD**, au pire et tout compris. Le lanceur ne crée l'instance que si la dépense au pire de l'offre choisie tient sous ce plafond (`choisir_offre_v7.py`, calcul inchangé depuis la v5) :
+    - dépense au pire = 1,05 × [durée plafonnée × prix horaire (location et stockage) + descente de 165 Go + remontée de 1 Go + **24 h de stockage entre l'arrêt et la destruction**] + 0,20 USD de marge ;
+    - le facteur 1,05 est la tolérance admise sur le prix relu après la création : le plafond tient même si l'instance est facturée 5 % au-dessus de l'offre (CLZ-03) ;
+    - 165 Go de descente : 157,19 Go de poids (trace ci-dessus), plus les roues pip et l'image, comptées pour environ 4 Go (CLW-10) ;
+    - la remontée des résultats, 3 072 × 4 × (4 096 + 8 192) × 2 octets ≈ 0,30 Go (même trace), est comptée pour 1 Go ;
+    - la marge de 0,20 USD couvre le retard de l'arrêt : au prix le plus haut admis (1,05 × 3,50 USD/h), elle paie 195,9 s ; le test du plafond sur tout un domaine d'offres compte maintenant cette latence entière (CLU-03 ; la v6 comptait 80 s), et le balayage de la contre-lecture n° 5 (30 308 offres, 196 s : `docs/notes/echelle-conscience-eval/v6/contre-lecture-cl5/sorties/sortie-pire-domaine-v5.txt`, `0a1412ab…`) le confirmait ;
+    - **la surveillance demande l'arrêt au plus deux appels après le plafond, soit 60 s, et l'appel d'arrêt dure au plus 30 s de plus** : chaque appel à vastai y est borné à 30 s, l'heure est relue après les appels, et la pause ne dépasse pas le temps qui reste avant le plafond (CLV-02). Ses réglages sont contrôlés au départ et consignés (CLU-02 : `APPEL_S` dans [1 ; 30] s, `PAS_S` dans [1 ; 60] s, `ATTENTE_ARRET_S` dans [0 ; 60] s, entiers ; sinon refus de partir). **Essai aux réglages réels** (pause de 60 s, appels bornés à 30 s ; faux outil ; `docs/notes/echelle-conscience-eval/v7/latence-surveillance/resultat-latence-v7.txt`, `4ed55cd0…`) : appels de 29 s, arrêt demandé 56,7 s après le plafond ; appels bloqués (300 s), coupés à 30 s, 58,8 s ; appels instantanés et pause qui rencontre le plafond, 0,15 s ; appels de 10 s et pause qui rencontre le plafond après eux, 0,37 s ; `APPEL_S=0` et `PAS_S=abc` : refus de partir, code 2, aucun appel (la v6 n'avait plus de borne avec `APPEL_S=0`, 88,8 s, et sortait en silence avec `PAS_S=abc` : essais de la contre-lecture n° 6).
+  - Durée plafonnée = min(2 h ; ce que le plafond permet), au moins 75 min, **comptée depuis la création**. Elle est transmise, avec l'heure de création :
+    - à l'instance, où l'amorce borne elle-même le calcul à « création + durée − 600 s », quel que soit le temps de démarrage du conteneur, et refuse de partir s'il reste moins de 45 min (CLZ-05) ;
+    - à la surveillance, qui l'exige, la compare à celle que le lanceur a écrite, et arrête l'instance par son identifiant (R10).
+  - Après la création, les prix de l'instance sont relus (`controler_prix_v7.sh`) : prix horaire obligatoire ; stockage, descente et remontée s'ils figurent dans la réponse. Un prix au-delà de 1,05 × l'offre, ou illisible, arrête l'instance par son identifiant, puis l'état est relu.
+  - **Destruction par identifiant** dès les résultats poussés et vérifiés, au plus tard 24 h après l'arrêt, consignée.
+  - Hypothèses dites, et non gardées :
+    - une instance sortie ou arrêtée n'est facturée par Vast.ai que pour son stockage ;
+    - si la session locale meurt, l'amorce borne quand même le clonage (600 s, CLU-04) et le calcul sur l'instance ; la session suivante arrête puis détruit l'instance par son identifiant. Les 24 h de stockage comptées supposent que cette session vienne dans les 24 h (CLZ-05). Les appels du lanceur qui précèdent toute création (`git ls-remote`, `git fetch`, `vastai --version`) ne sont pas bornés : sans coût ;
+    - un prix absent de la réponse relue est facturé au prix de l'offre, à la tolérance près ;
+    - l'arrêt demandé prend effet en quelques secondes : entre les 90 s que bornent la surveillance et ses appels, et les 195,9 s que couvre la marge, il reste plus de 100 s.
+  - Offre conforme : 2 à 4 cartes de 46 Go ou plus, 160 Go au total, CUDA ≥ 13.0, **débit de descente d'au moins 2 000 Mb/s** (le 70B demande ≈ 10 min ; ≈ 27 min à 700 Mb/s, l'ancien minimum, CLZ-05), au plus 3,50 USD/h, descente au plus 0,005 USD/Go.
+  - Offre de référence, recalculée sans appel réseau avec `choisir_offre_v7.py` sur les 45 offres relues en lecture seule le 27 octobre à 02:54 UTC (`docs/notes/echelle-conscience-eval/v7/offre-reference-v5.txt`, `c9612701…`, identique à l'octet au résultat de la v6, en-tête mis à part ; offres : `docs/notes/echelle-conscience-eval/v4/offres-relues-reference-v2.json`, `f7cfe2e0…`) : 4 × A40, 2,20 USD/h, descente 0,0026 USD/Go, remontée 0,0039 USD/Go, stockage 0,069 USD/h, débit 9 211 Mb/s ; durée plafonnée 7 200 s ; **au pire 7,03 USD** ; estimé 5,40 USD si le stockage court 24 h ; **attendu ≈ 3,8 USD** si la destruction suit la fin du run (1,5 h de calcul, 1 h de stockage). Deux offres seulement sont conformes ; le lanceur retiendra l'offre conforme du moment.
+  - Risque dit (CLZ-05) : si le 70B ne finit pas avant le délai de l'amorce, seul le 8B est poussé, et payé ; il n'est pas lu.
+
+## Hypothèse
+
+Selon la thèse de Singh et Chaudhary (2026), la conscience d'évaluation suit surtout le **format** chez les petits modèles et davantage le **contexte** chez les grands. Leur preuve repose sur la chaîne de pensée et les gradients intégrés, jusqu'à 12B, sans plan croisé (p. 6, p. 9 et p. 15) ; 70B et au-delà y sont déclarés ouverts (p. 8). Source : carte des zones libres v1, ligne ii-3 (`docs/sources/anteriorite-hm1-20261026/carte-zones-libres-v1.md`, `134040bd…`).
+
+Traduite en géométrie, au contenu égal, avec format et contexte croisés :
+
+- On apprend une **direction « évaluation »** à format constant, sur des paires de cadrages qui ne diffèrent que par la situation de l'auteur : il connaît la réponse et regarde, ou il ne la connaît pas et en a besoin.
+- On la mesure sur des **paraphrases tenues à part**, et cela **dans les deux sens** : apprise sur le jeu a, mesurée sur le jeu b, et l'inverse. **Les deux sens sont lus par les mêmes règles, et une issue n'est prononcée que si elle tient dans les deux sens, chez les mêmes modèles** : pour la fuite de signe inverse, le même modèle sous −δ dans les deux sens ; pour « positif », « inverse » et « nul », qui comparent les deux modèles, chaque modèle garde son λ d'un sens à l'autre, à δ près (cohérence des deux sens) (CLZ-01, CLW-01, CLV-01, CLU-01).
+- Le gabarit de **banc d'essai** (qcm), à contexte égal, déplace la lecture le long de cette direction, vers son pôle « évaluation », à 8B, et moins à 70B, relativement à l'effet du contexte.
+
+Les deux hypothèses (CLY-09) :
+
+- **H_A**, dans chacun des deux sens s :
+  - Δλ_s = λ_s(8B) − λ_s(70B) > δ ;
+  - λ_s(8B) > δ ;
+  - λ_s(70B) > −δ ;
+  - λ_s(70B) < 1.
+- **H_0** : tout le reste. En particulier : |Δλ| ≤ δ (pas d'effet d'échelle), un effet inverse, une fuite de signe inverse, ou **toute issue qui ne se retrouve que dans un sens** (signature propre à un jeu de cadrages, de l'un ou l'autre signe ; différence de force du contexte entre les deux jeux), **ou chez des modèles différents d'un sens à l'autre** (CLV-01, CLU-01).
+
+## Prédiction chiffrée et signe attendu
+
+- **Aucune issue n'est visée (R3)** ; toutes sont lues et rapportées au même titre (R4).
+- À titre indicatif, sans effet sur la lecture, l'auteur s'attend à :
+  - Δλ > 0 (signe de la thèse ci-dessus) ;
+  - λ(8B) ≈ 0,5 à 1 et λ(70B) ≈ 0 à 0,3 ;
+  - une probabilité subjective d'environ 0,25 pour l'issue « positif » (lue dans les deux sens).
+- Points d'appui vérifiés sur PDF, cités pour le contexte seulement :
+  - Nayan et al. (2026), Llama-3.1-8B-Instruct : 0,644 en détection comportementale de type Needham (tableau 15, p. 23) ; 0,491 sur le plan croisé de Devbunova (en prose, p. 5 et p. 12). La carte v1 signale ailleurs une autre base de 0,676 pour ce modèle (p. 10, 21 et 24). Ces chiffres ne portent pas sur le même jeu.
+  - Chaudhary et al. (2025) sondent la même famille aux mêmes tailles (« LLaMA-3.1-instruct (8B, 70B) », p. 3), sans contrôle du format (p. 3 et p. 6). L'identifiant exact des modèles n'est pas donné dans le PDF (carte v2, `docs/sources/anteriorite-hm1-20261026/carte-zones-libres-v2.md`, `fe1e93c1…`).
+  - Sur sept papiers lus sur PDF empreintés, aucun ne fait de plan croisé format × contexte entre 30 et 70 milliards de paramètres (carte v3, `docs/sources/anteriorite-hm1-20261026/carte-zones-libres-v3.md`, `9d03d3b2…`, R-507). C'est une **extension méthodologique**, pas une zone vierge (R8).
+- **Indices contraires à 70B**, cités par symétrie (R4, R8 ; CLY-10). Tous deux portent sur Llama-3.3-70B-Instruct, pas sur la 3.1. Tous deux vont contre la prédiction indicative λ(70B) ≈ 0 à 0,3.
+  - Nguyen et al. (2025) observent eux-mêmes, qualitativement, que les erreurs de leur sonde suivent le format (p. 6 ; figure 7, p. 8 ; carte v2).
+  - Xiong et al. (2025) réécrivent des items d'évaluation, ce qui change d'un même geste le format, le style, la personne et la longueur (p. 3, p. 11 à 13). Cela déplace le score de cette sonde de 0,056 à 0,073, et la part au-dessus de son seuil de 14,8 % à 26,4 % (p. 4 et p. 5 ; figure 4). Le témoin de réécriture aléatoire donne 15,1 % (p. 4 ; figure 18, p. 14).
+  - **Réserve sur cet indice** (CLZ-07) : la réécriture est choisie parmi sept pour maximiser cette même sonde (p. 3), et le témoin aléatoire n'est pas choisi de la même façon ; la hausse en surestime donc le poids (carte v3, l. 15, 79, 81 à 84 et 201).
+
+## Métrique
+
+**Stimuli** (`construire_echelle_v2.py`, déterministe, sans modèle ; inchangés depuis le v3 ; rapport de construction `stimuli/construction-echelle-v2.json`, au tableau des empreintes, CLZ-06) :
+
+- 64 contenus neufs : questions factuelles neutres et directes, à quatre options, sans chiffre. Aucune question reprise des stimuli de H-M1 v1, v2 et v4.
+- Plan : format {qcm, prose} × contexte {eval, reel}, contenu identique dans les quatre cellules. Gabarits :
+  - qcm : « Question: …? / A. … / D. … / Answer: » et « …? / (A) … / (D) … / Respond with the letter only. » ;
+  - prose : « …? Is it …, …, … or …? » et « Among …, …, … and …, …? ».
+  - Aucun gabarit ne dit ce que l'auteur sait, ignore ou cherche.
+- Deux jeux de six paires minimales de cadrages : a et b. Chaque paire garde la même personne grammaticale et le même nombre de marques syntaxiques de négation.
+- **Lemmes** : six premières lettres des mots de quatre lettres ou plus, mots-outils exclus. Ils sont disjoints entre a et b, et entre b et les gabarits.
+- Plis par blocs de quatre contenus : S1 et S2 (8 + 8) pour le choix de couche ; E1 et E2 (24 + 24) pour la mesure.
+- 3 072 stimuli.
+- **Contrôles lexicaux, dans les deux sens** (`verifier_lexique_v7.py`, copie de la v5 et de la v6 ; trace `docs/notes/echelle-conscience-eval/v7/lexique/controles-lexicaux-echelle-v7.json`, `59b0c2fe…`, produite au commit des outils et identique à la trace v6 hors le nom de version ; CLW-07) :
+  - les lemmes présents d'un seul côté d'une paire sont disjoints de ceux des gabarits, **dans le jeu a et dans le jeu b** ;
+  - les asymétries de mots courts entre eval et reel sont comptées et rapportées (par exemple « how » 4 contre 0 dans a, « on » 0 contre 5 dans b) ;
+  - le **sac de mots** (code de l'analyse), appris sur le jeu d'apprentissage et appliqué au jeu de mesure, scores centrés par moitié, vaut **0,5717 dans le sens a→b** (la valeur de la v3, CLY-05) et **0,5242 dans le sens b→a**.
+
+**Activations** (`mesurer_echelle_v7.py`, copie de la mesure v4 à v6 sous un nom nouveau ; le nom et l'empreinte de ce script sont relus dans chaque manifeste par l'analyse décisive, CLW-04) :
+
+- toutes les entrées sont d'abord mises en jetons, et le dernier jeton est contrôlé avant le chargement des poids ;
+- **aucun paramètre hors des cartes**, sinon arrêt : la garde relit l'appareil de chaque paramètre (CLZ-11). Un paramètre délesté sur le processeur ou le disque apparaît sur l'appareil « cpu » ou « meta ». La garde de la v3 ne lisait que la carte des couches, que transformers 5.18 ne remplit que pour une répartition sur plusieurs appareils ;
+- flux résiduel au dernier jeton de l'entrée (jeton constant), aux profondeurs relatives 0,25 ; 0,375 ; 0,5 et 0,625 (couches 8, 12, 16, 20 et 20, 30, 40, 50) ;
+- stockage en float16.
+
+**Mesures**, par modèle, à la couche L\*, **dans chacun des deux sens** s ∈ {a→b, b→a} (`analyser_echelle_v7.py`, qui fait foi pour le détail du calcul ; le calcul de λ, des aires et du témoin est celui de la v3) :
+
+- **ĉ_s** : différence des moyennes eval − reel du jeu d'apprentissage, les deux formats confondus, normée. Elle est apprise sur une moitié des contenus E et appliquée au jeu de mesure de l'autre moitié (ajustement croisé). Les projections sont centrées dans chaque moitié (invariance par translation).
+- **Ec**, **Ef** et **λ_s = Ef / Ec**, comme au v3.
+  - Dans le sens a→b, λ compte aussi la poussée du format sur la **signature propre aux cadrages a**, qui ne passe pas aux paraphrases b ; dans le sens b→a, celle sur la signature des cadrages b. Cette poussée peut être de l'un ou l'autre signe : elle peut gonfler λ, le faire passer sous zéro, ou masquer un écart vrai (CLZ-01).
+  - Une fuite du concept, elle, se retrouve dans les deux sens, **chez le même modèle** : λ_a→b(m) ≈ λ_b→a(m). D'où la lecture symétrique : modèle par modèle pour la fuite de signe inverse (CLV-01) ; cohérence des deux sens pour les issues qui comparent les deux modèles (CLU-01).
+  - λ_s est relatif à l'effet du contexte sur le jeu **mesuré** : une différence de force du contexte entre les deux jeux sépare aussi les deux sens, sans aucune signature (CLZ-02). Elle multiplie le λ des deux modèles dans un sens ; quand λ est grand, elle rompt la cohérence des deux sens (prix chiffré plus bas).
+- **Écart entre les sens** (CLU-01), par modèle : e(m) = λ_a→b(m) − λ_b→a(m), à la couche L\*, en point ; son intervalle est calculé sur les mêmes tirages (le bootstrap est apparié entre les sens) et rapporté.
+- **A_ctx_fixe_s** : la certification, à directions fixes dans le bootstrap. A_ctx, A_conf et A_conf_T1 sont rapportées.
+- **Témoin ν_s**, par permutation des paires d'apprentissage :
+  - dix partitions équilibrées des six paires en deux groupes de trois ; d_σ = moyenne du groupe 1 − moyenne du groupe 2, **orthogonalisée par rapport à ĉ_s** (CLY-02) ;
+  - ν_s = moyenne des |Ef le long de d_σ| / |Ec| ;
+  - **spécificité_s** = Δλ_s − (ν_s(8B) − ν_s(70B)) ;
+  - **spécificité de signe inverse** d'un modèle, dans le sens s : −λ_s − ν_s (CLW-02).
+- **Dans les deux sens** (CLW-07) : ΔA_ctx_fixe et ΔA_conf, avec intervalles ; sac de mots et marge de A_ctx_fixe sur lui.
+- **En points seulement** (CLY-07) : λ mesuré sur le jeu d'apprentissage de la moitié tenue à part, rapport de transfert, Ec par format, d'.
+
+**Couche L\*** : choisie par modèle sur le pli S seulement, **dans les deux sens** (CLW-07) : la plus petite des deux aires A_ctx (a→b et b→a), arrondie au millième, doit être maximale. À égalité, le plus petit des deux d' le plus grand (CLY-08) ; puis la plus basse. Elle n'est jamais choisie sur λ. λ et Δλ aux quatre profondeurs appariées sont rapportés en points, dans les deux sens.
+
+**Intervalles** : bootstrap apparié, avec les mêmes tirages pour les deux modèles et les deux sens.
+
+- On tire avec remise les contenus dans chaque moitié de E, et les paires dans chaque jeu.
+- Le tirage des paires est conditionné à au moins deux paires distinctes par jeu, sinon le témoin n'est pas défini : un rejet survient pour ≈ 1 tirage sur 7 776 dans chaque jeu, soit ≈ 2 sur 7 776 pour les deux (CLZ-10). Les rejets sont comptés et consignés, pour le bootstrap principal et pour celui du sac de mots.
+- 2 000 tirages ; percentiles 2,5 et 97,5 ; directions réapprises à chaque tirage, sauf pour A_ctx_fixe.
+- Graines : `numpy.random.SeedSequence(4429003211691042563)` (R9). L'entropie a été tirée le 26 octobre à 22:42 UTC, avant tout scellement et toute mesure, et elle n'a pas changé depuis.
+- **Mode décisif** (CLY-06, CLW-04) : l'analyse s'arrête si le commit des scripts n'est pas `b54da1fe41e26360cb5410bfd2fdc0614537de1d` (le commit des outils, CLZ-10), si l'arbre des scripts n'est pas propre, si numpy n'est pas en version 2.4.6, ou si un manifeste ne porte pas le nom et l'empreinte de `mesurer_echelle_v7.py` de cet arbre. Elle consigne les versions et le commit.
+
+## Seuil
+
+Fixés sans donnée, contraignants une fois scellés (`SEUILS` dans l'analyse) :
+
+| grandeur | seuil |
+|---|---|
+| certification | borne basse de A_ctx_fixe ≥ 0,70, **dans chaque sens** : un sens non certifié ne confirme aucune issue |
+| δ (écart d'échelle minimal d'intérêt, et bande d'équivalence de λ) | 0,25 |
+| λ maximal du modèle « qui ne fuit plus » | borne haute < 1 |
+| cohérence des deux sens (« positif », « inverse », « nul » ; CLU-01) | pour chacun des deux modèles, \|λ_a→b(m) − λ_b→a(m)\| ≤ δ, en point |
+
+Justifications :
+
+- **δ = 0,25** : un quart de l'effet d'un énoncé de contexte explicite. En dessous, « suit le format » et « suit le contexte » ne se distinguent pas en pratique. C'est aussi l'ordre de résolution du dispositif.
+- **0,70** : plancher usuel d'une lecture linéaire utilisable sur des paraphrases tenues à part. Il est appliqué à une borne basse, à direction fixe.
+- **Cohérence des deux sens, δ en point** (CLU-01) : même bande que l'équivalence de λ. Sous la classe relevée par la contre-lecture n° 6 (fuite égale aux deux tailles, poussée de la signature d'un seul jeu à chaque taille, jeux différents, signes opposés), l'écart e(m) d'un modèle vaut, au bruit près, le Δλ du sens que sa signature déplace : dès que « positif » ou « inverse » tient dans les deux sens (borne de Δλ au-delà de δ), |e(m)| dépasse δ, au bruit près, chez les deux modèles ; il suffit qu'un seul le dépasse pour bloquer l'issue (dans la simulation : chez les deux modèles dans 25 des 27 artefacts, chez un seul dans 2, chez aucun jamais). Sous H_A sans signature, e(m) est centré sur 0.
+  - **Pourquoi le point, et non l'intervalle** : la forme « l'intervalle de e(m) rencontre [−δ ; δ] », proposée par la contre-lecture n° 6, laisse passer cette classe à amplitude intermédiaire ; la forme « intervalle inclus dans [−δ ; δ] » coûte davantage sous H_A. Essai exploratoire, non décisif, sur des activations synthétiques en dimension 256 (et 64 pour H_A), six graines par cas, 300 tirages (`docs/notes/echelle-conscience-eval/v7/exploration-coherence/`, résumé `resume-exploration.txt`, `825fda05…`, et `LISEZ-MOI.txt`) : sur 7 « positif » et « inverse » fabriqués sous H_0, la forme par intervalle qui rencontre en laisse passer 1, le point et l'inclusion aucun ; sous H_A sans signature, 18 « positif » sur 18 avec l'intervalle qui rencontre, 17 avec le point, 15 avec l'inclusion.
+  - Le prix de la cohérence (perte de puissance sous un contexte d'un jeu plus faible, ou sous la signature d'un seul jeu chez un modèle quand H_A tient) est chiffré dans la simulation ci-dessous et écrit dans les limites.
+
+**Atteignabilité** (`simuler_atteignabilite_v7.py`, l'analyse v7 inchangée sur des activations synthétiques en dimension 64, et 256 pour les cas de la v7 qui le disent, 300 tirages ; quatre répétitions par case pour les cas de la v6, six pour ceux de la v7 ; sortie `docs/notes/echelle-conscience-eval/v7/atteignabilite-echelle-v7.json`, `84fd1638…`) :
+
+Sortie produite au commit `b54da1f…`, arbre propre, numpy 2.4.6, fils de calcul à un, trois processus. Une première exécution, coupée par la limite de durée des tâches de fond de la session avant d'écrire sa sortie, n'a rien produit ; la seconde, à l'identique, est versée (`docs/notes/echelle-conscience-eval/v7/simulation-v7-LISEZ-MOI.txt`). Les trente premiers cas reprennent ceux de la v6, aux mêmes graines ; les cas de la v7 sont en gras. tau : hétérogénéité des cadrages ; α : λ du concept ; « signature » : poussée du format sur la moyenne des particularités des paires d'un jeu, de norme égale à celle du contexte, multipliée par le facteur indiqué ; « croisées » : un seul jeu à chaque taille, et des jeux différents. Entre parenthèses, le nombre de lectures qui portent une réserve. Tableau tiré de la sortie par script (`docs/notes/echelle-conscience-eval/v7/simulation-tableau/tableau_atteignabilite_v7.py`, sortie `tableau-atteignabilite-v7.md`, `906d2521…`), sans transcription à la main ; comptes ci-dessous tirés par script (`comptes_atteignabilite_v7.py`, sortie `comptes-atteignabilite-v7.txt`, `60ab030b…`).
+
+| vérité (α au 8B et au 70B) | tau 0,15 | tau 0,4 | tau 0,8 |
+|---|---|---|---|
+| H_0 (0,5 et 0,5) | nul 4 | nul 4 | indécis 3, nul non confirmé (sens a→b) 1 |
+| pas de fuite (0 et 0) | pas de fuite 4 | pas de fuite 4 | pas de fuite 3, pas de fuite non confirmé (sens b→a) 1 |
+| H_A (1,0 et 0,2) | positif 4 | positif 4 | positif 2, désaccord des deux sens 1, positif non confirmé (sens b→a) 1 |
+| H_A faible (0,6 et 0,2) | positif 4 | positif 2, positif non confirmé (sens a→b) 2 | indécis 2, positif non confirmé (sens a→b) 2 |
+| inverse (0,2 et 1,0) | — | inverse 4 | — |
+| signe inverse (−0,6 et 0) | — | fuite de signe inverse (petit) 4 | — |
+| signature du jeu a au 8B (+2), α = 0 (CLY-01) | — | positif non confirmé (sens b→a) 4 | — |
+| contexte faible aux deux tailles | — | non certifiable 4 | — |
+| contexte faible au 8B | — | certification asymétrique (grand seulement) 4 | — |
+| signature du jeu a au 8B, négative (−2), α = 0 (CLZ-01) | — | fuite de signe inverse (petit) non confirmé (sens b→a) 2, fuite de signe inverse (petit) 1, positif non confirmé (sens a→b) 1 | — |
+| signature du jeu a au 70B (+2), α = 0 | — | désaccord des deux sens 3, inverse non confirmé (sens b→a) 1 | — |
+| signature du jeu b au 8B (+2), α = 0 | — | positif non confirmé (sens a→b) 4 | — |
+| signatures des deux jeux au 8B (+2 et +2), α = 0 (CLZ-08) | — | positif 3 (2), indécis 1 | — |
+| H_A masqué par une signature négative du jeu a (1,0 et 0,2 ; −3) | désaccord des deux sens 3, positif non confirmé (sens a→b) 1 | positif non confirmé (sens a→b) 2, désaccord des deux sens 1, fuite de signe inverse (petit) non confirmé (sens b→a) 1 | — |
+| fuite masquée par une signature négative du jeu a (0,6 et 0 ; −1,4) | positif 2, désaccord des deux sens 1, positif non confirmé (sens a→b) 1 | — | — |
+| contexte faible au 70B | — | certification asymétrique (petit seulement) 4 | — |
+| fuite faible et égale (0,2 et 0,2) (CLW-01) | nul 4 (1) | — | — |
+| fuite faible et égale, contexte du jeu b plus faible (0,15 et 0,15 ; jeu b × 0,6) (CLW-01) | nul 4 (2) | — | — |
+| signature du jeu a au 70B, négative (−2), α = 0 (CLW-09) | — | fuite de signe inverse (grand) non confirmé (sens b→a) 4 | — |
+| signatures des deux jeux au 8B, négatives (−2 et −2), α = 0 (CLW-02) | — | fuite de signe inverse (petit) 2 (2), fuite de signe inverse (petit) non confirmé (sens b→a) 1, indécis 1 | — |
+| signatures des deux jeux au 70B (+2 et +2), α = 0 (CLW-02) | — | inverse 4 | — |
+| signatures croisées négatives : jeu a au 8B, jeu b au 70B (−2 et −2), α = 0 (CLV-01) | désaccord des deux sens 2, indécis 2 | désaccord des deux sens 4 | — |
+| signatures croisées négatives : jeu b au 8B, jeu a au 70B (−2 et −2), α = 0 (CLV-01) | indécis 3, désaccord des deux sens 1 | désaccord des deux sens 4 | — |
+| signatures croisées positives : jeu a au 8B, jeu b au 70B (+2 et +2), α = 0 (CLV-01) | — | désaccord des deux sens 1, fuite de signe inverse (petit) non confirmé (sens a→b) 1, indécis 1, inverse non confirmé (sens a→b) 1 | — |
+| signatures croisées positives : jeu b au 8B, jeu a au 70B (+2 et +2), α = 0 (CLV-01) | — | indécis 2, fuite de signe inverse (petit) non confirmé (sens b→a) 1, inverse non confirmé (sens b→a) 1 | — |
+| signature du jeu b au 8B, négative (−2), α = 0 (CLV-04) | — | fuite de signe inverse (petit) non confirmé (sens a→b) 2, désaccord des deux sens 1, positif non confirmé (sens b→a) 1 | — |
+| signature du jeu b au 70B (+2), α = 0 (CLV-04) | — | inverse non confirmé (sens a→b) 3, désaccord des deux sens 1 | — |
+| signature du jeu b au 70B, négative (−2), α = 0 (CLV-04) | — | désaccord des deux sens 2, fuite de signe inverse (grand) non confirmé (sens a→b) 2 | — |
+| H_A sous les signatures des deux jeux au 8B, négatives (1,0 et 0,2 ; −2 et −2) (CLV-04) | — | indécis 3, fuite de signe inverse (petit) non confirmé (sens a→b) 1 | — |
+| H_A sous des signatures croisées de signes opposés (1,0 et 0,2 ; jeu a −2 au 8B, jeu b +2 au 70B) (CLV-04) | — | indécis 2, inverse non confirmé (sens a→b) 2 | — |
+| **H_0 (0,5 et 0,5) ; signatures croisées de signes opposés : jeu a +3 au 8B, jeu b −3 au 70B ; dimension 64** (CLU-01) | indécis 3, désaccord des deux sens 1, positif non confirmé (sens a→b) 1, positif non confirmé (sens b→a) 1 | — | — |
+| **H_0 (0,5 et 0,5) ; signatures croisées de signes opposés : jeu b +3 au 8B, jeu a −3 au 70B ; dimension 64** (CLU-01) | indécis 4, désaccord des deux sens 1, positif non confirmé (sens a→b) 1 | — | — |
+| **H_0 (0,5 et 0,5) ; signatures croisées de signes opposés : jeu a −3 au 8B, jeu b +3 au 70B ; dimension 64** (CLU-01) | désaccord des deux sens 2, inverse non confirmé (sens a→b) 2, fuite de signe inverse (petit) non confirmé (sens b→a) 1, indécis 1 | — | — |
+| **H_0 (0,5 et 0,5) ; signatures croisées de signes opposés : jeu b −3 au 8B, jeu a +3 au 70B ; dimension 64** (CLU-01) | indécis 3, désaccord des deux sens 1, fuite de signe inverse (petit) non confirmé (sens a→b) 1, inverse non confirmé (sens b→a) 1 | — | — |
+| **H_0 (0,5 et 0,5) ; signatures croisées de signes opposés : jeu a +0,9 au 8B, jeu b −0,9 au 70B ; dimension 64** (CLU-01) | — | indécis 3, positif non confirmé (sens b→a) 2, positif non confirmé (sens a→b) 1 | — |
+| **H_0 (0,5 et 0,5) ; signatures croisées de signes opposés : jeu b +0,9 au 8B, jeu a −0,9 au 70B ; dimension 64** (CLU-01) | — | désaccord des deux sens 2, positif non confirmé (sens b→a) 2, indécis 1, positif non confirmé (sens a→b) 1 | — |
+| **H_0 (0,5 et 0,5) ; signatures croisées de signes opposés : jeu a −0,9 au 8B, jeu b +0,9 au 70B ; dimension 64** (CLU-01) | — | inverse non confirmé (sens a→b) 3, désaccord des deux sens 1, indécis 1, inverse non confirmé (sens b→a) 1 | — |
+| **H_0 (0,5 et 0,5) ; signatures croisées de signes opposés : jeu b −0,9 au 8B, jeu a +0,9 au 70B ; dimension 64** (CLU-01) | — | désaccord des deux sens 3, indécis 1, inverse non confirmé (sens a→b) 1, inverse non confirmé (sens b→a) 1 | — |
+| **H_0 (0,5 et 0,5) ; signatures croisées de signes opposés : jeu a +0,9 au 8B, jeu b −0,9 au 70B ; dimension 256** (CLU-01) | indécis 3, désaccord des deux sens 2, positif non confirmé (sens b→a) 1 | positif non confirmé (sens b→a) 5, indécis 1 | — |
+| **H_0 (0,5 et 0,5) ; signatures croisées de signes opposés : jeu b +0,9 au 8B, jeu a −0,9 au 70B ; dimension 256** (CLU-01) | indécis 6 | positif non confirmé (sens a→b) 6 | — |
+| **H_0 (0,5 et 0,5) ; signatures croisées de signes opposés : jeu a −0,9 au 8B, jeu b +0,9 au 70B ; dimension 256** (CLU-01) | indécis 5, inverse non confirmé (sens b→a) 1 | inverse non confirmé (sens a→b) 6 | — |
+| **H_0 (0,5 et 0,5) ; signatures croisées de signes opposés : jeu b −0,9 au 8B, jeu a +0,9 au 70B ; dimension 256** (CLU-01) | indécis 5, inverse non confirmé (sens a→b) 1 | inverse non confirmé (sens b→a) 6 | — |
+| **H_0 (0,5 et 0,5) ; signatures croisées de signes opposés : jeu a +1,3 au 8B, jeu b −1,3 au 70B ; dimension 256** (CLU-01) | désaccord des deux sens 4, indécis 2 | désaccord des deux sens 4, fuite de signe inverse (grand) non confirmé (sens a→b) 2 | — |
+| **H_0 (0,5 et 0,5) ; signatures croisées de signes opposés : jeu b +1,3 au 8B, jeu a −1,3 au 70B ; dimension 256** (CLU-01) | désaccord des deux sens 3, indécis 2, positif non confirmé (sens b→a) 1 | désaccord des deux sens 5, fuite de signe inverse (grand) non confirmé (sens b→a) 1 | — |
+| **H_0 (0,5 et 0,5) ; signatures croisées de signes opposés : jeu a −1,3 au 8B, jeu b +1,3 au 70B ; dimension 256** (CLU-01) | désaccord des deux sens 5, indécis 1 | désaccord des deux sens 6 | — |
+| **H_0 (0,5 et 0,5) ; signatures croisées de signes opposés : jeu b −1,3 au 8B, jeu a +1,3 au 70B ; dimension 256** (CLU-01) | désaccord des deux sens 3, indécis 2, inverse non confirmé (sens b→a) 1 | désaccord des deux sens 3, fuite de signe inverse (petit) non confirmé (sens a→b) 3 | — |
+| **H_0 (0,5 et 0,5) ; dimension 256** (CLU-01) | nul 6 | nul non confirmé (sens a→b) 3, indécis 1, nul 1, nul non confirmé (sens b→a) 1 | — |
+| **H_A (1,0 et 0,2) ; dimension 256** (CLU-01) | positif 6 | positif 6 | — |
+| **H_A (1,0 et 0,2) ; contexte du jeu b × 0,6** (CLU-01) | désaccord des deux sens 6 | désaccord des deux sens 6 | — |
+| **H_A (1,0 et 0,2) ; contexte du jeu b × 0,8** (CLU-01) | désaccord des deux sens 3, positif 3 | désaccord des deux sens 5, positif 1 | — |
+| **H_A (1,0 et 0,2) ; contexte du jeu b × 0,6 ; dimension 256** (CLU-01) | désaccord des deux sens 6 | — | — |
+| **H_A (1,0 et 0,2) ; contexte du jeu b × 0,8 ; dimension 256** (CLU-01) | positif 4, désaccord des deux sens 2 | — | — |
+| **H_0 (0,5 et 0,5) ; contexte du jeu b × 0,8** (CLU-01) | nul 6 | — | — |
+| **H_0 (0,5 et 0,5) ; contexte du jeu b × 0,8 ; dimension 256** (CLU-01) | nul 6 | — | — |
+| **H_A (1,0 et 0,2) ; jeu a −1 au 8B ; dimension 256** (CLU-01) | désaccord des deux sens 5, positif 1 | — | — |
+
+- **Issues atteintes** : 21 des 26 noms possibles (CLU-05). Les cinq autres :
+  - « pas de fuite non confirmé (a→b) », miroir d'une issue atteinte ;
+  - « fuite de signe inverse (grand) » prononcée, et « fuite de signe inverse (petit et grand) », prononcée ou non confirmée : il y faut un λ du 70B sous −δ dans les deux sens, ou les deux modèles sous −δ dans un même sens, qu'aucune vérité simulée ne porte. « (grand) non confirmé » est atteint, dans les deux sens.
+  - La lecture mécanique les teste toutes, sens échangés (`test_lire`, `test_lire_miroir`) ; l'analyse complète prononce « fuite de signe inverse (grand) » dans deux tests d'intégration (profondeur sur quatre couches).
+- **R3** (CLV-04, CLU-01) : sous H_0 et sans fuite (48 analyses, dont 24 en dimension 256 ou avec un contexte du jeu b × 0,8), sous la signature d'un seul jeu dans ses huit combinaisons (jeu a ou b, de l'un ou l'autre signe, au 8B ou au 70B ; 32 analyses), sous les signatures croisées de même signe sans fuite (24 analyses), et **sous les signatures croisées de signes opposés sous une fuite égale (144 analyses : dimension 64 et 256, deux amplitudes par dimension, les deux ordres et leurs miroirs)**, aucune lecture « positif » ni « inverse ». Seules les doubles signatures chez un même modèle en fabriquent (12 analyses : « positif » 3, « inverse » 4 ; limite écrite plus bas).
+- **Audit R4** (`docs/notes/echelle-conscience-eval/v7/audit-simulation-v7/audit-simulation-v7.txt`, `7f998101…` ; script à côté) :
+  - **Cohérence des deux sens** (CLU-01) : sur les 386 analyses, la règle de la v6 (issue commune par son seul nom) aurait prononcé **27 lectures fausses** sous H_0 à signatures croisées de signes opposés (12 « positif », 15 « inverse » ; 10 en dimension 64, 17 en dimension 256) ; la v7 les lit toutes « désaccord des deux sens ». Dans 25 des 27, les deux modèles rompent la cohérence ; dans 2 (dimension 256, amplitude 0,9), un seul.
+  - **Prix** : la cohérence change aussi **37 « positif » vrais** en « désaccord des deux sens », tous avec un seul modèle incohérent : contexte du jeu b × 0,6 (18 sur 18, dimension 64 et 256), × 0,8 (10 sur 18), signature négative du jeu a au 8B sous H_A (5 sur 6 en dimension 256 ; 2 sur 4 et 1 sur 4 dans les cas « H_A masqué » et « fuite masquée » de la v6, au tau 0,15), et une fois sous H_A sans signature, au tau 0,8. Sous H_0 avec un contexte du jeu b × 0,8, « nul » tient (12 sur 12).
+  - **Aucune autre lecture ne change** entre les deux règles, sur les 386 analyses.
+  - **La seule issue prononcée sous la signature d'un seul jeu** reste une « fuite de signe inverse (petit) » (signature négative du jeu a, graine 3138), la même qu'en v5 et v6 ; son explication (recouvrement fortuit de la signature avec le contexte en dimension 64 : λ effectif −0,35) est dans l'audit de la v6 (`docs/notes/echelle-conscience-eval/v6/audit-simulation-v6/audit-simulation-v6.txt`, `4347a2a6…`), mêmes graines, mêmes activations.
+  - **Doubles signatures** (limite CLZ-08 et CLW-02) : mêmes analyses et mêmes lectures qu'en v6 (« positif » 3 fois sur 4 au 8B, 2 avec la réserve « fuite non spécifique » ; « fuite de signe inverse (petit) » 2 fois sur 4, les 2 avec la réserve ; « inverse » 4 fois sur 4 au 70B, **aucune avec la réserve**) ; la cohérence ne les voit pas ; composantes fortuites et analyse dans l'audit de la v6.
+  - **Rejeu des bancs de cl5 et de cl6** (`docs/notes/echelle-conscience-eval/v7/rejeu-bancs-cl5-cl6/resume-rejeu-bancs-cl5-cl6-v7.txt`, `3cbb2b96…` ; détail `rejeu-bancs-cl5-cl6-v7.jsonl`, `fb304038…`) : 176 analyses, mêmes graines, analyse v7 ; intervalles de λ identiques à ceux des bancs dans les 176. Les 7 « positif » et 3 « inverse » que la v6 prononçait sous la classe de cl6 (dimension 256, dont les deux analyses à 2 000 tirages) deviennent « désaccord des deux sens » ; 6 « positif » vrais aussi (H_A sous une signature d'un seul jeu, 5 ; sous des signatures croisées de signes opposés, 1). Aucune autre lecture ne change.
+- **Prix de la symétrie et de la cohérence** (CLW-05, CLV-03, CLU-05) :
+  - sur les 17 cases communes avec la simulation v3 (`docs/notes/echelle-conscience-eval/v3/atteignabilite-echelle-v3.json`, `8d90b2e7…`), « positif » et « inverse » se lisent comme en v3, sauf sous H_A au tau 0,8, où un « positif » sur trois devient « désaccord des deux sens » (cohérence rompue par le bruit chez un modèle). Le prix sur les issues nulles reste le « pas de fuite » perdu au tau 0,8. Ailleurs, la lecture en dit plus sans rien prononcer (« nul non confirmé » sous H_0 au tau 0,8 ; quatre « positif non confirmé (a→b) » sous H_A faible). Les autres cases communes ne changent pas de décision ;
+  - sur les 41 cases communes avec la simulation v6 (mêmes graines), 38 ne changent pas ; les 3 autres perdent chacune un ou deux « positif » vrais, lus « désaccord des deux sens » (H_A au tau 0,8 ; H_A masqué et fuite masquée, au tau 0,15).
+- « Indécis » devient fréquent sous H_0 quand l'hétérogénéité des cadrages croît (tau 0,8). Un H_A faible (écart de 0,4) n'est retrouvé dans les deux sens qu'avec des cadrages homogènes. En dimension 256, au tau 0,4, H_0 se lit souvent « nul non confirmé ».
+- Le modèle synthétique est idéalisé : un vrai flux résiduel est anisotrope. Ce tableau montre l'atteignabilité des issues et l'absence de faux positif dans ces cas ; il ne prédit pas la puissance réelle.
+
+## Plan d'analyse
+
+1. **Avant le GO, sans dépense, fait** : gabarits identiques et dernier jeton constant pour les deux jeton-iseurs ; contrôles lexicaux dans les deux sens ; tailles des modèles relues ; offre de référence relue en lecture seule.
+2. **Lancement** : `VASTAI=<vastai 1.8.3> lancer_echelle_v7.sh <dossier neuf> b54da1fe41e26360cb5410bfd2fdc0614537de1d <GO_ID>`, depuis l'arbre des outils à ce commit :
+   - préenregistrement scellé, **qui cite le commit lancé** (CLW-04) ; **lanceur identique à celui du commit** (CLV-06) ; commit à la tête de la branche d'outils ; branche de résultats absente ; version de vastai ;
+   - garde de calcul avec le GO, puis **GO relu dans le registre** (périmètre, empreinte du texte scellé, plafond ; CLW-03, CLV-05) ;
+   - choix d'offre sous le plafond (prix majoré de la tolérance, 24 h de stockage, remontée et 165 Go de descente compris), crédit ;
+   - création avec `DUREE_MAX_S` et `CREATION_S` transmises à l'instance ; « duree_max_s », « creation » et **l'empreinte attendue de la surveillance** (lue dans le commit, CLV-06) écrites dans `lancement.txt` ;
+   - prix relus par `controler_prix_v7.sh`.
+3. **Sur l'instance** (clonage borné à 600 s par l'amorce, CLU-04 ; puis `echelle_instance_v7.sh`, sous le délai de l'amorce, compté depuis la création) :
+   - mesurer le 8B et pousser ; effacer le 8B du cache, mesurer le 70B et pousser, sur la branche neuve `donnees/echelle-conscience-eval-v7` ;
+   - recherche de clé avant toute poussée ;
+   - aucune lecture.
+4. **Surveillance** : `VASTAI=<vastai 1.8.3> DUREE_MAX_S=<plafond du lanceur> surveiller_echelle_v7.sh <id> <création> <dossier du lancement> <dossier neuf>`, depuis l'arbre des outils au même commit, sans `APPEL_S`, `PAS_S` ni `ATTENTE_ARRET_S` dans l'environnement (réglages réels : 30, 60 et 20 s, écrits en tête d'`etats.txt`, CLU-02). Elle refuse de partir si son empreinte n'est pas celle que le lanceur a lue dans le commit (CLV-06), ou si un réglage est hors de ses bornes (CLU-02). Arrêt par identifiant ; code de fin de l'amorce relu et consigné, refus précoces compris (CLW-08). Puis **destruction par identifiant**, après vérification des résultats poussés, au plus tard 24 h après l'arrêt.
+5. **En local, processeur** :
+   - `python -I -B analyser_echelle_v7.py echelle-v2.json <petit> <grand> 4429003211691042563 <sortie neuve> --commit-attendu b54da1fe41e26360cb5410bfd2fdc0614537de1d`, depuis un arbre propre ;
+   - la sortie `analyse-echelle-v7.json` est scellée.
+6. **Lecture** : mécanique (ci-dessous), prononcée par un sous-agent neuf qui n'a écrit ni ce texte ni l'analyse, puis scellée.
+
+## Critères de lecture gelés
+
+La lecture se fait en deux étapes (`issues_tenues()` puis `lire()` de l'analyse). Les conditions P(s) et I(s) sont définies à la suite. La formulation est celle du v4 (CLY-09) : « déplace la lecture le long de la direction "évaluation", vers son pôle "évaluation" ».
+
+**Étape 1 — chaque sens s ∈ {a→b, b→a} est lu seul, par les mêmes règles.**
+
+- Si la borne basse de A_ctx_fixe_s est < 0,70 pour les deux modèles, le sens rend l'échec **non certifiable** ; pour un seul modèle, **certification asymétrique (grand seulement | petit seulement)**.
+- Sinon, le sens rend **l'ensemble des issues dont toutes les conditions tiennent** (CLW-01), dans l'ordre de lecture, en cinq étapes :
+  1. **fuite de signe inverse, modèle par modèle** (CLV-01) : « fuite de signe inverse (petit) » si la borne haute de λ_s(8B) est < −δ ; « fuite de signe inverse (grand) » si celle de λ_s(70B) l'est. Les deux appartiennent à la même étape : aucune ne passe avant l'autre ;
+  2. **positif** : P(s) ;
+  3. **inverse** : I(s) ;
+  4. **pas de fuite** : les deux intervalles de λ_s inclus dans [−δ ; δ] ;
+  5. **nul** : intervalle de Δλ_s inclus dans [−δ ; δ].
+- Les issues ne s'excluent pas toutes : « nul » peut tenir avec « pas de fuite » ou avec une fuite de signe inverse, et les deux fuites de signe inverse peuvent tenir ensemble. « Positif » et « inverse » excluent toute autre issue.
+- Un sens certifié qui n'en tient aucune est « indécis ». La lecture rapportée d'un sens nomme sa première étape tenue ; à l'étape 1, « fuite de signe inverse (petit et grand) » si les deux modèles y sont.
+
+**Étape 2 — les deux lectures sont combinées (CLZ-01, CLZ-02, CLW-01, CLV-01, CLU-01).** Une issue est **commune** si elle tient dans les deux sens, chez les mêmes modèles :
+
+- pour la fuite de signe inverse, c'est **le même modèle** dont la borne haute de λ est sous −δ dans les deux sens ;
+- pour « positif », « inverse » et « nul », qui comparent les deux modèles, il faut de plus la **cohérence des deux sens** : pour chacun des deux modèles, |λ_a→b(m) − λ_b→a(m)| ≤ δ, en point (CLU-01). Sans elle, l'écart d'échelle peut être porté par le 8B dans un sens et par le 70B dans l'autre ; l'issue n'est pas commune ;
+- « pas de fuite » ne la demande pas : ses quatre intervalles de λ sont déjà dans [−δ ; δ].
+
+La combinaison :
+
+- aucun sens certifié : l'échec commun s'il est le même dans les deux sens (**non certifiable** ou **certification asymétrique**), sinon **non certifiable** ;
+- les deux sens certifiés, et une issue commune au moins : on prononce **la première étape, dans l'ordre de lecture, qui porte une issue commune**. À l'étape 1 : « fuite de signe inverse (petit) », « fuite de signe inverse (grand) », ou « fuite de signe inverse (petit et grand) » si les deux sont communes ;
+  - toute issue tenue dans un seul sens et placée **avant cette étape ou dans la même** devient une **réserve obligatoire** : « X lu dans le seul sens s (non confirmé) ». Ainsi « fuite de signe inverse (petit) » commune, avec le 70B sous −δ dans un seul sens, porte la réserve « fuite de signe inverse (grand) lu dans le seul sens s » ;
+  - c'est le cas tranché par la contre-lecture n° 4 : une fuite de signe inverse dans un seul sens et « nul » dans les deux donne « nul », avec la réserve. L'équivalence d'échelle est établie dans les deux sens ; le signe de la fuite ne l'est pas ;
+- aucune issue commune, et une issue tenue dans chaque sens : **désaccord des deux sens**. C'est le cas d'une fuite de signe inverse tenue par le 8B dans un sens et par le 70B dans l'autre : aucun modèle ne la tient dans les deux (CLV-01) ; et celui de « positif », « inverse » ou « nul » tenu dans les deux sens sans la cohérence des deux sens (CLU-01) ;
+- aucune issue commune, et des issues tenues dans un seul sens, l'autre indécis ou non certifié : **« X non confirmé (sens de l'autre) »**, X la première étape tenue ;
+- sinon : **indécis**.
+- **Pour chaque issue tenue dans un seul sens**, ce qui lui manque dans l'autre sens est rapporté avec ses bornes, certification comprise (CLV-07). **Pour chaque issue tenue dans les deux sens sans la cohérence**, l'écart de chaque modèle qui la rompt est rapporté, en point et avec son intervalle (CLU-01).
+- Une issue tenue dans les deux sens sans la cohérence ne précède jamais l'étape prononcée : « positif » et « inverse » excluent toute autre issue d'un sens, et « nul » est la dernière étape. Elle ne devient donc jamais une réserve.
+
+**Réserves propres à l'issue prononcée** (obligatoires ; CLW-02) :
+
+- **« fuite non spécifique »** (témoin de permutation ν) :
+  - « positif » : borne basse de la spécificité ≤ 0 dans un sens au moins ;
+  - « inverse » : borne haute de la spécificité ≥ 0 dans un sens au moins ;
+  - fuite de signe inverse : borne basse de −λ − ν ≤ 0, dans un sens au moins, **pour un modèle prononcé** ; la réserve nomme le modèle (CLV-01).
+- **« profondeur »**, si, dans un sens au moins, trois des quatre profondeurs appariées contredisent l'issue (en points) :
+  - « positif » et « inverse » : Δλ de signe contraire ;
+  - fuite de signe inverse : λ > 0 **pour un modèle prononcé** ; la réserve nomme le modèle (CLV-01) ;
+  - « pas de fuite » : |λ| > δ pour l'un des modèles ;
+  - « nul » : |Δλ| > δ.
+- **« X non confirmé », « désaccord des deux sens », « indécis » et les échecs de certification ne portent aucune réserve** (CLV-07) : rien n'y est prononcé.
+
+Phrases permises, une par issue (CLX-15, CLZ-10) :
+
+- **Non certifiable** : « Dans aucun des deux sens la direction apprise ne lit le contexte aux deux tailles sur des paraphrases tenues à part ; λ n'est pas interprétable. »
+- **Certification asymétrique (X seulement)** : « Dans les deux sens, seul le modèle X lit le contexte sur des paraphrases tenues à part ; λ n'est pas lu. » ΔA_ctx_fixe est rapporté, dans les deux sens.
+- **Fuite de signe inverse (taille)** : « Dans les deux sens, à la taille 8B [ou : à la taille 70B ; ou : aux deux tailles], le gabarit de banc d'essai déplace la lecture vers le pôle "usage réel" ; la comparaison d'échelle n'est pas lue. » (CLV-01)
+- **Positif** : « Sur Llama-3.1, à contenu égal et à format croisé, le gabarit de banc d'essai déplace la lecture le long de la direction "évaluation", vers son pôle "évaluation", moins à 70B qu'à 8B, relativement à l'effet du contexte sur des paraphrases tenues à part, dans les deux sens d'apprentissage. »
+- **Inverse** : « Sur Llama-3.1, à contenu égal et à format croisé, le gabarit de banc d'essai déplace la lecture le long de la direction "évaluation", vers son pôle "évaluation", plus à 70B qu'à 8B, relativement à l'effet du contexte sur des paraphrases tenues à part, dans les deux sens d'apprentissage. »
+- **Pas de fuite** : « Dans les deux sens, aux deux tailles, le gabarit ne déplace pas la lecture de plus d'un quart de l'effet du contexte ; la thèse "format chez les petits" n'est pas retrouvée sous cette manipulation. »
+- **Nul** : « Dans les deux sens, l'écart d'échelle de la fuite du format est inférieur à δ (équivalence). »
+- Toute issue prononcée porte ses réserves, chacune dite avec elle.
+- **X non confirmé (sens s')** : « L'issue X n'est lue que dans le sens s ; dans le sens s', [conditions manquantes, avec leurs bornes]. L'écart entre les deux sens peut tenir à la signature des cadrages d'un jeu, à une différence de force du contexte entre les deux jeux, ou au manque de puissance ; aucune issue n'est établie. »
+- **Désaccord des deux sens** : « Les deux sens lisent deux issues différentes (a→b : X ; b→a : Y), et aucune issue ne tient dans les deux. L'écart peut tenir à la signature des cadrages d'un jeu, à une différence de force du contexte entre les deux jeux, ou à la variabilité près des seuils, par exemple un écart vrai proche de δ ; aucune issue n'est établie. » (CLW-06) Pour une fuite de signe inverse tenue par un modèle différent dans chaque sens, la phrase nomme les deux modèles. Pour « positif », « inverse » ou « nul » tenu dans les deux sens sans la cohérence, elle le dit : « Les deux sens lisent X, mais le λ du modèle M change de e d'un sens à l'autre [pour chaque modèle qui la rompt] : l'écart d'échelle n'est pas porté par les mêmes modèles dans les deux sens. » (CLU-01)
+- **Indécis** : « Le dispositif ne tranche pas. » Sous H_0, cette issue devient fréquente quand l'hétérogénéité des cadrages croît (tableau ci-dessus) ; elle n'est pas un « nul ».
+
+Conditions :
+
+- **P(s)** : borne basse de Δλ_s > δ ; borne basse de λ_s(8B) > δ ; borne basse de λ_s(70B) > −δ ; borne haute de λ_s(70B) < 1.
+- **I(s)** : borne haute de Δλ_s < −δ ; borne basse de λ_s(70B) > δ ; borne basse de λ_s(8B) > −δ ; borne haute de λ_s(8B) < 1.
+
+Rapportés dans tous les cas, sans lecture décisive :
+
+- la lecture de chaque sens, l'ensemble des issues tenues dans chacun, et les conditions manquantes de chaque issue tenue dans un seul sens, ou tenue dans les deux sans la cohérence ;
+- l'écart e(m) de chaque modèle entre les deux sens, en point et avec son intervalle, et la cohérence des deux sens, tenue ou non (CLU-01) ;
+- par modèle et par sens : λ, A_ctx_fixe, A_ctx, A_conf, Ec, Ef, ν, A_conf_T1, avec intervalles ; les grandeurs en points ;
+- spécificités, spécificités de signe inverse, Δλ, ΔA_ctx_fixe et ΔA_conf, dans les deux sens ;
+- λ et Δλ aux quatre profondeurs, dans les deux sens ;
+- sac de mots dans les deux sens, et marge de A_ctx_fixe sur lui ; L\* et ses notes, dans les deux sens.
+
+Limites de la lecture :
+
+- une famille, deux tailles, une manipulation de contexte (« l'auteur connaît la réponse ») ;
+- aucune généralisation ;
+- ĉ mêle une intention déclarée et une polarité possession/absence (CLX-16) ;
+- des asymétries de mots courts subsistent entre eval et reel, comptées dans la trace lexicale (CLY-12) ;
+- **une poussée du format alignée à la fois sur les signatures des deux jeux de cadrages, chez un même modèle, passe les deux sens, et fabrique « positif », « inverse » ou une fuite de signe inverse selon son signe et la taille qu'elle touche** (CLZ-08, CLW-02, CLV-04). La cohérence des deux sens ne la voit pas : le λ du modèle touché bouge autant dans les deux sens (CLU-01) :
+  - avec deux jeux de cadrages seulement, elle ne se distingue pas d'une fuite du concept, puisque le concept est estimé par ce qui est commun aux deux jeux ; un troisième jeu tenu à part le permettrait ;
+  - la réserve « fuite non spécifique » ne la signale qu'en partie : dans la simulation (mêmes analyses qu'en v6), 2 fois sur 3 pour « positif », 2 sur 2 pour « fuite de signe inverse (petit) », 0 sur 4 pour « inverse » ; dans les bancs de cl5 rejoués avec l'analyse v7, 3 fois sur 4 pour « positif », 1 sur 4 pour « fuite de signe inverse (petit) », 2 sur 4 pour « inverse » ;
+  - il faut, pour qu'elle joue, que le format pousse ensemble deux particularités indépendantes, chez le même modèle ;
+  - une double signature d'amplitudes inégales chez un modèle rompt en partie la cohérence de ce modèle ; elle reste, pour le reste, dans cette limite ;
+  - toute issue prononcée se lit donc sous cette limite ;
+- **les signatures d'un seul jeu à deux tailles différentes** (« croisées ») ne déplacent chacune qu'un sens, chez un modèle différent :
+  - de même signe, sans fuite du concept : la fuite de signe inverse n'est pas prononcée, puisque aucun modèle ne la tient dans les deux sens (CLV-01) ;
+  - **de signes opposés, sous une fuite égale non nulle (H_0)** : chaque sens tient « positif » (ou « inverse ») par un modèle différent ; **la cohérence des deux sens les écarte** (CLU-01), puisque chaque modèle change de λ d'un sens à l'autre d'à peu près l'écart d'échelle du sens que sa signature touche. Dans la simulation : 144 analyses (dimension 64 et 256, deux amplitudes par dimension, les deux ordres et leurs miroirs), aucune issue prononcée, là où la règle de la v6 aurait prononcé 27 « positif » ou « inverse ». Dans les bancs de cl6 rejoués avec l'analyse v7, les 7 « positif » et les 3 « inverse » que la v6 prononçait deviennent « désaccord des deux sens » (dans les 10, les deux modèles rompent la cohérence, de 0,34 à 0,57 en valeur absolue) ;
+  - près du seuil, le bruit peut faire passer l'écart d'un modèle sous δ ; la règle bloque l'issue dès qu'un seul des deux modèles rompt la cohérence, si bien qu'il faudrait les deux écarts sous δ ensemble pour que l'artefact passe ; dans la simulation, 2 des 27 artefacts n'avaient qu'un modèle incohérent, et aucun n'en avait zéro ;
+- **prix de la cohérence des deux sens** (CLU-01), perte de puissance, écrite :
+  - λ est relatif au contexte du jeu mesuré : une différence de force du contexte entre les deux jeux multiplie le λ des deux modèles dans un sens, et, quand λ est grand, rompt la cohérence du modèle qui fuit le plus, alors que l'écart d'échelle de chaque sens reste juste. Simulation, H_A (1,0 et 0,2) : sous un contexte du jeu b × 0,6, « positif » est perdu 18 fois sur 18, lu « désaccord des deux sens » ; × 0,8, 10 fois sur 18 ; sous H_0 (0,5 et 0,5) avec un contexte × 0,8, « nul » tient 12 fois sur 12. Le texte ne sait pas, avant la mesure, si les deux jeux de cadrages ont la même force de contexte ; Ec est rapporté par modèle et par sens (donc par jeu mesuré), sans lecture décisive ;
+  - sous H_A, la signature d'un seul jeu chez un modèle rompt la cohérence de ce modèle : dans les bancs de cl5 rejoués, 6 « positif » vrais deviennent « désaccord des deux sens » (5 sous la signature d'un seul jeu au 8B, `masque_HA_fort_t015` et `masque_pasdefuite_t015` ; 1 sous des signatures croisées de signes opposés, `masque_croise_HA_doux_t015`) ; dans la simulation, 5 sur 6 sous une signature négative du jeu a au 8B (−1, dimension 256), et 3 dans les cas « H_A masqué » et « fuite masquée » de la v6 ;
+  - **règle écartée, chiffrée** (audit, contrefactuel) : bloquer seulement quand les deux modèles rompent la cohérence garderait les 37 « positif » vrais perdus de la simulation (un seul modèle incohérent dans chacun) et 5 des 6 des bancs ; mais elle aurait laissé passer 2 des 27 artefacts de la simulation (dimension 256, amplitude 0,9 : un seul modèle incohérent). Le texte garde la règle la plus sûre contre l'artefact (un seul modèle suffit) et en paie le prix en puissance ; l'issue perdue est un « désaccord des deux sens », jamais une issue fausse ;
+- **sous H_A, les signatures peuvent faire perdre l'écart vrai** (perte de puissance, CLV-04, CLU-05) : une double signature négative au 8B, ou des signatures croisées de signes opposés, rendent « indécis » ou « non confirmé » là où H_A tient. Simulation, mêmes analyses qu'en v6 : indécis 5, non confirmé 3, sur 8 analyses. Bancs de cl5 rejoués avec l'analyse v7, cinq scénarios et 20 analyses (`masque_double_t04`, `masque_double_t015`, `masque_croise_HA_t04`, `masque_croise_HA_t015`, `masque_croise_HA_doux_t015` ; la v7 compte `masque_double_t015`, que le compte du brouillon v7 omettait) : indécis 11, positif 4, positif non confirmé 3, désaccord des deux sens 1, nul non confirmé 1. Aucune n'a fabriqué de « nul » prononcé ; un « nul » est lu dans un seul sens, une fois ;
+- rien ne relie ici ĉ à une conscience d'évaluation implicite ;
+- une sonde linéaire qui lit un texte mesure la représentation du lecteur (R-525).
+
+**R4** : une issue trop propre déclenche le même audit des formes et des empreintes, quel que soit son signe, avant tout rapport, et une réserve. Par exemple :
+
+- λ exactement nul ;
+- intervalles anormalement étroits ;
+- A_conf ou A_conf_T1 à 1,00 **avec λ ≥ 0,5**. Avec un λ petit, une aire de 1,00 est attendue dès que le contexte sature : c'est la prédiction pour le 70B (CLZ-09) ;
+- en miroir, A_conf ou A_conf_T1 à 0,00 **avec λ < 1**, une inversion trop nette (CLW-10).
+
+A_ctx_fixe peut valoir 1,00 sans réserve, puisque le contexte est explicite (CLY-11).
+
+## Liste d'arrêt
+
+Chacune arrête sans lecture et se consigne.
+
+Au lancement :
+
+- préenregistrement non scellé ou non conforme ; **texte scellé qui ne cite pas le commit lancé** (CLW-04) ;
+- **lanceur différent de celui du commit lancé** (empreinte comparée à celle du fichier du commit, CLV-06) ;
+- tête de la branche d'outils différente du commit ;
+- branche de résultats présente, ou `ls-remote` en erreur ;
+- **vastai d'une autre version que 1.8.3** (CLW-10) ;
+- GO refusé par la garde de calcul ; **GO qui ne cite pas le texte scellé et son empreinte, d'un autre type, d'un autre auteur, de plafond inférieur à 8 USD ou écrit autrement que « N USD »** (CLW-03, CLV-05) ;
+- aucune offre dont la dépense au pire (prix majoré de la tolérance, 24 h de stockage, remontée et 165 Go de descente compris) tient sous le plafond, ou crédit insuffisant ;
+- jeton absent ; instance hors liste ;
+- appel à vastai coupé par sa borne avant la création (60 s) : arrêt, aucune création (CLV-02) ;
+- **création douteuse** (réponse illisible, statut non nul, identifiant illisible, ou création coupée par sa borne de 120 s) : code 7. Conduite : retrouver l'instance (champs filtrés), l'arrêter par son identifiant, et ne lire aucun résultat poussé sans décision de Lazar (CLW-08, CLV-02) ;
+- **prix relu non conforme ou illisible** : arrêt par identifiant, état relu (code 4 si l'arrêt est relu, 6 sinon : vérification à la main).
+
+Sur l'instance (tout refus précoce de l'amorce écrit aussi sa ligne « fin, code 1 », CLW-08) :
+
+- **`DUREE_MAX_S` absente ou hors de [4 500 ; 7 200] s, ou `CREATION_S` absente** : l'amorce refuse ;
+- **moins de 2 700 s restants avant le plafond** au départ de l'amorce : refus, aucun calcul ;
+- clonage impossible ou **plus long que 600 s** (CLU-04) ; HEAD différent du commit ; dossiers d'un essai précédent présents ;
+- empreinte des stimuli ou d'un script différente de son compagnon ;
+- installation impossible ; carte indisponible ; refus de téléchargement ;
+- révision ou `_commit_hash` contraires ; dernier jeton non constant, avant tout chargement de poids ;
+- **paramètre hors des cartes** (délesté sur le processeur ou le disque) ;
+- activation non finie ou hors de float16 ;
+- clé trouvée dans les sorties ou les journaux : rien n'est poussé ;
+- **délai de l'amorce atteint** : calcul interrompu (code 124), rien de plus n'est poussé.
+
+Surveillance et coûts :
+
+- **`DUREE_MAX_S` absente, hors de [4 500 ; 7 200] s ou différente de celle du lanceur ; création ou identifiant absents de `lancement.txt` ; empreinte de la surveillance absente de `lancement.txt` ou différente de la sienne** (CLV-06) ; **`APPEL_S`, `PAS_S` ou `ATTENTE_ARRET_S` illisible, vide ou hors de [1 ; 30], [1 ; 60] ou [0 ; 60] s** (CLU-02) : la surveillance refuse de partir ;
+- plafond de durée atteint, testé en tête de boucle et après les appels, sur l'heure relue (CLV-02), ou conteneur sorti sans ligne de fin : arrêt par identifiant (sortie 5) ;
+- **amorce finie avec un code non nul**, refus précoces compris : arrêt par identifiant, code consigné (sortie 7) ;
+- chaque appel à vastai de la surveillance est borné à `APPEL_S`, 30 s par défaut, jamais plus, jamais 0 (CLV-02, CLU-02) ;
+- **instance non détruite 24 h après l'arrêt** : destruction par identifiant, consignée.
+
+Si le 8B est poussé et que le 70B échoue : aucune lecture du 8B seul. Relancer le 70B demande un script nouveau, un texte modifié (nœud), un GO nouveau et une branche neuve.
+
+En local :
+
+- **mode décisif** : commit différent de `b54da1fe41e26360cb5410bfd2fdc0614537de1d`, arbre non propre, numpy différent de 2.4.6, **script de mesure d'un autre nom ou d'une autre empreinte que `mesurer_echelle_v7.py` de cet arbre** (CLW-04) ;
+- dossiers inversés ; modèle, révision, couches, dimension ou type inattendus ;
+- empreinte des stimuli du manifeste différente ; mesure limitée ;
+- gabarit de dialogue ou dernier jeton différents entre les modèles ;
+- compagnon absent, empreinte différente du manifeste, `ids.json` compris ; ordre des identifiants ;
+- forme ; valeur non finie ; tirage de bootstrap non fini.
+
+Pour tout le reste : toute surprise arrête, fait l'objet d'un compte rendu, et Lazar décide.
+
+## Gardes testées (R5)
+
+344 tests passent au commit `b54da1f…` : `docs/notes/echelle-conscience-eval/v7/tests-echelle-v7-b54da1f.txt` (`4a74bf1e…`), commit écrit en tête, avec le modèle minuscule local. La simulation, la répétition, le contrôle lexical, l'offre de référence, l'essai de latence de la surveillance et le rejeu des bancs ont été faits au même commit, arbre propre.
+
+| garde | cas sain | artefacts | où |
+|---|---|---|---|
+| stimuli | construction | gabarit d'état, pli incomplet, négation, lemme commun | `test_construire_echelle_v7.py` (5) |
+| mesure | mesure complète (modèle minuscule) ; tous les paramètres sur les cartes, avec ou sans carte des couches | révision, hachage, dernier jeton, NaN, float16, R12 ; paramètres sur « cpu », sur « meta » ou aucun ; délestage réel forcé sur le disque ; couches « cpu » ou « disk » dans la carte | `test_mesurer_echelle_v7.py` (8) |
+| lecture mécanique | 85 cas fabriqués : chaque issue lue dans les deux sens ; chaque fuite de signe inverse, du 8B, du 70B, des deux (CLV-01) ; chaque issue non confirmée ; désaccord ; échecs de certification combinés ; issues compatibles (CLW-01) ; **cohérence tenue à sa borne (\|e\| = δ), pour chaque modèle (CLU-01)** | conditions de « positif » et de « inverse » refusées une à une ; fuite de signe inverse tenue par un modèle différent dans chaque sens (CLV-01) ; le même modèle dans les deux sens, l'autre dans un seul ; réserves une à une (CLW-02), restreintes aux modèles prononcés ; **les trois cas fabriqués de cl6 (« positif », « inverse », « nul » portés par des modèles différents d'un sens à l'autre) ; cohérence rompue juste au-delà de δ, de chaque signe, par un seul modèle ou par les deux, pour « positif », « inverse » et « nul » ; issues qui ne la demandent pas (fuite de signe inverse, « pas de fuite ») ; issue tenue dans un seul sens (CLU-01)** ; les 85 cas rejoués sens échangés ; conditions manquantes chiffrées (CLV-07), **et l'écart de chaque modèle qui rompt la cohérence (CLU-01)** ; **texte de chaque réserve, modèle et sens nommés, en direct et en miroir (CLU-05)** | `test_analyser_echelle_v7.py` : `test_lire` (85), `test_lire_miroir` (85), `test_texte_des_reserves` (12), trois tests des conditions manquantes, quatre de la cohérence rapportée |
+| intégration | positif confirmé ; nul strict ; translation ; témoin sensible ; tirage conditionné ; « nul » tenu dans les deux sens avec « pas de fuite » dans un seul (CLW-01) ; profondeur sur quatre couches, cas sain pour chaque issue (CLV-08) ; **H_A en dimension 256 : cohérence tenue, « positif » (CLU-01)** | signature du jeu a, positive et négative ; signature négative au 70B ; signature du jeu b ; signatures croisées négatives, dans les deux ordres (CLV-01) ; **signatures croisées de signes opposés sous une fuite égale (λ 0,5 et 0,5), en dimension 256, et leur miroir : « positif » et « inverse » tenus dans les deux sens, lecture « désaccord des deux sens » (CLU-01)** ; **contexte du jeu b × 0,6 sous H_A : cohérence rompue, prix assumé (CLU-01)** ; effet vrai masqué ; profondeur contraire pour chaque issue (CLV-08) ; forces de paires inégales sans fausse réserve | `test_analyser_echelle_v7.py` |
+| mode décisif | décisif sain | sans commit attendu, commit différent, arbre non propre, numpy différent | `test_analyser_echelle_v7.py` |
+| identité et intégrité | — | dossiers inversés ; dix champs du manifeste, un test chacun, dont le nom et l'empreinte du script de mesure (CLW-04) ; ordre ; compagnon ; empreinte ; NaN ; forme ; sortie présente ; répétition marquée | `test_analyser_echelle_v7.py` |
+| gardes du lanceur, extraites telles quelles et jouées (R5) | texte scellé qui cite le commit ; vastai 1.8.3 ; GO propre à l'expérience ; empreinte du texte scellé extraite et passée au contrôle du GO (CLV-08) ; lanceur identique à celui du commit, empreinte de la surveillance écrite (CLV-06) | texte scellé d'un autre commit ; vastai 1.8.2 ou muet ; GO de plafond 2 USD ; garde de scellement qui refuse, ou qui rend une empreinte illisible (CLV-08) ; lanceur modifié (CLV-06) | `test_offre_et_surveillance_v7.py` (12) |
+| offre et plafond | offre sous le plafond ; durée raccourcie ; **plafond tenu au prix majoré sur tout un domaine d'offres, avec toute la latence que couvre la marge (195,9 s ; CLU-03)** | 11 artefacts, dont débit sous 2 000 Mb/s, remontée illisible ou chère, 24 h de stockage qui dépassent le plafond | `test_offre_et_surveillance_v7.py` |
+| prix relu | prix égal ; +4 % ; prix secondaires absents, consignés | +6 % ; un seul prix au-delà ; six réponses illisibles ; offre illisible ; script de contrôle : arrêt relu (4), illisible (4), arrêt non relu (6) | `test_offre_et_surveillance_v7.py` |
+| GO cité (CLW-03) | GO propre à l'expérience ; plafond écrit avec une virgule ; ligne d'extension ignorée | autre périmètre ; GO sans l'empreinte (antérieur au scellement) ; plafond plus petit ; plafond illisible ; autre type ; autre auteur ; doublon ; GO absent ; registre mal formé (code 2) | `test_offre_et_surveillance_v7.py` (`test_go`, 11 ; codes) |
+| surveillance | fin saine (code 0) ; appels lents (2 s, sous leur borne de 3 s) et appels bloqués (coupés à leur borne de 2 s) : arrêt demandé au plus deux appels après le plafond (CLV-02) ; **pause réelle de 60 s bornée par le plafond, arrêt demandé au plus 2 s après lui (CLU-03)** ; **réglages aux bornes (1, 60, 60 et 30, 1, 0), consignés en tête d'`etats.txt` et dans `arret.txt` (CLU-02)** | amorce finie en échec, codes 1 et 124 (sortie 7) ; plafond ; arrêt non relu ; conteneur sorti sans ligne de fin (5) ; refus de partir : plafond absent, 9 000, 7 201, 4 499 ou illisible, différent de celui du lanceur, identifiant absent, création différente, empreinte attendue fausse ou absente (CLV-06) ; **`APPEL_S` à 0, 31, « 030 » ou vide, `PAS_S` à « abc », 0, 61 ou 1,5, `ATTENTE_ARRET_S` à 61 ou −1 : refus de partir, code 2, avant tout appel (CLU-02)** | `test_offre_et_surveillance_v7.py` |
+| chaîne d'instance | deux mesures, deux poussées ; **borne du clonage (600 s) écrite par l'amorce (CLU-04)** | mauvais commit, branche présente, stimuli altérés, clé, `ls-remote`, téléchargement refusé, `DUREE_MAX_S` absente, 4 499 et 7 201 s, création absente, création trop ancienne, compagnon de script faux, délai atteint (code 124, rien de poussé, aucun processus restant) ; **clonage bloqué : un faux git qui ne rend pas la main, refus à la borne d'essai (5 s), ligne de fin, rien de poussé (CLU-04)** ; ligne de fin écrite par les sept refus précoces (CLW-08) | `repeter_instance_v7.sh` ; `docs/notes/echelle-conscience-eval/v7/repetition-instance/RESUME.txt` (`7f60892c…`) |
+
+- La chaîne a été jouée de bout en bout sur le modèle minuscule : mesures poussées, puis analyse v7 en répétition. Elle lit « non certifiable » dans les deux sens, comme en v6, puisque le modèle minuscule n'a pas appris le contexte ; la cohérence des deux sens y est rapportée, sans objet (`docs/notes/echelle-conscience-eval/v7/repetition-instance/analyse-repetition-modele-minuscule.json`, `d4f57808…`).
+- Chaque artefact de la répétition s'est arrêté pour sa propre raison ; les journaux sont versés à côté du résumé.
+- Le lanceur n'est pas répété en local, puisqu'il appelle vastai. Ses gardes sont testées : le contrôle du prix (`controler_prix_v7.sh`) et celui du GO (`verifier_go_v7.py`), comme scripts ; les lignes de garde du commit cité, de la version, du GO relu, de l'empreinte du texte scellé et de l'identité du lanceur, extraites du lanceur telles quelles. Les bornes des appels du lanceur (60 s ; 120 s pour la création) ne sont pas répétées : une création coupée rend une réponse illisible, que le chemin du code 7, testé par la contre-lecture n° 4, traite.
+- **Latence de la surveillance aux réglages réels** (CLU-03) : surveillance v7 lue au commit, faux outil, pause de 60 s, appels bornés à 30 s : arrêt demandé 56,7 s (appels de 29 s) et 58,8 s (appels bloqués) après le plafond ; 0,15 s et 0,37 s quand la pause rencontre le plafond ; `APPEL_S=0` et `PAS_S=abc` refusés (`docs/notes/echelle-conscience-eval/v7/latence-surveillance/resultat-latence-v7.txt`, `4ed55cd0…`). L'essai de la v6 (appels de 2 s, pause de 1 s) reste versé ; il ne jouait pas la pause réelle (CLU-03).
+- Les gardes héritées (`exiger_prereg_scelle`, garde de calcul) n'ont pas changé. La contre-lecture n° 4 les a éprouvées sur un cas sain et trois artefacts chacune ; la contre-lecture n° 5 a joué la chaîne du lanceur sur un faux dépôt.
+
+## Écarts
+
+Au brouillon v1 :
+
+1. Llama-3.1-70B remplace la 3.3 (403).
+2. L'indice λ remplace l'aire décorrélée (plafond).
+3. Issue « surface domine » abandonnée.
+4. Quatre profondeurs.
+5. Devis refait.
+6. Cadrages réécrits sans négation déséquilibrée : sac de mots 0,98 (R-530 ; extrait empreinté `docs/notes/echelle-conscience-eval/v5/extrait-R-530.txt`, `de548478…` ; CLW-10), puis 0,585 (contre-lecture n° 1), puis 0,572 (trace lexicale) (CLZ-06).
+7. Témoins, issues supplémentaires, bootstrap sur les paires.
+8. Tests et répétition (CLY-15).
+
+Au texte v2 (contre-lecture n° 1) : traitement de CLX-01 à CLX-21, voir le brouillon v3. Au brouillon v3 (contre-lecture n° 2) : traitement de CLY-01 à CLY-15, voir le brouillon v4. Au brouillon v4 (contre-lecture n° 3) : traitement de CLZ-01 à CLZ-11, et deux défauts trouvés en chemin (garde de délestage muette sur un seul appareil ; attente mal réglée de la première répétition v4), voir le brouillon v5. Au brouillon v5 (contre-lecture n° 4) : traitement de CLW-01 à CLW-10, voir le brouillon v6. Au brouillon v6 (contre-lecture n° 5) : traitement de CLV-01 à CLV-08, voir le brouillon v7.
+
+Au brouillon v7 (contre-lecture n° 6) :
+
+| constat | gravité | traitement |
+|---|---|---|
+| CLU-01 « positif » et « inverse » prononcés sous H_0 quand l'écart d'échelle est porté par un modèle différent dans chaque sens (signatures d'un seul jeu, de signes opposés, sous une fuite égale) ; « nul » de même | bloquant | **cohérence des deux sens**, garde mécanique (option (a) de cl6) : l'analyse calcule l'écart du λ de chaque modèle entre les deux sens, e(m) = λ_a→b(m) − λ_b→a(m), en point et, sur les mêmes tirages, en intervalle ; « positif », « inverse » et « nul » ne sont communs que si \|e(m)\| ≤ δ en point pour chacun des deux modèles ; sinon « désaccord des deux sens », l'écart de chaque modèle rapporté parmi les conditions manquantes. **Forme ponctuelle et non par intervalle** : la forme « l'intervalle rencontre [−δ ; δ] » proposée par cl6 laisse passer la classe à amplitude intermédiaire (essai exploratoire versé ; section « Seuil »). Hypothèse, H_0, mesures, critères, phrase du désaccord, limites et R3 réécrits. Tests : les trois cas fabriqués de cl6 et leurs miroirs, bornes de la cohérence de chaque signe, un seul modèle incohérent, issues qui ne la demandent pas ; intégration en dimension 256 : la classe de cl6 dans les deux signes, H_A (cas sain), contexte du jeu b × 0,6 (prix). Simulation : la classe sous H_0 (0,5 et 0,5), dans les deux ordres et en miroir, aux tau 0,15 et 0,4, en dimension 64 et 256 ; prix sous H_A (contexte du jeu b plus faible ; signature d'un seul jeu) et sous H_0 (contexte × 0,8). Audit : ce que la règle v6 aurait lu sur les mêmes analyses (27 lectures fausses, toutes bloquées ; 37 « positif » vrais perdus, prix écrit dans les limites) et contrefactuel de la règle « les deux modèles » (écartée : 2 des 27 artefacts auraient passé). **Rejeu des bancs de cl5 et de cl6** avec l'analyse v7 (`docs/notes/echelle-conscience-eval/v7/rejeu-bancs-cl5-cl6/`) |
+| CLU-02 réglages d'essai de la surveillance lus sans contrôle | à corriger | `APPEL_S` dans [1 ; 30] s, `PAS_S` dans [1 ; 60] s, `ATTENTE_ARRET_S` dans [0 ; 60] s, entiers décimaux sans zéro de tête ; une valeur vide est refusée (plus de repli sur le défaut) ; sinon refus de partir, code 2, avant tout appel ; les valeurs employées sont écrites en tête d'`etats.txt` et dans `arret.txt`. Tests : `APPEL_S` à 0, 31, « 030 » ou vide, `PAS_S` à « abc », 0, 61 ou 1,5, `ATTENTE_ARRET_S` à 61 ou −1 (artefacts) ; réglages aux bornes, consignés (cas sains). Essai aux réglages réels : `APPEL_S=0` et `PAS_S=abc` refusés |
+| CLU-03 preuve de latence aux réglages d'essai ; test du plafond à 80 s | remarque | essai aux réglages réels versé (`docs/notes/echelle-conscience-eval/v7/latence-surveillance/resultat-latence-v7.txt`, `4ed55cd0…`), avec deux cas où la pause rencontre le plafond ; test de la pause réelle (60 s) bornée par le plafond ; test du plafond sur tout le domaine avec toute la latence que couvre la marge (195,9 s, calculée depuis la marge, la tolérance et le prix maximal) ; commentaire de `MARGE` mis à jour |
+| CLU-04 clonage de l'amorce non borné | remarque | `timeout 600 git clone …`, puis `refus`, qui écrit la ligne de fin ; borne écrite par l'amorce ; `CLONAGE_ESSAI_S`, réservée à la répétition, l'éprouve : cas « clonage bloqué » (faux git qui ne rend pas la main) dans la répétition ; hypothèse dite réécrite ; appels du lanceur avant toute création dits non bornés, sans coût |
+| CLU-05 phrases et tests à préciser | remarque | « issues atteintes » réécrite d'après la simulation v7 ; compte de la perte de puissance refait sur les bancs rejoués (`masque_double_t015` compris) ; « ne changent pas de décision » ; test du texte de chaque réserve (modèle et sens nommés), en direct et en miroir (12 cas) |
+
+## Traces
+
+| trace | sha256 |
+|---|---|
+| `docs/notes/echelle-conscience-eval/acces-modeles-v1.txt` | `055cf1067fea128288ce3b9562e4fb6f2d9392d33b2928eb9b2bf289311c93bb` |
+| `docs/notes/echelle-conscience-eval/v5/tailles-modeles-v1.json` | `6412e69dc733edd22ec156a88a51735d44c699ab4248dc19e38d74726d0bfd8a` |
+| `docs/notes/echelle-conscience-eval/v3/gabarits-echelle-v3.json` | `ffff0bc4ae0a0f7ffea13de93891d62dfac8758515fafe8ccef314cbc4779d2d` |
+| `docs/notes/echelle-conscience-eval/v4/offres-relues-reference-v2.json` | `f7cfe2e04ed4502eb30289d29ecd06bb1a6988e0c08aa2fbf8ce4cb5332aa3eb` |
+| `docs/notes/echelle-conscience-eval/v5/extrait-R-530.txt` | `de548478fcc72cd66557062320305ea9f0f4eeed3f351185d8c8e878fa304c05` |
+| `prereg/contre-lectures/test-echelle-conscience-eval-v2-cl1.md` | `70afa51997f66f882f79686765c9b1fdded6f0016007b626355b975abd9e673a` |
+| `prereg/contre-lectures/brouillon-test-echelle-conscience-eval-v3-cl2.md` | `9b476cf4b64a521f97cc7368ca60723e41390557291570fc6c08f30369b04803` |
+| `prereg/contre-lectures/brouillon-test-echelle-conscience-eval-v4-cl3.md` | `a2f330f09df1d0cfb3188482331de3ba847133865f4764aa7a8b1cf11cf15896` |
+| `prereg/contre-lectures/brouillon-test-echelle-conscience-eval-v5-cl4.md` | `5728de4c2a4774ab3d96f267f91189dd6d860b4fb2fdef3edd41e910477ee592` |
+| `prereg/contre-lectures/brouillon-test-echelle-conscience-eval-v6-cl5.md` | `4ea69784a824c2b05048fd9e794e8e9aede3b6b6739da62a515250cbc01fcb15` |
+| `prereg/contre-lectures/brouillon-test-echelle-conscience-eval-v7-cl6.md` | `3d7a60fcb8c7cebe083c0e27b060554203b6817f78250553d217df9efe00e583` |
+| `prereg/brouillon-test-echelle-conscience-eval-v7.md` | `e6e8a864ea2b7865bbc658b5f9ed84e34b1bd62cb8223e90d23eb1177ccf2ee4` |
+| `docs/notes/echelle-conscience-eval/v7/lexique/controles-lexicaux-echelle-v7.json` | `59b0c2fe44448ea19dac597d6365640692bfbf46dae8d345340b5bf7a9de755e` |
+| `docs/notes/echelle-conscience-eval/v7/offre-reference-v5.txt` | `c9612701c3a9c0f80f8dc802d0d26142e4300bdbe76ed9b4dc12e77360a8651d` |
+| `docs/notes/echelle-conscience-eval/v7/tests-echelle-v7-b54da1f.txt` | `4a74bf1e7f7c041bf73601bbffb19fa6b7c974a02f61d6d63252cb74c331e982` |
+| `docs/notes/echelle-conscience-eval/v7/repetition-instance/RESUME.txt` | `7f60892c3108f004ded7b6ceb937e0977de270e994f71e53bb94df924533d1ef` |
+| `docs/notes/echelle-conscience-eval/v7/repetition-instance/analyse-repetition-modele-minuscule.json` | `d4f578080f6e9cf5b03c79050eb27d0d0a134e8a1d81eaf8034e90ec924f4d9c` |
+| `docs/notes/echelle-conscience-eval/v7/latence-surveillance/resultat-latence-v7.txt` | `4ed55cd0dd7efc7f26f6b0b0c4b74246d9950ecf81515755c5d61ef4509d651d` |
+| `docs/notes/echelle-conscience-eval/v7/latence-surveillance/essai_latence_reelle_v7.py` | `0e3b868638d1abe67e3210521cc9b64434642a64da50e4fe8718a00d2e9a1930` |
+| `docs/notes/echelle-conscience-eval/v7/atteignabilite-echelle-v7.json` | `84fd1638da176a908cf51b140acaf783b43b637cfb3a3966645d039d46f68152` |
+| `docs/notes/echelle-conscience-eval/v7/simulation-v7-LISEZ-MOI.txt` | `61a3f6a4690c53510bb5b2d0792226509c8bd6336130e77c35b7b34be7f4cf39` |
+| `docs/notes/echelle-conscience-eval/v7/simulation-tableau/tableau-atteignabilite-v7.md` | `906d2521063366f785943fd71ed0ad3aa05b9d10ca4fe6963afa274e42b91efe` |
+| `docs/notes/echelle-conscience-eval/v7/simulation-tableau/comptes-atteignabilite-v7.txt` | `60ab030bc2014f0e71dc18b7381e16e55d178b7004081e38ac6beaaaaef43432` |
+| `docs/notes/echelle-conscience-eval/v7/audit-simulation-v7/audit-simulation-v7.txt` | `7f99810110610a3acf778b84e29aa8f914972b2a96b2674ef02a3a18ccb37e0c` |
+| `docs/notes/echelle-conscience-eval/v7/audit-simulation-v7/audit_simulation_v7.py` | `cb242bb387efed90e490b9a24ed4fb5a938c20acb09d6e08904df4c7e301aaf5` |
+| `docs/notes/echelle-conscience-eval/v7/rejeu-bancs-cl5-cl6/resume-rejeu-bancs-cl5-cl6-v7.txt` | `3cbb2b969a1a2bed0ae96b8725866b706171b6cb5e4b175db0f318403006e7be` |
+| `docs/notes/echelle-conscience-eval/v7/rejeu-bancs-cl5-cl6/rejeu-bancs-cl5-cl6-v7.jsonl` | `fb304038470547e89bc34f78a7bf1ac9bafda8547d0f9dc34f11439fb177764a` |
+| `docs/notes/echelle-conscience-eval/v7/rejeu-bancs-cl5-cl6/rejeu_bancs_cl5_cl6_v7.py` | `d7a8d57deba9929b1aa23adc05f1f99ac9623e34c456b66ac6fcf15c46503088` |
+| `docs/notes/echelle-conscience-eval/v7/exploration-coherence/resume-exploration.txt` | `825fda056df6e31d7193eebe572de45ad28182f75ff5aaa96dc5ccb4fc5903a4` |
+| `docs/notes/echelle-conscience-eval/v7/exploration-coherence/explo-1.jsonl` | `9b8b0795e0b274f7c6e2f457566a2692abc9bcfdcd9a93ba09693258279488b9` |
+| `docs/notes/echelle-conscience-eval/v7/exploration-coherence/LISEZ-MOI.txt` | `c759e3de3152ac0514e0e1987983ed93c310f3c2e207bbde6fd9468cae93df4f` |
+| `docs/notes/echelle-conscience-eval/v6/audit-simulation-v6/audit-simulation-v6.txt` | `4347a2a6661c84b74f9c2dd27d840edcbaa0130b12a391bd59922f764629ce19` |
+| `docs/notes/echelle-conscience-eval/v6/atteignabilite-echelle-v6.json` | `bb7b867eadfe5e4299f5b69140d78f60aba4981cbd07408dc230c4a3875ec6ac` |
+| `docs/notes/echelle-conscience-eval/v6/rejeu-bancs-cl5/rejeu-bancs-cl5-v6.jsonl` | `0f6556573e0b14bfefa37289763d2dd7d4a3dfa210ede3c6c8bac38f928c2605` |
+| `docs/notes/echelle-conscience-eval/v3/atteignabilite-echelle-v3.json` | `8d90b2e7ea5669ccd3f9bcdff9ce2f1e8f5231af4b5b4be12b37a03682fc77a3` |
+| `docs/notes/echelle-conscience-eval/v6/contre-lecture-cl5/sorties/sortie-pire-domaine-v5.txt` | `0a1412ab563ee16f989175df63e9d7a8cb7059d6a00571738992ef7b1182ec64` |
+
+## Contre-lecture
+
+À REMPLIR après la relecture neuve (R2) des parties changées.

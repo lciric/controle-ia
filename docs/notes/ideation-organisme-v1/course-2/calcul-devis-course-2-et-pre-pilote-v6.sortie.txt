@@ -1,0 +1,194 @@
+python 3.13.17 ; numpy 2.5.3 ; racine 20261031 ; tirages 20000
+prix (USD par million, entrée / sortie) : opus 4.0 / 20.0 ; sonnet 2.0 / 10.0 ; fable 10.0 / 50.0 ; kimi 2.0 / 10.0 ; argon 8.3 / 41.5 ; recherche 0.01 (pire 0.05)
+coupures de Kimi : probabilité 0.2 par appel ; réservation ÷ coût (2.7, 1.6, 2.4) ; facteur compté 1.447
+coûts unitaires de base (USD) : juge_kimi_lot 0.0260 ; juge_kimi_isole 0.0570 ; juge_opus 0.1141 ; juge_argon 0.0786 ; aiguillage 0.0570 ; anteriorite 0.2500 ; etiquette 0.0250 ; fusion 0.2043 ; relecteur 0.0470 ; rendu_kimi 0.0570 ; rendu_argon 0.0786 ; rendu_sonnet 0.0350 ; passe_kimi 1.2500 ; passe_argon 3.0000 ; passe_kimi_pp 2.0000 ; controle_argon 1.7500 ; redaction_fiche 0.0200
+coûts unitaires au pire (USD) : juge_kimi_lot 0.153 ; juge_kimi_isole 0.211 ; juge_opus 0.153 ; juge_argon 0.105 ; aiguillage 0.153 ; anteriorite 0.850 ; etiquette 0.038 ; fusion 0.891 ; passe_kimi 4.750 ; passe_argon 4.020 ; controle_argon 3.000
+dispersions (médiane ; écart-type du logarithme) : juge_kimi 1.0 ; 0.52 ; juge_kimi_isole 1.4 ; 0.52 ; argon 1.0 ; 0.30 ; opus 1.0 ; 0.22 ; anteriorite 1.2 ; 0.63 ; aiguilleur 1.0 ; 0.54 ; passe_kimi 1.2 ; 0.72 ; fusion 1.0 ; 0.70 ; passe_argon 1.0 ; 0.30 ; autre 1.0 ; 0.35
+rédacteur du pré-pilote : 270 000 jetons d'entrée, 119000 de sortie, 1.73 USD (Sonnet 5.5)
+
+== Pré-pilote, brouillon 5, texte du brouillon (D-g (a), D-i (1)) ==
+étape | attendu b5 (bases v3) | attendu aux bases v6 (coupures comptées) | moyenne tirée | médiane tirée | quantile 99 % tiré | plafond de relais b5 | rapport plafond b5 ÷ attendu b5 | P(dépasse le plafond b5) | plafond au quantile 90 % | plafond au quantile 95 % | rôle
+É0 appels de contrôle (cinq modèles) | — | 0.01 | 0.01 | 0.01 | 0.02 | 0.5 | — | 0.00 | 0.5 | 0.5 | P
+É1 rédacteur (Sonnet 5.5) : 28 squelettes, 8 antériorités, 6 difficiles, 8 voisines, 24 éléments de l'axe 7 | 2.6 | 1.73 | 1.84 | 1.73 | 3.90 | 3.3 | 1.27 | 0.03 | 3.0 | 3.5 | P
+É2 Kimi, passe 1 (10 fiches, ≈ 4 appels) | 2.0 | 2.89 | 4.53 | 3.31 | 21.09 | 3.0 | 1.50 | 0.55 | 9.5 | 12.5 | P
+É3 rendus : Kimi 9, Argon 9, T (Sonnet 5.5) 10 | 2.0 | 1.80 | 2.30 | 2.16 | 4.86 | 2.8 | 1.40 | 0.20 | 3.5 | 4.0 | P
+É4 aiguilleur 56, second lecteur 10, adjudicateur, nouvel essai | 4.1 | 4.11 | 4.77 | 4.11 | 14.45 | 5.5 | 1.34 | 0.30 | 8.5 | 10.0 | P
+É5 relecteur (Fable 5.1), 30 rendus au plus | 1.4 | 1.41 | 1.51 | 1.42 | 3.19 | 1.9 | 1.36 | 0.20 | 2.5 | 3.0 | P
+É5bis seconde version des témoins (si C5 échoue, probabilité 0,43) | 4.9 | 5.84 | 6.77 | 6.56 | 11.34 | 6.6 | 1.35 | 0.49 | 9.0 | 9.5 | P2
+É6 trois juges sur 28 rendus, un appel par fiche | 7.0 | 7.71 | 9.28 | 8.88 | 16.96 | 11.6 | 1.66 | 0.14 | 12.5 | 14.0 | P
+É7 passe « tableau » de Kimi, aiguilleur et second lecteur sur elle | 3.1 | 4.03 | 5.82 | 4.69 | 22.06 | 4.6 | 1.48 | 0.51 | 10.5 | 13.5 | S(4)
+É7 lectures d'étiquettes : 10 fiches × 3 grilles × 2 lecteurs | 0.75 | 1.50 | 1.59 | 1.50 | 3.38 | 1.0 | 1.33 | 0.88 | 2.5 | 3.0 | P
+É7 fusions (3, Kimi), aiguilleur et trois juges sur elles | 2.1 | 1.88 | 2.32 | 2.04 | 6.28 | 3.5 | 1.67 | 0.10 | 4.0 | 4.5 | S(1)
+É7 Opus, table seule de l'axe 7 (24 éléments) | 0.7 | 0.70 | 0.71 | 0.70 | 1.17 | 1.0 | 1.43 | 0.05 | 1.0 | 1.5 | S(3)
+É8 paraphrases (rédacteur, Sonnet 5.5) | 0.6 | 0.30 | 0.32 | 0.30 | 0.69 | 0.7 | 1.17 | 0.01 | 0.5 | 1.0 | P
+É9 antériorité (Opus 5.5 avec recherche), 8 fiches | 2.0 | 2.00 | 2.92 | 2.42 | 9.96 | 6.0 | 3.00 | 0.07 | 5.5 | 7.0 | S(2)
+total attendu sans seconde version 30.08 ; seconde version 5.84 si elle a lieu, pondérée 2.51 ; total attendu pondéré 32.59 ; somme des plafonds de relais : b5 52.0, quantile 90 % 73.0, quantile 95 % 87.5
+moyenne tirée sans plafond ni sacrifice (seconde version pondérée par 0.43) : 40.83
+
+== Pré-pilote, brouillon 5, configuration recommandée (D-g (b), D-i (2)) ==
+étape | attendu b5 (bases v3) | attendu aux bases v6 (coupures comptées) | moyenne tirée | médiane tirée | quantile 99 % tiré | plafond de relais b5 | rapport plafond b5 ÷ attendu b5 | P(dépasse le plafond b5) | plafond au quantile 90 % | plafond au quantile 95 % | rôle
+É0 appels de contrôle (cinq modèles) | — | 0.01 | 0.01 | 0.01 | 0.02 | 0.5 | — | 0.00 | 0.5 | 0.5 | P
+É1 rédacteur (Sonnet 5.5) : 28 squelettes, 8 antériorités, 6 difficiles, 8 voisines, 24 éléments de l'axe 7 | 2.6 | 1.83 | 1.94 | 1.83 | 4.01 | 3.3 | 1.27 | 0.04 | 3.0 | 3.5 | P
+É2 Kimi, passe 1 (10 fiches, ≈ 4 appels) | 2.0 | 2.89 | 4.48 | 3.30 | 20.80 | 3.0 | 1.50 | 0.55 | 9.5 | 12.5 | P
+É3 rendus : Kimi 9, Argon 9, T (Sonnet 5.5) 10 | 2.0 | 2.12 | 2.72 | 2.58 | 5.39 | 2.8 | 1.40 | 0.37 | 4.0 | 4.5 | P
+É4 aiguilleur 56, second lecteur 10, adjudicateur, nouvel essai | 4.1 | 4.34 | 5.07 | 4.40 | 14.66 | 5.5 | 1.34 | 0.34 | 8.5 | 10.5 | P
+É5 relecteur (Fable 5.1), 30 rendus au plus | 1.4 | 1.41 | 1.50 | 1.41 | 3.15 | 1.9 | 1.36 | 0.19 | 2.5 | 3.0 | P
+É5bis seconde version des témoins (si C5 échoue, probabilité 0,43) | 4.9 | 5.84 | 6.76 | 6.54 | 11.25 | 6.6 | 1.35 | 0.48 | 9.0 | 9.5 | P2
+É6 trois juges sur 28 rendus, un appel par fiche | 7.0 | 7.71 | 9.23 | 8.84 | 16.60 | 11.6 | 1.66 | 0.13 | 12.5 | 14.0 | P
+É7 passe « tableau » de Kimi, aiguilleur et second lecteur sur elle | 3.1 | 4.03 | 5.85 | 4.71 | 22.57 | 4.6 | 1.48 | 0.52 | 10.5 | 13.5 | S(4)
+É7 lectures d'étiquettes : 10 fiches × 3 grilles × 2 lecteurs | 0.75 | 1.50 | 1.60 | 1.50 | 3.43 | 1.0 | 1.33 | 0.88 | 2.5 | 3.0 | P
+É7 fusions (3, Kimi), aiguilleur et trois juges sur elles | 2.1 | 1.88 | 2.34 | 2.05 | 6.56 | 3.5 | 1.67 | 0.11 | 4.0 | 4.5 | S(1)
+É7 Opus, table seule de l'axe 7 (24 éléments) | 0.7 | 0.70 | 0.72 | 0.70 | 1.17 | 1.0 | 1.43 | 0.05 | 1.0 | 1.5 | S(3)
+É8 paraphrases (rédacteur, Sonnet 5.5) | 0.6 | 0.30 | 0.32 | 0.30 | 0.68 | 0.7 | 1.17 | 0.01 | 0.5 | 1.0 | P
+É9 antériorité (Opus 5.5 avec recherche), 8 fiches | 2.0 | 2.00 | 2.93 | 2.41 | 10.47 | 6.0 | 3.00 | 0.07 | 5.5 | 7.0 | S(2)
+É9b M6b, 4 fiches d'antériorité non citée (protégée) | 1.6 | 1.40 | 1.89 | 1.64 | 5.63 | 2.5 | 1.56 | 0.20 | 3.5 | 4.0 | P
+total attendu sans seconde version 32.13 ; seconde version 5.84 si elle a lieu, pondérée 2.51 ; total attendu pondéré 34.64 ; somme des plafonds de relais : b5 54.5, quantile 90 % 77.0, quantile 95 % 92.5
+moyenne tirée sans plafond ni sacrifice (seconde version pondérée par 0.43) : 43.51
+
+== Pré-pilote : règle d'A1 étape par étape (rapports P11 recalés ; coupures de Kimi tirées) ==
+plafond 45, arrêt 40, plafonds de relais du brouillon 5, texte du brouillon : dépense moyenne 34.3, médiane 34.2, quantile 90 % 40.2, quantile 99 % 43.2, maximum 44.9 ; P(sacrifice ou réduction) 0.04 (fusions 0.00 ; M6 réduite 0.04 ; table seule 0.00 ; passe tableau 0.00) ; P(arrêt d'étape touché) 0.00 ; P(étape protégée non lancée) 0.000 ; P(étape protégée coupée par son relais) 0.983 ; P(non lancée ou coupée) 0.983
+plafond 45, arrêt 40, plafonds de relais du brouillon 5, configuration recommandée : dépense moyenne 36.4, médiane 36.4, quantile 90 % 41.7, quantile 99 % 43.8, maximum 44.9 ; P(sacrifice ou réduction) 0.11 (fusions 0.03 ; M6 réduite 0.10 ; table seule 0.00 ; passe tableau 0.00) ; P(arrêt d'étape touché) 0.00 ; P(étape protégée non lancée) 0.009 ; P(étape protégée coupée par son relais) 0.991 ; P(non lancée ou coupée) 0.991
+plafond 45, arrêt 40, plafonds au quantile 90 %, configuration recommandée : dépense moyenne 38.0, médiane 38.2, quantile 90 % 42.3, quantile 99 % 44.0, maximum 45.0 ; P(sacrifice ou réduction) 0.55 (fusions 0.53 ; M6 réduite 0.43 ; table seule 0.32 ; passe tableau 0.26) ; P(arrêt d'étape touché) 0.01 ; P(étape protégée non lancée) 0.069 ; P(étape protégée coupée par son relais) 0.527 ; P(non lancée ou coupée) 0.549
+plafond 50, arrêt 45, plafonds au quantile 90 %, configuration recommandée : dépense moyenne 40.4, médiane 40.9, quantile 90 % 46.6, quantile 99 % 48.5, maximum 50.0 ; P(sacrifice ou réduction) 0.23 (fusions 0.20 ; M6 réduite 0.16 ; table seule 0.09 ; passe tableau 0.06) ; P(arrêt d'étape touché) 0.00 ; P(étape protégée non lancée) 0.033 ; P(étape protégée coupée par son relais) 0.520 ; P(non lancée ou coupée) 0.531
+idem, rapports corrélés entre postes (rho 0,5) : dépense moyenne 38.0, médiane 39.9, quantile 90 % 47.9, quantile 99 % 49.5, maximum 50.0 ; P(sacrifice ou réduction) 0.31 (fusions 0.29 ; M6 réduite 0.27 ; table seule 0.20 ; passe tableau 0.17) ; P(arrêt d'étape touché) 0.01 ; P(étape protégée non lancée) 0.109 ; P(étape protégée coupée par son relais) 0.348 ; P(non lancée ou coupée) 0.359
+plafond 45, arrêt 40, plafonds de relais du brouillon 5 SOUPLES, texte du brouillon : dépense moyenne 37.0, médiane 37.7, quantile 90 % 42.3, quantile 99 % 44.3, maximum 45.0 ; P(sacrifice ou réduction) 0.30 (fusions 0.21 ; M6 réduite 0.27 ; table seule 0.15 ; passe tableau 0.08) ; P(arrêt d'étape touché) 0.05 ; P(étape protégée non lancée) 0.029 ; P(étape protégée coupée par son relais) 0.103 ; P(non lancée ou coupée) 0.111
+plafond 45, arrêt 40, plafonds de relais du brouillon 5 SOUPLES, configuration recommandée : dépense moyenne 38.8, médiane 39.6, quantile 90 % 43.3, quantile 99 % 45.0, maximum 45.0 ; P(sacrifice ou réduction) 0.41 (fusions 0.32 ; M6 réduite 0.37 ; table seule 0.17 ; passe tableau 0.12) ; P(arrêt d'étape touché) 0.01 ; P(étape protégée non lancée) 0.051 ; P(étape protégée coupée par son relais) 0.168 ; P(non lancée ou coupée) 0.188
+plafond 50, arrêt 45, plafonds de relais du brouillon 5 SOUPLES, configuration recommandée : dépense moyenne 40.3, médiane 40.6, quantile 90 % 47.3, quantile 99 % 49.7, maximum 50.0 ; P(sacrifice ou réduction) 0.17 (fusions 0.12 ; M6 réduite 0.16 ; table seule 0.06 ; passe tableau 0.04) ; P(arrêt d'étape touché) 0.01 ; P(étape protégée non lancée) 0.021 ; P(étape protégée coupée par son relais) 0.063 ; P(non lancée ou coupée) 0.072
+idem (b5 SOUPLES, 50 / 45), rapports corrélés entre postes (rho 0,5) : dépense moyenne 38.1, médiane 38.9, quantile 90 % 48.7, quantile 99 % 50.0, maximum 50.0 ; P(sacrifice ou réduction) 0.27 (fusions 0.20 ; M6 réduite 0.26 ; table seule 0.14 ; passe tableau 0.10) ; P(arrêt d'étape touché) 0.02 ; P(étape protégée non lancée) 0.133 ; P(étape protégée coupée par son relais) 0.157 ; P(non lancée ou coupée) 0.180
+plafond 45, arrêt 40, plafonds au quantile 90 % SOUPLES, configuration recommandée : dépense moyenne 38.3, médiane 38.4, quantile 90 % 42.5, quantile 99 % 44.5, maximum 45.0 ; P(sacrifice ou réduction) 0.58 (fusions 0.56 ; M6 réduite 0.48 ; table seule 0.37 ; passe tableau 0.32) ; P(arrêt d'étape touché) 0.01 ; P(étape protégée non lancée) 0.088 ; P(étape protégée coupée par son relais) 0.112 ; P(non lancée ou coupée) 0.166
+plafond 50, arrêt 45, plafonds au quantile 90 % SOUPLES, configuration recommandée : dépense moyenne 40.8, médiane 41.4, quantile 90 % 46.8, quantile 99 % 48.9, maximum 50.0 ; P(sacrifice ou réduction) 0.29 (fusions 0.26 ; M6 réduite 0.22 ; table seule 0.15 ; passe tableau 0.12) ; P(arrêt d'étape touché) 0.00 ; P(étape protégée non lancée) 0.044 ; P(étape protégée coupée par son relais) 0.047 ; P(non lancée ou coupée) 0.080
+idem SOUPLES, rapports corrélés entre postes (rho 0,5) : dépense moyenne 38.1, médiane 40.0, quantile 90 % 48.1, quantile 99 % 49.9, maximum 50.0 ; P(sacrifice ou réduction) 0.33 (fusions 0.31 ; M6 réduite 0.29 ; table seule 0.23 ; passe tableau 0.21) ; P(arrêt d'étape touché) 0.01 ; P(étape protégée non lancée) 0.141 ; P(étape protégée coupée par son relais) 0.114 ; P(non lancée ou coupée) 0.169
+plafond 45, arrêt 40, plafonds au quantile 95 %, configuration recommandée : dépense moyenne 36.5, médiane 36.2, quantile 90 % 41.4, quantile 99 % 43.5, maximum 45.0 ; P(sacrifice ou réduction) 0.75 (fusions 0.74 ; M6 réduite 0.67 ; table seule 0.55 ; passe tableau 0.49) ; P(arrêt d'étape touché) 0.00 ; P(étape protégée non lancée) 0.072 ; P(étape protégée coupée par son relais) 0.278 ; P(non lancée ou coupée) 0.309
+plafond 50, arrêt 45, plafonds au quantile 95 %, configuration recommandée : dépense moyenne 39.7, médiane 39.8, quantile 90 % 45.5, quantile 99 % 48.0, maximum 50.0 ; P(sacrifice ou réduction) 0.43 (fusions 0.40 ; M6 réduite 0.33 ; table seule 0.23 ; passe tableau 0.20) ; P(arrêt d'étape touché) 0.00 ; P(étape protégée non lancée) 0.032 ; P(étape protégée coupée par son relais) 0.266 ; P(non lancée ou coupée) 0.284
+plafond 55, arrêt 50, plafonds au quantile 95 %, configuration recommandée : dépense moyenne 41.5, médiane 41.9, quantile 90 % 48.9, quantile 99 % 52.5, maximum 55.0 ; P(sacrifice ou réduction) 0.17 (fusions 0.15 ; M6 réduite 0.12 ; table seule 0.07 ; passe tableau 0.05) ; P(arrêt d'étape touché) 0.00 ; P(étape protégée non lancée) 0.015 ; P(étape protégée coupée par son relais) 0.260 ; P(non lancée ou coupée) 0.270
+plafond 32, arrêt 28 (GO-2026-10-30-07 tel quel), plafonds du brouillon 5, configuration recommandée : dépense moyenne 28.3, médiane 28.7, quantile 90 % 31.0, quantile 99 % 31.9, maximum 32.0 ; P(sacrifice ou réduction) 1.00 (fusions 1.00 ; M6 réduite 0.96 ; table seule 0.84 ; passe tableau 0.77) ; P(arrêt d'étape touché) 0.00 ; P(étape protégée non lancée) 0.294 ; P(étape protégée coupée par son relais) 0.991 ; P(non lancée ou coupée) 0.992
+
+== Pont vers la v5 et le relecteur : appels isolés de Kimi à la médiane 1,0 (bases de la v5), mêmes graines ==
+[médiane 1,0] 45 / 40, plafonds du brouillon 5 SOUPLES, configuration recommandée : dépense médiane 38.3 ; P(sacrifice) 0.32 (fusions 0.25) ; non lancée 0.025 ; coupée 0.123
+[médiane 1,0] 50 / 45, plafonds du brouillon 5 SOUPLES, configuration recommandée : dépense médiane 38.8 ; P(sacrifice) 0.12 (fusions 0.09) ; non lancée 0.010 ; coupée 0.043
+[médiane 1,0] 50 / 45, plafonds au quantile 90 % SOUPLES, configuration recommandée (option (b) de la v5) : dépense médiane 40.1 ; P(sacrifice) 0.20 (fusions 0.18) ; non lancée 0.031 ; coupée 0.037
+
+complément conditionnel (24 fonds) : attendu aux bases 11.15 (b5 : 11,6) ; moyenne tirée 13.3 ; médiane 13.0 ; quantile 90 % 16.3 ; P(> 17,5, plafond b5) 0.049
+
+== Course, 4 sous-sessions, lecture B (24 fusions : une paire par bras et par proposeur, ≈ 12 par proposeur (R-642, n° 268)) ==
+poste | appels | base USD | attendu aux bases (coupures de Kimi comptées) USD | pire USD
+Kimi proposeur (4 × 2 passes de 8) | ≈ 24 | 10.00 | 14.47 | 38.00
+Argon proposeur (4 × 2 passes de 8) | ≈ 8 à 24 | 24.00 | 24.00 | 32.16
+Contrôles d'Argon (4 lancements) | 4 lots | 7.00 | 7.00 | 12.00
+Aiguilleur (152 : fiches et fusions, avant tout juge) | 152 | 8.66 | 8.66 | 23.26
+Juges croisés : Argon sur 120 (fiches de Kimi, fusions, témoins) ; Kimi sur 96 (fiches d'Argon, témoins) | Argon ≈ 8 ; Kimi 4 | 11.94 | 13.05 | 27.29
+Opus 5.5 troisième juge (184) | ≈ 24 | 21.00 | 21.00 | 28.15
+Antériorité (52 : 10 notables par sous-session, la moitié des fusions) | 52 | 13.00 | 13.00 | 44.20
+Lectures d'étiquettes (384 : 16 fiches de passe 1 × 3 grilles × 2 lecteurs, par sous-session) | 384 | 9.60 | 9.60 | 14.40
+Fusions par Kimi (24) | 24 | 4.90 | 7.09 | 21.38
+Tableau minimal (programme) ; appels de contrôle | — | 0.01 | 0.01 | 0.50
+TOTAL | | | 117.89 | 241.34
+
+== Course, 4 sous-sessions, lecture A (12 fusions : une paire par bras et par sous-session (brouillon 5, S22 k = 1)) ==
+poste | appels | base USD | attendu aux bases (coupures de Kimi comptées) USD | pire USD
+Kimi proposeur (4 × 2 passes de 8) | ≈ 24 | 10.00 | 14.47 | 38.00
+Argon proposeur (4 × 2 passes de 8) | ≈ 8 à 24 | 24.00 | 24.00 | 32.16
+Contrôles d'Argon (4 lancements) | 4 lots | 7.00 | 7.00 | 12.00
+Aiguilleur (140 : fiches et fusions, avant tout juge) | 140 | 7.98 | 7.98 | 21.42
+Juges croisés : Argon sur 108 (fiches de Kimi, fusions, témoins) ; Kimi sur 96 (fiches d'Argon, témoins) | Argon ≈ 8 ; Kimi 4 | 10.99 | 12.11 | 26.03
+Opus 5.5 troisième juge (172) | ≈ 24 | 19.63 | 19.63 | 26.32
+Antériorité (46 : 10 notables par sous-session, la moitié des fusions) | 46 | 11.50 | 11.50 | 39.10
+Lectures d'étiquettes (384 : 16 fiches de passe 1 × 3 grilles × 2 lecteurs, par sous-session) | 384 | 9.60 | 9.60 | 14.40
+Fusions par Kimi (12) | 12 | 2.45 | 3.55 | 10.69
+Tableau minimal (programme) ; appels de contrôle | — | 0.01 | 0.01 | 0.50
+TOTAL | | | 109.84 | 220.62
+
+== Variantes de la course (attendu aux bases ; pire ; moyenne, médiane et quantile 90 % tirés) ==
+4 sous-sessions, lecture B : attendu aux bases 117.9 ; pire 241.3 ; moyenne tirée 139.2 ; médiane 134.9 ; quantile 90 % 173.9 ; corrélé (rho 0,5) : médiane 129.9, quantile 90 % 203.6
+4 sous-sessions, lecture A : attendu aux bases 109.8 ; pire 220.6 ; moyenne tirée 129.3 ; médiane 125.1 ; quantile 90 % 161.2 ; corrélé (rho 0,5) : médiane 120.7, quantile 90 % 188.5
+3 sous-sessions, lecture B : attendu aux bases 88.4 ; pire 181.1 ; moyenne tirée 104.4 ; médiane 101.1 ; quantile 90 % 130.4 ; corrélé (rho 0,5) : médiane 97.4, quantile 90 % 152.9
+3 sous-sessions, lecture A : attendu aux bases 82.3 ; pire 165.2 ; moyenne tirée 96.8 ; médiane 93.6 ; quantile 90 % 120.8 ; corrélé (rho 0,5) : médiane 90.3, quantile 90 % 141.2
+2 sous-sessions, lecture B : attendu aux bases 58.9 ; pire 120.9 ; moyenne tirée 69.6 ; médiane 67.3 ; quantile 90 % 87.1 ; corrélé (rho 0,5) : médiane 64.9, quantile 90 % 102.0
+2 sous-sessions, lecture A : attendu aux bases 54.9 ; pire 110.6 ; moyenne tirée 64.6 ; médiane 62.4 ; quantile 90 % 80.9 ; corrélé (rho 0,5) : médiane 60.3, quantile 90 % 94.3
+4 sous-sessions, lecture B, juges en appel isolé (une fiche par appel) : attendu aux bases 122.2 ; pire 246.9
+4 sous-sessions, lecture B, un seul lancement (contrôles d'Argon une fois) : attendu aux bases 112.6 ; pire 232.3
+4 sous-sessions, lecture B, allégée (4 témoins par lot, antériorité sur 6 notables) : attendu aux bases 110.2 ; pire 221.2
+recherche à 0,05 USD au lieu de 0,01 (lecture B, 4 sous-sessions, 52 fiches) : + 10.4 USD attendus aux bases
+
+== Écart v4 -> v5/v6 (attendu aux bases, 4 sous-sessions), en chaîne, par cause ==
+v4 publiée, lecture A : 84.69
+structure du v4 (2 bras, 8 fusions, une grille × 2 lecteurs), bases v5 : 100.76 (écart +16.07)
++ trois grilles d'étiquettes (plan du brouillon 5, É7) : 107.16 (écart +6.40)
++ troisième bras, basique (R-643) : 12 fusions, lecture A : 109.84 (écart +2.68)
++ lecture B, une paire par bras et par proposeur (n° 268, R-642) : 24 fusions : 117.89 (écart +8.04)
+détail du premier maillon (bases v4 -> v5, structure du v4) : Kimi proposeur +4.47 ; Argon proposeur +6.07 ; Contrôles d'Argon +5.25 ; Aiguilleur +0.00 ; Juges croisés +1.09 ; Opus 5.5 +0.03 ; Antériorité +0.00 ; Lectures d'étiquettes +0.00 ; Fusions -0.84 ; Tableau minimal +0.00
+
+== Ce que la course peut faire selon le plafond total (dépense du pré-pilote tirée par la règle d'A1, plafond 50, arrêt 45, plafonds du brouillon 5 souples (recommandation v6), configuration recommandée ; « avec complément » : complément proposé 0,20, coût tiré, pris sur le reste) ==
+rho 0.0 ; lecture B ; plafond total 110 ; sans complément : reste médian 69.4 ; course à 4 : 0.000 ; à 3 : 0.017 ; à 2 : 0.539 ; aucune : 0.444
+rho 0.0 ; lecture B ; plafond total 110 ; avec complément : reste médian 67.5 ; course à 4 : 0.000 ; à 3 : 0.014 ; à 2 : 0.466 ; aucune : 0.520
+rho 0.0 ; lecture B ; plafond total 123 ; sans complément : reste médian 82.4 ; course à 4 : 0.001 ; à 3 : 0.126 ; à 2 : 0.710 ; aucune : 0.163
+rho 0.0 ; lecture B ; plafond total 123 ; avec complément : reste médian 80.5 ; course à 4 : 0.001 ; à 3 : 0.106 ; à 2 : 0.675 ; aucune : 0.218
+rho 0.0 ; lecture B ; plafond total 128 ; sans complément : reste médian 87.4 ; course à 4 : 0.004 ; à 3 : 0.206 ; à 2 : 0.687 ; aucune : 0.103
+rho 0.0 ; lecture B ; plafond total 128 ; avec complément : reste médian 85.5 ; course à 4 : 0.004 ; à 3 : 0.173 ; à 2 : 0.680 ; aucune : 0.143
+rho 0.0 ; lecture B ; plafond total 140 ; sans complément : reste médian 99.4 ; course à 4 : 0.037 ; à 3 : 0.424 ; à 2 : 0.505 ; aucune : 0.035
+rho 0.0 ; lecture B ; plafond total 140 ; avec complément : reste médian 97.5 ; course à 4 : 0.031 ; à 3 : 0.375 ; à 2 : 0.543 ; aucune : 0.052
+rho 0.0 ; lecture B ; plafond total 160 ; sans complément : reste médian 119.4 ; course à 4 : 0.246 ; à 3 : 0.556 ; à 2 : 0.191 ; aucune : 0.007
+rho 0.0 ; lecture B ; plafond total 160 ; avec complément : reste médian 117.5 ; course à 4 : 0.213 ; à 3 : 0.550 ; à 2 : 0.227 ; aucune : 0.010
+rho 0.0 ; lecture B ; plafond total 180 ; sans complément : reste médian 139.4 ; course à 4 : 0.572 ; à 3 : 0.369 ; à 2 : 0.057 ; aucune : 0.002
+rho 0.0 ; lecture B ; plafond total 180 ; avec complément : reste médian 137.5 ; course à 4 : 0.530 ; à 3 : 0.397 ; à 2 : 0.071 ; aucune : 0.002
+rho 0.0 ; lecture A ; plafond total 110 ; sans complément : reste médian 69.4 ; course à 4 : 0.000 ; à 3 : 0.046 ; à 2 : 0.649 ; aucune : 0.305
+rho 0.0 ; lecture A ; plafond total 110 ; avec complément : reste médian 67.5 ; course à 4 : 0.000 ; à 3 : 0.039 ; à 2 : 0.576 ; aucune : 0.385
+rho 0.0 ; lecture A ; plafond total 123 ; sans complément : reste médian 82.4 ; course à 4 : 0.006 ; à 3 : 0.236 ; à 2 : 0.665 ; aucune : 0.093
+rho 0.0 ; lecture A ; plafond total 123 ; avec complément : reste médian 80.5 ; course à 4 : 0.006 ; à 3 : 0.198 ; à 2 : 0.662 ; aucune : 0.135
+rho 0.0 ; lecture A ; plafond total 128 ; sans complément : reste médian 87.4 ; course à 4 : 0.017 ; à 3 : 0.333 ; à 2 : 0.592 ; aucune : 0.057
+rho 0.0 ; lecture A ; plafond total 128 ; avec complément : reste médian 85.5 ; course à 4 : 0.014 ; à 3 : 0.286 ; à 2 : 0.615 ; aucune : 0.085
+rho 0.0 ; lecture A ; plafond total 140 ; sans complément : reste médian 99.4 ; course à 4 : 0.090 ; à 3 : 0.534 ; à 2 : 0.355 ; aucune : 0.021
+rho 0.0 ; lecture A ; plafond total 140 ; avec complément : reste médian 97.5 ; course à 4 : 0.076 ; à 3 : 0.489 ; à 2 : 0.406 ; aucune : 0.029
+rho 0.0 ; lecture A ; plafond total 160 ; sans complément : reste médian 119.4 ; course à 4 : 0.398 ; à 3 : 0.489 ; à 2 : 0.108 ; aucune : 0.004
+rho 0.0 ; lecture A ; plafond total 160 ; avec complément : reste médian 117.5 ; course à 4 : 0.352 ; à 3 : 0.508 ; à 2 : 0.134 ; aucune : 0.006
+rho 0.0 ; lecture A ; plafond total 180 ; sans complément : reste médian 139.4 ; course à 4 : 0.716 ; à 3 : 0.251 ; à 2 : 0.031 ; aucune : 0.002
+rho 0.0 ; lecture A ; plafond total 180 ; avec complément : reste médian 137.5 ; course à 4 : 0.678 ; à 3 : 0.281 ; à 2 : 0.039 ; aucune : 0.002
+rho 0.5 ; lecture B ; plafond total 110 ; sans complément : reste médian 71.1 ; course à 4 : 0.040 ; à 3 : 0.146 ; à 2 : 0.415 ; aucune : 0.398
+rho 0.5 ; lecture B ; plafond total 110 ; avec complément : reste médian 68.5 ; course à 4 : 0.035 ; à 3 : 0.130 ; à 2 : 0.394 ; aucune : 0.441
+rho 0.5 ; lecture B ; plafond total 123 ; sans complément : reste médian 84.1 ; course à 4 : 0.105 ; à 3 : 0.234 ; à 2 : 0.431 ; aucune : 0.231
+rho 0.5 ; lecture B ; plafond total 123 ; avec complément : reste médian 81.5 ; course à 4 : 0.092 ; à 3 : 0.216 ; à 2 : 0.428 ; aucune : 0.264
+rho 0.5 ; lecture B ; plafond total 128 ; sans complément : reste médian 89.1 ; course à 4 : 0.138 ; à 3 : 0.263 ; à 2 : 0.412 ; aucune : 0.187
+rho 0.5 ; lecture B ; plafond total 128 ; avec complément : reste médian 86.5 ; course à 4 : 0.122 ; à 3 : 0.249 ; à 2 : 0.414 ; aucune : 0.215
+rho 0.5 ; lecture B ; plafond total 140 ; sans complément : reste médian 101.1 ; course à 4 : 0.234 ; à 3 : 0.314 ; à 2 : 0.343 ; aucune : 0.109
+rho 0.5 ; lecture B ; plafond total 140 ; avec complément : reste médian 98.5 ; course à 4 : 0.213 ; à 3 : 0.304 ; à 2 : 0.358 ; aucune : 0.126
+rho 0.5 ; lecture B ; plafond total 160 ; sans complément : reste médian 121.1 ; course à 4 : 0.424 ; à 3 : 0.315 ; à 2 : 0.216 ; aucune : 0.045
+rho 0.5 ; lecture B ; plafond total 160 ; avec complément : reste médian 118.5 ; course à 4 : 0.400 ; à 3 : 0.317 ; à 2 : 0.231 ; aucune : 0.052
+rho 0.5 ; lecture B ; plafond total 180 ; sans complément : reste médian 141.1 ; course à 4 : 0.602 ; à 3 : 0.254 ; à 2 : 0.124 ; aucune : 0.020
+rho 0.5 ; lecture B ; plafond total 180 ; avec complément : reste médian 138.5 ; course à 4 : 0.579 ; à 3 : 0.263 ; à 2 : 0.136 ; aucune : 0.022
+rho 0.5 ; lecture A ; plafond total 110 ; sans complément : reste médian 71.1 ; course à 4 : 0.061 ; à 3 : 0.185 ; à 2 : 0.433 ; aucune : 0.321
+rho 0.5 ; lecture A ; plafond total 110 ; avec complément : reste médian 68.5 ; course à 4 : 0.053 ; à 3 : 0.165 ; à 2 : 0.417 ; aucune : 0.365
+rho 0.5 ; lecture A ; plafond total 123 ; sans complément : reste médian 84.1 ; course à 4 : 0.144 ; à 3 : 0.275 ; à 2 : 0.407 ; aucune : 0.174
+rho 0.5 ; lecture A ; plafond total 123 ; avec complément : reste médian 81.5 ; course à 4 : 0.128 ; à 3 : 0.258 ; à 2 : 0.411 ; aucune : 0.204
+rho 0.5 ; lecture A ; plafond total 128 ; sans complément : reste médian 89.1 ; course à 4 : 0.185 ; à 3 : 0.303 ; à 2 : 0.377 ; aucune : 0.135
+rho 0.5 ; lecture A ; plafond total 128 ; avec complément : reste médian 86.5 ; course à 4 : 0.166 ; à 3 : 0.286 ; à 2 : 0.389 ; aucune : 0.159
+rho 0.5 ; lecture A ; plafond total 140 ; sans complément : reste médian 101.1 ; course à 4 : 0.301 ; à 3 : 0.332 ; à 2 : 0.292 ; aucune : 0.076
+rho 0.5 ; lecture A ; plafond total 140 ; avec complément : reste médian 98.5 ; course à 4 : 0.274 ; à 3 : 0.328 ; à 2 : 0.309 ; aucune : 0.089
+rho 0.5 ; lecture A ; plafond total 160 ; sans complément : reste médian 121.1 ; course à 4 : 0.507 ; à 3 : 0.297 ; à 2 : 0.167 ; aucune : 0.029
+rho 0.5 ; lecture A ; plafond total 160 ; avec complément : reste médian 118.5 ; course à 4 : 0.480 ; à 3 : 0.305 ; à 2 : 0.181 ; aucune : 0.034
+rho 0.5 ; lecture A ; plafond total 180 ; sans complément : reste médian 141.1 ; course à 4 : 0.683 ; à 3 : 0.215 ; à 2 : 0.091 ; aucune : 0.011
+rho 0.5 ; lecture A ; plafond total 180 ; avec complément : reste médian 138.5 ; course à 4 : 0.661 ; à 3 : 0.225 ; à 2 : 0.101 ; aucune : 0.013
+
+== Ce que la course peut faire selon le plafond total (dépense du pré-pilote tirée par la règle d'A1, plafond 50, arrêt 45, plafonds au quantile 90 % souples (recommandation v5), configuration recommandée ; « avec complément » : complément proposé 0,20, coût tiré, pris sur le reste) ==
+rho 0.0 ; lecture B ; plafond total 110 ; sans complément : reste médian 68.6 ; course à 4 : 0.000 ; à 3 : 0.014 ; à 2 : 0.530 ; aucune : 0.457
+rho 0.0 ; lecture B ; plafond total 110 ; avec complément : reste médian 67.2 ; course à 4 : 0.000 ; à 3 : 0.011 ; à 2 : 0.457 ; aucune : 0.532
+rho 0.0 ; lecture B ; plafond total 123 ; sans complément : reste médian 81.6 ; course à 4 : 0.001 ; à 3 : 0.117 ; à 2 : 0.717 ; aucune : 0.165
+rho 0.0 ; lecture B ; plafond total 123 ; avec complément : reste médian 80.2 ; course à 4 : 0.001 ; à 3 : 0.098 ; à 2 : 0.678 ; aucune : 0.223
+rho 0.0 ; lecture B ; plafond total 128 ; sans complément : reste médian 86.6 ; course à 4 : 0.004 ; à 3 : 0.197 ; à 2 : 0.694 ; aucune : 0.105
+rho 0.0 ; lecture B ; plafond total 128 ; avec complément : reste médian 85.2 ; course à 4 : 0.003 ; à 3 : 0.165 ; à 2 : 0.685 ; aucune : 0.147
+rho 0.0 ; lecture B ; plafond total 140 ; sans complément : reste médian 98.6 ; course à 4 : 0.033 ; à 3 : 0.419 ; à 2 : 0.512 ; aucune : 0.036
+rho 0.0 ; lecture B ; plafond total 140 ; avec complément : reste médian 97.2 ; course à 4 : 0.028 ; à 3 : 0.370 ; à 2 : 0.551 ; aucune : 0.052
+rho 0.0 ; lecture B ; plafond total 160 ; sans complément : reste médian 118.6 ; course à 4 : 0.238 ; à 3 : 0.561 ; à 2 : 0.193 ; aucune : 0.008
+rho 0.0 ; lecture B ; plafond total 160 ; avec complément : reste médian 117.2 ; course à 4 : 0.205 ; à 3 : 0.554 ; à 2 : 0.230 ; aucune : 0.010
+rho 0.0 ; lecture B ; plafond total 180 ; sans complément : reste médian 138.6 ; course à 4 : 0.566 ; à 3 : 0.374 ; à 2 : 0.058 ; aucune : 0.002
+rho 0.0 ; lecture B ; plafond total 180 ; avec complément : reste médian 137.2 ; course à 4 : 0.523 ; à 3 : 0.402 ; à 2 : 0.072 ; aucune : 0.002
+
+== Lecture « total 123 » du brouillon 5 (S17, C10 : la ligne du pré-pilote s'ajoute au total, la course garde 110 − 32 = 78) ==
+lecture B ; reste de la course fixé à 78 ; sans complément : course à 4 : 0.000 ; à 3 : 0.054 ; à 2 : 0.724 ; aucune : 0.222
+lecture B ; reste de la course fixé à 78 ; avec complément : course à 4 : 0.000 ; à 3 : 0.045 ; à 2 : 0.661 ; aucune : 0.294
+lecture A ; reste de la course fixé à 78 ; sans complément : course à 4 : 0.001 ; à 3 : 0.135 ; à 2 : 0.735 ; aucune : 0.129
+lecture A ; reste de la course fixé à 78 ; avec complément : course à 4 : 0.001 ; à 3 : 0.110 ; à 2 : 0.704 ; aucune : 0.186
+
+== Sensibilité (R4) : coupure d'une étape protégée par son relais, plafond 45 / 40, plafonds du brouillon 5, configuration recommandée ==
+lectures d'étiquettes au compte du brouillon 5 (30) ; dispersions de P11 : P(étape protégée coupée par son relais) 0.938 ; dépense médiane 36.2
+lectures d'étiquettes au compte du brouillon 5 (30) ; dispersions divisées par deux : P(étape protégée coupée par son relais) 0.803 ; dépense médiane 35.6
+fin

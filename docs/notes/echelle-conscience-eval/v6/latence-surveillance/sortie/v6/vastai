@@ -1,0 +1,9 @@
+#!/usr/bin/env bash
+# faux vastai : l'état vit dans $ETAT_FAUX (running|stopped), les journaux dans $JOURNAL_FAUX, les arrêts dans
+# $ARRETS_FAUX (et leur heure dans $ARRETS_FAUX.heure) ; avant tout arrêt, « show » et « logs » répondent en
+# $LENTEUR_FAUSSE secondes (CLV-02)
+case "$1 $2" in
+  "show instance") [ -s "$ARRETS_FAUX" ] || sleep "$LENTEUR_FAUSSE"; echo "{\"actual_status\": \"$(cat "$ETAT_FAUX")\", \"cur_state\": \"$(cat "$ETAT_FAUX")\", \"dph_total\": 2.4, \"status_msg\": \"\"}" ;;
+  "logs "*) [ -s "$ARRETS_FAUX" ] || sleep "$LENTEUR_FAUSSE"; cat "$JOURNAL_FAUX" ;;
+  "stop instance") date +%s.%N >> "$ARRETS_FAUX.heure"; echo "$3" >> "$ARRETS_FAUX"; [ -n "$ARRET_EFFECTIF" ] && echo stopped > "$ETAT_FAUX"; echo "arrêt demandé" ;;
+esac

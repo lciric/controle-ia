@@ -1,0 +1,79 @@
+{
+ "version": "manifeste-simulation-puissance-garde-delta-v5",
+ "passage": "alpha-0.025-ebh-k8",
+ "ecrit_par": "le script lui-même, en fin de passage (GD4-05)",
+ "date_utc_debut": "2026-10-29T08:18:34Z",
+ "date_utc_fin": "2026-10-29T08:20:42Z",
+ "duree_s": 128.1,
+ "statut": "exploratoire, non préenregistré, non opposable ; lois synthétiques seulement",
+ "commande": {
+  "ligne": "python3 -I -B /tmp/claude-0/-home-user-controle-ia-travail/75a1275d-b838-5015-909e-b2bfadb395f9/scratchpad/relecture-garde-delta-v5/cl/outils/copie_script/sim_garde_v5.py --repetitions 2000 --comparateurs 8 --tailles 160,300,400,650 --K 10,3 --taux 0.01 --biais 0,0.0125 --deltas 0.05 --alpha 0.025 --lecture-ebh A,B --m 8,2,16 --sans-n80 --sortie doutes-script/alpha-0.025-ebh-k8.json",
+  "argv": [
+   "/tmp/claude-0/-home-user-controle-ia-travail/75a1275d-b838-5015-909e-b2bfadb395f9/scratchpad/relecture-garde-delta-v5/cl/outils/copie_script/sim_garde_v5.py",
+   "--repetitions",
+   "2000",
+   "--comparateurs",
+   "8",
+   "--tailles",
+   "160,300,400,650",
+   "--K",
+   "10,3",
+   "--taux",
+   "0.01",
+   "--biais",
+   "0,0.0125",
+   "--deltas",
+   "0.05",
+   "--alpha",
+   "0.025",
+   "--lecture-ebh",
+   "A,B",
+   "--m",
+   "8,2,16",
+   "--sans-n80",
+   "--sortie",
+   "doutes-script/alpha-0.025-ebh-k8.json"
+  ],
+  "repertoire_de_lancement": "/tmp/claude-0/-home-user-controle-ia-travail/75a1275d-b838-5015-909e-b2bfadb395f9/scratchpad/relecture-garde-delta-v5/cl/sorties",
+  "python_isole": true,
+  "sans_bytecode": true
+ },
+ "script": {
+  "chemin": "/tmp/claude-0/-home-user-controle-ia-travail/75a1275d-b838-5015-909e-b2bfadb395f9/scratchpad/relecture-garde-delta-v5/cl/outils/copie_script/sim_garde_v5.py",
+  "sha256": "7d1239e1375892f711a3382ce7d2f53fe432d3acff22b9708384506fdb028871",
+  "commit": null,
+  "etat_du_script": "hors dépôt git"
+ },
+ "graines": {
+  "graine_maitresse": 20261029,
+  "derivation": "SeedSequence([graine, entier des 8 premiers octets de sha256(étiquette)]) ; étiquettes : cellule, « cellule|ebh|modes », « cellule|ebh|nulles_A », « cellule|ebh|nulles_B », « loi|δ|seuil|biais|k|n80|n »",
+  "graines_derivees_par_cellule": {
+   "binomiale_Kh10_Ks10_taux0.01|delta=0.05|n=160|n_garde=160|biais=0.0|k=8": 15391775812036245936,
+   "binomiale_Kh10_Ks10_taux0.01|delta=0.05|n=160|n_garde=160|biais=0.0125|k=8": 9860971055712238882,
+   "binomiale_Kh10_Ks10_taux0.01|delta=0.05|n=300|n_garde=300|biais=0.0|k=8": 12333658532908596594,
+   "binomiale_Kh10_Ks10_taux0.01|delta=0.05|n=300|n_garde=300|biais=0.0125|k=8": 17391073488652494363,
+   "binomiale_Kh10_Ks10_taux0.01|delta=0.05|n=400|n_garde=400|biais=0.0|k=8": 5599910026313727659,
+   "binomiale_Kh10_Ks10_taux0.01|delta=0.05|n=400|n_garde=400|biais=0.0125|k=8": 7342100838078122673,
+   "binomiale_Kh10_Ks10_taux0.01|delta=0.05|n=650|n_garde=650|biais=0.0|k=8": 12199699559485957855,
+   "binomiale_Kh10_Ks10_taux0.01|delta=0.05|n=650|n_garde=650|biais=0.0125|k=8": 14714200713835362578,
+   "binomiale_Kh3_Ks3_taux0.01|delta=0.05|n=160|n_garde=160|biais=0.0|k=8": 2856090019728378590,
+   "binomiale_Kh3_Ks3_taux0.01|delta=0.05|n=160|n_garde=160|biais=0.0125|k=8": 3474044236698903228,
+   "binomiale_Kh3_Ks3_taux0.01|delta=0.05|n=300|n_garde=300|biais=0.0|k=8": 10678219806036344217,
+   "binomiale_Kh3_Ks3_taux0.01|delta=0.05|n=300|n_garde=300|biais=0.0125|k=8": 5665099155754687512,
+   "binomiale_Kh3_Ks3_taux0.01|delta=0.05|n=400|n_garde=400|biais=0.0|k=8": 6743967768432808801,
+   "binomiale_Kh3_Ks3_taux0.01|delta=0.05|n=400|n_garde=400|biais=0.0125|k=8": 10905835062183469267,
+   "binomiale_Kh3_Ks3_taux0.01|delta=0.05|n=650|n_garde=650|biais=0.0|k=8": 670348672814044055,
+   "binomiale_Kh3_Ks3_taux0.01|delta=0.05|n=650|n_garde=650|biais=0.0125|k=8": 12999422062832367577
+  }
+ },
+ "reglages_sha256": "783d7b629ac6d6afa79dda637ccadb6d61b4a3745e24aeed4df61bdd4d5667d3",
+ "environnement": {
+  "python": "3.13.17",
+  "numpy": "2.5.3",
+  "plateforme": "Linux-6.18.44-fc-v185-x86_64-with-glibc2.39"
+ },
+ "fichiers": {
+  "alpha-0.025-ebh-k8.json": "56a51f1f95344fa4b1972391ae0df8ac1543c5c9998ad87fe2f366d2f32341f0",
+  "alpha-0.025-ebh-k8-journal.txt": "248f4721db3f3298c5f0a6c983881f87d55a9abfa72b5a29f16b5f4909068c3f"
+ }
+}

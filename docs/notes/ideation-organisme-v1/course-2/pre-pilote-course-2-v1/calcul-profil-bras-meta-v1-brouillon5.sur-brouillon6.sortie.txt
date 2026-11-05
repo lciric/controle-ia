@@ -1,0 +1,313 @@
+== calcul-profil-bras-meta-v1-brouillon5 ==
+python 3.13.18 ; numpy 2.5.3 ; racine 20261101 ; N_SIM 100000
+blocs JSON lus dans l'annexe : 4 ; empreinte du bloc parametres_bras_meta (JSON canonique, sans les deux champs libres) : 08dd3c0d61145fd1ebfad254b72fada591e8c684533b790cdf8af38c329cf421
+empreinte du bloc variante_bloc_n4 (JSON canonique) : eb4bab0a58ca61c305a7df76bfabdc00621d29d750d124d6c424f7e78076e739
+empreinte du jeu d'essai (JSON canonique) : 428784d44bf5e8f563aea70d4d6845cb825a8f298a44db1cbe9c2cb37eeea2d5
+option écrite dans le bloc N4 de l'annexe : CA1-05 = 'b1' ; CA1-04 = 'A'
+
+== 1. Paires de niches dans le profil (aux structures près), par option de CA1-05 ==
+  a   bande [2, 3] canal ≤ 1 : 4 sur 15 (n1–n2, n1–n4, n1–n6, n3–n4) ; niches sans partenaire dans le profil : n5
+  b1  bande [2, 4] canal ≤ 1 : 6 sur 15 (n1–n2, n1–n4, n1–n6, n3–n4, n4–n5, n5–n6) ; niches sans partenaire dans le profil : aucune
+  b2  bande [2, 5] canal ≤ 1 : 7 sur 15 (n1–n2, n1–n4, n1–n6, n2–n5, n3–n4, n4–n5, n5–n6) ; niches sans partenaire dans le profil : aucune
+  c1  bande [2, 3] canal ≤ 1 : 4 sur 15 (n1–n2, n1–n4, n1–n6, n3–n4) ; niches sans partenaire dans le profil : n5
+  c2  bande [2, 3] canal ≤ 1 : 4 sur 15 (n1–n2, n1–n4, n1–n6, n3–n4) ; niches sans partenaire dans le profil : n5
+  d1  bande [2, 3] canal ≤ 2 : 10 sur 15 (n1–n2, n1–n3, n1–n4, n1–n6, n2–n3, n2–n4, n2–n6, n3–n4, n3–n5, n3–n6) ; niches sans partenaire dans le profil : aucune
+  sensibilité CA1-01 (c(n1, n2) relevé à 2), option a : 3 paires sur 15
+  sensibilité CA1-01 (c(n1, n2) relevé à 2), option b1 : 5 paires sur 15
+  CA1-04 option A : structures comptées = 14 (nombre_min 1)
+  CA1-04 option B : structures comptées = 17 (nombre_min 1)
+  CA1-04 option C : structures comptées = 11 (nombre_min 1)
+
+== 2. Épreuve des variantes contre le code réel v55 (lire_annexe_meta_v55, verifier_non_vacuite) ==
+  a   × A : brouillon refusé (À REMPLIR) True ; rempli accepté True ; non-vacuité 3 dans le profil / 38 hors profil / 4 même niche ; argmax e01–e04 score 2.0 ; S28 0.4/0.3
+  a   × B : brouillon refusé (À REMPLIR) True ; rempli accepté True ; non-vacuité 4 dans le profil / 37 hors profil / 4 même niche ; argmax e01–e04 score 2.0 ; S28 0.4/0.3
+  a   × C : brouillon refusé (À REMPLIR) True ; rempli accepté True ; non-vacuité 1 dans le profil / 40 hors profil / 4 même niche ; argmax e07–e08 score 1.5 ; S28 0.4/0.3
+  b1  × A : brouillon refusé (À REMPLIR) True ; rempli accepté True ; non-vacuité 4 dans le profil / 37 hors profil / 4 même niche ; argmax e01–e04 score 2.0 ; S28 0.4/0.3
+  b1  × B : brouillon refusé (À REMPLIR) True ; rempli accepté True ; non-vacuité 5 dans le profil / 36 hors profil / 4 même niche ; argmax e01–e04 score 2.0 ; S28 0.4/0.3
+  b1  × C : brouillon refusé (À REMPLIR) True ; rempli accepté True ; non-vacuité 1 dans le profil / 40 hors profil / 4 même niche ; argmax e07–e08 score 1.5 ; S28 0.4/0.3
+  b2  × A : brouillon refusé (À REMPLIR) True ; rempli accepté True ; non-vacuité 5 dans le profil / 36 hors profil / 4 même niche ; argmax e01–e04 score 2.0 ; S28 0.4/0.3
+  b2  × B : brouillon refusé (À REMPLIR) True ; rempli accepté True ; non-vacuité 6 dans le profil / 35 hors profil / 4 même niche ; argmax e01–e04 score 2.0 ; S28 0.4/0.3
+  b2  × C : brouillon refusé (À REMPLIR) True ; rempli accepté True ; non-vacuité 2 dans le profil / 39 hors profil / 4 même niche ; argmax e05–e06 score 1.5 ; S28 0.4/0.3
+  c1  × A : brouillon refusé (À REMPLIR) True ; rempli accepté True ; non-vacuité 3 dans le profil / 38 hors profil / 4 même niche ; argmax e01–e04 score 2.0 ; S28 0.4/0.3
+  c1  × B : brouillon refusé (À REMPLIR) True ; rempli accepté True ; non-vacuité 4 dans le profil / 37 hors profil / 4 même niche ; argmax e01–e04 score 2.0 ; S28 0.4/0.3
+  c1  × C : brouillon refusé (À REMPLIR) True ; rempli accepté True ; non-vacuité 1 dans le profil / 40 hors profil / 4 même niche ; argmax e07–e08 score 1.5 ; S28 0.4/0.3
+  c2  × A : brouillon refusé (À REMPLIR) True ; rempli accepté True ; non-vacuité 3 dans le profil / 38 hors profil / 4 même niche ; argmax e01–e04 score 2.0 ; S28 0.4/0.3
+  c2  × B : brouillon refusé (À REMPLIR) True ; rempli accepté True ; non-vacuité 4 dans le profil / 37 hors profil / 4 même niche ; argmax e01–e04 score 2.0 ; S28 0.4/0.3
+  c2  × C : brouillon refusé (À REMPLIR) True ; rempli accepté True ; non-vacuité 1 dans le profil / 40 hors profil / 4 même niche ; argmax e07–e08 score 1.5 ; S28 0.4/0.3
+  d1  × A : brouillon refusé (À REMPLIR) True ; rempli accepté True ; non-vacuité 6 dans le profil / 35 hors profil / 4 même niche ; argmax e01–e04 score 2.0 ; S28 0.4/0.3
+  d1  × B : brouillon refusé (À REMPLIR) True ; rempli accepté True ; non-vacuité 7 dans le profil / 34 hors profil / 4 même niche ; argmax e01–e04 score 2.0 ; S28 0.4/0.3
+  d1  × C : brouillon refusé (À REMPLIR) True ; rempli accepté True ; non-vacuité 4 dans le profil / 37 hors profil / 4 même niche ; argmax e02–e07 score 1.5 ; S28 0.4/0.3
+  artefacts sur la variante écrite (b1 × A), chacun refusé (A20) : paramètre changé après relecture True ; texte changé après relecture True ; approbation R-000 True ; contre_lecture à une seule empreinte True ; poids négatif True ; compagnon absent True ; définitions des niches absentes True
+
+== 3. Scénario principal (loi par axe, accord 0,7, structure 0,3, indépendance ; CA1-04 option A) ==
+  a   n= 6 : ≥ 1 paire du profil 0.27 ; paire méta dans le profil (après I-11) 0.25 ; médiane 0 ; aucune paire éligible 0.028 ; part même axe 0.11 (dont n1–n2 0.05)
+  a   n= 8 : ≥ 1 paire du profil 0.42 ; paire méta dans le profil (après I-11) 0.41 ; médiane 0 ; aucune paire éligible 0.005 ; part même axe 0.11 (dont n1–n2 0.05)
+  a   n=10 : ≥ 1 paire du profil 0.55 ; paire méta dans le profil (après I-11) 0.55 ; médiane 1 ; aucune paire éligible 0.001 ; part même axe 0.11 (dont n1–n2 0.05)
+  b1  n= 6 : ≥ 1 paire du profil 0.49 ; paire méta dans le profil (après I-11) 0.47 ; médiane 0 ; aucune paire éligible 0.028 ; part même axe 0.07 (dont n1–n2 0.02)
+  b1  n= 8 : ≥ 1 paire du profil 0.70 ; paire méta dans le profil (après I-11) 0.69 ; médiane 1 ; aucune paire éligible 0.005 ; part même axe 0.07 (dont n1–n2 0.02)
+  b1  n=10 : ≥ 1 paire du profil 0.84 ; paire méta dans le profil (après I-11) 0.83 ; médiane 2 ; aucune paire éligible 0.001 ; part même axe 0.07 (dont n1–n2 0.02)
+  b2  n= 6 : ≥ 1 paire du profil 0.58 ; paire méta dans le profil (après I-11) 0.56 ; médiane 1 ; aucune paire éligible 0.028 ; part même axe 0.06 (dont n1–n2 0.02)
+  b2  n= 8 : ≥ 1 paire du profil 0.78 ; paire méta dans le profil (après I-11) 0.77 ; médiane 2 ; aucune paire éligible 0.005 ; part même axe 0.06 (dont n1–n2 0.02)
+  b2  n=10 : ≥ 1 paire du profil 0.90 ; paire méta dans le profil (après I-11) 0.90 ; médiane 3 ; aucune paire éligible 0.001 ; part même axe 0.06 (dont n1–n2 0.02)
+  c1  n=12 : ≥ 1 paire du profil 0.66 ; paire méta dans le profil (après I-11) 0.66 ; médiane 1 ; aucune paire éligible 0.000 ; part même axe 0.14 (dont n1–n2 0.06)
+  c1  n=15 : ≥ 1 paire du profil 0.79 ; paire méta dans le profil (après I-11) 0.79 ; médiane 2 ; aucune paire éligible 0.000 ; part même axe 0.14 (dont n1–n2 0.06)
+  c2  n=12 : ≥ 1 paire du profil 0.66 ; paire méta dans le profil (après I-11) 0.66 ; médiane 1 ; aucune paire éligible 0.000 ; part même axe 0.15 (dont n1–n2 0.07)
+  c2  n=16 : ≥ 1 paire du profil 0.82 ; paire méta dans le profil (après I-11) 0.82 ; médiane 2 ; aucune paire éligible 0.000 ; part même axe 0.16 (dont n1–n2 0.07)
+  c2  n=20 : ≥ 1 paire du profil 0.91 ; paire méta dans le profil (après I-11) 0.91 ; médiane 4 ; aucune paire éligible 0.000 ; part même axe 0.16 (dont n1–n2 0.07)
+  d1  n= 6 : ≥ 1 paire du profil 0.55 ; paire méta dans le profil (après I-11) 0.53 ; médiane 1 ; aucune paire éligible 0.028 ; part même axe 0.10 (dont n1–n2 0.02)
+  d1  n= 8 : ≥ 1 paire du profil 0.75 ; paire méta dans le profil (après I-11) 0.74 ; médiane 1 ; aucune paire éligible 0.005 ; part même axe 0.10 (dont n1–n2 0.02)
+  d1  n=10 : ≥ 1 paire du profil 0.88 ; paire méta dans le profil (après I-11) 0.87 ; médiane 2 ; aucune paire éligible 0.001 ; part même axe 0.10 (dont n1–n2 0.02)
+  c2 avec perte de la passe « tableau » (0.53) : passe 1 à 6 fiches → ≥ 1 paire 0.45 ; paire méta dans le profil 0.44
+  c2 avec perte de la passe « tableau » (0.53) : passe 1 à 10 fiches → ≥ 1 paire 0.72 ; paire méta dans le profil 0.71
+
+== 4. Fourchettes : lois {par axe, annexe-b1, n6-fort, n2-fort} × structure {0,15 ; 0,3 ; 0,5} (accord 0,7) ==
+  a   n= 6 : ≥ 1 paire du profil [0.15 ; 0.54] ; paire méta dans le profil [0.15 ; 0.53]
+  a   n=10 : ≥ 1 paire du profil [0.37 ; 0.85] ; paire méta dans le profil [0.37 ; 0.85]
+  b1  n= 6 : ≥ 1 paire du profil [0.27 ; 0.65] ; paire méta dans le profil [0.26 ; 0.63]
+  b1  n=10 : ≥ 1 paire du profil [0.58 ; 0.93] ; paire méta dans le profil [0.57 ; 0.92]
+  b2  n= 6 : ≥ 1 paire du profil [0.33 ; 0.73] ; paire méta dans le profil [0.31 ; 0.72]
+  b2  n=10 : ≥ 1 paire du profil [0.68 ; 0.96] ; paire méta dans le profil [0.67 ; 0.96]
+  c1  n=12 : ≥ 1 paire du profil [0.48 ; 0.92] ; paire méta dans le profil [0.48 ; 0.92]
+  c1  n=15 : ≥ 1 paire du profil [0.63 ; 0.97] ; paire méta dans le profil [0.63 ; 0.97]
+  c2  n=12 : ≥ 1 paire du profil [0.48 ; 0.92] ; paire méta dans le profil [0.48 ; 0.92]
+  c2  n=20 : ≥ 1 paire du profil [0.81 ; 1.00] ; paire méta dans le profil [0.80 ; 0.99]
+  d1  n= 6 : ≥ 1 paire du profil [0.35 ; 0.79] ; paire méta dans le profil [0.34 ; 0.77]
+  d1  n=10 : ≥ 1 paire du profil [0.70 ; 0.97] ; paire méta dans le profil [0.70 ; 0.97]
+
+== 5. Sensibilités (loi par axe, n = 6 et 10 ; options a et b1 sauf mention) ==
+  a   n= 6 : structure dépendante du canal (CA1-06 a) 0.21 / 0.20 ; accord 0,6 axes 1 et 3, 0,85 ailleurs (CA1-06 c) 0.27 / 0.26 ; c(n1, n2) = 2 (CA1-01) 0.20 / 0.19 ; sans I-11 0.26
+  a   n=10 : structure dépendante du canal (CA1-06 a) 0.48 / 0.47 ; accord 0,6 axes 1 et 3, 0,85 ailleurs (CA1-06 c) 0.57 / 0.56 ; c(n1, n2) = 2 (CA1-01) 0.45 / 0.44 ; sans I-11 0.55
+  b1  n= 6 : structure dépendante du canal (CA1-06 a) 0.41 / 0.39 ; accord 0,6 axes 1 et 3, 0,85 ailleurs (CA1-06 c) 0.56 / 0.54 ; c(n1, n2) = 2 (CA1-01) 0.43 / 0.42 ; sans I-11 0.50
+  b1  n=10 : structure dépendante du canal (CA1-06 a) 0.77 / 0.76 ; accord 0,6 axes 1 et 3, 0,85 ailleurs (CA1-06 c) 0.89 / 0.89 ; c(n1, n2) = 2 (CA1-01) 0.78 / 0.78 ; sans I-11 0.84
+  CA1-04 (probabilité de structure partagée par paire, SUPPOSÉ : A 0,3 ; B jeux comptés 0,85 ; C sans les trois structures séquentielles 0,15) :
+    a   n= 6 : A 0.27 / 0.25 ; B 0.47 / 0.46 ; C 0.16 / 0.15
+    a   n=10 : A 0.55 / 0.55 ; B 0.73 / 0.73 ; C 0.37 / 0.37
+    b1  n= 6 : A 0.49 / 0.47 ; B 0.77 / 0.76 ; C 0.30 / 0.28
+    b1  n=10 : A 0.84 / 0.83 ; B 0.96 / 0.96 ; C 0.64 / 0.63
+
+== 6. Hanley et McNeil 1982 : erreur-type d'une aire 0,5 à 6 contre 6 = 0.173 ==
+== 7. Coûts (bases du devis v6 et du script v9) ==
+  c1, 5 fiches de plus en passe 1 (Kimi ×1,447, aiguilleur et second lecteur, 6 lectures d'étiquettes par fiche) : +2.77 USD ; É2 aux bases 2.89 → 4.34 USD pour un relais de 3,0
+  c2, lectures d'étiquettes sur les ≤ 10 fiches de la passe « tableau » (3 grilles × 2 lecteurs) : +1.50 USD ; É7b aux bases 1,50 → 3.00 USD pour un relais de 1,0 (souple, étape protégée)
+  désaccord (I-13) : 5 paires × 2 lecteurs au plus, ≤ 0.025 USD par lecture : ≤ 0.25 USD (absent du devis v6)
+
+== 8. Texte hors bloc N4 (ce qui ne doit pas changer quand on choisit une autre option) ==
+  empreinte du texte hors bloc N4 (tout sauf ce qui est strictement entre les deux marqueurs) : 079460f9ba4e5114cbf6f72349142fb52cee61231c47ea00028f47a3dcf9dcdb
+  blocs JSON dans le bloc N4 : parametres_bras_meta ; marqueurs ⟦…⟧ restants dans l'annexe : 0
+
+== 9. Épreuve du texte exact de l'annexe par le code v55 (aucun bloc réécrit) ==
+  annexe telle quelle (champs « À REMPLIR ») refusée : True ; copie où seules les deux valeurs sont remplacées acceptée : True ; paramètres et jeu d'essai lus par le code = ceux du script : True
+  non-vacuité sur le texte exact : 4 dans le profil / 37 hors profil / 4 même niche ; argmax e01–e04 score 2.0 ; S28 0.4/0.3 ; une ligne de texte changée après relecture refusée : True
+
+== 10. Loi par axe : marges ; paires de niches des paires méta du profil (scénario principal) ==
+  marges (deux places par axe, axes équiprobables) : n1 0.16 ; n2 0.17 ; n3 0.09 ; n4 0.05 ; n5 0.27 ; n6 0.26
+  a   n= 6 : n1–n6 0.53 ; n1–n2 0.32 ; n1–n4 0.09 ; n3–n4 0.06
+  a   n=10 : n1–n6 0.52 ; n1–n2 0.32 ; n1–n4 0.09 ; n3–n4 0.07
+  b1  n= 6 : n5–n6 0.45 ; n1–n6 0.24 ; n1–n2 0.16 ; n4–n5 0.08 ; n1–n4 0.04 ; n3–n4 0.03
+  b1  n=10 : n5–n6 0.46 ; n1–n6 0.23 ; n1–n2 0.16 ; n4–n5 0.08 ; n1–n4 0.04 ; n3–n4 0.03
+  b2  n= 6 : n5–n6 0.34 ; n2–n5 0.23 ; n1–n6 0.19 ; n1–n2 0.12 ; n4–n5 0.06 ; n1–n4 0.03 ; n3–n4 0.02
+  b2  n=10 : n5–n6 0.35 ; n2–n5 0.23 ; n1–n6 0.19 ; n1–n2 0.12 ; n4–n5 0.06 ; n1–n4 0.03 ; n3–n4 0.02
+  d1  n= 6 : n2–n6 0.23 ; n1–n6 0.21 ; n1–n2 0.12 ; n3–n5 0.12 ; n3–n6 0.10 ; n2–n3 0.06 ; n1–n3 0.06 ; n2–n4 0.04 ; n1–n4 0.04 ; n3–n4 0.02
+  d1  n=10 : n2–n6 0.24 ; n1–n6 0.21 ; n1–n2 0.12 ; n3–n5 0.12 ; n3–n6 0.10 ; n2–n3 0.06 ; n1–n3 0.05 ; n2–n4 0.04 ; n1–n4 0.04 ; n3–n4 0.02
+
+== 11. Fourchette détaillée (mêmes tâches que la section 4) ==
+  a   n= 6 : structure 0,3 — par-axe 0.26 / 0.25 ; annexe-b1 0.40 / 0.39 ; n6-fort 0.31 / 0.29 ; n2-fort 0.39 / 0.37 ; minimum 0.15 (par-axe, 0.15) ; maximum 0.54 (annexe-b1, 0.5)
+  a   n=10 : structure 0,3 — par-axe 0.55 / 0.54 ; annexe-b1 0.75 / 0.74 ; n6-fort 0.61 / 0.60 ; n2-fort 0.72 / 0.71 ; minimum 0.37 (par-axe, 0.15) ; maximum 0.85 (annexe-b1, 0.5)
+  b1  n= 6 : structure 0,3 — par-axe 0.50 / 0.48 ; annexe-b1 0.46 / 0.44 ; n6-fort 0.50 / 0.48 ; n2-fort 0.44 / 0.42 ; minimum 0.27 (n2-fort, 0.15) ; maximum 0.65 (par-axe, 0.5)
+  b1  n=10 : structure 0,3 — par-axe 0.84 / 0.83 ; annexe-b1 0.80 / 0.79 ; n6-fort 0.83 / 0.83 ; n2-fort 0.78 / 0.77 ; minimum 0.58 (n2-fort, 0.15) ; maximum 0.93 (par-axe, 0.5)
+  b2  n= 6 : structure 0,3 — par-axe 0.58 / 0.56 ; annexe-b1 0.53 / 0.51 ; n6-fort 0.54 / 0.52 ; n2-fort 0.53 / 0.51 ; minimum 0.33 (annexe-b1, 0.15) ; maximum 0.73 (par-axe, 0.5)
+  b2  n=10 : structure 0,3 — par-axe 0.90 / 0.90 ; annexe-b1 0.86 / 0.85 ; n6-fort 0.87 / 0.86 ; n2-fort 0.86 / 0.86 ; minimum 0.68 (annexe-b1, 0.15) ; maximum 0.96 (par-axe, 0.5)
+  c1  n=12 : structure 0,3 — par-axe 0.66 / 0.66 ; annexe-b1 0.85 / 0.84 ; n6-fort 0.72 / 0.71 ; n2-fort 0.83 / 0.82 ; minimum 0.48 (par-axe, 0.15) ; maximum 0.92 (annexe-b1, 0.5)
+  c1  n=15 : structure 0,3 — par-axe 0.79 / 0.79 ; annexe-b1 0.94 / 0.93 ; n6-fort 0.83 / 0.83 ; n2-fort 0.92 / 0.92 ; minimum 0.63 (par-axe, 0.15) ; maximum 0.97 (annexe-b1, 0.5)
+  c2  n=12 : structure 0,3 — par-axe 0.66 / 0.66 ; annexe-b1 0.85 / 0.84 ; n6-fort 0.72 / 0.71 ; n2-fort 0.83 / 0.82 ; minimum 0.48 (par-axe, 0.15) ; maximum 0.92 (annexe-b1, 0.5)
+  c2  n=20 : structure 0,3 — par-axe 0.91 / 0.91 ; annexe-b1 0.99 / 0.99 ; n6-fort 0.93 / 0.93 ; n2-fort 0.98 / 0.98 ; minimum 0.81 (par-axe, 0.15) ; maximum 1.00 (annexe-b1, 0.5)
+  d1  n= 6 : structure 0,3 — par-axe 0.55 / 0.53 ; annexe-b1 0.65 / 0.63 ; n6-fort 0.57 / 0.55 ; n2-fort 0.65 / 0.63 ; minimum 0.35 (par-axe, 0.15) ; maximum 0.79 (n2-fort, 0.5)
+  d1  n=10 : structure 0,3 — par-axe 0.88 / 0.87 ; annexe-b1 0.93 / 0.92 ; n6-fort 0.87 / 0.87 ; n2-fort 0.93 / 0.93 ; minimum 0.70 (par-axe, 0.15) ; maximum 0.97 (n2-fort, 0.5)
+  zéro paire du profil (1 − P(≥ 1)), structure 0,3, lois globales (comparaison avec la contre-lecture du brouillon 1) :
+    a   n= 6 : annexe-b1 0.60 ; n6-fort 0.69 ; n2-fort 0.61 ; par axe 0.74
+    a   n=10 : annexe-b1 0.25 ; n6-fort 0.39 ; n2-fort 0.28 ; par axe 0.45
+    b1  n= 6 : annexe-b1 0.54 ; n6-fort 0.50 ; n2-fort 0.56 ; par axe 0.50
+    b1  n=10 : annexe-b1 0.20 ; n6-fort 0.17 ; n2-fort 0.22 ; par axe 0.16
+    b2  n= 6 : annexe-b1 0.47 ; n6-fort 0.46 ; n2-fort 0.47 ; par axe 0.42
+    b2  n=10 : annexe-b1 0.14 ; n6-fort 0.13 ; n2-fort 0.14 ; par axe 0.10
+    d1  n= 6 : annexe-b1 0.35 ; n6-fort 0.43 ; n2-fort 0.35 ; par axe 0.45
+    d1  n=10 : annexe-b1 0.07 ; n6-fort 0.13 ; n2-fort 0.07 ; par axe 0.12
+    c1  n=15 : annexe-b1 0.06 ; n6-fort 0.17 ; n2-fort 0.08 ; par axe 0.21
+
+== 12. Sensibilités pour toutes les options ; classement des options à effectif égal ==
+  b2  n= 6 : structure dépendante du canal (CA1-06 a) 0.47 / 0.45 ; accord 0,6 axes 1 et 3, 0,85 ailleurs (CA1-06 c) 0.65 / 0.63 ; c(n1, n2) = 2 (CA1-01) 0.54 / 0.52 ; sans I-11 0.58
+  b2  n=10 : structure dépendante du canal (CA1-06 a) 0.82 / 0.82 ; accord 0,6 axes 1 et 3, 0,85 ailleurs (CA1-06 c) 0.94 / 0.94 ; c(n1, n2) = 2 (CA1-01) 0.88 / 0.87 ; sans I-11 0.90
+  c1  n=12 : structure dépendante du canal (CA1-06 a) 0.59 / 0.59 ; accord 0,6 axes 1 et 3, 0,85 ailleurs (CA1-06 c) 0.67 / 0.67 ; c(n1, n2) = 2 (CA1-01) 0.56 / 0.55 ; sans I-11 0.66
+  c1  n=15 : structure dépendante du canal (CA1-06 a) 0.73 / 0.73 ; accord 0,6 axes 1 et 3, 0,85 ailleurs (CA1-06 c) 0.80 / 0.80 ; c(n1, n2) = 2 (CA1-01) 0.70 / 0.70 ; sans I-11 0.79
+  c2  n=12 : structure dépendante du canal (CA1-06 a) 0.59 / 0.59 ; accord 0,6 axes 1 et 3, 0,85 ailleurs (CA1-06 c) 0.67 / 0.67 ; c(n1, n2) = 2 (CA1-01) 0.55 / 0.55 ; sans I-11 0.66
+  c2  n=20 : structure dépendante du canal (CA1-06 a) 0.87 / 0.87 ; accord 0,6 axes 1 et 3, 0,85 ailleurs (CA1-06 c) 0.91 / 0.91 ; c(n1, n2) = 2 (CA1-01) 0.86 / 0.85 ; sans I-11 0.91
+  d1  n= 6 : structure dépendante du canal (CA1-06 a) 0.51 / 0.50 ; accord 0,6 axes 1 et 3, 0,85 ailleurs (CA1-06 c) 0.56 / 0.54 ; c(n1, n2) = 2 (CA1-01) 0.55 / 0.53 ; sans I-11 0.55
+  d1  n=10 : structure dépendante du canal (CA1-06 a) 0.85 / 0.85 ; accord 0,6 axes 1 et 3, 0,85 ailleurs (CA1-06 c) 0.88 / 0.87 ; c(n1, n2) = 2 (CA1-01) 0.87 / 0.87 ; sans I-11 0.87
+  classement de P(≥ 1) entre a, b1, b2, d1 (même effectif, deux places par axe) :
+    n= 6 principal : a 0.27 < b1 0.49 < d1 0.55 < b2 0.58
+    n= 6 loi par-axe, structure 0,3 : a 0.26 < b1 0.50 < d1 0.55 < b2 0.58
+    n= 6 loi annexe-b1, structure 0,3 : a 0.40 < b1 0.46 < b2 0.53 < d1 0.65
+    n= 6 loi n6-fort, structure 0,3 : a 0.31 < b1 0.50 < b2 0.54 < d1 0.57
+    n= 6 loi n2-fort, structure 0,3 : a 0.39 < b1 0.44 < b2 0.53 < d1 0.65
+    n= 6 structure dépendante du canal : a 0.21 < b1 0.41 < b2 0.47 < d1 0.51
+    n= 6 accord par axe : a 0.27 < d1 0.56 < b1 0.56 < b2 0.65
+    n= 6 c(n1, n2) = 2 : a 0.20 < b1 0.43 < b2 0.54 < d1 0.55
+    n=10 principal : a 0.55 < b1 0.84 < d1 0.88 < b2 0.90
+    n=10 loi par-axe, structure 0,3 : a 0.55 < b1 0.84 < d1 0.88 < b2 0.90
+    n=10 loi annexe-b1, structure 0,3 : a 0.75 < b1 0.80 < b2 0.86 < d1 0.93
+    n=10 loi n6-fort, structure 0,3 : a 0.61 < b1 0.83 < b2 0.87 < d1 0.87
+    n=10 loi n2-fort, structure 0,3 : a 0.72 < b1 0.78 < b2 0.86 < d1 0.93
+    n=10 structure dépendante du canal : a 0.48 < b1 0.77 < b2 0.82 < d1 0.85
+    n=10 accord par axe : a 0.57 < d1 0.88 < b1 0.89 < b2 0.94
+    n=10 c(n1, n2) = 2 : a 0.45 < b1 0.78 < d1 0.87 < b2 0.88
+
+== 13. Ordre des bras tiré uniformément (tirages communs avec le scénario principal) ==
+  a   n= 6 : paire méta dans le profil 0.2551 (ordre de la v2 : 0.2550 ; écart +0.0002) ; ≥ 1 paire du profil 0.2670 (identique)
+  a   n=10 : paire méta dans le profil 0.5456 (ordre de la v2 : 0.5456 ; écart +0.0000) ; ≥ 1 paire du profil 0.5511 (identique)
+  b1  n= 6 : paire méta dans le profil 0.4728 (ordre de la v2 : 0.4723 ; écart +0.0005) ; ≥ 1 paire du profil 0.4930 (identique)
+  b1  n=10 : paire méta dans le profil 0.8346 (ordre de la v2 : 0.8344 ; écart +0.0002) ; ≥ 1 paire du profil 0.8393 (identique)
+  b2  n= 6 : paire méta dans le profil 0.5608 (ordre de la v2 : 0.5608 ; écart +0.0000) ; ≥ 1 paire du profil 0.5817 (identique)
+  b2  n=10 : paire méta dans le profil 0.8968 (ordre de la v2 : 0.8968 ; écart +0.0000) ; ≥ 1 paire du profil 0.9005 (identique)
+  d1  n= 6 : paire méta dans le profil 0.5292 (ordre de la v2 : 0.5286 ; écart +0.0006) ; ≥ 1 paire du profil 0.5486 (identique)
+  d1  n=10 : paire méta dans le profil 0.8715 (ordre de la v2 : 0.8717 ; écart -0.0002) ; ≥ 1 paire du profil 0.8756 (identique)
+
+== 14. Règle des affirmations mixtes (CA3-02) : axe 1 décomposé ; effet du défaut n2 (tirages communs) ==
+  axe 1 = m × [n1 : r ; n2 : 1 − r] + (1 − m) × fiches non mixtes [n1 0.250 ; n2 0.125 ; n3 0.500 ; n4 0.125] ; (m, r) = (0,6 ; 0,25) redonne la loi principale de l'axe 1 : True
+  m = part des fiches de l'axe 1 qui sont mixtes ; r = part des mixtes rangées en n1 (ligne « agrégation » déclarée) ; 1 − r : n2 (ligne couches ou jetons, ou défaut) ; r = 0 : le défaut joue pour toutes les mixtes
+  m=0.4 r=0.00 : axe 1 n1 0.15 n2 0.48 ; marge n1 0.140 (principal 0.160) ; marge n2 0.165
+    a   : n= 6 0.24 / 0.23, même axe 0.11 (dont n1–n2 0.04), n1–n2 parmi les paires méta du profil 0.30 ; n=10 0.51 / 0.51, même axe 0.11 (dont n1–n2 0.04), n1–n2 parmi les paires méta du profil 0.31
+    b1  : n= 6 0.48 / 0.46, même axe 0.06 (dont n1–n2 0.02), n1–n2 parmi les paires méta du profil 0.14 ; n=10 0.83 / 0.82, même axe 0.06 (dont n1–n2 0.02), n1–n2 parmi les paires méta du profil 0.14
+    b2  : n= 6 0.57 / 0.55, même axe 0.06 (dont n1–n2 0.01), n1–n2 parmi les paires méta du profil 0.10 ; n=10 0.89 / 0.89, même axe 0.06 (dont n1–n2 0.01), n1–n2 parmi les paires méta du profil 0.10
+    d1  : n= 6 0.56 / 0.54, même axe 0.10 (dont n1–n2 0.01), n1–n2 parmi les paires méta du profil 0.11 ; n=10 0.88 / 0.88, même axe 0.10 (dont n1–n2 0.01), n1–n2 parmi les paires méta du profil 0.10
+  m=0.4 r=0.25 : axe 1 n1 0.25 n2 0.38 ; marge n1 0.160 (principal 0.160) ; marge n2 0.145
+    a   : n= 6 0.26 / 0.25, même axe 0.11 (dont n1–n2 0.04), n1–n2 parmi les paires méta du profil 0.27 ; n=10 0.55 / 0.54, même axe 0.11 (dont n1–n2 0.04), n1–n2 parmi les paires méta du profil 0.28
+    b1  : n= 6 0.49 / 0.47, même axe 0.06 (dont n1–n2 0.02), n1–n2 parmi les paires méta du profil 0.14 ; n=10 0.84 / 0.83, même axe 0.06 (dont n1–n2 0.02), n1–n2 parmi les paires méta du profil 0.14
+    b2  : n= 6 0.57 / 0.55, même axe 0.06 (dont n1–n2 0.01), n1–n2 parmi les paires méta du profil 0.10 ; n=10 0.89 / 0.89, même axe 0.06 (dont n1–n2 0.01), n1–n2 parmi les paires méta du profil 0.10
+    d1  : n= 6 0.56 / 0.54, même axe 0.10 (dont n1–n2 0.02), n1–n2 parmi les paires méta du profil 0.10 ; n=10 0.88 / 0.88, même axe 0.10 (dont n1–n2 0.02), n1–n2 parmi les paires méta du profil 0.10
+  m=0.4 r=0.50 : axe 1 n1 0.35 n2 0.28 ; marge n1 0.180 (principal 0.160) ; marge n2 0.125
+    a   : n= 6 0.28 / 0.27, même axe 0.10 (dont n1–n2 0.04), n1–n2 parmi les paires méta du profil 0.25 ; n=10 0.58 / 0.58, même axe 0.11 (dont n1–n2 0.04), n1–n2 parmi les paires méta du profil 0.25
+    b1  : n= 6 0.50 / 0.48, même axe 0.06 (dont n1–n2 0.02), n1–n2 parmi les paires méta du profil 0.13 ; n=10 0.85 / 0.84, même axe 0.06 (dont n1–n2 0.02), n1–n2 parmi les paires méta du profil 0.13
+    b2  : n= 6 0.57 / 0.55, même axe 0.06 (dont n1–n2 0.01), n1–n2 parmi les paires méta du profil 0.10 ; n=10 0.89 / 0.89, même axe 0.06 (dont n1–n2 0.02), n1–n2 parmi les paires méta du profil 0.10
+    d1  : n= 6 0.56 / 0.54, même axe 0.10 (dont n1–n2 0.02), n1–n2 parmi les paires méta du profil 0.10 ; n=10 0.88 / 0.88, même axe 0.10 (dont n1–n2 0.02), n1–n2 parmi les paires méta du profil 0.10
+  m=0.4 r=0.75 : axe 1 n1 0.45 n2 0.17 ; marge n1 0.200 (principal 0.160) ; marge n2 0.105
+    a   : n= 6 0.30 / 0.29, même axe 0.10 (dont n1–n2 0.03), n1–n2 parmi les paires méta du profil 0.22 ; n=10 0.61 / 0.61, même axe 0.10 (dont n1–n2 0.03), n1–n2 parmi les paires méta du profil 0.22
+    b1  : n= 6 0.51 / 0.49, même axe 0.06 (dont n1–n2 0.02), n1–n2 parmi les paires méta du profil 0.12 ; n=10 0.85 / 0.85, même axe 0.06 (dont n1–n2 0.02), n1–n2 parmi les paires méta du profil 0.12
+    b2  : n= 6 0.57 / 0.55, même axe 0.06 (dont n1–n2 0.01), n1–n2 parmi les paires méta du profil 0.09 ; n=10 0.89 / 0.89, même axe 0.06 (dont n1–n2 0.01), n1–n2 parmi les paires méta du profil 0.09
+    d1  : n= 6 0.55 / 0.53, même axe 0.10 (dont n1–n2 0.01), n1–n2 parmi les paires méta du profil 0.09 ; n=10 0.88 / 0.87, même axe 0.10 (dont n1–n2 0.01), n1–n2 parmi les paires méta du profil 0.09
+  m=0.6 r=0.00 : axe 1 n1 0.10 n2 0.65 ; marge n1 0.130 (principal 0.160) ; marge n2 0.200
+    a   : n= 6 0.23 / 0.22, même axe 0.11 (dont n1–n2 0.04), n1–n2 parmi les paires méta du profil 0.36 ; n=10 0.49 / 0.49, même axe 0.11 (dont n1–n2 0.04), n1–n2 parmi les paires méta du profil 0.36
+    b1  : n= 6 0.47 / 0.45, même axe 0.06 (dont n1–n2 0.02), n1–n2 parmi les paires méta du profil 0.17 ; n=10 0.82 / 0.82, même axe 0.06 (dont n1–n2 0.02), n1–n2 parmi les paires méta du profil 0.17
+    b2  : n= 6 0.58 / 0.56, même axe 0.05 (dont n1–n2 0.01), n1–n2 parmi les paires méta du profil 0.12 ; n=10 0.90 / 0.90, même axe 0.05 (dont n1–n2 0.01), n1–n2 parmi les paires méta du profil 0.12
+    d1  : n= 6 0.55 / 0.53, même axe 0.10 (dont n1–n2 0.01), n1–n2 parmi les paires méta du profil 0.12 ; n=10 0.88 / 0.87, même axe 0.09 (dont n1–n2 0.01), n1–n2 parmi les paires méta du profil 0.12
+  m=0.6 r=0.25 : axe 1 n1 0.25 n2 0.50 ; marge n1 0.160 (principal 0.160) ; marge n2 0.170
+    a   : n= 6 0.27 / 0.25, même axe 0.11 (dont n1–n2 0.05), n1–n2 parmi les paires méta du profil 0.32 ; n=10 0.55 / 0.55, même axe 0.11 (dont n1–n2 0.05), n1–n2 parmi les paires méta du profil 0.32
+    b1  : n= 6 0.49 / 0.47, même axe 0.07 (dont n1–n2 0.02), n1–n2 parmi les paires méta du profil 0.16 ; n=10 0.84 / 0.83, même axe 0.07 (dont n1–n2 0.02), n1–n2 parmi les paires méta du profil 0.16
+    b2  : n= 6 0.58 / 0.56, même axe 0.06 (dont n1–n2 0.02), n1–n2 parmi les paires méta du profil 0.12 ; n=10 0.90 / 0.90, même axe 0.06 (dont n1–n2 0.02), n1–n2 parmi les paires méta du profil 0.12
+    d1  : n= 6 0.55 / 0.53, même axe 0.10 (dont n1–n2 0.02), n1–n2 parmi les paires méta du profil 0.12 ; n=10 0.88 / 0.87, même axe 0.10 (dont n1–n2 0.02), n1–n2 parmi les paires méta du profil 0.12
+  m=0.6 r=0.50 : axe 1 n1 0.40 n2 0.35 ; marge n1 0.190 (principal 0.160) ; marge n2 0.140
+    a   : n= 6 0.29 / 0.28, même axe 0.11 (dont n1–n2 0.05), n1–n2 parmi les paires méta du profil 0.27 ; n=10 0.60 / 0.60, même axe 0.11 (dont n1–n2 0.05), n1–n2 parmi les paires méta du profil 0.28
+    b1  : n= 6 0.51 / 0.49, même axe 0.07 (dont n1–n2 0.03), n1–n2 parmi les paires méta du profil 0.15 ; n=10 0.85 / 0.85, même axe 0.07 (dont n1–n2 0.03), n1–n2 parmi les paires méta du profil 0.15
+    b2  : n= 6 0.58 / 0.56, même axe 0.06 (dont n1–n2 0.02), n1–n2 parmi les paires méta du profil 0.11 ; n=10 0.90 / 0.90, même axe 0.06 (dont n1–n2 0.02), n1–n2 parmi les paires méta du profil 0.11
+    d1  : n= 6 0.55 / 0.53, même axe 0.10 (dont n1–n2 0.02), n1–n2 parmi les paires méta du profil 0.12 ; n=10 0.87 / 0.87, même axe 0.10 (dont n1–n2 0.02), n1–n2 parmi les paires méta du profil 0.12
+  m=0.6 r=0.75 : axe 1 n1 0.55 n2 0.20 ; marge n1 0.220 (principal 0.160) ; marge n2 0.110
+    a   : n= 6 0.32 / 0.30, même axe 0.09 (dont n1–n2 0.04), n1–n2 parmi les paires méta du profil 0.23 ; n=10 0.64 / 0.64, même axe 0.09 (dont n1–n2 0.04), n1–n2 parmi les paires méta du profil 0.24
+    b1  : n= 6 0.53 / 0.50, même axe 0.06 (dont n1–n2 0.02), n1–n2 parmi les paires méta du profil 0.13 ; n=10 0.86 / 0.86, même axe 0.06 (dont n1–n2 0.02), n1–n2 parmi les paires méta du profil 0.14
+    b2  : n= 6 0.58 / 0.56, même axe 0.06 (dont n1–n2 0.02), n1–n2 parmi les paires méta du profil 0.10 ; n=10 0.90 / 0.89, même axe 0.06 (dont n1–n2 0.02), n1–n2 parmi les paires méta du profil 0.10
+    d1  : n= 6 0.54 / 0.52, même axe 0.10 (dont n1–n2 0.02), n1–n2 parmi les paires méta du profil 0.11 ; n=10 0.87 / 0.87, même axe 0.10 (dont n1–n2 0.02), n1–n2 parmi les paires méta du profil 0.11
+  m=0.8 r=0.00 : axe 1 n1 0.05 n2 0.83 ; marge n1 0.120 (principal 0.160) ; marge n2 0.235
+    a   : n= 6 0.23 / 0.22, même axe 0.10 (dont n1–n2 0.03), n1–n2 parmi les paires méta du profil 0.41 ; n=10 0.47 / 0.47, même axe 0.10 (dont n1–n2 0.03), n1–n2 parmi les paires méta du profil 0.42
+    b1  : n= 6 0.46 / 0.44, même axe 0.06 (dont n1–n2 0.01), n1–n2 parmi les paires méta du profil 0.19 ; n=10 0.82 / 0.81, même axe 0.06 (dont n1–n2 0.01), n1–n2 parmi les paires méta du profil 0.18
+    b2  : n= 6 0.59 / 0.57, même axe 0.05 (dont n1–n2 0.01), n1–n2 parmi les paires méta du profil 0.13 ; n=10 0.91 / 0.90, même axe 0.05 (dont n1–n2 0.01), n1–n2 parmi les paires méta du profil 0.13
+    d1  : n= 6 0.54 / 0.52, même axe 0.09 (dont n1–n2 0.01), n1–n2 parmi les paires méta du profil 0.14 ; n=10 0.87 / 0.86, même axe 0.08 (dont n1–n2 0.01), n1–n2 parmi les paires méta du profil 0.14
+  m=0.8 r=0.25 : axe 1 n1 0.25 n2 0.63 ; marge n1 0.160 (principal 0.160) ; marge n2 0.195
+    a   : n= 6 0.27 / 0.26, même axe 0.12 (dont n1–n2 0.06), n1–n2 parmi les paires méta du profil 0.35 ; n=10 0.55 / 0.55, même axe 0.11 (dont n1–n2 0.06), n1–n2 parmi les paires méta du profil 0.36
+    b1  : n= 6 0.49 / 0.47, même axe 0.07 (dont n1–n2 0.03), n1–n2 parmi les paires méta du profil 0.18 ; n=10 0.84 / 0.84, même axe 0.07 (dont n1–n2 0.03), n1–n2 parmi les paires méta du profil 0.18
+    b2  : n= 6 0.59 / 0.57, même axe 0.06 (dont n1–n2 0.02), n1–n2 parmi les paires méta du profil 0.13 ; n=10 0.91 / 0.90, même axe 0.06 (dont n1–n2 0.02), n1–n2 parmi les paires méta du profil 0.13
+    d1  : n= 6 0.54 / 0.52, même axe 0.10 (dont n1–n2 0.02), n1–n2 parmi les paires méta du profil 0.15 ; n=10 0.87 / 0.87, même axe 0.10 (dont n1–n2 0.02), n1–n2 parmi les paires méta du profil 0.15
+  m=0.8 r=0.50 : axe 1 n1 0.45 n2 0.43 ; marge n1 0.200 (principal 0.160) ; marge n2 0.155
+    a   : n= 6 0.31 / 0.29, même axe 0.11 (dont n1–n2 0.06), n1–n2 parmi les paires méta du profil 0.30 ; n=10 0.62 / 0.62, même axe 0.11 (dont n1–n2 0.06), n1–n2 parmi les paires méta du profil 0.31
+    b1  : n= 6 0.52 / 0.50, même axe 0.07 (dont n1–n2 0.03), n1–n2 parmi les paires méta du profil 0.17 ; n=10 0.86 / 0.85, même axe 0.07 (dont n1–n2 0.03), n1–n2 parmi les paires méta du profil 0.17
+    b2  : n= 6 0.60 / 0.58, même axe 0.06 (dont n1–n2 0.02), n1–n2 parmi les paires méta du profil 0.13 ; n=10 0.91 / 0.90, même axe 0.06 (dont n1–n2 0.02), n1–n2 parmi les paires méta du profil 0.12
+    d1  : n= 6 0.54 / 0.52, même axe 0.10 (dont n1–n2 0.03), n1–n2 parmi les paires méta du profil 0.14 ; n=10 0.87 / 0.87, même axe 0.10 (dont n1–n2 0.03), n1–n2 parmi les paires méta du profil 0.14
+  m=0.8 r=0.75 : axe 1 n1 0.65 n2 0.23 ; marge n1 0.240 (principal 0.160) ; marge n2 0.115
+    a   : n= 6 0.34 / 0.32, même axe 0.09 (dont n1–n2 0.04), n1–n2 parmi les paires méta du profil 0.25 ; n=10 0.68 / 0.67, même axe 0.09 (dont n1–n2 0.05), n1–n2 parmi les paires méta du profil 0.25
+    b1  : n= 6 0.54 / 0.52, même axe 0.06 (dont n1–n2 0.02), n1–n2 parmi les paires méta du profil 0.15 ; n=10 0.87 / 0.87, même axe 0.06 (dont n1–n2 0.03), n1–n2 parmi les paires méta du profil 0.15
+    b2  : n= 6 0.59 / 0.57, même axe 0.06 (dont n1–n2 0.02), n1–n2 parmi les paires méta du profil 0.11 ; n=10 0.91 / 0.90, même axe 0.06 (dont n1–n2 0.02), n1–n2 parmi les paires méta du profil 0.11
+    d1  : n= 6 0.53 / 0.51, même axe 0.10 (dont n1–n2 0.02), n1–n2 parmi les paires méta du profil 0.13 ; n=10 0.87 / 0.86, même axe 0.10 (dont n1–n2 0.02), n1–n2 parmi les paires méta du profil 0.13
+  écart de P(≥ 1) entre r = 0 (défaut partout) et r = 0,5, à m = 0,6 : a n=6 +0.06 ; a n=10 +0.11 ; b1 n=6 +0.04 ; b1 n=10 +0.03 ; b2 n=6 +0.00 ; b2 n=10 +0.00 ; d1 n=6 -0.00 ; d1 n=10 -0.00
+  extrêmes de la grille (P(≥ 1), sur m et r) : a n=6 [0.23 ; 0.34] ; a n=10 [0.47 ; 0.68] ; b1 n=6 [0.46 ; 0.54] ; b1 n=10 [0.82 ; 0.87] ; b2 n=6 [0.57 ; 0.60] ; b2 n=10 [0.89 ; 0.91] ; d1 n=6 [0.53 ; 0.56] ; d1 n=10 [0.87 ; 0.88]
+
+== 15. Hanley et McNeil 1982, aire 0,5 (CA3-06) : course 2 à 24 fusions sur 3 bras, 8 par bras ==
+  6 contre 6 (chiffre des brouillons 1 à 3, situation qui n'est plus celle du plan) : erreur-type 0.173
+  8 contre 8 (deux bras comparés fusion par fusion) : erreur-type 0.149
+  4 contre 4 (un bras, fusions passées contre non passées, partage égal au mieux) : erreur-type 0.217
+
+== 16. Épreuves supplémentaires : texte exact, règles servies au lecteur, consigne figée, A4 (R5) ==
+  bloc regles_lecteur_niches hors du bloc N4 : True ; empreinte (JSON canonique) 1f999048528c8b128604bf0d46b61d4ba9e83540ae4b528f0144c9b5f7a20ab1
+  règle « niche » : 297 caractères ; empreinte b55bed3f415f229101576c34745d9c789ee60ed75911365282b2abed598be296
+  règle « affirmations_mixtes » : 560 caractères ; empreinte 66e4257fb04950edd14acdb3700e0f6366095073501f04a7b47d1a2f427901b0
+  règle « elements_imposes » : 649 caractères ; empreinte ab6548a7dccdf6c0a6aadeacb8206416aca345af2d1abec29478a0f231ac51a0
+  règle « format_reponse » : 273 caractères ; empreinte 360312ee1c710b5700e2847e7ab1c9009a5135169ed780cd405b3c19c79198c1
+  consigne figée : cas sain accepté True ; artefact « règle des éléments imposés absente » refusé True ; artefact « règle des mixtes modifiée d'un caractère » refusé True
+  texte exact : seul contre_lecture rempli refusé True ; seule approbation_lazar remplie refusée True ; « À REMPLIR » laissé dans approbation_lazar remplie refusé True ; les deux remplis acceptés True
+  phrases des règles servies par le code (liste_servie, definitions = « annexe ») : 10 sur 10 (n1_detection_sequentielle, n2_lecture_activations, om_martingale_e_processus, om_somme_cumulee_temps_arret, me_test_sequentiel_cusum, me_seuil_conforme, jd_simulateur_fige, jd_donnees_publiques, jd_notations_juges, pr_exclusion_famille)
+  garde A4 (liste d'essai : 17 étiquettes) : liste servie acceptée True ; règles acceptées True ; artefact « fusion » ajouté à une définition refusé True
+  combinaisons du bloc N4 : 18 ; jeux de paramètres distincts (clés option_* retirées) : 12 (CA3-08)
+  blocs JSON portant la clé parametres_bras_meta dans l'annexe : 1 (forme_annexe_v56 en exige un seul) ; clés de premier niveau des blocs : regles_lecteur_niches, jeu_essai_non_vacuite, variante_bloc_n4, parametres_bras_meta
+
+== 17. Écart entre N4 v12 et cette annexe (CA3-01) : zéro paire du profil = 1 − P(≥ 1) ==
+  cité de N4 v12 (l. 44 ; chiffres de la contre-lecture du brouillon 1) : (a) 0,59–0,67 à 6 fiches, 0,25–0,36 à 10 ; (b) quinze fiches 0,06 ; (c) bande retirée 0,47 et 0,14 ; (d) canal ≤ 2 0,35 et 0,07 ; script v9, paramètres fictifs : 0,31 et 0,03 ; (e) non chiffrée ; bande [2 ; 4] et réunion des passes : absentes
+  paires de niches de canal ≤ 1 : 7 sur 15 ; de canal ≤ 2 : 13 sur 15 (table du bloc N4)
+  (a) repli comme mesure     (a ) : loi du brouillon 1, structure 0,3 (§ 11) n=6 0.60 ; n=10 0.25 ; loi par axe, SUPPOSÉ (§ 3) n=6 0.73 ; n=10 0.45
+  (b) quinze fiches          (c1) : loi du brouillon 1, structure 0,3 (§ 11) n=12 0.15 ; n=15 0.06 ; loi par axe, SUPPOSÉ (§ 3) n=12 0.34 ; n=15 0.21
+  (c) bande retirée          (b2) : loi du brouillon 1, structure 0,3 (§ 11) n=6 0.47 ; n=10 0.14 ; loi par axe, SUPPOSÉ (§ 3) n=6 0.42 ; n=10 0.10
+  (d) canal ≤ 2              (d1) : loi du brouillon 1, structure 0,3 (§ 11) n=6 0.35 ; n=10 0.07 ; loi par axe, SUPPOSÉ (§ 3) n=6 0.45 ; n=10 0.12
+  nouvelle : bande [2 ; 4]   (b1) : loi du brouillon 1, structure 0,3 (§ 11) n=6 0.54 ; n=10 0.20 ; loi par axe, SUPPOSÉ (§ 3) n=6 0.51 ; n=10 0.16
+  nouvelle : passes réunies  (c2) : loi du brouillon 1, structure 0,3 (§ 11) n=12 0.15 ; n=20 0.01 ; loi par axe, SUPPOSÉ (§ 3) n=12 0.34 ; n=20 0.09
+  passes réunies avec la perte de la passe « tableau » (0.53), loi du brouillon 1, passe 1 à 6 fiches : P(≥ 1) 0.61, zéro paire 0.39
+  passes réunies avec la perte de la passe « tableau » (0.53), loi du brouillon 1, passe 1 à 10 fiches : P(≥ 1) 0.86, zéro paire 0.14
+  passes réunies avec la perte de la passe « tableau », loi par axe (mêmes tâches que § 3), passe 1 à 6 fiches : P(≥ 1) 0.45, zéro paire 0.55
+  passes réunies avec la perte de la passe « tableau », loi par axe (mêmes tâches que § 3), passe 1 à 10 fiches : P(≥ 1) 0.72, zéro paire 0.28
+
+== 18. Synthèse du tour 1 v12 des nœuds (N4) ; chiffres de l'erratum v2 de N4 ==
+  synthèse du tour 1 v12 : synthese-noeuds-v12-tour1-v1.md e4d5a5c94c37534a7481772af2f1150f325be38c46c356353520c44cf2f85aa5 ; attendue : True
+  critères de lecture du tour 1 : criteres-lecture-noeuds-v12-tour1-v1.md 22edbf4751c205f6760a136963bfaebcede773bfdc3300e923ad8e5df4e3a529 ; attendue : True
+  question du tour 2 (sans compagnon) : question-noeuds-v12-tour2-v1.md 19ff79d9407a6248d499b182fa0e191357877ee775869db044c07cb0b47d3258
+  question des nœuds v12 : question-noeuds-decisionnels-collisionneur-v12.md a7fac44bd25c0b88f90c3ce50c23fa3a704675e57c3639ea0e4e56c1797102d3 ; attendue : True
+  relecture Opus de la synthèse : relecture-opus-synthese-noeuds-v12-tour1-v1.md d1209130627f3e5c0ef7198016897c588a8b5ec3e36745084ec7b546475932b9 ; attendue : True
+  lettres d'option « (x) » trouvées (CA4-01) — section N4 de la synthèse ; questions du tour 2 sur N4 dans la synthèse ; paragraphe N4 de la question v12 ; ligne N4 de l'annexe du tour 2 servie avec la question du tour 2 :
+    synthèse, section N4 : (a) 10 ; (b) 0 ; (c) 0 ; (d) 0 ; (e) 0 ; (f) 2 ; (g) 0 ; (h) 0 ; (i) 0 ; (j) 0
+    synthèse, questions du tour 2 (N4) : (a) 2 ; (b) 0 ; (c) 0 ; (d) 0 ; (e) 0 ; (f) 0 ; (g) 0 ; (h) 0 ; (i) 0 ; (j) 0
+    question v12, N4 : (a) 1 ; (b) 1 ; (c) 1 ; (d) 1 ; (e) 1 ; (f) 0 ; (g) 0 ; (h) 0 ; (i) 0 ; (j) 0
+    question du tour 2, ligne N4 : (a) 1 ; (b) 0 ; (c) 0 ; (d) 0 ; (e) 0 ; (f) 0 ; (g) 0 ; (h) 0 ; (i) 0 ; (j) 0
+  contexte de « (f) » dans la synthèse, section N4 : '**(f)** mesurer la loi a priori des niches, pour remplacer une hypothè'
+  (g) et (h) : absentes de la section N4 de la synthèse, du paragraphe N4 de la v12 et de la ligne N4 du tour 2 : True
+  recalcul des chiffres de la synthèse sur la mesure de la loi (28 rendus filtrés par un accord de 0,5 à 0,7 ; niche de probabilité vraie 0,10) :
+    accord 0.5 : effectif utile 14.0 ; erreur-type 0.080 ; P(zéro fiche dans la niche) 0.229
+    accord 0.7 : effectif utile 19.6 ; erreur-type 0.068 ; P(zéro fiche dans la niche) 0.127
+  N4 sous trois lois, structure 0,3 (zéro paire du profil = 1 − P(≥ 1) ; P(méta) entre crochets) ; « n6 fort » = reconstruction [n1 0,18 ; n2 0,12 ; n3 0,10 ; n4 0,05 ; n5 0,20 ; n6 0,35] de la loi défavorable de la contre-lecture du brouillon 1 (qui donnait 0,67 et 0,36 sous l'option (a)) :
+    (a) repli comme mesure   (a ) : brouillon 1 n=6 0.60 [0.39], n=10 0.25 [0.74] ; n6 fort n=6 0.69 [0.29], n=10 0.39 [0.60] ; par axe n=6 0.73 [0.25], n=10 0.45 [0.55]
+    (b) quinze fiches        (c1) : brouillon 1 n=12 0.15 [0.84], n=15 0.06 [0.93] ; n6 fort n=12 0.28 [0.71], n=15 0.17 [0.83] ; par axe n=12 0.34 [0.66], n=15 0.21 [0.79]
+    (c) bande retirée        (b2) : brouillon 1 n=6 0.47 [0.51], n=10 0.14 [0.85] ; n6 fort n=6 0.46 [0.52], n=10 0.13 [0.86] ; par axe n=6 0.42 [0.56], n=10 0.10 [0.90]
+    (d) canal ≤ 2            (d1) : brouillon 1 n=6 0.35 [0.63], n=10 0.07 [0.92] ; n6 fort n=6 0.43 [0.55], n=10 0.13 [0.87] ; par axe n=6 0.45 [0.53], n=10 0.12 [0.87]
+    (g) passes réunies       (c2) : brouillon 1 n=12 0.15 [0.84], n=20 0.01 [0.99] ; n6 fort n=12 0.28 [0.71], n=20 0.07 [0.93] ; par axe n=12 0.34 [0.66], n=20 0.09 [0.91]
+    (h) bande [2 ; 4]        (b1) : brouillon 1 n=6 0.54 [0.44], n=10 0.20 [0.79] ; n6 fort n=6 0.50 [0.48], n=10 0.17 [0.83] ; par axe n=6 0.51 [0.47], n=10 0.16 [0.83]
+  (g) passes réunies avec la perte de la passe « tableau » (0.53), loi « n6 fort », passe 1 à 6 fiches : P(≥ 1) 0.50, zéro paire 0.50, P(méta) 0.49
+  (g) passes réunies avec la perte de la passe « tableau » (0.53), loi « n6 fort », passe 1 à 10 fiches : P(≥ 1) 0.76, zéro paire 0.24, P(méta) 0.76
+  n1–n2 hors du profil (c(n1, n2) = 2 ; accord à quatre du tour 1 : la paire que le programme fusionne ne reste pas dans le profil) — paires de niches dans le profil, puis P(≥ 1) [P(méta)] à 6 et 10 fiches, structure 0,3 :
+    a   : 4 → 3 paires sur 15 ; brouillon 1 n=6 0.20 [0.19] (avec n1–n2 0.40), n=10 0.44 [0.44] (avec n1–n2 0.75) ; n6 fort n=6 0.25 [0.24] (avec n1–n2 0.31), n=10 0.54 [0.53] (avec n1–n2 0.61) ; par axe n=6 0.20 [0.19] (avec n1–n2 0.27), n=10 0.45 [0.44] (avec n1–n2 0.55)
+    b1  : 6 → 5 paires sur 15 ; brouillon 1 n=6 0.26 [0.25] (avec n1–n2 0.46), n=10 0.52 [0.52] (avec n1–n2 0.80) ; n6 fort n=6 0.45 [0.44] (avec n1–n2 0.50), n=10 0.79 [0.79] (avec n1–n2 0.83) ; par axe n=6 0.43 [0.42] (avec n1–n2 0.49), n=10 0.78 [0.78] (avec n1–n2 0.84)
+    b2  : 7 → 6 paires sur 15 ; brouillon 1 n=6 0.36 [0.35] (avec n1–n2 0.53), n=10 0.69 [0.69] (avec n1–n2 0.86) ; n6 fort n=6 0.50 [0.48] (avec n1–n2 0.54), n=10 0.84 [0.84] (avec n1–n2 0.87) ; par axe n=6 0.54 [0.52] (avec n1–n2 0.58), n=10 0.88 [0.87] (avec n1–n2 0.90)
+    d1  : 10 → 10 paires sur 15 ; brouillon 1 n=6 0.65 [0.63] (avec n1–n2 0.65), n=10 0.93 [0.92] (avec n1–n2 0.93) ; n6 fort n=6 0.57 [0.55] (avec n1–n2 0.57), n=10 0.87 [0.87] (avec n1–n2 0.87) ; par axe n=6 0.55 [0.53] (avec n1–n2 0.55), n=10 0.87 [0.87] (avec n1–n2 0.88)
+
+== 19. Brouillon 5 contre brouillon 4 : texte hors bloc N4, blocs JSON, comptes (CA4-08, CA4-09) ==
+  brouillon 4 : 397e1cbc7483e7c5106bd859a77514605166e1fb699eb4b4ab5ed2730d15fb7c ; texte hors bloc N4 du brouillon 4 : 82df87759ec3b22c67de2ffb3439b230de1be0a4e5ff43dc43d10470ec8632c0
+  écart du texte hors bloc N4 (difflib, sans contexte) : 43 passages ; 50 lignes du brouillon 4 remplacées ou retirées ; 184 lignes du brouillon 5 ; lignes hors bloc N4 : 503 → 637 ; empreinte de l'écart (lignes jointes par \n) 3efc34bb2d8d440118b757a9fcd7cb2d41400a5d12e5ed50d09cd667a670ffe4
+  passages (numéros de ligne du texte hors bloc N4, brouillon 4 puis brouillon 5) : -5 +5,40 -8 +47 -15 +54 -20 +59,4 -27 +69 -29,2 +71,2 -33 +75 -37 +79 -58 +100 -81,0 +124,2 -92 +136 -98,2 +142,2 -105 +149 -109,0 +154,13 -120,2 +177,3 -124 +182 -139,3 +197,3 -151,4 +209,4 -161,0 +220 -162,0 +222 -167,0 +228,2 -168,0 +231,2 -180 +244 -204 +268 -225,0 +290 -239 +304 -245,0 +311 -254 +320 -282 +348 -326,0 +393,25 -346,2 +437,2 -350,2 +441,3 -356 +448 -361 +453 -373 +465 -385,4 +477,4 -415 +507 -422 +514 -428,3 +520,3 -436 +528,4 -442 +537 -489,3 +584,3 -502,0 +598,39
+  bloc regles_lecteur_niches : identique au brouillon 4 (JSON canonique, champs libres compris) True
+  bloc jeu_essai_non_vacuite : identique au brouillon 4 (JSON canonique, champs libres compris) True
+  bloc variante_bloc_n4 : identique au brouillon 4 (JSON canonique, champs libres compris) True
+  bloc parametres_bras_meta : identique au brouillon 4 (JSON canonique, champs libres compris) False
+  CA4-09 : structures portant une phrase servie 8 ; niches 2 ; « neuf structures » dans le brouillon 5 : 0 ; « huit structures » : 4
+  marqueurs de rédaction restants dans le texte hors bloc N4 : « A-VENIR » 0 ; « «C12- » 0
+fin

@@ -1,0 +1,42 @@
+[
+ {
+  "ancien": "(même disque, `PHASE=causal`, branche `calcul/sparks-exp7-nul-causal-v1` ; rd, l. 226-227)",
+  "nouveau": "(même disque, sur ordre écrit « causal », section « Minuterie de destruction et redémarrages » ; sorties sur une branche neuve `calcul/sparks-exp7-nul-causal-v4-<commit court>-<NNN>` écrite par l'instance, `<commit court>` étant les douze premiers caractères de `COMMIT` et `<NNN>` le numéro de l'ordre ; rd, l. 226-227)"
+ },
+ {
+  "ancien": "Carte : chaque démarrage est borné **sur la machine** (`timeout` de l'amorce ;",
+  "nouveau": "Carte : chaque démarrage est borné **sur la machine** (`timeout` sur chaque étape de l'amorce, clone, lecture des ordres, gardes, lots et repli `vastai` compris, et sur le calcul ;"
+ },
+ {
+  "ancien": "quand une destruction est due, le processus principal attend la fin de la minuterie.",
+  "nouveau": "quand une destruction est due, le processus principal attend la fin de la minuterie lancée par ce démarrage (désignée par son numéro de processus au lancement, jamais par un fichier d'un démarrage antérieur), au plus 32 minutes : dans un conteneur, la sortie du processus principal tue la minuterie. Chaque étape avant le calcul est sous `timeout` (clone et extraction 10 minutes, lecture des ordres 5 minutes, gardes 2 minutes, lot 15 minutes, `vastai destroy` 2 minutes) : sans cela, une étape bloquée garderait la carte louée jusqu'à l'échéance."
+ },
+ {
+  "ancien": "sur la branche `calcul/sparks-exp7-nul-v3-ordres`, puis redémarre.",
+  "nouveau": "sur la branche `ordres/sparks-exp7-nul-v4-<commit court>` (hors des branches `calcul/…`, que seules les instances écrivent ; liée au commit lancé, si bien qu'une répétition, lancée à un autre commit, n'y écrit jamais), puis redémarre."
+ },
+ {
+  "ancien": "clés fermées ; numéro égal au nom du fichier ;",
+  "nouveau": "clés fermées ; numéro égal au nom du fichier ; champ `instance` égal à `CONTAINER_ID` ;"
+ },
+ {
+  "ancien": "et le consigne fait avant d'agir.",
+  "nouveau": "et le consigne fait avant d'agir (consignation impossible : refus, rien ne part)."
+ },
+ {
+  "ancien": "est **relu à chaque démarrage** pour la borne de durée (ligne du devis).",
+  "nouveau": "est **relu à chaque démarrage** pour la borne de durée (ligne du devis) ; la machine refuse un `deja_usd` inférieur à celui du dernier ordre exécuté, et la borne de durée prend le plus grand de `deja_usd` et de la borne propre de la machine (somme des plafonds des démarrages consignés sur son disque × prix de la carte, plus la durée depuis la création × prix du stockage), qui ne passe par aucun modèle (R-1481)."
+ },
+ {
+  "ancien": "et par la minuterie au démarrage suivant.",
+  "nouveau": "et par la minuterie au démarrage suivant ; risque accepté par Lazar (R-1488, option (b)), borné par l'échéance de GO-2026-11-04-04 (fin du 18 novembre)."
+ },
+ {
+  "ancien": "cas sain et artefact pour chaque garde (`tests/test_sparks_exp7_nul_v3.py`, banc v3). Restent, avant le scellement : le **tir réel de la minuterie avant la création** (R-1477)",
+  "nouveau": "cas sain et artefact pour chaque garde, chacune mutée au banc (essais et banc de la version du code citée en section 2 ; minuterie et attente du principal jouées aussi dans un espace de processus à part, `unshare -pf`, comme dans un conteneur). Restent, avant le scellement : le **tir réel de la minuterie avant la création** (R-1477 : `DELETE` par la clé du conteneur, puis lecture qui ne trouve plus l'instance ; `curl` et `git` présents dans l'image ; arguments et environnement relancés tels quels par `vastai start` ; instance « arrêtée » sans carte facturée à la sortie du conteneur ; `vastai copy` possible depuis un conteneur lancé par ses arguments)"
+ },
+ {
+  "ancien": "(disque existant ; commit du disque égal à `COMMIT`, sinon refus).",
+  "nouveau": "(disque existant ; commit du disque égal à `COMMIT`, sinon refus). La session crée l'instance par `vastai create` sous `timeout`, sortie non affichée (seuls le code de retour et l'identifiant rendu sont gardés, R-1480) ; tout code non nul ou délai dépassé pose un marqueur de création incertaine : aucune seconde création avant un inventaire sans sortie brute."
+ }
+]

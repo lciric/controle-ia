@@ -1,0 +1,62 @@
+..........F..FFFF...........
+======================================================================
+FAIL: test_garde_discrimine_quand_elle_a_ses_unites (essais.test_v7_porte_pace.GardeV40.test_garde_discrimine_quand_elle_a_ses_unites)
+Cas sain où la garde a de la puissance : bruit P(±1) = 0,02, 600 unités de garde, m = 5. Témoin honnête validé,
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/tmp/claude-0/-home-user-controle-ia-travail/75a1275d-b838-5015-909e-b2bfadb395f9/scratchpad/relecture-v40/cl7/outils-cl7/mutants/N37/essais/test_v7_porte_pace.py", line 245, in test_garde_discrimine_quand_elle_a_ses_unites
+    self.assertGreaterEqual(sum(_temoin(r)["pari_apparie"]["validee"] for r in honnete) / 30, 0.9)
+    ~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: 0.03333333333333333 not greater than or equal to 0.9
+
+======================================================================
+FAIL: test_reglages_du_monde_de_la_garde (essais.test_v7_porte_pace.GardeV40.test_reglages_du_monde_de_la_garde) (n_garde=0)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/tmp/claude-0/-home-user-controle-ia-travail/75a1275d-b838-5015-909e-b2bfadb395f9/scratchpad/relecture-v40/cl7/outils-cl7/mutants/N37/essais/test_v7_porte_pace.py", line 261, in test_reglages_du_monde_de_la_garde
+    with self.subTest(**{k: v}), self.assertRaises(pp.SuiteInvalide):
+                                 ~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^
+AssertionError: SuiteInvalide not raised
+
+======================================================================
+FAIL: test_reglages_du_monde_de_la_garde (essais.test_v7_porte_pace.GardeV40.test_reglages_du_monde_de_la_garde) (n_garde=2.5)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/tmp/claude-0/-home-user-controle-ia-travail/75a1275d-b838-5015-909e-b2bfadb395f9/scratchpad/relecture-v40/cl7/outils-cl7/mutants/N37/essais/test_v7_porte_pace.py", line 261, in test_reglages_du_monde_de_la_garde
+    with self.subTest(**{k: v}), self.assertRaises(pp.SuiteInvalide):
+                                 ~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^
+AssertionError: SuiteInvalide not raised
+
+======================================================================
+FAIL: test_reglages_du_monde_de_la_garde (essais.test_v7_porte_pace.GardeV40.test_reglages_du_monde_de_la_garde) (n_garde=True)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/tmp/claude-0/-home-user-controle-ia-travail/75a1275d-b838-5015-909e-b2bfadb395f9/scratchpad/relecture-v40/cl7/outils-cl7/mutants/N37/essais/test_v7_porte_pace.py", line 261, in test_reglages_du_monde_de_la_garde
+    with self.subTest(**{k: v}), self.assertRaises(pp.SuiteInvalide):
+                                 ~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^
+AssertionError: SuiteInvalide not raised
+
+======================================================================
+FAIL: test_reglages_du_monde_de_la_garde (essais.test_v7_porte_pace.GardeV40.test_reglages_du_monde_de_la_garde)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/tmp/claude-0/-home-user-controle-ia-travail/75a1275d-b838-5015-909e-b2bfadb395f9/scratchpad/relecture-v40/cl7/outils-cl7/mutants/N37/essais/test_v7_porte_pace.py", line 266, in test_reglages_du_monde_de_la_garde
+    self.assertEqual([len(c["ecarts_faux_positifs"]) for c in sain], [50, 50])
+    ~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: Lists differ: [30, 30] != [50, 50]
+
+First differing element 0:
+30
+50
+
+- [30, 30]
+?  ^   ^
+
++ [50, 50]
+?  ^   ^
+
+
+----------------------------------------------------------------------
+Ran 25 tests in 18.767s
+
+FAILED (failures=5)

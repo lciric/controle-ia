@@ -1,0 +1,363 @@
+script éprouvé : lancer_p3_v1.sh 8cd40e08ee4cab05356cd73f433c541f5ae22abe279b6b261621ea52038e4e12
+script éprouvé : verifications_p3_v1.py 6667ac0ee7db2e7fe3f95eeb02d550565c75f4a26abc202cf204bc508405f1cc
+script éprouvé : essais_lanceur_p3_v1.sh 777030dffeaeb879cd70c55694eabfe9486996598ece3d6eb13c86014ebb7741
+lignes changées dans la copie du lanceur : 2 (DEPOT, B)
+S = 7b7f2397ed597e3b8edfa259d95c5bed2ec71f46
+P00-sain : code 0 ; créations factices 1 ; CONFORME
+    | prix 1.1000 USD/h ; autres projets en marche 0.0000 USD/h ; crédit 20.00 USD ; minimum 8.35 USD (6.5 h)
+    | succès : True ; identifiant 99999999 ; message : 
+    > etiquette p3-v1
+    > env COMMIT présent
+    > env PREREG=prereg/P3-premier-test-i-a-v1.md
+    > env BRANCHE=calcul/p3-reel-v1
+    > env DEPOT_URL=https://github.com/lciric/controle-ia-travail.git
+    > go GO-2026-10-04-08
+    > plafond de la surveillance = création + 22 200 s : True ; contrôle à cinq minutes = création + 180 à 300 s : True ; branche calcul/p3-reel-v1 : True ; PREREG et DEPOT_URL : True ; étiquette p3-v1 : True ; ETUDE absente : True ; GO GO-2026-10-04-08 écrit et porté par la création : True ; accord de Lazar du jour relu deux fois : True ; instances arrêtées tolérées (dont 56438435) : True ; destruction écrite (72 heures) : True
+P01-creee-mais-code-1 : code 4 ; créations factices 1 ; CONFORME
+    | succès : True ; identifiant 99999999 ; message : 
+    | création douteuse (statuts 1 0 0) : vérifier « vastai show instances », sans --raw
+P02-reponse-illisible : code 4 ; créations factices 1 ; CONFORME
+    | réponse illisible (300 premiers caractères masqués dans reponse-masquee.txt) ; vérifier par « vastai show instances », sans --raw
+    | création douteuse (statuts 0 4 0) : vérifier « vastai show instances », sans --raw
+P03-echec-creation : code 4 ; créations factices 1 ; CONFORME
+    | succès : False ; identifiant None ; message : non
+    | création douteuse (statuts 0 4 0) : vérifier « vastai show instances », sans --raw
+P04-heure-2345-avant-creation : code 3 ; créations factices 0 ; CONFORME
+    | prix 1.1000 USD/h ; autres projets en marche 0.0000 USD/h ; crédit 20.00 USD ; minimum 8.35 USD (6.5 h)
+    | heure UTC 2345 : pas de création entre 23:30 et 00:00 (T-7)
+P04b-heure-2340-au-depart : code 3 ; créations factices 0 ; CONFORME
+    | heure UTC 2340 : pas de création entre 23:30 et 00:00 (T-7)
+P04c-heure-2329-au-depart : code 0 ; créations factices 1 ; CONFORME
+    | prix 1.1000 USD/h ; autres projets en marche 0.0000 USD/h ; crédit 20.00 USD ; minimum 8.35 USD (6.5 h)
+    | succès : True ; identifiant 99999999 ; message : 
+P05-place-traces : code 3 ; créations factices 0 ; CONFORME
+    | place disque des traces : 2900000 ko
+P05b-place-bloc-notes : code 3 ; créations factices 0 ; CONFORME
+    | place disque : 2900000 ko libres (3 Go exigés)
+P06-controles-ko : code 2 ; créations factices 0 ; CONFORME
+    | KO  essai : faute simulée
+    | contrôles avant dépense en échec : pas de création
+P07-offre-sans-prix : code 3 ; créations factices 0 ; CONFORME
+    | accord de Lazar : R-999 : accord de Lazar du 2026-10-19 pour le lancement de P3 : conforme
+    | aucune offre conforme au filtre du plan au plus 1.3 USD/h (au moins 16 cœurs effectifs, 128000 Mo de mémoire vive, téléchargement au plus 0.05 USD/Go, stockage au plus 0.03 USD/h) : pas de c
+P07b-prix-au-dessus-du-devis : code 3 ; créations factices 0 ; CONFORME
+    | accord de Lazar : R-999 : accord de Lazar du 2026-10-19 pour le lancement de P3 : conforme
+    | aucune offre conforme au filtre du plan au plus 1.3 USD/h (au moins 16 cœurs effectifs, 128000 Mo de mémoire vive, téléchargement au plus 0.05 USD/Go, stockage au plus 0.03 USD/h) : pas de c
+P07c-processeur-autre : code 3 ; créations factices 0 ; CONFORME
+    | accord de Lazar : R-999 : accord de Lazar du 2026-10-19 pour le lancement de P3 : conforme
+    | aucune offre conforme au filtre du plan au plus 1.3 USD/h (au moins 16 cœurs effectifs, 128000 Mo de mémoire vive, téléchargement au plus 0.05 USD/Go, stockage au plus 0.03 USD/h) : pas de c
+P07d-processeur-voisin : code 3 ; créations factices 0 ; CONFORME
+    | accord de Lazar : R-999 : accord de Lazar du 2026-10-19 pour le lancement de P3 : conforme
+    | aucune offre conforme au filtre du plan au plus 1.3 USD/h (au moins 16 cœurs effectifs, 128000 Mo de mémoire vive, téléchargement au plus 0.05 USD/Go, stockage au plus 0.03 USD/h) : pas de c
+P07e-carte-pcie : code 3 ; créations factices 0 ; CONFORME
+    | accord de Lazar : R-999 : accord de Lazar du 2026-10-19 pour le lancement de P3 : conforme
+    | aucune offre conforme au filtre du plan au plus 1.3 USD/h (au moins 16 cœurs effectifs, 128000 Mo de mémoire vive, téléchargement au plus 0.05 USD/Go, stockage au plus 0.03 USD/h) : pas de c
+P07f-quinze-coeurs : code 3 ; créations factices 0 ; CONFORME
+    | accord de Lazar : R-999 : accord de Lazar du 2026-10-19 pour le lancement de P3 : conforme
+    | aucune offre conforme au filtre du plan au plus 1.3 USD/h (au moins 16 cœurs effectifs, 128000 Mo de mémoire vive, téléchargement au plus 0.05 USD/Go, stockage au plus 0.03 USD/h) : pas de c
+P07g-memoire-vive-64-go : code 3 ; créations factices 0 ; CONFORME
+    | accord de Lazar : R-999 : accord de Lazar du 2026-10-19 pour le lancement de P3 : conforme
+    | aucune offre conforme au filtre du plan au plus 1.3 USD/h (au moins 16 cœurs effectifs, 128000 Mo de mémoire vive, téléchargement au plus 0.05 USD/Go, stockage au plus 0.03 USD/h) : pas de c
+P07h-telechargement-au-dessus-de-la-borne : code 3 ; créations factices 0 ; CONFORME
+    | accord de Lazar : R-999 : accord de Lazar du 2026-10-19 pour le lancement de P3 : conforme
+    | aucune offre conforme au filtre du plan au plus 1.3 USD/h (au moins 16 cœurs effectifs, 128000 Mo de mémoire vive, téléchargement au plus 0.05 USD/Go, stockage au plus 0.03 USD/h) : pas de c
+P07i-coeurs-illisibles : code 3 ; créations factices 0 ; CONFORME
+    | accord de Lazar : R-999 : accord de Lazar du 2026-10-19 pour le lancement de P3 : conforme
+    | aucune offre conforme au filtre du plan au plus 1.3 USD/h (au moins 16 cœurs effectifs, 128000 Mo de mémoire vive, téléchargement au plus 0.05 USD/Go, stockage au plus 0.03 USD/h) : pas de c
+P07j-telechargement-illisible : code 3 ; créations factices 0 ; CONFORME
+    | accord de Lazar : R-999 : accord de Lazar du 2026-10-19 pour le lancement de P3 : conforme
+    | aucune offre conforme au filtre du plan au plus 1.3 USD/h (au moins 16 cœurs effectifs, 128000 Mo de mémoire vive, téléchargement au plus 0.05 USD/Go, stockage au plus 0.03 USD/h) : pas de c
+P07k-seize-coeurs-juste : code 0 ; créations factices 1 ; CONFORME
+    | prix 1.1000 USD/h ; autres projets en marche 0.0000 USD/h ; crédit 20.00 USD ; minimum 8.35 USD (6.5 h)
+    | succès : True ; identifiant 99999999 ; message : 
+P07l-stockage-au-dessus-de-la-borne : code 3 ; créations factices 0 ; CONFORME
+    | accord de Lazar : R-999 : accord de Lazar du 2026-10-19 pour le lancement de P3 : conforme
+    | aucune offre conforme au filtre du plan au plus 1.3 USD/h (au moins 16 cœurs effectifs, 128000 Mo de mémoire vive, téléchargement au plus 0.05 USD/Go, stockage au plus 0.03 USD/h) : pas de c
+P07m-stockage-illisible : code 3 ; créations factices 0 ; CONFORME
+    | accord de Lazar : R-999 : accord de Lazar du 2026-10-19 pour le lancement de P3 : conforme
+    | aucune offre conforme au filtre du plan au plus 1.3 USD/h (au moins 16 cœurs effectifs, 128000 Mo de mémoire vive, téléchargement au plus 0.05 USD/Go, stockage au plus 0.03 USD/h) : pas de c
+P07n-stockage-au-plafond-juste : code 0 ; créations factices 1 ; CONFORME
+    | prix 1.1000 USD/h ; autres projets en marche 0.0000 USD/h ; crédit 20.00 USD ; minimum 8.35 USD (6.5 h)
+    | succès : True ; identifiant 99999999 ; message : 
+P08-credit-insuffisant : code 3 ; créations factices 0 ; CONFORME
+    | prix 1.1000 USD/h ; autres projets en marche 0.0000 USD/h ; crédit 8.34 USD ; minimum 8.35 USD (6.5 h)
+    | crédit insuffisant pour P3 et les autres projets en marche : pas de lancement ; recharge demandée à Lazar
+P08b-credit-juste : code 0 ; créations factices 1 ; CONFORME
+    | prix 1.1000 USD/h ; autres projets en marche 0.0000 USD/h ; crédit 8.35 USD ; minimum 8.35 USD (6.5 h)
+    | succès : True ; identifiant 99999999 ; message : 
+P08c-credit-illisible : code 2 ; créations factices 0 ; CONFORME
+    | crédit illisible (vastai show user)
+    | crédit illisible (vastai show user, code 2) : pas de création
+P08d-credit-non-numerique : code 2 ; créations factices 0 ; CONFORME
+    | crédit illisible (vastai show user)
+    | crédit illisible (vastai show user, code 2) : pas de création
+P09-jeton-hf-absent : code 2 ; créations factices 0 ; CONFORME
+    | accord de Lazar : R-999 : accord de Lazar du 2026-10-19 pour le lancement de P3 : conforme
+    | jeton absent (HF_TOKEN ou CONTROLE_IA_GITHUB_TOKEN) : pas de création
+P09b-jeton-github-absent : code 2 ; créations factices 0 ; CONFORME
+    | accord de Lazar : R-999 : accord de Lazar du 2026-10-19 pour le lancement de P3 : conforme
+    | jeton absent (HF_TOKEN ou CONTROLE_IA_GITHUB_TOKEN) : pas de création
+P10-argument-absent : code 2 ; créations factices 0 ; CONFORME
+    | usage : lancer_p3_v1.sh DOSSIER_TRACES AUTRES_PROJETS ACCORD
+P10a-deux-arguments-sans-accord : code 2 ; créations factices 0 ; CONFORME
+    | usage : lancer_p3_v1.sh DOSSIER_TRACES AUTRES_PROJETS ACCORD
+P10b-quatre-arguments : code 2 ; créations factices 0 ; CONFORME
+    | usage : lancer_p3_v1.sh DOSSIER_TRACES AUTRES_PROJETS ACCORD
+P10c-forme-de-relance-refusee : code 2 ; créations factices 0 ; CONFORME
+    | usage : lancer_p3_v1.sh DOSSIER_TRACES AUTRES_PROJETS ACCORD
+P10d-accord-mal-forme : code 2 ; créations factices 0 ; CONFORME
+    | ACCORD : identifiant R-… de la ligne qui consigne l'accord de Lazar du jour attendu (R-185)
+P11-instance-non-toleree : code 2 ; créations factices 0 ; CONFORME
+    | autres instances sur le compte (non tolérées ; autre projet : étiquette « rr-… » exigée) : 1 (running, running)
+    | instances : non tolérée(s), ou liste illisible (voir la ligne ci-dessus) : pas de création
+P11b-instance-du-programme-en-marche : code 2 ; créations factices 0 ; CONFORME
+    | autres instances sur le compte (non tolérées ; autre projet : étiquette « rr-… » exigée) : 55538944 (running, running)
+    | instances : non tolérée(s), ou liste illisible (voir la ligne ci-dessus) : pas de création
+P11c-aucune-instance : code 0 ; créations factices 1 ; CONFORME
+    | prix 1.1000 USD/h ; autres projets en marche 0.0000 USD/h ; crédit 20.00 USD ; minimum 8.35 USD (6.5 h)
+    | succès : True ; identifiant 99999999 ; message : 
+P11d-liste-des-instances-illisible : code 2 ; créations factices 0 ; CONFORME
+    | vastai show instances : réponse illisible ou commande en échec
+    | instances : non tolérée(s), ou liste illisible (voir la ligne ci-dessus) : pas de création
+P11e-instance-des-notations-en-marche : code 2 ; créations factices 0 ; CONFORME
+    | autres instances sur le compte (non tolérées ; autre projet : étiquette « rr-… » exigée) : 56438435 (running, running)
+    | instances : non tolérée(s), ou liste illisible (voir la ligne ci-dessus) : pas de création
+Z01-instances-tolerees-non-epinglees : code 2 ; créations factices 0 ; CONFORME
+    | instances tolérées non épinglées
+Z02-borne-de-telechargement-non-fixee : code 2 ; créations factices 0 ; CONFORME
+    | borne de téléchargement non fixée (A_FIXER) : à reprendre du texte scellé
+Z03-borne-de-stockage-non-fixee : code 2 ; créations factices 0 ; CONFORME
+    | borne de stockage non fixée (A_FIXER) : à reprendre du texte scellé
+P14-controles_avant_depense_p3_v1.sh-non-verse : code 2 ; créations factices 0 ; CONFORME
+    | controles_avant_depense_p3_v1.sh exécuté ≠ copie versée au commit S
+P14-surveiller_p3_v1.sh-non-verse : code 2 ; créations factices 0 ; CONFORME
+    | surveiller_p3_v1.sh exécuté ≠ copie versée au commit S
+P14-controle_cinq_minutes_p3_v1.sh-non-verse : code 2 ; créations factices 0 ; CONFORME
+    | controle_cinq_minutes_p3_v1.sh exécuté ≠ copie versée au commit S
+P14-verifications_p3_v1.py-non-verse : code 2 ; créations factices 0 ; CONFORME
+    | verifications_p3_v1.py exécuté ≠ copie versée au commit S
+P14-recuperation_p3_v1.sh-non-verse : code 2 ; créations factices 0 ; CONFORME
+    | recuperation_p3_v1.sh exécuté ≠ copie versée au commit S
+P14b-lanceur-non-verse : code 2 ; créations factices 0 ; CONFORME
+    | lancer_p3_v1.sh exécuté ≠ copie versée au commit S
+P15-s-absent-du-distant : code 2 ; créations factices 0 ; CONFORME
+    | commit de scellement 7b7f2397ed597e3b8edfa259d95c5bed2ec71f46 absent du dépôt distant
+P16-sain-rejoue : code 0 ; créations factices 1 ; CONFORME
+    | prix 1.1000 USD/h ; autres projets en marche 0.0000 USD/h ; crédit 20.00 USD ; minimum 8.35 USD (6.5 h)
+    | succès : True ; identifiant 99999999 ; message : 
+N09-fetch-en-echec : code 2 ; créations factices 0 ; CONFORME
+    | and the repository exists.
+    | arrêt avant la création (ligne 76)
+N07-controles-derniere-ligne-autre : code 2 ; créations factices 0 ; CONFORME
+    | accord de Lazar : R-999 : accord de Lazar du 2026-10-19 pour le lancement de P3 : conforme
+    | contrôles : dernière ligne inattendue
+N05-traces-existantes : code 2 ; créations factices 0 ; CONFORME
+    | /tmp/claude-0/-home-user/5a6b9d1d-b17d-59a1-a770-8737a831fe0a/scratchpad/p3-v2-banc-lanceur/traces-existantes existe déjà (R12)
+N04-jeton-dans-la-reponse : code 0 ; créations factices 1 ; CONFORME
+    | prix 1.1000 USD/h ; autres projets en marche 0.0000 USD/h ; crédit 20.00 USD ; minimum 8.35 USD (6.5 h)
+    | succès : True ; identifiant 99999999 ; message : jeton *** et ***
+N04b-jeton-dans-une-reponse-illisible : code 4 ; créations factices 1 ; CONFORME
+    | réponse illisible (300 premiers caractères masqués dans reponse-masquee.txt) ; vérifier par « vastai show instances », sans --raw
+    | création douteuse (statuts 0 4 0) : vérifier « vastai show instances », sans --raw
+    N04b : réponse masquée gardée (reponse-masquee.txt), relue pour les jetons ci-dessous : CONFORME
+N03-go-calcul-echu : code 2 ; créations factices 0 ; CONFORME
+    | GARDE (registres/go, R10) — commande bloquée : GO-2026-10-04-08 hors de sa période de validité (2026-10-04 → 2026-10-11)
+    | arrêt avant la création (ligne 300)
+G02-go-revoque : code 2 ; créations factices 0 ; CONFORME
+    | accord de Lazar : R-999 : accord de Lazar du 2026-10-19 pour le lancement de P3 : conforme
+    | GO de calcul et décision de Lazar : GO-2026-10-04-08 révoqué au registre des GO (GO-2026-10-17-98)
+G02b-ligne-go-qui-mentionne-une-revocation : code 0 ; créations factices 1 ; CONFORME
+    | prix 1.1000 USD/h ; autres projets en marche 0.0000 USD/h ; crédit 20.00 USD ; minimum 8.35 USD (6.5 h)
+    | succès : True ; identifiant 99999999 ; message : 
+G06-decision-revoquee-au-registre-des-go : code 2 ; créations factices 0 ; CONFORME
+    | accord de Lazar : R-999 : accord de Lazar du 2026-10-19 pour le lancement de P3 : conforme
+    | GO de calcul et décision de Lazar : décision R-192 révoquée au registre des GO (GO-2026-10-17-96)
+G06b-revocation-qui-nomme-r-192-pour-un-autre-go : code 2 ; créations factices 0 ; CONFORME
+    | accord de Lazar : R-999 : accord de Lazar du 2026-10-19 pour le lancement de P3 : conforme
+    | GO de calcul et décision de Lazar : décision R-192 révoquée au registre des GO (GO-2026-10-17-95)
+G07-forme-exacte-au-registre-des-decisions : code 2 ; créations factices 0 ; CONFORME
+    | accord de Lazar : R-999 : accord de Lazar du 2026-10-19 pour le lancement de P3 : conforme
+    | GO de calcul et décision de Lazar : décision R-192 révoquée par R-998 (registre des décisions, « **Révocation de R-192** »)
+G07b-decision-qui-cite-r-192-sans-la-revoquer : code 0 ; créations factices 1 ; CONFORME
+    | prix 1.1000 USD/h ; autres projets en marche 0.0000 USD/h ; crédit 20.00 USD ; minimum 8.35 USD (6.5 h)
+    | succès : True ; identifiant 99999999 ; message : 
+G07c-ligne-r-215-qui-decrit-les-formes : code 0 ; créations factices 1 ; CONFORME
+    | prix 1.1000 USD/h ; autres projets en marche 0.0000 USD/h ; crédit 20.00 USD ; minimum 8.35 USD (6.5 h)
+    | succès : True ; identifiant 99999999 ; message : 
+G07d-aucune-revocation-de-r-192 : code 0 ; créations factices 1 ; CONFORME
+    | prix 1.1000 USD/h ; autres projets en marche 0.0000 USD/h ; crédit 20.00 USD ; minimum 8.35 USD (6.5 h)
+    | succès : True ; identifiant 99999999 ; message : 
+G07e-texte-libre-sans-la-forme-exacte : code 0 ; créations factices 1 ; CONFORME
+    | prix 1.1000 USD/h ; autres projets en marche 0.0000 USD/h ; crédit 20.00 USD ; minimum 8.35 USD (6.5 h)
+    | succès : True ; identifiant 99999999 ; message : 
+G07f-forme-exacte-ailleurs-qu-en-tete : code 0 ; créations factices 1 ; CONFORME
+    | prix 1.1000 USD/h ; autres projets en marche 0.0000 USD/h ; crédit 20.00 USD ; minimum 8.35 USD (6.5 h)
+    | succès : True ; identifiant 99999999 ; message : 
+G03-decision-absente : code 2 ; créations factices 0 ; CONFORME
+    | accord de Lazar : R-999 : accord de Lazar du 2026-10-19 pour le lancement de P3 : conforme
+    | GO de calcul et décision de Lazar : R-192 absent, en double, ou sans la décision de Lazar « (b) P1 + P2 + P3 + pilote du papier C »
+G03b-decision-autre : code 2 ; créations factices 0 ; CONFORME
+    | accord de Lazar : R-999 : accord de Lazar du 2026-10-19 pour le lancement de P3 : conforme
+    | GO de calcul et décision de Lazar : R-192 absent, en double, ou sans la décision de Lazar « (b) P1 + P2 + P3 + pilote du papier C »
+G08-registre-des-go-absent : code 2 ; créations factices 0 ; CONFORME
+    | accord de Lazar : R-999 : accord de Lazar du 2026-10-19 pour le lancement de P3 : conforme
+    | GO de calcul et décision de Lazar : fichier /tmp/claude-0/-home-user/5a6b9d1d-b17d-59a1-a770-8737a831fe0a/scratchpad/p3-v2-banc-lanceur/depot/registres/go.md absent ou illisible
+A10-accord-absent : code 2 ; créations factices 0 ; CONFORME
+    | preuves des essais : cinq journaux conformes ; 11 scripts éprouvés égaux à leurs copies versées à S
+    | accord de Lazar : accord R-999 absent ou en double au registre des décisions : pas de création
+A11-accord-d-un-autre-jour : code 2 ; créations factices 0 ; CONFORME
+    | preuves des essais : cinq journaux conformes ; 11 scripts éprouvés égaux à leurs copies versées à S
+    | accord de Lazar : accord R-999 daté 2026-10-18 : accord du jour de l'appel (2026-10-19) attendu : pas de création
+A12-mention-de-l-accord-sans-la-forme-exacte : code 2 ; créations factices 0 ; CONFORME
+    | preuves des essais : cinq journaux conformes ; 11 scripts éprouvés égaux à leurs copies versées à S
+    | accord de Lazar : accord R-999 : la cellule de décision ne commence pas par « **Accord de Lazar pour le lancement de P3** » : pas de création
+A12b-forme-exacte-ailleurs-qu-en-tete : code 2 ; créations factices 0 ; CONFORME
+    | preuves des essais : cinq journaux conformes ; 11 scripts éprouvés égaux à leurs copies versées à S
+    | accord de Lazar : accord R-999 : la cellule de décision ne commence pas par « **Accord de Lazar pour le lancement de P3** » : pas de création
+A13-accord-en-double : code 2 ; créations factices 0 ; CONFORME
+    | preuves des essais : cinq journaux conformes ; 11 scripts éprouvés égaux à leurs copies versées à S
+    | accord de Lazar : accord R-999 absent ou en double au registre des décisions : pas de création
+N08-s-introuvable : code 2 ; créations factices 0 ; CONFORME
+    | commit de scellement introuvable
+N01-amorce-non-citee : code 2 ; créations factices 0 ; CONFORME
+    | accord de Lazar : R-999 : accord de Lazar du 2026-10-19 pour le lancement de P3 : conforme
+    | empreinte de l'amorce (0bfaeaa64a0c355ba04bf84c9afc76ea31034a837e44cd588becf88f3aa5dae0) non citée par le préenregistrement
+N02-branche-autre : code 2 ; créations factices 0 ; CONFORME
+    | accord de Lazar : R-999 : accord de Lazar du 2026-10-19 pour le lancement de P3 : conforme
+    | PREREG ou BRANCHE : le préenregistrement de S cite autre chose
+G01-ligne-go-absente : code 2 ; créations factices 0 ; CONFORME
+    | accord de Lazar : R-999 : accord de Lazar du 2026-10-19 pour le lancement de P3 : conforme
+    | GO de calcul et décision de Lazar : ligne « GO de calcul et décision de Lazar » absente, en double ou mal formée
+G04-go-d-un-autre-type : code 2 ; créations factices 0 ; CONFORME
+    | accord de Lazar : R-999 : accord de Lazar du 2026-10-19 pour le lancement de P3 : conforme
+    | GO de calcul et décision de Lazar : GO-2026-10-12-01 : seul GO-2026-10-04-08 est accepté pour P3 (GO de calcul de la phase 0, R-192)
+G05-go-de-calcul-d-un-autre-perimetre : code 2 ; créations factices 0 ; CONFORME
+    | accord de Lazar : R-999 : accord de Lazar du 2026-10-19 pour le lancement de P3 : conforme
+    | GO de calcul et décision de Lazar : GO-2026-10-17-01 : seul GO-2026-10-04-08 est accepté pour P3 (GO de calcul de la phase 0, R-192)
+N00-sain-apres-retablissement : code 0 ; créations factices 1 ; CONFORME
+    | prix 1.1000 USD/h ; autres projets en marche 0.0000 USD/h ; crédit 20.00 USD ; minimum 8.35 USD (6.5 h)
+    | succès : True ; identifiant 99999999 ; message : 
+P30a-preuve-verdict-non-conforme : code 2 ; créations factices 0 ; CONFORME
+    | preuves des essais : journal banc-controles-p3-v1.log : dernière ligne ≠ « FIN DU BANC DES CONTRÔLES DE P3 ; cas non conformes : 0 »
+P30b-preuve-script-autre-que-la-copie : code 2 ; créations factices 0 ; CONFORME
+    | preuves des essais : sceller_p3_v1.sh éprouvé (7777777777777777777777777777777777777777777777777777777777777777) ≠ copie versée à S
+P30c-preuve-absente : code 2 ; créations factices 0 ; CONFORME
+    | preuves des essais : journal banc-surveillance-p3-v1.log absent de S
+P30d-preuve-sans-son-sceau : code 2 ; créations factices 0 ; CONFORME
+    | preuves des essais : sceau de banc-lanceur-p3-v1.log absent ou non conforme à S
+P30e-preuve-script-non-eprouve : code 2 ; créations factices 0 ; CONFORME
+    | preuves des essais : journal banc-surveillance-p3-v1.log : scripts éprouvés ≠ attendus (manquants ['essais_surveillance_p3_v1.sh'], en trop [])
+P30g-preuve-echec-non-compte : code 2 ; créations factices 0 ; CONFORME
+    | preuves des essais : journal banc-controles-p3-v1.log : ligne d'échec avant le verdict : Traceback (most recent call last): essai
+P30h-preuve-deux-empreintes : code 2 ; créations factices 0 ; CONFORME
+    | preuves des essais : sceller_p3_v1.sh éprouvé sous deux empreintes
+P30i-preuve-ligne-mal-formee : code 2 ; créations factices 0 ; CONFORME
+    | preuves des essais : journal banc-lanceur-p3-v1.log : ligne « script éprouvé » mal formée : script éprouvé : Autre.sh abc
+P30j-preuve-sans-ligne : code 2 ; créations factices 0 ; CONFORME
+    | preuves des essais : journal banc-surveillance-p3-v1.log : aucune ligne « script éprouvé »
+P30f-preuves-saines-apres-retablissement : code 0 ; créations factices 1 ; CONFORME
+    | prix 1.1000 USD/h ; autres projets en marche 0.0000 USD/h ; crédit 20.00 USD ; minimum 8.35 USD (6.5 h)
+    | succès : True ; identifiant 99999999 ; message : 
+V01-autre-projet-en-marche-tolere : code 0 ; créations factices 1 ; CONFORME
+    | prix 1.1000 USD/h ; autres projets en marche 4.0040 USD/h ; crédit 34.38 USD ; minimum 34.38 USD (6.5 h)
+    | succès : True ; identifiant 99999999 ; message : 
+V02-autre-projet-non-declare : code 2 ; créations factices 0 ; CONFORME
+    | autres instances sur le compte (non tolérées ; autre projet : étiquette « rr-… » exigée) : 55555587 (running, running)
+    | instances : non tolérée(s), ou liste illisible (voir la ligne ci-dessus) : pas de création
+V03-credit-insuffisant-avec-autre-projet : code 3 ; créations factices 0 ; CONFORME
+    | prix 1.1000 USD/h ; autres projets en marche 4.0040 USD/h ; crédit 34.37 USD ; minimum 34.38 USD (6.5 h)
+    | crédit insuffisant pour P3 et les autres projets en marche : pas de lancement ; recharge demandée à Lazar
+V04-autre-projet-etiquette-t05 : code 2 ; créations factices 0 ; CONFORME
+    | autres instances sur le compte (non tolérées ; autre projet : étiquette « rr-… » exigée) : 55555587 (running, running)
+    | instances : non tolérée(s), ou liste illisible (voir la ligne ci-dessus) : pas de création
+V04b-autre-projet-etiquette-p3 : code 2 ; créations factices 0 ; CONFORME
+    | autres instances sur le compte (non tolérées ; autre projet : étiquette « rr-… » exigée) : 55555587 (running, running)
+    | instances : non tolérée(s), ou liste illisible (voir la ligne ci-dessus) : pas de création
+V04c-autre-projet-etiquette-t09 : code 2 ; créations factices 0 ; CONFORME
+    | autres instances sur le compte (non tolérées ; autre projet : étiquette « rr-… » exigée) : 55555587 (running, running)
+    | instances : non tolérée(s), ou liste illisible (voir la ligne ci-dessus) : pas de création
+V04d-autre-projet-sans-prefixe-rr : code 2 ; créations factices 0 ; CONFORME
+    | autres instances sur le compte (non tolérées ; autre projet : étiquette « rr-… » exigée) : 55555587 (running, running)
+    | instances : non tolérée(s), ou liste illisible (voir la ligne ci-dessus) : pas de création
+V05-autres-mal-forme : code 2 ; créations factices 0 ; CONFORME
+    | AUTRES_PROJETS : identifiants d'instances séparés par des virgules, ou « - »
+V06-autre-declare-absent : code 0 ; créations factices 1 ; CONFORME
+    | prix 1.1000 USD/h ; autres projets en marche 0.0000 USD/h ; crédit 20.00 USD ; minimum 8.35 USD (6.5 h)
+    | succès : True ; identifiant 99999999 ; message : 
+V07-autre-projet-arrete-non-compte : code 0 ; créations factices 1 ; CONFORME
+    | prix 1.1000 USD/h ; autres projets en marche 0.0000 USD/h ; crédit 8.35 USD ; minimum 8.35 USD (6.5 h)
+    | succès : True ; identifiant 99999999 ; message : 
+V08-autre-projet-sans-prix : code 2 ; créations factices 0 ; CONFORME
+    | autres instances sur le compte (non tolérées ; autre projet : étiquette « rr-… » exigée) : 55555587 (prix illisible)
+    | instances : non tolérée(s), ou liste illisible (voir la ligne ci-dessus) : pas de création
+O01-moins-chere-des-conformes : code 0 ; créations factices 1 ; CONFORME
+    | prix 1.0500 USD/h ; autres projets en marche 0.0000 USD/h ; crédit 20.00 USD ; minimum 8.03 USD (6.5 h)
+    | succès : True ; identifiant 99999999 ; message : 
+    O01 : offre créée 112 ; conformes dans l'ordre des prix (112, 111, 113), machine, hôte, cœurs, mémoire vive et téléchargement écrits ; 22 offres relues gardées : CONFORME
+O02-egalite-de-prix-plus-petit-identifiant : code 0 ; créations factices 1 ; CONFORME
+    | prix 1.0500 USD/h ; autres projets en marche 0.0000 USD/h ; crédit 20.00 USD ; minimum 8.03 USD (6.5 h)
+    | succès : True ; identifiant 99999999 ; message : 
+    O02 : offre créée 119 : CONFORME
+O03-aucune-offre : code 3 ; créations factices 0 ; CONFORME
+    | accord de Lazar : R-999 : accord de Lazar du 2026-10-19 pour le lancement de P3 : conforme
+    | aucune offre conforme au filtre du plan au plus 1.3 USD/h (au moins 16 cœurs effectifs, 128000 Mo de mémoire vive, téléchargement au plus 0.05 USD/Go, stockage au plus 0.03 USD/h) : pas de c
+O04-seulement-au-dessus-du-devis : code 3 ; créations factices 0 ; CONFORME
+    | accord de Lazar : R-999 : accord de Lazar du 2026-10-19 pour le lancement de P3 : conforme
+    | aucune offre conforme au filtre du plan au plus 1.3 USD/h (au moins 16 cœurs effectifs, 128000 Mo de mémoire vive, téléchargement au plus 0.05 USD/Go, stockage au plus 0.03 USD/h) : pas de c
+    O04 : offres relues gardées sans offre conforme (code 3) : CONFORME
+O05-offres-illisibles : code 2 ; créations factices 0 ; CONFORME
+    | offres : réponse illisible
+    | offres : relecture impossible (code 2)
+    O05 : réponse illisible gardée (offres-relues-brut.txt) : CONFORME
+O06-offres-pas-une-liste : code 2 ; créations factices 0 ; CONFORME
+    | offres : liste attendue
+    | offres : relecture impossible (code 2)
+O07-prix-au-plafond-juste : code 0 ; créations factices 1 ; CONFORME
+    | prix 1.3000 USD/h ; autres projets en marche 0.0000 USD/h ; crédit 50.00 USD ; minimum 9.65 USD (6.5 h)
+    | succès : True ; identifiant 99999999 ; message : 
+O08-credit-calcule-sur-l-offre-choisie : code 0 ; créations factices 1 ; CONFORME
+    | prix 1.0000 USD/h ; autres projets en marche 0.0000 USD/h ; crédit 7.70 USD ; minimum 7.70 USD (6.5 h)
+    | succès : True ; identifiant 99999999 ; message : 
+O08b-credit-juste-sous-le-minimum : code 3 ; créations factices 0 ; CONFORME
+    | prix 1.0000 USD/h ; autres projets en marche 0.0000 USD/h ; crédit 7.69 USD ; minimum 7.70 USD (6.5 h)
+    | crédit insuffisant pour P3 et les autres projets en marche : pas de lancement ; recharge demandée à Lazar
+O09-identifiant-negatif : code 2 ; créations factices 0 ; CONFORME
+    | accord de Lazar : R-999 : accord de Lazar du 2026-10-19 pour le lancement de P3 : conforme
+    | offre choisie illisible
+O10-carte-de-40-go : code 3 ; créations factices 0 ; CONFORME
+    | accord de Lazar : R-999 : accord de Lazar du 2026-10-19 pour le lancement de P3 : conforme
+    | aucune offre conforme au filtre du plan au plus 1.3 USD/h (au moins 16 cœurs effectifs, 128000 Mo de mémoire vive, téléchargement au plus 0.05 USD/Go, stockage au plus 0.03 USD/h) : pas de c
+O11-identifiant-en-double : code 2 ; créations factices 0 ; CONFORME
+    | offres : identifiant en double dans la réponse (ambiguë) : pas de création
+    | offres : relecture impossible (code 2)
+O12-moins-chere-sans-assez-de-coeurs-ecartee : code 0 ; créations factices 1 ; CONFORME
+    | prix 1.2000 USD/h ; autres projets en marche 0.0000 USD/h ; crédit 20.00 USD ; minimum 9.00 USD (6.5 h)
+    | succès : True ; identifiant 99999999 ; message : 
+O13-moins-chere-sans-assez-de-memoire-vive-ecartee : code 0 ; créations factices 1 ; CONFORME
+    | prix 1.2000 USD/h ; autres projets en marche 0.0000 USD/h ; crédit 20.00 USD ; minimum 9.00 USD (6.5 h)
+    | succès : True ; identifiant 99999999 ; message : 
+O14-moins-chere-au-telechargement-trop-cher-ecartee : code 0 ; créations factices 1 ; CONFORME
+    | prix 1.2000 USD/h ; autres projets en marche 0.0000 USD/h ; crédit 20.00 USD ; minimum 9.00 USD (6.5 h)
+    | succès : True ; identifiant 99999999 ; message : 
+O15-moins-chere-au-telechargement-negatif-ecartee : code 0 ; créations factices 1 ; CONFORME
+    | prix 1.2000 USD/h ; autres projets en marche 0.0000 USD/h ; crédit 20.00 USD ; minimum 9.00 USD (6.5 h)
+    | succès : True ; identifiant 99999999 ; message : 
+O16-moins-chere-au-stockage-trop-cher-ecartee : code 0 ; créations factices 1 ; CONFORME
+    | prix 1.2000 USD/h ; autres projets en marche 0.0000 USD/h ; crédit 20.00 USD ; minimum 9.00 USD (6.5 h)
+    | succès : True ; identifiant 99999999 ; message : 
+O17-moins-chere-au-stockage-negatif-ecartee : code 0 ; créations factices 1 ; CONFORME
+    | prix 1.2000 USD/h ; autres projets en marche 0.0000 USD/h ; crédit 20.00 USD ; minimum 9.00 USD (6.5 h)
+    | succès : True ; identifiant 99999999 ; message : 
+O18-moins-chere-au-stockage-illisible-ecartee : code 0 ; créations factices 1 ; CONFORME
+    | prix 1.2000 USD/h ; autres projets en marche 0.0000 USD/h ; crédit 20.00 USD ; minimum 9.00 USD (6.5 h)
+    | succès : True ; identifiant 99999999 ; message : 
+A01-traces-numeriques : code 2 ; créations factices 0 ; CONFORME
+    | DOSSIER_TRACES purement numérique (/tmp/claude-0/-home-user/5a6b9d1d-b17d-59a1-a770-8737a831fe0a/scratchpad/p3-v2-banc-lanceur/29296808) : refusé (une offre n'est jamais passée en argument)
+A02-arguments-dans-le-desordre : code 2 ; créations factices 0 ; CONFORME
+    | usage : lancer_p3_v1.sh DOSSIER_TRACES AUTRES_PROJETS ACCORD
+A03-traces-en-chemin-relatif : code 0 ; créations factices 1 ; CONFORME
+    | prix 1.1000 USD/h ; autres projets en marche 0.0000 USD/h ; crédit 20.00 USD ; minimum 8.35 USD (6.5 h)
+    | succès : True ; identifiant 99999999 ; message : 
+    A03 : traces écrites sous /tmp/claude-0/-home-user/5a6b9d1d-b17d-59a1-a770-8737a831fe0a/scratchpad/p3-v2-banc-lanceur/traces-relatives (chemin absolu) : CONFORME
+aucun jeton affiché : CONFORME
+FIN DU BANC DU LANCEUR DE P3 ; cas non conformes : 0

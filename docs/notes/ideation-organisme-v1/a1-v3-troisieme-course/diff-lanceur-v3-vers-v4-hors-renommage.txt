@@ -1,0 +1,262 @@
+# Différentiel du lanceur durable v3 → v4, hors renommage (module puis amorce ; v3 renommée par sed : V3→V4, _v3_v3→_v3_v4, durable v3→durable v4, a1v3-v3.log/.sh→v4)
+--- v3-renommee
++++ v4
+@@ -1,5 +1,23 @@
+ #!/usr/bin/env python3
+-"""Hôte durable de la troisième course d'A1-v3, **version 3** (machine : GO-2026-11-05-03 ; course : GO-2026-11-04-06).
++"""Hôte durable de la troisième course d'A1-v3, **version 4** (machine : GO-2026-11-05-03 ; course : GO-2026-11-04-06).
++
++Version 4 (R12 : v1, v2 et v3 inchangées) : la v3, plus **seulement** le nom du texte v4 et les corrections 1 à 8 de la
++contre-lecture complète du lanceur v3 (`contre-lecture-complete-v1/contre-lecture-complete-lanceur-v3-v1.md`, `ed4dc27e…`) :
++
++- **Texte v4** — `NOM_TEXTE` = `orchestrator/prereg/preenregistrement-attaque-goodhart-v3-v4.md` (la v3 scellée garde un
++  marqueur que le lanceur gelé refuse : contre-lecture complète du texte, B1) ; la v1 gelée n'est pas touchée : la v4 surcharge
++  le chemin du texte vérifié sur la machine et la commande de la course (`MachineV4.cmd_course`).
++- **1** `controler` rend 6 (recontrôler) sur tout échec de `vastai` (code non nul, certificat, inventaire illisible).
++- **2** `se_detruire` relit l'inventaire après la destruction ; encore listée : arrêt par l'identifiant, écrit au journal.
++- **3** `principal` : les gestionnaires d'exception écrivent sans échec possible ; `fin()` est toujours appelée.
++- **4** `louer` et `principal` écrivent `COMMIT_PRIVE` et l'empreinte des quatre modules et de l'amorce.
++- **5** `git status --porcelain` du dépôt public relevé de nouveau juste avant la course, écrit, refus s'il n'est pas vide.
++- **6** `_grep` écrit la ligne entière (sortie de `grep -n`).
++- **7** numpy 2.5.3 vérifié sous les trois interpréteurs (hôte) et sous les deux chemins (amorce), sinon rien ne part.
++- **8** essais : les artefacts manquants des gardes de la machine, du client et de la minuterie, et un versement mesuré
++  (délais des appels de `git` locaux ramenés à 60 s : pire cas sous la réserve d'1 h, ce que la v3 ne tenait pas).
++
++Ce qui suit décrit la v3 :
+ 
+ Version 3 (R12 : v1 et v2 inchangées) : la v2, plus **seulement** trois corrections demandées après la contre-lecture n° 4
+ (`contre-lecture-n4-texte-v3-v1.md`, `b524b41c…`) et le fait relevé par la mère sur la sonde v10 (`faits-hote.json`,
+@@ -70,6 +88,7 @@
+ BRANCHE_VIE = "donnees/attaque-goodhart-v3-a1v3-troisieme-signe-de-vie-v1"  # m2 : signe de vie, branche orpheline
+ AMORCE = "scripts/amorce_hote_durable_a1_v3_v4.sh"
+ MODULE = "src/controle_ia/hote_durable_a1_v3_v4.py"
++NOM_TEXTE = "orchestrator/prereg/preenregistrement-attaque-goodhart-v3-v4.md"  # texte v4 ; la v1 gelée garde celui de la v3
+ MODULES = ("hote_durable_a1_v3.py", "hote_durable_a1_v3_v4.py", "sonde_hote_durable_a1_v3.py", "sonde_hote_durable_a1_v3_v10.py")
+ PROTEGEES = s10.PROTEGEES  # 58936096, 58936099, 58936100 : jamais touchées
+ DUREE_MACHINE_S = int(h.DUREE_MAX_MACHINE_H * 3600)  # 80 h : plafond de vie écrit (texte v3, section 8)
+@@ -93,6 +112,27 @@
+ PYTHON_IMAGE = "/usr/local/bin/python3"     # C1 : l'interpréteur 3.13 de l'image (`python:3.13-bookworm`)
+ PYTHON_CONFIGURATION = "/usr/bin/python3"   # C1 : chemin écrit dans la configuration gelée (commande d'Argon) ; Debian : 3.11
+ VERSION_PYTHON = "3.13"
++NUMPY_ATTENDU = h.NUMPY.split("==")[1]  # correction 7 : 2.5.3, la version que l'amorce installe
++DELAI_GIT_LOCAL_S = 60                    # correction 8 : appels de `git` sans réseau du versement (v3 : 240 s)
++VERIFICATIONS_DESTRUCTION = 3             # correction 2 : relectures de l'inventaire après la destruction
++
++
++def version_numpy(chemin: str) -> str:
++    """Correction 7 : version de numpy sous l'interpréteur, ou « absent »."""
++    try:
++        x = h.lancer([chemin, "-c", "import numpy; print(numpy.__version__)"], delai=120)
++    except (OSError, subprocess.TimeoutExpired) as e:
++        return f"absent ({type(e).__name__})"
++    return x.stdout.decode("utf-8", "replace").strip() if x.returncode == 0 else "absent"
++
++
++def empreintes_du_code() -> dict:
++    """Correction 4 : empreinte des quatre modules (voisins de ce fichier) et de l'amorce (clone de la machine), sinon « absent »."""
++    ici = Path(__file__).resolve().parent
++    e = {m: (h.sha256_fichier(ici / m) if (ici / m).is_file() else "absent") for m in MODULES}
++    amorce = ici.parents[1] / AMORCE
++    e[Path(AMORCE).name] = h.sha256_fichier(amorce) if amorce.is_file() else "absent de ce dossier"
++    return e
+ 
+ 
+ def version_python(chemin: str) -> tuple[str, str]:
+@@ -331,6 +371,7 @@
+         gc = h.verifier_go(Path(a.registre_main), Path(a.garde_main), a.go, MONTANT_GO_COURSE_USD, aujourd_hui)
+         j.ecrire(f"{VERSION} : machine {gm['go']} ({gm['plafond_usd']:g} USD) et course {gc['go']} ({gc['plafond_usd']:g} USD) "
+                  f"acceptés par la garde de main ; registre {gc['registre_sha256']}")
++        j.ecrire(f"code (correction 4) : COMMIT_PRIVE {a.commit_prive} ; empreintes {json.dumps(empreintes_du_code(), ensure_ascii=False)}")
+         offres = json.loads(Path(a.offres).read_text())
+         offres = offres.get("offers", offres) if isinstance(offres, dict) else offres
+         o = s10.offre_la_moins_chere_sonde(offres, int(a.offre))  # v9 a : « gpu », une carte, cpu_ram ≥ 8 000 Mo, …
+@@ -460,7 +501,8 @@
+         return 6
+     except (h.Refus, OSError, ValueError, KeyError) as x:
+         j.ecrire(f"REFUS : {x}")
+-        return 6 if "délai dépassé" in str(x) else 2
++        # correction 1 : tout échec de `vastai` (code non nul, certificat, inventaire illisible) = recontrôler
++        return 6 if ("délai dépassé" in str(x) or str(x).startswith("vastai ") or "inventaire illisible" in str(x)) else 2
+ 
+ 
+ def relever_facturation(a, client=None, environ=None) -> int:
+@@ -533,19 +575,21 @@
+             return self.fin(h.BRANCHE_INTERROMPUE)
+         self.t.mkdir(parents=True, exist_ok=False)
+         self.j = h.Journal(journal, self.secrets)
+-        self.j.ecrire(f"{VERSION} ; machine {self.env.get('GO_MACHINE')} ; course {self.env.get('GO_ID')} ; prix {self.prix_h} "
+-                      f"USD/h ; plafond machine {self.r.plafond_machine_usd} USD, {self.r.duree_max_s / 3600:g} h ; identifiant "
+-                      f"{self.env.get('CONTAINER_ID', '?')} ; départ du conteneur {self.depart_conteneur}")
+-        self.etat("demarrage")
+-        try:
++        try:  # correction 3 : l'en-tête aussi est sous la garde ; les gestionnaires écrivent sans échec ; fin() toujours
++            self.j.ecrire(f"{VERSION} ; machine {self.env.get('GO_MACHINE')} ; course {self.env.get('GO_ID')} ; prix {self.prix_h} "
++                          f"USD/h ; plafond machine {self.r.plafond_machine_usd} USD, {self.r.duree_max_s / 3600:g} h ; identifiant "
++                          f"{self.env.get('CONTAINER_ID', '?')} ; départ du conteneur {self.depart_conteneur}")
++            self.j.ecrire(f"code (correction 4) : COMMIT_PRIVE {self.env.get('COMMIT_PRIVE', '?')} ; empreintes "
++                          f"{json.dumps(empreintes_du_code(), ensure_ascii=False)}")
++            self.etat("demarrage")
+             self.preparer()
+             self.etat("course")
+             self.garder()
+         except h.Refus as e:
+-            self.j.ecrire(f"REFUS : {e}")
++            self._ecrire_sans_echec(f"REFUS : {e}")
+             self.nature_fin = "refus_avant_course" if self.course is None else "refus_pendant_la_course"
+         except Exception as e:  # jamais un repli silencieux : écrit, puis fin propre
+-            self.j.ecrire(f"EXCEPTION {type(e).__name__} : {self.j.masquer(str(e))[:500]}")
++            self._ecrire_sans_echec(f"EXCEPTION {type(e).__name__} : {self.j.masquer(str(e))[:500]}")
+             self.nature_fin = "exception_de_l_hote"
+         return self.fin(h.BRANCHE_DONNEES if self.course is not None else h.BRANCHE_REFUS)
+ 
+@@ -560,6 +604,22 @@
+         faux = [f"{n} {c} ({v})" for n, (c, v, _) in vus.items() if v != VERSION_PYTHON]
+         if faux:
+             raise h.Refus(f"interpréteur autre que Python {VERSION_PYTHON} (C1) : {', '.join(faux)} : rien ne part")
++        numpy = {n: version_numpy(c) for n, (c, _, _) in vus.items()}  # correction 7
++        self.j.ecrire("numpy (correction 7) : " + " ; ".join(f"{n} {v}" for n, v in numpy.items()))
++        faux = [f"{n} ({v})" for n, v in numpy.items() if v != NUMPY_ATTENDU]
++        if faux:
++            raise h.Refus(f"numpy autre que {NUMPY_ATTENDU} (correction 7) : {', '.join(faux)} : rien ne part")
++
++    @staticmethod
++    def _grep(chemin: Path, motif: str) -> list[str]:  # correction 6 : la ligne entière, comme `grep -n`
++        return [f"{n}:{l}" for n, l in enumerate(chemin.read_text(encoding="utf-8").splitlines(), 1) if motif in l]
++
++    def cmd_course(self, verifier: bool) -> list[str]:
++        """Texte v4 : la commande de la v1 gelée, le nom du texte v3 remplacé par celui du texte v4 (présent une fois)."""
++        cmd = super().cmd_course(verifier)
++        i = cmd.index(h.NOM_TEXTE.removeprefix("orchestrator/"))
++        cmd[i] = NOM_TEXTE.removeprefix("orchestrator/")
++        return cmd
+ 
+     def _show(self, commit: str, chemin: str) -> bytes:
+         try:
+@@ -630,12 +690,12 @@
+         if h.lancer(["git", "merge-base", "--is-ancestor", r.commit_code_gele, e["COMMIT_PUBLIC"]],
+                     cwd=r.clone_public).returncode != 0:
+             raise h.Refus(f"le commit {e['COMMIT_PUBLIC']} ne descend pas du code gelé {r.commit_code_gele}")
+-        texte = r.clone_public / h.NOM_TEXTE
++        texte = r.clone_public / NOM_TEXTE  # texte v4
+         vu = h.sha256_fichier(texte) if texte.is_file() else None
+         compagnon = Path(str(texte) + ".sha256")
+         comp = compagnon.read_text().split()[0] if compagnon.is_file() else None
+         if not (vu == e["SHA_TEXTE"] == comp):
+-            raise h.Refus(f"texte v3 : empreinte {vu}, attendue {e['SHA_TEXTE']}, compagnon {comp}")
++            raise h.Refus(f"texte v4 : empreinte {vu}, attendue {e['SHA_TEXTE']}, compagnon {comp}")
+         statut = h.git("status", "--porcelain", cwd=r.clone_public)
+         if statut.strip():
+             raise h.Refus("arbre du dépôt public modifié : " + statut[:200])
+@@ -645,6 +705,10 @@
+             raise h.Refus(f"port {r.port} déjà pris : un autre relais vit (Argon seul)")
+         self.lancer_relais()
+         self.verifier_seulement()
++        statut = h.git("status", "--porcelain", cwd=r.clone_public)  # correction 5 : relevé de nouveau, juste avant la course
++        self.j.ecrire("git status --porcelain juste avant la course : " + (repr(statut[:200]) if statut.strip() else "vide"))
++        if statut.strip():
++            raise h.Refus("arbre du dépôt public modifié avant la course (correction 5) : " + statut[:200])
+         self.lancer_course()
+ 
+     def extraire_sources(self) -> None:
+@@ -676,12 +740,12 @@
+ 
+     # -- versements
+     def _url(self) -> str:
+-        return h.git("remote", "get-url", "origin", cwd=self.r.clone_prive, delai=DELAI_GIT_S).strip()
++        return h.git("remote", "get-url", "origin", cwd=self.r.clone_prive, delai=DELAI_GIT_LOCAL_S).strip()
+ 
+     def _pousser(self, v: Path, branche: str, url: str) -> str | None:
+         """Poussée bornée (m1) : `essais_poussee` essais, attente constante, délais de `DELAI_GIT_S` ; vérifiée par ls-remote."""
+         gh = self.secrets["GH_TOKEN"]
+-        local = h.git("rev-parse", "HEAD", cwd=v, delai=DELAI_GIT_S).strip()
++        local = h.git("rev-parse", "HEAD", cwd=v, delai=DELAI_GIT_LOCAL_S).strip()
+         for essai in range(1, self.r.essais_poussee + 1):
+             try:
+                 h.git("push", "-q", url, f"HEAD:refs/heads/{branche}", cwd=v, gh_token=gh, delai=DELAI_GIT_S)
+@@ -748,17 +812,17 @@
+         h.git("clone", "-q", "--depth", "1", "--filter=blob:none", "--sparse", "--single-branch", "--branch", "main", url,
+               str(v), gh_token=gh, delai=DELAI_GIT_S)
+         h.git("sparse-checkout", "set", branche, cwd=v, gh_token=gh, delai=DELAI_GIT_S)
+-        h.git("checkout", "-q", "-b", branche, cwd=v, delai=DELAI_GIT_S)
++        h.git("checkout", "-q", "-b", branche, cwd=v, delai=DELAI_GIT_LOCAL_S)
+         dest = v / branche
+         dest.mkdir(parents=True, exist_ok=False)
+         for p in self.fichiers_a_verser():
+             cible = dest / p.relative_to(self.t)
+             cible.parent.mkdir(parents=True, exist_ok=True)
+             shutil.copy2(p, cible)
+-        h.git("add", "-f", str(dest), cwd=v, delai=DELAI_GIT_S)
++        h.git("add", "-f", str(dest), cwd=v, delai=DELAI_GIT_LOCAL_S)
+         h.git("-c", "user.name=hote-durable-a1-v3", "-c", "user.email=hote@invalid", "commit", "-q", "-m",
+               f"A1-v3, troisième course : état scellé de l'hôte durable v4 ({self.nature_fin}), liste "
+-              f"{h.sha256_fichier(liste)[:16]}…, versé avant toute lecture", cwd=v, delai=DELAI_GIT_S)
++              f"{h.sha256_fichier(liste)[:16]}…, versé avant toute lecture", cwd=v, delai=DELAI_GIT_LOCAL_S)
+         c = self._pousser(v, branche, url)
+         if not c:
+             return False
+@@ -796,6 +860,20 @@
+                 pass
+         return self.se_detruire(pousse)
+ 
++    attente_inventaire_s = 10.0
++
++    def _encore_listee(self, client, n: int) -> bool:
++        """Correction 2 : l'inventaire relu jusqu'à trois fois ; illisible chaque fois : tenue pour encore listée."""
++        for k in range(VERIFICATIONS_DESTRUCTION):
++            try:
++                if not [i for i in client.instances() if i.get("id") == n]:
++                    return False
++            except Exception as x:
++                self._ecrire_sans_echec(f"inventaire illisible après la destruction ({type(x).__name__})")
++            if k < VERIFICATIONS_DESTRUCTION - 1:
++                time.sleep(self.attente_inventaire_s)
++        return True
++
+     def client_vast(self):
+         return h.ClientVastJouet(self.r.vast_jouet) if self.r.jouet else h.ClientVast(self.secrets["CONTAINER_API_KEY"])
+ 
+@@ -803,7 +881,10 @@
+         try:
+             self.j.ecrire(m)
+         except Exception:
+-            print(m, flush=True)
++            try:  # correction 3 : même la sortie standard peut manquer ; rien ne doit empêcher fin()
++                print(self.j.masquer(m), flush=True)
++            except Exception:
++                pass
+ 
+     def se_detruire(self, pousse: bool) -> int:
+         """Texte v3, section 8 : poussée vérifiée → destruction par l'identifiant ; destruction refusée, poussée non vérifiée
+@@ -834,7 +915,9 @@
+             try:
+                 ecrire(f"destruction de la machine par son identifiant {n}")
+                 client.detruire(n)
+-                return 0
++                if not self._encore_listee(client, n):  # correction 2 : destruction vérifiée par l'inventaire
++                    return 0
++                ecrire(f"machine {n} encore listée après la destruction : arrêt par son identifiant (correction 2)")
+             except Exception as x:
+                 ecrire(f"destruction refusée ({type(x).__name__}) : arrêt de la machine {n} par son identifiant")
+         else:
+--- amorce-v3-renommee
++++ amorce-v4
+@@ -1,6 +1,7 @@
+ #!/usr/bin/env bash
+-# Amorce de l'hôte durable de la troisième course d'A1-v3, v3 (machine : GO-2026-11-05-03, une carte ; course :
+-# GO-2026-11-04-06). Nom neuf (R12 : amorces v1 et v2 inchangées). v3 = v2 + C1 : l'interpréteur de l'image
++# Amorce de l'hôte durable de la troisième course d'A1-v3, v4 (machine : GO-2026-11-05-03, une carte ; course :
++# GO-2026-11-04-06 ; texte v4). Nom neuf (R12 : amorces v1 à v3 inchangées). v4 = v3 + correction 7 : numpy 2.5.3 exigé sous
++# les deux chemins de l'interpréteur, sinon rien ne part. v3 = v2 + C1 : l'interpréteur de l'image
+ # (`/usr/local/bin/python3`) doit être Python 3.13 ; `/usr/bin/python3` (chemin écrit dans la configuration gelée ; Debian y
+ # met 3.11.2 sur `python:3.13-bookworm`, sonde v10) devient un lien vers lui ; les deux versions, avant et après, au journal ;
+ # sinon, rien ne part (code 2 : destruction immédiate par la minuterie). Essai local : A1V3_PYTHON_IMAGE et
+@@ -64,4 +65,9 @@
+ fi
+ [ "$(version "$PY_CONF")" = "3.13" ] || { echo "AMORCE A1-V3 V4 : $PY_CONF n'est pas Python 3.13 (C1) : rien ne part"; exit 2; }
+ echo "AMORCE A1-V3 V4 : interpréteurs après (C1) : $PY_IMAGE $(complete "$PY_IMAGE") ; $PY_CONF -> $(readlink -f "$PY_CONF") $(complete "$PY_CONF")"
++for p in "$PY_IMAGE" "$PY_CONF"; do  # correction 7
++    NV=$("$p" -c 'import numpy; print(numpy.__version__)' 2>/dev/null)
++    [ "$NV" = "2.5.3" ] || { echo "AMORCE A1-V3 V4 : numpy ${NV:-absent} sous $p au lieu de 2.5.3 (correction 7) : rien ne part"; exit 2; }
++done
++echo "AMORCE A1-V3 V4 : numpy 2.5.3 sous $PY_IMAGE et $PY_CONF (correction 7)"
+ exec "$PY_IMAGE" -I -B "$D/hote_durable_a1_v3_v4.py" hote

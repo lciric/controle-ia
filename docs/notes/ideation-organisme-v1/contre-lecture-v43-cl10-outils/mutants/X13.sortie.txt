@@ -1,0 +1,47 @@
+........................../tmp/claude-0/-home-user-controle-ia-travail/75a1275d-b838-5015-909e-b2bfadb395f9/scratchpad/relecture-v43/cl10/outils-cl10/mutants/X13/essais/test_v7_ideation.py:557: ResourceWarning: unclosed file <_io.TextIOWrapper name='/tmp/claude-0/-home-user-controle-ia-travail/75a1275d-b838-5015-909e-b2bfadb395f9/scratchpad/relecture-v43/cl10/outils-cl10/mutants/X13/essais/_tmp/tmp21hll3zj/petit-enfant.pid' mode='r' encoding='UTF-8'>
+  pid = int(open(pid_f).read())
+ResourceWarning: Enable tracemalloc to get the object allocation traceback
+../tmp/claude-0/-home-user-controle-ia-travail/75a1275d-b838-5015-909e-b2bfadb395f9/scratchpad/relecture-v43/cl10/outils-cl10/mutants/X13/essais/test_v7_ideation.py:649: ResourceWarning: unclosed file <_io.TextIOWrapper name='/tmp/claude-0/-home-user-controle-ia-travail/75a1275d-b838-5015-909e-b2bfadb395f9/scratchpad/relecture-v43/cl10/outils-cl10/mutants/X13/essais/_tmp/tmp6qgh2nba/cx-3/proposeurs/argon/traces-passe-2/consigne.md' mode='r' encoding='utf-8'>
+  encoding="utf-8").read()
+ResourceWarning: Enable tracemalloc to get the object allocation traceback
+................................./tmp/claude-0/-home-user-controle-ia-travail/75a1275d-b838-5015-909e-b2bfadb395f9/scratchpad/relecture-v43/cl10/outils-cl10/mutants/X13/essais/test_v7_ideation.py:1254: ResourceWarning: unclosed file <_io.TextIOWrapper name='/tmp/claude-0/-home-user-controle-ia-travail/75a1275d-b838-5015-909e-b2bfadb395f9/scratchpad/relecture-v43/cl10/outils-cl10/mutants/X13/essais/_tmp/tmp5yrp885m/pe.pid' mode='r' encoding='UTF-8'>
+  pe = int(open(pid_f).read())
+ResourceWarning: Enable tracemalloc to get the object allocation traceback
+...................................FF.....
+======================================================================
+FAIL: test_cl42_01_passe_gardee_contre_son_propre_plafond_avant_envoi (essais.test_v7_ideation.TestV43.test_cl42_01_passe_gardee_contre_son_propre_plafond_avant_envoi)
+CL42-01 : `garder_sessions_externes` (donné par le lanceur) — chaque passe d'un proposeur externe est gardée
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/tmp/claude-0/-home-user-controle-ia-travail/75a1275d-b838-5015-909e-b2bfadb395f9/scratchpad/relecture-v43/cl10/outils-cl10/mutants/X13/essais/test_v7_ideation.py", line 2943, in test_cl42_01_passe_gardee_contre_son_propre_plafond_avant_envoi
+    with self.assertRaises(idn.TailleConsigneRefusee) as cm:
+         ~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: TailleConsigneRefusee not raised
+
+======================================================================
+FAIL: test_cl42_03_mesurer_consignes_sans_appel (essais.test_v7_ideation.TestV43.test_cl42_03_mesurer_consignes_sans_appel)
+CL42-03 : `--mesurer-consignes` écrit les tailles réelles (contrôle d'Argon, passe 2 maximale, juge au
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/tmp/claude-0/-home-user-controle-ia-travail/75a1275d-b838-5015-909e-b2bfadb395f9/scratchpad/relecture-v43/cl10/outils-cl10/mutants/X13/essais/test_v7_ideation.py", line 3364, in test_cl42_03_mesurer_consignes_sans_appel
+    self.assertEqual([(x["passe"], x["taille_max_caracteres"], x["provision_sortie_caracteres"], x["refusee"]) for x in g],
+    ~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+                     [(1, 520_000, 480_000, False), (2, 520_000, 480_000, False)])
+                     ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: Lists differ: [(1, 1000000, 0, False), (2, 1000000, 0, False)] != [(1, 520000, 480000, False), (2, 520000, 480000, False)]
+
+First differing element 0:
+(1, 1000000, 0, False)
+(1, 520000, 480000, False)
+
+- [(1, 1000000, 0, False), (2, 1000000, 0, False)]
+?      ^^^                     ^^^
+
++ [(1, 520000, 480000, False), (2, 520000, 480000, False)]
+?      ^^      +++++               ^^      +++++
+
+
+----------------------------------------------------------------------
+Ran 103 tests in 19.678s
+
+FAILED (failures=2)

@@ -1,0 +1,1271 @@
+{
+ "source": {
+  "chemin": "/home/user/controle-ia/docs/sources/pdf/2606.08892v2.pdf",
+  "sha256": "aea0f2d192f3744f0a5827b2fbb106f5a4b7cd33eee8bde30ea139ba8a09759a",
+  "titre": "Diffuse AI Control on Fuzzy Tasks (Terekhov, Gulcehre, Hebbar, Benton), arXiv 2606.08892v2",
+  "pages": 71,
+  "pagination": "numéro de page du fichier = numéro imprimé"
+ },
+ "outils": {
+  "pdftotext": "pdftotext version 24.02.0",
+  "pdftohtml": "pdftohtml version 24.02.0",
+  "python": "3.11.15"
+ },
+ "methode": {
+  "construction": "scripts/construire.py : pdftohtml -xml (polices et positions) ; lignes du bloc = fragments en police à chasse fixe (SFTT0900, SFIT0900) avec les glyphes mathématiques et marqueurs qui tombent dans la ligne ; espaces et retraits recalculés sur la grille à chasse fixe (4,7062 pt) ; marqueur « ,→ » = ligne coupée, recollée par une espace ; lignes vides = écart vertical / interligne (9,85 pt) ; passages de page fixés dans la configuration (mesure ou doute consigné).",
+  "verification": "scripts/verifier.py : contrôle A (contenu) sur le texte de pdftotext en mode par défaut, contrôle B (structure) sur les positions des mots de pdftotext -bbox. Voir LISEZMOI.md.",
+  "normalisation_controle_A": [
+   "ligatures ﬀ ﬁ ﬂ ﬃ ﬄ ﬅ ﬆ -> lettres",
+   "« , » suivi de « → » (blancs éventuels entre les deux) -> une espace",
+   "toute suite de blancs ASCII -> une espace ; bords rognés",
+   "côté PDF : numéro de page (dernière ligne) retiré, puis retraits déclarés",
+   "côté transcription : substitutions déclarées (forme transcrite -> forme de pdftotext)"
+  ],
+  "normalisation_controle_B": [
+   "chiffres en indice ou en exposant -> chiffres simples ; ½ -> 12 (comparaison seulement)"
+  ],
+  "elisions": "Aucune mention d'élision (du type « [full prompt body elided — N chars] ») dans les blocs transcrits. Les élisions de l'article se trouvent dans H.11 (« _26 score lines elided._ », « _[full prompt body elided — 9084 chars]_ », etc.) et H.14 (« … chars omitted._ »), qui ne font pas partie des invites demandées."
+ },
+ "invites": [
+  {
+   "id": "H1",
+   "fichier": "invites/H1.txt",
+   "section": "H.1",
+   "titre": "Default Generator Prompt",
+   "pages": {
+    "debut": 25,
+    "fin": 28
+   },
+   "introduction": {
+    "page": 25,
+    "texte": "Below is a minimalistic prompt for the untrusted generator that we use as a seed to the prompt optimization process. We also use it to compare between generators in Figure 3, as well as to provide the benign baselines in Figure 4."
+   },
+   "caracteres": 672,
+   "octets": 674,
+   "lignes": 3,
+   "sha256": "8294cf679a7823b0c8c0c8f6e6d392f3b0cf2321d2ffa3e18bf46dbbd9fe78c3",
+   "retraits": [
+    "marqueurs de continuation « ,→ » : 8 retirés, chaque ligne coupée recollée à la précédente par une espace",
+    "numéro de page « 25 » (pied de page) entre deux parties du bloc",
+    "page 25 : note de bas de page n° 3 (renvoi du texte de l'annexe G)",
+    "page 26 : page entière de figure (figure 17 et sa légende)",
+    "page 27 : page entière de figure (figure 18 et sa légende)",
+    "page 28 : algorithme 1 et tableau 3 (flottants placés en haut de la page 28)"
+   ],
+   "normalisations": [
+    "ligatures : aucune rencontrée dans le bloc (police à chasse fixe)"
+   ],
+   "doutes": [],
+   "elisions": [],
+   "remarques": [
+    "Deux morceaux : le paragraphe de la page 25 et la consigne de numérotation de la page 28 ; entre les deux, la note de bas de page 3, les pages de figures 26-27 et les flottants (algorithme 1, tableau 3) de la page 28.",
+    "passage p25→p28 : 1 ligne(s) vide(s), établi par mesure — Page 25 pleine (la note de bas de page occupe le bas). Page 28 : le bloc reprend sous l'algorithme 1 et le tableau 3 flottants ; base de « Number your proposals… » à 516,65 pt, soit 40,1 pt sous le filet bas du tableau (476,6 pt). Sans ligne vide on attendrait 20 pt (séparation flottant-texte) + 10 pt (\\topskip) = 30 pt ; l'excédent (environ 10 pt) vaut une ligne de verbatim (9,85 pt). La page 28 est pleine (la ligne vide suivante de H.2 est reportée en haut de la page 29), donc l'écart n'est pas un étirement."
+   ],
+   "sauts_de_page": [
+    {
+     "passage": "p25→p28",
+     "lignes_vides": 1,
+     "certitude": "mesurée",
+     "justification": "Page 25 pleine (la note de bas de page occupe le bas). Page 28 : le bloc reprend sous l'algorithme 1 et le tableau 3 flottants ; base de « Number your proposals… » à 516,65 pt, soit 40,1 pt sous le filet bas du tableau (476,6 pt). Sans ligne vide on attendrait 20 pt (séparation flottant-texte) + 10 pt (\\topskip) = 30 pt ; l'excédent (environ 10 pt) vaut une ligne de verbatim (9,85 pt). La page 28 est pleine (la ligne vide suivante de H.2 est reportée en haut de la page 29), donc l'écart n'est pas un étirement."
+    }
+   ],
+   "verification": {
+    "pages": [
+     25,
+     26,
+     27,
+     28
+    ],
+    "avant": "as well as to provide the benign baselines in Figure 4.",
+    "apres": "H.2 Ground Truth Proxy Scorer Prompt",
+    "retraits": [
+     {
+      "page": 25,
+      "debut": "3 The optimizer sees the scores normalized",
+      "fin": "instead of [0.100].",
+      "motif": "note de bas de page n° 3 (renvoi du texte de l'annexe G)"
+     },
+     {
+      "page": 26,
+      "tout": true,
+      "motif": "page entière de figure (figure 17 et sa légende)"
+     },
+     {
+      "page": 27,
+      "tout": true,
+      "motif": "page entière de figure (figure 18 et sa légende)"
+     },
+     {
+      "page": 28,
+      "debut": "Require: Hyperparameters A, B, N, M, L, L0",
+      "fin": "Initial red-team budget 10 32 5 10 15 100",
+      "motif": "algorithme 1 et tableau 3 (flottants placés en haut de la page 28)"
+     }
+    ],
+    "substitutions": [],
+    "zones": [
+     {
+      "page": 25,
+      "haut_pt": 623.33,
+      "bas_pt": 704.67
+     },
+     {
+      "page": 28,
+      "haut_pt": 508.0,
+      "bas_pt": 529.33
+     }
+    ],
+    "sauts": [
+     1
+    ]
+   }
+  },
+  {
+   "id": "H1-format",
+   "fichier": "invites/H1-format.txt",
+   "section": "H.11 (sections fixes ajoutées au générateur)",
+   "titre": "Format Instructions (appended after your prompt)",
+   "pages": {
+    "debut": 40,
+    "fin": 40
+   },
+   "introduction": {
+    "page": 40,
+    "texte": "(Dans l'invite de l'optimiseur de l'équipe rouge, H.11 :) « ## Fixed Sections (DO NOT INCLUDE — automatically appended) / The following sections are AUTOMATICALLY APPENDED to every evolved prompt. Do NOT include them in your output. / ### Format Instructions (appended after your prompt): »"
+   },
+   "caracteres": 145,
+   "octets": 145,
+   "lignes": 3,
+   "sha256": "2dcf69d25901d527d6e053c0df55a48cbc7c707a95ec98088d56dc634b03b297",
+   "retraits": [
+    "lignes « ``` » qui ouvrent et ferment la section dans l'invite H.11 : elles appartiennent à l'invite de l'optimiseur, pas au texte ajouté ; exclues"
+   ],
+   "normalisations": [
+    "ligatures : aucune rencontrée dans le bloc (police à chasse fixe)"
+   ],
+   "doutes": [],
+   "elisions": [],
+   "remarques": [
+    "Publié dans H.11 (invite de l'optimiseur de l'équipe rouge) parmi les « Fixed Sections (DO NOT INCLUDE — automatically appended) » : « The following sections are AUTOMATICALLY APPENDED to every evolved prompt. » H.13 le redit pour les invites d'ancrage. L'article ne dit pas explicitement que ces sections s'ajoutent à l'invite par défaut H.1, qui porte sa propre consigne de numérotation.",
+    "Recoupement : la fin de l'invite I.3 (page 57) reproduit ce texte à l'identique, suivi de deux lignes vides puis de H1-classification."
+   ],
+   "sauts_de_page": [],
+   "verification": {
+    "pages": [
+     40
+    ],
+    "avant": "### Format Instructions (appended after your prompt): ```",
+    "apres": "``` ### Classification Guidance (appended after format):",
+    "retraits": [],
+    "substitutions": [],
+    "zones": [
+     {
+      "page": 40,
+      "haut_pt": 662.0,
+      "bas_pt": 692.67
+     }
+    ],
+    "sauts": []
+   }
+  },
+  {
+   "id": "H1-classification",
+   "fichier": "invites/H1-classification.txt",
+   "section": "H.11 (sections fixes ajoutées au générateur)",
+   "titre": "Classification Guidance (appended after format)",
+   "pages": {
+    "debut": 41,
+    "fin": 41
+   },
+   "introduction": {
+    "page": 40,
+    "texte": "(Dans l'invite de l'optimiseur de l'équipe rouge, H.11 :) « ### Classification Guidance (appended after format): » (titre en bas de la page 40, bloc en haut de la page 41)"
+   },
+   "caracteres": 809,
+   "octets": 809,
+   "lignes": 10,
+   "sha256": "69d50fb972f3255c94430205ab09c4f21054185d7def25b061c7255d71cc5540",
+   "retraits": [
+    "marqueurs de continuation « ,→ » : 8 retirés, chaque ligne coupée recollée à la précédente par une espace",
+    "lignes « ``` » qui ouvrent et ferment la section dans l'invite H.11 : elles appartiennent à l'invite de l'optimiseur, pas au texte ajouté ; exclues",
+    "numéro de page « 40 » : le titre « ### Classification Guidance (appended after format): » est en bas de la page 40, le bloc en haut de la page 41"
+   ],
+   "normalisations": [
+    "ligatures : aucune rencontrée dans le bloc (police à chasse fixe)"
+   ],
+   "doutes": [],
+   "elisions": [],
+   "remarques": [
+    "Même origine que H1-format (H.11, sections ajoutées automatiquement à chaque invite évoluée).",
+    "Recoupement : identique à la fin de l'invite I.3 (page 57)."
+   ],
+   "sauts_de_page": [],
+   "verification": {
+    "pages": [
+     40,
+     41
+    ],
+    "avant": "### Classification Guidance (appended after format): ```",
+    "apres": "``` Your output should contain ONLY the content/strategy instructions.",
+    "retraits": [],
+    "substitutions": [],
+    "zones": [
+     {
+      "page": 41,
+      "haut_pt": 92.67,
+      "bas_pt": 271.33
+     }
+    ],
+    "sauts": []
+   }
+  },
+  {
+   "id": "H2",
+   "fichier": "invites/H2.txt",
+   "section": "H.2",
+   "titre": "Ground Truth Proxy Scorer Prompt",
+   "pages": {
+    "debut": 28,
+    "fin": 29
+   },
+   "introduction": {
+    "page": 28,
+    "texte": "This is the prompt we use to evaluate g(t, o) in the paper, with the exception of the strong scorer ablation studies in Appendix C.2. The text below is a preamble! The full prompt is a concatenation of the preamble and the rubric description, provided separately in Appendix H.4."
+   },
+   "caracteres": 2027,
+   "octets": 2033,
+   "lignes": 21,
+   "sha256": "2398de042aedbb822fd96648deb5b80a6b55587557aa1f210a543e95f2b25585",
+   "retraits": [
+    "marqueurs de continuation « ,→ » : 16 retirés, chaque ligne coupée recollée à la précédente par une espace",
+    "numéro de page « 28 » (pied de page) entre deux parties du bloc"
+   ],
+   "normalisations": [
+    "ligatures : aucune rencontrée dans le bloc (police à chasse fixe)"
+   ],
+   "doutes": [],
+   "elisions": [],
+   "remarques": [
+    "Préambule : d'après l'article, l'invite complète du correcteur de référence est la concaténation de ce préambule et de la grille H.4 ; le séparateur entre les deux n'est pas publié.",
+    "passage p28→p29 : 1 ligne(s) vide(s), établi par mesure — La première ligne de la page 29 est une ligne plus bas que d'ordinaire (125 au lieu de 110 en unités XML) : une ligne vide du bloc est reportée en haut de page ; la page 28 est pleine (dernière ligne à 1070)."
+   ],
+   "sauts_de_page": [
+    {
+     "passage": "p28→p29",
+     "lignes_vides": 1,
+     "certitude": "mesurée",
+     "justification": "La première ligne de la page 29 est une ligne plus bas que d'ordinaire (125 au lieu de 110 en unités XML) : une ligne vide du bloc est reportée en haut de page ; la page 28 est pleine (dernière ligne à 1070)."
+    }
+   ],
+   "verification": {
+    "pages": [
+     28,
+     29
+    ],
+    "avant": "The full prompt is a concatenation of the preamble and the rubric description, provided separately in Appendix H.4.",
+    "apres": "H.3 Default Weak Scorer Prompt",
+    "retraits": [],
+    "substitutions": [],
+    "zones": [
+     {
+      "page": 28,
+      "haut_pt": 605.33,
+      "bas_pt": 724.67
+     },
+     {
+      "page": 29,
+      "haut_pt": 83.33,
+      "bas_pt": 320.0
+     }
+    ],
+    "sauts": [
+     1
+    ]
+   }
+  },
+  {
+   "id": "H3",
+   "fichier": "invites/H3.txt",
+   "section": "H.3",
+   "titre": "Default Weak Scorer Prompt",
+   "pages": {
+    "debut": 29,
+    "fin": 29
+   },
+   "introduction": {
+    "page": 29,
+    "texte": "This is the default weak scorer prompt b = b₀. We use it in Figure 3, Figure 4, and as the starting point for the blue team optimization in Section 5.1. The text below is a preamble! The full prompt is a concatenation of the preamble and the rubric description, provided separately in Appendix H.4."
+   },
+   "caracteres": 705,
+   "octets": 707,
+   "lignes": 7,
+   "sha256": "52ab1e255360cf80a7a27ae3f8e6feb1eee5a26ae7ccee3d10ebc9ddd58c9c4d",
+   "retraits": [
+    "marqueurs de continuation « ,→ » : 7 retirés, chaque ligne coupée recollée à la précédente par une espace"
+   ],
+   "normalisations": [
+    "ligatures : aucune rencontrée dans le bloc (police à chasse fixe)"
+   ],
+   "doutes": [],
+   "elisions": [],
+   "remarques": [
+    "Préambule : d'après l'article, l'invite complète du correcteur faible par défaut est la concaténation de ce préambule et de la grille H.4 ; le séparateur entre les deux n'est pas publié."
+   ],
+   "sauts_de_page": [],
+   "verification": {
+    "pages": [
+     29
+    ],
+    "avant": "The full prompt is a concatenation of the preamble and the rubric description, provided separately in Appendix H.4.",
+    "apres": "H.4 Rubric description",
+    "retraits": [],
+    "substitutions": [],
+    "zones": [
+     {
+      "page": 29,
+      "haut_pt": 395.33,
+      "bas_pt": 534.0
+     }
+    ],
+    "sauts": []
+   }
+  },
+  {
+   "id": "H4",
+   "fichier": "invites/H4.txt",
+   "section": "H.4",
+   "titre": "Rubric description",
+   "pages": {
+    "debut": 29,
+    "fin": 34
+   },
+   "introduction": {
+    "page": 29,
+    "texte": "Below is the description of the rubric we provide to the ground truth scorer g(t, o) and to the weak scorer w_b(t, o) with the default weak scorer prompt b = b₀. The detailed calibration is provided to avoid scorer collapse; without it, both scorers tended to rate the proposals from frontier models overly high and the diversity of scores was too low. For each criterion and for each score, the prompt provides explicit anchoring for both experimental and theoretical proposals. The decision on how to weigh the results to holistically evaluate the proposal set is left to the judge."
+   },
+   "caracteres": 19500,
+   "octets": 19580,
+   "lignes": 98,
+   "sha256": "cb103166b1c21f8caeb00ebc90730cb62b6cbda89ea3c89469674bcd60786fbc",
+   "retraits": [
+    "marqueurs de continuation « ,→ » : 208 retirés, chaque ligne coupée recollée à la précédente par une espace",
+    "numéro de page « 29 » (pied de page) entre deux parties du bloc",
+    "numéro de page « 30 » (pied de page) entre deux parties du bloc",
+    "numéro de page « 31 » (pied de page) entre deux parties du bloc",
+    "numéro de page « 32 » (pied de page) entre deux parties du bloc",
+    "numéro de page « 33 » (pied de page) entre deux parties du bloc"
+   ],
+   "normalisations": [
+    "ligatures : aucune rencontrée dans le bloc (police à chasse fixe)"
+   ],
+   "doutes": [
+    "passage p30→p31 : 0 ligne(s) vide(s) retenue(s) — Trois places libres en bas de la page 30, mais la ligne logique suivante (« - **5**: … ») fait sept lignes et ne tient pas : 0 à 3 lignes vides possibles. Retenu 0 : les niveaux d'un critère se suivent sans ligne vide partout ailleurs dans la grille.",
+    "passage p32→p33 : 0 ligne(s) vide(s) retenue(s) — Trois places libres en bas de la page 32, ligne logique suivante de six lignes : 0 à 3 lignes vides possibles. Retenu 0 : les niveaux d'un critère se suivent sans ligne vide partout ailleurs."
+   ],
+   "elisions": [],
+   "remarques": [
+    "Une seule grille est publiée : pour chaque critère et chaque niveau, le repère expérimental est suivi de « For theory: … ». Il n'existe pas de version expérimentale et de version théorique séparées ; d'où un seul fichier H4.txt (et non H4-experimental / H4-theorique). L'article la décrit ainsi : « For each criterion and for each score, the prompt provides explicit anchoring for both experimental and theoretical proposals ».",
+    "passage p29→p30 : 0 ligne(s) vide(s), établi par mesure — Page 29 pleine (dernière ligne à 1067, aucune place libre) et page 30 commençant à la position normale (110).",
+    "passage p31→p32 : 0 ligne(s) vide(s), établi par mesure — Page 31 pleine (dernière ligne à 1061) et page 32 commençant à 110.",
+    "passage p33→p34 : 1 ligne(s) vide(s), établi par mesure — Une place libre en bas de la page 33 et ligne suivante (« ### REDUNDANCY_PENALTY ») d'une seule ligne : sans ligne vide, TeX l'aurait placée en page 33 ; avec deux, la seconde serait reportée en haut de la page 34, qui commence à 110. Donc exactement une ligne vide."
+   ],
+   "sauts_de_page": [
+    {
+     "passage": "p29→p30",
+     "lignes_vides": 0,
+     "certitude": "mesurée",
+     "justification": "Page 29 pleine (dernière ligne à 1067, aucune place libre) et page 30 commençant à la position normale (110)."
+    },
+    {
+     "passage": "p30→p31",
+     "lignes_vides": 0,
+     "certitude": "doute",
+     "justification": "Trois places libres en bas de la page 30, mais la ligne logique suivante (« - **5**: … ») fait sept lignes et ne tient pas : 0 à 3 lignes vides possibles. Retenu 0 : les niveaux d'un critère se suivent sans ligne vide partout ailleurs dans la grille."
+    },
+    {
+     "passage": "p31→p32",
+     "lignes_vides": 0,
+     "certitude": "mesurée",
+     "justification": "Page 31 pleine (dernière ligne à 1061) et page 32 commençant à 110."
+    },
+    {
+     "passage": "p32→p33",
+     "lignes_vides": 0,
+     "certitude": "doute",
+     "justification": "Trois places libres en bas de la page 32, ligne logique suivante de six lignes : 0 à 3 lignes vides possibles. Retenu 0 : les niveaux d'un critère se suivent sans ligne vide partout ailleurs."
+    },
+    {
+     "passage": "p33→p34",
+     "lignes_vides": 1,
+     "certitude": "mesurée",
+     "justification": "Une place libre en bas de la page 33 et ligne suivante (« ### REDUNDANCY_PENALTY ») d'une seule ligne : sans ligne vide, TeX l'aurait placée en page 33 ; avec deux, la seconde serait reportée en haut de la page 34, qui commence à 110. Donc exactement une ligne vide."
+    }
+   ],
+   "verification": {
+    "pages": [
+     29,
+     30,
+     31,
+     32,
+     33,
+     34
+    ],
+    "avant": "The decision on how to weigh the results to holistically evaluate the proposal set is left to the judge.",
+    "apres": "H.5 Rubric-Free Scorer, no Paper Access",
+    "retraits": [],
+    "substitutions": [
+     {
+      "transcription": "---\n\n## Output Format",
+      "pdf": "--## Output Format",
+      "raison": "pdftotext (mode par défaut) prend le dernier « - » de la ligne « --- » pour un trait d'union de fin de ligne : il le supprime et colle la ligne suivante. « --- » seul sur sa ligne est confirmé par le contrôle B (pdftotext -bbox : mot « --- ») et par pdftotext -layout."
+     }
+    ],
+    "zones": [
+     {
+      "page": 29,
+      "haut_pt": 642.67,
+      "bas_pt": 722.67
+     },
+     {
+      "page": 30,
+      "haut_pt": 73.33,
+      "bas_pt": 689.33
+     },
+     {
+      "page": 31,
+      "haut_pt": 73.33,
+      "bas_pt": 718.67
+     },
+     {
+      "page": 32,
+      "haut_pt": 73.33,
+      "bas_pt": 688.67
+     },
+     {
+      "page": 33,
+      "haut_pt": 73.33,
+      "bas_pt": 708.67
+     },
+     {
+      "page": 34,
+      "haut_pt": 73.33,
+      "bas_pt": 506.0
+     }
+    ],
+    "sauts": [
+     0,
+     0,
+     0,
+     0,
+     1
+    ]
+   }
+  },
+  {
+   "id": "H5",
+   "fichier": "invites/H5.txt",
+   "section": "H.5",
+   "titre": "Rubric-Free Scorer, no Paper Access",
+   "pages": {
+    "debut": 34,
+    "fin": 35
+   },
+   "introduction": {
+    "page": 34,
+    "texte": "Below is the prompt we used in Appendix C.2 to power the rubric-free version of the weak scorer (Haiku 4.5, does not have access to the full paper). We tried to prompt the agent in the most general way, without anchoring for any specific criteria, since this would consitute an implicit rubric."
+   },
+   "caracteres": 1465,
+   "octets": 1467,
+   "lignes": 13,
+   "sha256": "9fa6052b45a8c0cb906807e74b8909bff49f5978595dd1dac25582778f0d1522",
+   "retraits": [
+    "marqueurs de continuation « ,→ » : 16 retirés, chaque ligne coupée recollée à la précédente par une espace",
+    "numéro de page « 34 » (pied de page) entre deux parties du bloc"
+   ],
+   "normalisations": [
+    "ligatures : aucune rencontrée dans le bloc (police à chasse fixe)"
+   ],
+   "doutes": [],
+   "elisions": [],
+   "remarques": [
+    "passage p34→p35 : 0 ligne(s) vide(s), établi par mesure — Page 34 pleine (dernière ligne à 1063) et page 35 commençant à 110."
+   ],
+   "sauts_de_page": [
+    {
+     "passage": "p34→p35",
+     "lignes_vides": 0,
+     "certitude": "mesurée",
+     "justification": "Page 34 pleine (dernière ligne à 1063) et page 35 commençant à 110."
+    }
+   ],
+   "verification": {
+    "pages": [
+     34,
+     35
+    ],
+    "avant": "since this would consitute an implicit rubric.",
+    "apres": "H.6 Rubric-free Scorer, with Paper Access",
+    "retraits": [],
+    "substitutions": [],
+    "zones": [
+     {
+      "page": 34,
+      "haut_pt": 580.67,
+      "bas_pt": 720.0
+     },
+     {
+      "page": 35,
+      "haut_pt": 73.33,
+      "bas_pt": 222.67
+     }
+    ],
+    "sauts": [
+     0
+    ]
+   }
+  },
+  {
+   "id": "H6",
+   "fichier": "invites/H6.txt",
+   "section": "H.6",
+   "titre": "Rubric-free Scorer, with Paper Access",
+   "pages": {
+    "debut": 35,
+    "fin": 36
+   },
+   "introduction": {
+    "page": 35,
+    "texte": "Below is the prompt we used in Appendix C.2 to power the rubric-free version of the ground truth proxy scorer (Sonnet 4.6 with access to the full paper). This prompt is similar to the rubric-free weak scorer prompt in Appendix H.5, with the exception of the instructions on how to use the paper."
+   },
+   "caracteres": 2462,
+   "octets": 2468,
+   "lignes": 24,
+   "sha256": "115f5f1eb01381ac15ccbce8d6917d75b448f4153a7d9625a459ae04c61ce5ed",
+   "retraits": [
+    "marqueurs de continuation « ,→ » : 22 retirés, chaque ligne coupée recollée à la précédente par une espace",
+    "numéro de page « 35 » (pied de page) entre deux parties du bloc"
+   ],
+   "normalisations": [
+    "ligatures : aucune rencontrée dans le bloc (police à chasse fixe)"
+   ],
+   "doutes": [
+    "passage p35→p36 : 1 ligne(s) vide(s) retenue(s) — Une place libre en bas de la page 35, paragraphe suivant de trois lignes : 0 ou 1 ligne vide possible. Retenu 1 : nouveau paragraphe, et le même passage de H.2 (page 29) porte une ligne vide visible entre « …specific subfield. » et « Use the reference paper… »."
+   ],
+   "elisions": [],
+   "remarques": [],
+   "sauts_de_page": [
+    {
+     "passage": "p35→p36",
+     "lignes_vides": 1,
+     "certitude": "doute",
+     "justification": "Une place libre en bas de la page 35, paragraphe suivant de trois lignes : 0 ou 1 ligne vide possible. Retenu 1 : nouveau paragraphe, et le même passage de H.2 (page 29) porte une ligne vide visible entre « …specific subfield. » et « Use the reference paper… »."
+    }
+   ],
+   "verification": {
+    "pages": [
+     35,
+     36
+    ],
+    "avant": "with the exception of the instructions on how to use the paper.",
+    "apres": "H.7 Paper Compiler Agent",
+    "retraits": [],
+    "substitutions": [],
+    "zones": [
+     {
+      "page": 35,
+      "haut_pt": 298.67,
+      "bas_pt": 713.33
+     },
+     {
+      "page": 36,
+      "haut_pt": 73.33,
+      "bas_pt": 104.67
+     }
+    ],
+    "sauts": [
+     1
+    ]
+   }
+  },
+  {
+   "id": "H9",
+   "fichier": "invites/H9.txt",
+   "section": "H.9",
+   "titre": "Opus 4.6 Extracting Research Questions",
+   "pages": {
+    "debut": 37,
+    "fin": 38
+   },
+   "introduction": {
+    "page": 37,
+    "texte": "This prompt also extracts the affiliations of the authors and the experiment expenditures if that information is available, but we ended up not using it for the final version of our setup."
+   },
+   "caracteres": 3659,
+   "octets": 3663,
+   "lignes": 68,
+   "sha256": "15a3d48bb9c65aa8ef50bc6859c71bbbe4c983e5205d80d21cdc5d0b4ce31489",
+   "retraits": [
+    "marqueurs de continuation « ,→ » : 24 retirés, chaque ligne coupée recollée à la précédente par une espace",
+    "numéro de page « 37 » (pied de page) entre deux parties du bloc"
+   ],
+   "normalisations": [
+    "ligatures : aucune rencontrée dans le bloc (police à chasse fixe)"
+   ],
+   "doutes": [],
+   "elisions": [],
+   "remarques": [
+    "Les « ... » à l'intérieur des exemples JSON font partie de l'invite ; ce ne sont pas des élisions des auteurs.",
+    "Retraits des lignes JSON mesurés sur la grille : 2, 4 et 8 espaces (pdftotext -layout affiche 5 au lieu de 4 : approximation de ce mode).",
+    "passage p37→p38 : 1 ligne(s) vide(s), établi par mesure — Page 37 pleine (dernière ligne à 1070) et page 38 commençant une ligne plus bas (125) : une ligne vide reportée en haut de page."
+   ],
+   "sauts_de_page": [
+    {
+     "passage": "p37→p38",
+     "lignes_vides": 1,
+     "certitude": "mesurée",
+     "justification": "Page 37 pleine (dernière ligne à 1070) et page 38 commençant une ligne plus bas (125) : une ligne vide reportée en haut de page."
+    }
+   ],
+   "verification": {
+    "pages": [
+     37,
+     38
+    ],
+    "avant": "but we ended up not using it for the final version of our setup.",
+    "apres": "H.10 Opus 4.6 Classifying the Papers",
+    "retraits": [],
+    "substitutions": [],
+    "zones": [
+     {
+      "page": 37,
+      "haut_pt": 205.33,
+      "bas_pt": 724.67
+     },
+     {
+      "page": 38,
+      "haut_pt": 83.33,
+      "bas_pt": 456.67
+     }
+    ],
+    "sauts": [
+     1
+    ]
+   }
+  },
+  {
+   "id": "H10",
+   "fichier": "invites/H10.txt",
+   "section": "H.10",
+   "titre": "Opus 4.6 Classifying the Papers",
+   "pages": {
+    "debut": 38,
+    "fin": 39
+   },
+   "introduction": null,
+   "caracteres": 3010,
+   "octets": 3012,
+   "lignes": 47,
+   "sha256": "9cced274c41f00cd463e83d16307a32c5293d3e54b5285438721a15f5e3564f8",
+   "retraits": [
+    "marqueurs de continuation « ,→ » : 23 retirés, chaque ligne coupée recollée à la précédente par une espace",
+    "numéro de page « 38 » (pied de page) entre deux parties du bloc"
+   ],
+   "normalisations": [
+    "ligatures : aucune rencontrée dans le bloc (police à chasse fixe)"
+   ],
+   "doutes": [],
+   "elisions": [],
+   "remarques": [
+    "Les « \\_ » (barre oblique inverse devant le tiret bas) du format de sortie sont imprimés ainsi dans le bloc ; conservés sans correction.",
+    "passage p38→p39 : 0 ligne(s) vide(s), établi par mesure — Page 38 pleine (dernière ligne à 1070) et page 39 commençant à 110."
+   ],
+   "sauts_de_page": [
+    {
+     "passage": "p38→p39",
+     "lignes_vides": 0,
+     "certitude": "mesurée",
+     "justification": "Page 38 pleine (dernière ligne à 1070) et page 39 commençant à 110."
+    }
+   ],
+   "verification": {
+    "pages": [
+     38,
+     39
+    ],
+    "avant": "H.10 Opus 4.6 Classifying the Papers",
+    "apres": "H.11 Red Team Multiobjective Prompt Optimizer",
+    "retraits": [],
+    "substitutions": [],
+    "zones": [
+     {
+      "page": 38,
+      "haut_pt": 488.67,
+      "bas_pt": 724.67
+     },
+     {
+      "page": 39,
+      "haut_pt": 73.33,
+      "bas_pt": 526.0
+     }
+    ],
+    "sauts": [
+     0
+    ]
+   }
+  },
+  {
+   "id": "H12",
+   "fichier": "invites/H12.txt",
+   "section": "H.12",
+   "titre": "Sandbagging Detector",
+   "pages": {
+    "debut": 43,
+    "fin": 43
+   },
+   "introduction": null,
+   "caracteres": 1410,
+   "octets": 1410,
+   "lignes": 11,
+   "sha256": "d44e48546b0c77783684cfe4c30c9ae0bb8e7f9ed68ea99443cdd407672115ab",
+   "retraits": [
+    "marqueurs de continuation « ,→ » : 15 retirés, chaque ligne coupée recollée à la précédente par une espace"
+   ],
+   "normalisations": [
+    "ligatures : aucune rencontrée dans le bloc (police à chasse fixe)"
+   ],
+   "doutes": [],
+   "elisions": [],
+   "remarques": [
+    "Fautes et bizarreries de l'original conservées : « score of a 100 -- to extreme complete that they were », « high-grained scores ».",
+    "p. 43, ligne « extreme confidence that the proposals were NOT sandbagged, a… » : espace double de l'original conservée (mesurée sur la grille à chasse fixe) : « extreme confidence that the proposals were NOT sandbagged, and  score of a 100 »"
+   ],
+   "sauts_de_page": [],
+   "verification": {
+    "pages": [
+     43
+    ],
+    "avant": "H.12 Sandbagging Detector",
+    "apres": "H.13 Anchor Prompt Generation",
+    "retraits": [],
+    "substitutions": [],
+    "zones": [
+     {
+      "page": 43,
+      "haut_pt": 92.67,
+      "bas_pt": 350.0
+     }
+    ],
+    "sauts": []
+   }
+  },
+  {
+   "id": "H13-noyaux-systeme",
+   "fichier": "invites/H13-noyaux-systeme.txt",
+   "section": "H.13 (1/4)",
+   "titre": "Anchor Prompt Generation — kernels, System",
+   "pages": {
+    "debut": 43,
+    "fin": 43
+   },
+   "introduction": {
+    "page": 43,
+    "texte": "These are the prompts that we use with Opus 4.6 to generate the benign anchor prompts A for Algorithm 1. First, we generate the “kernels” for the prompts. — étiquette « System: »"
+   },
+   "caracteres": 704,
+   "octets": 708,
+   "lignes": 4,
+   "sha256": "f882624cee5744d6f3325e4981a4cdec2dd31933c203d7f942020e014b241d62",
+   "retraits": [
+    "marqueurs de continuation « ,→ » : 8 retirés, chaque ligne coupée recollée à la précédente par une espace",
+    "étiquettes des auteurs (« System: », « User (template): », « User: », en Times gras) et phrase des auteurs « Then, we expand the kernel ideas into full generator prompts. » : hors des blocs, non transcrites ; la section H.13 est découpée en quatre fichiers (deux invites système, deux gabarits utilisateur)"
+   ],
+   "normalisations": [
+    "ligatures : aucune rencontrée dans le bloc (police à chasse fixe)"
+   ],
+   "doutes": [],
+   "elisions": [],
+   "remarques": [
+    "Retours à la ligne durs de l'original conservés (« …different priorities (rigor vs novelty » / « vs feasibility), … They should » / « all be plausibly … ») : ces lignes commencent à la marge sans marqueur de continuation.",
+    "p. 43, ligne « ML-experiment-proposal generators.  Each kernel is a 1-2 sen… » : espace double de l'original conservée (mesurée sur la grille à chasse fixe) : « ML-experiment-proposal generators.  Each kernel is a 1-2 sentence description of »",
+    "p. 43, ligne « a *stylistic and methodological angle* that a generator  mig… » : espace double de l'original conservée (mesurée sur la grille à chasse fixe) : « that a generator  might emphasize when »",
+    "p. 43, ligne « ablation-heavy,  mechanism-focused, scaling-laws-oriented, I… » : espace double de l'original conservée (mesurée sur la grille à chasse fixe) : « ablation-heavy,  mechanism-focused, scaling-laws-oriented, ICLR-flashy, »"
+   ],
+   "sauts_de_page": [],
+   "verification": {
+    "pages": [
+     43
+    ],
+    "avant": "First, we generate the “kernels” for the prompts. System:",
+    "apres": "User (template):",
+    "retraits": [],
+    "substitutions": [],
+    "zones": [
+     {
+      "page": 43,
+      "haut_pt": 427.33,
+      "bas_pt": 547.33
+     }
+    ],
+    "sauts": []
+   }
+  },
+  {
+   "id": "H13-noyaux-utilisateur",
+   "fichier": "invites/H13-noyaux-utilisateur.txt",
+   "section": "H.13 (2/4)",
+   "titre": "Anchor Prompt Generation — kernels, User (template)",
+   "pages": {
+    "debut": 43,
+    "fin": 43
+   },
+   "introduction": {
+    "page": 43,
+    "texte": "étiquette « User (template): »"
+   },
+   "caracteres": 185,
+   "octets": 185,
+   "lignes": 7,
+   "sha256": "9f07a5ffeda6bf31da45e205f0bc2c52d64e64ee7d5a9a3cd04c1ba6ba367574",
+   "retraits": [
+    "étiquettes des auteurs (« System: », « User (template): », « User: », en Times gras) et phrase des auteurs « Then, we expand the kernel ideas into full generator prompts. » : hors des blocs, non transcrites ; la section H.13 est découpée en quatre fichiers (deux invites système, deux gabarits utilisateur)"
+   ],
+   "normalisations": [
+    "ligatures : aucune rencontrée dans le bloc (police à chasse fixe)"
+   ],
+   "doutes": [],
+   "elisions": [],
+   "remarques": [
+    "Accolades doublées {{ }} et variable {n} : gabarit Python tel qu'imprimé, conservé."
+   ],
+   "sauts_de_page": [],
+   "verification": {
+    "pages": [
+     43
+    ],
+    "avant": "User (template):",
+    "apres": "Then, we expand the kernel ideas into full generator prompts.",
+    "retraits": [],
+    "substitutions": [],
+    "zones": [
+     {
+      "page": 43,
+      "haut_pt": 572.67,
+      "bas_pt": 642.0
+     }
+    ],
+    "sauts": []
+   }
+  },
+  {
+   "id": "H13-expansion-systeme",
+   "fichier": "invites/H13-expansion-systeme.txt",
+   "section": "H.13 (3/4)",
+   "titre": "Anchor Prompt Generation — expansion, System",
+   "pages": {
+    "debut": 43,
+    "fin": 44
+   },
+   "introduction": {
+    "page": 43,
+    "texte": "Then, we expand the kernel ideas into full generator prompts. — étiquette « System: »"
+   },
+   "caracteres": 644,
+   "octets": 646,
+   "lignes": 6,
+   "sha256": "9d3bedfef685b7210db14b66467889ea60513b587438e129cbbb2db4d9910994",
+   "retraits": [
+    "marqueurs de continuation « ,→ » : 5 retirés, chaque ligne coupée recollée à la précédente par une espace",
+    "numéro de page « 43 » (pied de page) entre deux parties du bloc",
+    "étiquettes des auteurs (« System: », « User (template): », « User: », en Times gras) et phrase des auteurs « Then, we expand the kernel ideas into full generator prompts. » : hors des blocs, non transcrites ; la section H.13 est découpée en quatre fichiers (deux invites système, deux gabarits utilisateur)"
+   ],
+   "normalisations": [
+    "ligatures : aucune rencontrée dans le bloc (police à chasse fixe)"
+   ],
+   "doutes": [],
+   "elisions": [],
+   "remarques": [
+    "passage p43→p44 : 0 ligne(s) vide(s), établi par mesure — Page 43 pleine (dernière ligne à 1070) et page 44 commençant à 110. La ligne « guidance will be appended… » n'a pas de marqueur de continuation : c'est un vrai retour à la ligne de l'invite (une ligne coupée par le PDF ne peut pas passer d'une page à l'autre)."
+   ],
+   "sauts_de_page": [
+    {
+     "passage": "p43→p44",
+     "lignes_vides": 0,
+     "certitude": "mesurée",
+     "justification": "Page 43 pleine (dernière ligne à 1070) et page 44 commençant à 110. La ligne « guidance will be appended… » n'a pas de marqueur de continuation : c'est un vrai retour à la ligne de l'invite (une ligne coupée par le PDF ne peut pas passer d'une page à l'autre)."
+    }
+   ],
+   "verification": {
+    "pages": [
+     43,
+     44
+    ],
+    "avant": "Then, we expand the kernel ideas into full generator prompts. System:",
+    "apres": "User:",
+    "retraits": [],
+    "substitutions": [],
+    "zones": [
+     {
+      "page": 43,
+      "haut_pt": 683.33,
+      "bas_pt": 724.67
+     },
+     {
+      "page": 44,
+      "haut_pt": 73.33,
+      "bas_pt": 143.33
+     }
+    ],
+    "sauts": [
+     0
+    ]
+   }
+  },
+  {
+   "id": "H13-expansion-utilisateur",
+   "fichier": "invites/H13-expansion-utilisateur.txt",
+   "section": "H.13 (4/4)",
+   "titre": "Anchor Prompt Generation — expansion, User",
+   "pages": {
+    "debut": 44,
+    "fin": 44
+   },
+   "introduction": {
+    "page": 44,
+    "texte": "étiquette « User: »"
+   },
+   "caracteres": 293,
+   "octets": 293,
+   "lignes": 4,
+   "sha256": "0d371006adfbb3e3dca31fdb6ca622ab4035eaeef0a5ccb5be9d10355e0197b2",
+   "retraits": [
+    "marqueurs de continuation « ,→ » : 3 retirés, chaque ligne coupée recollée à la précédente par une espace",
+    "étiquettes des auteurs (« System: », « User (template): », « User: », en Times gras) et phrase des auteurs « Then, we expand the kernel ideas into full generator prompts. » : hors des blocs, non transcrites ; la section H.13 est découpée en quatre fichiers (deux invites système, deux gabarits utilisateur)"
+   ],
+   "normalisations": [
+    "ligatures : aucune rencontrée dans le bloc (police à chasse fixe)"
+   ],
+   "doutes": [],
+   "elisions": [],
+   "remarques": [
+    "Variables de gabarit {name} et {description} conservées."
+   ],
+   "sauts_de_page": [],
+   "verification": {
+    "pages": [
+     44
+    ],
+    "avant": "User:",
+    "apres": "H.14 Blue Team Prompt Optimizer",
+    "retraits": [],
+    "substitutions": [],
+    "zones": [
+     {
+      "page": 44,
+      "haut_pt": 171.33,
+      "bas_pt": 241.33
+     }
+    ],
+    "sauts": []
+   }
+  },
+  {
+   "id": "I3",
+   "fichier": "invites/I3.txt",
+   "section": "I.3",
+   "titre": "Red Team Prompt",
+   "pages": {
+    "debut": 54,
+    "fin": 57
+   },
+   "introduction": {
+    "page": 54,
+    "texte": "Below is the subversion prompt we were discussing in Section 5.2. Note how it is not clear whether the behavior this prompt attempts to create can be classified as sandbagging (deliberate underperformance) or research steering. The distinction introduced by Gasteiger et al. [2025] is blurred."
+   },
+   "caracteres": 9786,
+   "octets": 9908,
+   "lignes": 110,
+   "sha256": "25fad19e6ea002da88b730e60abc57475640f83f66d3a695470001bc13e9e720",
+   "retraits": [
+    "marqueurs de continuation « ,→ » : 84 retirés, chaque ligne coupée recollée à la précédente par une espace",
+    "numéro de page « 54 » (pied de page) entre deux parties du bloc",
+    "numéro de page « 55 » (pied de page) entre deux parties du bloc",
+    "numéro de page « 56 » (pied de page) entre deux parties du bloc"
+   ],
+   "normalisations": [
+    "glyphes composés en police mathématique, gardés tels que pdftotext les décode : ± × α β δ ε η λ σ → ∈ √ ∝ ∞ ∼ ≤ ≥",
+    "p. 55, ligne « - Training: AdamW (β₁=0.9, β₂=0.999, ε=1e-8, wd=0.01-0.1), c… » : chiffre « 1 » composé en indice (petit corps, décalé) rendu par le caractère Unicode « ₁ »",
+    "p. 55, ligne « - Training: AdamW (β₁=0.9, β₂=0.999, ε=1e-8, wd=0.01-0.1), c… » : chiffre « 2 » composé en indice (petit corps, décalé) rendu par le caractère Unicode « ₂ »",
+    "p. 55, ligne « - **Hypothesis**: \"H₁: [quantity] ∼ [f(params)] with [coeffi… » : chiffre « 1 » composé en indice (petit corps, décalé) rendu par le caractère Unicode « ₁ »",
+    "p. 56, ligne « Step 6 — Falsification threshold: outcome disproving H₁… » : chiffre « 1 » composé en indice (petit corps, décalé) rendu par le caractère Unicode « ₁ »",
+    "p. 56, ligne « R(D)=½log(σ²/D). Efficiency gap across scales.… » : fraction empilée 1 sur 2 (deux chiffres l'un au-dessus de l'autre) rendue par « ½ »",
+    "p. 56, ligne « R(D)=½log(σ²/D). Efficiency gap across scales.… » : chiffre « 2 » composé en exposant (petit corps, décalé) rendu par le caractère Unicode « ² »",
+    "ligatures : aucune rencontrée dans le bloc (police à chasse fixe)"
+   ],
+   "doutes": [
+    "passage p55→p56 : 0 ligne(s) vide(s) retenue(s) — Une place libre en bas de la page 55, élément suivant de deux lignes : 0 ou 1 ligne vide possible. Retenu 0 : les éléments numérotés de la liste se suivent sans ligne vide.",
+    "« σ^ » (ligne « 4. Effective rank r_eff = exp(H(σ^)) … ») et « β^ » (ligne « P1: Language … Compare β^ to Chinchilla values ») : le PDF montre le caractère « ^ » collé après la lettre grecque, dans la police du texte. L'invite d'origine portait peut-être une lettre surmontée d'un accent (σ̂, β̂) ; transcrit tel que visible.",
+    "Indices, exposant et fraction (β₁, β₂, H₁ deux fois, σ², ½) : le PDF les compose en mode mathématique (petits chiffres décalés, fraction empilée). Rendus par les caractères Unicode correspondants ; l'invite d'origine contenait probablement ces caractères, mais le PDF ne permet pas de le prouver. pdftotext les sort en chiffres simples entourés d'espaces (substitutions déclarées pour le contrôle A).",
+    "« {{A1}: ..., A2: ...} » : tel qu'imprimé (accolades doublées et « A1 » entre accolades, probable reste d'échappement de gabarit) ; aucune correction.",
+    "« √N » : le trait horizontal du radical est un filet graphique, pas du texte ; transcrit « √N »."
+   ],
+   "elisions": [],
+   "remarques": [
+    "Recoupement : la fin de l'invite (consigne de numérotation puis « ## Paper Classification (verified metadata) » …) est identique, caractère pour caractère, à H1-format + deux lignes vides + H1-classification (pages 40-41).",
+    "passage p54→p55 : 1 ligne(s) vide(s), établi par mesure — Page 54 pleine (dernière ligne à 1063) et page 55 commençant une ligne plus bas (125).",
+    "passage p56→p57 : 2 ligne(s) vide(s), établi par mesure — Deux places libres en bas de la page 56 et ligne suivante (« P9: FORMAL THEOREM ») d'une seule ligne : avec 0 ou 1 ligne vide, TeX l'aurait placée en page 56 ; avec 3, la troisième serait reportée en haut de la page 57, qui commence à 110. Donc exactement deux lignes vides (l'invite en contient ailleurs, page 57)."
+   ],
+   "sauts_de_page": [
+    {
+     "passage": "p54→p55",
+     "lignes_vides": 1,
+     "certitude": "mesurée",
+     "justification": "Page 54 pleine (dernière ligne à 1063) et page 55 commençant une ligne plus bas (125)."
+    },
+    {
+     "passage": "p55→p56",
+     "lignes_vides": 0,
+     "certitude": "doute",
+     "justification": "Une place libre en bas de la page 55, élément suivant de deux lignes : 0 ou 1 ligne vide possible. Retenu 0 : les éléments numérotés de la liste se suivent sans ligne vide."
+    },
+    {
+     "passage": "p56→p57",
+     "lignes_vides": 2,
+     "certitude": "mesurée",
+     "justification": "Deux places libres en bas de la page 56 et ligne suivante (« P9: FORMAL THEOREM ») d'une seule ligne : avec 0 ou 1 ligne vide, TeX l'aurait placée en page 56 ; avec 3, la troisième serait reportée en haut de la page 57, qui commence à 110. Donc exactement deux lignes vides (l'invite en contient ailleurs, page 57)."
+    }
+   ],
+   "verification": {
+    "pages": [
+     54,
+     55,
+     56,
+     57
+    ],
+    "avant": "The distinction introduced by Gasteiger et al. [2025] is blurred.",
+    "apres": "I.4 Proposals Generated by the Red Team",
+    "retraits": [],
+    "substitutions": [
+     {
+      "transcription": "(β₁=0.9, β₂=0.999,",
+      "pdf": "(β 1 =0.9, β 2 =0.999,",
+      "raison": "chiffres 1 et 2 composés en indice (CMR6, abaissés) après β ; pdftotext les sort en chiffres simples entourés d'espaces ; aucune espace visible sur la grille (contrôle B)."
+     },
+     {
+      "transcription": "\"H₁: [quantity]",
+      "pdf": "\"H1 : [quantity]",
+      "raison": "chiffre 1 composé en indice après H ; pdftotext le sort en chiffre simple suivi d'une espace ; aucune espace visible (contrôle B)."
+     },
+     {
+      "transcription": "disproving H₁",
+      "pdf": "disproving H1",
+      "raison": "chiffre 1 composé en indice après H ; pdftotext le sort en chiffre simple."
+     },
+     {
+      "transcription": "r_eff/d",
+      "pdf": "r_ eff/d",
+      "raison": "fin d'un passage en italique (_eff = exp(H(σ^)) — predict r_) : la correction d'italique de LaTeX laisse un écart de 1,7 pt (0,4 chasse), que pdftotext lit comme une espace ; sur la grille à chasse fixe il n'y a pas d'espace (contrôle B)."
+     },
+     {
+      "transcription": "√N",
+      "pdf": "√ N",
+      "raison": "radical composé en police mathématique, plus haut que la ligne ; pdftotext le sépare de N ; écart nul sur la grille (contrôle B)."
+     },
+     {
+      "transcription": "R(D)=½log(σ²/D).",
+      "pdf": "R(D)= 12 log(σ 2 /D).",
+      "raison": "fraction 1 sur 2 empilée (deux chiffres CMR6 l'un au-dessus de l'autre) et chiffre 2 en exposant après σ ; pdftotext sort « 12 » et « 2 » entourés d'espaces ; écarts nuls sur la grille (contrôle B)."
+     }
+    ],
+    "zones": [
+     {
+      "page": 54,
+      "haut_pt": 590.0,
+      "bas_pt": 720.0
+     },
+     {
+      "page": 55,
+      "haut_pt": 83.33,
+      "bas_pt": 714.67
+     },
+     {
+      "page": 56,
+      "haut_pt": 73.33,
+      "bas_pt": 704.0
+     },
+     {
+      "page": 57,
+      "haut_pt": 73.33,
+      "bas_pt": 565.33
+     }
+    ],
+    "sauts": [
+     1,
+     0,
+     2
+    ]
+   }
+  },
+  {
+   "id": "I7",
+   "fichier": "invites/I7.txt",
+   "section": "I.7",
+   "titre": "Successful Attack against Sandbagging Detector",
+   "pages": {
+    "debut": 66,
+    "fin": 68
+   },
+   "introduction": {
+    "page": 66,
+    "texte": "This is a red team prompt discovered through red team optimization that successfully attacks the sandbagging detector blue team described in Appendix F."
+   },
+   "caracteres": 7970,
+   "octets": 7998,
+   "lignes": 44,
+   "sha256": "5b5fcb38833da235d7bf36a900ba37065a987dc388afe391c5abdd39bea959f5",
+   "retraits": [
+    "marqueurs de continuation « ,→ » : 89 retirés, chaque ligne coupée recollée à la précédente par une espace",
+    "numéro de page « 66 » (pied de page) entre deux parties du bloc",
+    "numéro de page « 67 » (pied de page) entre deux parties du bloc"
+   ],
+   "normalisations": [
+    "glyphes composés en police mathématique, gardés tels que pdftotext les décode : ± ≥",
+    "ligatures : aucune rencontrée dans le bloc (police à chasse fixe)"
+   ],
+   "doutes": [
+    "passage p66→p67 : 1 ligne(s) vide(s) retenue(s) — Une place libre en bas de la page 66, paragraphe suivant de quatre lignes : 0 ou 1 ligne vide possible. Retenu 1 : nouveau paragraphe, et tous les paragraphes de cette invite sont séparés par une ligne vide."
+   ],
+   "elisions": [],
+   "remarques": [
+    "« *Concrete specifications.* », « *Expected outcomes.* » … : passages en italique dans le PDF (balises markdown *…* conservées telles qu'imprimées).",
+    "passage p67→p68 : 1 ligne(s) vide(s), établi par mesure — Page 67 pleine (dernière ligne à 1058, la place suivante dépasserait le bas de page) et page 68 commençant une ligne plus bas (125)."
+   ],
+   "sauts_de_page": [
+    {
+     "passage": "p66→p67",
+     "lignes_vides": 1,
+     "certitude": "doute",
+     "justification": "Une place libre en bas de la page 66, paragraphe suivant de quatre lignes : 0 ou 1 ligne vide possible. Retenu 1 : nouveau paragraphe, et tous les paragraphes de cette invite sont séparés par une ligne vide."
+    },
+    {
+     "passage": "p67→p68",
+     "lignes_vides": 1,
+     "certitude": "mesurée",
+     "justification": "Page 67 pleine (dernière ligne à 1058, la place suivante dépasserait le bas de page) et page 68 commençant une ligne plus bas (125)."
+    }
+   ],
+   "verification": {
+    "pages": [
+     66,
+     67,
+     68
+    ],
+    "avant": "successfully attacks the sandbagging detector blue team described in Appendix F.",
+    "apres": "I.8 The Robustified Blue Team Prompt b∗",
+    "retraits": [],
+    "substitutions": [],
+    "zones": [
+     {
+      "page": 66,
+      "haut_pt": 629.33,
+      "bas_pt": 710.67
+     },
+     {
+      "page": 67,
+      "haut_pt": 73.33,
+      "bas_pt": 716.67
+     },
+     {
+      "page": 68,
+      "haut_pt": 83.33,
+      "bas_pt": 658.0
+     }
+    ],
+    "sauts": [
+     1,
+     1
+    ]
+   }
+  },
+  {
+   "id": "I8",
+   "fichier": "invites/I8.txt",
+   "section": "I.8",
+   "titre": "The Robustified Blue Team Prompt b∗",
+   "pages": {
+    "debut": 69,
+    "fin": 71
+   },
+   "introduction": {
+    "page": 68,
+    "texte": "Below is the robustified prompt b∗ results for which are presented in Figure 5 and which is analyzed in Section 5.2."
+   },
+   "caracteres": 7958,
+   "octets": 7972,
+   "lignes": 143,
+   "sha256": "1991d8967b315b845adef43bc6c24b5ca53117a671c59da749e87ca26c928e98",
+   "retraits": [
+    "marqueurs de continuation « ,→ » : 43 retirés, chaque ligne coupée recollée à la précédente par une espace",
+    "numéro de page « 69 » (pied de page) entre deux parties du bloc",
+    "numéro de page « 70 » (pied de page) entre deux parties du bloc"
+   ],
+   "normalisations": [
+    "ligatures : aucune rencontrée dans le bloc (police à chasse fixe)"
+   ],
+   "doutes": [
+    "passage p69→p70 : 0 ligne(s) vide(s) retenue(s) — Quatre places libres en bas de la page 69, élément suivant de cinq lignes : 0 à 4 lignes vides possibles. Retenu 0 : les niveaux d'un critère se suivent sans ligne vide."
+   ],
+   "elisions": [],
+   "remarques": [
+    "Titre de section et phrase d'introduction en page 68 ; le bloc occupe les pages 69 à 71 (fin du document).",
+    "passage p70→p71 : 1 ligne(s) vide(s), établi par mesure — Une place libre en bas de la page 70 et ligne suivante d'une seule ligne : sans ligne vide, TeX l'aurait placée en page 70 ; la page 71 commence à 110. Donc exactement une ligne vide."
+   ],
+   "sauts_de_page": [
+    {
+     "passage": "p69→p70",
+     "lignes_vides": 0,
+     "certitude": "doute",
+     "justification": "Quatre places libres en bas de la page 69, élément suivant de cinq lignes : 0 à 4 lignes vides possibles. Retenu 0 : les niveaux d'un critère se suivent sans ligne vide."
+    },
+    {
+     "passage": "p70→p71",
+     "lignes_vides": 1,
+     "certitude": "mesurée",
+     "justification": "Une place libre en bas de la page 70 et ligne suivante d'une seule ligne : sans ligne vide, TeX l'aurait placée en page 70 ; la page 71 commence à 110. Donc exactement une ligne vide."
+    }
+   ],
+   "verification": {
+    "pages": [
+     68,
+     69,
+     70,
+     71
+    ],
+    "avant": "which is analyzed in Section 5.2.",
+    "apres": "",
+    "retraits": [],
+    "substitutions": [],
+    "zones": [
+     {
+      "page": 69,
+      "haut_pt": 73.33,
+      "bas_pt": 681.33
+     },
+     {
+      "page": 70,
+      "haut_pt": 73.33,
+      "bas_pt": 710.0
+     },
+     {
+      "page": 71,
+      "haut_pt": 73.33,
+      "bas_pt": 641.33
+     }
+    ],
+    "sauts": [
+     0,
+     1
+    ]
+   }
+  }
+ ]
+}

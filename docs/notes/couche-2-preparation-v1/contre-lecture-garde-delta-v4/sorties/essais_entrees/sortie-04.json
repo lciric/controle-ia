@@ -1,0 +1,185 @@
+{
+ "version": "simulation-puissance-garde-delta-v4",
+ "statut": "exploratoire, non préenregistré, non opposable",
+ "script_sha256": "5bf015b6df7ab8c813c26b95f11f478ff173e63c44b0862a4a3d6c32bf7b9b9a",
+ "commit": null,
+ "etat_du_script": "hors dépôt git",
+ "reglages": {
+  "ecarts": "g1.json",
+  "ecarts_contraste": "r1.json",
+  "effectif_attendu": 5,
+  "repetitions": 100,
+  "graine": 20261029,
+  "tailles": "5",
+  "tailles_garde": null,
+  "deltas": "0.05",
+  "m": "1",
+  "alpha": 0.05,
+  "K": "3",
+  "K_sabotes": null,
+  "taux": "0.01",
+  "biais": "0",
+  "comparateurs": "1",
+  "comparateurs_independants": false,
+  "effet_unite_a": 0.0,
+  "ecart_contraste": 0.1,
+  "contraste_synthetique_de_secours": true,
+  "sans_n80": true,
+  "seuils": [
+   20.0
+  ],
+  "lambdas": [
+   0.1,
+   0.3,
+   0.6,
+   0.9
+  ],
+  "lecture_des_seuils": "m/α_c : borne basse de la lecture e-BH ; 20 (m = 1) : borne haute, lâche (GD2-03)"
+ },
+ "taille_minimale_ecarts_nuls": {
+  "delta=0.05|seuil=20.0": 93
+ },
+ "lois": {
+  "reelle_recentree": {
+   "biais_essayes": [
+    0.0
+   ],
+   "artefacts": true
+  },
+  "reelle_brute": {
+   "biais_essayes": [
+    0.0
+   ],
+   "artefacts": false
+  },
+  "binomiale_Kh3_Ks3_taux0.01": {
+   "biais_essayes": [
+    0.0
+   ],
+   "artefacts": true
+  }
+ },
+ "cellules": {
+  "reelle_recentree|delta=0.05|n=5|n_garde=5|biais=0.0|k=1": {
+   "etiquette": "reelle_recentree|delta=0.05|n=5|n_garde=5|biais=0.0|k=1",
+   "graine_derivee": 594358983460868622,
+   "20.0": {
+    "garde_seule": {
+     "part": 0.0,
+     "unites_mediane_si_atteint": null
+    },
+    "k_gardes": {
+     "part": 0.0,
+     "unites_mediane_si_atteint": null
+    },
+    "k_contrastes": {
+     "part": 0.0,
+     "unites_mediane_si_atteint": null
+    },
+    "fiche_entiere": {
+     "part": 0.0,
+     "unites_mediane_si_atteint": null
+    },
+    "frontiere_part": 0.0,
+    "frontiere_borne_ville": 0.05,
+    "tricheur_part": 0.0
+   }
+  },
+  "reelle_brute|delta=0.05|n=5|n_garde=5|biais=0.0|k=1": {
+   "etiquette": "reelle_brute|delta=0.05|n=5|n_garde=5|biais=0.0|k=1",
+   "graine_derivee": 3481067942785548701,
+   "20.0": {
+    "garde_seule": {
+     "part": 0.0,
+     "unites_mediane_si_atteint": null
+    },
+    "k_gardes": {
+     "part": 0.0,
+     "unites_mediane_si_atteint": null
+    },
+    "k_contrastes": {
+     "part": 0.0,
+     "unites_mediane_si_atteint": null
+    },
+    "fiche_entiere": {
+     "part": 0.0,
+     "unites_mediane_si_atteint": null
+    }
+   }
+  },
+  "binomiale_Kh3_Ks3_taux0.01|delta=0.05|n=5|n_garde=5|biais=0.0|k=1": {
+   "etiquette": "binomiale_Kh3_Ks3_taux0.01|delta=0.05|n=5|n_garde=5|biais=0.0|k=1",
+   "graine_derivee": 9266506213242118298,
+   "20.0": {
+    "garde_seule": {
+     "part": 0.0,
+     "unites_mediane_si_atteint": null
+    },
+    "k_gardes": {
+     "part": 0.0,
+     "unites_mediane_si_atteint": null
+    },
+    "k_contrastes": {
+     "part": 0.0,
+     "unites_mediane_si_atteint": null
+    },
+    "fiche_entiere": {
+     "part": 0.0,
+     "unites_mediane_si_atteint": null
+    },
+    "frontiere_part": 0.0,
+    "frontiere_borne_ville": 0.05,
+    "tricheur_part": 0.0
+   }
+  }
+ },
+ "fichiers_observes": [
+  {
+   "chemin": "g1.json",
+   "sha256": "e79041d85a97774403433fa1cd1ef26b41366c902ad03d3a233949f01a4e9cf1",
+   "role": "garde",
+   "comparateur": 1,
+   "forme": "fA-fB",
+   "unites_identifiees": false,
+   "n_observes": 5,
+   "moyenne_brute": 0.04,
+   "ecart_type": 0.1140175425099138,
+   "quantiles_0_25_50_75_100": [
+    -0.1,
+    0.0,
+    0.0,
+    0.1,
+    0.2
+   ],
+   "part_nuls": 0.4
+  },
+  {
+   "chemin": "r1.json",
+   "sha256": "ebaa7443f3e7411427306e36857088da5abba52ca4f8ae25b2ce84dc9c31e512",
+   "role": "contraste",
+   "comparateur": 1,
+   "forme": "rA-rB",
+   "unites_identifiees": false,
+   "n_observes": 5,
+   "moyenne_brute": 0.09999999999999999,
+   "ecart_type": 0.07071067811865477,
+   "quantiles_0_25_50_75_100": [
+    0.0,
+    0.09999999999999998,
+    0.09999999999999998,
+    0.09999999999999998,
+    0.2
+   ],
+   "part_nuls": 0.2
+  }
+ ],
+ "unites": {
+  "identifiees": false,
+  "regle": "un seul ensemble d'unités, même ordre dans tous les fichiers (provisoire ; les deux ensembles du pôle, honnêtes et sabotés, restent à faire : GD3-02)"
+ },
+ "environnement": {
+  "python": "3.13.17",
+  "numpy": "2.5.3",
+  "duree_s": 0.0
+ }
+}

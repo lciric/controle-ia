@@ -1,0 +1,62 @@
+[
+ {
+  "ancien": "**« Confondu » par épisode est une issue possible** de l'analyse par épisode (contrôle « mention »),\n  déclarée ici comme issue **conclusive**, rapportée à égalité avec la lecture par action ; ce texte n'en estime pas la\n  probabilité (le signe descriptif de la v3 est connu, V4-E2 : toute probabilité en serait tirée).",
+  "nouveau": "**« Confondu » par épisode est une issue possible** de l'analyse par épisode scellée\n  (`prereg/analyse-par-episode-v1.md`, `26a3ff72e3a39636d3bdb965971fd1b237a04acc133a31a42f9a695d6d5970a4`, ligne\n  « Δ(W − G) borne basse > 0, mention contraire »), lue et rapportée **selon ses critères gelés et sa préséance,\n  inchangés** (« la principale reste la lecture principale » ; classes divergentes : « les deux rapportées ensemble ») ;\n  ce texte n'ajoute, ne retire ni ne hiérarchise aucune lecture, et n'en estime pas la probabilité (le signe descriptif\n  de la v3 est connu, V4-E2 : toute probabilité en serait tirée)."
+ },
+ {
+  "ancien": "| « Confondu » par épisode | Issue **conclusive** de l'analyse par épisode, rapportée à égalité avec la lecture par action |",
+  "nouveau": "| « Confondu » par épisode | Lu selon l'analyse par épisode scellée (`26a3ff72…`), inchangée, préséance comprise (la principale reste la lecture principale) ; aucune lecture ajoutée par ce texte |"
+ },
+ {
+  "ancien": "la seule liberté restante, l'ensemble des épisodes `non_resolu`, est fixée par le résultat scellé de la réparation, que la table cite (`resultat_reparation_sha256`)",
+  "nouveau": "la seule liberté restante, l'ensemble des épisodes `non_resolu`, est fixée par le résultat scellé de la réparation, que la table cite (`resultat_reparation_sha256`) ; **garde de chaîne** (code neuf avant le scellement, cas sain et artefact, R5) : avant toute reconstruction du rejeu, `resultat_reparation_sha256` doit égaler le sceau du résultat de la réparation de la même session (même configuration), les entrées « identifiants » des cibles être exactement ses retrouvées et les entrées `non_resolu` exactement ses non retrouvées, sinon « echec » (artefact : une retrouvée rétrogradée en `non_resolu`) ; **à la réception**, la table est recalculée sur processeur (`construire_table_v4`, même configuration, résultat versé) et doit égaler à l'octet la table versée : son empreinte est la valeur, fixée d'avance, d'une fonction scellée de pièces scellées. Construction et rejeu s'enchaînent dans la session 2 sans lecture ni décision humaine ; une troisième session sous texte neuf ne s'impose que si cet enchaînement est rompu (table construite hors de la session 2)"
+ },
+ {
+  "ancien": "alerte à 45 USD engagés, arrêt à 57 USD engagés (TERM au processus par son PID, poussée, destruction par l'identifiant, R10)",
+  "nouveau": "alerte à 45 USD engagés, destruction à 57 USD engagés **par l'identifiant de l'instance seulement** (R10 ; aucun signal par numéro de processus : aucun accès au conteneur n'est posé ni éprouvé en mode « args », fait constaté du complément scellé `049f20ba…`, « Aucun signal par numéro de processus dans ce texte ») ; tâche de destruction à heure fixe `T0 + H`, `H = (57 USD − dépenses déjà imputées au GO, sessions et reprises comprises − disque estimé) / prix horaire de l'offre − 15 min`, écrite dans `registres/depenses.md` à la création ; **armement, quatre épreuves R5 (destruction : cas sain et artefact ; vérification horaire : cas sain et artefact) et lecture filtrée des journaux : ceux du complément scellé (C-3, C-4, C-5), seuils 45 et 57 USD au lieu de 30 et 39,5 USD, compte `episodes=k/89`**, consignés avant chaque création ; conséquence déclarée : une destruction perd ce qui n'est pas poussé (le script ne pousse qu'à la fin d'une étape)"
+ },
+ {
+  "ancien": "**dépense** : 57 USD engagés sous le GO (arrêt par PID puis par identifiant).",
+  "nouveau": "**dépense** : 57 USD engagés sous le GO (destruction par l'identifiant, V4-E12)."
+ },
+ {
+  "ancien": "branche `-v2` ; même texte, même GO s'il est valide ;",
+  "nouveau": "branche `-v2` ; même texte, même GO s'il est valide, sous la garde de dépense cumulée (`H` recalculé, V4-E12) ;"
+ },
+ {
+  "ancien": "## Essais (processeur, sans dépense, sans téléchargement)",
+  "nouveau": "**Surveillance** (remplace celle de la v3, dont les valeurs ne valent pas ici ; lecture filtrée de V4-E12) : valeurs\nattendues au journal, session 1 : « AMORCE … plafond de l'amorce 180 min », « DELAI_ETAPE_MIN=120 », « tests : 358\npassed », lignes `etape=temoin` des lots 2 et 13, `etape=fin` ; session 2 : « plafond de l'amorce 2200 min »,\n« DELAI_ETAPE_MIN=2100 », « tests : 358 passed », `etape=reparation … cibles=89 lots=28`, `episodes=k/89`, « table v4 :\nprereg/R1-table-tokenisation-v4.json (<empreinte>) », puis les jalons du rejeu de la v3, table de version 4. Une autre\nvaleur de plafond ou de délai lue au journal fait détruire l'instance par son identifiant (R10), sans lecture.\n\n## Essais (processeur, sans dépense, sans téléchargement)"
+ },
+ {
+  "ancien": "**Étape 1 — conditions du lancement**, dans l'ordre : contre-lecture neuve (R2) traitée ;",
+  "nouveau": "**Étape 1 — conditions du lancement**, dans l'ordre : contre-lecture neuve (R2) traitée ; **avant le scellement** :\npré-vol de l'étape 0 écrit et versé (script et sortie empreintés), suite des 23 fichiers rejouée au commit cité avec le\ntokeniseur de la révision de P3 (« 358 passed », aucun sauté), banc de mutations rejoué en entier au commit cité,\nrépétition jouet de bout en bout des deux sessions (amorce et script ; cas sain de la session 2 jusqu'au rejeu ;\nartefacts de l'amorce : `PLAFOND_AMORCE_MIN` hors bornes, `SESSION` inconnue, seconde exécution ; témoin arrêté ou de\nsceau faux), garde de chaîne de V4-E5 éprouvée (sain, artefact) ;"
+ },
+ {
+  "ancien": "intermédiaire) ; comptes de la table v4 ; non retrouvés v4.",
+  "nouveau": "intermédiaire) ; par lot réparé, accord des lignes connues forcées et captures, **séparés avant et après la première\naction en échec d'une cible** (épreuve sur la carte de l'indépendance des lignes, mesure à ajouter au code avant le\nscellement) ; comptes de la table v4 ; non retrouvés v4."
+ },
+ {
+  "ancien": "| Résultat suspect de propreté, dans un sens ou l'autre | Même audit (R4) |",
+  "nouveau": "| Indépendance des lignes contredite sur la carte (dans un lot réparé, une ligne connue perd l'accord ou une capture diffère après le premier échec d'une cible, non avant) | Réserve d'instrument sur cette hypothèse, rapportée par lot ; aucune entrée de table ni aucune classe ne change (l'empreinte de P3 reste le seul arbitre) ; le repli écrit continue ; aucune course de plus sous ce texte |\n| Lecture « exact » du témoin contredite pendant la réparation (ligne connue en désaccord dans un lot sans cible en échec) | Même réserve, sur la lecture du témoin ; la voie écrite d'avance ne change pas en cours de route |\n| Résultat suspect de propreté, dans un sens ou l'autre | Même audit (R4) |"
+ },
+ {
+  "ancien": "accord = 1 exactement sur ≈ 16 900 pas mesurés",
+  "nouveau": "accord = 1 exactement sur tous les pas mesurés des deux lots (≈ 16 900 pour le lot 2, diagnostic § 5.2 ; égalités de\n  jetons, non de logits : seules les 8 captures du lot 2 sont des égalités au bit, « exact » est une lecture de route,\n  non une preuve au bit du calcul en lot)"
+ },
+ {
+  "ancien": "Complément de validation (texte scellé au commit `4b47db7b`, **non lisible sur la machine de rédaction** ; lu : son brouillon 2, `41d5350e…`)",
+  "nouveau": "Complément de validation (texte scellé au commit `4b47db7b`, `049f20ba98da75539220bd4a520dd03a3df8c16a81193cc6a4e1a650783f62ca`, configuration `prereg/R1-graine-config-complement-v2.json` `1b6f943c7fcd84f4486ab1961efbf4496392a27d61304a36e1ce50e590d545dd` ; rédigé sur son brouillon 2, `41d5350e…` ; C1 et C2 recoupés avec le texte scellé par la contre-lecture R2 : concordants)"
+ },
+ {
+  "ancien": "configuration `R1-reparation-v4-config-v1.json` (celle du complément, brouillon 2, plus les clés v4 :",
+  "nouveau": "configuration `R1-reparation-v4-config-v1.json` (celle du complément scellé, `1b6f943c…`, sauf `episodes_resolution` vidée et `episodes_resolution_lot` retirée, sans objet ici, plus les clés v4 :"
+ },
+ {
+  "ancien": "P-R5 contraire : réserve d'instrument (v3, E7),\n  sans changer aucune classe.",
+  "nouveau": "P-R5 contraire : réserve d'instrument (v3, E7),\n  sans changer aucune classe ; lue sur `tokenisation.part_fideles_parmi_notees` contre 0,97 ; la clé\n  `p_r5_au_moins_90_pour_cent` garde son sens de la v3 (90 %, garde « plus de 10 % d'actions non fidèles » de l'analyse\n  secondaire, inchangée)."
+ },
+ {
+  "ancien": "sur l'option « réparer la donnée, pas la règle",
+  "nouveau": "sur l'option (a) de conv-audit (n° 404, `4a525a52…`, ligne de GO-2026-11-03-03), résumée par la consigne du développeur (`059a564f…`) : « réparer la donnée, pas la règle"
+ }
+]

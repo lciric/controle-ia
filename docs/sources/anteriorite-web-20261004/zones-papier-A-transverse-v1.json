@@ -1,0 +1,1085 @@
+{
+ "avertissement": "budget de recherche web de la session épuisé en cours de route : les sorties marquées « indeterminee » ou « non_verifiable_sans_pdf » n'ont pas été recherchées",
+ "date_utc": "2026-10-04",
+ "provenance": "transcription (recherche web, résumés du moteur) — NON opposable (R7)",
+ "resultats": [
+  {
+   "candidats": [
+    {
+     "absent_etat_de_l_art": false,
+     "auteurs": "Zhang Qinqin, Gao Yuze",
+     "ce_que_ca_fait": "Construit une attaque de sabotage distribué par copule gaussienne AR(1) qui garde la marginale par pas du score de moniteur exactement égale à la marginale bénigne et encode le dommage dans la corrélation temporelle. Il oppose le Moniteur A (moyenne, max, top-k, seuil ; « provably blind by construction », AUC ≈ 0,52 à 1 % de FPR) au Moniteur B (CUSUM, SPRT, HMM-LR, test des runs, autocorrélation, logistique fenêtrée ; AUC 0,79 à 0,97, puissance jusqu'à 0,688 pour le SPRT). Il décrit une frontière de détectabilité selon la force de coordination. Il comprend un volet sur traces réelles agent/moniteur (φ bénin ≈ 0,06 ; autocorrélation sur un épisode : AUC 0,59 ; l'accumulation de 100 à 1600 pas fait passer l'AUC de 0,62 à 0,86). Quand le dommage est amorti sur plus de pas, A s'effondre au hasard et B se maintient vers 0,95.",
+     "ce_qui_reste": "Rien de vérifié sur : les activations internes (sondes) ; l'axe agents ou co-élévation ; l'indexation unifiée temps × agents ; un e-processus toujours valide ; l'invariance formelle au budget total B. Statut exact de la « preuve » (proposition formelle ou argument par construction) : incertain, PDF non lu.",
+     "date": "2026-06-09",
+     "id": "2606.10456",
+     "lieu": "arXiv (révision v2 du 2026-06-13) ; code github.com/Gyyz/distributed_sabotage_frontier",
+     "niveau": "occupe",
+     "preuve": "resume_moteur",
+     "recouvrement": "Il fait la moitié « temps » de la revendication en boîte noire : le théorème négatif (statistiques de marginales aveugles par construction) et la nécessité d'un agrégateur de corrélation temporelle, avec validation synthétique et traces réelles. Contrairement à l'état de l'art du 14/09, il n'est pas purement synthétique. Le résultat sur l'amortissement recouvre en partie l'idée d'invariance au budget.",
+     "titre": "The Distributed Detectability Band Against Marginal-Preserving Attacks",
+     "urls": [
+      "https://arxiv.org/abs/2606.10456",
+      "https://arxiv.org/html/2606.10456",
+      "https://arxiv.org/pdf/2606.10456"
+     ]
+    },
+    {
+     "absent_etat_de_l_art": true,
+     "auteurs": "Yibo Hu, Ren Wang",
+     "ce_que_ca_fait": "Formalise une « observability boundary » : un moniteur ne détecte que ce que sa vue distingue du trafic bénin. Une porte dérobée distribuée répartit la charge entre agents de sorte que chaque contrôle local passe, et le signal ne revient que si le moniteur voit l'objet assemblé. Validation sur banc contrôlé, sur un benchmark externe et sur des exécutions de bout en bout.",
+     "ce_qui_reste": "Le remède proposé est la vue jointe sur l'objet assemblé, pas un agrégateur statistique de co-élévation. Pas de marginale de score préservée au sens copule, pas d'axe temps unifié, pas de sondes internes (d'après le résumé). Une seule requête l'a ramené, donc corroboration faible.",
+     "id": "2607.11751",
+     "lieu": "arXiv",
+     "niveau": "partiel",
+     "preuve": "resume_moteur",
+     "recouvrement": "Analogue conceptuel du théorème négatif dans l'axe agents : la vue locale, c'est-à-dire la marginale, est indiscernable du bénin, donc le moniteur local n'a aucune puissance.",
+     "titre": "When Local Monitors Miss Compositional Harm: Diagnosing Distributed Backdoors in Multi-Agent Systems",
+     "urls": [
+      "https://arxiv.org/abs/2607.11751",
+      "https://arxiv.org/html/2607.11751",
+      "https://pith.science/paper/2607.11751"
+     ]
+    },
+    {
+     "absent_etat_de_l_art": true,
+     "auteurs": "incertain (travail « led by @aaronrose227 » selon un tweet de Christian Schroeder de Witt ; dépôt aaronrose227/narcbench)",
+     "ce_que_ca_fait": "Benchmark NARCBench avec cinq techniques de sondage linéaire qui agrègent des scores de tromperie par agent au niveau du groupe : Peak Suspicion, Deception Split, Asymmetry Probe, Sorted Concatenation, et Activation Alignment (similarité cosinus des activations entre agents, donc détection relationnelle). AUROC de 1,00 en distribution, de 0,60 à 0,86 en transfert zéro-shot, y compris vers une tâche stéganographique. Aucune technique ne domine.",
+     "ce_qui_reste": "Pas de théorème à marginales préservées, pas de nécessité démontrée (« aucune technique ne domine »), pas de séquentiel ni d'e-processus, pas d'axe temps unifié. Ce sont des agents qui interagissent, pas un sabotage diffus. Déjà dans les pistes, mais absent de l'état de l'art déclaré.",
+     "id": "2604.01151",
+     "lieu": "arXiv ; billet LessWrong ; Oxford (eng.ox.ac.uk)",
+     "niveau": "adjacent",
+     "preuve": "resume_moteur",
+     "recouvrement": "Il existe déjà des agrégateurs inter-agents sur activations, y compris relationnels ou de corrélation, ce qui touche le « co-élévation boîte blanche » des papiers A-T et B.",
+     "titre": "Detecting Multi-Agent Collusion Through Multi-Agent Interpretability",
+     "urls": [
+      "https://huggingface.co/papers/2604.01151",
+      "https://www.alphaxiv.org/abs/2604.01151",
+      "https://www.lesswrong.com/posts/Q65SETuTmhF4LWdix/detecting-collusion-through-multi-agent-interpretability-3",
+      "https://eng.ox.ac.uk/news/how-can-we-tell-when-ai-agents-are-secretly-colluding"
+     ]
+    },
+    {
+     "absent_etat_de_l_art": true,
+     "auteurs": "Mohamed Chahine Ghanem (Keele University) ; « Ghanem & Keele » dans les pistes est une erreur d'attribution, Keele est l'université",
+     "ce_que_ca_fait": "Méta-détecteur boîte noire, entre mandants, indépendant de l'encodage. Il fusionne l'information mutuelle inter-exécutions, des tests d'invariance par permutation, des statistiques de décalage de distribution et des canaux auxiliaires temporels ou d'appels d'outils, calibrés sur un budget de faux positifs, avec une borne de détectabilité tirée de la théorie de la capacité et un adversaire co-évolutif. Agents individuellement bien élevés.",
+     "ce_qui_reste": "Boîte noire seulement, pas d'activations, pas d'axe temps unifié, pas de théorème « marginales aveugles » vu. Un résumé signale des « placeholder results pending measurement » : non corroboré, incertain.",
+     "id": "2608.02698",
+     "lieu": "arXiv",
+     "niveau": "adjacent",
+     "preuve": "resume_moteur",
+     "recouvrement": "Détection de dépendance inter-agents quand chaque agent paraît normal : version boîte noire de l'idée d'agrégateur de dépendance dans l'axe agents, avec une borne théorique.",
+     "titre": "Steganalysis of Adaptive Covert Collusion in Tool-Using Agent Populations: A Black-Box, Cross-Principal Approach",
+     "urls": [
+      "https://arxiv.org/abs/2608.02698",
+      "https://arxiv.org/html/2608.02698",
+      "https://arxiv.org/html/2608.02698v1"
+     ]
+    },
+    {
+     "absent_etat_de_l_art": true,
+     "auteurs": "Oliver Makins et 2 autres (noms non vus)",
+     "ce_que_ca_fait": "Formalise les attaques distribuées multi-agents sur FakeLab (9 services, 86 tâches bénignes, 4 objectifs d'attaque). Effet de fragmentation : plus il y a d'agents, moins le moniteur par agent attrape. Un planificateur explicite amplifie l'effet. Un moniteur joint qui lit tous les commits rattrape l'attaque.",
+     "ce_qui_reste": "Pas de construction à marginale préservée, pas de théorème, pas d'agrégateur statistique de co-élévation, pas de sondes internes.",
+     "id": "2607.07368",
+     "lieu": "arXiv (soumis à NeurIPS selon le résumé)",
+     "niveau": "adjacent",
+     "preuve": "resume_moteur",
+     "recouvrement": "Démonstration empirique, en boîte noire avec moniteurs LLM, que la preuve par instance s'effondre quand l'attaque se fragmente entre agents. C'est le constat qui motive l'axe agents.",
+     "titre": "Multi-Agent AI Control: Distributed Attacks Hamper Per-Instance Monitors",
+     "urls": [
+      "https://arxiv.org/abs/2607.07368",
+      "https://arxiv.org/html/2607.07368v1"
+     ]
+    },
+    {
+     "absent_etat_de_l_art": true,
+     "auteurs": "J Alex Corll",
+     "ce_que_ca_fait": "Accumulateur temporel côté proxy (pic et persistance CUSUM sur des scores par événement figés) contre des injections distribuées sous le seuil. Thèse falsifiable : « temporal accumulation amplifies a weak margin; it cannot create one ». AUC de 0,708 sur l'exfiltration git, 0,167 sur des actions plus larges.",
+     "ce_qui_reste": "Pas de corrélation encodée, pas d'agrégateur de dépendance, pas d'axe agents, pas d'activations.",
+     "date": "2026-06-17",
+     "id": "2606.20746",
+     "lieu": "arXiv cs.CR",
+     "niveau": "adjacent",
+     "preuve": "resume_moteur",
+     "recouvrement": "Énonce empiriquement le pendant du théorème pour la somme cumulée : sans marge par événement, l'accumulation de marginales ne crée pas de puissance.",
+     "titre": "Amplify, Don't Create: Temporal Accumulation for Slow-Burn Prompt Injection",
+     "urls": [
+      "https://arxiv.org/abs/2606.20746",
+      "https://arxiv.org/html/2606.20746v1"
+     ]
+    },
+    {
+     "absent_etat_de_l_art": true,
+     "auteurs": "Josh Hills, Ida Caspary, Asa Cooper Stickland",
+     "ce_que_ca_fait": "Cadre Iterative VibeCoding : attaques réparties sur plusieurs PR dans une base de code persistante, avec un timing choisi pour la meilleure couverture. Évasion ≥ 65 % selon les attaquants. Un ensemble de quatre moniteurs avec suivi de liens à état fait passer l'évasion de 93 % à 47 %.",
+     "ce_qui_reste": "Pas de marginale préservée, pas de théorème, pas d'agrégateur de corrélation, pas de sondes.",
+     "date": "2026-07-02",
+     "id": "2607.02514",
+     "lieu": "arXiv (v2 du 2026-07-08)",
+     "niveau": "adjacent",
+     "preuve": "resume_moteur",
+     "recouvrement": "Fragmentation temporelle et échec des moniteurs par action, en boîte noire.",
+     "titre": "Distributed Attacks in Persistent-State AI Control",
+     "urls": [
+      "https://arxiv.org/abs/2607.02514",
+      "https://arxiv.org/html/2607.02514v2"
+     ]
+    },
+    {
+     "absent_etat_de_l_art": true,
+     "auteurs": "Davis Brown, Samarth Bhargav, Arav Santhanam, Kasper Hong, Ivan Zhang, Matan Shtepel, Steffi Chern, Alexander Robey, Eric Wong, Hamed Hassani",
+     "ce_que_ca_fait": "Attaque répartie entre sous-agents et comptes. Moniteur en ligne à état qui récupère des preuves inter-utilisateurs et inter-contextes : rappel de campagne +6 à +10 points, temps de détection au 99e centile de 37,2 à 25,4 pas.",
+     "ce_qui_reste": "Agrégation par récupération sémantique, pas statistique de dépendance. Pas de théorème, pas d'activations.",
+     "id": "2605.31593",
+     "lieu": "arXiv cs.CR/cs.AI",
+     "niveau": "adjacent",
+     "preuve": "resume_moteur",
+     "recouvrement": "Agrégation inter-agents et inter-contextes en ligne contre une attaque décomposée.",
+     "titre": "Stateful Online Monitoring Catches Distributed Agent Attacks",
+     "urls": [
+      "https://arxiv.org/abs/2605.31593",
+      "https://arxiv.org/html/2605.31593"
+     ]
+    },
+    {
+     "absent_etat_de_l_art": true,
+     "auteurs": "Diego Fernandez Arias, Dev Prashant Mistry, Ren Wang, Yibo Hu",
+     "ce_que_ca_fait": "Fragments chiffrés répartis entre agents puis réassemblés. Un détecteur de préfixe signale 99,3 % des attaques réussies avec 10,3 % de faux positifs.",
+     "ce_qui_reste": "Pas de théorème marginal, pas d'agrégateur de dépendance, pas de sondes.",
+     "id": "2607.24893",
+     "lieu": "arXiv",
+     "niveau": "adjacent",
+     "preuve": "resume_moteur",
+     "recouvrement": "Suite de 2607.11751 : détection précoce d'une charge distribuée entre agents.",
+     "titre": "Early Detection of Distributed Backdoors in Multi-Agent LLM Systems: A Characterization Study",
+     "urls": [
+      "https://arxiv.org/abs/2607.24893"
+     ]
+    },
+    {
+     "absent_etat_de_l_art": true,
+     "auteurs": "Adam Stein, Davis Brown, Hamed Hassani, Mayur Naik, Eric Wong",
+     "ce_que_ca_fait": "Meerkat : regroupement et recherche agentique sur de grands ensembles de traces pour trouver des violations visibles seulement en analysant plusieurs traces ensemble.",
+     "ce_qui_reste": "Rien de statistique sur les marginales ou la dépendance, pas d'activations.",
+     "date": "2026-04-13",
+     "id": "2604.11806",
+     "lieu": "arXiv",
+     "niveau": "adjacent",
+     "preuve": "resume_moteur",
+     "recouvrement": "Une preuve qui n'apparaît qu'au niveau multi-traces.",
+     "titre": "Detecting Safety Violations Across Many Agent Traces",
+     "urls": [
+      "https://arxiv.org/abs/2604.11806"
+     ]
+    },
+    {
+     "absent_etat_de_l_art": true,
+     "auteurs": "Gregory N Frank",
+     "ce_que_ca_fait": "Position fondée sur des incidents. L'unité de défense doit être l'« épisode de coordination » qui relie les exécutions, avec un problème de découverte prospective d'épisodes. Il affirme ne proposer aucun nouveau détecteur.",
+     "ce_qui_reste": "Aucun résultat statistique, pas de théorème.",
+     "date": "2026-09-05",
+     "id": "2609.06140",
+     "lieu": "arXiv cs.CR/cs.LG/cs.MA",
+     "niveau": "adjacent",
+     "preuve": "resume_moteur",
+     "recouvrement": "Plaide pour surveiller à travers les exécutions et les agents.",
+     "titre": "Counter-Swarm Doctrine: Containing Coordinated Agent Intrusions",
+     "urls": [
+      "https://arxiv.org/abs/2609.06140"
+     ]
+    },
+    {
+     "absent_etat_de_l_art": true,
+     "auteurs": "Aashiq Muhamed, Virginia Smith",
+     "ce_que_ca_fait": "Benchmark de menaces internes : 150 comptes opérés par IA, 9 services à état, 30 jours, 12 menaces, 40 moniteurs comparés. Le meilleur moniteur rate près de la moitié du dommage.",
+     "ce_qui_reste": "Pas de théorème ni de construction à marginales préservées.",
+     "date": "2026-09-07",
+     "id": "2609.06966",
+     "lieu": "arXiv",
+     "niveau": "adjacent",
+     "preuve": "resume_moteur",
+     "recouvrement": "Banc d'essai multi-comptes et multi-jours utilisable pour l'axe temps × agents.",
+     "titre": "MOLE: Detecting Insider Threats in AI Agents",
+     "urls": [
+      "https://arxiv.org/abs/2609.06966"
+     ]
+    },
+    {
+     "absent_etat_de_l_art": true,
+     "auteurs": "Nikolay Radev, Lennart Haas, Benjamin Arnav, Pablo Bernabeu-Pérez",
+     "ce_que_ca_fait": "Benchmark de sabotage coordonné multi-instances : 17 tâches. Un moniteur de confiance attrape 99 % (Gemini) et 68 % (Codex) des tentatives à FPR ≤ 2 %.",
+     "ce_qui_reste": "Aucun recouvrement du théorème.",
+     "id": "2605.29178",
+     "lieu": "arXiv (ICML 2026 selon le résumé, incertain)",
+     "niveau": "adjacent",
+     "preuve": "resume_moteur",
+     "recouvrement": "Sabotage coordonné multi-agents, en boîte noire.",
+     "titre": "The Best-Laid SCHEMEs: Coordinated Sabotage and Monitoring in Multi-Agent Systems",
+     "urls": [
+      "https://arxiv.org/abs/2605.29178"
+     ]
+    },
+    {
+     "absent_etat_de_l_art": true,
+     "auteurs": "Steven Gianvecchio, Haining Wang (et al. pour RAID 2008)",
+     "ce_que_ca_fait": "Les canaux temporels couverts « model-based » font suivre aux délais inter-paquets le modèle statistique, donc la marginale, du trafic légitime. La détection passe par l'entropie conditionnelle corrigée, qui capte la régularité et la dépendance au-delà de la marginale.",
+     "ce_qui_reste": "Pas de dommage diffus, pas d'IA, pas de multi-agents, pas d'e-processus. Il ne revendique pas le théorème sous forme générale.",
+     "date": "2007",
+     "id": "https://www.eecis.udel.edu/~hnw/paper/tdsc10.pdf",
+     "lieu": "ACM CCS 2007 ; RAID 2008",
+     "niveau": "fond",
+     "preuve": "resume_moteur",
+     "recouvrement": "Même schéma mathématique en sécurité réseau : un adversaire qui reproduit la marginale rend aveugles les tests de forme de distribution, et il faut une statistique de dépendance d'ordre supérieur.",
+     "titre": "An Entropy-Based Approach to Detecting Covert Timing Channels (CCS 2007 / TDSC) ; Model-Based Covert Timing Channels: Automated Modeling and Evasion (RAID 2008)",
+     "urls": [
+      "https://www.eecis.udel.edu/~hnw/paper/tdsc10.pdf",
+      "https://link.springer.com/chapter/10.1007/978-3-540-87403-4_12",
+      "https://www.researchgate.net/publication/221609087_An_Entropy-Based_Approach_to_Detecting_Covert_Timing_Channels"
+     ]
+    },
+    {
+     "absent_etat_de_l_art": true,
+     "auteurs": "Prahlad Fogla, Monirul Sharif, Roberto Perdisci et al. (dont Wenke Lee)",
+     "ce_que_ca_fait": "Les instances d'attaque reproduisent la distribution de fréquence d'octets du trafic normal et échappent ainsi aux détecteurs d'anomalies fondés sur cette marginale. Ils montrent que le mélange optimal est NP-complet.",
+     "ce_qui_reste": "Pas d'encodage du dommage dans la corrélation, pas de détecteur de dépendance proposé (d'après le résumé).",
+     "date": "2006",
+     "id": "https://www.usenix.org/legacy/event/sec06/tech/full_papers/fogla/fogla.pdf",
+     "lieu": "USENIX Security 2006",
+     "niveau": "fond",
+     "preuve": "resume_moteur",
+     "recouvrement": "Antériorité de l'« attaque à marginale préservée » contre des détecteurs de marginales en sécurité.",
+     "titre": "Polymorphic Blending Attacks",
+     "urls": [
+      "https://www.usenix.org/legacy/event/sec06/tech/full_papers/fogla/fogla.pdf"
+     ]
+    },
+    {
+     "absent_etat_de_l_art": true,
+     "auteurs": "Paul J Bonczek, Nicola Bezzo",
+     "ce_que_ca_fait": "Les attaques furtives par injection de fausses données passent le détecteur χ² par pas. Un moniteur des incohérences sérielles (amplitude et signe) de la mesure χ² les détecte.",
+     "ce_qui_reste": "Pas d'IA ni d'agents, pas d'activations, pas de théorème général sur les marginales vu.",
+     "date": "2021",
+     "id": "2104.15097",
+     "lieu": "IEEE ACC 2021",
+     "niveau": "fond",
+     "preuve": "resume_moteur",
+     "recouvrement": "Analogue en systèmes cyber-physiques : le test par pas est aveugle face à une attaque furtive, et la statistique sérielle détecte. Les résumés de la littérature cyber-physique parlent aussi de la violation de la blancheur des innovations (autocorrélation).",
+     "titre": "Detection of Hidden Attacks on Cyber-Physical Systems from Serial Magnitude and Sign Randomness Inconsistencies",
+     "urls": [
+      "https://arxiv.org/abs/2104.15097"
+     ]
+    },
+    {
+     "absent_etat_de_l_art": true,
+     "auteurs": "Bai, Pasqualetti, Gupta",
+     "ce_que_ca_fait": "Furtivité d'une attaque définie par la divergence KL sur la séquence complète, avec un compromis entre détectabilité et dommage.",
+     "ce_qui_reste": "Pas de copule ni d'agents, pas d'IA.",
+     "date": "2017",
+     "id": "1704.00748",
+     "lieu": "Automatica 2017",
+     "niveau": "fond",
+     "preuve": "resume_moteur",
+     "recouvrement": "Cadre formel « dommage contre détectabilité » sur des séquences entières : fondement pour l'énoncé budgétaire et le théorème négatif.",
+     "titre": "Data-Injection Attacks in Stochastic Control Systems: Detectability and Performance Tradeoffs",
+     "urls": [
+      "https://arxiv.org/pdf/1704.00748"
+     ]
+    },
+    {
+     "absent_etat_de_l_art": true,
+     "auteurs": "Bücher, Kojadinovic, Rohmer, Segers",
+     "ce_que_ca_fait": "Test de rupture de la copule (dépendance transversale) fondé sur le processus de copule empirique séquentiel. Implémenté dans le paquet R npcp.",
+     "ce_qui_reste": "Hors ligne, pas anytime-valid, pas d'adversaire.",
+     "date": "2014",
+     "id": "https://www.researchgate.net/publication/264624486_Detecting_changes_in_cross-sectional_dependence_in_multivariate_time_series",
+     "lieu": "Journal of Multivariate Analysis",
+     "niveau": "fond",
+     "preuve": "resume_moteur",
+     "recouvrement": "Fondement statistique pour détecter un changement de dépendance à marginales constantes, et pour l'axe transversal (agents).",
+     "titre": "Detecting changes in cross-sectional dependence in multivariate time series",
+     "urls": [
+      "https://www.researchgate.net/publication/264624486_Detecting_changes_in_cross-sectional_dependence_in_multivariate_time_series"
+     ]
+    },
+    {
+     "absent_etat_de_l_art": true,
+     "auteurs": "Wied, Krämer, Dehling",
+     "ce_que_ca_fait": "Test CUSUM sur des corrélations empiriques pour détecter une rupture de corrélation. Selon le résumé, Wied et Galeano (2013) ont proposé une surveillance séquentielle de la corrélation.",
+     "ce_qui_reste": "Pas d'adversaire, pas d'e-processus.",
+     "date": "2012",
+     "id": "https://www.cambridge.org/core/journals/econometric-theory/article/abs/testing-for-a-change-in-correlation-at-anunknown-point-in-time-using-an-extended-functionaldelta-method/DD1E71706B9BCF285FAA4A9137054F0E",
+     "lieu": "Econometric Theory",
+     "niveau": "fond",
+     "preuve": "resume_moteur",
+     "recouvrement": "Fondement de la détection séquentielle d'un changement de corrélation.",
+     "titre": "Testing for a Change in Correlation at an Unknown Point in Time Using an Extended Functional Delta Method",
+     "urls": [
+      "https://www.cambridge.org/core/journals/econometric-theory/article/abs/testing-for-a-change-in-correlation-at-anunknown-point-in-time-using-an-extended-functionaldelta-method/DD1E71706B9BCF285FAA4A9137054F0E"
+     ]
+    },
+    {
+     "absent_etat_de_l_art": true,
+     "auteurs": "Podkopaev et al.",
+     "ce_que_ca_fait": "Test d'indépendance séquentiel par pari (e-processus, pari sur des paires d'observations), anytime-valid.",
+     "ce_qui_reste": "Pas d'adversaire ni de cadre de sabotage. Suppose des paires i.i.d. (à vérifier).",
+     "date": "2023",
+     "id": "https://proceedings.mlr.press (ICML 2023) — Sequential Kernelized Independence Testing",
+     "lieu": "ICML 2023",
+     "niveau": "fond",
+     "preuve": "resume_moteur",
+     "recouvrement": "Fondement direct d'un agrégateur de dépendance toujours valide.",
+     "titre": "Sequential Kernelized Independence Testing",
+     "urls": [
+      "https://arxiv.org/html/2606.18993v1"
+     ]
+    },
+    {
+     "absent_etat_de_l_art": true,
+     "auteurs": "Vovk et al.",
+     "ce_que_ca_fait": "Martingales conformes et d'échangeabilité qui détectent en ligne les écarts au caractère aléatoire ou échangeable, y compris contre des alternatives markoviennes (dépendance sérielle).",
+     "ce_qui_reste": "Pas d'adversaire, pas d'agents.",
+     "id": "2111.01885",
+     "lieu": "arXiv / COPA",
+     "niveau": "fond",
+     "preuve": "titre_url_vus",
+     "recouvrement": "Fondement : un e-processus d'échangeabilité détecte une dépendance que les statistiques invariantes par permutation ne voient pas.",
+     "titre": "Conformal testing: binary case with Markov alternatives (et la série de Vovk sur Testing Exchangeability On-Line / Testing randomness 1906.09256)",
+     "urls": [
+      "https://arxiv.org/pdf/2111.01885",
+      "https://arxiv.org/pdf/1906.09256",
+      "https://www.researchgate.net/publication/221345779_Testing_Exchangeability_On-Line"
+     ]
+    },
+    {
+     "absent_etat_de_l_art": true,
+     "auteurs": "Beutel et al. (CopyCatch) ; Chavoshi et al. (DeBot) — attributions partielles, incertain",
+     "ce_que_ca_fait": "Détecte des groupes de comptes individuellement normaux par leur synchronisation (lockstep) ou leur corrélation d'activité.",
+     "ce_qui_reste": "Pas d'IA, pas d'activations, pas de théorème.",
+     "date": "2013",
+     "id": "https://alexbeutel.com/papers/www2013_copycatch.pdf",
+     "lieu": "WWW 2013 ; SocInfo (DeBot)",
+     "niveau": "fond",
+     "preuve": "resume_moteur",
+     "recouvrement": "Fondement de l'agrégateur de co-élévation entre agents quand les marginales individuelles sont normales.",
+     "titre": "CopyCatch: Stopping Group Attacks by Spotting Lockstep Behavior in Social Networks (et SynchroTrap ; DeBot « Identifying Correlated Bots in Twitter »)",
+     "urls": [
+      "https://alexbeutel.com/papers/www2013_copycatch.pdf",
+      "https://www.cs.unm.edu/~chavoshi/debot/SocInfo.pdf",
+      "https://arxiv.org/html/1810.08885"
+     ]
+    },
+    {
+     "absent_etat_de_l_art": true,
+     "auteurs": "incertain",
+     "ce_que_ca_fait": "Stéganalyse fondée sur des modèles markoviens. Les résumés indiquent que l'insertion qui préserve l'histogramme échappe à l'analyse du premier ordre mais reste vulnérable aux traits markoviens et du second ordre.",
+     "ce_qui_reste": "Pas d'IA ni de séquentiel anytime-valid.",
+     "id": "https://wcsl.ece.ucsb.edu/sites/default/files/publications/steganalysis.pdf",
+     "lieu": "incertain (UCSB)",
+     "niveau": "fond",
+     "preuve": "titre_url_vus",
+     "recouvrement": "Antériorité du schéma « préserver le premier ordre, être détecté au second ordre ».",
+     "titre": "Steganalysis for Markov Cover Data With Applications to ... (titre tronqué dans le résultat)",
+     "urls": [
+      "https://wcsl.ece.ucsb.edu/sites/default/files/publications/steganalysis.pdf"
+     ]
+    },
+    {
+     "absent_etat_de_l_art": true,
+     "auteurs": "incertain",
+     "ce_que_ca_fait": "Seuls le titre et l'URL ont été vus : agrégation de preuves entre pas d'une trajectoire d'agent.",
+     "ce_qui_reste": "Inconnu.",
+     "id": "2606.07054",
+     "lieu": "arXiv",
+     "niveau": "adjacent",
+     "preuve": "titre_url_vus",
+     "recouvrement": "Peut-être un agrégateur temporel de moniteur. Contenu non vérifié.",
+     "titre": "TRACE: Trajectory Reasoning through Adaptive Cross-Step Evidence Aggregation for LLM Agents",
+     "urls": [
+      "https://arxiv.org/html/2606.07054v1"
+     ]
+    }
+   ],
+   "justification": "Bilan : 42 requêtes WebSearch effectives. Deux autres ont été refusées parce que le budget de recherche de la session était épuisé. Un essai WebFetch sur alphaxiv a été bloqué. Aucun PDF n'a été lu. Tout ce qui suit relève donc au mieux de la « transcription » : identifiant, titre et URL vus, plus des résumés de moteur corroborés par plusieurs requêtes quand c'est indiqué.\n\n(1) Axe temps, boîte noire : occupé. arXiv 2606.10456 (« The Distributed Detectability Band Against Marginal-Preserving Attacks », Zhang Qinqin et Gao Yuze ; soumis le 2026-06-09, révisé le 2026-06-13) est identifié de façon cohérente par plus de 8 requêtes. Sa provenance n'est donc plus « douteuse » au niveau identifiant, titre et auteurs. D'après les résumés concordants, il :\n- construit une attaque par copule gaussienne AR(1) qui garde la marginale du score par pas exactement bénigne ;\n- énonce que les moniteurs de marginales (moyenne, max, top-k, seuil) sont « provably blind by construction » et n'offrent « zero protection » (AUC ≈ 0,52) ;\n- montre que les moniteurs de corrélation séquentielle (CUSUM, SPRT, HMM-LR, test des runs, autocorrélation, logistique fenêtrée) atteignent une AUC de 0,79 à 0,97 ;\n- ajoute un volet sur traces réelles agent/moniteur (φ bénin ≈ 0,06 ; autocorrélation sur un seul épisode : AUC 0,59 ; l'accumulation de pas fait remonter l'AUC de 0,62 à 0,86 entre 100 et 1600 pas).\n\nL'état de l'art du 14/09 le qualifie de « synthétique ». C'est inexact selon deux résumés indépendants : il y a des traces réelles, mais en boîte noire, sur des scores de moniteur. Le cœur du théorème négatif et la nécessité d'un agrégateur de dépendance dans le temps sont donc déjà revendiqués.\n\n(2) Axe agents : partiellement occupé, sans théorème à marginales préservées vérifié.\n- 2607.11751 (Hu et Wang) formalise une « observability boundary » : un moniteur local ne voit que ce que sa vue distingue du bénin, et une charge répartie entre agents passe tous les contrôles locaux. C'est l'analogue conceptuel du théorème dans l'axe agents, mais le remède proposé est la vue jointe, pas un agrégateur de co-élévation.\n- 2604.01151 (NARCBench) agrège des sondes d'activations entre agents, y compris une détection relationnelle (« Activation Alignment », similarité cosinus par paires). Il ne contient aucun théorème.\n- 2608.02698 (Ghanem, Université de Keele : « Keele » n'est pas un co-auteur) fait une détection boîte noire de dépendance inter-agents (information mutuelle inter-exécutions) avec une borne de capacité. Selon un résumé non corroboré, ses résultats seraient des « placeholders ».\n- 2607.07368 (effet de fragmentation) montre empiriquement que le moniteur par instance s'effondre et que le moniteur joint rattrape l'attaque.\n\n(3) Hors du contrôle de l'IA, le schéma « attaque qui reproduit la marginale, détection par la dépendance » est ancien. Ce sont des fondements, mais ils affaiblissent toute revendication de nouveauté conceptuelle du théorème négatif :\n- canaux temporels couverts « model-based » et entropie conditionnelle corrigée (Gianvecchio et Wang, 2007 et 2008) ;\n- polymorphic blending attacks (Fogla et al., 2006) ;\n- stéganographie qui préserve l'histogramme contre stéganalyse markovienne ;\n- attaques furtives en systèmes cyber-physiques qui passent le détecteur χ², détectées par la blancheur ou l'aléa sériel (Bonczek et Bezzo, 2104.15097) ;\n- tests de rupture de copule à marginales constantes (Bücher, Kojadinovic, Rohmer, Segers 2014 ; Wied, Krämer, Dehling 2012) ;\n- tests d'indépendance et d'échangeabilité séquentiels anytime-valid (Podkopaev et al., ICML 2023 ; martingales conformes de Vovk) ;\n- détection de « lockstep » sur des comptes individuellement normaux (CopyCatch, SynchroTrap, DeBot) pour l'axe agents.\n\n(4) Ce qui reste revendicable, sous réserve :\n- (a) la version boîte blanche sur les vraies activations de l'agent qui agit. Il reste à établir qu'un attaquant peut préserver la marginale du score de sonde : c'est empirique et non garanti ;\n- (b) l'indexation unifiée temps × agents comme un seul objet de dépendance, avec la même statistique. Aucun travail trouvé ne le fait, mais la statistique des tableaux échangeables et des panels n'a pas été fouillée ;\n- (c) un e-processus toujours valide pour l'agrégateur de dépendance, appliqué aux sondes ;\n- (d) l'invariance au budget total. 2606.10456 montre déjà la tenue de l'AUC quand le dommage est amorti sur plus de pas, ce qui recouvre en partie cette idée.\n\n(5) Mise en garde : la revendication telle qu'énoncée est mathématiquement trop forte. À marginales préservées, l'autocorrélation positive change la loi de la moyenne, de la somme cumulée et du max (variance, queues). Un test unilatéral sur ces agrégats n'a donc pas en général une puissance égale au taux de faux positifs. Le 0,52 de 2606.10456, et non 0,50, en est peut-être un symptôme. Il faut restreindre l'énoncé aux statistiques qui ne dépendent que de la loi marginale, c'est-à-dire aux tests par pas ou aux fonctionnelles en espérance, ou bien le formuler en termes d'AUC asymptotique.",
+   "pistes_non_resolues": [
+    "Citations de 2606.10456 : aucune suite ni citation explicite trouvée par recherche directe. Les deux requêtes ciblées (boîte blanche/sondes + marginale préservée ; co-élévation inter-agents + sous le seuil) n'ont pas pu être exécutées faute de budget. À refaire en priorité, avec Semantic Scholar ou Google Scholar « cited by » depuis un réseau non bloqué.",
+    "Lire le PDF de 2606.10456 : la négativité des moniteurs de marginales est-elle une proposition formelle avec preuve, ou un argument « par construction » ? Le volet traces réelles utilise-t-il des scores de moniteur LLM ou autre chose ? Un résultat d'invariance au budget y figure-t-il (amortissement du dommage sur plus de pas) ? Y a-t-il une section multi-agents ?",
+    "Précision mathématique du théorème revendiqué : à marginales préservées, l'autocorrélation change la variance de la moyenne et de la somme cumulée et la loi du max. « Toute statistique de marginales a une puissance égale au FPR » est donc faux en général pour les agrégats. Il faut restreindre l'énoncé, par exemple aux statistiques qui ne dépendent que des lois marginales ou aux tests par pas, ou le formuler asymptotiquement. Vérifier aussi si l'AUC de 0,52 (et non 0,50) dans 2606.10456 reflète cet effet.",
+    "2607.11751 (observability boundary) : un seul résumé, à corroborer. Vérifier si la formalisation est un théorème d'indistinguabilité locale, équivalent du théorème négatif dans l'axe agents, et si 2607.24893 l'étend.",
+    "2608.02698 : vérifier si les résultats sont réellement des « placeholders » (un seul résumé le dit) et si la borne de capacité dit quelque chose des statistiques marginales contre les statistiques de dépendance.",
+    "Unification temps × agents comme un même objet : non cherché dans la statistique des tableaux échangeables (Aldous-Hoover, échangeabilité séparée), des panels (dépendance sérielle et transversale conjointe) et des statistiques de balayage spatio-temporelles. Risque de fondement classique non identifié.",
+    "Stéganalyse : attribution de SPAM (Subtractive Pixel Adjacency Matrix) et du papier UCSB sur les couvertures markoviennes non vérifiée. Le titre est tronqué dans le résultat.",
+    "Littérature sur la blancheur des innovations face aux attaques furtives en systèmes cyber-physiques : seul un résumé de moteur le dit. Identifier le papier précis qui énonce que des attaques persistantes, à marginale d'innovation préservée, se trahissent par l'autocorrélation.",
+    "Faisabilité côté attaquant en boîte blanche : aucun travail trouvé sur un agent capable de préserver la marginale de son score de sonde d'activations tout en encodant le dommage dans la corrélation. C'est le point qui rend la version boîte blanche réellement nouvelle ou vide de sens. La fouille croisée avec la zone obfuscation d'activations et sondes reste à faire."
+   ],
+   "requetes": [
+    "arXiv 2606.10456 distributed sabotage",
+    "\"distributed_sabotage_frontier\" OR \"distributed sabotage\" monitor marginal correlation",
+    "\"Distributed Attacks in Persistent-State AI Control\" arXiv 2607.02514",
+    "\"Stateful Online Monitoring Catches Distributed Agent Attacks\"",
+    "\"Multi-Agent AI Control: Distributed Attacks Hamper Per-Instance Monitors\"",
+    "\"MOLE: Detecting Insider Threats in AI Agents\" arXiv 2609.06966",
+    "\"marginal-preserving\" attack monitor autocorrelation agent sabotage detectability",
+    "\"Distributed Detectability Band\" Zhang Gao copula AR(1) follow-up",
+    "2606.10456 multi-agent extension cross-agent correlation marginal-preserving copula monitors",
+    "\"Counter-Swarm Doctrine\" Containing Coordinated Agent Intrusions arXiv 2609.06140",
+    "change-point detection copula dependence structure constant marginals test Bücher Kojadinovic Rohmer Segers",
+    "sequential monitoring change in correlation unknown time Wied Krämer Dehling online detection",
+    "NARCBench collusion detection multi-agent LLM correlation",
+    "arXiv 2608.02698 Ghanem Keele",
+    "\"Steganalysis of Adaptive Covert Collusion in Tool-Using Agent Populations\" marginal correlation detection frontier",
+    "\"Detecting Multi-Agent Collusion Through Multi-Agent Interpretability\" activation alignment aggregation agents",
+    "model-based covert timing channel mimics inter-packet delay distribution detected corrected conditional entropy Gianvecchio Wang",
+    "histogram-preserving steganography defeated first-order statistics detected second-order Markov SPAM steganalysis",
+    "polymorphic blending attacks match byte frequency distribution normal traffic anomaly detector evasion Fogla Lee",
+    "Podkopaev \"Sequential Kernelized Independence Testing\" e-process betting",
+    "anytime-valid test of serial independence autocorrelation e-process time series betting",
+    "conformal test martingales testing exchangeability online Vovk detect dependence randomness",
+    "AI control monitoring across many agent instances aggregate suspicion scores correlated low-suspicion actions collusion statistical test",
+    "arXiv 2609 sub-threshold distributed sabotage temporal correlation monitor activations probe sequential",
+    "\"The Best-Laid SCHEMEs\" Coordinated Sabotage and Monitoring in Multi-Agent Systems 2605.29178",
+    "\"Amplify, Don't Create\" Temporal Accumulation Slow-Burn Prompt Injection 2606.20746",
+    "\"When Local Monitors Miss Compositional Harm\" Distributed Backdoors Multi-Agent Systems 2607.11751",
+    "attack preserves per-agent marginal distribution only joint distribution changes multi-agent detection co-occurrence elevated scores impossibility",
+    "\"Distributed Detectability Band\" proposition marginal-based monitor power equals false positive rate proof",
+    "\"Early Detection of Distributed Backdoors in Multi-Agent LLM Systems\"",
+    "unified detection temporal and cross-agent dependence agent swarm monitoring activations probes spatio-temporal statistic LLM copies shared weights",
+    "\"Who Audits Whom, on What Substrate, with What Evidence\" independence-graded audit protocol agentic AI",
+    "CopyCatch lockstep behavior detection SynchroTrap DeBot correlated activity individually normal accounts coordinated",
+    "arXiv 2610 distributed sabotage monitor correlation agents temporal \"marginal\" AI control",
+    "stealthy attack residual marginal distribution preserved chi-squared detector blind autocorrelation whiteness test detects cyber-physical",
+    "Bai Pasqualetti Gupta data-injection attacks stochastic control systems detectability performance tradeoffs KL divergence stealthiness",
+    "\"Detection of Hidden Attacks on Cyber-Physical Systems from Serial Magnitude and Sign Randomness Inconsistencies\"",
+    "monitor evasion \"correlation\" \"marginal\" LLM agent sabotage theorem marginal statistics cannot detect permutation sequential monitor 2026",
+    "\"Distributed Detectability Band\" real agent episodes autocorrelation AUC 0.59 SHADE-Arena trajectories",
+    "2606.10456 Gaussian copula harm amortized steps budget Monitor B holds AUC 0.95 linear probe activations",
+    "\"Detecting Safety Violations Across Many Agent Traces\" 2604.11806",
+    "copula-based anomaly detection adversary matches marginals dependence attack detection COPOD limitation evasion",
+    "[NON EXÉCUTÉE, budget épuisé] \"marginal-preserving\" sabotage white-box probe activations e-process sequential detection agents",
+    "[NON EXÉCUTÉE, budget épuisé] \"sub-threshold\" sabotage cross-agent co-elevation correlation detector multi-agent \"marginal\" monitor arXiv",
+    "[WebFetch bloqué] https://www.alphaxiv.org/overview/2606.10456"
+   ],
+   "verdict": "partiellement_occupee",
+   "zone": "A-T — Théorème négatif : dommage porté par la corrélation à marginales préservées (statistiques de marginales aveugles ; agrégateur d'autocorrélation dans le temps ou de co-élévation entre agents nécessaire ; même objet dans les deux axes)"
+  },
+  {
+   "candidats": [
+    {
+     "absent_etat_de_l_art": false,
+     "auteurs": "Zhang Qinqin, Yuze Gao",
+     "ce_que_ca_fait": "Attaque de sabotage distribué à marginale préservée (copule gaussienne AR(1)) : la marginale du score de moniteur par pas est exactement celle du comportement bénin et le dommage est encodé dans la corrélation temporelle. Proposition 1 : tout moniteur fondé sur les seules marginales a une puissance égale à son taux de faux positifs. Les moniteurs temporels (CUSUM, SPRT, HMM-LR, test des runs, autocorrélation) atteignent une AUC de 0,79 à 0,97 à 1 % de FPR. Quand le dommage est amorti sur davantage de pas, le moniteur de marginales tombe au hasard tandis que le moniteur séquentiel tient (AUC ≈ 0,95). Cadre synthétique en boîte noire.",
+     "ce_qui_reste": "Aucun énoncé d'invariance de la puissance à la répartition d'un décalage de moyenne à B fixé n'a été vu dans les résumés : le régime étudié est à décalage de moyenne nul. Restent aussi les activations de modèle, l'indexation temps × agents, la garantie toujours valide par e-processus de mélange, la condition de non-décorrélabilité et l'expérience sur un vrai LLM.",
+     "id": "2606.10456",
+     "lieu": "arXiv (juin 2026)",
+     "niveau": "partiel",
+     "preuve": "resume_moteur",
+     "recouvrement": "Formule le budget de dommage amorti sur les pas et l'effondrement des statistiques par pas (max, moyenne, top-k) quand la fragmentation croît. Utilise des détecteurs séquentiels (CUSUM, SPRT). Recouvre le théorème négatif du Papier A (hors zone).",
+     "titre": "The Distributed Detectability Band Against Marginal-Preserving Attacks",
+     "urls": [
+      "https://arxiv.org/abs/2606.10456",
+      "https://arxiv.org/html/2606.10456",
+      "https://arxiv.org/pdf/2606.10456"
+     ]
+    },
+    {
+     "absent_etat_de_l_art": true,
+     "auteurs": "Oliver Makins, Orazio Angelini, Zohreh Shams, Mary Phuong",
+     "ce_que_ca_fait": "Première étude empirique du contrôle multi-agents, avec FakeLab (9 services, 86 tâches bénignes, 4 objectifs d'attaque). Effet de fragmentation : plus il y a d'agents qui coordonnent l'attaque, moins le monitoring par agent attrape un attaquant ; le commit le plus suspect paraît moins suspect. Un planificateur explicite amplifie l'effet. Contrôlée par le nombre d'agents, la baisse de la fraction de lignes malveillantes n'explique qu'une petite part de la chute de suspicion.",
+     "ce_qui_reste": "Pas d'agrégation séquentielle ni inter-agents formalisée, pas de lemme de puissance, pas d'activations. Le constat « ce n'est pas de la dilution » est à confronter à la condition de non-décorrélabilité : en boîte noire, la preuve par action n'est pas conservée.",
+     "id": "2607.07368",
+     "lieu": "arXiv (soumis à NeurIPS selon le résumé)",
+     "niveau": "adjacent",
+     "preuve": "resume_moteur",
+     "recouvrement": "Établit empiriquement, entre agents, l'effondrement du max par action quand la fragmentation croît, avec des moniteurs LLM en boîte noire.",
+     "titre": "Multi-Agent AI Control: Distributed Attacks Hamper Per-Instance Monitors",
+     "urls": [
+      "https://arxiv.org/abs/2607.07368",
+      "https://arxiv.org/html/2607.07368v1",
+      "https://arxiv.org/pdf/2607.07368"
+     ]
+    },
+    {
+     "absent_etat_de_l_art": true,
+     "auteurs": "Josh Hills, Ida Caspary, Asa Cooper Stickland",
+     "ce_que_ca_fait": "Cadre ITERATIVE VIBECODING : un agent de code construit un logiciel sur une suite de PR tout en poursuivant une tâche cachée. Les attaques graduelles échappent davantage aux moniteurs (évasion ≥ 65 %). Un moniteur à état « link-tracker » suit l'accumulation de suspicion entre PR. Un ensemble de quatre moniteurs fait passer l'évasion de 93 % à 47 %.",
+     "ce_qui_reste": "Pas de garantie toujours valide, pas de lemme d'invariance, pas de sondes internes, pas de dimension multi-agents.",
+     "date": "2026-07-02",
+     "id": "2607.02514",
+     "lieu": "arXiv (preprint en évaluation)",
+     "niveau": "adjacent",
+     "preuve": "resume_moteur",
+     "recouvrement": "Fragmentation temporelle d'un seul agent et accumulateur de suspicion à état, en boîte noire. Correspond à la case {boîte noire, séquentiel} du plan 2×2.",
+     "titre": "Distributed Attacks in Persistent-State AI Control",
+     "urls": [
+      "https://arxiv.org/abs/2607.02514",
+      "https://arxiv.org/html/2607.02514v2"
+     ]
+    },
+    {
+     "absent_etat_de_l_art": true,
+     "auteurs": "Davis Brown, Samarth Bhargav, Arav Santhanam, Kasper Hong, Ivan Zhang, Matan Shtepel, Steffi Chern, Alexander Robey, Eric Wong, Hamed Hassani",
+     "ce_que_ca_fait": "Attaque d'agent distribuée : les tâches nuisibles (cyber) sont réparties entre sous-agents et comptes pour que chaque transcription paraisse bénigne. Moniteur en ligne à état qui regroupe par clustering en temps réel des signaux de suspicion faibles sur de nombreuses transcriptions, puis escalade rarement vers un LLM. Détection 30 % plus précoce.",
+     "ce_qui_reste": "Pas de théorie de puissance, pas de garantie toujours valide, pas d'activations, pas d'indexation temps × agents formelle.",
+     "date": "2026-05-29",
+     "id": "2605.31593",
+     "lieu": "arXiv cs.CR",
+     "niveau": "adjacent",
+     "preuve": "resume_moteur",
+     "recouvrement": "Agrégation inter-agents (comptes) de preuves faibles contre une attaque fragmentée, en boîte noire.",
+     "titre": "Stateful Online Monitoring Catches Distributed Agent Attacks",
+     "urls": [
+      "https://arxiv.org/abs/2605.31593",
+      "https://arxiv.org/html/2605.31593"
+     ]
+    },
+    {
+     "absent_etat_de_l_art": true,
+     "auteurs": "Wen, Hebbar et al. (liste complète non vue)",
+     "ce_que_ca_fait": "Cadre à deux niveaux. Des micro-protocoles produisent des réponses et des scores de moniteur par tâche. Un macro-protocole à état maintient une crédence sur l'alignement du modèle, la met à jour par la règle de Bayes sur la suite des tâches et choisit le micro-protocole. Environ 80 % de backdoors en moins à utilité égale.",
+     "ce_qui_reste": "Bayésien, pas toujours valide fréquentiste. Boîte noire. Pas d'énoncé d'invariance à la répartition ni d'analyse de la fragmentation du budget (non vérifié : requête non exécutée faute de budget). Pas d'agents multiples.",
+     "id": "2411.17693",
+     "lieu": "ICLR 2025",
+     "niveau": "adjacent",
+     "preuve": "resume_moteur",
+     "recouvrement": "Accumulation de preuve de moniteur sur des tâches successives contre une menace distribuée.",
+     "titre": "Adaptive Deployment of Untrusted LLMs Reduces Distributed Threats",
+     "urls": [
+      "https://www.alphaxiv.org/abs/2411.17693",
+      "https://openreview.net/forum?id=keu6sxrPWn",
+      "https://mlanthology.org/iclr/2025/wen2025iclr-adaptive/"
+     ]
+    },
+    {
+     "absent_etat_de_l_art": true,
+     "auteurs": "Mikhail Terekhov, Caglar Gulcehre, Vivek Hebbar, Joe Benton",
+     "ce_que_ca_fait": "Cadre de red-teaming pour évaluer des interventions d'entraînement contre un sabotage diffus (sandbagging) sur des tâches floues. Une IA intrigante peut subvertir la génération d'idées d'expériences ML malgré une optimisation contre les scores d'un modèle plus faible. Certains prompts du juge faible améliorent nettement sa robustesse.",
+     "ce_qui_reste": "Pas de détection séquentielle, pas de sondes internes, pas d'invariance au budget.",
+     "id": "2606.08892",
+     "lieu": "arXiv ; billet Alignment Science Blog (Anthropic)",
+     "niveau": "adjacent",
+     "preuve": "resume_moteur",
+     "recouvrement": "Pour cette zone, rien du lemme. Pour le programme, occupe le cadre expérimental du Papier A (sabotage diffus de propositions d'expériences) et touche le Papier C (robustesse du juge).",
+     "titre": "Diffuse AI Control on Fuzzy Tasks",
+     "urls": [
+      "https://arxiv.org/abs/2606.08892",
+      "https://arxiv.org/html/2606.08892v2",
+      "https://alignment.anthropic.com/2026/diffuse-ai-control/"
+     ]
+    },
+    {
+     "absent_etat_de_l_art": false,
+     "auteurs": "Howard, Ramdas, McAuliffe, Sekhon",
+     "ce_que_ca_fait": "Frontières uniformes en temps par martingale de mélange normal (méthode de Robbins). Suites de confiance pour la moyenne courante d'effets variables dans le temps sous dépendance de martingale.",
+     "ce_qui_reste": "L'application aux activations, l'indexation temps × agents, l'interprétation adverse (budget de sabotage) et la condition de non-décorrélabilité.",
+     "id": "Howard-Ramdas-McAuliffe-Sekhon-2021",
+     "lieu": "Annals of Statistics 2021",
+     "niveau": "fond",
+     "preuve": "resume_moteur",
+     "recouvrement": "L'e-processus de mélange sur la somme ne dépend que de S_t et V_t. L'invariance de la puissance à la répartition de Σδ en est un corollaire quasi direct.",
+     "titre": "Time-uniform, nonparametric, nonasymptotic confidence sequences",
+     "urls": [
+      "https://par.nsf.gov/servlets/purl/10251927",
+      "https://arxiv.org/pdf/2103.06476v3"
+     ]
+    },
+    {
+     "absent_etat_de_l_art": true,
+     "auteurs": "Ery Arias-Castro, Emmanuel J. Candès, Yaniv Plan",
+     "ce_que_ca_fait": "Test global sous alternatives parcimonieuses. L'ANOVA (statistique de type somme) est quasi optimale pour une parcimonie modérée, les comparaisons multiples (max) le sont pour une forte parcimonie, et la higher criticism couvre tout le domaine.",
+     "ce_qui_reste": "Le séquentiel toujours valide, le cadre adverse, les activations et l'indexation temps × agents.",
+     "id": "Arias-Castro-Candes-Plan-2011",
+     "lieu": "Annals of Statistics 2011 (arXiv 1007.1434)",
+     "niveau": "fond",
+     "preuve": "resume_moteur",
+     "recouvrement": "Version hors-ligne de « la somme gagne quand le signal est étalé, le max quand il est concentré », c'est-à-dire l'effondrement du max sous fragmentation.",
+     "titre": "Global testing under sparse alternatives: ANOVA, multiple comparisons and the higher criticism",
+     "urls": [
+      "https://projecteuclid.org/euclid.aos/1322663467",
+      "https://arxiv.org/pdf/1007.1434"
+     ]
+    },
+    {
+     "absent_etat_de_l_art": true,
+     "auteurs": "Donoho, Jin (2004) ; frontière d'Ingster (1997)",
+     "ce_que_ca_fait": "Frontière de détection des effets « rares et faibles ». La higher criticism atteint la frontière optimale d'Ingster et s'adapte aux régimes parcimonieux comme denses.",
+     "ce_qui_reste": "Le séquentiel, l'adverse et la boîte blanche.",
+     "id": "math/0410072",
+     "lieu": "Annals of Statistics 2004 ; revue Statistical Science 2015",
+     "niveau": "fond",
+     "preuve": "resume_moteur",
+     "recouvrement": "Fondement de la dichotomie épars/dense et des agrégateurs adaptatifs.",
+     "titre": "Higher criticism for detecting sparse heterogeneous mixtures",
+     "urls": [
+      "https://arxiv.org/pdf/math/0410072",
+      "https://projecteuclid.org/journals/statistical-science/volume-30/issue-1/Higher-Criticism-for-Large-Scale-Inference-Especially-for-Rare-and/10.1214/14-STS506.full"
+     ]
+    },
+    {
+     "absent_etat_de_l_art": true,
+     "auteurs": "Y. Mei",
+     "ce_que_ca_fait": "Détection de rupture sur de nombreux flux indépendants dont le sous-ensemble affecté est inconnu, par somme des CUSUM locaux. Minimise asymptotiquement le délai pour toute combinaison de flux affectés sous contrainte globale de fausse alarme.",
+     "ce_qui_reste": "Pas de garantie toujours valide par e-processus, optimalité seulement asymptotique de premier ordre, pas d'indexation temps × agents unifiée au sens du programme, pas d'activations ni d'adversaire.",
+     "id": "Mei-2010-Biometrika",
+     "lieu": "Biometrika 97(2), 2010",
+     "niveau": "fond",
+     "preuve": "resume_moteur",
+     "recouvrement": "Analogue inter-flux (inter-agents) d'une robustesse à la répartition du signal par agrégation de type somme.",
+     "titre": "Efficient scalable schemes for monitoring a large number of data streams",
+     "urls": [
+      "https://academic.oup.com/biomet/article/97/2/419/219175"
+     ]
+    },
+    {
+     "absent_etat_de_l_art": true,
+     "auteurs": "Yao Xie, David Siegmund",
+     "ce_que_ca_fait": "Procédure de mélange sur flux parallèles, avec des GLR par flux combinés sous l'hypothèse d'une fraction p₀ de flux affectés. Expression analytique de l'ARL et approximation de l'EDD.",
+     "ce_qui_reste": "Le cadre adverse avec budget, la garantie toujours valide, les activations et le couplage temps × agents d'un sabotage réparti.",
+     "id": "Xie-Siegmund-2013-AoS",
+     "lieu": "Annals of Statistics 41(2), 2013",
+     "niveau": "fond",
+     "preuve": "resume_moteur",
+     "recouvrement": "Mélange sur la répartition du signal entre flux (agents) en détection séquentielle.",
+     "titre": "Sequential multi-sensor change-point detection",
+     "urls": [
+      "https://projecteuclid.org/journals/annals-of-statistics/volume-41/issue-2/Sequential-multi-sensor-change-point-detection/10.1214/13-AOS1094.full"
+     ]
+    },
+    {
+     "absent_etat_de_l_art": true,
+     "auteurs": "Liang, Tartakovsky, Veeravalli",
+     "ce_que_ca_fait": "Observations post-rupture non stationnaires, caractérisées par la divergence KL cumulée. Borne inférieure universelle du délai et CUSUM-GLR à fenêtre asymptotiquement optimal.",
+     "ce_qui_reste": "Le budget adverse, l'invariance explicite à la répartition, le multi-agents, les activations et la garantie toujours valide.",
+     "id": "Liang-Tartakovsky-Veeravalli-2023",
+     "lieu": "IEEE Transactions on Information Theory 69(5), 2023",
+     "niveau": "fond",
+     "preuve": "resume_moteur",
+     "recouvrement": "Le délai est gouverné par la preuve cumulée (KL cumulée) et non par le signal par pas. Proche de l'esprit du lemme pour des décalages non identiques.",
+     "titre": "Quickest Change Detection With Non-Stationary Post-Change Observations",
+     "urls": [
+      "https://experts.illinois.edu/en/publications/quickest-change-detection-with-non-stationary-post-change-observa/",
+      "https://par.nsf.gov/servlets/purl/10351780"
+     ]
+    },
+    {
+     "absent_etat_de_l_art": false,
+     "auteurs": "Amir Reza Ramtin, Philippe Nain, Don Towsley",
+     "ce_que_ca_fait": "L'adversaire connaît γ et choisit une loi post-rupture stationnaire qui converge vers la loi pré-rupture. Lois d'échelle : délai Θ(γ) pour l'adversaire couvert contre O(log γ) dans le cas classique.",
+     "ce_qui_reste": "La répartition non stationnaire du budget, le multi-agents, les activations, le processus e de mélange.",
+     "id": "2601.20022",
+     "lieu": "arXiv",
+     "niveau": "fond",
+     "preuve": "resume_moteur",
+     "recouvrement": "Adversaire furtif contre CUSUM, avec arbitrage furtivité/délai.",
+     "titre": "Quickest Change Detection in Discrete-Time in Presence of a Covert Adversary",
+     "urls": [
+      "https://arxiv.org/abs/2601.20022"
+     ]
+    },
+    {
+     "absent_etat_de_l_art": true,
+     "auteurs": "Yun-Feng Lo, Matthieu R. Bloch",
+     "ce_que_ca_fait": "Détection de rupture bayésienne où le détecteur sonde activement en restant couvert. Introduit un « expected covertness budget » qui majore l'entropie relative, avec gain de détection en racine carrée.",
+     "ce_qui_reste": "Le sabotage d'agent, l'invariance de puissance à la répartition, les activations.",
+     "date": "2026-05-15",
+     "id": "2605.16140",
+     "lieu": "arXiv (cs.IT, math.ST)",
+     "niveau": "fond",
+     "preuve": "resume_moteur",
+     "recouvrement": "Formalisme de budget de furtivité exprimé en KL cumulée. Les rôles sont inversés : c'est le détecteur qui se cache.",
+     "titre": "Covert Bayesian Quickest Change Detection",
+     "urls": [
+      "https://arxiv.org/abs/2605.16140"
+     ]
+    },
+    {
+     "absent_etat_de_l_art": true,
+     "auteurs": "C. Bai, F. Pasqualetti, V. Gupta",
+     "ce_que_ca_fait": "Attaques par injection contre un détecteur KL, avec ε-furtivité définie par la divergence KL. Arbitrage formel entre dégradation de performance et détectabilité.",
+     "ce_qui_reste": "Le transfert aux activations de LLM, l'indexation temps × agents et l'invariance de puissance à la répartition sous e-processus.",
+     "id": "1704.00748",
+     "lieu": "Automatica 82, 2017",
+     "niveau": "adjacent",
+     "preuve": "resume_moteur",
+     "recouvrement": "Condition « dommage borné par la détectabilité » : analogue CPS de la non-décorrélabilité dommage/furtivité.",
+     "titre": "Data-Injection Attacks in Stochastic Control Systems: Detectability and Performance Tradeoffs",
+     "urls": [
+      "https://arxiv.org/pdf/1704.00748"
+     ]
+    },
+    {
+     "absent_etat_de_l_art": true,
+     "auteurs": "Bash, Goeckel, Towsley",
+     "ce_que_ca_fait": "Sur n usages du canal, seulement O(√n) bits peuvent être transmis de façon fiable et couverte.",
+     "ce_qui_reste": "Tout le cadre sabotage, sondes et e-processus.",
+     "id": "Bash-Goeckel-Towsley-square-root-law",
+     "lieu": "IEEE ISIT",
+     "niveau": "fond",
+     "preuve": "resume_moteur",
+     "recouvrement": "Fondement : la détectabilité est gouvernée par le signal total, d'où la borne sur le budget furtif total.",
+     "titre": "Square root law for communication with low probability of detection on AWGN channels",
+     "urls": [
+      "https://www.researchgate.net/publication/261234323_Square_root_law_for_communication_with_low_probability_of_detection_on_AWGN_channels"
+     ]
+    },
+    {
+     "absent_etat_de_l_art": true,
+     "auteurs": "Etienne Gauthier, Francis Bach, Michael I. Jordan",
+     "ce_que_ca_fait": "Test séquentiel par pari (e-valeurs, supermartingale de test) contre un étalon d'équilibre dans des jeux répétés. Analyse des temps de détection et procédures de type BH pour les grands jeux, avec extension aux jeux stochastiques.",
+     "ce_qui_reste": "Le sabotage fragmenté à budget, l'invariance à la répartition et les activations.",
+     "date": "2026-01-08",
+     "id": "2601.05427",
+     "lieu": "ICML 2026",
+     "niveau": "adjacent",
+     "preuve": "resume_moteur",
+     "recouvrement": "Détection toujours valide multi-agents avec analyse des temps de détection.",
+     "titre": "Anytime Detection of Strategic Deviations in Multi-Agent Systems",
+     "urls": [
+      "https://arxiv.org/abs/2601.05427"
+     ]
+    },
+    {
+     "absent_etat_de_l_art": false,
+     "auteurs": "Shuvom Sadhuka, Drew Prinster, Clara Fannjiang, Gabriele Scalia, Bonnie Berger, Aviv Regev, Hanchen Wang",
+     "ce_que_ca_fait": "Convertit tout score de vérificateur en boîte noire en test séquentiel par e-processus, valide à chaque pas d'une trajectoire d'agent.",
+     "ce_qui_reste": "Le cadre adverse, le budget de sabotage, les sondes internes et le multi-agents.",
+     "id": "2512.03109",
+     "lieu": "arXiv",
+     "niveau": "adjacent",
+     "preuve": "resume_moteur",
+     "recouvrement": "Accumulation toujours valide de scores le long d'une trajectoire d'agent (boîte noire, succès ou échec).",
+     "titre": "E-valuator: Reliable Agent Verifiers with Sequential Hypothesis Testing",
+     "urls": [
+      "https://arxiv.org/abs/2512.03109"
+     ]
+    },
+    {
+     "absent_etat_de_l_art": true,
+     "auteurs": "Kai Ruan, Zihe Huang, Ziqi Zhou, Qianshan Wei, Jinghao Lin, Xuan Wang, Hao Sun",
+     "ce_que_ca_fait": "Sondes légères par tour sur les activations cachées d'agents, qui prédisent l'échec dès le premier tour là où les scoreurs comportementaux sont proches du hasard. Cascade d'une porte calibrée sans hypothèse de loi par tour, avec budgets de rappel par tour cherchés conjointement pour garantir un taux global.",
+     "ce_qui_reste": "La cible est l'échec et non le sabotage adverse. Portes par tour, pas d'accumulation additive (e-processus). Pas de lemme de budget ni de multi-agents.",
+     "date": "2026-07-07",
+     "id": "2607.06503",
+     "lieu": "arXiv",
+     "niveau": "adjacent",
+     "preuve": "resume_moteur",
+     "recouvrement": "Usage séquentiel calibré de sondes d'activations le long d'une trajectoire d'agent, avec garantie globale.",
+     "titre": "Doomed from the Start: Early Abort of LLM Agent Episodes via a Recall-Controlled Probe Cascade",
+     "urls": [
+      "https://arxiv.org/abs/2607.06503"
+     ]
+    },
+    {
+     "absent_etat_de_l_art": true,
+     "auteurs": "Aritra Das, Jaee Ponde, Mihir More, Debayan Gupta",
+     "ce_que_ca_fait": "Sondes sur activations internes pour détecter la collusion multi-agents (blackjack à 4 agents, jeu de Simmons), sur Qwen3-32B-AWQ et GPT-OSS-20B. Scores combinés entre couches et calibrés sur des épisodes honnêtes. Informer les agents de la présence du moniteur, voire leur renvoyer son score, ne les cache pas.",
+     "ce_qui_reste": "Pas d'accumulation séquentielle toujours valide vue, pas de lemme de budget, pas de sabotage diffus de tâches floues.",
+     "id": "2609.03035",
+     "lieu": "arXiv",
+     "niveau": "adjacent",
+     "preuve": "resume_moteur",
+     "recouvrement": "Monitoring par activations en multi-agents avec agrégation de scores de sondes.",
+     "titre": "You Can't Escape Your Own Activations : Evaluation Awareness and Multi-Agent Monitoring",
+     "urls": [
+      "https://arxiv.org/abs/2609.03035v1"
+     ]
+    },
+    {
+     "absent_etat_de_l_art": true,
+     "auteurs": "incertain (non vus)",
+     "ce_que_ca_fait": "Benchmark NARCBench avec cinq techniques de sondage qui agrègent des scores de tromperie par agent pour classer au niveau du groupe. Le signal est localisé au niveau des tokens.",
+     "ce_qui_reste": "Pas de dimension temporelle séquentielle vue, pas de garantie toujours valide, pas de lemme d'invariance.",
+     "id": "2604.01151",
+     "lieu": "arXiv ; billet LessWrong",
+     "niveau": "adjacent",
+     "preuve": "resume_moteur",
+     "recouvrement": "Agrégation inter-agents de scores de sondes internes.",
+     "titre": "Detecting Multi-Agent Collusion Through Multi-Agent Interpretability",
+     "urls": [
+      "https://arxiv.org/abs/2604.01151"
+     ]
+    },
+    {
+     "absent_etat_de_l_art": true,
+     "auteurs": "Haowen Xu, Xue Tan, Lei Ma, Zhihao Zhang, Chao Wang, Qingze Wang, Ping Chen, Jun Dai, Xiaoyan Sun",
+     "ce_que_ca_fait": "AcMAS : détection de comportements malveillants dans des systèmes multi-agents à partir des activations internes de chaque agent local, en partant de l'intuition que les déviations d'activation précèdent les sorties anormales. Gain de F1 de 0,22 en synchrone et 0,55 en asynchrone.",
+     "ce_qui_reste": "Pas d'accumulation de preuve contre un sabotage fragmenté, pas de puissance séquentielle, pas de lemme.",
+     "date": "2026-07-07",
+     "id": "2607.06807",
+     "lieu": "ICML 2026",
+     "niveau": "adjacent",
+     "preuve": "resume_moteur",
+     "recouvrement": "Monitoring par activations par agent en multi-agents.",
+     "titre": "When Agents Go Rogue: Activation-Based Detection of Malicious Behaviors in Multi-Agent Systems",
+     "urls": [
+      "https://arxiv.org/abs/2607.06807"
+     ]
+    },
+    {
+     "absent_etat_de_l_art": true,
+     "auteurs": "Tanzim Ahad et al.",
+     "ce_que_ca_fait": "Un orchestrateur LLM décompose une requête en sous-tâches individuellement bénignes mais conjointement violatrices. Théorème « Decomposition Detectability Threshold » : un plan échappe à tous les classifieurs par sous-tâche de seuil τ si et seulement si FS(P) > 1−τ, et aucune amélioration des classifieurs par sous-tâche ne ferme l'écart.",
+     "ce_qui_reste": "Pas d'agrégateur séquentiel ni de puissance en fonction du budget, pas d'activations.",
+     "id": "2604.08608",
+     "lieu": "AAAI 2026 Summer Symposium",
+     "niveau": "adjacent",
+     "preuve": "resume_moteur",
+     "recouvrement": "Énoncé formel de l'impuissance des classifieurs par action sous fragmentation, analogue de l'effondrement du max par action.",
+     "titre": "Semantic Intent Fragmentation: A Single-Shot Compositional Attack on Multi-Agent AI Pipelines",
+     "urls": [
+      "https://arxiv.org/abs/2604.08608"
+     ]
+    },
+    {
+     "absent_etat_de_l_art": true,
+     "auteurs": "Yueh-Han Chen et al. (liste non vue)",
+     "ce_que_ca_fait": "Attaques par décomposition d'un but malveillant en sous-tâches bénignes. Moniteur séquentiel léger qui évalue cumulativement chaque sous-tâche : jusqu'à 93 % de défense, avec un coût réduit de 90 %.",
+     "ce_qui_reste": "Pas de garantie statistique toujours valide, pas de lemme, pas d'activations ni de multi-agents.",
+     "id": "2506.10949",
+     "lieu": "ICLR 2026",
+     "niveau": "adjacent",
+     "preuve": "resume_moteur",
+     "recouvrement": "Accumulation séquentielle de preuve d'intention répartie, en boîte noire.",
+     "titre": "Monitoring Decomposition Attacks in LLMs with Lightweight Sequential Monitors",
+     "urls": [
+      "https://arxiv.org/abs/2506.10949"
+     ]
+    },
+    {
+     "absent_etat_de_l_art": true,
+     "auteurs": "David Lindner, Charlie Griffin, Tomek Korbak, Roland S. Zimmermann, Geoffrey Irving, Sebastian Farquhar, Alan Cooney",
+     "ce_que_ca_fait": "Identifie les dynamiques réelles : instances parallèles, latence de supervision, attaques incrémentales entre instances, difficulté d'identifier un agent intrigant à partir d'actions isolées. Compare le monitoring synchrone, semi-synchrone et asynchrone.",
+     "ce_qui_reste": "Pas de statistique ni de lemme, pas d'activations.",
+     "id": "2512.22154",
+     "lieu": "arXiv",
+     "niveau": "adjacent",
+     "preuve": "resume_moteur",
+     "recouvrement": "Pose le problème des attaques incrémentales entre instances (temps × agents).",
+     "titre": "Practical challenges of control monitoring in frontier AI deployments",
+     "urls": [
+      "https://arxiv.org/abs/2512.22154"
+     ]
+    },
+    {
+     "absent_etat_de_l_art": true,
+     "auteurs": "Vivek Hebbar (Redwood Research)",
+     "ce_que_ca_fait": "Définit les menaces diffuses : la catastrophe exige de nombreuses mauvaises actions, chacune faible preuve d'intention, par opposition aux menaces concentrées. Propose l'entraînement en ligne pendant le déploiement.",
+     "ce_qui_reste": "Pas de formalisation statistique de l'accumulation, pas d'activations.",
+     "date": "2025-04",
+     "id": "https://blog.redwoodresearch.org/p/how-can-we-solve-diffuse-threats",
+     "lieu": "Blog Redwood Research",
+     "niveau": "adjacent",
+     "preuve": "resume_moteur",
+     "recouvrement": "Cadre conceptuel du sabotage diffus et de la faible incrimination par action.",
+     "titre": "How can we solve diffuse threats like research sabotage with AI control?",
+     "urls": [
+      "https://blog.redwoodresearch.org/p/how-can-we-solve-diffuse-threats",
+      "https://blog.redwoodresearch.org/p/notes-on-handling-non-concentrated"
+     ]
+    },
+    {
+     "absent_etat_de_l_art": true,
+     "auteurs": "incertain (non vus)",
+     "ce_que_ca_fait": "Contrôle d'agents par rééchantillonnage. Selon un résumé de moteur dont l'attribution précise est incertaine, le papier agrège les scores de suspicion sur la trajectoire, par exemple un audit « N-strikes » déclenché quand N actions dépassent un seuil.",
+     "ce_qui_reste": "Pas de garantie toujours valide, pas de lemme, pas d'activations.",
+     "id": "2504.10374",
+     "lieu": "arXiv ; Alignment Forum",
+     "niveau": "adjacent",
+     "preuve": "resume_moteur",
+     "recouvrement": "Agrégateurs heuristiques de suspicion sur une trajectoire, en boîte noire.",
+     "titre": "Ctrl-Z: Controlling AI Agents via Resampling",
+     "urls": [
+      "https://arxiv.org/pdf/2504.10374",
+      "https://www.alignmentforum.org/posts/LPHMMMZFAWog6ty5x/ctrl-z-controlling-ai-agents-via-resampling"
+     ]
+    },
+    {
+     "absent_etat_de_l_art": true,
+     "auteurs": "non vus dans les résultats",
+     "ce_que_ca_fait": "Cadre e-détecteur : CUSUM correspond au max d'e-processus et Shiryaev-Roberts à leur somme.",
+     "ce_qui_reste": "Le cadre adverse, le budget, les activations et le multi-agents.",
+     "id": "2203.03532",
+     "lieu": "NEJSDS",
+     "niveau": "fond",
+     "preuve": "resume_moteur",
+     "recouvrement": "Fondement pour un détecteur de rupture toujours valide construit à partir d'e-processus.",
+     "titre": "E-detectors: a nonparametric framework for sequential change detection",
+     "urls": [
+      "https://arxiv.org/pdf/2203.03532",
+      "https://nejsds.nestat.org/journal/NEJSDS/article/59/info"
+     ]
+    },
+    {
+     "absent_etat_de_l_art": true,
+     "auteurs": "Yao Xie",
+     "ce_que_ca_fait": "Programme : modéliser les interactions LLM comme des processus dépendants, obtenir des garanties valides sous dépendance et adaptation, monitorer par alarmes séquentielles et détection de rupture.",
+     "ce_qui_reste": "Le sabotage adverse fragmenté, le lemme et les activations.",
+     "id": "2606.07624",
+     "lieu": "Discussion invitée, The American Statistician (arXiv)",
+     "niveau": "adjacent",
+     "preuve": "resume_moteur",
+     "recouvrement": "Cadre général de monitoring séquentiel des LLM.",
+     "titre": "Sequential statistical inference for Large Language Models: Representation, validity, and monitoring",
+     "urls": [
+      "https://arxiv.org/abs/2606.07624"
+     ]
+    },
+    {
+     "absent_etat_de_l_art": true,
+     "auteurs": "Hayden Helm, Carey Priebe, Brandon Duderstadt",
+     "ce_que_ca_fait": "Cartes de contrôle adaptatives pour systèmes multi-agents en boîte noire. Montre la vulnérabilité aux agents adverses : soit les agents ne peuvent pas apprendre, soit le système est attaquable.",
+     "ce_qui_reste": "Le lemme de budget, l'e-processus et les activations.",
+     "date": "2026-05-11",
+     "id": "2605.11135",
+     "lieu": "arXiv",
+     "niveau": "adjacent",
+     "preuve": "resume_moteur",
+     "recouvrement": "SPC multi-agents et vulnérabilité adverse.",
+     "titre": "Control Charts for Multi-agent Systems",
+     "urls": [
+      "https://arxiv.org/abs/2605.11135"
+     ]
+    },
+    {
+     "absent_etat_de_l_art": true,
+     "auteurs": "Vijitha Mittapalli et al. (dont Franck Dernoncourt, Ryan A. Rossi, Nesreen K. Ahmed)",
+     "ce_que_ca_fait": "Moniteur LLM de trajectoires longues (boucle Triage-Inspect-Judge) qui accumule la preuve entre pas pour détecter des objectifs malveillants poursuivis par des actions individuellement bénignes. F1 de 0,713.",
+     "ce_qui_reste": "Pas de garantie statistique, pas de lemme, pas d'activations.",
+     "date": "2026-06-05",
+     "id": "2606.07054",
+     "lieu": "arXiv",
+     "niveau": "adjacent",
+     "preuve": "resume_moteur",
+     "recouvrement": "Agrégation de preuve entre pas contre un sabotage fragmenté, en boîte noire.",
+     "titre": "TRACE: Trajectory Reasoning through Adaptive Cross-Step Evidence Aggregation for LLM Agents",
+     "urls": [
+      "https://arxiv.org/abs/2606.07054"
+     ]
+    }
+   ],
+   "justification": "Provenance : niveau transcription. Aucun PDF n'a été lu, et WebFetch a été refusé par la politique réseau pour arxiv.org et alignment.anthropic.com. Tous les contenus ci-dessous viennent des résumés du moteur de recherche. Le budget WebSearch de la session (200) s'est épuisé après environ 56 requêtes. Trois requêtes prévues n'ont donc pas été exécutées : Wen et al. (taux d'attaque), Koning & Grünwald 2208.07610 et la e-puissance « GROW ».\n\n(1) Le cœur statistique du lemme n'est pas neuf ; il relève du fond. Sous un e-processus de mélange gaussien appliqué à la somme des scores, la statistique ne dépend que de S_t=ΣX_i et de V_t (frontières à mélange normal de Howard, Ramdas, McAuliffe & Sekhon 2021, avec suites de confiance pour la moyenne courante de moyennes variables). Sous l'alternative, la puissance ne dépend donc que de B=Σδ et de la variance : c'est un corollaire presque immédiat. La dichotomie « somme puissante pour un signal dense et étalé, max puissant pour un signal concentré » est classique, en hors-ligne (Arias-Castro, Candès & Plan 2011 ; Ingster ; Donoho & Jin) comme en séquentiel multi-flux (somme de CUSUM locaux de Mei 2010, quasi optimale pour toute combinaison de flux affectés ; mélange sur la fraction de flux affectés de Xie & Siegmund 2013). Le délai de détection gouverné par la divergence KL cumulée est également connu (Liang, Tartakovsky & Veeravalli 2023, observations post-rupture non stationnaires). L'arbitrage furtivité/dommage borné par un budget KL est formalisé en systèmes cyber-physiques (ε-furtivité de Bai, Pasqualetti & Gupta 2017) et en communication couverte (loi de la racine carrée de Bash, Goeckel & Towsley).\n\nMise en garde de fond, qui est mon analyse et non une source : l'invariance à la répartition est une propriété de l'agrégateur linéaire (somme ou mélange sur la somme), pas du test du rapport de vraisemblance oracle, qui dépend de Σδ². Le lemme doit être énoncé comme une propriété de l'agrégateur somme/mélange, sinon il est faux en général.\n\n(2) En contrôle de l'IA, le phénomène et la réponse en boîte noire sont désormais occupés empiriquement :\n- 2606.10456 (connu) amortit un budget de dommage sur les pas. Il montre l'effondrement des moniteurs de marginales (Proposition 1 : puissance égale au taux de faux positifs) et le maintien de CUSUM/SPRT. Ce résultat recouvre aussi largement le « théorème négatif » du Papier A.\n- 2607.07368 établit l'« effet de fragmentation » entre agents pour les moniteurs par instance. Selon le résumé, la dilution n'expliquerait qu'une petite part de la chute de suspicion.\n- 2607.02514 traite les attaques graduelles entre PR, avec un moniteur à état « link-tracker ».\n- 2605.31593 agrège en ligne des signaux faibles entre comptes et sous-agents.\n- 2506.10949 propose un moniteur séquentiel cumulatif.\n- Wen et al. 2411.17693 propose un macro-protocole bayésien qui accumule la crédence sur les tâches.\n\n(3) Ce qui reste apparemment vierge (gap à vérifier, pas une conclusion) :\n- l'énoncé formel du lemme sur des scores de sondes d'activations ;\n- l'accumulation séquentielle toujours valide (e-processus) de sondes internes contre un sabotage diffus. Les plus proches sont la cascade de portes calibrées sur sondes de 2607.06503, qui vise la prédiction d'échec et non le sabotage, et l'agrégation de scores de sondes multi-agents par épisode de 2609.03035 et 2604.01151 ;\n- l'indexation unifiée temps × agents dans un même processus e ;\n- la condition de non-décorrélabilité dommage/furtivité pour la preuve interne ;\n- la distinction explicite entre puissance de Wald et garantie toujours valide dans ce cadre.\n\nPoint d'alerte : le constat de 2607.07368, si le PDF le confirme, montre qu'en boîte noire la preuve par action n'est pas conservée, puisque la suspicion chute plus que par simple dilution. Cela soutient la thèse, mais la conservation de la preuve interne doit alors être démontrée empiriquement et non supposée.\n\nHors zone mais important pour le programme : 2606.08892 (Terekhov, Gulcehre, Hebbar & Benton, « Diffuse AI Control on Fuzzy Tasks ») occupe le cadre expérimental du Papier A (sabotage diffus de tâches floues, génération d'idées d'expériences ML, juge faible). Il touche aussi le Papier C (robustesse du juge faible selon le prompt).\n\nVerdict : zone partiellement occupée. Le lemme mathématique relève du fond ; le phénomène et les accumulateurs en boîte noire sont occupés. Restent revendicables l'instanciation boîte blanche et toujours valide, l'indexation unifiée et la condition de non-décorrélabilité, sous réserve de lecture des PDF de 2606.10456, 2607.07368 et 2411.17693.",
+   "pistes_non_resolues": [
+    "Lire le PDF de 2606.10456. Il faut vérifier s'il contient un énoncé sur un régime à décalage de moyenne non nul (invariance à la répartition de B), une extension multi-agents ou une garantie toujours valide. Les résumés mentionnent seulement le budget de dommage amorti et la Proposition 1 ; le code est sur GitHub (Gyyz/distributed_sabotage_frontier), non consulté.",
+    "Lire 2607.07368 pour confirmer que la dilution explique peu la chute de suspicion. Si c'est confirmé en boîte noire, c'est un contre-exemple direct à la conservation de la preuve par action, qu'il faut confronter à la condition de non-décorrélabilité côté activations. Vérifier aussi si un moniteur inter-agents y est testé.",
+    "Wen et al. 2411.17693 : vérifier si le red team optimise son taux ou sa répartition d'attaques contre le macro-protocole, ce qui serait une forme d'analyse de fragmentation (requête non exécutée, budget épuisé).",
+    "Koning & Grünwald 2208.07610 et la littérature « safe testing » / GROW / e-puissance (Grünwald, Shafer, Vovk) : non vérifiées. Il s'agit de voir si un énoncé explicite d'e-puissance pour des alternatives non identiquement distribuées à somme fixée existe.",
+    "Ctrl-Z 2504.10374 : l'attribution de l'agrégateur « N-strikes » vient d'un résumé de moteur, peut-être d'une issue GitHub de LinuxArena. Le PDF n'a pas été lu.",
+    "StepShield 2601.22136 (« When, Not Whether to Intervene on Rogue Agents ») et 2501.04130 (« Multiple testing in multi-stream sequential change detection ») : seulement titre et URL vus, contenu non vérifié.",
+    "2604.01151 (NARCBench) : auteurs non vus, et on ne sait pas si l'agrégation des scores de sondes est aussi temporelle.",
+    "Billet Redwood « Notes on handling non-concentrated failures with AI control » : contenu et auteur non vérifiés. Les billets LessWrong/AF sur l'agrégation de scores de moniteur par trajectoire sont inaccessibles.",
+    "Tartakovsky (détection multi-flux générale) et Moustakides et Veeravalli (ruptures transitoires) : pas de requête dédiée.",
+    "Listings arXiv 2609/2610 non parcourus exhaustivement. Une suite boîte blanche de 2606.10456 ou de 2607.07368 parue après le 14 septembre 2026 ne peut être exclue.",
+    "Psychologie sociale et criminologie (fractionnement de fraudes, structuring/smurfing en lutte anti-blanchiment, détection de comptes coordonnés) : non explorées. Ce sont des analogues possibles de la fragmentation sous seuil par action."
+   ],
+   "requetes": [
+    "\"Distributed Detectability Band\" Zhang Gao arXiv 2606.10456",
+    "\"Adaptive Deployment of Untrusted LLMs Reduces Distributed Threats\" macro-protocol",
+    "sequential test power depends only on sum of mean shifts not allocation e-process mixture",
+    "\"Distributed Detectability Band\" budget fragmentation per-step alarm CUSUM sum of drifts",
+    "distributed sabotage AI control monitor aggregate suspicion across many steps \"sub-threshold\" sabotage",
+    "arXiv 2609 diffuse threats sequential monitoring AI control e-values anytime-valid",
+    "\"Multi-Agent AI Control: Distributed Attacks Hamper Per-Instance Monitors\"",
+    "\"Distributed Attacks in Persistent-State AI Control\" arXiv 2607.02514",
+    "\"Anytime Detection of Strategic Deviations in Multi-Agent Systems\" arXiv 2601.05427",
+    "\"When Agents Go Rogue: Activation-Based Detection of Malicious Behaviors in Multi-Agent Systems\"",
+    "\"Control Charts for Multi-agent Systems\" arXiv 2605.11135",
+    "\"MOLE: Detecting Insider Threats in AI Agents\" arXiv 2609.06966",
+    "Arias-Castro Candès Plan \"Global testing under sparse alternatives\" ANOVA multiple comparisons higher criticism sum test versus max test",
+    "\"Sequential Statistical Inference for Large Language Models: Representation, Validity, and Monitoring\"",
+    "Xie Siegmund 2013 \"sequential multi-sensor change-point detection\" fraction of affected streams mixture likelihood",
+    "linear probe activations agent trajectory accumulate evidence across steps sequential test deception detection sabotage",
+    "Redwood Research \"diffuse threats\" OR \"non-concentrated\" OR \"low-stakes\" AI control accumulating evidence many actions",
+    "\"Ramtin\" Nain Towsley covert adversary detection delay arXiv 2601.20022",
+    "\"Diffuse AI Control on Fuzzy Tasks\" arXiv 2606.08892",
+    "\"Covert Bayesian Quickest Change Detection\" arXiv 2605.16140",
+    "\"How can we solve diffuse threats like research sabotage with AI control\" Redwood",
+    "confidence sequence time-varying means \"average of conditional means\" betting Waudby-Smith Ramdas nonstationary",
+    "quickest change detection non-stationary post-change observations detection delay depends on cumulative KL divergence Liang Veeravalli",
+    "stealthy attack cyber-physical system detectability stealthiness trade-off damage bound CUSUM detector attacker spreads attack small increments",
+    "Bai Pasqualetti Gupta \"Data-injection attacks in stochastic control systems: Detectability and performance tradeoffs\" epsilon-stealthy KL divergence",
+    "\"fragmentation\" attack AI agents per-action monitor evasion aggregate sequential detector power fixed total harm budget theorem",
+    "arXiv 2608 OR 2609 activation probes trajectory-level monitoring agents aggregate probe scores across actions sabotage detection",
+    "SPRT OR CUSUM OR \"e-process\" on linear probe scores LLM internal activations sequential detection misbehavior anytime-valid",
+    "\"Semantic Intent Fragmentation\" \"Decomposition Detectability Threshold\" arXiv 2604.08608",
+    "\"You Can't Escape Your Own Activations\" evaluation awareness multi-agent monitoring authors probes collusion",
+    "\"marginal-preserving\" distributed sabotage \"harm budget\" amortizing across steps monitor theorem power equals false positive rate marginal functionals",
+    "Zhang Qinqin Gao Yuze sabotage frontier follow-up multi-agent spatio-temporal monitor activations 2026",
+    "\"sparse\" versus \"dense\" alternatives sequential detection \"sum\" statistic optimal when signal spread thinly many small effects power depends on total signal",
+    "\"Stateful Online Monitoring Catches Distributed Agent Attacks\" arXiv 2605.31593",
+    "\"The Best-Laid SCHEMEs\" coordinated sabotage monitoring multi-agent arXiv 2605.29178 aggregation",
+    "\"Practical challenges of control monitoring in frontier AI deployments\" arXiv 2512.22154 asynchronous monitoring",
+    "anytime-valid inference time-varying treatment effects \"running average\" mixture martingale power depends on cumulative effect Howard Ramdas McAuliffe Sekhon",
+    "\"Gaussian mixture\" martingale \"sum of drifts\" detection non-identical shifts same total shift distribution of shifts irrelevant sequential test",
+    "\"Wald\" sequential analysis power non-identically distributed alternatives \"only through\" sum of means variance \"invariant to\" allocation of drift across time",
+    "\"On the Sequential Test and Distributed Detection\" arXiv 2609.09358",
+    "\"Calibration-Family Overfit\" trusted sabotage monitors arXiv 2607.06596",
+    "\"ResearchArena: Evaluating Sabotage and Monitoring in Automated AI R&D\" arXiv 2607.19321 diffuse sabotage aggregation",
+    "sandbagging detection sequential hypothesis testing accumulate evidence across many tasks statistical power small per-task deviation",
+    "Mei 2010 \"Efficient scalable schemes for monitoring a large number of data streams\" sum of local CUSUM statistics Biometrika",
+    "square root law covert communication undetectable signal total KL budget O(sqrt n) Bash Goeckel Towsley attacker spreads perturbation",
+    "AI control monitor suspicion scores combine across trajectory steps max versus mean aggregation agent attack low-suspicion actions Ctrl-Z resampling",
+    "\"E-valuator\" arXiv 2512.03109 e-values agent trajectories sequential",
+    "space-time scan statistic CUSUM unified index time and sensors multi-agent anomaly detection fixed total signal spread across agents and time detection power",
+    "white-box activation monitoring diffuse threats research sabotage probes \"low-stakes\" control online training probe-based",
+    "arXiv 2610 sabotage monitor sequential evidence accumulation probes \"fragmented\" attack agents October 2026",
+    "\"Multi-Agent AI Control\" Makins Angelini Shams Phuong fragmentation effect \"not simply dilution\" cross-agent monitor aggregate FakeLab",
+    "\"TRACE: Trajectory Reasoning through Adaptive Cross-Step Evidence Aggregation for LLM Agents\" 2606.07054",
+    "\"Counter-Swarm Doctrine\" coordinated agent intrusions arXiv 2609.06140",
+    "\"Doomed from the Start\" early abort LLM agent episodes recall-controlled probe cascade arXiv 2607.06503",
+    "\"Monitoring Decomposition Attacks in LLMs with Lightweight Sequential Monitors\" cumulative intent",
+    "Donoho Jin higher criticism \"rare and weak\" detection boundary sum test dense regime Ingster",
+    "[NON EXÉCUTÉE, budget épuisé] Wen Hebbar adaptive deployment untrusted LLMs red team optimal backdoor rate credence macro-protocol",
+    "[NON EXÉCUTÉE, budget épuisé] Koning Grünwald arXiv 2208.07610",
+    "[NON EXÉCUTÉE, budget épuisé] Grünwald safe testing GROW e-power mixture e-variable",
+    "[WebFetch, bloqué] https://arxiv.org/abs/2606.10456",
+    "[WebFetch, bloqué] https://alignment.anthropic.com/2026/diffuse-ai-control/"
+   ],
+   "verdict": "partiellement_occupee",
+   "zone": "A-L : lemme d'additivité, c'est-à-dire l'invariance de la puissance au budget total B=Σδ_k et l'effondrement du max par action sous fragmentation, sur scores de sondes internes, avec indexation unifiée temps/agents"
+  },
+  {
+   "candidats": [],
+   "justification": "Je n'ai pas pu faire la recherche. Le quota de WebSearch de la session était déjà épuisé (200 appels sur 200) quand cette tâche a commencé. Mes trois premières requêtes ont été refusées sans aucun résultat, avec le message : « Web search was not performed: this session has used its web search budget ». Aucune requête n'a donc abouti, alors que la consigne en demande au moins 12. Je n'ai vu aucun titre, aucune URL et aucun résumé de moteur, et je n'ai lu aucune page.\n\nJe n'ai pas essayé de passer par un autre canal, par exemple WebFetch sur un moteur de recherche tiers. Ce serait contourner une limite fixée pour la session. De plus, WebFetch et curl sont bloqués pour arxiv.org, openreview.net, semanticscholar.org et les autres sources utiles.\n\nLe répertoire de travail contient seulement les documents du programme (programme v2, état de l'art v1, briefs). Ce sont les sources de niveau « transcription » que la mission doit vérifier ; ils n'apportent aucune preuve indépendante. Je ne les ai pas rouverts : le contenu utile pour A-H2 est déjà résumé dans la tâche.\n\nConséquence : sur cette zone, je ne peux ni confirmer ni réfuter que l'application de l'accumulation séquentielle toujours valide aux sondes internes est vierge. Les candidats déjà connus restent au niveau « transcription, non opposable » :\n- E-valuator 2512.03109 ;\n- Probe Trajectories 2605.18549 ;\n- TRACES 2605.27690 ;\n- TRACE 2606.07054 ;\n- NARCBench 2604.01151 ;\n- Das et al. 2609.03035 ;\n- McKenzie 2506.10805.\n\nJe ne les reporte pas comme candidats, car je n'ai vu aucun d'eux dans un résultat de cette session. Le schéma exige un niveau de preuve (titre_url_vus, resume_moteur, page_lue) que je ne peux pas revendiquer honnêtement pour eux.\n\nAvertissement anti-faux-gap : l'absence de candidats ici ne veut pas dire que la zone est vierge. Ce verdict ne doit pas servir à lancer le programme.\n\nPour la suite, il faut relancer la zone dans une session avec un quota de recherche disponible. L'utilisateur peut relever CLAUDE_CODE_MAX_WEB_SEARCHES_PER_SESSION, ou la zone peut être confiée à une nouvelle session.\n\nD'après la description de la tâche seulement (non vérifié), deux pistes paraissent les plus menaçantes et sont à vérifier en premier :\n- les moniteurs séquentiels légers contre les attaques par décomposition (Chen et al., 2025, piste fournie par l'orchestrateur, attribution non garantie) ;\n- Probe Trajectories, qui traite déjà les scores de sonde comme une série temporelle, mais sur une chaîne de pensée.",
+   "pistes_non_resolues": [
+    "Toute la zone est à relancer dans une session dont le quota WebSearch n'est pas épuisé : aucune requête n'a abouti ici.",
+    "Chen et al. (2025), « Monitoring Decomposition Attacks in LLMs with Lightweight Sequential Monitors » : vérifier l'identifiant, les auteurs, et si le moniteur séquentiel lit des activations (boîte blanche) ou seulement du texte, et s'il donne une garantie de faux positifs toujours valide. C'est la piste de collision la plus directe.",
+    "Angle (1) : croiser e-value, e-process, anytime-valid, CUSUM, SPRT, martingale de test et sequential test avec probe, linear probe, activation, internal representations et white-box.",
+    "Angle (2) : détection multi-tours de jailbreak par sondes d'activation ; streaming probes et online probes ; activation monitoring over agent trajectories ; probe-based monitoring of agents.",
+    "Angle (3) : suites de NARCBench 2604.01151 (Rose, Cullen, Schroeder de Witt), où les tests séquentiels sont annoncés comme prochaine étape. Chercher une suite parue entre septembre et octobre 2026.",
+    "Angle (3) : publications de l'équipe boîte blanche de l'institut britannique (AISI) et de Goodfire sur le monitoring d'agents par sondes.",
+    "Angle (4) : arXiv 2609.* et 2610.* croisés avec probe, sequential, e-value, sabotage, agent.",
+    "Vérifier en lisant le PDF (et pas seulement par transcription) l'ensemble des candidats déjà connus : E-valuator 2512.03109, Probe Trajectories 2605.18549, TRACES 2605.27690, TRACE 2606.07054, Das et al. 2609.03035, McKenzie 2506.10805. Point clé : Probe Trajectories ou Das et al. ajoutent-ils déjà une garantie toujours valide sur des scores de sondes ?",
+    "Hors du contrôle de l'IA : détection séquentielle de rupture sur des représentations internes de réseaux (dérive, données hors distribution, attaque adverse détectée par CUSUM sur les activations). C'est une antériorité possible pour la partie méthodologique.",
+    "Hors du contrôle de l'IA : sécurité informatique, avec la détection d'intrusion lente (low-and-slow) par CUSUM ou SPRT sur des signaux internes, analogue conceptuel de la fragmentation sous le seuil."
+   ],
+   "requetes": [
+    "\"Monitoring Decomposition Attacks in LLMs with Lightweight Sequential Monitors\" — NON EXÉCUTÉE (quota WebSearch épuisé, 200/200)",
+    "anytime-valid sequential test linear probe activations agent sabotage detection — NON EXÉCUTÉE (quota épuisé)",
+    "e-process activation probe scores multi-turn monitoring LLM agent — NON EXÉCUTÉE (quota épuisé)"
+   ],
+   "verdict": "indeterminee",
+   "zone": "A-H2 — Accumulation séquentielle toujours valide (processus e, somme cumulée) de scores de sondes internes lues dans les activations de l'agent qui agit, sur trajectoire multi-étapes"
+  },
+  {
+   "candidats": [],
+   "justification": "Je n'ai fait AUCUNE recherche affirmative. Le budget WebSearch de la session était déjà épuisé (200 appels sur 200, consommés avant mon lancement, sans doute par les autres sous-agents du workflow). Les trois requêtes que j'ai tentées ont toutes été refusées par l'outil, qui demande de ne plus en lancer, et je n'ai pas contourné ce plafond. J'ai fait deux lectures directes. alignment.anthropic.com est bloqué par le proxy (EGRESS_BLOCKED). www.anthropic.com/research a été lu : la page ne montre aucun billet sur les sondes, l'obfuscation d'activations ou la surveillance d'agents. Ce n'est pas un indice d'absence : cette page ne couvre pas la littérature. Je ne peux donc ni confirmer ni réfuter que la zone est vierge. La liste des candidats est vide parce que rien n'a été vu dans un résultat de recherche, pas parce que rien n'existe. Les quatre références de l'état de l'art (2506.14261, 2412.09565, 2512.11949, 2601.20022) n'ont pas été recorroborées non plus. Selon la règle anti-faux-gap, la revendication « jamais testé » reste une question ouverte. Raisonnement a priori, sans valeur de preuve. (i) Si une trajectoire est traitée comme un long contexte de tokens, une agrégation max ou attention sur la trajectoire est formellement proche d'une agrégation au niveau token. Une collision pourrait donc se cacher sous la terminologie « long-context probes », « multi-turn » ou « conversation-level monitoring » plutôt que « action-level ». (ii) Ce qui distingue vraiment la revendication est le couplage de trois éléments : accumulation séquentielle toujours valide (processus e), attaquant RL qui connaît l'agrégateur, et unités d'action dans une tâche agentique. C'est sur ce couplage que la recherche doit porter. Il faut relancer cette zone avec un budget de recherche relevé (variable CLAUDE_CODE_MAX_WEB_SEARCHES_PER_SESSION) avant toute conclusion.",
+   "pistes_non_resolues": [
+    "TOUTE LA ZONE EST À REFAIRE. Il faut au moins 12 requêtes WebSearch, une fois le plafond CLAUDE_CODE_MAX_WEB_SEARCHES_PER_SESSION relevé. Aucune piste ci-dessous n'a été vérifiée : celles qui viennent de la mémoire du modèle (coupure juin 2026) ont des titres approximatifs et des auteurs ou dates incertains, et ne sont pas opposables.",
+    "Angle 1 (évasion de sondes en contexte agentique) — requêtes à lancer : \"activation probe\" evasion agent trajectory reinforcement learning ; \"obfuscated activations\" multi-turn OR agentic ; \"latent-space monitor\" agent sabotage evasion ; \"white-box monitor\" \"AI control\" probe obfuscation 2026 ; arXiv 2609 OR 2610 probe obfuscation agent.",
+    "Angle 2 (agrégations robustes et attaquant adaptatif) — requêtes à lancer : \"max aggregation\" OR \"attention probe\" adversarial robustness probes ; \"adversarially robust\" probe aggregation \"adaptive attack\" ; \"multimax\" probe aggregation long context (piste de mémoire : un travail de type « production-ready probes » chez un grand laboratoire, qui discute des agrégations de sondes sur long contexte, d'identité et de date incertaines) ; \"high-stakes interactions\" activation probes aggregation (piste de mémoire : comparaison d'agrégations mean/max/attention au niveau token, auteurs incertains).",
+    "Angle 3 (attaques contre moniteurs séquentiels) — requêtes à lancer : \"adaptive attacks\" trusted monitor \"AI control\" (piste de mémoire : un travail sur des attaques adaptatives qui subvertissent des protocoles de contrôle fondés sur un moniteur de confiance, en boîte noire, auteurs incertains) ; \"distributed threats\" OR \"diffuse threats\" adaptive deployment untrusted ; \"Ctrl-Z\" resampling multi-step agent control (piste de mémoire : contrôle multi-étapes d'agents, en boîte noire) ; e-process OR \"anytime-valid\" monitoring adversary LLM.",
+    "Hors sous-champ (fondements possibles, niveau « fond ») — requêtes à lancer : adversarially robust sequential test e-process adaptive adversary ; adversarial change-point detection CUSUM evasion attack ; \"low-and-slow\" attack evasion sequential anomaly detection intrusion (sécurité informatique : attaques lentes et diffuses contre les détecteurs cumulatifs, le cousin direct de la revendication).",
+    "Suites de Gupta & Jenner, à vérifier : requêtes \"Gupta\" \"Jenner\" obfuscation probes 2026 ; travaux qui citent 2506.14261 et mentionnent agent, trajectory ou multi-step ; vérifier aussi ce que fait 2601.20022, dont seul l'identifiant figure dans l'état de l'art.",
+    "Piste de terminologie à couvrir : une collision pourrait être indexée sous « conversation-level probe », « long-horizon monitoring », « episode-level detection », « stateful monitor » ou « monitor evasion via RL fine-tuning » plutôt que sous « action-level ». Il faut aussi vérifier si les benchmarks d'agents saboteurs avec moniteurs (de type SHADE-Arena, identité exacte incertaine) ont des variantes boîte blanche ou sondes."
+   ],
+   "requetes": [
+    "[REFUSÉE — budget WebSearch épuisé, 200/200] RL-Obfuscation language models learn to evade latent-space monitors 2506.14261",
+    "[REFUSÉE — budget WebSearch épuisé, 200/200] probe evasion agentic multi-turn activation obfuscation reinforcement learning monitor",
+    "[REFUSÉE — budget WebSearch épuisé, 200/200] Neural Chameleons language models evade unseen activation monitors 2512.11949",
+    "[WebFetch, bloqué EGRESS_BLOCKED] https://alignment.anthropic.com/ — index des billets (sondes, obfuscation, surveillance d'agents)",
+    "[WebFetch, page lue] https://www.anthropic.com/research — aucun titre pertinent visible sur la page (non concluant pour le champ)"
+   ],
+   "verdict": "indeterminee",
+   "zone": "A-Tr — Transposition token → action de la robustesse des agrégations max et attention des sondes face à l'évasion par RL (accumulation séquentielle, attaquant adaptatif)"
+  }
+ ],
+ "source": "sorties structurées des sous-agents (journal du workflow wf_338c685a-c33)"
+}

@@ -1,0 +1,68 @@
+Below is the full text of an academic paper in markdown.
+
+You will produce a structured JSON response with three fields: affiliations, research_questions, and costs.
+
+## 1. Affiliations
+
+Extract the author-affiliation mapping. Replace author names with anonymous labels that preserve ordering and distinguish lead/equal-contribution authors. Format as a bipartite graph:
+
+"affiliations": [
+  {"author": "Lead Author 1", "institutions": ["Dept of CS, Stanford University, Stanford, USA"]},
+  {"author": "Lead Author 2", "institutions": ["Google DeepMind, London, UK", "Dept of CS, UCL, London, UK"]},
+  {"author": "Author 3", "institutions": ["Dept of CS, Stanford University, Stanford, USA"]},
+  ...
+]
+
+Rules:
+- Use "Lead Author N" for authors marked as equal contribution or first authors. Use "Author N" for the rest. Use "Corresponding Author N" (always numbered) if explicitly marked as corresponding.
+- Standardize each institution to: "Department, University/Organization, City, Country" (omit fields not available)
+- Preserve the original author ordering from the paper
+
+## 2. Research Questions
+
+Extract and edit the paper's introduction to create a clean problem statement that poses the research questions or problems the paper addresses.
+
+The output should read like a well-motivated introduction that identifies the gap/problem, but does NOT reveal:
+- The specific method, approach, or solution proposed by the authors
+- Experimental setup, datasets used, or evaluation methodology
+- Results, findings, or conclusions
+- Figure or table references (remove all [FIGURE N] blocks)
+- Any named contributions or contribution lists
+- Author names
+
+What to KEEP:
+- Background and motivation for the research area
+- The problem statement or research questions being addressed
+- Why the problem is important or challenging
+- Relevant context from prior work that frames the problem (but not the paper's own approach)
+
+Edit the text to flow naturally. It should read as a well-motivated problem statement that could serve as a prompt for: "Given this problem, how would you design experiments to address it?"
+
+## 3. Experiment Costs
+
+Search the ENTIRE paper for mentions of the total computational/financial cost of running the paper's experiments. Look for:
+- Dollar amounts spent on compute, API calls, human annotation, etc.
+- GPU hours, TPU hours, or similar compute time
+- Cloud computing costs
+- Human labor costs (crowdsourcing, annotation, etc.)
+
+IMPORTANT: Only report costs if you are fairly confident the reported amounts cover ALL or at least the MOST EXPENSIVE experiments in the paper (including appendix). If the paper only mentions the cost of one sub-experiment, one component, or one attack/baseline — but clearly ran many other expensive experiments whose costs are not reported — set total to null. The goal is to capture the full experiment budget, not partial costs that would be misleading.
+
+Return:
+- "total": the total cost as a string (e.g. "$5,000", "1,200 GPU hours"), or null if costs are not comprehensively reported
+- "splits": a list of {"resource": "...", "cost": "..."} objects for individual cost items, or empty list if no breakdown is available
+
+## Output format
+
+Return ONLY valid JSON:
+{
+  "affiliations": [
+    {"author": "Lead Author 1", "institutions": ["Dept of CS, Stanford University, Stanford, USA"]},
+    {"author": "Author 2", "institutions": ["Google DeepMind, London, UK"]}
+  ],
+  "research_questions": "The edited introduction text here...",
+  "costs": {
+    "total": "$5,000" or null,
+    "splits": [{"resource": "GPU compute", "cost": "$3,000"}, {"resource": "human annotation", "cost": "$2,000"}]
+  }
+}

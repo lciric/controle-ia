@@ -1,0 +1,3 @@
+# Moniteurs proposés par sous-agents (cadrage défensif) — v1
+
+28 octobre 2026. Deux sous-agents Opus 4.6, brief `entrees/brief-moniteurs-evasion-v2.md` (liste blanche `entrees/ENTREES-v2.txt`), sans connaissance des moniteurs du programme. Chaque fichier = un couple **brèche analysée** (ce qu'une sonde linéaire ponctuelle raterait) + **moniteur qui la ferme**, gabarit en 7 sections. P1 : famille A (géométrique), 5 moniteurs. P2 : famille C (adaptation), 5 moniteurs. P3 (B+D) et P4 (transversal) : sous-agents Fable 5.1 interrompus (crédit de session épuisé, 429) — rien rendu. Conceptuel ; aucun code ; registre de gouvernance (R-611). Empreintes : `EMPREINTES-v1.txt`.

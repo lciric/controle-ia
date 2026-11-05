@@ -1,0 +1,76 @@
+{
+ "version": "manifeste-simulation-puissance-garde-delta-v5",
+ "passage": "effet-unite-1.0-ebh-k8",
+ "ecrit_par": "le script lui-même, en fin de passage (GD4-05)",
+ "date_utc_debut": "2026-10-29T08:14:32Z",
+ "date_utc_fin": "2026-10-29T08:17:29Z",
+ "duree_s": 177.8,
+ "statut": "exploratoire, non préenregistré, non opposable ; lois synthétiques seulement",
+ "commande": {
+  "ligne": "python3 -I -B /tmp/claude-0/-home-user-controle-ia-travail/75a1275d-b838-5015-909e-b2bfadb395f9/scratchpad/relecture-garde-delta-v5/cl/outils/copie_script/sim_garde_v5.py --repetitions 2000 --comparateurs 8 --tailles 160,400,650 --K 10,3 --taux 0.01 --biais 0 --deltas 0.05 --lecture-ebh A,B --m 8,2,16 --sans-n80 --effet-unite-a 1.0 --lien-coupe --sortie doutes-script/effet-unite-1.0-ebh-k8.json",
+  "argv": [
+   "/tmp/claude-0/-home-user-controle-ia-travail/75a1275d-b838-5015-909e-b2bfadb395f9/scratchpad/relecture-garde-delta-v5/cl/outils/copie_script/sim_garde_v5.py",
+   "--repetitions",
+   "2000",
+   "--comparateurs",
+   "8",
+   "--tailles",
+   "160,400,650",
+   "--K",
+   "10,3",
+   "--taux",
+   "0.01",
+   "--biais",
+   "0",
+   "--deltas",
+   "0.05",
+   "--lecture-ebh",
+   "A,B",
+   "--m",
+   "8,2,16",
+   "--sans-n80",
+   "--effet-unite-a",
+   "1.0",
+   "--lien-coupe",
+   "--sortie",
+   "doutes-script/effet-unite-1.0-ebh-k8.json"
+  ],
+  "repertoire_de_lancement": "/tmp/claude-0/-home-user-controle-ia-travail/75a1275d-b838-5015-909e-b2bfadb395f9/scratchpad/relecture-garde-delta-v5/cl/sorties",
+  "python_isole": true,
+  "sans_bytecode": true
+ },
+ "script": {
+  "chemin": "/tmp/claude-0/-home-user-controle-ia-travail/75a1275d-b838-5015-909e-b2bfadb395f9/scratchpad/relecture-garde-delta-v5/cl/outils/copie_script/sim_garde_v5.py",
+  "sha256": "7d1239e1375892f711a3382ce7d2f53fe432d3acff22b9708384506fdb028871",
+  "commit": null,
+  "etat_du_script": "hors dépôt git"
+ },
+ "graines": {
+  "graine_maitresse": 20261029,
+  "derivation": "SeedSequence([graine, entier des 8 premiers octets de sha256(étiquette)]) ; étiquettes : cellule, « cellule|ebh|modes », « cellule|ebh|nulles_A », « cellule|ebh|nulles_B », « loi|δ|seuil|biais|k|n80|n »",
+  "graines_derivees_par_cellule": {
+   "binomiale_Kh10_Ks10_taux0.01_effetA1.0|delta=0.05|n=160|n_garde=160|biais=0.0|k=8": 2399579322716830799,
+   "binomiale_Kh10_Ks10_taux0.01_effetA1.0|delta=0.05|n=400|n_garde=400|biais=0.0|k=8": 18108811984896369896,
+   "binomiale_Kh10_Ks10_taux0.01_effetA1.0|delta=0.05|n=650|n_garde=650|biais=0.0|k=8": 15806598271653300763,
+   "binomiale_Kh10_Ks10_taux0.01_effetA1.0_lien_coupe|delta=0.05|n=160|n_garde=160|biais=0.0|k=8": 1406422546362100994,
+   "binomiale_Kh10_Ks10_taux0.01_effetA1.0_lien_coupe|delta=0.05|n=400|n_garde=400|biais=0.0|k=8": 3980930626485512072,
+   "binomiale_Kh10_Ks10_taux0.01_effetA1.0_lien_coupe|delta=0.05|n=650|n_garde=650|biais=0.0|k=8": 2795580648042458568,
+   "binomiale_Kh3_Ks3_taux0.01_effetA1.0|delta=0.05|n=160|n_garde=160|biais=0.0|k=8": 12486796196273626641,
+   "binomiale_Kh3_Ks3_taux0.01_effetA1.0|delta=0.05|n=400|n_garde=400|biais=0.0|k=8": 10481571959644049588,
+   "binomiale_Kh3_Ks3_taux0.01_effetA1.0|delta=0.05|n=650|n_garde=650|biais=0.0|k=8": 9924759381514261623,
+   "binomiale_Kh3_Ks3_taux0.01_effetA1.0_lien_coupe|delta=0.05|n=160|n_garde=160|biais=0.0|k=8": 3260794459111769208,
+   "binomiale_Kh3_Ks3_taux0.01_effetA1.0_lien_coupe|delta=0.05|n=400|n_garde=400|biais=0.0|k=8": 8478246249449429412,
+   "binomiale_Kh3_Ks3_taux0.01_effetA1.0_lien_coupe|delta=0.05|n=650|n_garde=650|biais=0.0|k=8": 15499136799030055651
+  }
+ },
+ "reglages_sha256": "308572cb7a6a241c7dec05d4c6607924cc7bcef8a58cdca15f9b325abb3c83f7",
+ "environnement": {
+  "python": "3.13.17",
+  "numpy": "2.5.3",
+  "plateforme": "Linux-6.18.44-fc-v185-x86_64-with-glibc2.39"
+ },
+ "fichiers": {
+  "effet-unite-1.0-ebh-k8.json": "adb7982bdc000639de9e0a2047dacce6291b30ba6454519816a8c83f87611fbb",
+  "effet-unite-1.0-ebh-k8-journal.txt": "2646e036c932adc9fea571101205e27b68267b5d6ff24fae621b8f9c1b69fcfe"
+ }
+}

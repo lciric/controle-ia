@@ -1,0 +1,47 @@
+Below is the full text of an academic paper in markdown.
+
+Classify it along the following axes. Read the FULL paper carefully before answering.
+
+## 1. Theory vs Experiment Balance
+
+Which category best describes this paper?
+
+- "theory_only": Only theoretical results (proofs, theorems, bounds). No experimental evaluation whatsoever.
+- "mostly_theory": Primarily theoretical contributions, but includes a few supporting experiments or simulations.
+- "mostly_experiments": Primarily experimental contributions, with some theoretical analysis or motivation.
+- "experiments_only": Only experimental results. No theorems, proofs, or formal theoretical analysis.
+
+## 2. Data Type
+
+If the paper has ANY experimental results, classify the data used:
+
+- "synthetic_only": All experiments use synthetic/simulated data (including RL in simulation, generated datasets, toy examples).
+- "mostly_synthetic": Primarily synthetic data, with minor use of real-world data.
+- "mostly_real": Primarily real-world data (public benchmarks, collected datasets), with minor synthetic components.
+- "real_only": All experiments use real-world collected data or established public benchmarks.
+- "not_applicable": Paper has no experimental results (theory_only papers).
+
+Notes:
+- Standard real-world ML benchmarks (ImageNet, CIFAR, SWE-bench, MMLU, etc.) count as real data.
+- RL in game/simulation environments (Atari, MuJoCo, etc.) counts as synthetic.
+- Robotics in simulation counts as synthetic; real robot experiments count as real.
+- If the paper uses both real and synthetic data (e.g., trains on real data but evaluates on synthetic test sets, or vice versa), classify as "mostly_real" or "mostly_synthetic" depending on which dominates. Never use "real_only" or "synthetic_only" if both types are present.
+
+## 3. Experimental Domains
+
+List the specific real-world application domains that the paper's experiments target. These should be concrete enough that someone could identify the type of datasets or benchmarks involved — NOT broad ML subfields.
+
+Bad examples (too broad): "computer vision", "NLP", "reinforcement learning", "general ML"
+Good examples (specific): "autonomous driving", "protein folding", "financial time series", "medical imaging", "robot manipulation", "code generation", "video surveillance", "weather forecasting", "drug discovery", "chip design", "virtual reality", "document OCR", "satellite imagery"
+
+If the paper runs experiments but they are purely methodological with no specific application domain (e.g., generic image classification on CIFAR/ImageNet, generic language modeling on WikiText, generic RL on Atari/MuJoCo), return an empty list [].
+If the paper has no experiments, return an empty list [].
+
+## Output format
+
+Return ONLY valid JSON:
+{
+  "theory_experiment": "theory_only" | "mostly\_theory" | "mostly_experiments" | "experiments\_only",
+  "data\_type": "synthetic\_only" | "mostly_synthetic" | "mostly\_real" | "real_only" | "not_applicable",
+  "domains": ["domain1", "domain2"]
+}

@@ -1,0 +1,173 @@
+........................................................................ [ 90%]
+........                                                                 [100%]
+==================================== PASSES ====================================
+____________________________ test_positif_confirme _____________________________
+----------------------------- Captured stdout call -----------------------------
+{"lecture": "positif", "reserves": []}
+____________________ test_signature_du_jeu_a_non_confirmee _____________________
+----------------------------- Captured stdout call -----------------------------
+{"lecture": "positif non confirmé (sens b→a)", "reserves": []}
+___________________ test_forces_inegales_sans_fausse_reserve ___________________
+----------------------------- Captured stdout call -----------------------------
+{"lecture": "positif", "reserves": []}
+_______________________________ test_nul_strict ________________________________
+----------------------------- Captured stdout call -----------------------------
+{"lecture": "nul", "reserves": []}
+_______________________ test_invariance_par_translation ________________________
+----------------------------- Captured stdout call -----------------------------
+{"lecture": "positif", "reserves": []}
+{"lecture": "positif", "reserves": []}
+_____________________ test_temoin_de_permutation_sensible ______________________
+----------------------------- Captured stdout call -----------------------------
+{"lecture": "positif", "reserves": []}
+{"lecture": "positif", "reserves": ["fuite non spécifique : l'écart de λ ne dépasse pas celui du témoin de permutation"]}
+______________________________ test_decisif_sain _______________________________
+----------------------------- Captured stdout call -----------------------------
+{"lecture": "positif", "reserves": []}
+_______________________ test_decisif_sans_commit_attendu _______________________
+----------------------------- Captured stderr call -----------------------------
+usage : analyser_echelle_v3.py STIMULI PETIT GRAND ENTROPIE SORTIE (--commit-attendu C | --repetition)
+________________________ test_decisif_commit_different _________________________
+----------------------------- Captured stderr call -----------------------------
+arrêt : commit des scripts cccccccccccccccccccccccccccccccccccccccc ≠ dddddddddddddddddddddddddddddddddddddddd attendu
+________________________ test_decisif_arbre_non_propre _________________________
+----------------------------- Captured stderr call -----------------------------
+arrêt : arbre des scripts non propre
+_________________________ test_decisif_numpy_different _________________________
+----------------------------- Captured stderr call -----------------------------
+arrêt : numpy 2.4.6 ≠ 0.0.0
+_______________________ test_artefact_dossiers_inverses ________________________
+----------------------------- Captured stderr call -----------------------------
+arrêt : g : modele = essai/grand ≠ essai/petit attendu
+_______________ test_artefact_champ_du_manifeste[revision-autre] _______________
+----------------------------- Captured stderr call -----------------------------
+arrêt : p : revision = autre ≠ r-petit attendu
+______________ test_artefact_champ_du_manifeste[couches-valeur1] _______________
+----------------------------- Captured stderr call -----------------------------
+arrêt : p : couches = [4, 6, 8] ≠ [4, 6] attendu
+________________ test_artefact_champ_du_manifeste[dimension-32] ________________
+----------------------------- Captured stderr call -----------------------------
+arrêt : p : dimension = 32 ≠ 64 attendu
+____________ test_artefact_champ_du_manifeste[type_nombre-float32] _____________
+----------------------------- Captured stderr call -----------------------------
+arrêt : p : type float32 ≠ bfloat16
+_ test_artefact_champ_du_manifeste[sha256_stimuli-0000000000000000000000000000000000000000000000000000000000000000] _
+----------------------------- Captured stderr call -----------------------------
+arrêt : p : mesuré sur d'autres stimuli que ceux analysés
+_________________ test_artefact_champ_du_manifeste[limite-100] _________________
+----------------------------- Captured stderr call -----------------------------
+arrêt : p : mesure limitée (essai), pas une mesure complète
+_______ test_artefact_champ_du_manifeste[rendu_premier-<autre gabarit>] ________
+----------------------------- Captured stderr call -----------------------------
+arrêt : gabarit de dialogue différent entre les deux modèles
+___________ test_artefact_champ_du_manifeste[dernier_jeton-<autre>] ____________
+----------------------------- Captured stderr call -----------------------------
+arrêt : dernier jeton différent entre les deux modèles
+_____________________________ test_artefact_ordre ______________________________
+----------------------------- Captured stderr call -----------------------------
+arrêt : p/ids.json : empreinte ≠ manifeste
+________________________ test_artefact_compagnon_absent ________________________
+----------------------------- Captured stderr call -----------------------------
+arrêt : activations-L6.npy : compagnon d'empreinte absent
+___________________________ test_artefact_empreinte ____________________________
+----------------------------- Captured stderr call -----------------------------
+arrêt : activations-L6.npy : empreinte ≠ compagnon
+____________________________ test_artefact_non_fini ____________________________
+----------------------------- Captured stderr call -----------------------------
+arrêt : activations-L6.npy : valeur non finie
+_____________________________ test_artefact_forme ______________________________
+----------------------------- Captured stderr call -----------------------------
+arrêt : activations-L6.npy : forme (3071, 64) inattendue
+_____________________________ test_sortie_presente _____________________________
+----------------------------- Captured stderr call -----------------------------
+/tmp/claude-0/-home-user/1cc16375-a2bd-54b9-a03f-27d43b6f26a6/scratchpad/contre-lecture-echelle-v4/pytest-base/test_sortie_presente0/sortie existe déjà (R12)
+___________________________ test_repetition_marquee ____________________________
+----------------------------- Captured stdout call -----------------------------
+{"lecture": "répétition, non décisive (positif)", "reserves": []}
+----------------------------- Captured stderr call -----------------------------
+arrêt : p : modele = autre ≠ essai/petit attendu
+___________________________ test_construction_saine ____________________________
+----------------------------- Captured stdout call -----------------------------
+{"stimuli": 3072, "lemmes_communs_a_b": [], "lemmes_communs_b_gabarits": [], "paires_premiere_personne": {"a": 3, "b": 3}, "aires_longueur": {"a": 0.4966, "b": 0.4823}, "ecarts_longueur_paires": {"a": [0, -3, 2, 2, -2, 0], "b": [-1, -1, -2, 1, -3, -1]}, "references_hm1": [], "sha256": "472bf5ec9bbc8f8ac1ed4604dc8870c2ebf48f719a10f2be1f8d37b122b6d162"}
+=========================== short test summary info ============================
+PASSED echelle-v3/tests/test_analyser_echelle_v3.py::test_lire[kw0-positif-0]
+PASSED echelle-v3/tests/test_analyser_echelle_v3.py::test_lire[kw1-positif-1]
+PASSED echelle-v3/tests/test_analyser_echelle_v3.py::test_lire[kw2-positif-1]
+PASSED echelle-v3/tests/test_analyser_echelle_v3.py::test_lire[kw3-positif-1]
+PASSED echelle-v3/tests/test_analyser_echelle_v3.py::test_lire[kw4-positif non confirm\xe9 (sens b\u2192a)-0]
+PASSED echelle-v3/tests/test_analyser_echelle_v3.py::test_lire[kw5-positif non confirm\xe9 (sens b\u2192a)-0]
+PASSED echelle-v3/tests/test_analyser_echelle_v3.py::test_lire[kw6-ind\xe9cis-0]
+PASSED echelle-v3/tests/test_analyser_echelle_v3.py::test_lire[kw7-ind\xe9cis-0]
+PASSED echelle-v3/tests/test_analyser_echelle_v3.py::test_lire[kw8-ind\xe9cis-0]
+PASSED echelle-v3/tests/test_analyser_echelle_v3.py::test_lire[kw9-fuite de signe inverse-0]
+PASSED echelle-v3/tests/test_analyser_echelle_v3.py::test_lire[kw10-fuite de signe inverse-0]
+PASSED echelle-v3/tests/test_analyser_echelle_v3.py::test_lire[kw11-fuite de signe inverse-0]
+PASSED echelle-v3/tests/test_analyser_echelle_v3.py::test_lire[kw12-inverse-0]
+PASSED echelle-v3/tests/test_analyser_echelle_v3.py::test_lire[kw13-inverse-1]
+PASSED echelle-v3/tests/test_analyser_echelle_v3.py::test_lire[kw14-inverse non confirm\xe9 (sens b\u2192a)-0]
+PASSED echelle-v3/tests/test_analyser_echelle_v3.py::test_lire[kw15-pas de fuite-0]
+PASSED echelle-v3/tests/test_analyser_echelle_v3.py::test_lire[kw16-nul-0]
+PASSED echelle-v3/tests/test_analyser_echelle_v3.py::test_lire[kw17-ind\xe9cis-0]
+PASSED echelle-v3/tests/test_analyser_echelle_v3.py::test_lire[kw18-non certifiable-0]
+PASSED echelle-v3/tests/test_analyser_echelle_v3.py::test_lire[kw19-certification asym\xe9trique (grand seulement)-0]
+PASSED echelle-v3/tests/test_analyser_echelle_v3.py::test_lire[kw20-certification asym\xe9trique (petit seulement)-0]
+PASSED echelle-v3/tests/test_analyser_echelle_v3.py::test_aire_ponderee_egale_aire_dupliquee
+PASSED echelle-v3/tests/test_analyser_echelle_v3.py::test_intervalle_non_fini
+PASSED echelle-v3/tests/test_analyser_echelle_v3.py::test_partitions
+PASSED echelle-v3/tests/test_analyser_echelle_v3.py::test_tirage_paires_conditionne
+PASSED echelle-v3/tests/test_analyser_echelle_v3.py::test_positif_confirme
+PASSED echelle-v3/tests/test_analyser_echelle_v3.py::test_signature_du_jeu_a_non_confirmee
+PASSED echelle-v3/tests/test_analyser_echelle_v3.py::test_forces_inegales_sans_fausse_reserve
+PASSED echelle-v3/tests/test_analyser_echelle_v3.py::test_nul_strict
+PASSED echelle-v3/tests/test_analyser_echelle_v3.py::test_invariance_par_translation
+PASSED echelle-v3/tests/test_analyser_echelle_v3.py::test_temoin_de_permutation_sensible
+PASSED echelle-v3/tests/test_analyser_echelle_v3.py::test_decisif_sain
+PASSED echelle-v3/tests/test_analyser_echelle_v3.py::test_decisif_sans_commit_attendu
+PASSED echelle-v3/tests/test_analyser_echelle_v3.py::test_decisif_commit_different
+PASSED echelle-v3/tests/test_analyser_echelle_v3.py::test_decisif_arbre_non_propre
+PASSED echelle-v3/tests/test_analyser_echelle_v3.py::test_decisif_numpy_different
+PASSED echelle-v3/tests/test_analyser_echelle_v3.py::test_artefact_dossiers_inverses
+PASSED echelle-v3/tests/test_analyser_echelle_v3.py::test_artefact_champ_du_manifeste[revision-autre]
+PASSED echelle-v3/tests/test_analyser_echelle_v3.py::test_artefact_champ_du_manifeste[couches-valeur1]
+PASSED echelle-v3/tests/test_analyser_echelle_v3.py::test_artefact_champ_du_manifeste[dimension-32]
+PASSED echelle-v3/tests/test_analyser_echelle_v3.py::test_artefact_champ_du_manifeste[type_nombre-float32]
+PASSED echelle-v3/tests/test_analyser_echelle_v3.py::test_artefact_champ_du_manifeste[sha256_stimuli-0000000000000000000000000000000000000000000000000000000000000000]
+PASSED echelle-v3/tests/test_analyser_echelle_v3.py::test_artefact_champ_du_manifeste[limite-100]
+PASSED echelle-v3/tests/test_analyser_echelle_v3.py::test_artefact_champ_du_manifeste[rendu_premier-<autre gabarit>]
+PASSED echelle-v3/tests/test_analyser_echelle_v3.py::test_artefact_champ_du_manifeste[dernier_jeton-<autre>]
+PASSED echelle-v3/tests/test_analyser_echelle_v3.py::test_artefact_ordre
+PASSED echelle-v3/tests/test_analyser_echelle_v3.py::test_artefact_compagnon_absent
+PASSED echelle-v3/tests/test_analyser_echelle_v3.py::test_artefact_empreinte
+PASSED echelle-v3/tests/test_analyser_echelle_v3.py::test_artefact_non_fini
+PASSED echelle-v3/tests/test_analyser_echelle_v3.py::test_artefact_forme
+PASSED echelle-v3/tests/test_analyser_echelle_v3.py::test_sortie_presente
+PASSED echelle-v3/tests/test_analyser_echelle_v3.py::test_repetition_marquee
+PASSED echelle-v3/tests/test_construire_echelle_v3.py::test_construction_saine
+PASSED echelle-v3/tests/test_construire_echelle_v3.py::test_artefact_gabarit_etat
+PASSED echelle-v3/tests/test_construire_echelle_v3.py::test_artefact_pli_incomplet
+PASSED echelle-v3/tests/test_construire_echelle_v3.py::test_artefact_negation
+PASSED echelle-v3/tests/test_construire_echelle_v3.py::test_artefact_lemmes_communs
+PASSED echelle-v3/tests/test_mesurer_echelle_v3.py::test_couches_relatives
+PASSED echelle-v3/tests/test_mesurer_echelle_v3.py::test_revision_saine_et_artefacts
+PASSED echelle-v3/tests/test_mesurer_echelle_v3.py::test_commit_hash
+PASSED echelle-v3/tests/test_mesurer_echelle_v3.py::test_dernier_jeton
+PASSED echelle-v3/tests/test_mesurer_echelle_v3.py::test_repartition
+PASSED echelle-v3/tests/test_mesurer_echelle_v3.py::test_activation
+PASSED echelle-v3/tests/test_mesurer_echelle_v3.py::test_mesure_complete_modele_minuscule
+PASSED echelle-v3/tests/test_offre_et_surveillance_v3.py::test_offre_saine_moins_chere_et_plafonnee
+PASSED echelle-v3/tests/test_offre_et_surveillance_v3.py::test_offre_plafond_de_duree_calcule
+PASSED echelle-v3/tests/test_offre_et_surveillance_v3.py::test_offre_artefacts[artefact0]
+PASSED echelle-v3/tests/test_offre_et_surveillance_v3.py::test_offre_artefacts[artefact1]
+PASSED echelle-v3/tests/test_offre_et_surveillance_v3.py::test_offre_artefacts[artefact2]
+PASSED echelle-v3/tests/test_offre_et_surveillance_v3.py::test_offre_artefacts[artefact3]
+PASSED echelle-v3/tests/test_offre_et_surveillance_v3.py::test_offre_artefacts[artefact4]
+PASSED echelle-v3/tests/test_offre_et_surveillance_v3.py::test_offre_artefacts[artefact5]
+PASSED echelle-v3/tests/test_offre_et_surveillance_v3.py::test_offre_artefacts[artefact6]
+PASSED echelle-v3/tests/test_offre_et_surveillance_v3.py::test_offre_artefacts[artefact7]
+PASSED echelle-v3/tests/test_offre_et_surveillance_v3.py::test_offre_illisible_ou_ambigue
+PASSED echelle-v3/tests/test_offre_et_surveillance_v3.py::test_surveillance_fin_saine
+PASSED echelle-v3/tests/test_offre_et_surveillance_v3.py::test_surveillance_plafond
+PASSED echelle-v3/tests/test_offre_et_surveillance_v3.py::test_surveillance_arret_non_relu
+PASSED echelle-v3/tests/test_offre_et_surveillance_v3.py::test_surveillance_sans_plafond_refusee
+PASSED echelle-v3/tests/test_offre_et_surveillance_v3.py::test_surveillance_plafond_refuse_au_dela_de_deux_heures
+80 passed in 210.21s (0:03:30)

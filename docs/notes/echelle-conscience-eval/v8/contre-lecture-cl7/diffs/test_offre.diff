@@ -1,0 +1,220 @@
+--- echelle-v6/tests/test_offre_et_surveillance_v6.py	2026-10-27 07:08:16.136025729 +0000
++++ echelle-v7/tests/test_offre_et_surveillance_v7.py	2026-10-27 07:36:18.734343181 +0000
+@@ -1,13 +1,14 @@
+-"""Gardes du choix d'offre (`choisir_offre_v6.py` : CLX-07 ; CLY-03, 24 h de stockage ; CLZ-03, prix majoré de la
++"""Gardes du choix d'offre (`choisir_offre_v7.py` : CLX-07 ; CLY-03, 24 h de stockage ; CLZ-03, prix majoré de la
+ tolérance ; CLZ-05, remontée et débit ; CLW-10, 165 Go de descente), du contrôle du prix relu (`verifier_prix_relu` et
+-`controler_prix_v6.sh`, CLZ-04 : prix égal, +4 %, +6 %, illisible, arrêt relu ou non), du GO cité (`verifier_go_v6.py`,
+-CLW-03 : périmètre, empreinte du texte scellé, plafond, type, auteur), de la surveillance (`surveiller_echelle_v6.sh`,
++`controler_prix_v7.sh`, CLZ-04 : prix égal, +4 %, +6 %, illisible, arrêt relu ou non), du GO cité (`verifier_go_v7.py`,
++CLW-03 : périmètre, empreinte du texte scellé, plafond, type, auteur), de la surveillance (`surveiller_echelle_v7.sh`,
+ R10 ; plafond exigé dans [4 500 ; 7 200] et égal à celui du lanceur, création et identifiant relus, code de fin de
+ l'amorce rendu, conteneur sorti sans ligne de fin, CLZ-11, CLW-09 ; empreinte attendue, CLV-06 ; appels lents ou
+-bloqués, CLV-02) et des gardes du lanceur extraites telles quelles (commit cité, version de vastai, GO relu, empreinte
++bloqués, CLV-02 ; réglages d'essai bornés et consignés, CLU-02 ; pause réelle bornée par le plafond, CLU-03), du plafond
++de dépense avec toute la latence que couvre la marge (CLU-03) et des gardes du lanceur extraites telles quelles (commit cité, version de vastai, GO relu, empreinte
+ du texte scellé extraite, CLV-08 ; lanceur et surveillance du commit, CLV-06), sur des offres fabriquées, un registre
+ fabriqué, un faux dépôt et un faux outil vastai (R5). Aucun appel réseau, aucune instance réelle.
+-Lancement : python -m pytest -q echelle-v6/tests
++Lancement : python -m pytest -q echelle-v7/tests
+ """
+ import hashlib
+ import importlib.util
+@@ -23,7 +24,7 @@
+ import pytest
+ 
+ SCRIPTS = pathlib.Path(__file__).resolve().parent.parent / "scripts"
+-spec = importlib.util.spec_from_file_location("offre", SCRIPTS / "choisir_offre_v6.py")
++spec = importlib.util.spec_from_file_location("offre", SCRIPTS / "choisir_offre_v7.py")
+ OF = importlib.util.module_from_spec(spec)
+ spec.loader.exec_module(OF)
+ 
+@@ -39,7 +40,7 @@
+ def choisir(tmp_path, offres, plafond="8.00", prix_max="3.50", descente_max="0.005"):
+     brut = tmp_path / "brut.json"
+     brut.write_text(json.dumps(offres) if not isinstance(offres, str) else offres)
+-    r = subprocess.run([sys.executable, "-I", "-B", str(SCRIPTS / "choisir_offre_v6.py"), str(brut),
++    r = subprocess.run([sys.executable, "-I", "-B", str(SCRIPTS / "choisir_offre_v7.py"), str(brut),
+                         str(tmp_path / "offre.json"), prix_max, descente_max, plafond, str(tmp_path / "journal.txt"),
+                         str(tmp_path / "relues.json")], capture_output=True, text=True)
+     return r.returncode, r.stdout.split()
+@@ -60,20 +61,28 @@
+     assert code == 0 and int(sortie[3]) < 7200 and float(sortie[4]) <= 8.0
+ 
+ 
+-def depense_reelle_au_pire(o, duree_s, latence_s=80):
+-    """Dépense si tout est facturé au prix relu le plus haut admis (tolérance), latence de la surveillance comprise."""
++PRIX_MAX = 3.5
++LATENCE_COUVERTE_S = OF.MARGE / (OF.TOLERANCE_PRIX * PRIX_MAX) * 3600     # ≈ 195,9 s : la borne de la marge (CLU-03)
++LATENCE_SURVEILLANCE_S = 2 * 30 + 30          # deux appels bornés après le plafond, puis l'appel d'arrêt (CLV-02)
++
++
++def depense_reelle_au_pire(o, duree_s, latence_s=LATENCE_COUVERTE_S):
++    """Dépense si tout est facturé au prix relu le plus haut admis (tolérance), latence de la surveillance comprise :
++    par défaut, toute la latence que couvre la marge (CLU-03 ; la v6 comptait 80 s)."""
+     t = OF.TOLERANCE_PRIX
+     return ((duree_s + latence_s) / 3600 * t * o["dph_total"] + t * OF.DESCENTE_GO * o["inet_down_cost"]
+             + t * OF.MONTEE_GO * o["inet_up_cost"] + t * OF.STOCKAGE_APRES_H * o["storage_total_cost"])
+ 
+ 
+ def test_plafond_tenu_au_prix_majore_sur_tout_le_domaine():
+-    """CLZ-03 : au prix relu le plus haut admis (offre × 1,05), la dépense réelle au pire tient sous 8 USD."""
++    """CLZ-03, CLU-03 : au prix relu le plus haut admis (offre × 1,05), avec toute la latence que couvre la marge
++    (195,9 s, plus que les 90 s que la surveillance admet), la dépense réelle au pire tient sous 8 USD."""
++    assert LATENCE_COUVERTE_S >= LATENCE_SURVEILLANCE_S
+     pires = []
+     for dph, desc, mont, stock in itertools.product((0.8, 1.5, 2.2, 2.9, 3.2, 3.5), (0.0, 0.0026, 0.005),
+                                                     (0.0, 0.004, 0.05), (0.0, 0.05, 0.08, 0.15)):
+         o = offre(1, dph_total=dph, inet_down_cost=desc, inet_up_cost=mont, storage_total_cost=stock)
+-        e = OF.evaluer(o, 3.5, 0.005, 8.0)
++        e = OF.evaluer(o, PRIX_MAX, 0.005, 8.0)
+         if e is not None:
+             pires.append(depense_reelle_au_pire(o, e[1]))
+     assert pires and max(pires) <= 8.0
+@@ -154,7 +163,7 @@
+     (tmp_path / "etat").write_text(etat_apres)
+     env = dict(os.environ, VASTAI=str(faux), INSTANCE_FAUSSE=str(tmp_path / "instance.json"),
+                ETAT_FAUX=str(tmp_path / "etat"), ARRETS_FAUX=str(tmp_path / "arrets"), ATTENTE_ARRET_S="0")
+-    r = subprocess.run(["bash", str(SCRIPTS / "controler_prix_v6.sh"), "12345678", str(tmp_path / "offre.json"),
++    r = subprocess.run(["bash", str(SCRIPTS / "controler_prix_v7.sh"), "12345678", str(tmp_path / "offre.json"),
+                         str(tmp_path / "journal.txt")], env=env, capture_output=True, text=True, timeout=60)
+     arrets = (tmp_path / "arrets").read_text().split() if (tmp_path / "arrets").exists() else []
+     return r.returncode, arrets
+@@ -196,7 +205,7 @@
+   "stop instance") date +%s.%N >> "$ARRETS_FAUX.heure"; echo "$3" >> "$ARRETS_FAUX"; [ -n "$ARRET_EFFECTIF" ] && echo stopped > "$ETAT_FAUX"; echo "arrêt demandé" ;;
+ esac
+ """
+-SURVEILLANCE = SCRIPTS / "surveiller_echelle_v6.sh"
++SURVEILLANCE = SCRIPTS / "surveiller_echelle_v7.sh"
+ 
+ 
+ def sha_fichier(f):
+@@ -205,7 +214,7 @@
+ 
+ def surveiller(tmp_path, journal, duree="4500", effectif="1", sans_duree=False, duree_lancement=None, ident="12345678",
+                age_s=0, creation_lancement=None, etat_initial="running", attendue=None, lenteur="0", appel_s=None,
+-               avec_heure=False):
++               avec_heure=False, reglages=None):
+     """`attendue` : empreinte écrite par le lanceur (par défaut, celle du script ; "" : ligne absente, CLV-06)."""
+     faux = faux_vastai(tmp_path, FAUX_VASTAI)
+     (tmp_path / "etat").write_text(etat_initial)
+@@ -223,10 +232,12 @@
+                ATTENTE_ARRET_S="0", LENTEUR_FAUSSE=lenteur)
+     if appel_s is not None:
+         env["APPEL_S"] = appel_s
++    env.update(reglages or {})
+     if sans_duree:
+         env.pop("DUREE_MAX_S")
++    attente = int(env["ATTENTE_ARRET_S"]) if env["ATTENTE_ARRET_S"].isdigit() else 0
+     r = subprocess.run(["bash", str(SURVEILLANCE), "12345678", creation, str(lanc), str(tmp_path / "s")], env=env,
+-                       capture_output=True, text=True, timeout=60)
++                       capture_output=True, text=True, timeout=60 + attente)
+     arrets = (tmp_path / "arrets").read_text().split() if (tmp_path / "arrets").exists() else []
+     arret_txt = (tmp_path / "s" / "arret.txt").read_text() if (tmp_path / "s" / "arret.txt").exists() else ""
+     if avec_heure:
+@@ -272,6 +283,36 @@
+     assert code == 2 and arrets == []
+ 
+ 
++@pytest.mark.parametrize("reglages", [{"APPEL_S": "0"}, {"APPEL_S": "31"}, {"APPEL_S": "030"}, {"APPEL_S": ""},
++                                      {"PAS_S": "abc"}, {"PAS_S": "0"}, {"PAS_S": "61"}, {"PAS_S": "1.5"},
++                                      {"ATTENTE_ARRET_S": "61"}, {"ATTENTE_ARRET_S": "-1"}])
++def test_surveillance_reglages_hors_bornes(tmp_path, reglages):
++    """CLU-02 : un réglage d'essai illisible ou hors de ses bornes (APPEL_S=0 ôterait la borne des appels ; PAS_S=abc
++    ferait sortir la surveillance sans arrêter l'instance) : refus de partir, code 2, avant tout appel."""
++    code, arrets, txt = surveiller(tmp_path, "AMORCE 2026 : fin, code 0\n", reglages=reglages)
++    assert code == 2 and arrets == [] and txt == "" and not (tmp_path / "s").exists()
++
++
++@pytest.mark.parametrize("reglages", [{}, {"APPEL_S": "1", "PAS_S": "60", "ATTENTE_ARRET_S": "60"},
++                                      {"APPEL_S": "30", "PAS_S": "1", "ATTENTE_ARRET_S": "0"}])
++def test_surveillance_reglages_consignes(tmp_path, reglages):
++    """CLU-02, cas sains (bornes comprises) : les valeurs employées sont écrites en tête d'etats.txt et dans arret.txt."""
++    code, arrets, txt = surveiller(tmp_path, "AMORCE 2026 : fin, code 0\n", reglages=reglages)
++    v = {"APPEL_S": "30", "PAS_S": "1", "ATTENTE_ARRET_S": "0", **reglages}
++    attendu = f"réglages : APPEL_S={v['APPEL_S']} PAS_S={v['PAS_S']} ATTENTE_ARRET_S={v['ATTENTE_ARRET_S']} DUREE_MAX_S=4500"
++    assert code == 0 and arrets == ["12345678"] and attendu in txt
++    assert (tmp_path / "s" / "etats.txt").read_text().splitlines()[0] == attendu
++
++
++def test_surveillance_pause_bornee_par_le_plafond(tmp_path):
++    """CLU-03 : pause réelle (PAS_S = 60 s), appels instantanés, plafond 5 s après le départ : la pause s'arrête au
++    plafond, l'arrêt est demandé au plus 2 s après lui (une pause de 60 s non bornée le demanderait 55 s après)."""
++    code, arrets, txt, heures, fin = surveiller(tmp_path, "ECHELLE 2026 : mesure\n", age_s=4495, avec_heure=True,
++                                                reglages={"PAS_S": "60"})
++    assert code == 5 and arrets == ["12345678"] and "plafond" in txt and "PAS_S=60" in txt
++    assert fin <= heures[0] <= fin + 2
++
++
+ @pytest.mark.parametrize("lenteur, appel_s", [("2", "3"),        # appels lents, sous leur borne
+                                                ("30", "2")])     # appels bloqués, coupés à leur borne
+ def test_surveillance_appels_lents(tmp_path, lenteur, appel_s):
+@@ -286,11 +327,11 @@
+ 
+ # ---------- GO cité (CLW-03) ----------
+ 
+-spec_go = importlib.util.spec_from_file_location("go", SCRIPTS / "verifier_go_v6.py")
++spec_go = importlib.util.spec_from_file_location("go", SCRIPTS / "verifier_go_v7.py")
+ GO = importlib.util.module_from_spec(spec_go)
+ spec_go.loader.exec_module(GO)
+ EMPREINTE = "0123456789abcdef" + "0" * 48
+-NOM = "test-echelle-conscience-eval-v7.md"
++NOM = "test-echelle-conscience-eval-v8.md"
+ ENTETE = """# Registre des GO
+ 
+ | id | accordé le | type | périmètre | plafond | échéance | accordé par | référence |
+@@ -324,7 +365,7 @@
+ def test_go_ligne_mal_formee_et_codes(tmp_path):
+     f = tmp_path / "go.md"
+     f.write_text(ENTETE + ligne())
+-    code = lambda: subprocess.run([sys.executable, "-I", "-B", str(SCRIPTS / "verifier_go_v6.py"), str(f),
++    code = lambda: subprocess.run([sys.executable, "-I", "-B", str(SCRIPTS / "verifier_go_v7.py"), str(f),
+                                    "GO-2026-10-27-01", NOM, EMPREINTE, "8.00"], capture_output=True).returncode
+     assert code() == 0
+     f.write_text(ENTETE + ligne(plafond="2 USD"))
+@@ -337,7 +378,7 @@
+ 
+ def bloc_du_lanceur(debut, n_lignes):
+     """Les n lignes du lanceur qui commencent par `debut` (la garde et sa suite), telles qu'elles sont dans le script."""
+-    lignes = (SCRIPTS / "lancer_echelle_v6.sh").read_text(encoding="utf-8").splitlines()
++    lignes = (SCRIPTS / "lancer_echelle_v7.sh").read_text(encoding="utf-8").splitlines()
+     i = [k for k, l in enumerate(lignes) if l.startswith(debut)]
+     assert len(i) == 1, debut
+     return "\n".join(lignes[i[0]:i[0] + n_lignes])
+@@ -374,9 +415,9 @@
+     """CLW-03 : la ligne du lanceur qui relit le GO arrête si le GO n'est pas propre à l'expérience."""
+     (tmp_path / "registres").mkdir()
+     (tmp_path / "registres" / "go.md").write_text(ENTETE + ligne(plafond=plafond))
+-    (tmp_path / "verifier_go_v6.py").write_text((SCRIPTS / "verifier_go_v6.py").read_text(encoding="utf-8"))
++    (tmp_path / "verifier_go_v7.py").write_text((SCRIPTS / "verifier_go_v7.py").read_text(encoding="utf-8"))
+     (tmp_path / "lancement.txt").write_text("")
+-    bloc = bloc_du_lanceur('python3 -I -B "$T/verifier_go_v6.py"', 2)
++    bloc = bloc_du_lanceur('python3 -I -B "$T/verifier_go_v7.py"', 2)
+     prelude = (f"T={tmp_path}; DEPOT={tmp_path}; GO=GO-2026-10-27-01; PREREG=prereg/{NOM}; "
+                f"EMPREINTE_PREREG={EMPREINTE}; PLAFOND_GO=8.00")
+     assert jouer(tmp_path, prelude, bloc) == attendu
+@@ -424,9 +465,9 @@
+ def depot_du_commit(tmp_path, lanceur, surveillance):
+     """Faux dépôt git dont un commit porte le lanceur et la surveillance donnés ; rend (dépôt, commit)."""
+     d = tmp_path / "depot-git"
+-    (d / "echelle-v6" / "scripts").mkdir(parents=True)
+-    (d / "echelle-v6" / "scripts" / "lancer_echelle_v6.sh").write_bytes(lanceur)
+-    (d / "echelle-v6" / "scripts" / "surveiller_echelle_v6.sh").write_bytes(surveillance)
++    (d / "echelle-v7" / "scripts").mkdir(parents=True)
++    (d / "echelle-v7" / "scripts" / "lancer_echelle_v7.sh").write_bytes(lanceur)
++    (d / "echelle-v7" / "scripts" / "surveiller_echelle_v7.sh").write_bytes(surveillance)
+     g = ["git", "-C", str(d), "-c", "user.name=essai", "-c", "user.email=essai@invalid"]
+     subprocess.run(["git", "init", "-q", str(d)], check=True)
+     subprocess.run(g + ["add", "."], check=True)
+@@ -440,9 +481,9 @@
+ def test_lanceur_et_surveillance_du_commit(tmp_path, lanceur_modifie, attendu):
+     """CLV-06 : les lignes du lanceur qui comparent son empreinte à celle du fichier du commit et écrivent l'empreinte
+     attendue de la surveillance, jouées telles quelles ; la surveillance relit cette ligne (test de refus de partir)."""
+-    vrai = (SCRIPTS / "lancer_echelle_v6.sh").read_bytes()
++    vrai = (SCRIPTS / "lancer_echelle_v7.sh").read_bytes()
+     depot, commit = depot_du_commit(tmp_path, vrai, SURVEILLANCE.read_bytes())
+-    local = tmp_path / "lancer_echelle_v6.sh"
++    local = tmp_path / "lancer_echelle_v7.sh"
+     local.write_bytes(vrai + (b"# copie modifiee\n" if lanceur_modifie else b""))
+     (tmp_path / "t").mkdir()
+     bloc = bloc_du_lanceur('L_COMMIT=$(git -C "$DEPOT" show', 4)

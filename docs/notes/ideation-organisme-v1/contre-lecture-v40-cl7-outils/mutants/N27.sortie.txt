@@ -1,0 +1,55 @@
+....................FFFFE........................................................................
+======================================================================
+ERROR: test_ebh_pondere_log_e_et_budgets (essais.test_v7_pari_apparie.TestValeursNonFiniesV40.test_ebh_pondere_log_e_et_budgets) (log_e=None)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/tmp/claude-0/-home-user-controle-ia-travail/75a1275d-b838-5015-909e-b2bfadb395f9/scratchpad/relecture-v40/cl7/outils-cl7/mutants/N27/essais/test_v7_pari_apparie.py", line 389, in test_ebh_pondere_log_e_et_budgets
+    pa.ebh_pondere({"a": 0.0, "b": x, "c": 3.0}, b, 0.05)
+    ~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/tmp/claude-0/-home-user-controle-ia-travail/75a1275d-b838-5015-909e-b2bfadb395f9/scratchpad/relecture-v40/cl7/outils-cl7/mutants/N27/pole/pari_apparie.py", line 293, in ebh_pondere
+    scores = sorted(((math.log(budgets[i]) + log_e[i], i) for i in log_e), key=lambda x: (-x[0], str(x[1])))
+  File "/tmp/claude-0/-home-user-controle-ia-travail/75a1275d-b838-5015-909e-b2bfadb395f9/scratchpad/relecture-v40/cl7/outils-cl7/mutants/N27/pole/pari_apparie.py", line 293, in <genexpr>
+    scores = sorted(((math.log(budgets[i]) + log_e[i], i) for i in log_e), key=lambda x: (-x[0], str(x[1])))
+                      ~~~~~~~~~~~~~~~~~~~~~^~~~~~~~~~
+TypeError: unsupported operand type(s) for +: 'float' and 'NoneType'
+
+======================================================================
+FAIL: test_ebh_pondere_log_e_et_budgets (essais.test_v7_pari_apparie.TestValeursNonFiniesV40.test_ebh_pondere_log_e_et_budgets) (log_e=nan)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/tmp/claude-0/-home-user-controle-ia-travail/75a1275d-b838-5015-909e-b2bfadb395f9/scratchpad/relecture-v40/cl7/outils-cl7/mutants/N27/essais/test_v7_pari_apparie.py", line 388, in test_ebh_pondere_log_e_et_budgets
+    with self.subTest(log_e=x), self.assertRaises(pa.ContrasteInvalide):
+                                ~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: ContrasteInvalide not raised
+
+======================================================================
+FAIL: test_ebh_pondere_log_e_et_budgets (essais.test_v7_pari_apparie.TestValeursNonFiniesV40.test_ebh_pondere_log_e_et_budgets) (log_e=inf)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/tmp/claude-0/-home-user-controle-ia-travail/75a1275d-b838-5015-909e-b2bfadb395f9/scratchpad/relecture-v40/cl7/outils-cl7/mutants/N27/essais/test_v7_pari_apparie.py", line 388, in test_ebh_pondere_log_e_et_budgets
+    with self.subTest(log_e=x), self.assertRaises(pa.ContrasteInvalide):
+                                ~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: ContrasteInvalide not raised
+
+======================================================================
+FAIL: test_ebh_pondere_log_e_et_budgets (essais.test_v7_pari_apparie.TestValeursNonFiniesV40.test_ebh_pondere_log_e_et_budgets) (log_e=-inf)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/tmp/claude-0/-home-user-controle-ia-travail/75a1275d-b838-5015-909e-b2bfadb395f9/scratchpad/relecture-v40/cl7/outils-cl7/mutants/N27/essais/test_v7_pari_apparie.py", line 388, in test_ebh_pondere_log_e_et_budgets
+    with self.subTest(log_e=x), self.assertRaises(pa.ContrasteInvalide):
+                                ~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: ContrasteInvalide not raised
+
+======================================================================
+FAIL: test_ebh_pondere_log_e_et_budgets (essais.test_v7_pari_apparie.TestValeursNonFiniesV40.test_ebh_pondere_log_e_et_budgets) (log_e=True)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/tmp/claude-0/-home-user-controle-ia-travail/75a1275d-b838-5015-909e-b2bfadb395f9/scratchpad/relecture-v40/cl7/outils-cl7/mutants/N27/essais/test_v7_pari_apparie.py", line 388, in test_ebh_pondere_log_e_et_budgets
+    with self.subTest(log_e=x), self.assertRaises(pa.ContrasteInvalide):
+                                ~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: ContrasteInvalide not raised
+
+----------------------------------------------------------------------
+Ran 93 tests in 22.200s
+
+FAILED (failures=4, errors=1)

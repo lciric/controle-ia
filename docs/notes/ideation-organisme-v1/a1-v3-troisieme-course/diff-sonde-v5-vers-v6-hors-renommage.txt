@@ -1,0 +1,161 @@
+--- src/controle_ia/sonde_hote_durable_a1_v3_v5.py (renommé v6)
++++ src/controle_ia/sonde_hote_durable_a1_v3_v6.py
+@@ -1,5 +1,13 @@
+ #!/usr/bin/env python3
+-"""Sonde de l'hôte durable d'A1-v3, **version 5** (GO-2026-11-04-09, GO de la machine, 35 USD).
++"""Sonde de l'hôte durable d'A1-v3, **version 6** (GO-2026-11-04-09, GO de la machine, 35 USD).
++
++Version 6 (R12 : v1 à v5 inchangées) : la v5, plus **seulement** ce qu'impose le fait constaté par la fille le 4 novembre 2026
++(22:48 et 22:51 UTC, rien créé) : son trafic sortant passe par un mandataire qui réémet les certificats, et `vastai` échouait
++(« SSLCertVerificationError ») faute des variables du mandataire. (a) `ClientPilote._lancer` transmet aussi `HTTPS_PROXY`,
++`HTTP_PROXY`, `NO_PROXY`, `SSL_CERT_FILE` et `REQUESTS_CA_BUNDLE` s'ils sont présents (non vides) dans l'environnement reçu, aucune
++autre variable ; leurs valeurs sont masquées comme les secrets. (b) Un échec de `vastai` dont la sortie d'erreur contient
++« CERTIFICATE_VERIFY_FAILED » ou « SSLCertVerificationError » est un refus « appel non parvenu à Vast (certificat) », sans marqueur
++de création incertaine ; seule la présence de ces mots est lue, la sortie d'erreur n'est jamais écrite. Ce qui suit décrit la v5 :
+ 
+ Version 5 (R12 : `hote_durable_a1_v3.py` et les v1 à v4 inchangés) : la v4, plus **seulement** ce qu'impose le fait constaté
+ par la fille le 4 novembre 2026 vers 22:31 UTC (lecture seule) : sur Vast, les offres sans carte rendent `cpu_ram` = 0 (champ
+@@ -97,7 +105,9 @@
+ # Liste commune à l'amorce v6 (f2) : même motif, même ordre.
+ CLES_INTERDITES = re.compile(r"^(CLE_ARGON|GEMINI.*|ANTHROPIC.*|OPENAI.*|MOONSHOT.*|KIMI.*|RR_.*API_KEY.*)$")
+ MOTIF_AMORCE = "CLE_ARGON|GEMINI*|ANTHROPIC*|OPENAI*|MOONSHOT*|KIMI*|RR_*API_KEY*"
+-SECRETS_PILOTE = ("GH_TOKEN", "VAST_API_KEY")
++VARIABLES_MANDATAIRE = ("HTTPS_PROXY", "HTTP_PROXY", "NO_PROXY", "SSL_CERT_FILE", "REQUESTS_CA_BUNDLE")  # v6 (a)
++MOTS_CERTIFICAT = (b"CERTIFICATE_VERIFY_FAILED", b"SSLCertVerificationError")  # v6 (b) : présence lue, texte jamais écrit
++SECRETS_PILOTE = ("GH_TOKEN", "VAST_API_KEY") + VARIABLES_MANDATAIRE  # v6 (a) : valeurs du mandataire masquées aussi
+ SECRETS_MACHINE = ("GH_TOKEN", "CONTAINER_API_KEY", "VAST_API_KEY")
+ FICHIERS_DEMARRAGE = ("sonde-v6-minuterie.txt", "sonde-v6-minuterie.log", "sonde-v6-temps.txt", "amorce-sonde-a1v3-v6.log",
+                       "sonde-v6-memoire.txt")  # v5 (b) : mémoire réelle relevée par l'amorce
+@@ -150,6 +160,11 @@
+     """Refus d'une garde du pilote **avant** tout appel à `vastai` : aucune instance n'a pu naître (m-1 : pas de marqueur)."""
+ 
+ 
++class RefusCertificat(RefusAvantAppel):
++    """v6 (b) : `vastai` n'a pas pu établir la connexion (certificat refusé) : l'appel n'est pas parvenu à Vast, aucune instance
++    n'a pu naître, donc aucun marqueur de création incertaine."""
++
++
+ def cout_maximal_usd(dph: float, duree_s: int, marge_s: int = MARGE_MINUTERIE_S) -> float:
+     """Borne (M-B), comptée depuis la création : la minuterie détruit au plus tard à l'échéance absolue (création + 10 min +
+     durée + marge) ; si toutes ses destructions sont refusées, le conteneur sort 10 min plus tard (« exited » : réserve f-f).
+@@ -295,10 +310,11 @@
+         return texte
+ 
+     def _lancer(self, args: list[str], secrets_en_plus: dict | None = None) -> str:
+-        env = {k: self.environ[k] for k in ("PATH", "HOME", "LANG", "VAST_API_KEY") if self.environ.get(k)}
++        env = {k: self.environ[k] for k in ("PATH", "HOME", "LANG", "VAST_API_KEY") + VARIABLES_MANDATAIRE
++               if self.environ.get(k)}  # v6 (a) : variables du mandataire transmises si présentes, aucune autre
+         try:
+-            r = subprocess.run([self.outil, *args], env=env, stdout=subprocess.PIPE, stderr=subprocess.DEVNULL,
+-                               timeout=DELAI_VASTAI_S)  # f-a
++            r = subprocess.run([self.outil, *args], env=env, stdout=subprocess.PIPE, stderr=subprocess.PIPE,
++                               timeout=DELAI_VASTAI_S)  # f-a, v6 (b) : la sortie d'erreur n'est que cherchée, jamais écrite
+         except subprocess.TimeoutExpired:  # M-1 : le message de l'exception porte la ligne de commande, jeton compris
+             raise h.Refus(f"vastai {' '.join(args[:2])} : délai dépassé ({DELAI_VASTAI_S} s)") from None
+ 
+@@ -308,7 +324,12 @@
+                 if v:
+                     texte = texte.replace(v, f"[{nom} masquée]")
+             return self.masquer(texte)
+-        if r.returncode != 0:  # f-a : le code seul ; aucune sortie (standard ni d'erreur) n'est lue ni écrite
++        certificat = any(m in (r.stderr or b"") for m in MOTS_CERTIFICAT)
++        r = subprocess.CompletedProcess(r.args, r.returncode, r.stdout, None)  # la sortie d'erreur est oubliée ici
++        if r.returncode != 0:  # f-a : le code seul ; aucune sortie (standard ni d'erreur) n'est écrite
++            if certificat:
++                raise RefusCertificat(f"vastai {' '.join(args[:2])} : appel non parvenu à Vast (certificat) ; code "
++                                      f"{r.returncode}")
+             raise h.Refus(f"vastai {' '.join(args[:2])} : code {r.returncode}")
+         return masque(r.stdout)  # la sortie standard seule est lue ; la sortie d'erreur n'est jamais ni lue ni écrite
+ 
+--- tests/test_sonde_hote_durable_a1_v3_v5.py (renommé v6)
++++ tests/test_sonde_hote_durable_a1_v3_v6.py
+@@ -1,5 +1,5 @@
+ """Essais en mode jouet de la sonde v6 de l'hôte durable d'A1-v3 (contre-lectures `contre-lecture-sonde-v1.md` à
+-`contre-lecture-sonde-v3.md`, et mémoire non renseignée des offres sans carte ; m7 : cas sain
++`contre-lecture-sonde-v3.md`, mémoire non renseignée des offres sans carte, mandataire du conteneur de la fille ; m7 : cas sain
+ et artefact pour chaque garde, l'amorce et le script de démarrage compris). Aucune location, aucun réseau, aucune clé : `curl`
+ et `vastai` sont des outils factices, les dépôts sont locaux, Vast est un fichier.
+ """
+@@ -860,3 +860,82 @@
+     assert s.MachineSondeV6(r, env, 120).principal() == 0
+     f = versees(nu, s.BRANCHE)
+     assert b"MemTotal 16384000 kB" in f[f"{s.BRANCHE}/demarrage/sonde-v6-memoire.txt"]
++
++
++
++# --- v6 : mandataire qui réémet les certificats (fait constaté par la fille, 4 novembre 2026, 22:48 et 22:51 UTC) -----------
++
++MANDATAIRE = {"HTTPS_PROXY": "http://utilisateur:motdepasse-mandataire@mandataire.invalide:3128",
++              "HTTP_PROXY": "http://utilisateur:motdepasse-mandataire@mandataire.invalide:3128",
++              "NO_PROXY": "localhost,127.0.0.1", "SSL_CERT_FILE": "/chemin/jouet/ca-mandataire.crt",
++              "REQUESTS_CA_BUNDLE": "/chemin/jouet/ca-mandataire.crt"}
++
++
++def vastai_qui_note_son_environnement(tmp_path, stderr="", code=0, sortie='{"success": true, "new_contract": 31}'):
++    note = tmp_path / "env-vu-par-vastai.txt"
++    o = outil(tmp_path, "vastai-env", f'env | cut -d= -f1 | sort > "{note}"\nenv | grep -E "^(HTTPS_PROXY|SSL_CERT_FILE)=" '
++                                      f'>> "{note}.valeurs"\nprintf \'%s\\n\' \'{stderr}\' >&2\necho \'{sortie}\'\nexit {code}\n')
++    return o, note
++
++
++def test_mandataire_transmis_quand_present(tmp_path):
++    """(a) cas sain : les cinq variables du mandataire, présentes, sont transmises à `vastai` ; aucune autre (l'artefact
++    `AUTRE_VARIABLE` ne passe pas)."""
++    o, note = vastai_qui_note_son_environnement(tmp_path)
++    env = {"PATH": os.environ["PATH"], "HOME": str(tmp_path), "VAST_API_KEY": CLE_COMPTE, "GH_TOKEN": JETON,
++           "AUTRE_VARIABLE": "x", **MANDATAIRE}
++    assert s.ClientPilote(env, str(o)).creer(11, s.corps("a" * 40, OFFRE, 1200, JETON, 1_800_000_000)) == 31
++    vus = set(note.read_text().split())
++    assert set(MANDATAIRE) <= vus and "AUTRE_VARIABLE" not in vus and "GH_TOKEN" not in vus
++    assert vus <= {"PATH", "HOME", "LANG", "VAST_API_KEY", "PWD", "SHLVL", "_", "OLDPWD"} | set(MANDATAIRE)
++    assert MANDATAIRE["HTTPS_PROXY"] in Path(str(note) + ".valeurs").read_text()
++
++
++def test_mandataire_absent_rien_n_est_invente(tmp_path):
++    """(a) artefact : sans variables du mandataire (ou vides), aucune n'est transmise."""
++    o, note = vastai_qui_note_son_environnement(tmp_path)
++    env = {"PATH": os.environ["PATH"], "HOME": str(tmp_path), "VAST_API_KEY": CLE_COMPTE, "HTTPS_PROXY": ""}
++    assert s.ClientPilote(env, str(o)).creer(11, s.corps("a" * 40, OFFRE, 1200, JETON, 1_800_000_000)) == 31
++    assert not (set(MANDATAIRE) & set(note.read_text().split()))
++
++
++def test_valeurs_du_mandataire_masquees_au_journal(tmp_path):
++    vast = h.ClientVastJouet(tmp_path / "vast.json")
++    env = dict(ENV_PILOTE, **MANDATAIRE)
++    a = args_louer(tmp_path)
++    a.commit_prive = "a" * 40
++    assert s.louer(a, vast, JOUR, env) == 0
++    j = (tmp_path / "journal-sonde-v6.log").read_text()
++    assert "motdepasse-mandataire" not in j and JETON not in j
++
++
++@pytest.mark.parametrize("stderr", [
++    "ssl.SSLCertVerificationError: [SSL: CERTIFICATE_VERIFY_FAILED] self-signed certificate in certificate chain",
++    "requests.exceptions.SSLError: CERTIFICATE_VERIFY_FAILED",
++    "SSLCertVerificationError ghp_jouet_secret_dans_l_erreur",
++])
++def test_erreur_de_certificat_aucun_marqueur(tmp_path, stderr):
++    """(b) : échec de certificat : refus « appel non parvenu à Vast (certificat) », aucun marqueur, sortie d'erreur jamais
++    écrite ; une location reste possible ensuite."""
++    o, _ = vastai_qui_note_son_environnement(tmp_path, stderr=stderr, code=1, sortie="")
++    env = dict(ENV_PILOTE, PATH=os.environ["PATH"], HOME=str(tmp_path))
++    c = s.ClientPilote(env, str(o))
++    with pytest.raises(s.RefusCertificat, match=r"appel non parvenu à Vast \(certificat\) ; code 1"):
++        c.creer(11, s.corps("a" * 40, OFFRE, 1200, JETON, 1_800_000_000))
++    assert s.louer(args_louer(tmp_path), c, JOUR, env) == 2
++    assert not (tmp_path / "journal-sonde-v6.log.creation-incertaine").exists()
++    j = (tmp_path / "journal-sonde-v6.log").read_text()
++    assert "appel non parvenu à Vast (certificat)" in j and "self-signed" not in j and "ghp_jouet_secret" not in j
++    assert "SSL" not in j.replace("SSLCertVerificationError", "")  # rien de la sortie d'erreur
++    o2, _ = vastai_qui_note_son_environnement(tmp_path, sortie='{"success": true, "new_contract": 32}')
++    assert s.louer(args_louer(tmp_path), s.ClientPilote(env, str(o2)), JOUR, env) == 0  # aucun marqueur : location possible
++
++
++@pytest.mark.parametrize("stderr", ["HTTP 500 : erreur interne", "", "certificat mentionné en français seulement"])
++def test_autre_erreur_marqueur_pose(tmp_path, stderr):
++    """(b) artefact : toute autre erreur après l'appel garde le marqueur de création incertaine (m-1)."""
++    o, _ = vastai_qui_note_son_environnement(tmp_path, stderr=stderr, code=1, sortie="")
++    env = dict(ENV_PILOTE, PATH=os.environ["PATH"], HOME=str(tmp_path))
++    assert s.louer(args_louer(tmp_path), s.ClientPilote(env, str(o)), JOUR, env) == 2
++    assert (tmp_path / "journal-sonde-v6.log.creation-incertaine").exists()
++    assert stderr not in (tmp_path / "journal-sonde-v6.log").read_text() or stderr == ""

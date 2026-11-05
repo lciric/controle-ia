@@ -1,0 +1,61 @@
+banc : essais_scellement_pilote_v1.sh 7ab36701229d6760897e08fc56c4dedd77921caa0600eb346e4c875487699659
+commit des préalables : 3881fb7183a6448ace018b26efd5bfed247287df
+C = 3881fb7183a6448ace018b26efd5bfed247287df
+lignes changées dans la copie du scellement : 2
+J = e1887951c52f265e1c8ce8106ab8ead95ba9a263
+S00-sain : code 0 ; CONFORME
+    | {"prereg_sha256": "b5eaeb4a8656a8f640444861d8b1a5c0768225ed30cd8a245558525bac8decfc", "config_canonique": "db3ad3cebc3f0832e43514749b42c01b344ab4dca2997153d851814fe251b714", "noyau": "defaut", "d_s": 
+    | S 14b9726f179bd91ebf03a3b64f247a11a47b0c64 poussé ; préenregistrement b5eaeb4a8656a8f640444861d8b1a5c0768225ed30cd8a245558525bac8decfc
+    S 14b9726f179bd91ebf03a3b64f247a11a47b0c64 : enfant de J, poussé, quatre fichiers seulement, arbre propre : CONFORME
+S01-arbre-sale : code 2 ; CONFORME
+    | arbre suivi non propre
+S02-sceau-fausse-verifier-arbre : code 2 ; CONFORME
+    | verifier-arbre en échec
+    | échec avant le commit : fichiers créés retirés
+S03-poussee-refusee : code 2 ; CONFORME
+    | and the repository exists.
+    | poussée de S en échec : S reste local ; repousser avant tout lancement
+S04-epingle-normalisee-fausse : code 2 ; CONFORME
+    | candidat relu : normalisé ≠ épingle
+S05-generateur-non-verse : code 2 ; CONFORME
+    | remplir_pilote_v1.py du bloc-notes ≠ copie versée
+S06-head-en-avance : code 2 ; CONFORME
+    | HEAD ≠ origin/main : pousser d'abord les préalables
+S07-prereg-present : code 2 ; CONFORME
+    | prereg/T0.5-pilote-8B-v1.md existe déjà (R12)
+S08-rapport-epingle-absent : code 2 ; CONFORME
+    | arrêt du scellement (ligne 85)
+    | échec avant le commit : fichiers créés retirés
+S09-n019-en-attente : code 2 ; CONFORME
+    | arrêt du scellement (ligne 85)
+    | échec avant le commit : fichiers créés retirés
+S13-epingle-restee : code 2 ; CONFORME
+    | épingle restée « A_EPINGLER » dans les contrôles
+S14-code-relu-autre : code 2 ; CONFORME
+    | arbre gelé de HEAD ≠ code relu épinglé (f8ab64abbc44894426f803b53dd17bac0e206a5e)
+S15-journal-repetition-altere : code 2 ; CONFORME
+    | journal de la répétition jouet absent ou d'une autre empreinte que l'épingle
+S16-rapport-autre-famille : code 2 ; CONFORME
+    | rapport épinglé hors des deux familles (état des lieux, relecture-b8) : T0.5-pilote-v1-autre-famille-v1.md
+S17-journal-non-suivi : code 2 ; CONFORME
+    | docs/procedures/pilote-T0.5-v1/repetition-jouet-pilote-v1.log non suivi à HEAD
+S18-journal-autre-commit : code 2 ; CONFORME
+    | journal de la répétition jouet d'un autre commit que le code relu
+S19-journal-hors-du-dossier : code 2 ; CONFORME
+    | code relu ou répétition jouet non épinglés
+S20-arret-avant-le-piege : code 2 ; CONFORME
+    | and the repository exists.
+    | arrêt du scellement (ligne 43)
+S21-commit-refuse : code 2 ; CONFORME
+    | arrêt du scellement (ligne 97)
+    | échec avant le commit : fichiers créés retirés
+    index propre après S21 : CONFORME
+S10-sans-arguments : code 2 ; CONFORME
+    | usage : sceller_pilote_v1.sh GO-AAAA-MM-JJ-NN R-NNN (décision de Lazar sur N-019)
+S11-go-mal-forme : code 2 ; CONFORME
+    | usage : sceller_pilote_v1.sh GO-AAAA-MM-JJ-NN R-NNN (décision de Lazar sur N-019)
+S12-autre-go : code 2 ; CONFORME
+    | arrêt du scellement (ligne 85)
+    | échec avant le commit : fichiers créés retirés
+FIN DU BANC DU SCELLEMENT DU PILOTE ; cas non conformes : 0
+code 0

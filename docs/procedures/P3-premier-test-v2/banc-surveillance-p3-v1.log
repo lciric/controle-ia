@@ -1,0 +1,97 @@
+script éprouvé : surveiller_p3_v1.sh 5a2fcc24da7d1e6fd20a2d9234066fddfaa55419d1e59d6786a0a619400ebeff
+script éprouvé : controle_cinq_minutes_p3_v1.sh 3af7429518024b7a0861777dd099486dfce573aeb2b89dad315df72a275b332e
+script éprouvé : essais_surveillance_p3_v1.sh bb7a3c35cf9a1f36fe397f141f4f8ea43ab15ad901ab72c5654e021416644ca6
+M00-fin : code 0 ; CONFORME
+    | FIN : AMORCE 2026-10-13T12:00:00Z : fin, code 0
+    relevé cumulatif : 4 lignes (début de l'amorce, deux PROGRES, fin de l'amorce), sans doublon d'un tour à l'autre : CONFORME
+M01-perdue-apres-sondes-figees : code 0 ; CONFORME
+    | ÉTAT TERMINAL : actual_status=offline cur_state=stopped intended_status=running status_msg=essai
+    ligne des sondes figées gardée au relevé cumulatif et au dernier journal lisible : CONFORME
+M02-echec-d-amorce : code 0 ; CONFORME
+    | ÉCHEC D'AMORCE : AMORCE : clonage impossible (jeton GitHub ?)
+M03-redemarrage : code 0 ; CONFORME
+    | REDÉMARRAGE : l'amorce a été relancée par le conteneur
+M04-plafond : code 0 ; CONFORME
+    | PLAFOND : création + 22200 s
+M04b-avant-le-plafond : code 0 ; CONFORME
+    | FIN : AMORCE 2026-10-13T12:00:00Z : fin, code 1
+M05-outil-introuvable : code 2 ; CONFORME
+    | outil de location introuvable sur le PATH : surveillance aveugle, arrêt
+M06-dossier-existant : code 2 ; CONFORME
+    | /tmp/claude-0/-home-user/5a6b9d1d-b17d-59a1-a770-8737a831fe0a/scratchpad/p3-v2-banc-surveillance/sortie-M06-dossier-existant existe déjà (R12)
+M07-jeton-masque : code 0 ; CONFORME
+    | FIN : AMORCE 2026-10-13T12:00:00Z : fin, code 0
+    jetons masqués dans les relevés : CONFORME
+M08-hors-ligne-passager : code 0 ; CONFORME
+    | FIN : AMORCE 2026-10-13T12:00:00Z : fin, code 0
+M08b-hors-ligne-alterne : code 0 ; CONFORME
+    | FIN : AMORCE 2026-10-13T12:00:00Z : fin, code 0
+M10-etat-illisible : code 0 ; CONFORME
+    | FIN : AMORCE 2026-10-13T12:00:00Z : fin, code 0
+    deux états illisibles relevés, sans état terminal : CONFORME
+M11-jetons-absents : code 2 ; CONFORME
+    | jetons HF_TOKEN et CONTROLE_IA_GITHUB_TOKEN absents ou trop courts : masquage impossible, surveillance refusée
+    aucun relevé écrit sans jetons : CONFORME
+M11b-jeton-trop-court : code 2 ; CONFORME
+M09-usage-faux : code 2 ; CONFORME
+C00-sain : code 0 ; 0 KO ; CONFORME
+    | CONTRÔLE À CINQ MINUTES : CONFORME
+    journal à cinq minutes et relevé du contrôle gardés : CONFORME
+C01-trop-tot : code 2 ; 0 KO ; CONFORME
+    | trop tôt : création + 62 s ; rejouer à la création + 180 s au moins
+    rien d'écrit trop tôt : CONFORME
+C02-echec-d-amorce : code 1 ; 1 KO ; CONFORME
+    KO  journal : échec de l'amorce (AMORCE : clonage impossible (jeton GitHub ?))
+    | CONTRÔLE À CINQ MINUTES : 1 KO : arrêter l'instance 99999999 par son identifiant (R10), nœud de Lazar
+C03-commit-autre : code 1 ; 2 KO ; CONFORME
+    KO  journal : ligne « AMORCE <date> : commit 0123456789abcdef0123456789abcdef01234567 » absente ou répétée (redémarrage ?)
+    KO  journal : « début : ETUDE=p3 MODE=reel COMMIT=<S> BRANCHE=calcul/p3-reel-v1 » absent
+    | CONTRÔLE À CINQ MINUTES : 2 KO : arrêter l'instance 99999999 par son identifiant (R10), nœud de Lazar
+C04-tests-attendus-autres : code 1 ; 1 KO ; CONFORME
+    KO  journal : « préenregistrement lu : 868 tests attendus » absent
+    | CONTRÔLE À CINQ MINUTES : 1 KO : arrêter l'instance 99999999 par son identifiant (R10), nœud de Lazar
+C05-carte-autre : code 1 ; 1 KO ; CONFORME
+    KO  journal : carte A100 SXM4 d'au moins 75 Gio absente («  »)
+    | CONTRÔLE À CINQ MINUTES : 1 KO : arrêter l'instance 99999999 par son identifiant (R10), nœud de Lazar
+C06-prix-au-dessus-du-prix-choisi : code 1 ; 1 KO ; CONFORME
+    KO  prix relu 1.2 USD/h au plus celui de l offre choisie (1.0933333333333333) ; sinon recalculer la borne de dépense de l étape à ce prix (nœud)
+    | CONTRÔLE À CINQ MINUTES : 1 KO : arrêter l'instance 99999999 par son identifiant (R10), nœud de Lazar
+C06b-prix-au-dessus-du-plafond : code 1 ; 2 KO ; CONFORME
+    KO  prix relu 1.35 USD/h au plus 1.3
+    KO  prix relu 1.35 USD/h au plus celui de l offre choisie (1.0933333333333333) ; sinon recalculer la borne de dépense de l étape à ce prix (nœud)
+    | CONTRÔLE À CINQ MINUTES : 2 KO : arrêter l'instance 99999999 par son identifiant (R10), nœud de Lazar
+C07-machine-autre : code 1 ; 1 KO ; CONFORME
+    KO  machine 1 et hôte 125728 de l offre choisie 4242 (30574, 125728)
+    | CONTRÔLE À CINQ MINUTES : 1 KO : arrêter l'instance 99999999 par son identifiant (R10), nœud de Lazar
+C08-etiquette-autre : code 1 ; 1 KO ; CONFORME
+    KO  étiquette t05-notations-v1 (p3-v1 attendue)
+    | CONTRÔLE À CINQ MINUTES : 1 KO : arrêter l'instance 99999999 par son identifiant (R10), nœud de Lazar
+C09-instance-arretee : code 1 ; 1 KO ; CONFORME
+    KO  instance en marche (exited)
+    | CONTRÔLE À CINQ MINUTES : 1 KO : arrêter l'instance 99999999 par son identifiant (R10), nœud de Lazar
+C10-branche-non-poussee : code 1 ; 1 KO ; CONFORME
+    KO  journal : « branche calcul/p3-reel-v1 poussée avant l'installation » absent
+    | CONTRÔLE À CINQ MINUTES : 1 KO : arrêter l'instance 99999999 par son identifiant (R10), nœud de Lazar
+C11-redemarrage : code 1 ; 1 KO ; CONFORME
+    KO  journal : ligne « AMORCE <date> : commit 0123456789abcdef0123456789abcdef01234567 » absente ou répétée (redémarrage ?)
+    | CONTRÔLE À CINQ MINUTES : 1 KO : arrêter l'instance 99999999 par son identifiant (R10), nœud de Lazar
+C12-etat-illisible : code 1 ; 1 KO ; CONFORME
+    KO  état de l instance illisible (vastai show instance) : pas du JSON 
+    | CONTRÔLE À CINQ MINUTES : 1 KO : arrêter l'instance 99999999 par son identifiant (R10), nœud de Lazar
+C13-journal-illisible : code 1 ; 1 KO ; CONFORME
+    KO  journal de l'instance illisible (vastai logs en échec ; 300 premiers caractères masqués dans journal-erreur.txt)
+    | CONTRÔLE À CINQ MINUTES : 1 KO : arrêter l'instance 99999999 par son identifiant (R10), nœud de Lazar
+C14-jetons-absents : code 2 ; 0 KO ; CONFORME
+    | jetons HF_TOKEN et CONTROLE_IA_GITHUB_TOKEN absents ou trop courts : masquage impossible, contrôle refusé
+C15-dossier-existant : code 2 ; 0 KO ; CONFORME
+    | /tmp/claude-0/-home-user/5a6b9d1d-b17d-59a1-a770-8737a831fe0a/scratchpad/p3-v2-banc-surveillance/cinq-C15-dossier-existant/sortie existe déjà (R12)
+C16-jeton-masque : code 0 ; 0 KO ; CONFORME
+    | CONTRÔLE À CINQ MINUTES : CONFORME
+    jetons masqués (journal et état) : CONFORME
+C17-retard-ecrit : code 0 ; 0 KO ; CONFORME
+    | CONTRÔLE À CINQ MINUTES : CONFORME
+    retard écrit : CONFORME
+C18-traces-incompletes : code 2 ; CONFORME
+C19-usage-faux : code 2 ; CONFORME
+aucun jeton affiché : CONFORME
+FIN DU BANC DE LA SURVEILLANCE DE P3 ; cas non conformes : 0
