@@ -2,6 +2,17 @@
 
 **An AI control research programme.** Can a monitor that reads an AI agent's internal activations catch sabotage spread thinly over many innocent-looking actions? And how easily can the monitor itself be corrupted?
 
+> **Status, 8 November 2026.** This repository is a cleaned public copy of the programme's working repository *as it stood on 9 October 2026*; the 9 October text below is kept unchanged. What has happened since, honestly:
+>
+> - **Phase 0 is not closed.** Two of the eight criteria of the first gate (G0) are proven: the activation harness is validated on the real model, and the statistical aggregators are validated in simulation. The gate is now due by the end of November 2026.
+> - **First white-box test on real activations** (Llama-3.1-8B-Instruct, 60 tasks, verdict of 20 October): the instructed saboteur inflates its declared cost (paired log10 difference 1.52), and neither generic probe beats a floor of 200 random directions: "not detected at this power". [Result page](https://github.com/lciric/ideation-organism/tree/main/resultats/controle-p3-premier-test)
+> - **White box versus black box** (6–7 November): a probe trained on the saboteur beats the generic probe by +0.93 in area under the ROC curve, **but a preregistered leak audit established that it reads the saboteur's hidden instruction, present in its context, rather than the sabotage**: it separates the actions where the saboteur does not inflate the cost just as well (area 0.997). The 3-billion-parameter LLM judge is at chance (0.523), while a simple predictor on text features reaches 0.866. No white-box claim stands on this organism. [Result page, with the sealed analyses and verdicts](https://github.com/lciric/ideation-organism/tree/main/resultats/controle-r1-blanche-noire)
+> - **Preregistered simulation of the statistical instruments**: 31 of 31 predictions confirmed — instrument checks, not evidence about real models. [Result page](https://github.com/lciric/ideation-organism/tree/main/resultats/controle-simulation-defenses)
+> - **Next, each step preregistered and sealed before it runs:** organisms whose sabotage is trained into the weights (low-rank adapters), with no instruction in the context — their full chain ran end to end on a real GPU on 8 November (36 episodes, 144 actions, 3.65 USD), with one fidelity check to fix before the decisive run; probes tested across the two origins of sabotage, against a stronger black-box baseline; a labeller validated against known construction for fuzzy sabotage.
+> - **Companion system:** an automated research pole whose statistical judge was attacked by a language-model proposer and repaired — [lciric/ideation-organism](https://github.com/lciric/ideation-organism), which also hosts the result pages linked above.
+>
+> Results are posted whatever their sign, with hashes. The working repository stays private.
+
 > **Status, 9 October 2026.** Phase 0 (building and validating the instruments) started on 5 October; work in this repository started on 4 October. The first decision gate, G0, is planned for 1 November 2026, before the grant period, which would start in December 2026. The working documents are in French; this README is the English entry point.
 
 ## In one minute
