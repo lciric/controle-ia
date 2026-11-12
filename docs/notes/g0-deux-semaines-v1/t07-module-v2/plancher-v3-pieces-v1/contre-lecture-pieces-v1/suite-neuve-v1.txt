@@ -1,0 +1,85 @@
+02:42:15
+.............................FF...........s............................. [ 70%]
+.......sssssssssssssss..ssssss                                           [100%]
+=================================== FAILURES ===================================
+______________ test_configuration_v6_admise_v5_refusee_empreintes ______________
+
+    def test_configuration_v6_admise_v5_refusee_empreintes():
+>       c5, c6 = config_v5(), config_v6()
+                 ^^^^^^^^^^^
+
+tests/test_t07_plancher_v2_lecture_v1.py:121: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+tests/test_t07_plancher_v2_lecture_v1.py:111: in config_v5
+    brut = CONFIG_V5.read_bytes()
+           ^^^^^^^^^^^^^^^^^^^^^^
+/usr/lib/python3.13/pathlib/_abc.py:625: in read_bytes
+    with self.open(mode='rb') as f:
+         ^^^^^^^^^^^^^^^^^^^^
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+self = PosixPath('/tmp/claude-0/-home-user/1cc16375-a2bd-54b9-a03f-27d43b6f26a6/scratchpad/cl-plancher-v3/arbre/brouillons/T0.7-sondes-v0-v1-candidat1-pieces/configuration-t07-v5.json')
+mode = 'rb', buffering = -1, encoding = None, errors = None, newline = None
+
+    def open(self, mode='r', buffering=-1, encoding=None,
+             errors=None, newline=None):
+        """
+        Open the file pointed to by this path and return a file object, as
+        the built-in open() function does.
+        """
+        if "b" not in mode:
+            encoding = io.text_encoding(encoding)
+>       return io.open(self, mode, buffering, encoding, errors, newline)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+E       FileNotFoundError: [Errno 2] No such file or directory: '/tmp/claude-0/-home-user/1cc16375-a2bd-54b9-a03f-27d43b6f26a6/scratchpad/cl-plancher-v3/arbre/brouillons/T0.7-sondes-v0-v1-candidat1-pieces/configuration-t07-v5.json'
+
+/usr/lib/python3.13/pathlib/_local.py:537: FileNotFoundError
+___________________ test_commande_empreinte_config_v6_et_v5 ____________________
+
+tmp_path = PosixPath('/tmp/pytest-of-root/pytest-296/test_commande_empreinte_config0')
+
+    def test_commande_empreinte_config_v6_et_v5(tmp_path):
+        p6, p5 = tmp_path / "configuration-t07-v6.json", tmp_path / "configuration-t07-v5.json"
+>       p6.write_text(json.dumps(config_v6(), indent=2, ensure_ascii=False) + "\n", encoding="utf-8")
+                                 ^^^^^^^^^^^
+
+tests/test_t07_plancher_v2_lecture_v1.py:137: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+tests/test_t07_plancher_v2_lecture_v1.py:117: in config_v6
+    return {**config_v5(), "methode_plancher": METHODE}
+              ^^^^^^^^^^^
+tests/test_t07_plancher_v2_lecture_v1.py:111: in config_v5
+    brut = CONFIG_V5.read_bytes()
+           ^^^^^^^^^^^^^^^^^^^^^^
+/usr/lib/python3.13/pathlib/_abc.py:625: in read_bytes
+    with self.open(mode='rb') as f:
+         ^^^^^^^^^^^^^^^^^^^^
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+self = PosixPath('/tmp/claude-0/-home-user/1cc16375-a2bd-54b9-a03f-27d43b6f26a6/scratchpad/cl-plancher-v3/arbre/brouillons/T0.7-sondes-v0-v1-candidat1-pieces/configuration-t07-v5.json')
+mode = 'rb', buffering = -1, encoding = None, errors = None, newline = None
+
+    def open(self, mode='r', buffering=-1, encoding=None,
+             errors=None, newline=None):
+        """
+        Open the file pointed to by this path and return a file object, as
+        the built-in open() function does.
+        """
+        if "b" not in mode:
+            encoding = io.text_encoding(encoding)
+>       return io.open(self, mode, buffering, encoding, errors, newline)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+E       FileNotFoundError: [Errno 2] No such file or directory: '/tmp/claude-0/-home-user/1cc16375-a2bd-54b9-a03f-27d43b6f26a6/scratchpad/cl-plancher-v3/arbre/brouillons/T0.7-sondes-v0-v1-candidat1-pieces/configuration-t07-v5.json'
+
+/usr/lib/python3.13/pathlib/_local.py:537: FileNotFoundError
+=============================== warnings summary ===============================
+tests/test_t07_plancher_v3_notation_v1.py::test_refus_et_cas_sains
+  /tmp/claude-0/-home-user/1cc16375-a2bd-54b9-a03f-27d43b6f26a6/scratchpad/cl-plancher-v3/arbre/src/controle_ia/t07/plancher_v3.py:139: RuntimeWarning: invalid value encountered in matmul
+    S = A @ m["W"] + m["b"]
+
+-- Docs: https://docs.pytest.org/en/stable/how-to/capture-warnings.html
+=========================== short test summary info ============================
+FAILED tests/test_t07_plancher_v2_lecture_v1.py::test_configuration_v6_admise_v5_refusee_empreintes
+FAILED tests/test_t07_plancher_v2_lecture_v1.py::test_commande_empreinte_config_v6_et_v5
+2 failed, 78 passed, 22 skipped, 1 warning in 145.35s (0:02:25)
+02:44:47

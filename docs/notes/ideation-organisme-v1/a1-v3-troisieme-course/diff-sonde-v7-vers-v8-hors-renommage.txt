@@ -1,0 +1,330 @@
+--- src/controle_ia/sonde_hote_durable_a1_v3_v7.py (renommé v8)
++++ src/controle_ia/sonde_hote_durable_a1_v3_v8.py
+@@ -1,5 +1,14 @@
+ #!/usr/bin/env python3
+-"""Sonde de l'hôte durable d'A1-v3, **version 7** (GO-2026-11-04-09, GO de la machine, 35 USD).
++"""Sonde de l'hôte durable d'A1-v3, **version 8** (GO-2026-11-04-09, GO de la machine, 35 USD).
++
++Version 8 (R12 : v1 à v7 inchangées) : la v7, plus **seulement** ce qu'imposent les faits constatés par la fille le 4 novembre 2026
++(23:35 et 23:38 UTC) : avec `--raw`, `vastai` 1.8.3 écrit ses refus sur la **sortie d'erreur**, avec le **code 0** et une sortie
++standard vide (forme `{'success': False, 'error': True, 'msg': 'error 404/3603: no_such_ask …'}`). (a) La création capture les
++deux sorties ; `categoriser_reponse` lit la sortie standard d'abord, puis la sortie d'erreur, ne se fie jamais au code seul (un code
++0 sans contrat est un refus) et extrait `error` et `msg` même d'un texte mal formé ; rien d'autre que la catégorie et ces deux champs
++masqués n'est écrit ; les mots du certificat restent cherchés dans la sortie d'erreur. (b) Sur « no_such_ask », `louer` essaie au
++plus 4 autres offres conformes, par prix croissant, chacune revérifiée, garde de dépense recalculée, chaque refus journalisé avec le
++compte ; au cinquième « no_such_ask », refus final sans marqueur. Ce qui suit décrit la v7 :
+ 
+ Version 7 (R12 : v1 à v6 inchangées) : la v6, plus **seulement** ce qu'imposent les faits constatés par la fille le 4 novembre 2026
+ (23:09 et 23:11 UTC : deux « CREATION_INCERTAINE : réponse illisible », aucune instance créée, l'offre visée disparue ensuite).
+@@ -110,6 +119,7 @@
+ BORNE_SIGNE_DE_VIE_S = 1800       # T0 + 30 min : sans signe de vie, le pilote détruit (m2)
+ PLAFOND_SONDE_USD = 0.50
+ DELAI_GIT_S = 120
++ESSAIS_NO_SUCH_ASK = 5            # v8 (b) : l'offre choisie et au plus 4 autres
+ DELAI_VASTAI_S = 300              # M-1 : délai d'un appel de `vastai` ; dépassé, `Refus` sans arguments ni environnement
+ # Liste commune à l'amorce v8 (f2) : même motif, même ordre.
+ CLES_INTERDITES = re.compile(r"^(CLE_ARGON|GEMINI.*|ANTHROPIC.*|OPENAI.*|MOONSHOT.*|KIMI.*|RR_.*API_KEY.*)$")
+@@ -174,6 +184,10 @@
+     marqueur de création incertaine."""
+ 
+ 
++class RefusNoSuchAsk(RefusVastSansCreation):
++    """v8 (b) : Vast répond « no_such_ask » (offre plus disponible) : rien créé ; `louer` essaie l'offre conforme suivante."""
++
++
+ class RefusRecontroler(h.Refus):
+     """v7 (b) : le contrôle n'a pas pu établir un fait (échec de `ls-remote`) : code 6, recontrôler ; jamais « pas de signe de
+     vie »."""
+@@ -357,8 +371,23 @@
+             raise RefusAvantAppel("clé de modèle dans le corps : rien créé")
+         if any(ch.isspace() or ch in "\"'" for v in c["env"].values() for ch in v):
+             raise RefusAvantAppel("valeur d'environnement avec espace ou guillemet : refus (forme -e K=V)")
+-        texte = self._lancer(arguments_de_creation(offre_id, c), {"GH_TOKEN": c["env"]["GH_TOKEN"]})
+-        return lire_reponse_de_creation(texte, [v for v in self.secrets.values() if v] + [c["env"]["GH_TOKEN"]])
++        # v8 (a) : les deux sorties sont capturées ; le code de sortie seul ne décide jamais ; rien de brut n'est écrit
++        env = {k: self.environ[k] for k in ("PATH", "HOME", "LANG", "VAST_API_KEY") + VARIABLES_MANDATAIRE
++               if self.environ.get(k)}
++        args = arguments_de_creation(offre_id, c)
++        try:
++            r = subprocess.run([self.outil, *args], env=env, stdout=subprocess.PIPE, stderr=subprocess.PIPE,
++                               timeout=DELAI_VASTAI_S)
++        except subprocess.TimeoutExpired:  # M-1
++            raise h.Refus(f"vastai {' '.join(args[:2])} : délai dépassé ({DELAI_VASTAI_S} s)") from None
++        sortie = (r.stdout or b"").decode("utf-8", "replace")
++        erreur = (r.stderr or b"").decode("utf-8", "replace")
++        certificat = any(m in (r.stderr or b"") for m in MOTS_CERTIFICAT)
++        secrets = [v for v in self.secrets.values() if v] + [c["env"]["GH_TOKEN"]]
++        cat, _ = categoriser_reponse(sortie, secrets)
++        if cat == "illisible" and certificat:
++            raise RefusCertificat(f"vastai {' '.join(args[:2])} : appel non parvenu à Vast (certificat) ; code {r.returncode}")
++        return lire_reponse_de_creation(sortie, secrets, erreur, r.returncode)
+ 
+     def instances(self) -> list[dict]:
+         texte = self._lancer(["show", "instances", "--raw"])
+@@ -412,6 +441,8 @@
+         if rep is not None:
+             break
+     if rep is None:
++        rep = _champs_par_motif(texte)  # v8 (a) : forme mal formée (`'success': False?`, …) : error et msg seuls
++    if rep is None:
+         return "illisible", f"longueur {len(texte)}"
+     ident = rep.get("new_contract")
+     if rep.get("success") is True and isinstance(ident, int) and not isinstance(ident, bool):
+@@ -424,12 +455,35 @@
+     return "erreur Vast sans success faux", detail
+ 
+ 
+-def lire_reponse_de_creation(texte: str, secrets: list[str] | None = None) -> int:
+-    """v7 (a) : seule la catégorie et ses champs sûrs sortent d'ici, dans le message du refus ou l'identifiant."""
++def _champs_par_motif(texte: str) -> dict | None:
++    """v8 (a) : `error`, `msg` et `success` extraits par motif quand le texte n'est ni du JSON ni un littéral Python."""
++    champs = {}
++    for nom in ("error", "msg"):
++        m = re.search(r"""['"]%s['"]\s*:\s*(?:'((?:[^'\\]|\\.)*)'|"((?:[^"\\]|\\.)*)"|([^,}]+))""" % nom, texte)
++        if m:
++            champs[nom] = next(g for g in m.groups() if g is not None).strip()
++    m = re.search(r"""['"]success['"]\s*:\s*(True|False|true|false)""", texte)
++    if m:
++        champs["success"] = m.group(1).lower() == "true"
++    return champs if ("error" in champs or "msg" in champs) else None
++
++
++def lire_reponse_de_creation(texte: str, secrets: list[str] | None = None, erreur: str = "", code: int = 0) -> int:
++    """v7 (a), v8 (a) : sortie standard d'abord, puis sortie d'erreur ; seule la catégorie et ses champs sûrs sortent d'ici."""
+     cat, detail = categoriser_reponse(texte, secrets or [])
++    if cat == "illisible" and erreur:
++        cat, detail = categoriser_reponse(erreur, secrets or [])
++        if cat == "illisible":
++            detail = f"sortie standard {len(texte)} caractères, sortie d'erreur {len(erreur)}, code {code}"
++        else:
++            detail = f"{detail} (sortie d'erreur, code {code})"
++    elif cat == "illisible":
++        detail = f"sortie standard {len(texte)} caractères, sortie d'erreur 0, code {code}"
+     if cat == "contrat":
+         return int(detail)
+-    if cat in ("no_such_ask", "erreur Vast"):
++    if cat == "no_such_ask":
++        raise RefusNoSuchAsk(f"réponse de création : {cat} ; {detail} (Vast : rien créé)")
++    if cat == "erreur Vast":
+         raise RefusVastSansCreation(f"réponse de création : {cat} ; {detail} (Vast : rien créé)")
+     if cat == "illisible":
+         raise h.Refus(f"CREATION_INCERTAINE : réponse de création : illisible ({detail}) : ne rien relancer avant l'inventaire")
+@@ -460,27 +514,52 @@
+         duree = verifier_duree(a.duree_s)
+         tir = bool(getattr(a, "tir_minuterie", False))
+         marge = MARGE_TIR_S if tir else MARGE_MINUTERIE_S
+-        cout = verifier_plafond(o["dph_total"], duree, marge_s=marge)
+-        j.ecrire(f"sonde v8 : offre {o['id']} à {o['dph_total']} USD/h, la moins chère des conformes ; durée {duree} s ; "
+-                 f"dépense au plus {cout:.4f} USD (borne de la minuterie) ≤ {PLAFOND_SONDE_USD} USD")
+-        t_creation = maintenant or dt.datetime.now(dt.timezone.utc)
+-        echeance = int(t_creation.timestamp()) + DEMARRAGE_MAX_S + duree + marge
+-        c = corps(a.commit_prive, o, duree, environ.get("GH_TOKEN", ""), echeance, tir)
+-        lg = longueurs_de_creation(o["id"], c)
+-        j.ecrire(f"sonde v8 : longueurs de la commande de création : --args {lg['args_c']} caractères, --env {lg['env']}, "
+-                 f"commande entière {lg['commande']}")
+         if a.verifier_seulement:
++            cout = verifier_plafond(o["dph_total"], duree, marge_s=marge)
++            c = corps(a.commit_prive, o, duree, environ.get("GH_TOKEN", ""),
++                      int((maintenant or dt.datetime.now(dt.timezone.utc)).timestamp()) + DEMARRAGE_MAX_S + duree + marge, tir)
++            lg = longueurs_de_creation(o["id"], c)
++            j.ecrire(f"sonde v8 : offre {o['id']} à {o['dph_total']} USD/h ; dépense au plus {cout:.4f} USD ; longueurs : "
++                     f"--args {lg['args_c']}, --env {lg['env']}, commande {lg['commande']}")
+             j.ecrire("sonde v8, vérification seulement : rien créé (variables : " + ", ".join(sorted(c["env"])) + ")")
+             return 0
+         client = client or ClientPilote(environ)
+-        try:
+-            ident = client.creer(o["id"], c)
+-            j.ecrire(f"sonde v8 : réponse de création : contrat {ident}")
+-        except RefusAvantAppel:  # gardes d'avant l'appel, certificat, et Vast qui dit lui-même que rien n'est créé (v7)
+-            raise
+-        except h.Refus as e:  # m-1 : tout échec après l'appel (code non nul, délai, réponse illisible ou refusée)
+-            incertain_f.write_text(f"{h.maintenant()} {str(e)[:120]}\n")
+-            raise
++        # v8 (b) : sur « no_such_ask » (Vast : rien créé), au plus 4 autres offres conformes, par prix croissant, chacune
++        # revérifiée ; garde de dépense recalculée à chaque essai ; au cinquième « no_such_ask », refus final sans marqueur.
++        autres = []
++        for x in sorted((x for x in offres if isinstance(x, dict) and x.get("id") != o["id"]),
++                        key=lambda x: (x.get("dph_total") if isinstance(x.get("dph_total"), (int, float)) else 1e9,
++                                       str(x.get("id")))):
++            try:
++                autres.append(verifier_offre_sonde([x], x.get("id")))
++            except h.Refus:
++                continue
++        candidates = [o] + autres[:ESSAIS_NO_SUCH_ASK - 1]
++        ident = None
++        for n, oc in enumerate(candidates, 1):
++            oc = verifier_offre_sonde(offres, oc["id"])
++            cout = verifier_plafond(oc["dph_total"], duree, marge_s=marge)
++            t_creation = maintenant or dt.datetime.now(dt.timezone.utc)
++            echeance = int(t_creation.timestamp()) + DEMARRAGE_MAX_S + duree + marge
++            c = corps(a.commit_prive, oc, duree, environ.get("GH_TOKEN", ""), echeance, tir)
++            lg = longueurs_de_creation(oc["id"], c)
++            j.ecrire(f"sonde v8 : essai {n}/{len(candidates)} : offre {oc['id']} à {oc['dph_total']} USD/h ; dépense au plus "
++                     f"{cout:.4f} USD ≤ {PLAFOND_SONDE_USD} ; longueurs : --args {lg['args_c']}, --env {lg['env']}, "
++                     f"commande {lg['commande']}")
++            try:
++                ident = client.creer(oc["id"], c)
++                j.ecrire(f"sonde v8 : réponse de création : contrat {ident} (essai {n})")
++                o = oc
++                break
++            except RefusNoSuchAsk as e:
++                j.ecrire(f"sonde v8 : essai {n} refusé : {e}")
++                if n == len(candidates):
++                    raise RefusNoSuchAsk(f"{n} essai(s), tous « no_such_ask » : refus final (Vast : rien créé)") from None
++            except RefusAvantAppel:  # certificat, autre erreur de Vast avec success faux, gardes : arrêt, sans marqueur
++                raise
++            except h.Refus as e:  # m-1 : réponse illisible, erreur sans success faux, délai : marqueur, arrêt
++                incertain_f.write_text(f"{h.maintenant()} {str(e)[:120]}\n")
++                raise
+         t0 = t_creation
+         etat = {"identifiant": ident, "etiquette": ETIQUETTE, "t0_utc": t0.strftime("%Y-%m-%dT%H:%M:%SZ"),
+                 "borne_signe_de_vie_utc": (t0 + dt.timedelta(seconds=BORNE_SIGNE_DE_VIE_S)).strftime("%Y-%m-%dT%H:%M:%SZ"),
+--- tests/test_sonde_hote_durable_a1_v3_v7.py (renommé v8)
++++ tests/test_sonde_hote_durable_a1_v3_v8.py
+@@ -988,7 +988,7 @@
+      "no_such_ask"),
+     ('{"success": false, "error": "invalid_args", "msg": "bad image"}', 2, False, "erreur Vast ; error='invalid_args'"),
+     ('{"error": "bizarre"}', 2, True, "erreur Vast sans success faux"),
+-    ("réponse que personne ne sait lire", 2, True, "illisible (longueur"),
++    ("réponse que personne ne sait lire", 2, True, "illisible (sortie standard"),  # v8 : longueurs des deux flux
+ ])
+ def test_louer_catégorie_et_marqueur(tmp_path, sortie, code, marqueur, au_journal):
+     """Cas sain (contrat) et un artefact par catégorie : seuls no_such_ask et erreur Vast avec success faux évitent le
+@@ -1006,7 +1006,7 @@
+     j = (tmp_path / "journal-sonde-v8.log").read_text()
+     c = s.corps("a" * 40, dict(OFFRE, id=12, dph_total=0.09), 1200, JETON, 1)
+     lg = s.longueurs_de_creation(12, c)
+-    assert f"--args {lg['args_c']} caractères" in j and "commande entière" in j and lg["args_c"] == len(c["script"])
++    assert f"--args {lg['args_c']}, --env " in j and ", commande " in j and lg["args_c"] == len(c["script"])  # v8 : longueurs écrites à chaque essai
+ 
+ 
+ def faux_git(tmp_path, code=0, sortie=""):
+@@ -1038,3 +1038,128 @@
+     assert s.controler(etat_pilote(tmp_path), v, echec, heure(13, 35), {}) == 6 and v.gestes == []
+     assert "RECONTRÔLER : ls-remote : code 128" in (tmp_path / "controle.log").read_text()
+     assert s.controler(etat_pilote(tmp_path), v, lambda: False, heure(13, 35), {}) == 1  # vrai « pas de vie » : détruite
++
++
++
++# --- v8 : refus sur la sortie d'erreur avec le code 0, et nouvel essai sur « no_such_ask » (fille, 23:35 et 23:38 UTC) -------
++
++FORME_DE_LA_FILLE = ("{'success': False?, 'error': True, 'msg': 'error 404/3603: no_such_ask  Instance type by id 1 is not "
++                     "available.'}")
++
++
++def vastai_deux_flux(tmp_path, nom, stdout="", stderr="", code=0):
++    o = outil(tmp_path, nom, f"cat <<'FIN1'\n{stdout}\nFIN1\ncat >&2 <<'FIN2'\n{stderr}\nFIN2\nexit {code}\n")
++    env = {"PATH": os.environ["PATH"], "HOME": str(tmp_path), "VAST_API_KEY": CLE_COMPTE, "GH_TOKEN": JETON}
++    return s.ClientPilote(env, str(o))
++
++
++def corps_v8():
++    return s.corps("a" * 40, OFFRE, 1200, JETON, 1_800_000_000)
++
++
++def test_contrat_sur_la_sortie_standard(tmp_path):
++    assert vastai_deux_flux(tmp_path, "v1", stdout='{"success": true, "new_contract": 808}', stderr="avertissement").creer(
++        11, corps_v8()) == 808
++
++
++@pytest.mark.parametrize("stdout, stderr, code, classe, motif", [
++    ("", FORME_DE_LA_FILLE, 0, "RefusNoSuchAsk", "no_such_ask"),                       # refus sur stderr, code 0
++    ("", "{'success': False, 'error': 'no_such_ask', 'msg': 'gone'}", 0, "RefusNoSuchAsk", "sortie d'erreur, code 0"),
++    ('{"success": false, "error": "invalid_args", "msg": "bad"}', "", 0, "RefusVastSansCreation", "invalid_args"),
++    ("", "{'success': False, 'error': 'insufficient_credit', 'msg': 'balance " + JETON + "'}", 1, "RefusVastSansCreation",
++     "insufficient_credit"),
++    ("", "", 0, "Refus", "illisible (sortie standard 1 caractères, sortie d'erreur 1, code 0)"),  # deux flux vides
++])
++def test_categorie_des_deux_flux(tmp_path, stdout, stderr, code, classe, motif):
++    c = vastai_deux_flux(tmp_path, "v2", stdout, stderr, code)
++    with pytest.raises(h.Refus) as e:
++        c.creer(11, corps_v8())
++    assert type(e.value).__name__ == classe and motif in str(e.value), str(e.value)
++    assert JETON not in str(e.value) and CLE_COMPTE not in str(e.value)
++    if classe == "RefusNoSuchAsk":
++        assert isinstance(e.value, s.RefusVastSansCreation)
++    if classe == "RefusVastSansCreation":
++        assert not isinstance(e.value, s.RefusNoSuchAsk)
++
++
++def test_motif_mal_forme_de_la_fille():
++    cat, detail = s.categoriser_reponse(FORME_DE_LA_FILLE, SECRETS_V7)
++    assert cat == "no_such_ask" and "Instance type by id 1" in detail and "error='True'" in detail
++
++
++OFFRES_V8 = [dict(OFFRE, id=100 + k, dph_total=round(0.05 + 0.01 * k, 2)) for k in range(7)]
++
++
++def vastai_compteur(tmp_path, reponses):
++    """Faux `vastai` : la n-ième création rend la n-ième réponse (stdout, stderr) ; le compte des appels est gardé."""
++    d = tmp_path / "reponses"
++    d.mkdir(exist_ok=True)
++    for n, (so, se) in enumerate(reponses, 1):
++        (d / f"{n}.out").write_text(so)
++        (d / f"{n}.err").write_text(se)
++    compte = tmp_path / "compte"
++    o = outil(tmp_path, "vastai-compteur",
++              f'n=$(( $(cat "{compte}" 2>/dev/null || echo 0) + 1 )); echo $n > "{compte}"; echo "$3" >> "{compte}.offres"\n'
++              f'[ -f "{d}/$n.out" ] || n=$(ls "{d}" | grep -c out)\ncat "{d}/$n.out"; cat "{d}/$n.err" >&2; exit 0\n')
++    env = dict(ENV_PILOTE, PATH=os.environ["PATH"], HOME=str(tmp_path))
++    return s.ClientPilote(env, str(o)), compte, env
++
++
++def louer_v8(tmp_path, client, env, offres=None, offre="100", **kw):
++    a = args_louer(tmp_path, **kw)
++    Path(a.offres).write_text(json.dumps(offres if offres is not None else OFFRES_V8))
++    a.offre = offre
++    return s.louer(a, client, JOUR, env)
++
++
++NSA = ("", "{'success': False, 'error': True, 'msg': 'error 404/3603: no_such_ask  Instance type is not available.'}")
++
++
++def test_no_such_ask_puis_contrat_au_deuxieme_essai(tmp_path):
++    c, compte, env = vastai_compteur(tmp_path, [NSA, ('{"success": true, "new_contract": 909}', "")])
++    assert louer_v8(tmp_path, c, env) == 0
++    assert Path(str(compte) + ".offres").read_text().split() == ["100", "101"]  # par prix croissant
++    j = (tmp_path / "journal-sonde-v8.log").read_text()
++    assert "essai 1/5 : offre 100" in j and "essai 1 refusé" in j and "contrat 909 (essai 2)" in j
++    e = json.loads((tmp_path / "journal-sonde-v8.log.etat.json").read_text())
++    assert e["identifiant"] == 909 and e["prix_h_usd"] == 0.06
++    assert not (tmp_path / "journal-sonde-v8.log.creation-incertaine").exists()
++
++
++def test_cinq_no_such_ask_refus_final_sans_marqueur(tmp_path):
++    c, compte, env = vastai_compteur(tmp_path, [NSA] * 7)
++    assert louer_v8(tmp_path, c, env) == 2
++    assert compte.read_text().strip().splitlines()[0] == "5"
++    assert Path(str(compte) + ".offres").read_text().split() == ["100", "101", "102", "103", "104"]
++    j = (tmp_path / "journal-sonde-v8.log").read_text()
++    assert "5 essai(s), tous « no_such_ask » : refus final" in j and "essai 5/5" in j
++    assert not (tmp_path / "journal-sonde-v8.log.creation-incertaine").exists()
++
++
++def test_moins_d_offres_conformes_que_cinq(tmp_path):
++    offres = [OFFRES_V8[0], OFFRES_V8[1], dict(OFFRE, id=150, num_gpus=1, dph_total=0.01)]  # la carte n'est jamais essayée
++    c, compte, env = vastai_compteur(tmp_path, [NSA] * 3)
++    assert louer_v8(tmp_path, c, env, offres) == 2
++    assert Path(str(compte) + ".offres").read_text().split() == ["100", "101"]
++    assert "2 essai(s), tous « no_such_ask »" in (tmp_path / "journal-sonde-v8.log").read_text()
++
++
++@pytest.mark.parametrize("reponse, marqueur", [
++    (('{"success": false, "error": "invalid_args", "msg": "bad image"}', ""), False),  # erreur Vast : arrêt, sans marqueur
++    (("", ""), True),                                                                  # illisible : arrêt, marqueur
++])
++def test_autre_erreur_ne_relance_pas(tmp_path, reponse, marqueur):
++    c, compte, env = vastai_compteur(tmp_path, [reponse, ('{"success": true, "new_contract": 1}', "")])
++    assert louer_v8(tmp_path, c, env) == 2
++    assert compte.read_text().strip().splitlines()[0] == "1"
++    assert (tmp_path / "journal-sonde-v8.log.creation-incertaine").exists() == marqueur
++
++
++def test_garde_de_depense_recalculee_a_chaque_essai(tmp_path):
++    """Mode normal, 1 800 s : 0,09 USD/h passe la garde ; 0,39 USD/h (conforme à l'offre) la dépasse : arrêt avant l'appel."""
++    offres = [dict(OFFRE, id=100, dph_total=0.09), dict(OFFRE, id=101, dph_total=0.39)]
++    c, compte, env = vastai_compteur(tmp_path, [NSA, ('{"success": true, "new_contract": 2}', "")])
++    assert louer_v8(tmp_path, c, env, offres, duree_s="1800") == 2
++    assert Path(str(compte) + ".offres").read_text().split() == ["100"]  # le second essai n'a pas été appelé
++    j = (tmp_path / "journal-sonde-v8.log").read_text()
++    assert "plafond 0.5 USD" in j and not (tmp_path / "journal-sonde-v8.log.creation-incertaine").exists()

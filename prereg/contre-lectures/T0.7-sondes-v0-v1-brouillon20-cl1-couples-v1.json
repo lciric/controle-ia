@@ -1,0 +1,72 @@
+[
+ {
+  "id": "CL20-01",
+  "section": "Module (« Accord au code », point 1)",
+  "motif": "C20-01 et C20-02 : portée réelle de la règle de CT-01 (les quatre concepts à la fois) ; au commit 8dc1cb09 le module n'écrit aucune réserve pour la sonde du domaine quand T7-P10 est non lue",
+  "ancien": "**n'est pas dit** (lecture prudente du plan, point 1, déclarée) ;",
+  "nouveau": "**n'est pas dit** (lecture prudente du plan, point 1, déclarée) ; **portée de la règle** (contre-lecture du brouillon 20, C20-01 et C20-02) : tous les témoins lexicaux notent la même liste d'actions ; une seule action sans caractère de mot parmi les actions notées de la course met donc en échec les témoins de **tous les concepts lus** à la fois, et T7-P10 est alors non lue pour chacun sur ce run ; au commit `8dc1cb09`, le module écrit « non lue : témoin lexical en échec » sous `predictions[\"T7-P10\"]` et **aucune entrée de `reserves_identifiees`** pour ce cas : pour la sonde du domaine, « la sonde lit l'intention » non dit et la mention « porté possiblement par le vocabulaire » sont alors portés par le lecteur du verdict (R13), à qui sa consigne les rappelle, tant que le code ne les écrit pas ;"
+ },
+ {
+  "id": "CL20-02",
+  "section": "Module (« Accord au code », point 9)",
+  "motif": "C20-03 : témoin lexical de la tromperie sans pouvoir (mêmes textes sous les deux étiquettes) : phrase de lecture écrite, comme pour J-D ; aucune ligne R neuve",
+  "ancien": "il est lu et rapporté avec cette phrase.",
+  "nouveau": "il est lu et rapporté avec cette phrase. **Même lecture pour la tromperie** (contre-lecture du brouillon 20, C20-03), si T7-P10 y est calculé sur les données de P3 (point 12) : les deux exemples d'un fait portent le même texte sous les deux étiquettes (`src/controle_ia/t07/donnees_p3_t07_v1.py` au commit `8dc1cb09`, en-tête ; rapport complémentaire 2 du développeur, `b5671a02…`, section 4 : témoin au hasard par construction) ; T7-P10 pour la tromperie compare donc la sonde à un témoin sans pouvoir, **ne dit rien du vocabulaire**, et un « au-dessus du témoin lexical » n'y vaut pas garde de validité ; il est lu et rapporté avec cette phrase ; pour les enjeux, le témoin sépare sur sa validation (même rapport, même section) et T7-P10 se lit pleinement."
+ },
+ {
+  "id": "CL20-03",
+  "section": "Module (configuration)",
+  "motif": "C20-04 : clé `donnees_p3` du commit 8dc1cb09, facultative pour le code, exigée par le texte si T7-P10 de P3 est « calculé »",
+  "ancien": "et **`scores_base_t06`** (nul sous « égalité ») ;",
+  "nouveau": "et **`scores_base_t06`** (nul sous « égalité ») ; **au commit `8dc1cb09`** (contre-lecture du brouillon 20, C20-04), une clé de plus, **`donnees_p3`** (quatre fichiers de la provenance de P3, chacun par chemin et empreinte, sceaux vérifiés dans la garde de l'étape A), que le code tient pour **facultative** : sans elle, T7-P10 de la tromperie et des enjeux est écrit « non lu » avec son motif, sans refus ; si `T7P10_SONDES_P3` vaut « calculé », **ce texte l'exige** : la configuration scellée la porte (brouillon de configuration `brouillons/T0.7-sondes-v0-v1-brouillon19-pieces/configuration-t07-v2.json`, même branche, `7daf4f9b…`), et une configuration sans elle est un écart à ce texte ;"
+ },
+ {
+  "id": "CL20-04",
+  "section": "Calcul et dépense (principe)",
+  "motif": "C20-05 : le repli du commit 8dc1cb09 écrit les activations recalculées sous le run de T0.6 ; relance unique de (b) 4 refusée si le dossier existe",
+  "ancien": "jamais sous `<run>` de T0.6.",
+  "nouveau": "jamais sous `<run>` de T0.6 ; **exception à déclarer si `REPLI_RECALCUL_T07` vaut « mis en œuvre »** (contre-lecture du brouillon 20, C20-05) : au commit `8dc1cb09`, le repli écrit les activations recalculées sous `donnees/<run>/activations/` du run de T0.6, dossier qui doit être absent (R12) ; après un échec de la garde d'équivalence ce dossier existe, et la relance unique de l'écrit (b) 4 serait refusée pour ce seul motif : l'ordre de la variante B règle ce point avant la relance (dossier déplacé sous un nom neuf, jamais effacé ni écrasé)."
+ },
+ {
+  "id": "CL20-05",
+  "section": "Calcul et dépense (attendu)",
+  "motif": "C20-06 : suite d'essais au commit 8dc1cb09 (sept fichiers)",
+  "ancien": "(quatre fichiers d'essais de T0.7 : 223 passés, 1 sauté, en 402 à 668 s sur le processeur des sessions de développement et de contre-lecture)",
+  "nouveau": "(quatre fichiers d'essais de T0.7 au commit `1f77b34d` : 223 passés, 1 sauté, en 402 à 668 s sur le processeur des sessions de développement et de contre-lecture ; sept fichiers au commit `8dc1cb09` : 247 passés, 1 sauté, 526 s, rapport complémentaire 2 du développeur, `b5671a02…`, section 6)"
+ },
+ {
+  "id": "CL20-06",
+  "section": "Module (introduction)",
+  "motif": "C20-06 : rapport complémentaire 2 rendu ; quatorze modules, sept fichiers d'essais, trois scripts au commit 8dc1cb09",
+  "ancien": "Corrections CT-01 à CT-07 : rapport complémentaire v2 attendu, contrôlé par une contre-lecture courte du différentiel avant que `COMMIT_CODE_T07` soit rempli (paragraphe « Accord au code » ci-dessous).",
+  "nouveau": "Corrections CT-01 à CT-07 : **rapport complémentaire 2 rendu** (contre-lecture du brouillon 20, C20-06 ; `docs/notes/g0-deux-semaines-v1/t07-module-v2/rapport-developpeur-t07-module-v2-complement-v2.md`, `b5671a02aef3c688d774b48b8d7a8637cb3555ceef27f57af43af23a34d603b7` ; R-2093) : au commit `8dc1cb09f5e764f37aa87cf1410bc6586249b3d1`, descendant de `1f77b34d`, le module compte **quatorze fichiers** (les douze ci-dessus, plus `repli_recalcul_v1.py` et `donnees_p3_t07_v1.py`), **sept fichiers d'essais** (les quatre ci-dessus, plus `tests/test_t07_repli_recalcul_v1.py`, `tests/test_t07_donnees_p3_v1.py` et `tests/test_t07_corrections_cl1_v1.py`) et trois scripts de répétition (`scripts/repetition_jouet_t07_v1.py`, `scripts/repetition_jouet_t07_v2.py`, `scripts/repetition_jouet_repli_t07_v1.py`) ; ces fichiers neufs entrent dans `EMPREINTES_CODE_T07` (« tout fichier neuf des corrections ») ; le tout reste contrôlé par une contre-lecture courte du différentiel avant que `COMMIT_CODE_T07` soit rempli (paragraphe « Accord au code » ci-dessous)."
+ },
+ {
+  "id": "CL20-07",
+  "section": "Module (« Accord au code », point 4)",
+  "motif": "C20-12 : le code exige aussi deux paires par concept",
+  "ancien": "concepts** (plan, point 10), contrôlé dans la garde de l'étape A ;",
+  "nouveau": "concepts** (plan, point 10) et au moins deux paires par concept (code au commit `8dc1cb09` ; contre-lecture du brouillon 20, C20-12), contrôlés dans la garde de l'étape A ;"
+ },
+ {
+  "id": "CL20-08",
+  "section": "Module (commande, ordre d'exécution)",
+  "motif": "C20-06 : nombre de fichiers d'essais selon le commit cité",
+  "ancien": "(les quatre fichiers `tests/test_t07_*.py`,",
+  "nouveau": "(tous les fichiers `tests/test_t07_*.py` du commit cité par `COMMIT_CODE_T07` : quatre au commit `1f77b34d`, sept au commit `8dc1cb09`,"
+ },
+ {
+  "id": "CL20-09",
+  "section": "Module (commande, ordre d'exécution)",
+  "motif": "C20-07 : ce que laisse un échec de la passe à blanc ; script de la passe à blanc non écrit au commit 8dc1cb09",
+  "ancien": "un échec de la passe à blanc arrête l'ordre avant l'étape A (nœud) ;",
+  "nouveau": "un échec de la passe à blanc arrête l'ordre avant l'étape A (nœud) ; **ce que ce nœud laisse** (contre-lecture du brouillon 20, C20-07) : l'étape A reste due (écrit (b) 7 : ce nœud n'est pas un de ceux de (b)) ; une correction du code serait un écart à ce texte scellé, qui cite son commit (version neuve de ce texte, ou ligne `CODE-T07` si DS-3 bis est accordée) ; la minuterie de l'instance court pendant ce temps, et sans étape A avant la destruction la variante B s'applique (écrit (b) 2) ; au commit `8dc1cb09`, le script de la passe à blanc n'est pas écrit (rapport complémentaire 2, section 5) : il est écrit, contre-lu (R2) et éprouvé en mode jouet sur un cas sain et sur un artefact (R5) avant le scellement de l'ordre, qui le cite à son empreinte ;"
+ },
+ {
+  "id": "CL20-10",
+  "section": "Reste (ce qui ne conditionne pas le scellement)",
+  "motif": "C20-08 : ce qui arrive si le jeu de phrases des concepts ou un jeu générique manque à l'ouverture de l'étape A",
+  "ancien": "les phrases des concepts (`SCELLEMENT-CONCEPTS-T07`), P3-bis scellé,",
+  "nouveau": "les phrases des concepts (`SCELLEMENT-CONCEPTS-T07` ; **contre-lecture du brouillon 20, C20-08, si une pièce manque** : cette clé est exigée par l'étape A, sans repli ; absente à la fin de la course de 7b, l'étape A est refusée, code 2, et attend (écrit (b) 3), le stockage de l'instance courant jusqu'à la minuterie ; encore absente à la destruction de l'instance, l'étape A passe en variante B (écrit (b) 2), qui l'attend de même ; les jeux J-D, J-C et J-A sont, eux, des clés permises : non scellés à l'ouverture, ils suivent le repli de « Seuil », sans attente), P3-bis scellé,"
+ }
+]

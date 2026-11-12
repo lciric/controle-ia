@@ -1,0 +1,112 @@
+--- commande_argon_v56_nuit_v2.py (sha256 221df610681ed47bf66fbfef21d583006aa3e09a3147e22227faacd98622b851)
++++ commande_argon_v56_nuit_v3.py
+@@ -1,7 +1,32 @@
+ #!/usr/bin/env python3
+-"""Commande externe d'Argon (gemini-4-argon) pour la mini-course d'idéation (orchestrateur v56, GO-2026-11-01-12) — v2.
++"""Commande externe d'Argon (gemini-4-argon) pour le tour fermé, étage 1 (orchestrateur v63) — v3.
+ 
+-Rédigée le 1er novembre 2026 (sous-agent de session-depot) ; rien n'a été lancé par le rédacteur. **Version 2** =
++Version 3, rédigée le 2 novembre 2026 (sous-agent de session-depot) ; rien n'a été lancé par le rédacteur. **Version 3 =
++`commande_argon_v56_nuit_v2.py` (sha256 `221df610…`, inchangée, R12) avec quatre changements dans la seule sous-commande
++`appeler`, et seulement ceux-là** (défaut TF-01 : la v2 refusait, code 2, les rôles de l'étage de tests de mort) :
++
++1. **Rôles** : `ROLES` étendu à `experimentateur_test` (l'expérimentateur de l'étage) et `lecteur_test` (le vérificateur,
++   joué par Argon, témoin jamais décisif), en plus de `proposeur_ideation` et `juge_ideation` (`pole/adaptateurs.py`,
++   `ROLES_ETAGE_TESTS` ; `pole/tests_de_mort_v5.py`, `ROLE_EXPERIMENTATEUR`, `ROLE_LECTEUR`).
++2. **Sortie maximale et minimale par rôle** (`bornes_de_sortie`) : proposeur → `--max-sortie-proposeur` /
++   `--sortie-min-jetons` ; tout autre rôle → `--max-sortie-court` / `--sortie-min-jetons` ; sauf `lecteur_test` → options
++   neuves de `appeler`, `--max-sortie-lecteur` (défaut 1 000) et `--sortie-min-jetons-lecteur` (défaut 200 : le
++   vérificateur rend une seule ligne, sous un plafond de session de 0,10 USD).
++3. **Dernière ligne** : le champ `role` est rendu sur toute sortie (aussi sur un refus de réglage, code 2, où il vaut ce
++   que portait `ROLE_POLE`) et le champ `version` vaut `commande-argon-v56-nuit-v3` ; le champ `envoye` est conservé.
++4. **Cet en-tête** (différences numérotées) et les lignes d'usage.
++
++**La sous-commande `servir` (le relais Argon local, port 8805) est inchangée, ligne pour ligne, et se comporte à
++l'identique** : aucune reprise ajoutée (`attentes=(0,)`), mêmes codes 402 (plafond du relais), 429 (nombre d'appels),
++413 (corps trop grand), 411 (`Content-Length` exigé), 403, 400, mêmes journaux, même empreinte exigée du collisionneur. Le
++relais est un instrument gelé d'une autre expérience (A1-v3) : il continue d'être servi depuis le fichier qui le sert
++aujourd'hui ; seule la constante `VERSION`, partagée par les deux sous-commandes, change de nom (champ `version` de
++`GET /relais/etat` et en-tête `Server` si l'on servait depuis ce fichier). Remarque : `COLLISIONNEUR_DEFAUT` est calculé
++relativement au dossier du fichier (trois dossiers au-dessus, `espece-seule-v1/collisionneur_v7.py`) ; depuis
++`docs/notes/ideation-organisme-v1/commandes-tour-ferme-v1/` il ne pointe sur rien : `servir` depuis ce fichier exigerait
++`--collisionneur` explicite (inchangé, hors du périmètre de la v3).
++
++Historique de la version 2 — rédigée le 1er novembre 2026 (sous-agent de session-depot). **Version 2** =
+ `commande_argon_v56_nuit_v1.py` (inchangée, R12) avec une seule correction, trouvée par la répétition v2 : sur un échec ou un
+ usage absent, le coût compté est le pire cas **réservé par la commande** (et non le nombre arrondi à 8 décimales rendu par le
+ relais, qui pouvait le dépasser de moins de 1e-8 et marquer à tort un « dépassement de réserve », devenu un arrêt de la course
+@@ -44,9 +69,11 @@
+ 
+ Usage :
+   env -i PATH=/usr/bin:/bin LANG=C.UTF-8 GEMINI_API_KEY="$GEMINI_API_KEY_2" HTTPS_PROXY=… SSL_CERT_FILE=… \\
+-      python3 -I -B commande_argon_v56_nuit_v1.py servir --port 8805 --plafond-usd 10 --max-appels 50 --journal J.jsonl
+-  python3 -I -B commande_argon_v56_nuit_v1.py appeler --url-relais http://127.0.0.1:8805 --registre R.jsonl \\
+-      --plafond-cumule-usd 10        (consigne sur l'entrée standard ; environnement fourni par l'orchestrateur)
++      python3 -I -B commande_argon_v56_nuit_v3.py servir --port 8805 --plafond-usd 10 --max-appels 50 --journal J.jsonl
++  python3 -I -B commande_argon_v56_nuit_v3.py appeler --url-relais http://127.0.0.1:8805 --registre R.jsonl \\
++      --plafond-cumule-usd 50 [--max-sortie-proposeur 32000] [--max-sortie-court 4000] [--sortie-min-jetons 1000] \\
++      [--max-sortie-lecteur 1000] [--sortie-min-jetons-lecteur 200] [--delai-s 1750]
++                                     (consigne sur l'entrée standard ; environnement fourni par l'orchestrateur)
+ """
+ 
+ import argparse
+@@ -70,8 +97,8 @@
+ sys.path.insert(0, ICI)  # -I n'ajoute pas le dossier du script : le registre partagé est chargé d'ici
+ import registre_depense_cumulee_v1 as reg  # noqa: E402
+ 
+-VERSION = "commande-argon-v56-nuit-v2"
+-ROLES = ("proposeur_ideation", "juge_ideation")
++VERSION = "commande-argon-v56-nuit-v3"
++ROLES = ("proposeur_ideation", "juge_ideation", "experimentateur_test", "lecteur_test")  # v3 (1)
+ PLANCHER = 1e-6
+ HOTE = "127.0.0.1"
+ COLLISIONNEUR_DEFAUT = os.path.join(os.path.dirname(os.path.dirname(os.path.dirname(ICI))), "espece-seule-v1", "collisionneur_v7.py")
+@@ -266,6 +293,17 @@
+     return url.rstrip("/") + "/appel"
+ 
+ 
++def bornes_de_sortie(role, args):
++    """v3 (2) : (sortie maximale, sortie minimale) en jetons selon le rôle : proposeur → `--max-sortie-proposeur` /
++    `--sortie-min-jetons` ; `lecteur_test` (vérificateur, une seule ligne rendue) → `--max-sortie-lecteur` /
++    `--sortie-min-jetons-lecteur` ; tout autre rôle (juge, expérimentateur) → `--max-sortie-court` / `--sortie-min-jetons`."""
++    if role == "proposeur_ideation":
++        return args.max_sortie_proposeur, args.sortie_min_jetons
++    if role == "lecteur_test":
++        return args.max_sortie_lecteur, args.sortie_min_jetons_lecteur
++    return args.max_sortie_court, args.sortie_min_jetons
++
++
+ def plafond_etape(environ):
+     etape, brut = environ.get("ETAPE_POLE"), environ.get("PLAFOND_ETAPE_USD")
+     if etape is None and brut is None:
+@@ -295,15 +333,16 @@
+         if not prompt.strip():
+             raise ValueError("consigne vide")
+     except (ValueError, SystemExit) as e:
+-        rendre(2, erreur=str(e)[:300], envoye=False)
+-    maxi = args.max_sortie_proposeur if role == "proposeur_ideation" else args.max_sortie_court
++        rendre(2, erreur=str(e)[:300], envoye=False, role=environ.get("ROLE_POLE"))  # v3 (3)
++    maxi, mini = bornes_de_sortie(role, args)  # v3 (2)
+     entree_usd = pire_cas(len(prompt), 0)
+     mt = min(maxi, int((plafond - entree_usd) * 1e6 / PRIX[1])) if plafond > entree_usd else 0
+-    if mt < args.sortie_min_jetons:
+-        rendre(4, erreur=f"pire cas au-dessus du plafond de session {plafond} USD ({len(prompt)} caractères)", envoye=False)
++    if mt < mini:  # v3 (2)
++        rendre(4, erreur=f"pire cas au-dessus du plafond de session {plafond} USD ({len(prompt)} caractères)", envoye=False,
++               role=role)  # v3 (3)
+     pire = pire_cas(len(prompt), mt)
+     if pire > plafond + 1e-12:
+-        rendre(4, erreur="pire cas au-dessus du plafond de session", envoye=False)
++        rendre(4, erreur="pire cas au-dessus du plafond de session", envoye=False, role=role)  # v3 (3)
+     diag = {"max_tokens": mt, "caracteres": len(prompt), "pire_cas_usd": round(pire, 8), "modele_demande": args.modele,
+             "role": role, "etape": etape}
+     try:
+@@ -391,6 +430,8 @@
+     p.add_argument("--max-sortie-proposeur", type=int, default=32000)
+     p.add_argument("--max-sortie-court", type=int, default=4000)
+     p.add_argument("--sortie-min-jetons", type=int, default=1000)
++    p.add_argument("--max-sortie-lecteur", type=int, default=1000)  # v3 (2) : lecteur_test, une seule ligne rendue
++    p.add_argument("--sortie-min-jetons-lecteur", type=int, default=200)  # v3 (2)
+     p.add_argument("--delai-s", type=float, default=1750.0)
+     p.add_argument("--registre", required=True)
+     p.add_argument("--plafond-cumule-usd", type=float, required=True)

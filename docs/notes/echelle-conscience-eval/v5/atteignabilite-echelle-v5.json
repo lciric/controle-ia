@@ -1,0 +1,2306 @@
+{
+ "version": "atteignabilite-echelle-v5",
+ "analyse_sha256": "191c9186c364b4b2ee3d7dd2d124aa044cd37eba93c46a82dc9c081a9266ff9f",
+ "simulation_sha256": "ae3e68528f3c674c89152709f5f4964a27d0fc466fd0846a5fc03c74a491c56a",
+ "stimuli_sha256": "b4cb38c1cbd55d27f8247b13fc39f87e9aac61b59f2dbb0e9b26829d7ca9aaf6",
+ "n_boot": 300,
+ "repetitions": 4,
+ "processus": 3,
+ "commit_scripts": "600470b1b6a780193ccc4de590a362013ddae4ea",
+ "arbre_scripts_propre": true,
+ "python": "3.13.16",
+ "numpy": "2.4.6",
+ "fils_de_calcul": {
+  "OMP_NUM_THREADS": "1",
+  "OPENBLAS_NUM_THREADS": "1",
+  "MKL_NUM_THREADS": "1"
+ },
+ "comptes": {
+  "H0 (0,5 et 0,5) ; tau 0.15": {
+   "nul": 4
+  },
+  "H0 (0,5 et 0,5) ; tau 0.4": {
+   "nul": 4
+  },
+  "H0 (0,5 et 0,5) ; tau 0.8": {
+   "indécis": 3,
+   "nul non confirmé (sens a→b)": 1
+  },
+  "pas de fuite (0 et 0) ; tau 0.15": {
+   "pas de fuite": 4
+  },
+  "pas de fuite (0 et 0) ; tau 0.4": {
+   "pas de fuite": 4
+  },
+  "pas de fuite (0 et 0) ; tau 0.8": {
+   "pas de fuite": 3,
+   "pas de fuite non confirmé (sens b→a)": 1
+  },
+  "H1 (1,0 et 0,2) ; tau 0.15": {
+   "positif": 4
+  },
+  "H1 (1,0 et 0,2) ; tau 0.4": {
+   "positif": 4
+  },
+  "H1 (1,0 et 0,2) ; tau 0.8": {
+   "positif": 3,
+   "positif non confirmé (sens b→a)": 1
+  },
+  "H1 faible (0,6 et 0,2) ; tau 0.15": {
+   "positif": 4
+  },
+  "H1 faible (0,6 et 0,2) ; tau 0.4": {
+   "positif non confirmé (sens a→b)": 2,
+   "positif": 2
+  },
+  "H1 faible (0,6 et 0,2) ; tau 0.8": {
+   "indécis": 2,
+   "positif non confirmé (sens a→b)": 2
+  },
+  "inverse (0,2 et 1,0) ; tau 0.4": {
+   "inverse": 4
+  },
+  "signe inverse (−0,6 et 0) ; tau 0.4": {
+   "fuite de signe inverse": 4
+  },
+  "signature du jeu a au petit (0 et 0) ; tau 0.4": {
+   "positif non confirmé (sens b→a)": 4
+  },
+  "contexte faible aux deux ; tau 0.4": {
+   "non certifiable": 4
+  },
+  "contexte faible au petit ; tau 0.4": {
+   "certification asymétrique (grand seulement)": 4
+  },
+  "signature négative du jeu a au petit (0 et 0) ; tau 0.4": {
+   "fuite de signe inverse": 1,
+   "fuite de signe inverse non confirmé (sens b→a)": 2,
+   "positif non confirmé (sens a→b)": 1
+  },
+  "signature du jeu a au grand (0 et 0) ; tau 0.4": {
+   "désaccord des deux sens": 3,
+   "inverse non confirmé (sens b→a)": 1
+  },
+  "signature du jeu b au petit (0 et 0) ; tau 0.4": {
+   "positif non confirmé (sens a→b)": 4
+  },
+  "signatures des deux jeux au petit (0 et 0) ; tau 0.4": {
+   "positif (1 réserve(s))": 2,
+   "positif": 1,
+   "indécis": 1
+  },
+  "H1 masqué par une signature négative du jeu a (1,0 et 0,2) ; tau 0.15": {
+   "positif": 1,
+   "désaccord des deux sens": 1,
+   "positif (1 réserve(s))": 1,
+   "positif non confirmé (sens a→b)": 1
+  },
+  "H1 masqué par une signature négative du jeu a (1,0 et 0,2) ; tau 0.4": {
+   "positif non confirmé (sens a→b)": 2,
+   "désaccord des deux sens": 1,
+   "fuite de signe inverse non confirmé (sens b→a)": 1
+  },
+  "fuite masquée par une signature négative du jeu a (0,6 et 0) ; tau 0.15": {
+   "positif non confirmé (sens a→b)": 1,
+   "positif": 3
+  },
+  "contexte faible au grand ; tau 0.4": {
+   "certification asymétrique (petit seulement)": 4
+  },
+  "fuite faible égale (0,2 et 0,2) ; tau 0.15": {
+   "nul": 3,
+   "nul (1 réserve(s))": 1
+  },
+  "fuite faible égale, contexte du jeu b plus faible (0,15 et 0,15 ; × 0,6) ; tau 0.15": {
+   "nul": 2,
+   "nul (1 réserve(s))": 2
+  },
+  "signature négative du jeu a au grand (0 et 0) ; tau 0.4": {
+   "fuite de signe inverse non confirmé (sens b→a)": 4
+  },
+  "signatures des deux jeux, négatives, au petit (0 et 0) ; tau 0.4": {
+   "fuite de signe inverse non confirmé (sens b→a)": 1,
+   "indécis": 1,
+   "fuite de signe inverse (1 réserve(s))": 2
+  },
+  "signatures des deux jeux au grand (0 et 0) ; tau 0.4": {
+   "inverse": 4
+  }
+ },
+ "lectures_par_sens": {
+  "H0 (0,5 et 0,5) ; tau 0.15": {
+   "a→b : nul ; b→a : nul": 4
+  },
+  "H0 (0,5 et 0,5) ; tau 0.4": {
+   "a→b : nul ; b→a : nul": 4
+  },
+  "H0 (0,5 et 0,5) ; tau 0.8": {
+   "a→b : indécis ; b→a : indécis": 3,
+   "a→b : indécis ; b→a : nul": 1
+  },
+  "pas de fuite (0 et 0) ; tau 0.15": {
+   "a→b : pas de fuite ; b→a : pas de fuite": 4
+  },
+  "pas de fuite (0 et 0) ; tau 0.4": {
+   "a→b : pas de fuite ; b→a : pas de fuite": 4
+  },
+  "pas de fuite (0 et 0) ; tau 0.8": {
+   "a→b : pas de fuite ; b→a : pas de fuite": 3,
+   "a→b : pas de fuite ; b→a : indécis": 1
+  },
+  "H1 (1,0 et 0,2) ; tau 0.15": {
+   "a→b : positif ; b→a : positif": 4
+  },
+  "H1 (1,0 et 0,2) ; tau 0.4": {
+   "a→b : positif ; b→a : positif": 4
+  },
+  "H1 (1,0 et 0,2) ; tau 0.8": {
+   "a→b : positif ; b→a : positif": 3,
+   "a→b : positif ; b→a : indécis": 1
+  },
+  "H1 faible (0,6 et 0,2) ; tau 0.15": {
+   "a→b : positif ; b→a : positif": 4
+  },
+  "H1 faible (0,6 et 0,2) ; tau 0.4": {
+   "a→b : indécis ; b→a : positif": 2,
+   "a→b : positif ; b→a : positif": 2
+  },
+  "H1 faible (0,6 et 0,2) ; tau 0.8": {
+   "a→b : indécis ; b→a : indécis": 2,
+   "a→b : indécis ; b→a : positif": 2
+  },
+  "inverse (0,2 et 1,0) ; tau 0.4": {
+   "a→b : inverse ; b→a : inverse": 4
+  },
+  "signe inverse (−0,6 et 0) ; tau 0.4": {
+   "a→b : fuite de signe inverse ; b→a : fuite de signe inverse": 4
+  },
+  "signature du jeu a au petit (0 et 0) ; tau 0.4": {
+   "a→b : positif ; b→a : indécis": 4
+  },
+  "contexte faible aux deux ; tau 0.4": {
+   "a→b : non certifiable ; b→a : non certifiable": 4
+  },
+  "contexte faible au petit ; tau 0.4": {
+   "a→b : certification asymétrique (grand seulement) ; b→a : certification asymétrique (grand seulement)": 4
+  },
+  "signature négative du jeu a au petit (0 et 0) ; tau 0.4": {
+   "a→b : fuite de signe inverse ; b→a : fuite de signe inverse": 1,
+   "a→b : fuite de signe inverse ; b→a : indécis": 2,
+   "a→b : indécis ; b→a : positif": 1
+  },
+  "signature du jeu a au grand (0 et 0) ; tau 0.4": {
+   "a→b : inverse ; b→a : fuite de signe inverse": 1,
+   "a→b : inverse ; b→a : pas de fuite": 2,
+   "a→b : inverse ; b→a : indécis": 1
+  },
+  "signature du jeu b au petit (0 et 0) ; tau 0.4": {
+   "a→b : indécis ; b→a : positif": 4
+  },
+  "signatures des deux jeux au petit (0 et 0) ; tau 0.4": {
+   "a→b : positif ; b→a : positif": 3,
+   "a→b : indécis ; b→a : indécis": 1
+  },
+  "H1 masqué par une signature négative du jeu a (1,0 et 0,2) ; tau 0.15": {
+   "a→b : positif ; b→a : positif": 2,
+   "a→b : nul ; b→a : positif": 1,
+   "a→b : indécis ; b→a : positif": 1
+  },
+  "H1 masqué par une signature négative du jeu a (1,0 et 0,2) ; tau 0.4": {
+   "a→b : indécis ; b→a : positif": 2,
+   "a→b : fuite de signe inverse ; b→a : positif": 1,
+   "a→b : fuite de signe inverse ; b→a : indécis": 1
+  },
+  "fuite masquée par une signature négative du jeu a (0,6 et 0) ; tau 0.15": {
+   "a→b : indécis ; b→a : positif": 1,
+   "a→b : positif ; b→a : positif": 3
+  },
+  "contexte faible au grand ; tau 0.4": {
+   "a→b : certification asymétrique (petit seulement) ; b→a : certification asymétrique (petit seulement)": 4
+  },
+  "fuite faible égale (0,2 et 0,2) ; tau 0.15": {
+   "a→b : nul ; b→a : nul": 3,
+   "a→b : pas de fuite ; b→a : nul": 1
+  },
+  "fuite faible égale, contexte du jeu b plus faible (0,15 et 0,15 ; × 0,6) ; tau 0.15": {
+   "a→b : nul ; b→a : nul": 2,
+   "a→b : nul ; b→a : pas de fuite": 2
+  },
+  "signature négative du jeu a au grand (0 et 0) ; tau 0.4": {
+   "a→b : fuite de signe inverse ; b→a : indécis": 4
+  },
+  "signatures des deux jeux, négatives, au petit (0 et 0) ; tau 0.4": {
+   "a→b : fuite de signe inverse ; b→a : indécis": 1,
+   "a→b : indécis ; b→a : indécis": 1,
+   "a→b : fuite de signe inverse ; b→a : fuite de signe inverse": 2
+  },
+  "signatures des deux jeux au grand (0 et 0) ; tau 0.4": {
+   "a→b : inverse ; b→a : inverse": 4
+  }
+ },
+ "detail": [
+  {
+   "cas": "H0 (0,5 et 0,5) ; tau 0.15",
+   "graine": 3002,
+   "lecture": "nul",
+   "lecture_par_sens": {
+    "a→b": "nul",
+    "b→a": "nul"
+   },
+   "issues_tenues_par_sens": {
+    "a→b": [
+     "nul"
+    ],
+    "b→a": [
+     "nul"
+    ]
+   },
+   "reserves": []
+  },
+  {
+   "cas": "H0 (0,5 et 0,5) ; tau 0.15",
+   "graine": 3004,
+   "lecture": "nul",
+   "lecture_par_sens": {
+    "a→b": "nul",
+    "b→a": "nul"
+   },
+   "issues_tenues_par_sens": {
+    "a→b": [
+     "nul"
+    ],
+    "b→a": [
+     "nul"
+    ]
+   },
+   "reserves": []
+  },
+  {
+   "cas": "H0 (0,5 et 0,5) ; tau 0.15",
+   "graine": 3006,
+   "lecture": "nul",
+   "lecture_par_sens": {
+    "a→b": "nul",
+    "b→a": "nul"
+   },
+   "issues_tenues_par_sens": {
+    "a→b": [
+     "nul"
+    ],
+    "b→a": [
+     "nul"
+    ]
+   },
+   "reserves": []
+  },
+  {
+   "cas": "H0 (0,5 et 0,5) ; tau 0.15",
+   "graine": 3008,
+   "lecture": "nul",
+   "lecture_par_sens": {
+    "a→b": "nul",
+    "b→a": "nul"
+   },
+   "issues_tenues_par_sens": {
+    "a→b": [
+     "nul"
+    ],
+    "b→a": [
+     "nul"
+    ]
+   },
+   "reserves": []
+  },
+  {
+   "cas": "H0 (0,5 et 0,5) ; tau 0.4",
+   "graine": 3010,
+   "lecture": "nul",
+   "lecture_par_sens": {
+    "a→b": "nul",
+    "b→a": "nul"
+   },
+   "issues_tenues_par_sens": {
+    "a→b": [
+     "nul"
+    ],
+    "b→a": [
+     "nul"
+    ]
+   },
+   "reserves": []
+  },
+  {
+   "cas": "H0 (0,5 et 0,5) ; tau 0.4",
+   "graine": 3012,
+   "lecture": "nul",
+   "lecture_par_sens": {
+    "a→b": "nul",
+    "b→a": "nul"
+   },
+   "issues_tenues_par_sens": {
+    "a→b": [
+     "nul"
+    ],
+    "b→a": [
+     "nul"
+    ]
+   },
+   "reserves": []
+  },
+  {
+   "cas": "H0 (0,5 et 0,5) ; tau 0.4",
+   "graine": 3014,
+   "lecture": "nul",
+   "lecture_par_sens": {
+    "a→b": "nul",
+    "b→a": "nul"
+   },
+   "issues_tenues_par_sens": {
+    "a→b": [
+     "nul"
+    ],
+    "b→a": [
+     "nul"
+    ]
+   },
+   "reserves": []
+  },
+  {
+   "cas": "H0 (0,5 et 0,5) ; tau 0.4",
+   "graine": 3016,
+   "lecture": "nul",
+   "lecture_par_sens": {
+    "a→b": "nul",
+    "b→a": "nul"
+   },
+   "issues_tenues_par_sens": {
+    "a→b": [
+     "nul"
+    ],
+    "b→a": [
+     "nul"
+    ]
+   },
+   "reserves": []
+  },
+  {
+   "cas": "H0 (0,5 et 0,5) ; tau 0.8",
+   "graine": 3018,
+   "lecture": "indécis",
+   "lecture_par_sens": {
+    "a→b": "indécis",
+    "b→a": "indécis"
+   },
+   "issues_tenues_par_sens": {
+    "a→b": [],
+    "b→a": []
+   },
+   "reserves": []
+  },
+  {
+   "cas": "H0 (0,5 et 0,5) ; tau 0.8",
+   "graine": 3020,
+   "lecture": "indécis",
+   "lecture_par_sens": {
+    "a→b": "indécis",
+    "b→a": "indécis"
+   },
+   "issues_tenues_par_sens": {
+    "a→b": [],
+    "b→a": []
+   },
+   "reserves": []
+  },
+  {
+   "cas": "H0 (0,5 et 0,5) ; tau 0.8",
+   "graine": 3022,
+   "lecture": "indécis",
+   "lecture_par_sens": {
+    "a→b": "indécis",
+    "b→a": "indécis"
+   },
+   "issues_tenues_par_sens": {
+    "a→b": [],
+    "b→a": []
+   },
+   "reserves": []
+  },
+  {
+   "cas": "H0 (0,5 et 0,5) ; tau 0.8",
+   "graine": 3024,
+   "lecture": "nul non confirmé (sens a→b)",
+   "lecture_par_sens": {
+    "a→b": "indécis",
+    "b→a": "nul"
+   },
+   "issues_tenues_par_sens": {
+    "a→b": [],
+    "b→a": [
+     "nul"
+    ]
+   },
+   "reserves": []
+  },
+  {
+   "cas": "pas de fuite (0 et 0) ; tau 0.15",
+   "graine": 3026,
+   "lecture": "pas de fuite",
+   "lecture_par_sens": {
+    "a→b": "pas de fuite",
+    "b→a": "pas de fuite"
+   },
+   "issues_tenues_par_sens": {
+    "a→b": [
+     "pas de fuite",
+     "nul"
+    ],
+    "b→a": [
+     "pas de fuite",
+     "nul"
+    ]
+   },
+   "reserves": []
+  },
+  {
+   "cas": "pas de fuite (0 et 0) ; tau 0.15",
+   "graine": 3028,
+   "lecture": "pas de fuite",
+   "lecture_par_sens": {
+    "a→b": "pas de fuite",
+    "b→a": "pas de fuite"
+   },
+   "issues_tenues_par_sens": {
+    "a→b": [
+     "pas de fuite",
+     "nul"
+    ],
+    "b→a": [
+     "pas de fuite",
+     "nul"
+    ]
+   },
+   "reserves": []
+  },
+  {
+   "cas": "pas de fuite (0 et 0) ; tau 0.15",
+   "graine": 3030,
+   "lecture": "pas de fuite",
+   "lecture_par_sens": {
+    "a→b": "pas de fuite",
+    "b→a": "pas de fuite"
+   },
+   "issues_tenues_par_sens": {
+    "a→b": [
+     "pas de fuite",
+     "nul"
+    ],
+    "b→a": [
+     "pas de fuite",
+     "nul"
+    ]
+   },
+   "reserves": []
+  },
+  {
+   "cas": "pas de fuite (0 et 0) ; tau 0.15",
+   "graine": 3032,
+   "lecture": "pas de fuite",
+   "lecture_par_sens": {
+    "a→b": "pas de fuite",
+    "b→a": "pas de fuite"
+   },
+   "issues_tenues_par_sens": {
+    "a→b": [
+     "pas de fuite",
+     "nul"
+    ],
+    "b→a": [
+     "pas de fuite",
+     "nul"
+    ]
+   },
+   "reserves": []
+  },
+  {
+   "cas": "pas de fuite (0 et 0) ; tau 0.4",
+   "graine": 3034,
+   "lecture": "pas de fuite",
+   "lecture_par_sens": {
+    "a→b": "pas de fuite",
+    "b→a": "pas de fuite"
+   },
+   "issues_tenues_par_sens": {
+    "a→b": [
+     "pas de fuite",
+     "nul"
+    ],
+    "b→a": [
+     "pas de fuite",
+     "nul"
+    ]
+   },
+   "reserves": []
+  },
+  {
+   "cas": "pas de fuite (0 et 0) ; tau 0.4",
+   "graine": 3036,
+   "lecture": "pas de fuite",
+   "lecture_par_sens": {
+    "a→b": "pas de fuite",
+    "b→a": "pas de fuite"
+   },
+   "issues_tenues_par_sens": {
+    "a→b": [
+     "pas de fuite",
+     "nul"
+    ],
+    "b→a": [
+     "pas de fuite",
+     "nul"
+    ]
+   },
+   "reserves": []
+  },
+  {
+   "cas": "pas de fuite (0 et 0) ; tau 0.4",
+   "graine": 3038,
+   "lecture": "pas de fuite",
+   "lecture_par_sens": {
+    "a→b": "pas de fuite",
+    "b→a": "pas de fuite"
+   },
+   "issues_tenues_par_sens": {
+    "a→b": [
+     "pas de fuite",
+     "nul"
+    ],
+    "b→a": [
+     "pas de fuite",
+     "nul"
+    ]
+   },
+   "reserves": []
+  },
+  {
+   "cas": "pas de fuite (0 et 0) ; tau 0.4",
+   "graine": 3040,
+   "lecture": "pas de fuite",
+   "lecture_par_sens": {
+    "a→b": "pas de fuite",
+    "b→a": "pas de fuite"
+   },
+   "issues_tenues_par_sens": {
+    "a→b": [
+     "pas de fuite",
+     "nul"
+    ],
+    "b→a": [
+     "pas de fuite",
+     "nul"
+    ]
+   },
+   "reserves": []
+  },
+  {
+   "cas": "pas de fuite (0 et 0) ; tau 0.8",
+   "graine": 3042,
+   "lecture": "pas de fuite",
+   "lecture_par_sens": {
+    "a→b": "pas de fuite",
+    "b→a": "pas de fuite"
+   },
+   "issues_tenues_par_sens": {
+    "a→b": [
+     "pas de fuite"
+    ],
+    "b→a": [
+     "pas de fuite"
+    ]
+   },
+   "reserves": []
+  },
+  {
+   "cas": "pas de fuite (0 et 0) ; tau 0.8",
+   "graine": 3044,
+   "lecture": "pas de fuite",
+   "lecture_par_sens": {
+    "a→b": "pas de fuite",
+    "b→a": "pas de fuite"
+   },
+   "issues_tenues_par_sens": {
+    "a→b": [
+     "pas de fuite"
+    ],
+    "b→a": [
+     "pas de fuite"
+    ]
+   },
+   "reserves": []
+  },
+  {
+   "cas": "pas de fuite (0 et 0) ; tau 0.8",
+   "graine": 3046,
+   "lecture": "pas de fuite",
+   "lecture_par_sens": {
+    "a→b": "pas de fuite",
+    "b→a": "pas de fuite"
+   },
+   "issues_tenues_par_sens": {
+    "a→b": [
+     "pas de fuite",
+     "nul"
+    ],
+    "b→a": [
+     "pas de fuite"
+    ]
+   },
+   "reserves": []
+  },
+  {
+   "cas": "pas de fuite (0 et 0) ; tau 0.8",
+   "graine": 3048,
+   "lecture": "pas de fuite non confirmé (sens b→a)",
+   "lecture_par_sens": {
+    "a→b": "pas de fuite",
+    "b→a": "indécis"
+   },
+   "issues_tenues_par_sens": {
+    "a→b": [
+     "pas de fuite"
+    ],
+    "b→a": []
+   },
+   "reserves": []
+  },
+  {
+   "cas": "H1 (1,0 et 0,2) ; tau 0.15",
+   "graine": 3050,
+   "lecture": "positif",
+   "lecture_par_sens": {
+    "a→b": "positif",
+    "b→a": "positif"
+   },
+   "issues_tenues_par_sens": {
+    "a→b": [
+     "positif"
+    ],
+    "b→a": [
+     "positif"
+    ]
+   },
+   "reserves": []
+  },
+  {
+   "cas": "H1 (1,0 et 0,2) ; tau 0.15",
+   "graine": 3052,
+   "lecture": "positif",
+   "lecture_par_sens": {
+    "a→b": "positif",
+    "b→a": "positif"
+   },
+   "issues_tenues_par_sens": {
+    "a→b": [
+     "positif"
+    ],
+    "b→a": [
+     "positif"
+    ]
+   },
+   "reserves": []
+  },
+  {
+   "cas": "H1 (1,0 et 0,2) ; tau 0.15",
+   "graine": 3054,
+   "lecture": "positif",
+   "lecture_par_sens": {
+    "a→b": "positif",
+    "b→a": "positif"
+   },
+   "issues_tenues_par_sens": {
+    "a→b": [
+     "positif"
+    ],
+    "b→a": [
+     "positif"
+    ]
+   },
+   "reserves": []
+  },
+  {
+   "cas": "H1 (1,0 et 0,2) ; tau 0.15",
+   "graine": 3056,
+   "lecture": "positif",
+   "lecture_par_sens": {
+    "a→b": "positif",
+    "b→a": "positif"
+   },
+   "issues_tenues_par_sens": {
+    "a→b": [
+     "positif"
+    ],
+    "b→a": [
+     "positif"
+    ]
+   },
+   "reserves": []
+  },
+  {
+   "cas": "H1 (1,0 et 0,2) ; tau 0.4",
+   "graine": 3058,
+   "lecture": "positif",
+   "lecture_par_sens": {
+    "a→b": "positif",
+    "b→a": "positif"
+   },
+   "issues_tenues_par_sens": {
+    "a→b": [
+     "positif"
+    ],
+    "b→a": [
+     "positif"
+    ]
+   },
+   "reserves": []
+  },
+  {
+   "cas": "H1 (1,0 et 0,2) ; tau 0.4",
+   "graine": 3060,
+   "lecture": "positif",
+   "lecture_par_sens": {
+    "a→b": "positif",
+    "b→a": "positif"
+   },
+   "issues_tenues_par_sens": {
+    "a→b": [
+     "positif"
+    ],
+    "b→a": [
+     "positif"
+    ]
+   },
+   "reserves": []
+  },
+  {
+   "cas": "H1 (1,0 et 0,2) ; tau 0.4",
+   "graine": 3062,
+   "lecture": "positif",
+   "lecture_par_sens": {
+    "a→b": "positif",
+    "b→a": "positif"
+   },
+   "issues_tenues_par_sens": {
+    "a→b": [
+     "positif"
+    ],
+    "b→a": [
+     "positif"
+    ]
+   },
+   "reserves": []
+  },
+  {
+   "cas": "H1 (1,0 et 0,2) ; tau 0.4",
+   "graine": 3064,
+   "lecture": "positif",
+   "lecture_par_sens": {
+    "a→b": "positif",
+    "b→a": "positif"
+   },
+   "issues_tenues_par_sens": {
+    "a→b": [
+     "positif"
+    ],
+    "b→a": [
+     "positif"
+    ]
+   },
+   "reserves": []
+  },
+  {
+   "cas": "H1 (1,0 et 0,2) ; tau 0.8",
+   "graine": 3066,
+   "lecture": "positif",
+   "lecture_par_sens": {
+    "a→b": "positif",
+    "b→a": "positif"
+   },
+   "issues_tenues_par_sens": {
+    "a→b": [
+     "positif"
+    ],
+    "b→a": [
+     "positif"
+    ]
+   },
+   "reserves": []
+  },
+  {
+   "cas": "H1 (1,0 et 0,2) ; tau 0.8",
+   "graine": 3068,
+   "lecture": "positif",
+   "lecture_par_sens": {
+    "a→b": "positif",
+    "b→a": "positif"
+   },
+   "issues_tenues_par_sens": {
+    "a→b": [
+     "positif"
+    ],
+    "b→a": [
+     "positif"
+    ]
+   },
+   "reserves": []
+  },
+  {
+   "cas": "H1 (1,0 et 0,2) ; tau 0.8",
+   "graine": 3070,
+   "lecture": "positif",
+   "lecture_par_sens": {
+    "a→b": "positif",
+    "b→a": "positif"
+   },
+   "issues_tenues_par_sens": {
+    "a→b": [
+     "positif"
+    ],
+    "b→a": [
+     "positif"
+    ]
+   },
+   "reserves": []
+  },
+  {
+   "cas": "H1 (1,0 et 0,2) ; tau 0.8",
+   "graine": 3072,
+   "lecture": "positif non confirmé (sens b→a)",
+   "lecture_par_sens": {
+    "a→b": "positif",
+    "b→a": "indécis"
+   },
+   "issues_tenues_par_sens": {
+    "a→b": [
+     "positif"
+    ],
+    "b→a": []
+   },
+   "reserves": []
+  },
+  {
+   "cas": "H1 faible (0,6 et 0,2) ; tau 0.15",
+   "graine": 3074,
+   "lecture": "positif",
+   "lecture_par_sens": {
+    "a→b": "positif",
+    "b→a": "positif"
+   },
+   "issues_tenues_par_sens": {
+    "a→b": [
+     "positif"
+    ],
+    "b→a": [
+     "positif"
+    ]
+   },
+   "reserves": []
+  },
+  {
+   "cas": "H1 faible (0,6 et 0,2) ; tau 0.15",
+   "graine": 3076,
+   "lecture": "positif",
+   "lecture_par_sens": {
+    "a→b": "positif",
+    "b→a": "positif"
+   },
+   "issues_tenues_par_sens": {
+    "a→b": [
+     "positif"
+    ],
+    "b→a": [
+     "positif"
+    ]
+   },
+   "reserves": []
+  },
+  {
+   "cas": "H1 faible (0,6 et 0,2) ; tau 0.15",
+   "graine": 3078,
+   "lecture": "positif",
+   "lecture_par_sens": {
+    "a→b": "positif",
+    "b→a": "positif"
+   },
+   "issues_tenues_par_sens": {
+    "a→b": [
+     "positif"
+    ],
+    "b→a": [
+     "positif"
+    ]
+   },
+   "reserves": []
+  },
+  {
+   "cas": "H1 faible (0,6 et 0,2) ; tau 0.15",
+   "graine": 3080,
+   "lecture": "positif",
+   "lecture_par_sens": {
+    "a→b": "positif",
+    "b→a": "positif"
+   },
+   "issues_tenues_par_sens": {
+    "a→b": [
+     "positif"
+    ],
+    "b→a": [
+     "positif"
+    ]
+   },
+   "reserves": []
+  },
+  {
+   "cas": "H1 faible (0,6 et 0,2) ; tau 0.4",
+   "graine": 3082,
+   "lecture": "positif non confirmé (sens a→b)",
+   "lecture_par_sens": {
+    "a→b": "indécis",
+    "b→a": "positif"
+   },
+   "issues_tenues_par_sens": {
+    "a→b": [],
+    "b→a": [
+     "positif"
+    ]
+   },
+   "reserves": []
+  },
+  {
+   "cas": "H1 faible (0,6 et 0,2) ; tau 0.4",
+   "graine": 3084,
+   "lecture": "positif",
+   "lecture_par_sens": {
+    "a→b": "positif",
+    "b→a": "positif"
+   },
+   "issues_tenues_par_sens": {
+    "a→b": [
+     "positif"
+    ],
+    "b→a": [
+     "positif"
+    ]
+   },
+   "reserves": []
+  },
+  {
+   "cas": "H1 faible (0,6 et 0,2) ; tau 0.4",
+   "graine": 3086,
+   "lecture": "positif non confirmé (sens a→b)",
+   "lecture_par_sens": {
+    "a→b": "indécis",
+    "b→a": "positif"
+   },
+   "issues_tenues_par_sens": {
+    "a→b": [],
+    "b→a": [
+     "positif"
+    ]
+   },
+   "reserves": []
+  },
+  {
+   "cas": "H1 faible (0,6 et 0,2) ; tau 0.4",
+   "graine": 3088,
+   "lecture": "positif",
+   "lecture_par_sens": {
+    "a→b": "positif",
+    "b→a": "positif"
+   },
+   "issues_tenues_par_sens": {
+    "a→b": [
+     "positif"
+    ],
+    "b→a": [
+     "positif"
+    ]
+   },
+   "reserves": []
+  },
+  {
+   "cas": "H1 faible (0,6 et 0,2) ; tau 0.8",
+   "graine": 3090,
+   "lecture": "indécis",
+   "lecture_par_sens": {
+    "a→b": "indécis",
+    "b→a": "indécis"
+   },
+   "issues_tenues_par_sens": {
+    "a→b": [],
+    "b→a": []
+   },
+   "reserves": []
+  },
+  {
+   "cas": "H1 faible (0,6 et 0,2) ; tau 0.8",
+   "graine": 3092,
+   "lecture": "positif non confirmé (sens a→b)",
+   "lecture_par_sens": {
+    "a→b": "indécis",
+    "b→a": "positif"
+   },
+   "issues_tenues_par_sens": {
+    "a→b": [],
+    "b→a": [
+     "positif"
+    ]
+   },
+   "reserves": []
+  },
+  {
+   "cas": "H1 faible (0,6 et 0,2) ; tau 0.8",
+   "graine": 3094,
+   "lecture": "positif non confirmé (sens a→b)",
+   "lecture_par_sens": {
+    "a→b": "indécis",
+    "b→a": "positif"
+   },
+   "issues_tenues_par_sens": {
+    "a→b": [],
+    "b→a": [
+     "positif"
+    ]
+   },
+   "reserves": []
+  },
+  {
+   "cas": "H1 faible (0,6 et 0,2) ; tau 0.8",
+   "graine": 3096,
+   "lecture": "indécis",
+   "lecture_par_sens": {
+    "a→b": "indécis",
+    "b→a": "indécis"
+   },
+   "issues_tenues_par_sens": {
+    "a→b": [],
+    "b→a": []
+   },
+   "reserves": []
+  },
+  {
+   "cas": "inverse (0,2 et 1,0) ; tau 0.4",
+   "graine": 3098,
+   "lecture": "inverse",
+   "lecture_par_sens": {
+    "a→b": "inverse",
+    "b→a": "inverse"
+   },
+   "issues_tenues_par_sens": {
+    "a→b": [
+     "inverse"
+    ],
+    "b→a": [
+     "inverse"
+    ]
+   },
+   "reserves": []
+  },
+  {
+   "cas": "inverse (0,2 et 1,0) ; tau 0.4",
+   "graine": 3100,
+   "lecture": "inverse",
+   "lecture_par_sens": {
+    "a→b": "inverse",
+    "b→a": "inverse"
+   },
+   "issues_tenues_par_sens": {
+    "a→b": [
+     "inverse"
+    ],
+    "b→a": [
+     "inverse"
+    ]
+   },
+   "reserves": []
+  },
+  {
+   "cas": "inverse (0,2 et 1,0) ; tau 0.4",
+   "graine": 3102,
+   "lecture": "inverse",
+   "lecture_par_sens": {
+    "a→b": "inverse",
+    "b→a": "inverse"
+   },
+   "issues_tenues_par_sens": {
+    "a→b": [
+     "inverse"
+    ],
+    "b→a": [
+     "inverse"
+    ]
+   },
+   "reserves": []
+  },
+  {
+   "cas": "inverse (0,2 et 1,0) ; tau 0.4",
+   "graine": 3104,
+   "lecture": "inverse",
+   "lecture_par_sens": {
+    "a→b": "inverse",
+    "b→a": "inverse"
+   },
+   "issues_tenues_par_sens": {
+    "a→b": [
+     "inverse"
+    ],
+    "b→a": [
+     "inverse"
+    ]
+   },
+   "reserves": []
+  },
+  {
+   "cas": "signe inverse (−0,6 et 0) ; tau 0.4",
+   "graine": 3106,
+   "lecture": "fuite de signe inverse",
+   "lecture_par_sens": {
+    "a→b": "fuite de signe inverse",
+    "b→a": "fuite de signe inverse"
+   },
+   "issues_tenues_par_sens": {
+    "a→b": [
+     "fuite de signe inverse"
+    ],
+    "b→a": [
+     "fuite de signe inverse"
+    ]
+   },
+   "reserves": []
+  },
+  {
+   "cas": "signe inverse (−0,6 et 0) ; tau 0.4",
+   "graine": 3108,
+   "lecture": "fuite de signe inverse",
+   "lecture_par_sens": {
+    "a→b": "fuite de signe inverse",
+    "b→a": "fuite de signe inverse"
+   },
+   "issues_tenues_par_sens": {
+    "a→b": [
+     "fuite de signe inverse"
+    ],
+    "b→a": [
+     "fuite de signe inverse"
+    ]
+   },
+   "reserves": []
+  },
+  {
+   "cas": "signe inverse (−0,6 et 0) ; tau 0.4",
+   "graine": 3110,
+   "lecture": "fuite de signe inverse",
+   "lecture_par_sens": {
+    "a→b": "fuite de signe inverse",
+    "b→a": "fuite de signe inverse"
+   },
+   "issues_tenues_par_sens": {
+    "a→b": [
+     "fuite de signe inverse"
+    ],
+    "b→a": [
+     "fuite de signe inverse"
+    ]
+   },
+   "reserves": []
+  },
+  {
+   "cas": "signe inverse (−0,6 et 0) ; tau 0.4",
+   "graine": 3112,
+   "lecture": "fuite de signe inverse",
+   "lecture_par_sens": {
+    "a→b": "fuite de signe inverse",
+    "b→a": "fuite de signe inverse"
+   },
+   "issues_tenues_par_sens": {
+    "a→b": [
+     "fuite de signe inverse"
+    ],
+    "b→a": [
+     "fuite de signe inverse"
+    ]
+   },
+   "reserves": []
+  },
+  {
+   "cas": "signature du jeu a au petit (0 et 0) ; tau 0.4",
+   "graine": 3114,
+   "lecture": "positif non confirmé (sens b→a)",
+   "lecture_par_sens": {
+    "a→b": "positif",
+    "b→a": "indécis"
+   },
+   "issues_tenues_par_sens": {
+    "a→b": [
+     "positif"
+    ],
+    "b→a": []
+   },
+   "reserves": []
+  },
+  {
+   "cas": "signature du jeu a au petit (0 et 0) ; tau 0.4",
+   "graine": 3116,
+   "lecture": "positif non confirmé (sens b→a)",
+   "lecture_par_sens": {
+    "a→b": "positif",
+    "b→a": "indécis"
+   },
+   "issues_tenues_par_sens": {
+    "a→b": [
+     "positif"
+    ],
+    "b→a": []
+   },
+   "reserves": []
+  },
+  {
+   "cas": "signature du jeu a au petit (0 et 0) ; tau 0.4",
+   "graine": 3118,
+   "lecture": "positif non confirmé (sens b→a)",
+   "lecture_par_sens": {
+    "a→b": "positif",
+    "b→a": "indécis"
+   },
+   "issues_tenues_par_sens": {
+    "a→b": [
+     "positif"
+    ],
+    "b→a": []
+   },
+   "reserves": []
+  },
+  {
+   "cas": "signature du jeu a au petit (0 et 0) ; tau 0.4",
+   "graine": 3120,
+   "lecture": "positif non confirmé (sens b→a)",
+   "lecture_par_sens": {
+    "a→b": "positif",
+    "b→a": "indécis"
+   },
+   "issues_tenues_par_sens": {
+    "a→b": [
+     "positif"
+    ],
+    "b→a": []
+   },
+   "reserves": []
+  },
+  {
+   "cas": "contexte faible aux deux ; tau 0.4",
+   "graine": 3122,
+   "lecture": "non certifiable",
+   "lecture_par_sens": {
+    "a→b": "non certifiable",
+    "b→a": "non certifiable"
+   },
+   "issues_tenues_par_sens": {
+    "a→b": [],
+    "b→a": []
+   },
+   "reserves": []
+  },
+  {
+   "cas": "contexte faible aux deux ; tau 0.4",
+   "graine": 3124,
+   "lecture": "non certifiable",
+   "lecture_par_sens": {
+    "a→b": "non certifiable",
+    "b→a": "non certifiable"
+   },
+   "issues_tenues_par_sens": {
+    "a→b": [],
+    "b→a": []
+   },
+   "reserves": []
+  },
+  {
+   "cas": "contexte faible aux deux ; tau 0.4",
+   "graine": 3126,
+   "lecture": "non certifiable",
+   "lecture_par_sens": {
+    "a→b": "non certifiable",
+    "b→a": "non certifiable"
+   },
+   "issues_tenues_par_sens": {
+    "a→b": [],
+    "b→a": []
+   },
+   "reserves": []
+  },
+  {
+   "cas": "contexte faible aux deux ; tau 0.4",
+   "graine": 3128,
+   "lecture": "non certifiable",
+   "lecture_par_sens": {
+    "a→b": "non certifiable",
+    "b→a": "non certifiable"
+   },
+   "issues_tenues_par_sens": {
+    "a→b": [],
+    "b→a": []
+   },
+   "reserves": []
+  },
+  {
+   "cas": "contexte faible au petit ; tau 0.4",
+   "graine": 3130,
+   "lecture": "certification asymétrique (grand seulement)",
+   "lecture_par_sens": {
+    "a→b": "certification asymétrique (grand seulement)",
+    "b→a": "certification asymétrique (grand seulement)"
+   },
+   "issues_tenues_par_sens": {
+    "a→b": [],
+    "b→a": []
+   },
+   "reserves": []
+  },
+  {
+   "cas": "contexte faible au petit ; tau 0.4",
+   "graine": 3132,
+   "lecture": "certification asymétrique (grand seulement)",
+   "lecture_par_sens": {
+    "a→b": "certification asymétrique (grand seulement)",
+    "b→a": "certification asymétrique (grand seulement)"
+   },
+   "issues_tenues_par_sens": {
+    "a→b": [],
+    "b→a": []
+   },
+   "reserves": []
+  },
+  {
+   "cas": "contexte faible au petit ; tau 0.4",
+   "graine": 3134,
+   "lecture": "certification asymétrique (grand seulement)",
+   "lecture_par_sens": {
+    "a→b": "certification asymétrique (grand seulement)",
+    "b→a": "certification asymétrique (grand seulement)"
+   },
+   "issues_tenues_par_sens": {
+    "a→b": [],
+    "b→a": []
+   },
+   "reserves": []
+  },
+  {
+   "cas": "contexte faible au petit ; tau 0.4",
+   "graine": 3136,
+   "lecture": "certification asymétrique (grand seulement)",
+   "lecture_par_sens": {
+    "a→b": "certification asymétrique (grand seulement)",
+    "b→a": "certification asymétrique (grand seulement)"
+   },
+   "issues_tenues_par_sens": {
+    "a→b": [],
+    "b→a": []
+   },
+   "reserves": []
+  },
+  {
+   "cas": "signature négative du jeu a au petit (0 et 0) ; tau 0.4",
+   "graine": 3138,
+   "lecture": "fuite de signe inverse",
+   "lecture_par_sens": {
+    "a→b": "fuite de signe inverse",
+    "b→a": "fuite de signe inverse"
+   },
+   "issues_tenues_par_sens": {
+    "a→b": [
+     "fuite de signe inverse"
+    ],
+    "b→a": [
+     "fuite de signe inverse"
+    ]
+   },
+   "reserves": []
+  },
+  {
+   "cas": "signature négative du jeu a au petit (0 et 0) ; tau 0.4",
+   "graine": 3140,
+   "lecture": "fuite de signe inverse non confirmé (sens b→a)",
+   "lecture_par_sens": {
+    "a→b": "fuite de signe inverse",
+    "b→a": "indécis"
+   },
+   "issues_tenues_par_sens": {
+    "a→b": [
+     "fuite de signe inverse"
+    ],
+    "b→a": []
+   },
+   "reserves": []
+  },
+  {
+   "cas": "signature négative du jeu a au petit (0 et 0) ; tau 0.4",
+   "graine": 3142,
+   "lecture": "positif non confirmé (sens a→b)",
+   "lecture_par_sens": {
+    "a→b": "indécis",
+    "b→a": "positif"
+   },
+   "issues_tenues_par_sens": {
+    "a→b": [],
+    "b→a": [
+     "positif"
+    ]
+   },
+   "reserves": []
+  },
+  {
+   "cas": "signature négative du jeu a au petit (0 et 0) ; tau 0.4",
+   "graine": 3144,
+   "lecture": "fuite de signe inverse non confirmé (sens b→a)",
+   "lecture_par_sens": {
+    "a→b": "fuite de signe inverse",
+    "b→a": "indécis"
+   },
+   "issues_tenues_par_sens": {
+    "a→b": [
+     "fuite de signe inverse"
+    ],
+    "b→a": []
+   },
+   "reserves": []
+  },
+  {
+   "cas": "signature du jeu a au grand (0 et 0) ; tau 0.4",
+   "graine": 3146,
+   "lecture": "désaccord des deux sens",
+   "lecture_par_sens": {
+    "a→b": "inverse",
+    "b→a": "fuite de signe inverse"
+   },
+   "issues_tenues_par_sens": {
+    "a→b": [
+     "inverse"
+    ],
+    "b→a": [
+     "fuite de signe inverse"
+    ]
+   },
+   "reserves": []
+  },
+  {
+   "cas": "signature du jeu a au grand (0 et 0) ; tau 0.4",
+   "graine": 3148,
+   "lecture": "désaccord des deux sens",
+   "lecture_par_sens": {
+    "a→b": "inverse",
+    "b→a": "pas de fuite"
+   },
+   "issues_tenues_par_sens": {
+    "a→b": [
+     "inverse"
+    ],
+    "b→a": [
+     "pas de fuite",
+     "nul"
+    ]
+   },
+   "reserves": []
+  },
+  {
+   "cas": "signature du jeu a au grand (0 et 0) ; tau 0.4",
+   "graine": 3150,
+   "lecture": "inverse non confirmé (sens b→a)",
+   "lecture_par_sens": {
+    "a→b": "inverse",
+    "b→a": "indécis"
+   },
+   "issues_tenues_par_sens": {
+    "a→b": [
+     "inverse"
+    ],
+    "b→a": []
+   },
+   "reserves": []
+  },
+  {
+   "cas": "signature du jeu a au grand (0 et 0) ; tau 0.4",
+   "graine": 3152,
+   "lecture": "désaccord des deux sens",
+   "lecture_par_sens": {
+    "a→b": "inverse",
+    "b→a": "pas de fuite"
+   },
+   "issues_tenues_par_sens": {
+    "a→b": [
+     "inverse"
+    ],
+    "b→a": [
+     "pas de fuite"
+    ]
+   },
+   "reserves": []
+  },
+  {
+   "cas": "signature du jeu b au petit (0 et 0) ; tau 0.4",
+   "graine": 3154,
+   "lecture": "positif non confirmé (sens a→b)",
+   "lecture_par_sens": {
+    "a→b": "indécis",
+    "b→a": "positif"
+   },
+   "issues_tenues_par_sens": {
+    "a→b": [],
+    "b→a": [
+     "positif"
+    ]
+   },
+   "reserves": []
+  },
+  {
+   "cas": "signature du jeu b au petit (0 et 0) ; tau 0.4",
+   "graine": 3156,
+   "lecture": "positif non confirmé (sens a→b)",
+   "lecture_par_sens": {
+    "a→b": "indécis",
+    "b→a": "positif"
+   },
+   "issues_tenues_par_sens": {
+    "a→b": [],
+    "b→a": [
+     "positif"
+    ]
+   },
+   "reserves": []
+  },
+  {
+   "cas": "signature du jeu b au petit (0 et 0) ; tau 0.4",
+   "graine": 3158,
+   "lecture": "positif non confirmé (sens a→b)",
+   "lecture_par_sens": {
+    "a→b": "indécis",
+    "b→a": "positif"
+   },
+   "issues_tenues_par_sens": {
+    "a→b": [],
+    "b→a": [
+     "positif"
+    ]
+   },
+   "reserves": []
+  },
+  {
+   "cas": "signature du jeu b au petit (0 et 0) ; tau 0.4",
+   "graine": 3160,
+   "lecture": "positif non confirmé (sens a→b)",
+   "lecture_par_sens": {
+    "a→b": "indécis",
+    "b→a": "positif"
+   },
+   "issues_tenues_par_sens": {
+    "a→b": [],
+    "b→a": [
+     "positif"
+    ]
+   },
+   "reserves": []
+  },
+  {
+   "cas": "signatures des deux jeux au petit (0 et 0) ; tau 0.4",
+   "graine": 3162,
+   "lecture": "positif (1 réserve(s))",
+   "lecture_par_sens": {
+    "a→b": "positif",
+    "b→a": "positif"
+   },
+   "issues_tenues_par_sens": {
+    "a→b": [
+     "positif"
+    ],
+    "b→a": [
+     "positif"
+    ]
+   },
+   "reserves": [
+    "fuite non spécifique : l'effet ne dépasse pas celui du témoin de permutation"
+   ]
+  },
+  {
+   "cas": "signatures des deux jeux au petit (0 et 0) ; tau 0.4",
+   "graine": 3164,
+   "lecture": "positif (1 réserve(s))",
+   "lecture_par_sens": {
+    "a→b": "positif",
+    "b→a": "positif"
+   },
+   "issues_tenues_par_sens": {
+    "a→b": [
+     "positif"
+    ],
+    "b→a": [
+     "positif"
+    ]
+   },
+   "reserves": [
+    "fuite non spécifique : l'effet ne dépasse pas celui du témoin de permutation"
+   ]
+  },
+  {
+   "cas": "signatures des deux jeux au petit (0 et 0) ; tau 0.4",
+   "graine": 3166,
+   "lecture": "positif",
+   "lecture_par_sens": {
+    "a→b": "positif",
+    "b→a": "positif"
+   },
+   "issues_tenues_par_sens": {
+    "a→b": [
+     "positif"
+    ],
+    "b→a": [
+     "positif"
+    ]
+   },
+   "reserves": []
+  },
+  {
+   "cas": "signatures des deux jeux au petit (0 et 0) ; tau 0.4",
+   "graine": 3168,
+   "lecture": "indécis",
+   "lecture_par_sens": {
+    "a→b": "indécis",
+    "b→a": "indécis"
+   },
+   "issues_tenues_par_sens": {
+    "a→b": [],
+    "b→a": []
+   },
+   "reserves": []
+  },
+  {
+   "cas": "H1 masqué par une signature négative du jeu a (1,0 et 0,2) ; tau 0.15",
+   "graine": 3170,
+   "lecture": "positif",
+   "lecture_par_sens": {
+    "a→b": "positif",
+    "b→a": "positif"
+   },
+   "issues_tenues_par_sens": {
+    "a→b": [
+     "positif"
+    ],
+    "b→a": [
+     "positif"
+    ]
+   },
+   "reserves": []
+  },
+  {
+   "cas": "H1 masqué par une signature négative du jeu a (1,0 et 0,2) ; tau 0.15",
+   "graine": 3172,
+   "lecture": "désaccord des deux sens",
+   "lecture_par_sens": {
+    "a→b": "nul",
+    "b→a": "positif"
+   },
+   "issues_tenues_par_sens": {
+    "a→b": [
+     "nul"
+    ],
+    "b→a": [
+     "positif"
+    ]
+   },
+   "reserves": []
+  },
+  {
+   "cas": "H1 masqué par une signature négative du jeu a (1,0 et 0,2) ; tau 0.15",
+   "graine": 3174,
+   "lecture": "positif (1 réserve(s))",
+   "lecture_par_sens": {
+    "a→b": "positif",
+    "b→a": "positif"
+   },
+   "issues_tenues_par_sens": {
+    "a→b": [
+     "positif"
+    ],
+    "b→a": [
+     "positif"
+    ]
+   },
+   "reserves": [
+    "fuite non spécifique : l'effet ne dépasse pas celui du témoin de permutation"
+   ]
+  },
+  {
+   "cas": "H1 masqué par une signature négative du jeu a (1,0 et 0,2) ; tau 0.15",
+   "graine": 3176,
+   "lecture": "positif non confirmé (sens a→b)",
+   "lecture_par_sens": {
+    "a→b": "indécis",
+    "b→a": "positif"
+   },
+   "issues_tenues_par_sens": {
+    "a→b": [],
+    "b→a": [
+     "positif"
+    ]
+   },
+   "reserves": []
+  },
+  {
+   "cas": "H1 masqué par une signature négative du jeu a (1,0 et 0,2) ; tau 0.4",
+   "graine": 3178,
+   "lecture": "positif non confirmé (sens a→b)",
+   "lecture_par_sens": {
+    "a→b": "indécis",
+    "b→a": "positif"
+   },
+   "issues_tenues_par_sens": {
+    "a→b": [],
+    "b→a": [
+     "positif"
+    ]
+   },
+   "reserves": []
+  },
+  {
+   "cas": "H1 masqué par une signature négative du jeu a (1,0 et 0,2) ; tau 0.4",
+   "graine": 3180,
+   "lecture": "positif non confirmé (sens a→b)",
+   "lecture_par_sens": {
+    "a→b": "indécis",
+    "b→a": "positif"
+   },
+   "issues_tenues_par_sens": {
+    "a→b": [],
+    "b→a": [
+     "positif"
+    ]
+   },
+   "reserves": []
+  },
+  {
+   "cas": "H1 masqué par une signature négative du jeu a (1,0 et 0,2) ; tau 0.4",
+   "graine": 3182,
+   "lecture": "désaccord des deux sens",
+   "lecture_par_sens": {
+    "a→b": "fuite de signe inverse",
+    "b→a": "positif"
+   },
+   "issues_tenues_par_sens": {
+    "a→b": [
+     "fuite de signe inverse"
+    ],
+    "b→a": [
+     "positif"
+    ]
+   },
+   "reserves": []
+  },
+  {
+   "cas": "H1 masqué par une signature négative du jeu a (1,0 et 0,2) ; tau 0.4",
+   "graine": 3184,
+   "lecture": "fuite de signe inverse non confirmé (sens b→a)",
+   "lecture_par_sens": {
+    "a→b": "fuite de signe inverse",
+    "b→a": "indécis"
+   },
+   "issues_tenues_par_sens": {
+    "a→b": [
+     "fuite de signe inverse"
+    ],
+    "b→a": []
+   },
+   "reserves": []
+  },
+  {
+   "cas": "fuite masquée par une signature négative du jeu a (0,6 et 0) ; tau 0.15",
+   "graine": 3186,
+   "lecture": "positif non confirmé (sens a→b)",
+   "lecture_par_sens": {
+    "a→b": "indécis",
+    "b→a": "positif"
+   },
+   "issues_tenues_par_sens": {
+    "a→b": [],
+    "b→a": [
+     "positif"
+    ]
+   },
+   "reserves": []
+  },
+  {
+   "cas": "fuite masquée par une signature négative du jeu a (0,6 et 0) ; tau 0.15",
+   "graine": 3188,
+   "lecture": "positif",
+   "lecture_par_sens": {
+    "a→b": "positif",
+    "b→a": "positif"
+   },
+   "issues_tenues_par_sens": {
+    "a→b": [
+     "positif"
+    ],
+    "b→a": [
+     "positif"
+    ]
+   },
+   "reserves": []
+  },
+  {
+   "cas": "fuite masquée par une signature négative du jeu a (0,6 et 0) ; tau 0.15",
+   "graine": 3190,
+   "lecture": "positif",
+   "lecture_par_sens": {
+    "a→b": "positif",
+    "b→a": "positif"
+   },
+   "issues_tenues_par_sens": {
+    "a→b": [
+     "positif"
+    ],
+    "b→a": [
+     "positif"
+    ]
+   },
+   "reserves": []
+  },
+  {
+   "cas": "fuite masquée par une signature négative du jeu a (0,6 et 0) ; tau 0.15",
+   "graine": 3192,
+   "lecture": "positif",
+   "lecture_par_sens": {
+    "a→b": "positif",
+    "b→a": "positif"
+   },
+   "issues_tenues_par_sens": {
+    "a→b": [
+     "positif"
+    ],
+    "b→a": [
+     "positif"
+    ]
+   },
+   "reserves": []
+  },
+  {
+   "cas": "contexte faible au grand ; tau 0.4",
+   "graine": 3194,
+   "lecture": "certification asymétrique (petit seulement)",
+   "lecture_par_sens": {
+    "a→b": "certification asymétrique (petit seulement)",
+    "b→a": "certification asymétrique (petit seulement)"
+   },
+   "issues_tenues_par_sens": {
+    "a→b": [],
+    "b→a": []
+   },
+   "reserves": []
+  },
+  {
+   "cas": "contexte faible au grand ; tau 0.4",
+   "graine": 3196,
+   "lecture": "certification asymétrique (petit seulement)",
+   "lecture_par_sens": {
+    "a→b": "certification asymétrique (petit seulement)",
+    "b→a": "certification asymétrique (petit seulement)"
+   },
+   "issues_tenues_par_sens": {
+    "a→b": [],
+    "b→a": []
+   },
+   "reserves": []
+  },
+  {
+   "cas": "contexte faible au grand ; tau 0.4",
+   "graine": 3198,
+   "lecture": "certification asymétrique (petit seulement)",
+   "lecture_par_sens": {
+    "a→b": "certification asymétrique (petit seulement)",
+    "b→a": "certification asymétrique (petit seulement)"
+   },
+   "issues_tenues_par_sens": {
+    "a→b": [],
+    "b→a": []
+   },
+   "reserves": []
+  },
+  {
+   "cas": "contexte faible au grand ; tau 0.4",
+   "graine": 3200,
+   "lecture": "certification asymétrique (petit seulement)",
+   "lecture_par_sens": {
+    "a→b": "certification asymétrique (petit seulement)",
+    "b→a": "certification asymétrique (petit seulement)"
+   },
+   "issues_tenues_par_sens": {
+    "a→b": [],
+    "b→a": []
+   },
+   "reserves": []
+  },
+  {
+   "cas": "fuite faible égale (0,2 et 0,2) ; tau 0.15",
+   "graine": 3202,
+   "lecture": "nul",
+   "lecture_par_sens": {
+    "a→b": "nul",
+    "b→a": "nul"
+   },
+   "issues_tenues_par_sens": {
+    "a→b": [
+     "nul"
+    ],
+    "b→a": [
+     "nul"
+    ]
+   },
+   "reserves": []
+  },
+  {
+   "cas": "fuite faible égale (0,2 et 0,2) ; tau 0.15",
+   "graine": 3204,
+   "lecture": "nul",
+   "lecture_par_sens": {
+    "a→b": "nul",
+    "b→a": "nul"
+   },
+   "issues_tenues_par_sens": {
+    "a→b": [
+     "nul"
+    ],
+    "b→a": [
+     "nul"
+    ]
+   },
+   "reserves": []
+  },
+  {
+   "cas": "fuite faible égale (0,2 et 0,2) ; tau 0.15",
+   "graine": 3206,
+   "lecture": "nul",
+   "lecture_par_sens": {
+    "a→b": "nul",
+    "b→a": "nul"
+   },
+   "issues_tenues_par_sens": {
+    "a→b": [
+     "nul"
+    ],
+    "b→a": [
+     "nul"
+    ]
+   },
+   "reserves": []
+  },
+  {
+   "cas": "fuite faible égale (0,2 et 0,2) ; tau 0.15",
+   "graine": 3208,
+   "lecture": "nul (1 réserve(s))",
+   "lecture_par_sens": {
+    "a→b": "pas de fuite",
+    "b→a": "nul"
+   },
+   "issues_tenues_par_sens": {
+    "a→b": [
+     "pas de fuite",
+     "nul"
+    ],
+    "b→a": [
+     "nul"
+    ]
+   },
+   "reserves": [
+    "pas de fuite lu dans le seul sens a→b (non confirmé)"
+   ]
+  },
+  {
+   "cas": "fuite faible égale, contexte du jeu b plus faible (0,15 et 0,15 ; × 0,6) ; tau 0.15",
+   "graine": 3210,
+   "lecture": "nul",
+   "lecture_par_sens": {
+    "a→b": "nul",
+    "b→a": "nul"
+   },
+   "issues_tenues_par_sens": {
+    "a→b": [
+     "nul"
+    ],
+    "b→a": [
+     "nul"
+    ]
+   },
+   "reserves": []
+  },
+  {
+   "cas": "fuite faible égale, contexte du jeu b plus faible (0,15 et 0,15 ; × 0,6) ; tau 0.15",
+   "graine": 3212,
+   "lecture": "nul",
+   "lecture_par_sens": {
+    "a→b": "nul",
+    "b→a": "nul"
+   },
+   "issues_tenues_par_sens": {
+    "a→b": [
+     "nul"
+    ],
+    "b→a": [
+     "nul"
+    ]
+   },
+   "reserves": []
+  },
+  {
+   "cas": "fuite faible égale, contexte du jeu b plus faible (0,15 et 0,15 ; × 0,6) ; tau 0.15",
+   "graine": 3214,
+   "lecture": "nul (1 réserve(s))",
+   "lecture_par_sens": {
+    "a→b": "nul",
+    "b→a": "pas de fuite"
+   },
+   "issues_tenues_par_sens": {
+    "a→b": [
+     "nul"
+    ],
+    "b→a": [
+     "pas de fuite",
+     "nul"
+    ]
+   },
+   "reserves": [
+    "pas de fuite lu dans le seul sens b→a (non confirmé)"
+   ]
+  },
+  {
+   "cas": "fuite faible égale, contexte du jeu b plus faible (0,15 et 0,15 ; × 0,6) ; tau 0.15",
+   "graine": 3216,
+   "lecture": "nul (1 réserve(s))",
+   "lecture_par_sens": {
+    "a→b": "nul",
+    "b→a": "pas de fuite"
+   },
+   "issues_tenues_par_sens": {
+    "a→b": [
+     "nul"
+    ],
+    "b→a": [
+     "pas de fuite",
+     "nul"
+    ]
+   },
+   "reserves": [
+    "pas de fuite lu dans le seul sens b→a (non confirmé)"
+   ]
+  },
+  {
+   "cas": "signature négative du jeu a au grand (0 et 0) ; tau 0.4",
+   "graine": 3218,
+   "lecture": "fuite de signe inverse non confirmé (sens b→a)",
+   "lecture_par_sens": {
+    "a→b": "fuite de signe inverse",
+    "b→a": "indécis"
+   },
+   "issues_tenues_par_sens": {
+    "a→b": [
+     "fuite de signe inverse"
+    ],
+    "b→a": []
+   },
+   "reserves": []
+  },
+  {
+   "cas": "signature négative du jeu a au grand (0 et 0) ; tau 0.4",
+   "graine": 3220,
+   "lecture": "fuite de signe inverse non confirmé (sens b→a)",
+   "lecture_par_sens": {
+    "a→b": "fuite de signe inverse",
+    "b→a": "indécis"
+   },
+   "issues_tenues_par_sens": {
+    "a→b": [
+     "fuite de signe inverse"
+    ],
+    "b→a": []
+   },
+   "reserves": []
+  },
+  {
+   "cas": "signature négative du jeu a au grand (0 et 0) ; tau 0.4",
+   "graine": 3222,
+   "lecture": "fuite de signe inverse non confirmé (sens b→a)",
+   "lecture_par_sens": {
+    "a→b": "fuite de signe inverse",
+    "b→a": "indécis"
+   },
+   "issues_tenues_par_sens": {
+    "a→b": [
+     "fuite de signe inverse"
+    ],
+    "b→a": []
+   },
+   "reserves": []
+  },
+  {
+   "cas": "signature négative du jeu a au grand (0 et 0) ; tau 0.4",
+   "graine": 3224,
+   "lecture": "fuite de signe inverse non confirmé (sens b→a)",
+   "lecture_par_sens": {
+    "a→b": "fuite de signe inverse",
+    "b→a": "indécis"
+   },
+   "issues_tenues_par_sens": {
+    "a→b": [
+     "fuite de signe inverse"
+    ],
+    "b→a": []
+   },
+   "reserves": []
+  },
+  {
+   "cas": "signatures des deux jeux, négatives, au petit (0 et 0) ; tau 0.4",
+   "graine": 3226,
+   "lecture": "fuite de signe inverse non confirmé (sens b→a)",
+   "lecture_par_sens": {
+    "a→b": "fuite de signe inverse",
+    "b→a": "indécis"
+   },
+   "issues_tenues_par_sens": {
+    "a→b": [
+     "fuite de signe inverse"
+    ],
+    "b→a": []
+   },
+   "reserves": []
+  },
+  {
+   "cas": "signatures des deux jeux, négatives, au petit (0 et 0) ; tau 0.4",
+   "graine": 3228,
+   "lecture": "indécis",
+   "lecture_par_sens": {
+    "a→b": "indécis",
+    "b→a": "indécis"
+   },
+   "issues_tenues_par_sens": {
+    "a→b": [],
+    "b→a": []
+   },
+   "reserves": []
+  },
+  {
+   "cas": "signatures des deux jeux, négatives, au petit (0 et 0) ; tau 0.4",
+   "graine": 3230,
+   "lecture": "fuite de signe inverse (1 réserve(s))",
+   "lecture_par_sens": {
+    "a→b": "fuite de signe inverse",
+    "b→a": "fuite de signe inverse"
+   },
+   "issues_tenues_par_sens": {
+    "a→b": [
+     "fuite de signe inverse"
+    ],
+    "b→a": [
+     "fuite de signe inverse"
+    ]
+   },
+   "reserves": [
+    "fuite non spécifique : l'effet ne dépasse pas celui du témoin de permutation"
+   ]
+  },
+  {
+   "cas": "signatures des deux jeux, négatives, au petit (0 et 0) ; tau 0.4",
+   "graine": 3232,
+   "lecture": "fuite de signe inverse (1 réserve(s))",
+   "lecture_par_sens": {
+    "a→b": "fuite de signe inverse",
+    "b→a": "fuite de signe inverse"
+   },
+   "issues_tenues_par_sens": {
+    "a→b": [
+     "fuite de signe inverse"
+    ],
+    "b→a": [
+     "fuite de signe inverse"
+    ]
+   },
+   "reserves": [
+    "fuite non spécifique : l'effet ne dépasse pas celui du témoin de permutation"
+   ]
+  },
+  {
+   "cas": "signatures des deux jeux au grand (0 et 0) ; tau 0.4",
+   "graine": 3234,
+   "lecture": "inverse",
+   "lecture_par_sens": {
+    "a→b": "inverse",
+    "b→a": "inverse"
+   },
+   "issues_tenues_par_sens": {
+    "a→b": [
+     "inverse"
+    ],
+    "b→a": [
+     "inverse"
+    ]
+   },
+   "reserves": []
+  },
+  {
+   "cas": "signatures des deux jeux au grand (0 et 0) ; tau 0.4",
+   "graine": 3236,
+   "lecture": "inverse",
+   "lecture_par_sens": {
+    "a→b": "inverse",
+    "b→a": "inverse"
+   },
+   "issues_tenues_par_sens": {
+    "a→b": [
+     "inverse"
+    ],
+    "b→a": [
+     "inverse"
+    ]
+   },
+   "reserves": []
+  },
+  {
+   "cas": "signatures des deux jeux au grand (0 et 0) ; tau 0.4",
+   "graine": 3238,
+   "lecture": "inverse",
+   "lecture_par_sens": {
+    "a→b": "inverse",
+    "b→a": "inverse"
+   },
+   "issues_tenues_par_sens": {
+    "a→b": [
+     "inverse"
+    ],
+    "b→a": [
+     "inverse"
+    ]
+   },
+   "reserves": []
+  },
+  {
+   "cas": "signatures des deux jeux au grand (0 et 0) ; tau 0.4",
+   "graine": 3240,
+   "lecture": "inverse",
+   "lecture_par_sens": {
+    "a→b": "inverse",
+    "b→a": "inverse"
+   },
+   "issues_tenues_par_sens": {
+    "a→b": [
+     "inverse"
+    ],
+    "b→a": [
+     "inverse"
+    ]
+   },
+   "reserves": []
+  }
+ ]
+}

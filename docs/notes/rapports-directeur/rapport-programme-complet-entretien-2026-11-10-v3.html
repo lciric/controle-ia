@@ -1,0 +1,308 @@
+<!doctype html>
+<html lang="fr">
+<head>
+<meta charset="utf-8">
+<title>Le programme complet, vu depuis l'entretien — 10 novembre 2026 — version 3</title>
+<style>
+:root {
+  --ink: #16202b; --muted: #56636f; --rule: #d3d9e0; --accent: #1f4e79; --tint: #eef3f8;
+  --ok: #1a6340; --okbg: #e5f2ea; --run: #7d5200; --runbg: #fbf0d9;
+  --todo: #4f5a66; --todobg: #eceff2; --hold: #6b3fa0; --holdbg: #f0eaf8; --you: #9a3412; --youbg: #fdebe0;
+}
+* { box-sizing: border-box; -webkit-print-color-adjust: exact; print-color-adjust: exact; }
+html, body { margin: 0; padding: 0; }
+body { font-family: Carlito, "Liberation Sans", "DejaVu Sans", sans-serif; font-size: 10.4pt; line-height: 1.36; color: var(--ink); }
+h1 { font-weight: 700; font-size: 25pt; line-height: 1.1; margin: 0 0 5pt; letter-spacing: -0.012em; }
+.sub { font-size: 12pt; line-height: 1.32; color: var(--ink); margin: 0 0 9pt; max-width: 150mm; }
+.meta { font-size: 8.8pt; color: var(--muted); border-top: 0.6pt solid var(--rule); border-bottom: 0.6pt solid var(--rule); padding: 4pt 0; margin: 0 0 11pt; }
+.meta b { color: var(--ink); font-weight: 600; }
+h2 { font-size: 15pt; font-weight: 700; margin: 17pt 0 5pt; padding-top: 7pt; border-top: 1.3pt solid var(--ink); break-after: avoid; letter-spacing: -0.005em; }
+h2 .n { color: var(--accent); margin-right: 5pt; }
+h3 { font-size: 11.2pt; font-weight: 700; margin: 11pt 0 3pt; break-after: avoid; }
+p { margin: 0 0 5.5pt; }
+ol, ul { margin: 0 0 6pt; padding-left: 15pt; }
+li { margin: 0 0 2.5pt; }
+table { width: 100%; border-collapse: collapse; font-size: 9.3pt; line-height: 1.3; margin: 5pt 0 9pt; }
+th { text-align: left; font-weight: 700; color: var(--muted); font-size: 7.9pt; text-transform: uppercase; letter-spacing: 0.045em; border-bottom: 0.9pt solid var(--ink); padding: 3pt 7pt 3pt 0; vertical-align: bottom; }
+td { border-bottom: 0.5pt solid var(--rule); padding: 4.2pt 7pt 4.2pt 0; vertical-align: top; }
+td:last-child, th:last-child { padding-right: 0; }
+tr { break-inside: avoid; }
+td b, li b, p b { font-weight: 700; }
+.chip { display: inline-block; font-size: 8pt; font-weight: 700; line-height: 1.25; padding: 1pt 5.5pt; border-radius: 8pt; white-space: nowrap; }
+.ok { color: var(--ok); background: var(--okbg); }
+.run { color: var(--run); background: var(--runbg); }
+.todo { color: var(--todo); background: var(--todobg); }
+.hold { color: var(--hold); background: var(--holdbg); }
+.you { color: var(--you); background: var(--youbg); }
+.box { background: var(--tint); border-left: 2.6pt solid var(--accent); padding: 7.5pt 11pt 4pt; margin: 8pt 0 10pt; break-inside: avoid; }
+.box h3 { margin-top: 0; }
+.box ol { margin-bottom: 3pt; }
+.ref { font-family: "DejaVu Sans Mono", monospace; font-size: 6.7pt; color: var(--muted); overflow-wrap: anywhere; }
+table.src { table-layout: fixed; }
+.en { font-style: italic; }
+.small { font-size: 8.8pt; color: var(--muted); }
+.legend { font-size: 8.6pt; color: var(--muted); margin: 2pt 0 6pt; }
+.legend .chip { margin-right: 2pt; }
+.keep { break-inside: avoid; }
+.pb { break-before: page; }
+
+/* La carte */
+.map { display: grid; grid-template-columns: 1fr 13pt 1.02fr 13pt 1fr; column-gap: 3pt; row-gap: 7pt; margin: 6pt 0 5pt; break-inside: avoid; }
+.mh { font-size: 7.9pt; font-weight: 700; text-transform: uppercase; letter-spacing: 0.05em; color: var(--muted); border-bottom: 0.9pt solid var(--ink); padding-bottom: 2pt; }
+.node { border: 0.8pt solid #9fb0c2; border-radius: 3pt; padding: 5pt 7pt 4.5pt; font-size: 9pt; line-height: 1.28; background: #fff; }
+.node b { display: block; font-size: 9.9pt; margin-bottom: 1.5pt; }
+.node .chip { margin-top: 3pt; }
+.node ul { padding-left: 10pt; margin: 0; }
+.node li { margin: 0 0 1pt; }
+.node.dec { background: var(--tint); border-color: var(--accent); }
+.node.ghost { border-style: dashed; color: var(--muted); display: flex; align-items: center; }
+.stack { display: flex; flex-direction: column; gap: 0; }
+.pince { font-size: 8.3pt; color: var(--accent); font-weight: 700; text-align: center; padding: 2.5pt 0; border-left: 0.8pt dashed var(--accent); border-right: 0.8pt dashed var(--accent); margin: 0 14pt; }
+.arr { align-self: center; text-align: center; font-size: 11pt; color: var(--muted); }
+.maprow-note { grid-column: 1 / -1; font-size: 8.8pt; color: var(--muted); border-top: 0.5pt solid var(--rule); padding-top: 4pt; }
+.two { display: grid; grid-template-columns: 1fr 1fr; column-gap: 13pt; }
+.two .box { margin-top: 4pt; }
+</style>
+</head>
+<body>
+
+<h1>Le programme complet, vu depuis l'entretien</h1>
+<p class="sub">Détecter le sabotage diffus d'un agent d'intelligence artificielle en lisant l'intérieur du modèle : les premiers principes, la carte du programme avec le bras d'attaque et l'organisme d'idéation, les preuves à produire, ce qui est fait, ce qui reste.</p>
+<p class="meta"><b>Pour Lazar</b> · état relevé le 10 novembre 2026 à 09:33 UTC · écrit par la session mère · version 3 · <b>Entretien avec le Transformative AI Fund</b> : vers le dimanche 22 novembre, jour à confirmer · demande : 58 630 dollars</p>
+
+<div class="box">
+<h3>L'essentiel</h3>
+<ol>
+<li><b>La thèse tient, et rien n'est encore prouvé sur elle.</b> Aucune sonde n'a battu un surveillant de référence. La trace interne du sabotage n'est pas établie. Le dossier tient si nous le disons nous-mêmes, avant qu'on nous le demande.</li>
+<li><b>Le résultat positif et rigoureux qu'on peut tenir le jour de l'entretien n'est pas « la thèse est vraie ». C'est « notre chaîne de mesure sait voir, et sait se taire ».</b> Trois pièces le portent : un signal planté que la chaîne retrouve, un saboteur sans consigne dont l'effet sur le coût croît avec la dose, des résultats nuls dits avec leur portée. Une quatrième montre la méthode : notre propre juge, attaqué, tient là où il dit couvrir et cède là où il dit ne pas couvrir.</li>
+<li><b>Le risque est le calendrier.</b> Trois dates, avec zéro à un jour de marge : préenregistrement des sondes scellé avant le vendredi 13 à midi ; course de confirmation créée au plus tard le dimanche 15 ; témoin positif créé au plus tard le mercredi 18, lu le vendredi 20.</li>
+<li><b>Bras d'attaque : monté, jamais lancé. Organisme d'idéation : intégré</b> comme second terrain du papier sur la corruptibilité des surveillants, et comme atelier d'idées. Ni l'un ni l'autre n'est sur le chemin critique de l'entretien.</li>
+</ol>
+</div>
+
+<h2><span class="n">1</span>Les premiers principes</h2>
+
+<ol>
+<li><b>Le danger.</b> Un agent à qui l'on confie un long travail peut nuire par petites touches. Chaque action se défend prise seule ; le dommage n'existe que dans l'ensemble. C'est le sabotage diffus.</li>
+<li><b>Pourquoi la surveillance ordinaire échoue.</b> Un surveillant qui juge chaque action sur ce que l'agent écrit n'a rien à voir, par construction : aucune action n'est coupable.</li>
+<li><b>Le pari.</b> Si l'intention de nuire laisse une trace dans l'activité interne du modèle à chaque contribution, ces traces s'additionnent, même quand les preuves visibles ne s'additionnent pas. En une phrase : la fragmentation détruit la preuve externe, pas la preuve interne.</li>
+<li><b>La question unique.</b> Que mesure vraiment un surveillant, et sa mesure survit-elle à l'adversaire ?</li>
+<li><b>La règle de preuve.</b> Écrire le critère avant de regarder les données, et le sceller. Faire relire par quelqu'un qui n'a pas écrit. Planter des témoins : un signal qu'on doit retrouver, un jumeau honnête sur lequel on doit se taire. Dire la portée de chaque résultat nul. Rapporter les deux issues : les deux sont publiables.</li>
+</ol>
+
+<p>Le pari peut être faux de six façons. Chacune commande une pièce du programme : c'est ce tableau qui donne son sens à tout le reste.</p>
+
+<table>
+<thead><tr><th style="width:27%">Ce qui rendrait le pari faux</th><th style="width:41%">La pièce qui le teste</th><th>Aujourd'hui</th></tr></thead>
+<tr><td><b>Il n'y a pas de trace interne.</b></td><td>Des saboteurs d'épreuve dont on règle la dose. Des sondes (petits lecteurs de l'activité interne) jugées contre un plancher aléatoire, avec la puissance écrite d'avance.</td><td>Premier test scellé : nul, à puissance limitée. Confirmation préenregistrée, à lancer.</td></tr>
+<tr><td><b>La sonde lit la consigne de sabotage, pas l'intention.</b></td><td>Un saboteur sans consigne : le comportement est distillé dans les poids du modèle, rien n'est écrit dans son contexte.</td><td>Audit scellé : sur le saboteur instruit, la sonde lit bien la consigne. Le saboteur sans consigne existe.</td></tr>
+<tr><td><b>Lire le texte suffit.</b></td><td>Des surveillants de référence externes sur les mêmes épisodes. Règle fixée : les sondes ne sont jugées qu'aux doses où le surveillant « mots et coût » échoue.</td><td>Règle fixée. Préenregistrement des surveillants externes : pas écrit.</td></tr>
+<tr><td><b>Le sabotage d'épreuve est flagrant, donc facile.</b></td><td>« Diffus » défini comme une mesure : chaque action reste sous le seuil du meilleur surveillant externe réglé à 1 % de fausses alertes. Un saboteur à budget, diffus par construction.</td><td>Définition fixée. Saboteur à budget : conçu, pas codé.</td></tr>
+<tr><td><b>L'adversaire s'adapte aux surveillants.</b></td><td>Le bras d'attaque, et la mesure de la pince : tromper le surveillant externe doit se voir au surveillant interne.</td><td>Monté, jamais lancé. La pince est une hypothèse, dans aucun préenregistrement.</td></tr>
+<tr><td><b>Le surveillant lui-même se laisse déplacer.</b></td><td>Le papier sur l'instrument. L'attaque du juge de l'organisme d'idéation.</td><td>Verdict scellé le 10 novembre sur le juge statistique.</td></tr>
+</table>
+
+<h2><span class="n">2</span>Le programme complet en une carte</h2>
+
+<p>Trois sortes d'attaquants, trois sortes de surveillants, trois papiers. La carte se lit de gauche à droite : qui attaque quoi, et quelle question cela tranche.</p>
+
+<div class="map">
+  <div class="mh">Ce qui attaque</div><div></div><div class="mh">Ce qui surveille</div><div></div><div class="mh">Ce que cela décide</div>
+
+  <div class="node"><b>Les saboteurs d'épreuve</b>
+    <ul>
+      <li>instruit par une consigne privée : existe, flagrant</li>
+      <li>distillé dans les poids, dose réglable : confirmation à lancer</li>
+      <li>à budget, diffus par construction : conçu</li>
+    </ul>
+  </div>
+  <div class="arr">→</div>
+  <div class="stack">
+    <div class="node"><b>Le surveillant externe</b>ne lit que ce que l'agent écrit : mots, coût déclaré, juge par action, juge qui accumule</div>
+    <div class="pince">la pince (hypothèse)</div>
+    <div class="node"><b>Le surveillant interne</b>lit l'activité du modèle : sondes, accumulées action après action</div>
+  </div>
+  <div class="arr">→</div>
+  <div class="node dec"><b>Le temps (papier A)</b>À fausses alertes égales, l'intérieur détecte-t-il le sabotage diffus que l'extérieur rate ?<br><span class="chip todo">porte décisive, après celle des instruments</span></div>
+
+  <div class="node"><b>Le bras d'attaque</b>
+    <ul>
+      <li>aveugle : conçu sans voir aucun surveillant</li>
+      <li>informé : connaît les surveillants, jamais les épreuves</li>
+    </ul>
+    <span class="chip hold">monté, jamais lancé</span>
+  </div>
+  <div class="arr">→</div>
+  <div class="node ghost">Les mêmes surveillants, figés avant l'attaque. Les recettes sont scellées et lues par le seul juge.</div>
+  <div class="arr">→</div>
+  <div class="node dec"><b>L'universalité et la pince</b>Le rappel tient-il sur un mode de sabotage que personne n'a vu ? L'intérieur reste-t-il muet quand l'extérieur est trompé ?</div>
+
+  <div class="node"><b>L'attaquant du juge</b>un proposeur qui lit la description exacte du juge, et ses verdicts<br><span class="chip ok">couru, verdict scellé le 10 novembre</span></div>
+  <div class="arr">→</div>
+  <div class="node"><b>Le juge statistique de l'organisme d'idéation</b>calculé hors de tout agent, sur un engagement scellé avant les données</div>
+  <div class="arr">→</div>
+  <div class="node dec"><b>L'instrument (papier C)</b>Un surveillant se laisse-t-il déplacer vers le verdict voulu par l'attaquant, et de combien ?</div>
+
+  <div class="maprow-note"><b>L'essaim (papier B), mois 3 à 6, pas commencé :</b> la même question quand plusieurs agents partagent les mêmes poids. Leurs traces internes varient ensemble ; se décorréler leur coûte de la coordination.</div>
+</div>
+
+<div class="two">
+<div class="box">
+<h3>Le bras d'attaque</h3>
+<p><b>Deux bras.</b> L'aveugle invente un mode de sabotage sans avoir vu aucun surveillant ; scellé avant la porte décisive, révélé à l'évaluation seulement, il dit si nos surveillants sont génériques ou spécialisés. L'informé connaît la conception des surveillants et le protocole, jamais les épreuves, les notes ni les seuils ; il mesure la pince.</p>
+<p><b>Cloisons.</b> La quarantaine va de l'attaquant vers les concepteurs de surveillants. Aucun score de surveillant n'entre dans un entraînement, hors bras d'attaque déclaré.</p>
+<p><b>État.</b> Consignes, listes d'exclusion, témoins, juge et circuit de scellement sont écrits. Rien n'a tourné. Deux réponses de sessions ont été arrêtées par un classifieur de sûreté (27 octobre, 9 novembre) : consignées, jamais contournées. Le lancement est une dépense et demande ton mot direct dans la session qui en a la charge.</p>
+<p class="small">Limite : la session mère ne lit pas les pièces du bras d'attaque. Cet état vient des décisions et des registres seulement.</p>
+</div>
+<div class="box">
+<h3>L'organisme d'idéation</h3>
+<p><b>Ce qu'il est.</b> Des agents proposent des hypothèses de recherche. Un juge statistique décide ce qui est retenu : il est calculé par l'orchestrateur, hors de tout agent, contre un nul formé des lois déjà connues, avec contrôle des comparaisons multiples. Ce juge est un surveillant d'affirmations.</p>
+<p><b>Rôle 1, adopté.</b> Second terrain du papier sur l'instrument : on mesure la corruptibilité du juge en l'attaquant.</p>
+<p><b>Rôle 2, adopté.</b> Atelier d'idées du programme. Ses fiches sont du matériau, jamais une preuve.</p>
+<p><b>Rôle 3, à trancher par toi.</b> Un proposeur à poids ouverts qui trompe le juge serait une famille de menaces diffuses, à réserver ou non comme famille jamais vue à la conception.</p>
+<p><b>Deux garde-fous.</b> Aucun score d'un surveillant du programme ne sert à entraîner ou choisir l'organisme. Tout texte qui le présente cite POPPER, Dwork et al., Blum et Hardt, et Co-Scientist.</p>
+</div>
+</div>
+
+<h3>Les portes</h3>
+<table>
+<thead><tr><th style="width:23%">Porte</th><th style="width:50%">Ce qu'elle exige</th><th>Aujourd'hui</th></tr></thead>
+<tr><td><b>Porte des instruments</b><br><span class="small">dite G0 ; verdict au plus tard le 30 novembre, un seul report possible au 31 janvier 2027</span></td><td>Huit critères : chaîne d'enregistrement validée ; saboteurs à dose-réponse ; sondes au-dessus du plancher ; surveillants externes sur les mêmes épisodes ; agrégateurs validés en simulation ; préenregistrements de la porte décisive et du papier sur l'instrument scellés ; état de l'art vérifié.</td><td>Deux critères prouvés sur huit (chaîne d'enregistrement ; agrégateurs). Aucune porte franchie.</td></tr>
+<tr><td><b>Porte décisive</b><br><span class="small">dite G1</span></td><td>La lecture interne accumulée doit battre chaque surveillant externe de la liste scellée, et deux autres façons de lire l'intérieur, dans chaque mode de sabotage, mode tenu à l'écart compris.</td><td>Préenregistrement au brouillon 6. Si elle échoue : résultat négatif publié, puis reconception des sondes. Jamais d'arrêt sur un résultat négatif.</td></tr>
+</table>
+
+<h2><span class="n">3</span>Ce qu'il faut produire pour l'entretien</h2>
+
+<p>Le jury décide sur trois questions de fond et deux de gestion. Pour chacune, on fixe d'avance ce qui la soutient et ce qui la réfuterait : on ne choisit pas après coup ce qu'on montre.</p>
+
+<table>
+<thead><tr><th style="width:15%">Ce que le jury doit croire</th><th style="width:36%">Ce qui le soutient</th><th style="width:24%">Ce qui le réfuterait</th><th>Aujourd'hui</th></tr></thead>
+<tr><td><b>La question compte.</b></td><td>État de l'art vérifié sur les sources : 3 497 citations contrôlées, aucun échec. Notre propre saboteur instruit montre le piège : il gonfle son coût d'environ 33 fois, le texte seul le repère. « Diffus » doit donc être une mesure.</td><td>Un surveillant externe publié qui détecte déjà le sabotage diffus sur des tâches floues.</td><td><span class="chip ok">tenu</span><br>Reste la littérature hors archives ouvertes.</td></tr>
+<tr><td><b>L'approche peut marcher, et on saura si elle ne marche pas.</b></td><td>Le témoin positif retrouvé, son jumeau honnête laissé en paix. La dose-réponse confirmée sur le saboteur sans consigne. Ensuite seulement : des sondes au-dessus du plancher, là où « mots et coût » échoue.</td><td>Le signal planté non retrouvé : la chaîne est aveugle. Pas de dose-réponse. Des sondes au plancher à puissance suffisante.</td><td><span class="chip run">en cours</span><br>Rien n'est encore lu.</td></tr>
+<tr><td><b>L'équipe exécute avec rigueur.</b></td><td>51 préenregistrements, 56 décisions et 11 verdicts déposés par empreinte chez un tiers. Des négatifs rapportés tels quels. Nos prédictions tenues à jour : 47 confirmées, 5 réfutées, 8 non concluantes sur 60 tranchées, 235 écrites. Notre juge attaqué par nous-mêmes.</td><td>Un chiffre du dossier sans pièce. Un préenregistrement postérieur à ses données. Un dépôt qu'un tiers ne peut pas vérifier.</td><td><span class="chip run">à finir</span><br>Le dépôt chez le tiers est privé et non gelé.</td></tr>
+<tr><td><b>Le budget est tenu.</b></td><td>Un registre de chaque ligne payée, des plafonds signés, des exceptions listées. Au moins 645,42 dollars relevés au 8 novembre : un plancher. Ordre de grandeur de 750 à 1 000, non opposable.</td><td>Un écart entre le registre et les factures. La candidature disait « about $20 » au 7 octobre : à corriger nous-mêmes.</td><td><span class="chip you">à toi</span><br>Rapprochement avec les factures.</td></tr>
+<tr><td><b>Le repli existe.</b></td><td>Deux issues publiables : si le sabotage déplace la moyenne des scores, le lemme s'applique ; sinon le théorème négatif dicte un autre agrégateur. Échec de la porte décisive : négatif publié, sondes reconçues.</td><td>Un critère déplacé après lecture.</td><td><span class="chip ok">écrit</span></td></tr>
+</table>
+
+<h3>La démonstration minimale : quatre pièces, scellées et lues avant le jour de l'entretien</h3>
+<table>
+<thead><tr><th style="width:17%">Pièce</th><th style="width:33%">Ce qu'elle montre</th><th style="width:22%">Date réaliste</th><th>Si elle n'est pas prête, on dit</th></tr></thead>
+<tr><td><b>Le témoin positif planté</b><br><span class="small">dit P3-bis</span></td><td>On plante dans le contexte de chaque action le contraste même sur lequel la sonde a été entraînée. La sonde doit séparer le saboteur planté de son témoin honnête de même longueur, au-dessus du plancher, sans qu'un prédicteur trivial fasse aussi bien. Issue « vu » ou « non vu ». Elle éprouve la chaîne, pas la thèse.</td><td>Création au plus tard le 18. Lecture au rendez-vous du 20 à 12:00 UTC. Plafond 80 dollars.</td><td class="en">“The positive control is pre-registered and due on the 20th.”<br><span class="small" style="font-style:normal">Seulement si le texte est scellé.</span></td></tr>
+<tr><td><b>La course de confirmation</b><br><span class="small">dite 7b</span></td><td>Le saboteur sans consigne, à quatre doses, sur des graines neuves : son effet sur le coût déclaré croît-il avec la dose ? Elle réplique la course exploratoire sans en lire les sondes. Avant l'entretien, seule cette table du coût sera lue.</td><td>Création au plus tard le 15. Verdict entre le 16 et le 18. Plafond 200 dollars.</td><td class="en">“The confirmation run is pre-registered and due.”<br><span class="small" style="font-style:normal">Vrai depuis ce matin.</span></td></tr>
+<tr><td><b>Les résultats nuls, avec leur portée</b></td><td>Premier test sur le saboteur instruit : aucune sonde générique au-dessus du plancher. Portée écrite : une aire sous la courbe inférieure à 0,63 (tromperie) ou 0,60 (enjeux élevés) n'est pas exclue. L'audit ajoute : la sonde entraînée lit la consigne.</td><td><span class="chip ok">scellé</span></td><td class="small">Réserve à dire : la puissance a été calculée avant le scellement, sur des nombres déjà lus.</td></tr>
+<tr><td><b>Le juge attaqué</b></td><td>Voir l'encadré ci-dessous.</td><td><span class="chip ok">scellé le 10 novembre</span></td><td class="small">La page publique reste à pousser : c'est une publication, donc ton geste.</td></tr>
+</table>
+
+<p><b>Ce qui ne sera pas prêt, et qu'on ne promet pas :</b> les sondes lues sur le saboteur sans consigne (leur lecture attend la règle « mots et coût », donc le préenregistrement des surveillants externes, qui n'est pas écrit) ; les surveillants externes sur les mêmes épisodes ; le saboteur diffus par construction. Avant l'entretien, deux résultats neufs seulement peuvent être lus : le témoin positif et la table du coût de la course de confirmation.</p>
+
+<div class="box">
+<h3>Peut-on dire que le juge est validé ? Non. Voici ce qu'on peut dire.</h3>
+<p><b>« Résiste, à cette taille » veut dire :</b> sur 24 séries d'attaque de 16 tentatives chacune, avec retour du juge, une seule a fait passer une fausse découverte. L'intervalle de confiance à 95 % va de 0,7 % à 20 % : avec 24 séries, on ne peut pas exclure un taux réel de 20 %. Le critère gelé demandait une borne haute sous 25 %, pas un taux sous 5 %. Le même attaquant battait l'ancien juge 24 fois sur 24 : l'attaque a donc des dents.</p>
+<p><b>Hors du monde que le juge déclare couvrir :</b> 10 séries sur 24 passent (de 24 % à 61 %). La frontière est franchie, et 10 des 17 lois retenues à tort se rejouent au-dessus du seuil après correction.</p>
+<p><b>La phrase tenable :</b> le juge tient là où il dit couvrir, à la résolution de 24 essais, sur un monde jouet, avec un seul fournisseur de modèle et une seule forme d'attaque ; il cède là où il dit ne pas couvrir. C'est une frontière mesurée et annoncée d'avance. Elle soutient « l'équipe exécute avec rigueur » et le papier sur l'instrument. Elle ne dit rien de la trace interne.</p>
+<p class="small">Réserves du verdict : une fausse découverte sur 24 est le plus grand compte que « résiste » admette ; la course est « trop propre » (aucun témoin négatif planté) ; trois de nos onze prédictions ne sont pas tenues.</p>
+</div>
+
+<h3>Les cinq questions qui peuvent faire tomber le dossier</h3>
+<table>
+<thead><tr><th style="width:31%">La question</th><th>La réponse, ou l'aveu préparé</th></tr></thead>
+<tr><td><b>« La trace interne existe-t-elle ? »</b></td><td>Nous ne le savons pas encore, et nous ne le dirons pas avant qu'une course préenregistrée le montre. Le premier test est nul, à une puissance que nous donnons. La course qui compte est scellée.</td></tr>
+<tr><td><b>« Votre seul saboteur est flagrant. Où est le sabotage diffus ? »</b></td><td>Concédé : il éprouve notre chaîne, pas notre thèse. « Diffus » est une mesure, lue avant toute sonde. La porte refuse le gain facile : aucune victoire là où « mots et coût » suffit. Un saboteur à budget est conçu.</td></tr>
+<tr><td><b>« Un attaquant adaptatif contournera vos sondes. »</b></td><td>Nous ne demandons pas qu'un surveillant soit imbattable. Nous demandons que battre l'un coûte sur l'autre : c'est la pince, une hypothèse à préenregistrer. Le bras d'attaque qui la mesure est monté, jamais lancé.</td></tr>
+<tr><td><b>« Votre règle dit : préenregistrer avant toute donnée. Deux courses n'en avaient pas. »</b></td><td>Exact. Elles sont exploratoires, donc non opposables : aucun chiffre du dossier n'en sort. Ce qui décide est préenregistré et scellé.</td></tr>
+<tr><td><b>« Vous annonciez vingt dollars de calcul. Où en est la dépense ? »</b></td><td>Au moins 645 dollars relevés au 8 novembre, un plancher, surtout des appels de modèles. Presque chaque ligne est sous un plafond signé ; les exceptions sont au registre. Le total exact attend les factures.</td></tr>
+</table>
+
+<h2><span class="n">4</span>Ce qui est fait</h2>
+<p class="legend"><span class="chip ok">scellé</span> critère, texte ou verdict figé avec son empreinte · <span class="chip run">en cours</span> · <span class="chip hold">monté, jamais lancé</span> · <span class="chip todo">exploratoire</span> ne décide rien, aucun chiffre n'en sort</p>
+
+<table>
+<thead><tr><th style="width:19%">Front</th><th>Fait au 10 novembre, 09:33 UTC</th><th style="width:15%">État</th></tr></thead>
+<tr><td><b>Instruments</b></td><td>Chaîne d'enregistrement de l'activité interne validée sur le modèle réel. Simulation du lemme et du théorème négatif : 31 prédictions sur 31, qui vérifient surtout les instruments. État de l'art vérifié sur deux niveaux.</td><td><span class="chip ok">scellé</span></td></tr>
+<tr><td><b>Premier test, saboteur instruit</b></td><td>Le saboteur gonfle son coût. Aucune sonde générique au-dessus du plancher, portée écrite. Audit : la sonde entraînée lit la consigne.</td><td><span class="chip ok">scellé</span></td></tr>
+<tr><td><b>Saboteur sans consigne</b></td><td>Course exploratoire de dose-réponse finie, machine détruite, environ 17,6 dollars.</td><td><span class="chip todo">exploratoire</span></td></tr>
+<tr><td></td><td>Préenregistrement de la course de confirmation scellé ce matin, après sept contre-lectures. Autorisations de dépense prolongées au 23 novembre.</td><td><span class="chip ok">scellé</span></td></tr>
+<tr><td><b>Sondes</b></td><td>Préenregistrement au brouillon 20, neuf valeurs à remplir. Module de lecture écrit ; sa contre-lecture vient de rendre quatre défauts à corriger. Deux jeux d'entraînement scellés ce matin ; le troisième a ses 32 tâches écrites et pré-contrôlées, dernier jalon en cours ; les phrases témoins sont rendues, à contrôler.</td><td><span class="chip run">en cours</span></td></tr>
+<tr><td><b>Témoin positif</b></td><td>Préenregistrement au brouillon 10. Code proposé : 531 essais passés, essai de fermeture conforme.</td><td><span class="chip run">en cours</span></td></tr>
+<tr><td><b>Bras d'attaque</b></td><td>Consignes, listes d'exclusion, témoins, juge, circuit de scellement.</td><td><span class="chip hold">monté, jamais lancé</span></td></tr>
+<tr><td><b>Organisme d'idéation</b></td><td>Première version close : 30 fiches, 5 retenues, 8,42 dollars. Revendication du juge resserrée après la revue d'antériorité. Rôles 1 et 2 adoptés. Quatrième course d'attaque du juge : verdict officiel prononcé par un lecteur neuf.</td><td><span class="chip ok">scellé</span></td></tr>
+<tr><td><b>Saboteur diffus par construction</b></td><td>Tu as choisi de le construire. Conception écrite et contre-lue une fois. Ni code, ni autorisation de dépense.</td><td><span class="chip run">conçu</span></td></tr>
+<tr><td><b>Entretien</b></td><td>Candidature envoyée le 7 octobre, scellée au dépôt. Programme d'entretien en version 18, non contre-lue ; version condensée de 30 minutes ; témoins plantés pour la répétition ; consigne de la version 19 (la pince, le bras d'attaque, la parade au « saboteur flagrant »). Socle de preuves détaillé : écrit et scellé ce matin, pas encore contre-lu.</td><td><span class="chip run">en cours</span></td></tr>
+</table>
+
+<h2><span class="n">5</span>Ce qu'il reste à faire</h2>
+
+<h3>Le chemin critique jusqu'à l'entretien</h3>
+<table>
+<thead><tr><th style="width:19%">Date</th><th style="width:52%">Ce qui doit être vrai</th><th>Si cela glisse</th></tr></thead>
+<tr><td><b>Mardi 10, vers 17:15 UTC</b></td><td>Deux choix sur le jugement des sondes prennent leur défaut, sans mot de toi.</td><td>—</td></tr>
+<tr><td><b>Vendredi 13, 12:00 UTC</b></td><td><b>Préenregistrement des sondes scellé.</b> D'ici là : troisième jeu fini, vérifié à l'aveugle et scellé ; phrases témoins scellées ; code corrigé et contre-lu ; brouillon 21, contre-lecture, scellement.</td><td>Bascule, décidée ce jour-là, sur une chaîne de lancement déjà préparée, qui lit l'autorisation prolongée. C'est un écart au texte scellé : ton mot, puis une contre-lecture.</td></tr>
+<tr><td><b>Dimanche 15, au plus tard</b></td><td><b>Course de confirmation créée.</b> L'ordre est au brouillon 3 ; tu le remets à la session qui tient la clé du calcul.</td><td>La chaîne actuelle refuse toute création après le 15. Sans bascule, pas de course avant l'entretien.</td></tr>
+<tr><td><b>Lundi 16 au mercredi 18</b></td><td>Verdict de dose-réponse par un lecteur neuf, sur le coût déclaré. Calcul de l'activité interne sur ces épisodes, sur une machine séparée (20 dollars) : il prépare la lecture des sondes, qui viendra après l'entretien.</td><td>On dit « la course a tourné ; sa lecture est scellée et pas encore faite ».</td></tr>
+<tr><td><b>Mercredi 18, au plus tard</b></td><td><b>Course du témoin positif créée</b>, après scellement de son texte et dernière relecture de son code.</td><td>Le rendez-vous du 20 ne tient plus ; le témoin sort après l'entretien.</td></tr>
+<tr><td><b>Vendredi 20, 12:00 UTC</b></td><td>Lecture du témoin positif, sur ton mot « ouvrir » ; verdict par un lecteur neuf.</td><td>—</td></tr>
+<tr><td><b>Avant le dimanche 22</b></td><td>Programme d'entretien en version 19, contre-lu. Socle de preuves contre-lu. Répétition contradictoire avec témoins plantés.</td><td>On répète sur la version 18, périmée sur trois points.</td></tr>
+<tr><td><b>Lundi 30</b></td><td>Verdict de la porte des instruments.</td><td>Un seul report : 31 janvier 2027.</td></tr>
+</table>
+
+<h3>Hors du chemin critique : rien de ceci ne doit retarder une date ci-dessus</h3>
+<ul>
+<li><b>Surveillants externes de référence :</b> préenregistrement à écrire, puis course sur les épisodes de la confirmation. Verdict au mieux juste avant l'entretien.</li>
+<li><b>Saboteur diffus par construction :</b> code, contre-lecture, puis demande d'autorisation avec son plafond.</li>
+<li><b>Préenregistrements de la porte décisive et du papier sur l'instrument :</b> à contre-lire et sceller fin novembre.</li>
+<li><b>Vérité du dommage :</b> l'épreuve de l'étiqueteur, arrêtée, à relancer.</li>
+<li><b>Organisme d'idéation :</b> juge génératif de comparaison, conçu, non lancé ; course sur la nouvelle question, bloquée par une règle de permission.</li>
+<li><b>Bras d'attaque :</b> son lancement. La mesure de la pince est placée après la porte décisive, sur des surveillants figés.</li>
+</ul>
+
+<h2><span class="n">6</span>Ce qui dépend de toi</h2>
+<table>
+<thead><tr><th style="width:4%"></th><th style="width:46%">Geste ou décision</th><th>Pourquoi maintenant</th></tr></thead>
+<tr><td>1</td><td><b>Rendre public et geler le dépôt des empreintes chez le tiers</b> (Open Science Framework).</td><td>C'est la seule preuve, vérifiable sans nous, que chaque préenregistrement précède ses données.</td></tr>
+<tr><td>2</td><td><b>Rapprocher le registre des factures</b> sur les consoles, puis valider la phrase de dépense.</td><td>Le chiffre dit au fonds doit venir de la source. Exemple : les 114 dollars que la course d'attaque du juge compte pour elle-même ne sont pas encore au registre.</td></tr>
+<tr><td>3</td><td><b>Remettre l'ordre de la course de confirmation</b> à la session exécutante, dès qu'il est prêt.</td><td>Borne du dimanche 15.</td></tr>
+<tr><td>4</td><td><b>Bras d'attaque : le lancer ou non avant l'entretien.</b> Recommandation : non. « Monté, jamais lancé » est tenable, et rien du dossier n'en dépend.</td><td>Si oui : une dépense, et ton mot direct dans la session qui en a la charge.</td></tr>
+<tr><td>5</td><td><b>Pousser la page publique du verdict du juge</b> ; confirmer la destruction de sa machine et sa facturation ; lever l'interdit d'appeler le fournisseur réservé à cette course.</td><td>Publication : ton geste. La course est close.</td></tr>
+<tr><td>6</td><td><b>Entretien :</b> date exacte ; statut du mentor ; accord sur la reformulation des trois faiblesses ; présentation des courses exploratoires.</td><td>Trois de ces points changent le plus le dossier.</td></tr>
+<tr><td>7</td><td><b>Organisme :</b> règle de permission pour sa prochaine course ; rôle 3.</td><td>Le rôle 3 se décide avant toute sonde qui pourrait le toucher.</td></tr>
+<tr><td>8</td><td><b>Trois machines arrêtées :</b> les garder ou les détruire, avec leurs identifiants.</td><td>Environ 2,5 dollars par jour de stockage.</td></tr>
+</table>
+
+<h2><span class="n">7</span>Ce qu'on ne dit pas</h2>
+<ul>
+<li><span class="en">“Our probes detect sabotage.”</span> Aucune sonde n'a battu un surveillant de référence.</li>
+<li>Un chiffre de la course exploratoire, ou du saboteur à budget.</li>
+<li><span class="en">“Red-teamed”</span> au passé ; un contenu, une recette ou un compte de refus du bras d'attaque.</li>
+<li><span class="en">“The pincer works”</span>, <span class="en">“our organism is diffuse”</span>, <span class="en">“the judge is validated”</span>.</li>
+<li><span class="en">“A pre-registered negative result”</span> pour un verdict qui n'a pas été prononcé.</li>
+</ul>
+
+<h2><span class="n">8</span>Sources</h2>
+<p class="small">Chaque chiffre de ce document vient d'une de ces pièces du dépôt de travail. Empreintes SHA-256 recalculées le 10 novembre 2026 (douze premiers caractères). Les chiffres de dépense autres que le plancher ne sont pas opposables.</p>
+<table class="src">
+<thead><tr><th style="width:31%">Ce que la pièce porte</th><th style="width:54%">Chemin</th><th style="width:15%">Empreinte</th></tr></thead>
+<tr><td>Question, thèse, hypothèses, portes</td><td class="ref">docs/programme-controle-ia-v2.md</td><td class="ref">2fd63badb5af</td></tr>
+<tr><td>Bras d'attaque : deux bras, cloisons</td><td class="ref">docs/decisions/decision-N-056-v1.md</td><td class="ref">3592c1e977e8</td></tr>
+<tr><td>Juge de l'organisme : revendication resserrée</td><td class="ref">docs/decisions/decision-N-064-v1.md</td><td class="ref">387c9d4eda5a</td></tr>
+<tr><td>Organisme : rôles 1, 2 et 3</td><td class="ref">docs/decisions/decision-N-065-v1.md</td><td class="ref">f820e90da092</td></tr>
+<tr><td>Saboteur diffus par construction</td><td class="ref">docs/decisions/proposition-P-066-saboteur-diffus-par-construction-v1.md</td><td class="ref">012ddc44baca</td></tr>
+<tr><td>La pince ; état du bras d'attaque ; parade</td><td class="ref">brouillons/entretien-taif-v3/consigne-v19-pince-bras-attaque-sabotage-diffus-v1.md</td><td class="ref">5609fc655b5e</td></tr>
+<tr><td>Critères de la porte des instruments ; dépense ; résultats scellés, exploratoires, absents ; questions dures</td><td class="ref">brouillons/entretien-taif-v3/programme-entretien-taif-v18.md</td><td class="ref">e58ccfedf959</td></tr>
+<tr><td>Premier test : coût gonflé, sondes au plancher, portée</td><td class="ref">docs/verdicts/verdict-P3-premier-test-i-a-v2.md</td><td class="ref">05e896daed17</td></tr>
+<tr><td>Audit : la sonde lit la consigne</td><td class="ref">docs/verdicts/verdict-audit-fuite-r1-v4-v1.md</td><td class="ref">320463e6c031</td></tr>
+<tr><td>Chaîne d'enregistrement validée</td><td class="ref">docs/verdicts/verdict-T0.4-critere-1-G0-v3.md</td><td class="ref">63444faa4ce2</td></tr>
+<tr><td>Simulation : 31 prédictions sur 31</td><td class="ref">docs/notes/resultats-T0.3-v1.md</td><td class="ref">9ab618edae17</td></tr>
+<tr><td>Juge attaqué : verdict officiel</td><td class="ref">docs/notes/ideation-organisme-v1/a1-v4-reprise-v9/verdict-a1-v4-v1/verdict-officiel-a1-v4-v1.md</td><td class="ref">e6e2f17076fa</td></tr>
+<tr><td>Course de confirmation : texte scellé</td><td class="ref">prereg/T0.6-organismes-v0-v1.md</td><td class="ref">ef31feff9abb</td></tr>
+<tr><td>Témoin positif : hypothèse et prédictions</td><td class="ref">brouillons/P3-bis-temoin-positif-v1/P3-bis-preenregistrement-v1-brouillon10.md</td><td class="ref">9038a015…</td></tr>
+<tr><td>Jeux d'entraînement scellés</td><td class="ref">registres/scellements-v1.md</td><td class="ref">d48af4f5d768</td></tr>
+<tr><td>Dépense : plancher de 645,42 dollars</td><td class="ref">livrables/registres-taif-v4/total-depenses-v3.md</td><td class="ref">123be1a7e1c3</td></tr>
+<tr><td>Prédictions : 47, 5 et 8 sur 60 ; 235 écrites</td><td class="ref">livrables/registres-taif-v4/calibration-v3.md</td><td class="ref">0f1bca5aa900</td></tr>
+<tr><td>Candidature envoyée le 7 octobre</td><td class="ref">docs/sources/candidature-taif-2026-10-07/proposal_v2_TAIF_2026-10-07.pdf</td><td class="ref">737c482c53d1</td></tr>
+<tr><td>Socle de preuves pour l'entretien (non contre-lu)</td><td class="ref">brouillons/entretien-taif-v3/socle-preuves-entretien-v1.md</td><td class="ref">b8a97629e837</td></tr>
+<tr><td>Rapport du 9 novembre, dont celui-ci prend la suite</td><td class="ref">docs/notes/rapports-directeur/rapport-principes-etat-goulots-entretien-organisme-2026-11-09-v1.md</td><td class="ref">22263fced8d4</td></tr>
+<tr><td>État du jour, autorisations, décisions R-2051 à R-2115</td><td class="ref">registres/etat.md · registres/go.md · registres/decisions.md</td><td class="ref">vivants</td></tr>
+</table>
+
+</body>
+</html>

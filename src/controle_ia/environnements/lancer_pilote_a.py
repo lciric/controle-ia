@@ -1,11 +1,14 @@
 """Lanceur du pilote 8B de l'environnement (a) (T0.5), côté machine de calcul.
 
 Enchaîne, sous un manifeste de run décisif (préenregistrement scellé exigé, R1) :
-1. épisodes honnêtes de l'agent (8B), un environnement par épisode, garde d'équivalence en ligne ;
-2. notation des ensembles finaux par le juge 8B puis le juge 3B (invite b0) : épisodes e0 notés deux fois (runs A et B
-   de la décomposition de l'annexe C.1), les autres une fois ;
-3. appariement de chaque proposition finale à chaque cible semée de sa tâche, par le 8B (probabilité du jeton) ;
-4. résultats scellés, rattachés au manifeste ; vecteurs par action sous `donnees/<run>/` (hors git), empreinte consignée.
+1. contrôle du format (agent et juges), puis poids des juges qui ne sont pas l'agent téléchargés (SI-02) ;
+2. épisodes honnêtes de l'agent (8B), un environnement par épisode, garde d'équivalence en ligne ; `episodes.json` ;
+3. appariement de chaque proposition finale à chaque cible semée de sa tâche, et base « énoncé seul », par le 8B
+   (probabilité du jeton) ; `appariements.json` (SI-01 : les familles ne dépendent plus de la durée des juges) ;
+4. notations décisives des ensembles finaux par le juge 8B puis le juge 3B (invite b0 ; épisodes e0 notés deux fois,
+   runs A et B de la décomposition de l'annexe C.1), chaque juge chargé à sa première notation, le 3B hors ligne et
+   son format recontrôlé ; puis notations descriptives (D) ;
+5. résultats scellés, rattachés au manifeste ; vecteurs par action sous `donnees/<run>/` (hors git), empreinte consignée.
 
 Gardes de lancement (avant le manifeste), pour un run avec préenregistrement : l'arbre gelé est celui du commit cité
 (`exiger_code_cite`, comme T0.4) ; la configuration (empreinte canonique), le fichier des tâches (empreinte) et
@@ -30,7 +33,8 @@ from pathlib import Path
 import numpy as np
 import torch
 
-from ..gardes import GardeArret
+from ..gardes import (GardeArret, exiger_sans_signal, lever_sur_term, motif_d_arret,
+                      relever_term_apres)
 from ..harnais.run_harnais_factice import graine_entiere
 from ..harnais.validation_reelle import ENTROPIE_CITEE, exiger_code_cite, exiger_code_importe_sous, noyau
 from ..manifeste import config_canonique, creer_manifeste, ecrire_resultat, generateur, lire_manifeste
@@ -226,8 +230,27 @@ def memoire_pic_gio(reinitialiser: bool = True) -> float | None:
     return round(pic, 2)
 
 
-def charger_modele_et_format(spec: dict, mode: str, graine_jouet: int):
-    """Modèle et format (réel : révision figée, date du gabarit figée ; jouet : modèle par caractères)."""
+def precharger_juges(config: dict) -> dict:
+    """Poids des juges qui ne sont pas l'agent téléchargés sur disque avant les épisodes, sans les porter sur la carte
+    (SI-02, PF-04 : après l'écriture de episodes.json, aucun relancement n'est permis ; leurs modèles se chargent alors
+    hors ligne, depuis ces fichiers). Mode jouet : rien à télécharger. Rend, par juge, la révision et la durée."""
+    if config["mode"] != "reel":
+        return {}
+    from ..harnais.modeles import precharger_modele
+
+    sortie = {}
+    for j in config["juges"]:
+        if not j["meme_modele_que_agent"]:
+            depart = time.perf_counter()
+            precharger_modele(j["modele"], j["revision"])
+            sortie[j["nom"]] = {"modele": j["modele"], "revision": j["revision"],
+                                "duree_s": round(time.perf_counter() - depart, 1)}
+    return sortie
+
+
+def charger_modele_et_format(spec: dict, mode: str, graine_jouet: int, hors_ligne: bool = False):
+    """Modèle et format (réel : révision figée, date du gabarit figée ; jouet : modèle par caractères). `hors_ligne` :
+    réel seulement, fichiers lus dans le cache local (préchargés par `precharger_juges`), aucun accès au réseau."""
     from ..harnais.formats import FormatChat
     from ..harnais.modeles import fins_du_modele, modele_jouet, tokeniseur_caracteres_chat
 
@@ -237,7 +260,7 @@ def charger_modele_et_format(spec: dict, mode: str, graine_jouet: int):
         return m, FormatChat(tok, fins={tok.convert_tokens_to_ids("<|im_end|>"), tok.eos_token_id})
     from ..harnais.modeles import charger_modele
 
-    m, tok = charger_modele(spec["modele"], spec["revision"], "bfloat16", "cuda", "sdpa")
+    m, tok = charger_modele(spec["modele"], spec["revision"], "bfloat16", "cuda", "sdpa", hors_ligne=hors_ligne)
     fmt = FormatChat(tok, variables=spec["variables_gabarit"])
     fmt.fins = fins_du_modele(m, tok) | {fmt._pieces(("x", "y"))["cloture"][0]}
     return m, fmt
@@ -280,9 +303,10 @@ def executer(config: dict, racine: Path, run_id: str, prereg: str | None, chemin
     try:
         return _executer_apres_manifeste(config, racine, run_id, chemin_m, manifeste, plan, par_id, etat, debut)
     except Exception as e:          # garde, panne (mémoire…), signal TERM : consigné, puis propagé
-        ecrire_resultat(racine, chemin_m, "arret", {"etape": etat["etape"], "motif": f"{type(e).__name__}: {e}",
+        ecrire_resultat(racine, chemin_m, "arret", {"etape": etat["etape"], "motif": motif_d_arret(e),
                                                      "partiel": {k: v for k, v in etat.items() if k != "etape"},
                                                      "duree_s": round(time.perf_counter() - debut, 1)})
+        relever_term_apres(e)       # TERM reçu, exception convertie par une bibliothèque : l'arrêt TERM fait foi (D-1)
         raise
 
 
@@ -293,7 +317,9 @@ def _executer_apres_manifeste(config, racine, run_id, chemin_m, manifeste, plan,
     from ..harnais.modeles import regler_determinisme
 
     reglages = regler_determinisme(config["fils"], "cuda" if config["mode"] == "reel" else "cpu")
+    depart_agent = time.perf_counter()
     modele, fmt = charger_modele_et_format(config["agent"], config["mode"], graine_entiere(g["modele-jouet"]))
+    chargement_agent_s = round(time.perf_counter() - depart_agent, 1)
     # garde du format au début du run (CL-25) : agent, et chaque juge (tokeniseur seul s'il n'est pas l'agent)
     etat["etape"] = "contrôle du format"
     formats = {"agent": controler_format(fmt, config["agent"], "agent", config)}
@@ -301,6 +327,9 @@ def _executer_apres_manifeste(config, racine, run_id, chemin_m, manifeste, plan,
         fmt_j = fmt if j["meme_modele_que_agent"] else charger_format_seul(j, config["mode"])
         formats[f"juge-{j['nom']}"] = controler_format(fmt_j, j, "juge", config)
     etat["formats"] = sorted(formats)
+    # poids des juges sur disque avant les épisodes (SI-02) : une panne de réseau ici précède episodes.json
+    etat["etape"] = "préchargement des juges"
+    etat["precharges"] = precharger_juges(config)
     etat["etape"] = "épisodes"
     generateurs = {e: generateur(g[e]) for e, _ in plan}
     chrono: dict = {}
@@ -313,7 +342,8 @@ def _executer_apres_manifeste(config, racine, run_id, chemin_m, manifeste, plan,
         fiches, vecteurs, controle_negatif = jouer_pilote(modele, fmt, plan, generateurs, config, echeance=echeance,
                                                           chrono=chrono)
     descriptifs = {"episodes": {"duree_s": round(time.perf_counter() - depart, 1), "memoire_pic_gio": memoire_pic_gio(),
-                                **chrono}}
+                                **chrono, "chargement_agent_s": chargement_agent_s,
+                                "precharges": etat["precharges"]}}
     etat["controle_negatif"] = controle_negatif["lecture"]
     donnees = racine / "donnees" / run_id
     donnees.mkdir(parents=True, exist_ok=False)
@@ -327,27 +357,67 @@ def _executer_apres_manifeste(config, racine, run_id, chemin_m, manifeste, plan,
                                                    "formats": formats, "descriptifs": descriptifs["episodes"],
                                                    "duree_s": round(time.perf_counter() - debut, 1)})
     etat["episodes_ecrits"] = len(fiches)
+    del vecteurs
+    import gc
 
-    # Ordre des étapes (contre-lecture 1, CL-7 ; contre-lecture 2, D-6) : les notations décisives (épisodes de
-    # `episodes_decisifs` : A noté deux fois, et C) par tous les juges, puis l'appariement (et la base « énoncé seul »),
-    # dont dépendent les familles, puis les notations descriptives (D) ; un arrêt laisse ainsi les lectures décisives
-    # complètes. L'échéance se contrôle à chaque lot. Les modèles des juges sont chargés une fois ; juges et appariement
-    # tournent au noyau par défaut de la bibliothèque (noyaux permis consignés, D-14).
+    gc.collect()
+    if torch.cuda.is_available():
+        torch.cuda.empty_cache()
+
+    # Ordre des étapes (contre-lecture 1, CL-7 ; contre-lecture 2, D-6 ; état des lieux du pilote, SI-01) :
+    # l'appariement des propositions et la base « énoncé seul », dont dépendent les familles, d'abord, par le juge qui
+    # sert à l'appariement (le 8B, déjà en mémoire : quelques minutes) ; puis les notations décisives (épisodes de
+    # `episodes_decisifs` : A noté deux fois, et C) par tous les juges ; puis les notations descriptives (D). Un arrêt
+    # pendant les notations, dont la durée n'a jamais été mesurée, laisse ainsi les familles lisibles. L'échéance se
+    # contrôle à chaque lot. Chaque juge est chargé une fois, à sa première notation (CO-01 : une panne au chargement
+    # du 3B laisse écrites les notations décisives du 8B) ; ceux qui ne sont pas l'agent hors ligne (préchargés avant
+    # les épisodes), format recontrôlé ; juges et appariement tournent au noyau par défaut de la bibliothèque (noyaux
+    # permis consignés, D-14).
     from ..harnais.modeles import noyaux_attention_permis
 
     noyaux_juges = noyaux_attention_permis() if torch.cuda.is_available() else None
-    etat["etape"] = "chargement des juges"          # épisodes déjà écrits : l'étiquette le dit (relecture, V-1)
     modeles_juges = {}
+
+    def modele_du_juge(j: dict):
+        if j["nom"] not in modeles_juges:
+            if j["meme_modele_que_agent"]:
+                modeles_juges[j["nom"]] = (modele, fmt)
+            else:
+                m_j, fmt_j = charger_modele_et_format(j, config["mode"], graine_entiere(g["modele-jouet"]) + 1,
+                                                      hors_ligne=True)
+                # garde du format rejouée sur le tokeniseur chargé hors ligne (état des lieux, piste 12) : il doit rendre
+                # le contrôle obtenu au début du run, avant les épisodes ; sinon, arrêt (aucune notation sur un autre format)
+                if controler_format(fmt_j, j, "juge", config) != formats[f"juge-{j['nom']}"]:
+                    raise GardeArret(f"{j['nom']} : format chargé hors ligne ≠ format contrôlé au début du run")
+                modeles_juges[j["nom"]] = (m_j, fmt_j)
+        return modeles_juges[j["nom"]]
+
     for j in config["juges"]:
-        modeles_juges[j["nom"]] = (modele, fmt) if j["meme_modele_que_agent"] else charger_modele_et_format(
-            j, config["mode"], graine_entiere(g["modele-jouet"]) + 1)
+        if j["sert_a_l_appariement"]:
+            etat["etape"] = f"appariement par {j['nom']}"
+            m_j, fmt_j = modele_du_juge(j)
+            paires = paires_d_appariement(fiches, par_id)
+            jetons = jetons_jouet(fmt_j.tok) if config["mode"] == "jouet" else None
+            depart = time.perf_counter()
+            app = apparier(m_j, fmt_j, paires, config["lot_appariement"], jetons=jetons,
+                           echeance=echeance) if paires else []
+            enonce = apparier(m_j, fmt_j, paires_enonce_seul(list(par_id.values())), config["lot_appariement"],
+                              jetons=jetons, echeance=echeance)
+            ecrire_resultat(racine, chemin_m, "appariements", {
+                "juge": j["nom"], "appariements": app, "enonce_seul": enonce, "noyau": "défaut de la bibliothèque",
+                "noyaux_permis": noyaux_juges,
+                "descriptifs": {"duree_s": round(time.perf_counter() - depart, 1),
+                                "memoire_pic_gio": memoire_pic_gio(), "paires": len(app) + len(enonce)}})
+            etat["appariement_ecrit"] = j["nom"]
     decisifs = {str(k) for k in config["episodes_decisifs"]}
     notations: dict[str, list] = {j["nom"]: [] for j in config["juges"]}
 
     def noter(etape: str) -> None:
         for j in config["juges"]:
+            if j["nom"] not in modeles_juges:
+                etat["etape"] = f"chargement du juge {j['nom']}"     # épisodes déjà écrits (relecture, V-1)
+            m_j, fmt_j = modele_du_juge(j)
             etat["etape"] = f"notations {etape} par {j['nom']}"
-            m_j, fmt_j = modeles_juges[j["nom"]]
             demandes = [d for d in demandes_de_notation(fiches, par_id, config, j["nom"])
                         if (d["episode"].rsplit("/e", 1)[1] in decisifs) == (etape == "decisives")]
             graines_j = {d["cle"]: graine_entiere(g[d["cle"]]) for d in demandes}
@@ -363,23 +433,6 @@ def _executer_apres_manifeste(config, racine, run_id, chemin_m, manifeste, plan,
             etat.setdefault("notations_ecrites", []).append(f"{j['nom']}/{etape}")
 
     noter("decisives")
-    for j in config["juges"]:
-        if j["sert_a_l_appariement"]:
-            etat["etape"] = f"appariement par {j['nom']}"
-            m_j, fmt_j = modeles_juges[j["nom"]]
-            paires = paires_d_appariement(fiches, par_id)
-            jetons = jetons_jouet(fmt_j.tok) if config["mode"] == "jouet" else None
-            depart = time.perf_counter()
-            app = apparier(m_j, fmt_j, paires, config["lot_appariement"], jetons=jetons,
-                           echeance=echeance) if paires else []
-            enonce = apparier(m_j, fmt_j, paires_enonce_seul(list(par_id.values())), config["lot_appariement"],
-                              jetons=jetons, echeance=echeance)
-            ecrire_resultat(racine, chemin_m, "appariements", {
-                "juge": j["nom"], "appariements": app, "enonce_seul": enonce, "noyau": "défaut de la bibliothèque",
-                "noyaux_permis": noyaux_juges,
-                "descriptifs": {"duree_s": round(time.perf_counter() - depart, 1),
-                                "memoire_pic_gio": memoire_pic_gio(), "paires": len(app) + len(enonce)}})
-            etat["appariement_ecrit"] = j["nom"]
     noter("descriptives")
     del modeles_juges
 
@@ -393,13 +446,13 @@ def _executer_apres_manifeste(config, racine, run_id, chemin_m, manifeste, plan,
               "notations": {k: {"n": len(v), "completes": sum(1 for x in v if x["score"] is not None)}
                             for k, v in notations.items()},
               "duree_s": round(time.perf_counter() - debut, 1)}
+    exiger_sans_signal("avant le résumé")           # aucun résumé après un signal TERM, même avalé (D-1)
     ecrire_resultat(racine, chemin_m, "resume", resume)
     lire_manifeste(chemin_m)
     return resume
 
 
-def _signal_term(signum, frame):
-    raise GardeArret("signal TERM reçu (délai externe du run ou plafond de l'amorce) : arrêt consigné")
+_signal_term = lever_sur_term      # drapeau, puis exception (gardes, D-1)
 
 
 def _main(argv: list[str]) -> int:

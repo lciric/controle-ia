@@ -1,0 +1,16 @@
+Complément du 27 octobre 2026, vers 11:45 UTC (R-547) : sur le mot de Lazar (« il faut utiliser
+RR_ANTHROPIC_API_KEY_LUC !!! »), les deux tours du collisionneur partent avec la clé RR_ANTHROPIC_API_KEY_LUC, sans
+en-tête d'espace de travail (elle a servi ainsi le 24 octobre, R-351), et non avec RR_ANTHROPIC_API_KEY (sans crédit).
+Plafond 35 USD par tour (R-544), même ordre, mêmes questions et mêmes faits.
+
+Scripts, sous des noms nouveaux (R12) ; chacun refuse de partir (code 2, rien de lancé) si la variable est absente de
+la session : collisionneur-memoire-v3/tour/verifier-credit-luc-v1.sh (crédit, sans dépense si l'appel est refusé),
+collisionneur-*/tour/controler-especes-luc-v1.sh, collisionneur-*/tour/lancer-tour-*-plafond35-luc.sh, et
+enchainer-tours-luc-v1.sh (contrôle, tour mémoire, contrôle, tour « Boucle d'or »). Les scripts à clé
+RR_ANTHROPIC_API_KEY restent, sans modification, et ne servent plus.
+
+La variable n'était pas visible dans la session « session-depot » ouverte (une session lit son environnement à son
+démarrage) ; Lazar l'a déposée et attend que la session redémarre seule (R-416 : le 25 octobre, les clés sont devenues
+visibles après le redémarrage du processus). Après redémarrage : routine R14, lire les messages de conv-audit, puis
+verifier-credit-luc-v1.sh ; s'il rend 0, enchainer-tours-luc-v1.sh en tâche de fond, borne de 2 h (marche à suivre de
+LISEZ-MOI.txt pour l'environnement, si le bloc-notes a été effacé).

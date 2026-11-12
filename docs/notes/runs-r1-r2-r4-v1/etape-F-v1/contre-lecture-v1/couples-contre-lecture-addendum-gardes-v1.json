@@ -1,0 +1,97 @@
+{
+ "brouillon": "prereg/addendum-1-gardes-analyses-r1-v4-v1-brouillon1.md",
+ "brouillon_sha256": "5d3ab56c0c6b3faba393624967bce874839eb0cefcb4c7908b7b7d8954e3d245",
+ "regle": "appliquer dans l'ordre ; chaque « ancien » apparaît une seule fois dans le brouillon 1 et au moment de son application ; après les corrections de code K1 et K2, regénérer les trois listes fermées et les trois empreintes de constantes (rapport, section 6) : les couples ne touchent aucune empreinte",
+ "couples": [
+  {
+   "id": "C1",
+   "motif": "Objet : les listes d'arrêt ne sont pas inchangées (la règle « second passage » est remplacée).",
+   "ancien": "critères de lecture gelés et listes d'arrêt restent ceux des textes scellés, dits",
+   "nouveau": "critères de lecture gelés et listes d'arrêt restent ceux des textes scellés — sauf une règle de leurs listes d'arrêt, le « second passage », remplacée pour la seule course v4 par le point 6 du Plan d'analyse (écart déclaré, nœud de Lazar) —, dits"
+  },
+  {
+   "id": "C2",
+   "motif": "Déclaration exacte : la branche de résultats est déjà présente dans le dépôt du canal comme référence distante.",
+   "ancien": "Ce texte et son code ont été écrits sans récupérer `calcul/r1-r2-reel-v1` (aucun `git fetch` de cette branche, aucun",
+   "nouveau": "Ce texte et son code ont été écrits sans ouvrir `calcul/r1-r2-reel-v1` (présente dans le dépôt du canal comme référence distante `origin/calcul/r1-r2-reel-v1`, tête du 5 novembre 2026 à 02:36 UTC, comme `origin/calcul/r1-v4-reparation-reel-v1` : objets présents, aucun fichier extrait, affiché ni lu ; aucun"
+  },
+  {
+   "id": "C3",
+   "motif": "Déclaration : la course v4 n'est pas aveugle aux résultats de la course v3, lus et jugés.",
+   "ancien": "`commande`, `preenregistrement`, `decisif` de leurs manifestes (jamais leurs résultats).",
+   "nouveau": "`commande`, `preenregistrement`, `decisif` de leurs manifestes (jamais leurs résultats) par le rédacteur. Ces résultats ont été lus et jugés par conv-audit et Lazar (verdicts R13 du 3 novembre 2026, R-1322) : la course v4 n'est pas aveugle à la course v3 ; la seule liberté qu'elle laisserait, la graine, est fixée par les textes (Plan, point 4), et le calcul, les seuils et les critères sont gelés depuis le 2 novembre."
+  },
+  {
+   "id": "C4",
+   "motif": "Ordre de scellement : « avant toute récupération » est déjà dépassé (référence distante présente) ; dire ce qui est interdit.",
+   "ancien": "(aucun `git fetch` de cette branche, aucune lecture de ses fichiers avant le scellement)",
+   "nouveau": "(aucune extraction de ses fichiers — `git checkout`, `git show`, `git diff`, `git log -p` — ni aucune lecture avant le scellement ; la référence distante déjà présente n'est pas ouverte)"
+  },
+  {
+   "id": "C5",
+   "motif": "Commit cité : le commit `c82dafeb` (brouillon 1) existe déjà ; le commit cité est celui du brouillon final.",
+   "ancien": "ce commit est le **commit cité** (premier commit de l'étape, ni amendé",
+   "nouveau": "ce commit est le **commit cité** (premier commit qui porte le brouillon final et le code à ses empreintes finales ; le commit `c82dafeb`, qui porte le brouillon 1 et le code d'avant la contre-lecture, ne l'est pas ; ni amendé"
+  },
+  {
+   "id": "C6",
+   "motif": "Préalable manquant : réception v4 conforme (fiche v4, script en code 0, recalcul égal à l'octet) avant toute commande décisive.",
+   "ancien": "   Une vérification qui échoue : ne pas lancer, signaler à Lazar.",
+   "nouveau": "   Préalable aux commandes décisives : réception v4 conforme selon la fiche v4 (`verifier_reception_r1_v4_v1.py` en code 0, recalcul de la table égal à l'octet, section 7), consignée au registre avec ce qui a été vu avant les analyses (fiche v4, section 6). Une vérification qui échoue : ne pas lancer, signaler à Lazar."
+  },
+  {
+   "id": "C7",
+   "motif": "Aucune issue vue entre les trois commandes décisives : sorties redirigées vers un journal non affiché.",
+   "ancien": "committées avant la suivante (point 1 de chaque analyse ci-dessous)",
+   "nouveau": "committées avant la suivante, sorties standard et d'erreur redirigées vers un journal non affiché (seul le code de fin est lu avant la commande suivante ; sur code non nul, le seul message d'arrêt est lu, il ne porte aucune valeur), journal scellé et committé avec les sorties ; aucune issue n'est lue avant que les trois sorties soient committées et poussées (point 1 de chaque analyse ci-dessous)"
+  },
+  {
+   "id": "C8",
+   "motif": "Place des gardes : avant P3, R1 et tout `.npz` (rien n'est chargé si la chaîne du fournisseur est fausse) ; correction de code K1.",
+   "ancien": "**après** le chargement de R1 par les chargeurs",
+   "nouveau": "**juste après** la lecture de la fiche, **avant** le chargement de P3 et de R1 par les chargeurs"
+  },
+  {
+   "id": "C9",
+   "motif": "Place des gardes (suite de C8).",
+   "ancien": "inchangés (`entrees_v1.charger_r1`, resp. `entrees_v3.charger_activations_v3`) et **avant** le chargement des juges,",
+   "nouveau": "inchangés (`entrees_v1.charger_r1`, resp. `entrees_v3.charger_activations_v3` : aucun `.npz` ouvert avant elles), des juges,"
+  },
+  {
+   "id": "C10",
+   "motif": "Premier passage sous l'addendum : tolérance par liste fermée, non ouverte ; correction de code K2.",
+   "ancien": "comptent pas : ils sont comptés et écrits dans `lien_au_preenregistrement.passages`. Voir le point 6.",
+   "nouveau": "comptent pas, **par liste fermée** : les trois manifestes de la course v3, `runs/20261103-072723-analyse-principale-r1-r2-v1` (`0587c398…`), `runs/20261103-072805-analyse-par-episode-v1` (`79f2a758…`), `runs/20261103-072840-analyse-blanche-noire-v3` (`91f711c6…`), run et empreinte du manifeste gelés dans les constantes, et les manifestes des deux autres versions neuves sous l'addendum, commandes gelées (`lecture_v6`, `lecture_v7`, `analyse_blanche_noire.lecture_v4`) ; tout autre manifeste qui cite le texte (chemin ou empreinte, dans ses octets : règle des textes) ou l'addendum arrête ; les tolérés sont comptés et écrits, par nom, dans `lien_au_preenregistrement.passages`. Voir le point 6."
+  },
+  {
+   "id": "C11",
+   "motif": "Point 6 : même liste fermée, dite là où l'écart est déclaré.",
+   "ancien": "course v3 sont tolérés, comptés et écrits. C'est un écart déclaré aux trois textes scellés, porté à Lazar avec ce",
+   "nouveau": "course v3 sont tolérés par liste fermée (les trois manifestes nommés au point 3.c, run et empreinte gelés), comptés et écrits ; tout autre passage antérieur arrête. C'est un écart déclaré aux trois textes scellés, porté à Lazar avec ce"
+  },
+  {
+   "id": "C12",
+   "motif": "Point 6 : statut des deux courses et borne « une seule lecture sous R1 v4, jamais une troisième ».",
+   "ancien": "nouveau, un code nouveau (constante `ADDENDUM` nouvelle) et une contre-lecture nouvelle.",
+   "nouveau": "nouveau, un code nouveau (constante `ADDENDUM` nouvelle) et une contre-lecture nouvelle : ce texte l'exclut d'avance. **Une seule lecture sous R1 v4** : ce passage épuise les trois textes ; aucune troisième lecture n'a lieu sous ces textes, sous cet addendum ni sous un autre (une autre course de R1 relève de textes neufs, d'une contre-lecture neuve et du GO de Lazar). Statut proposé à Lazar avec l'écart : les sorties de la course v3, lues et jugées (R-1322), restent au registre et sont rapportées avec celles de la course v4 ; la course v4 est la lecture qui compte pour R1 et R2 (critères gelés des textes), fixée avant toute donnée de R1 v4, jamais choisie sur ses résultats ; aucune des deux n'efface l'autre ; un arrêt technique après le manifeste est un nœud de Lazar (le code v6, v7 ou v4 refuse tout second passage sous l'addendum ; une reprise exigerait une version neuve du code, écart à « même code » des textes)."
+  },
+  {
+   "id": "C13",
+   "motif": "Liste d'arrêt : la règle « second passage » des textes n'est pas inchangée.",
+   "ancien": "l. 201-217 ; lecture par épisode, l. 135-145), chargeurs et calculs compris, s'appliquent sans changement. S'y ajoutent,",
+   "nouveau": "l. 201-217 ; lecture par épisode, l. 135-145), chargeurs et calculs compris, s'appliquent sans changement, **sauf** la règle « second passage » (aucun manifeste sous `runs/` ne cite le texte, par son chemin ni par son empreinte), remplacée pour la seule course v4 par celle du Plan d'analyse, points 3.c et 6 (écart déclaré, nœud de Lazar). S'y ajoutent,"
+  },
+  {
+   "id": "C14",
+   "motif": "Liste d'arrêt, mode décisif : la règle neuve écrite en entier (liste fermée).",
+   "ancien": "l'addendum avec la commande de ce code ; manifeste illisible qui cite l'addendum) ;",
+   "nouveau": "l'addendum avec la commande de ce code ou une commande hors des trois commandes gelées ; manifeste illisible qui cite le texte ou l'addendum ; manifeste qui cite le texte hors de la liste fermée de la course v3, ou dont l'empreinte diffère de celle gelée) ;"
+  },
+  {
+   "id": "C15",
+   "motif": "Pas un arrêt : les tolérés sont ceux de la liste fermée, non « les manifestes de la course v3 » en général.",
+   "ancien": "et écrits : les manifestes de la course v3 qui citent les textes, et ceux des deux autres analyses sous cet addendum.",
+   "nouveau": "et écrits : les trois manifestes de la course v3 de la liste fermée (Plan, point 3.c), et ceux des deux autres versions neuves sous cet addendum (commandes gelées)."
+  }
+ ]
+}

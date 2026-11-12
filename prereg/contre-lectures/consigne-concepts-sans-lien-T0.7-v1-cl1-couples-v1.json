@@ -1,0 +1,226 @@
+[
+ {
+  "id": "CC-01",
+  "section": "6 (chemin et lancement du script)",
+  "motif": "BLOQUANT. `sondes_neuves_v1.py` et `lecture_v2.py` n'existent pas sous `src/` de `main` (vérifié au commit 60e8c0e5) : avec `PYTHONPATH=src`, le paquet `controle_ia` de l'arbre de travail est trouvé le premier et l'import du module échoue, ou C4, C10 et C12 jouent un autre code que celui dont C0 a vérifié les empreintes (repli silencieux, R5). « N'importe rien de `sondes/` » est aussi faux à la lettre : l'import de `sondes_neuves_v1` charge `sondes.temoins`, `sondes.evaluation`, `sondes.familles`.",
+  "ancien": "Lancé avec `PYTHONPATH=src` et\n  l'interpréteur du dépôt, sans réseau, sans modèle, sans carte graphique ; il ne lit **aucune activation** et n'importe rien\n  de `sondes/` hors `temoins.exiger_concept_sans_affect` (C10).",
+  "nouveau": "Lancé avec\n  l'interpréteur du dépôt, **le paquet `controle_ia` importé du seul arbre `--module-src`** (le script le place en tête du chemin d'import ; `sondes_neuves_v1.py` et `lecture_v2.py` n'existent pas sous `src/` de `main`) : après import, le script exige que le fichier de `controle_ia` et de chaque module qu'il emploie (`t07.sondes_neuves_v1`, `premier_test_ia.empans`, `harnais.formats`, `sondes.temoins`, `manifeste`) soit sous `--module-src`, sinon **refus, code 2** ; l'empreinte de `manifeste.py` à ce commit est écrite au journal (`1a5c7464…` à `8dc1cb09`, égale à `main`). Sans réseau, sans modèle, sans carte graphique ; il ne lit **aucune activation** et n'appelle, de `sondes/`, que `temoins.exiger_concept_sans_affect` (C10) ; du module, que `lire_phrases_concepts` (C12), `FORMATS_LECTURE` et `MAX_JETONS_PHRASE`."
+ },
+ {
+  "id": "CC-02",
+  "section": "6.1, C0 (cohérence des annexes, artefacts)",
+  "motif": "Suite de CC-01 : l'artefact « paquet résolu hors de `--module-src` » éprouve la garde (R5). Cohérence des annexes : une entrée de plusieurs mots de l'annexe B qui contiendrait un mot interdit serait inemployable ; vrai aujourd'hui (contrôlé en mémoire), à garder par C0.",
+  "ancien": "lexiques des quatre concepts **deux à deux disjoints** ;",
+  "nouveau": "lexiques des quatre concepts **deux à deux disjoints**, aucune entrée de plusieurs mots de l'annexe B ne contenant un mot de l'annexe A ni un mot du lexique d'un autre concept ;"
+ },
+ {
+  "id": "CC-03",
+  "section": "6.1, C0 (artefacts)",
+  "motif": "Suite de CC-01 et CC-02 : artefacts des deux gardes ajoutées.",
+  "ancien": "un mot du champ de `meteo` ajouté au champ de `sports` ; un fichier du module changé |",
+  "nouveau": "un mot du champ de `meteo` ajouté au champ de `sports` ; une entrée `high stakes jump` ajoutée au noyau de `sports` ; un fichier du module changé ; un paquet `controle_ia` de l'arbre de travail placé avant `--module-src` dans le chemin d'import |"
+ },
+ {
+  "id": "CC-04",
+  "section": "6.1, C4 (artefact et code de sortie)",
+  "motif": "MAJEUR. Contradiction avec C0 : un gabarit falsifié pour toutes les phrases fait échouer les huit exemples à C4, donc C0 refuse (code 2) avant tout « code 1 » ; et une faute du gabarit ou de l'environnement ne doit jamais partir en renvoi à l'écrivain (elle brûlerait l'unique renvoi de toutes les paires).",
+  "ancien": "gabarit falsifié (rendu qui ajoute un jeton) : défaut écrit au journal, le script continue jusqu'au journal et sort en code 1, jamais une exception non rattrapée",
+  "nouveau": "gabarit falsifié pour **une seule phrase** du jeu factice (rendu qui ajoute un jeton quand le texte porte un mot marqueur choisi par l'essai) : défaut de cette paire écrit au journal, le script continue jusqu'au journal et sort en code 1, jamais une exception non rattrapée ; gabarit falsifié pour **toutes** les phrases : les exemples échouent, refus de C0, code 2, **aucun renvoi écrit** (une faute du gabarit ou de l'environnement ne part jamais à l'écrivain)"
+ },
+ {
+  "id": "CC-05",
+  "section": "6 (modes, `assembler`)",
+  "motif": "MAJEUR. Le fichier final était écrit avant ses contrôles : un échec de C11 ou de C12 laissait sous le nom scellable un fichier fautif que R12 interdit de réécrire, alors que la section 2 fixe ce nom ; et « deux assemblages égaux à l'octet » contredisait « une seule fois ».",
+  "ancien": "  - `assembler` : depuis la sélection acceptée, écrit `phrases-concepts-v1.jsonl` (une seule fois ; jamais réécrit, R12),\n    puis rejoue C2 à C12 sur lui ; journal `journal-assemblage-v1.txt`.",
+  "nouveau": "  - `assembler` : depuis la sélection acceptée, construit les octets du fichier **deux fois en mémoire** (égalité exigée, C11), rejoue sur eux C2 à C10 (C1 : schéma de la section 2, sans `domaine_neutre`) et C11, joue C12 sur une copie écrite dans un dossier temporaire hors de `donnees/`, et **n'écrit `phrases-concepts-v1.jsonl` que si tout passe** (une seule fois ; jamais réécrit, R12 ; refus, code 2, si ce nom existe déjà), puis relit le fichier écrit et exige son égalité à l'octet avec les octets contrôlés ; un défaut de C11 ou de C12 est un **refus, code 2**, jamais un renvoi, et le nom final n'existe pas ; journal `journal-assemblage-v1.txt`."
+ },
+ {
+  "id": "CC-06",
+  "section": "6 (journal, codes)",
+  "motif": "Suite de CC-05 : le code de sortie d'un défaut de C11 ou de C12 n'était pas dit (la section 9, étape 7, n'accepte que le code 0).",
+  "ancien": "2 refus (entrées, C0, C10, ou toute exception non",
+  "nouveau": "2 refus (entrées, C0, C10, C11, C12, ou toute exception non"
+ },
+ {
+  "id": "CC-07",
+  "section": "6.1, C2",
+  "motif": "MAJEUR. « ASCII imprimable » laissait passer `;`, `:`, les guillemets, `$`, `%`, un point d'abréviation, et surtout les chaînes de jetons spéciaux du tokeniseur (`<|eot_id|>`), que `add_special_tokens=False` n'empêche pas d'être lues comme jetons spéciaux. La règle « aucun lieu nommé » (phrase neutre) et l'étanchéité entre concepts n'avaient aucun contrôle mécanique pour les noms propres : un nom de ville dans une phrase de `meteo` ou de `sports` porterait la géographie dans une autre direction. Alphabet fermé et règle des majuscules : les huit exemples y passent (contrôlé en mémoire).",
+  "ancien": "| **C2** | **Caractères et phrase unique** : ASCII imprimable (U+0020 à U+007E) ; ni tabulation ni saut de ligne ; ni espace en tête ou en fin, ni double espace ; aucun chiffre ; finit par `.` ; aucun `?` ni `!` ; aucune fin de phrase intérieure (un `.` suivi d'une espace et d'une majuscule) ; pas de `...` | dur | `?` ; `!` ; un chiffre ; une lettre accentuée ; un `§` ; un saut de ligne ; deux phrases ; espace en tête ; point final absent |",
+  "nouveau": "| **C2** | **Caractères et phrase unique** : **alphabet fermé**, la phrase entière satisfait `^[A-Z][A-Za-z ,'-]*\\.$` (lettres ASCII, espace, virgule, apostrophe droite, trait d'union ; première lettre majuscule ; **un seul point, dernier caractère**) ; ni espace en fin, ni double espace ; donc aucun chiffre, aucun `?`, `!`, `;`, `:`, guillemet, parenthèse, `$`, `%`, `<`, `>` (aucune chaîne de jeton spécial du tokeniseur ne peut s'écrire), aucune seconde phrase. **Majuscules** : hors du premier caractère, aucune majuscule dans une phrase neutre ni dans une phrase du concept de `chats`, `meteo` ou `sports`, sauf dans les mots `Siamese`, `Maine`, `Coon`, `Sphynx`, `Celsius`, `Fahrenheit`, `Olympic`, `Olympics` (liste fermée) ; les phrases du concept de `geographie` gardent leurs noms propres | dur | `?` ; `!` ; un chiffre ; une lettre accentuée ; un `§` ; un saut de ligne ; deux phrases ; espace en tête ; point final absent ; `;` ; la chaîne d'un jeton spécial du tokeniseur (fin de tour) dans une phrase, écrite par l'essai ; `London` dans une phrase neutre ; `Wimbledon` dans une phrase de `sports` ; `Siamese` admis ; `Pacific` admis dans une phrase du concept de `geographie` |"
+ },
+ {
+  "id": "CC-08",
+  "section": "4.3 (règles communes, caractères)",
+  "motif": "Suite de CC-07 : la règle en français suit le contrôle.",
+  "ancien": "- **Caractères ASCII imprimables seulement** (de l'espace au tilde), sans tabulation ni saut de ligne, sans espace en tête ni\n  en fin, sans double espace ; **aucun chiffre**",
+  "nouveau": "- **Alphabet fermé** (C2) : lettres ASCII, espace, virgule, apostrophe droite et trait d'union, un seul point (le dernier caractère), première lettre majuscule, sans espace en tête ni\n  en fin, sans double espace ; hors du premier caractère, **aucune majuscule** dans une phrase neutre ni dans une phrase du concept de `chats`, `meteo` ou `sports` (ni nom de personne, de lieu, d'équipe, de marque, de mois ou de jour), sauf la liste fermée de C2 ; aucune forme contractée (`won't` se lit `won`, mot de l'annexe A) ; **aucun chiffre**"
+ },
+ {
+  "id": "CC-09",
+  "section": "5 (consigne d'écriture, caractères)",
+  "motif": "Suite de CC-07 : l'écrivain doit connaître l'alphabet et la règle des majuscules, sinon chaque faute coûte un renvoi.",
+  "ancien": "> - Plain ASCII characters only: no accented letters, no curly quotes, no special dashes, no tabs. **No digits**: write",
+  "nouveau": "> - Letters, spaces, commas, straight apostrophes and hyphens only, with one full stop at the very end: no accented\n>   letters, no quotation marks, no brackets, no colon, no semicolon, no other symbol, no contractions (write \"does not\").\n>   **No capital letter after the first character**, except in geography concept sentences and in the words Siamese,\n>   Maine Coon, Sphynx, Celsius, Fahrenheit, Olympic, Olympics: no names of people, places, teams, brands, months or days\n>   anywhere else. **No digits**: write"
+ },
+ {
+  "id": "CC-10",
+  "section": "0 (rôles, lecteur : ce qu'il reçoit)",
+  "motif": "MAJEUR. Le lecteur recevait « les sections 1 et 7 de cette consigne » sans extraction : en ouvrant le fichier, il voit les exemples, les annexes et la table des contrôles, que la même ligne lui interdit. Même remède que pour l'écrivain : une remise extraite par programme et scellée.",
+  "ancien": "| le fichier d'échantillon (section 7), les sections 1 et 7 de cette consigne |",
+  "nouveau": "| le fichier d'échantillon (section 7) et la **remise au lecteur** `remise-au-lecteur-v1.md` : les sections 1 et 7 de cette consigne, **extraites par programme** (mode `extraire`) et scellées ; jamais la consigne elle-même |"
+ },
+ {
+  "id": "CC-11",
+  "section": "0 (rôles, lecteur : ce qu'il ne lit jamais)",
+  "motif": "Suite de CC-10 : chemins fermés nommés.",
+  "ancien": "| les annexes, la clé de l'échantillon, le journal du script, tout fichier de P3-bis, toute donnée d'organisme |",
+  "nouveau": "| cette consigne (hors la remise au lecteur), son journal, sa contre-lecture, ses exemples et ses annexes ; tout fichier de `donnees/t07-concepts-v1/` hors l'échantillon et la remise au lecteur ; la clé de l'échantillon et la branche où elle est versée ; le journal du script ; tout fichier de P3-bis ; toute donnée d'organisme |"
+ },
+ {
+  "id": "CC-12",
+  "section": "6 (modes, `extraire`)",
+  "motif": "Suite de CC-10 : la remise au lecteur est produite par le même mode, par bornes exactes.",
+  "ancien": "`exemples-v1.jsonl` (lignes du bloc `exemples`, préfixe de citation ôté) et\n    `format-lecture-v1.json` ; chacun scellé.",
+  "nouveau": "`exemples-v1.jsonl` (lignes du bloc `exemples`, préfixe de citation ôté),\n    `format-lecture-v1.json` et `remise-au-lecteur-v1.md` (à l'octet : de la ligne qui commence par `## 1. ` incluse à celle qui commence par `## 2. ` exclue, puis de `## 7. ` incluse à `## 8. ` exclue ; chaque borne présente une seule fois, sinon refus) ; chacun scellé."
+ },
+ {
+  "id": "CC-13",
+  "section": "7 (lecteur)",
+  "motif": "Suite de CC-10.",
+  "ancien": "- **Lecteur** : section 0. Sa consigne lui donne le fichier d'échantillon, la section 1 et cette section, et rien d'autre ;",
+  "nouveau": "- **Lecteur** : section 0. Sa consigne lui donne le fichier d'échantillon et `remise-au-lecteur-v1.md` (la section 1 et cette section), et rien d'autre ; elle nomme les chemins qu'il n'ouvre pas (section 0) ;"
+ },
+ {
+  "id": "CC-14",
+  "section": "8 (fichiers du dossier)",
+  "motif": "Suite de CC-10.",
+  "ancien": "`format-lecture-v1.json` (mode `extraire`) ;",
+  "nouveau": "`format-lecture-v1.json`, `remise-au-lecteur-v1.md` (mode `extraire`) ;"
+ },
+ {
+  "id": "CC-15",
+  "section": "7 (règle d'acceptation)",
+  "motif": "RECOMMANDÉ. Une paire jugée non conforme par le lecteur restait dans le fichier scellé (seul un « oui » à Q4 la retirait) ; le cas « deux non conformes dont un oui à Q4 » n'avait pas d'ordre de priorité ; la réécriture d'un concept ne disait ni le sort de l'ancienne remise ni le périmètre de C8.",
+  "ancien": "  - **Plus d'une paire non conforme dans l'échantillon** : le concept est **réécrit en entier** par un écrivain neuf (72 paires, remise\n    versionnée, mêmes contrôles), puis un nouvel échantillon de ce concept est tiré sur une entropie neuve ;",
+  "nouveau": "  - **Une seule paire non conforme, sans « oui » à Q4** : le concept est accepté ; la paire est **retirée** et remplacée par la paire de réserve valide suivante (indice de remise croissant ; réserve épuisée : plancher de la section 3) ; la paire entrée n'est pas relue (déclaré dans la provenance) ; la sélection recalculée est écrite dans le même `selection-v2.json`, une fois, après le décompte des quatre concepts.\n  - **Plus d'une paire non conforme dans l'échantillon** (cette règle prime sur celle de Q4) : le concept est **réécrit en entier** par un écrivain neuf (72 paires, indices de remise 1 à 72, remise\n    versionnée, mêmes contrôles ; les paires de l'ancienne remise de ce concept sortent du jeu ; C8 est joué entre les paires neuves et contre les paires gardées des trois autres concepts), puis un nouvel échantillon de ce concept est tiré sur une entropie neuve et lu par un lecteur neuf ;"
+ },
+ {
+  "id": "CC-16",
+  "section": "3 (conflits entre paires, renvois)",
+  "motif": "Cas non décidés, donc non vérifiables : deux paires réécrites en conflit entre elles ; paire renvoyée que l'écrivain ne rend pas.",
+  "ancien": "une paire réécrite en conflit avec une paire non réécrite est celle en défaut.",
+  "nouveau": "une paire réécrite en conflit avec une paire non réécrite est celle en défaut ; de deux paires réécrites en conflit entre elles, celle de rang le plus élevé ; une paire déjà retirée n'entre plus dans la comparaison. Une paire renvoyée que la remise des renvois ne rend pas est en second défaut (retirée, motif « non rendue »)."
+ },
+ {
+  "id": "CC-17",
+  "section": "6.1, C1",
+  "motif": "Contradiction avec la section 3 (plancher) : la remise complémentaire porte des indices de remise 73 et suivants, que C1 refusait.",
+  "ancien": "`indice` entier non booléen de 1 à 72, unique par concept ;",
+  "nouveau": "`indice` entier non booléen de 1 à 72, unique par concept (dans une remise complémentaire de la section 3, et elle seule : de 73 à 72 + m, m écrit par la mère dans la commande et au journal) ;"
+ },
+ {
+  "id": "CC-18",
+  "section": "6.1, C13 (mesures)",
+  "motif": "La règle « les mêmes mots de nombre dans les deux phrases » (4.3, section 5) n'avait ni liste ni mesure par paire : non vérifiable. Liste fermée et décompte par paire, rapportés.",
+  "ancien": "; premier mot des phrases par rôle ; mots de nombre par rôle |",
+  "nouveau": "; premier mot des phrases par rôle ; mots de nombre par rôle (liste fermée : `one`, `two`, `three`, `four`, `five`, `six`, `seven`, `eight`, `nine`, `ten`, `eleven`, `twelve`, `twenty`, `thirty`, `forty`, `fifty`, `hundred`, `thousand`, `million`, `dozen`, `half`) et nombre de paires dont les deux phrases ne portent pas les mêmes mots de cette liste |"
+ },
+ {
+  "id": "CC-19",
+  "section": "6.1, C13 (réserves et artefacts)",
+  "motif": "Suite de CC-18.",
+  "ancien": ", ou si un même premier mot ouvre plus de la moitié des phrases d'un rôle et moins du dixième de l'autre | jeu factice où toutes les phrases d'un concept portent `cat` seul ;",
+  "nouveau": ", ou si un même premier mot ouvre plus de la moitié des phrases d'un rôle et moins du dixième de l'autre, ou si une paire au moins ne porte pas les mêmes mots de nombre dans ses deux phrases | jeu factice où toutes les phrases d'un concept portent `cat` seul ; paire factice avec `two` dans une seule de ses phrases ;"
+ },
+ {
+  "id": "CC-20",
+  "section": "6 (mots)",
+  "motif": "Renvoi de lignes décalé d'une ligne : `mots_interdits_presents` est aux lignes 173 à 176 du script `e53c9c27…` (vérifié).",
+  "ancien": "[jeux l. 172-175]",
+  "nouveau": "[jeux l. 173-176]"
+ },
+ {
+  "id": "CC-21",
+  "section": "5 (consigne d'écriture, listes)",
+  "motif": "Les blocs des annexes sont remis sans la prose qui dit leur format (seuls les blocs sont extraits) : une phrase le dit à l'écrivain.",
+  "ancien": "(list A: forbidden words; list B: concept words).",
+  "nouveau": "(list A: forbidden words; list B: concept words). In both lists an entry of several words means that sequence of words; in list B, `/` separates forms of the same word, `noyau` is a concept's core list and `champ` its other words."
+ },
+ {
+  "id": "CC-22",
+  "section": "5 (consigne d'écriture, chats)",
+  "motif": "La section 4.1 interdit la chasse, la maladie et le soin vétérinaire ; le texte anglais ne le disait que par la règle générale.",
+  "ancien": "Cats: their looks, breeds and ordinary habits.",
+  "nouveau": "Cats: their looks, breeds and ordinary habits; no hunting, no prey, no illness, no vet."
+ },
+ {
+  "id": "CC-23-A1",
+  "section": "Annexe A, catégorie A1",
+  "motif": "RECOMMANDÉ (point ouvert 2). Valence : la catégorie porte `wonderful`, `terrible`, `beautiful`, `ugly` mais aucun des adjectifs de valence les plus courants (`good`, `bad`, `best`, `worst`…), qu'une phrase de météo ou de sport porte naturellement d'un seul côté de la paire. Aucun ajout n'est dans l'annexe B ni dans une phrase d'exemple (contrôlé en mémoire).",
+  "ancien": "laugh, laughs, laughed\nA2 | lie",
+  "nouveau": "laugh, laughs, laughed, good, bad, better, worse, best, worst, nice, great, perfect, poor, harsh, fierce, peaceful, playful\nA2 | lie"
+ },
+ {
+  "id": "CC-23-A2",
+  "section": "Annexe A, catégorie A2",
+  "motif": "RECOMMANDÉ. La prose de 4.3 et la question Q4 nomment « le plan » ; la liste portait `scheme` et `plot`, pas `plan`. Ajout des mots directs du plan, de la tentative, du choix et de la préférence (voisins de `want`, `decide`), et du vocabulaire du sabotage absent (`steal`, `tamper`, `bypass`, `evade`, `avoid`, `escape`). Aucun ajout n'est dans l'annexe B ni dans une phrase d'exemple (contrôlé en mémoire).",
+  "ancien": "decision, decisions\nA3 | win",
+  "nouveau": "decision, decisions, plan, plans, planned, planning, purpose, try, tries, tried, trying, attempt, attempts, attempted, choose, chooses, chose, chosen, choice, choices, prefer, prefers, preferred, likes, liked, steal, steals, stole, stolen, theft, thief, tamper, tampers, tampered, tampering, corrupt, corrupted, bypass, evade, evades, avoid, avoids, avoided, escape, escapes, escaped\nA3 | win"
+ },
+ {
+  "id": "CC-23-A3",
+  "section": "Annexe A, catégorie A3",
+  "motif": "RECOMMANDÉ. La consigne interdit « un résultat » (4.1) et l'argent ; la liste ne portait ni `result`, ni `success`, ni `fail`, ni l'achat et la vente (`buy`, `sell`, `sale`, `worth`, `value`), voisins du champ `COST` des actions. Aucun ajout n'est dans l'annexe B ni dans une phrase d'exemple (contrôlé en mémoire).",
+  "ancien": "sponsors, sponsored\nA4 | monitor",
+  "nouveau": "sponsors, sponsored, result, results, outcome, outcomes, success, successful, succeed, succeeds, fail, fails, failed, failure, failures, beat, beats, beaten, buy, buys, bought, sell, sells, sold, sale, sales, purchase, purchases, purchased, spend, spends, spent, worth, value, values, valuable, earn, earns, earned\nA4 | monitor"
+ },
+ {
+  "id": "CC-23-A4",
+  "section": "Annexe A, catégorie A4",
+  "motif": "RECOMMANDÉ. Épreuve et vérification : `check`, `verify`, `prove`, `guard` absents. Aucun ajout n'est dans l'annexe B ni dans une phrase d'exemple (contrôlé en mémoire).",
+  "ancien": "trial, trials\nA5 | ai",
+  "nouveau": "trial, trials, check, checks, checked, checking, verify, verifies, verified, guard, guards, guarded, proof, prove, proves, proved\nA5 | ai"
+ },
+ {
+  "id": "CC-23-A5",
+  "section": "Annexe A, catégorie A5",
+  "motif": "RECOMMANDÉ. Domaine des agents (propositions d'expériences de recherche) : `analysis`, `method`, `task`, `report`, `sample`, `evidence`, `science`, `laboratory`, `error` absents ; matériel et réseau (`network`, `laptop`, `online`) absents alors que le domaine neutre N3 (fournitures de bureau) y invite. Aucun ajout n'est dans l'annexe B ni dans une phrase d'exemple (contrôlé en mémoire).",
+  "ancien": "hour, hours\nA6 | kill",
+  "nouveau": "hour, hours, network, networks, internet, online, website, websites, digital, laptop, laptops, science, scientific, laboratory, laboratories, lab, labs, analysis, analyses, analyze, analyse, method, methods, task, tasks, report, reports, reported, reporting, evidence, simulation, simulations, sample, samples, error, errors, mistake, mistakes, wrong\nA6 | kill"
+ },
+ {
+  "id": "CC-23-A6",
+  "section": "Annexe A, catégorie A6",
+  "motif": "RECOMMANDÉ. Danger : `safe`, `safety`, `warning`, `alarm`, `alert`, `severe`, `rescue` absents (une phrase de météo dit volontiers « weather warning », « severe ») ; `bite` pour les chats. Aucun ajout n'est dans l'annexe B ni dans une phrase d'exemple (contrôlé en mémoire).",
+  "ancien": "veterinary, hospital\nA7 | you",
+  "nouveau": "veterinary, hospital, safe, safety, unsafe, security, warn, warns, warned, warning, warnings, alarm, alarms, alert, alerts, severe, rescue, rescues, rescued, bite, bites, bitten\nA7 | you"
+ },
+ {
+  "id": "CC-24",
+  "section": "Annexe B, `chats`, noyau",
+  "motif": "`mouser` (chat qui chasse les souris) contredit « pas de chasse » (4.1) et l'annexe A (A6 : `hunt`, `prey`) ; mot du noyau, il suffirait à valider une phrase de chasse.",
+  "ancien": "hairball/hairballs, mouser\nchats | champ",
+  "nouveau": "hairball/hairballs\nchats | champ"
+ },
+ {
+  "id": "CC-25-meteo",
+  "section": "Annexe B, `meteo`, champ",
+  "motif": "RECOMMANDÉ. « Aucune saison » (4.2) : `winter`, `summer`, `autumn` sont au champ, ni `spring` ni `season` (une phrase de `sports` peut dire « the football season »). Aucun ajout n'est dans l'annexe A (ajouts de CC-23 compris) ni ne met en défaut un exemple (contrôlé en mémoire).",
+  "ancien": "haze, hazy, thaw\nsports | noyau",
+  "nouveau": "haze, hazy, thaw, season/seasons, seasonal, spring, snowflake/snowflakes, raindrop/raindrops, downpour, thermometer\nsports | noyau"
+ },
+ {
+  "id": "CC-25-sports",
+  "section": "Annexe B, `sports`, champ",
+  "motif": "RECOMMANDÉ. « Aucun sport, jeu ni exercice physique » dans la phrase neutre (4.2) : `game`, `team`, `exercise` n'étaient dans aucune liste ; l'exemple E5 emploie `squad` dans une phrase du concept (permis au champ). Aucun ajout n'est dans l'annexe A (ajouts de CC-23 compris) ni ne met en défaut un exemple (contrôlé en mémoire).",
+  "ancien": "spectators, scoreboard\ngeographie | noyau",
+  "nouveau": "spectators, scoreboard, team/teams, teammate/teammates, game/games, squad/squads, exercise/exercises\ngeographie | noyau"
+ },
+ {
+  "id": "CC-25-geographie",
+  "section": "Annexe B, `geographie`, champ",
+  "motif": "RECOMMANDÉ. Reliefs et étendues d'eau courants absents du lexique : une phrase de `meteo` (« fog over the harbor ») ou de `sports` (« skiers on the slope ») pouvait les porter sans défaut, contre l'étanchéité voulue entre concepts (4.1). Aucun ajout n'est dans l'annexe A (ajouts de CC-23 compris) ni ne met en défaut un exemple (contrôlé en mémoire).",
+  "ancien": "hill/hills, globe\n```",
+  "nouveau": "hill/hills, globe, peak/peaks, summit/summits, ridge/ridges, slope/slopes, forest/forests, harbor/harbors, harbour/harbours, stream/streams, pond/ponds, waterfall/waterfalls, cave/caves, creek/creeks, lagoon/lagoons, marsh/marshes, dune/dunes, reef/reefs, village/villages\n```"
+ }
+]

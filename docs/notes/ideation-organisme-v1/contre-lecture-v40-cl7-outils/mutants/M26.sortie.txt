@@ -1,0 +1,33 @@
+..........................F./tmp/claude-0/-home-user-controle-ia-travail/75a1275d-b838-5015-909e-b2bfadb395f9/scratchpad/relecture-v40/cl7/outils-cl7/mutants/M26/essais/test_v7_ideation.py:649: ResourceWarning: unclosed file <_io.TextIOWrapper name='/tmp/claude-0/-home-user-controle-ia-travail/75a1275d-b838-5015-909e-b2bfadb395f9/scratchpad/relecture-v40/cl7/outils-cl7/mutants/M26/essais/_tmp/tmpya3mkbq4/cx-3/proposeurs/argon/traces-passe-2/consigne.md' mode='r' encoding='utf-8'>
+  encoding="utf-8").read()
+ResourceWarning: Enable tracemalloc to get the object allocation traceback
+................................/usr/lib/python3.13/subprocess.py:1141: ResourceWarning: subprocess 29136 is still running
+  _warn("subprocess %s is still running" % self.pid,
+ResourceWarning: Enable tracemalloc to get the object allocation traceback
+./usr/lib/python3.13/subprocess.py:833: ResourceWarning: unclosed file <_io.BufferedWriter name=4>
+  _cleanup()
+ResourceWarning: Enable tracemalloc to get the object allocation traceback
+/usr/lib/python3.13/subprocess.py:833: ResourceWarning: unclosed file <_io.BufferedReader name=5>
+  _cleanup()
+ResourceWarning: Enable tracemalloc to get the object allocation traceback
+/usr/lib/python3.13/subprocess.py:833: ResourceWarning: unclosed file <_io.BufferedReader name=7>
+  _cleanup()
+ResourceWarning: Enable tracemalloc to get the object allocation traceback
+/tmp/claude-0/-home-user-controle-ia-travail/75a1275d-b838-5015-909e-b2bfadb395f9/scratchpad/relecture-v40/cl7/outils-cl7/mutants/M26/essais/test_v7_ideation.py:1248: ResourceWarning: unclosed file <_io.TextIOWrapper name='/tmp/claude-0/-home-user-controle-ia-travail/75a1275d-b838-5015-909e-b2bfadb395f9/scratchpad/relecture-v40/cl7/outils-cl7/mutants/M26/essais/_tmp/tmpuol3j7nx/pe.pid' mode='r' encoding='UTF-8'>
+  pe = int(open(pid_f).read())
+ResourceWarning: Enable tracemalloc to get the object allocation traceback
+....
+======================================================================
+FAIL: test_delai_arrete_tout_le_groupe (essais.test_v7_ideation.TestCommandeExterne.test_delai_arrete_tout_le_groupe)
+CL35-13 : au délai, le petit-enfant de la commande est arrêté aussi ; coût inconnu → plafond compté.
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/tmp/claude-0/-home-user-controle-ia-travail/75a1275d-b838-5015-909e-b2bfadb395f9/scratchpad/relecture-v40/cl7/outils-cl7/mutants/M26/essais/test_v7_ideation.py", line 554, in test_delai_arrete_tout_le_groupe
+    self.assertLess(time.monotonic() - debut, 10.0)  # M26 : avec `kill` au lieu de `killpg`, le tube tenu par le petit-enfant bloque 60 s
+    ~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: 60.04599007700017 not less than 10.0
+
+----------------------------------------------------------------------
+Ran 65 tests in 64.572s
+
+FAILED (failures=1)

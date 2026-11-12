@@ -1,0 +1,14 @@
+#!/usr/bin/env python3
+# Faux outil en ligne de commande (CL3) : aucun réseau ; répond à -v ; sinon note son PID et pend (ignore SIGTERM si demandé).
+import os, signal, sys, time
+if "-v" in sys.argv or "--version" in sys.argv:
+    print("2.9.99 (Claude Code)"); sys.exit(0)
+d = os.environ.get("FAUX_CLI_JOURNAL", "/tmp/faux-cli-journal")
+with open(os.path.join(d, "pid-%d" % os.getpid()), "w") as f:
+    f.write(" ".join(sys.argv[1:])[:4000])
+if os.environ.get("FAUX_CLI_IGNORE_TERM") == "1":
+    signal.signal(signal.SIGTERM, signal.SIG_IGN)
+while True:
+    time.sleep(1)
+    with open(os.path.join(d, "vivant-%d" % os.getpid()), "w") as f:
+        f.write(str(time.time()))

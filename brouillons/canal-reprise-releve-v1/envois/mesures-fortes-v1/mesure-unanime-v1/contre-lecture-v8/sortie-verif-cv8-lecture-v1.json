@@ -1,0 +1,121 @@
+{
+ "base": "/home/claude/canal-conv-audit-n04/brouillons/canal-reprise-releve-v1/envois/mesures-fortes-v1/mesure-unanime-v1/sortie-reelle-v8-repetition.json",
+ "table": "/home/claude/canal-conv-audit-n04/brouillons/canal-reprise-releve-v1/envois/mesures-fortes-v1/mesure-unanime-v1/table-m2bis-m4-v8.json",
+ "arbre": {
+  "combinaisons": 64,
+  "feuilles_atteintes": {
+   "(1)": 32,
+   "(2b)": 8,
+   "(4d)": 2,
+   "(4c)": 2,
+   "(4a)": 2,
+   "(4b)": 2,
+   "(2a)": 8,
+   "(3b)": 4,
+   "(3a)": 4
+  },
+  "desaccords_de_feuille": [],
+  "desaccords_d_etiquette": [
+   {
+    "entrees": [
+     0.08,
+     0.01,
+     0.07,
+     0.01,
+     0.01,
+     -0.01
+    ],
+    "lecture": "(4b) dérive et dépendance",
+    "texte": "(4b) dépendance établie, mélange à pas fixé au-dessus de α"
+   },
+   {
+    "entrees": [
+     0.08,
+     0.01,
+     0.07,
+     0.01,
+     0.01,
+     0.01
+    ],
+    "lecture": "(4b) dérive et dépendance",
+    "texte": "(4b) dépendance établie, mélange à pas fixé au-dessus de α (dérive mesurée)"
+   }
+  ],
+  "n_desaccords_d_etiquette": 2
+ },
+ "bornes": {
+  "v0=0,05": {
+   "lecture": "(1) Ville tenue sur P3 à τ = 0",
+   "texte": "(1) Ville tenue sur P3 à τ = 0"
+  },
+  "v0=0,05+1e-17": {
+   "lecture": "(1) Ville tenue sur P3 à τ = 0",
+   "texte": "(1) Ville tenue sur P3 à τ = 0"
+  },
+  "bbD=0": {
+   "lecture": "(2a) marges seules",
+   "texte": "(2a) marges seules"
+  },
+  "bbD=+3e-18": {
+   "lecture": "(2a) marges seules",
+   "texte": "(2a) marges seules"
+  },
+  "bbDp=0": {
+   "lecture": "(4c) structure intra-épisode avec dérive de pas mesurée",
+   "texte": "(4c) structure intra-épisode avec dérive de pas mesurée"
+  },
+  "bbDd=-3e-18": {
+   "lecture": "(4d) structure intra-épisode non attribuée",
+   "texte": "(4d) structure intra-épisode non attribuée"
+  },
+  "vm=0,05": {
+   "lecture": "(4a) dépendance naturelle suffisante",
+   "texte": "(4a) dépendance naturelle suffisante"
+  },
+  "vmp=0,05+1e-17": {
+   "lecture": "(4a) dépendance naturelle suffisante",
+   "texte": "(4a) dépendance naturelle suffisante"
+  }
+ },
+ "2a_avec_bbDp_positif": {
+  "M2_ter": "(2a) marges seules",
+  "reserves": [],
+  "ligne": "première ligne : la synthèse a raison (comparateur par épisode entier ; sommes sans niveau sous dépendance non vue, maximum tenu) — proposé à Lazar pour G1 et H2"
+ },
+ "M2_bis_refutee": {
+  "M2_bis": "hors table (rapporté) ; RÉFUTÉE (borne haute de la différence ≤ 0 avec r₀ < 0,5)",
+  "M2_controle": "attendu",
+  "audits": [],
+  "ligne": "première ligne : la synthèse a raison (comparateur par épisode entier ; sommes sans niveau sous dépendance non vue, maximum tenu) — proposé à Lazar pour G1 et H2",
+  "reserves": []
+ },
+ "cellule_M3_a_zero": {
+  "M3": "tenu, fragile sur 1 cellule(s) (rapporté, la lecture continue)",
+  "cellule_a_zero": "AUDIT R4 (trop propre : médiane et troisième quartile nuls sur une cellule de M3) : ['tau=0.0:balayage']",
+  "audits": [
+   "placebo",
+   "cellule_a_zero"
+  ],
+  "ligne": "AUDIT R4 avant toute lecture (placebo, cellule_a_zero) : rie"
+ },
+ "cellule_bras_a_zero": {
+  "audits": [],
+  "reserves": [
+   "cellules conformes à zéro (médiane et troisième quartile) dans les bras : ['melange_pas_fixe_tau=0:max'] — réserve, pas un audit (CV7-2)"
+  ],
+  "ligne": "première ligne : la synthèse a raison (comparateur par épiso"
+ },
+ "refus_manifeste_format_reel": {
+  "sain": "PASSE",
+  "tirages_19": "refus : sortie réelle avec tirages 19 ou rééchantillonnages 2000 hors des valeurs fixes (CV7-5)",
+  "bootstrap_300": "refus : sortie réelle avec tirages 20 ou rééchantillonnages 300 hors des valeurs fixes (CV7-5)",
+  "commit_vide": "refus : sortie réelle sans commit au manifeste (CV7-5)",
+  "commit_absent": "refus : sortie réelle sans commit au manifeste (CV7-5)",
+  "E_absent": "refus : E de la table (60) ≠ E de la sortie (None)",
+  "E_51": "refus : E de la table (60) ≠ E de la sortie (51)",
+  "empreinte_script_autre": "refus : empreinte du script de la sortie ≠ celle attendue (CV7-5)",
+  "empreinte_donnees_autre": "refus : empreinte des données de la sortie ≠ celle attendue",
+  "script_v7": "refus : sortie d'un autre script que la v8 : analyse_fausses_alertes_v7.py",
+  "drapeau_synthetique_pose_sur_sortie_reelle_tirages_5": "PASSE"
+ }
+}

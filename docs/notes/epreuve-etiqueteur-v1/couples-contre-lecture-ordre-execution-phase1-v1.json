@@ -1,0 +1,98 @@
+[
+ {
+  "id": "CO-01-format-detache",
+  "n": 1,
+  "ancien": "Lancé avec l'option `run_in_background` ; l'outil rappelle l'exécutante à la fin. Le code de fin est écrit dans un fichier.",
+  "nouveau": "Lancé par un appel **ordinaire** de l'outil de commande (sans `run_in_background`) : l'enveloppe qui attend la lecture et écrit son code de fin est elle-même détachée (`&` final), et l'appel rend la main aussitôt. Motif : une commande lancée avec `run_in_background` est tuée par l'outil à sa limite (30 minutes au défaut, 2 heures au plus), et la lecture avec elle, sans manifeste et sans fichier de code de fin ; un processus détaché par `&` survit à la fin de l'appel (les deux constatés par la contre-lecture sur des processus factices). La fin est guettée par le bloc « guet » qui suit. Le code de fin est écrit dans un fichier."
+ },
+ {
+  "id": "CO-02-format-bloc-detache-et-guet",
+  "n": 2,
+  "ancien": "  P=$!; echo \"$P\" > \"$CONSOLES/lecture-format.pid\"; wait \"$P\"; echo \"$?\" > \"$CONSOLES/code-lecture-format-v1.txt\" )\n",
+  "nouveau": "  P=$!; echo \"$P\" > \"$CONSOLES/lecture-format.pid\"; wait \"$P\"; echo \"$?\" > \"$CONSOLES/code-lecture-format-v1.txt\" ) > /dev/null 2>&1 &\ntimeout 15 bash -c 'until test -s \"$1\"; do sleep 0.2; done' _ \"$CONSOLES/lecture-format.pid\" && echo \"lecture lancée, processus $(cat \"$CONSOLES/lecture-format.pid\")\" || echo \"ARRET : numéro de processus non écrit\"\n```\n\nGuet (lancé, lui, avec `run_in_background` et `timeout` 7200000 ; il rend la main au plus tard après 9 minutes, bien avant la limite de l'outil, et ne touche jamais la lecture ; « lecture en cours » : passer le programme de surveillance (3.3 ou 4.4), puis relancer ce guet tel quel) :\n\n```bash\nset -u; . /home/user/epreuve-etiqueteur-phase1-v1/variables-v1.sh\nP=$(cat \"$CONSOLES/lecture-format.pid\"); timeout 540 tail --pid=\"$P\" -f /dev/null\ntimeout 30 bash -c 'until test -s \"$1\"; do sleep 1; done' _ \"$CONSOLES/code-lecture-format-v1.txt\"\nif test -s \"$CONSOLES/code-lecture-format-v1.txt\"; then echo \"lecture finie, code $(cat \"$CONSOLES/code-lecture-format-v1.txt\")\"; elif kill -0 \"$P\" 2>/dev/null; then echo \"lecture en cours : relancer ce guet\"; else echo \"ARRET : lecture disparue sans code de fin (section 4.4)\"; fi\n"
+ },
+ {
+  "id": "CO-03-principale-detache",
+  "n": 3,
+  "ancien": "Lancé avec `run_in_background`. `--depense-engagee` reçoit",
+  "nouveau": "Lancé par un appel **ordinaire** de l'outil de commande (sans `run_in_background`) : l'enveloppe qui attend la lecture et écrit son code de fin est elle-même détachée (`&` final), et l'appel rend la main aussitôt. Motif : une commande lancée avec `run_in_background` est tuée par l'outil à sa limite (30 minutes au défaut, 2 heures au plus), et la lecture avec elle, sans manifeste et sans fichier de code de fin ; un processus détaché par `&` survit à la fin de l'appel (les deux constatés par la contre-lecture sur des processus factices). La fin est guettée par le bloc « guet » qui suit (lecture principale : plusieurs heures, donc plusieurs guets successifs). `--depense-engagee` reçoit"
+ },
+ {
+  "id": "CO-04-principale-bloc-detache-et-guet",
+  "n": 4,
+  "ancien": "  P=$!; echo \"$P\" > \"$CONSOLES/lecture-principale.pid\"; wait \"$P\"; echo \"$?\" > \"$CONSOLES/code-lecture-principale-v1.txt\" )\n",
+  "nouveau": "  P=$!; echo \"$P\" > \"$CONSOLES/lecture-principale.pid\"; wait \"$P\"; echo \"$?\" > \"$CONSOLES/code-lecture-principale-v1.txt\" ) > /dev/null 2>&1 &\ntimeout 15 bash -c 'until test -s \"$1\"; do sleep 0.2; done' _ \"$CONSOLES/lecture-principale.pid\" && echo \"lecture lancée, processus $(cat \"$CONSOLES/lecture-principale.pid\")\" || echo \"ARRET : numéro de processus non écrit\"\n```\n\nGuet (lancé, lui, avec `run_in_background` et `timeout` 7200000 ; il rend la main au plus tard après 14 minutes, bien avant la limite de l'outil, et ne touche jamais la lecture ; « lecture en cours » : passer le programme de surveillance (3.3 ou 4.4), puis relancer ce guet tel quel) :\n\n```bash\nset -u; . /home/user/epreuve-etiqueteur-phase1-v1/variables-v1.sh\nP=$(cat \"$CONSOLES/lecture-principale.pid\"); timeout 840 tail --pid=\"$P\" -f /dev/null\ntimeout 30 bash -c 'until test -s \"$1\"; do sleep 1; done' _ \"$CONSOLES/code-lecture-principale-v1.txt\"\nif test -s \"$CONSOLES/code-lecture-principale-v1.txt\"; then echo \"lecture finie, code $(cat \"$CONSOLES/code-lecture-principale-v1.txt\")\"; elif kill -0 \"$P\" 2>/dev/null; then echo \"lecture en cours : relancer ce guet\"; else echo \"ARRET : lecture disparue sans code de fin (section 4.4)\"; fi\n"
+ },
+ {
+  "id": "CO-05-reprise-et-depense-engagee",
+  "n": 5,
+  "ancien": "Un lancement arrêté n'est **jamais** relancé par l'exécutante : la reprise, avec la dépense déjà engagée (somme des `cout_estime` du journal pour un lancement sans manifeste) et un plafond diminué d'autant, est un ordre nouveau de la session mère, dans un dossier de sortie nouveau.",
+  "nouveau": "Un lancement arrêté **ou disparu** n'est **jamais** relancé par l'exécutante. **Lancement disparu** (le guet écrit « lecture disparue », ou le processus n'existe plus sans fichier `code-lecture-*-v1.txt` ni manifeste : conteneur redémarré, session fermée, arrêt par l'outil) : arrêt ; le relais, s'il vit encore, est relevé puis arrêté (section 3.4 avec `RELAIS_F` ou `RELAIS_P`) ; l'exécutante rapporte, par le programme de la section 3.3 sur le dossier de ce lancement, les comptes par statut et la somme des `cout_estime` des **deux** journaux (A et B), puis les empreintes de tous les fichiers du dossier et du relais ; aucune réponse n'est ouverte ; nœud du directeur avant toute lecture de réponse. La reprise est un ordre nouveau de la session mère, dans des dossiers de sortie nouveaux (par exemple `lecture-principale-v2`, `relais-principale-v2`), avec : `--plafond-dollars 300` **inchangé** (le script refuse un autre plafond que celui de l'essai de format) ; `--depense-engagee` égale au champ `depense_estimee_dollars` du manifeste du lancement précédent s'il existe (il comprend déjà la dépense engagée avant lui), sinon à `DEP` (dépense de l'essai de format) **plus** la somme des `cout_estime` des journaux A et B du lancement interrompu (texte scellé, liste d'arrêt, ligne « dépense au-delà du plafond ») ; le relais relancé avec `--plafond-usd` égal à 300 moins cette dépense, arrondi vers le bas au centime. Réserve écrite au compte rendu : une tentative en vol au moment de la mort (deux au plus, une par fil) n'a pas de ligne au journal ; son coût (au plus le pire cas d'une tentative, moins d'un dollar) échappe à cette somme : la session mère la compare aux relevés des fournisseurs avant la reprise."
+ },
+ {
+  "id": "CO-06-table-arret-disparu",
+  "n": 6,
+  "ancien": "| 8 illisibles ou plus pour un lecteur en lecture principale ; lecture bloquée 45 minutes | arrêt de la lecture par son numéro de processus, puis du relais |\n",
+  "nouveau": "| 8 illisibles ou plus pour un lecteur en lecture principale ; lecture bloquée 45 minutes | arrêt de la lecture par son numéro de processus, puis du relais |\n| lecture disparue sans code de fin ni manifeste (conteneur redémarré, session fermée, limite de l'outil) | section 4.4 : arrêt, comptes et somme des `cout_estime` des deux journaux, empreintes, aucune relance ; nœud du directeur |\n"
+ },
+ {
+  "id": "CO-07-prix-argon-avant-essai",
+  "n": 7,
+  "ancien": "**Aucun appel avant ce feu vert** (sans dépôt antérieur à la première lecture, l'épreuve ne décide plus rien).",
+  "nouveau": "**Aucun appel avant ce feu vert** (sans dépôt antérieur à la première lecture, l'épreuve ne décide plus rien). Le même message de la session mère porte aussi, avant tout lancement de la section 3 : (a) le **relevé du prix public d'Argon** sur la page des prix de Google (texte scellé, « Points ouverts », point 4, temps 1), fait par le directeur ou par un réseau permis sur sa décision : prix par million de jetons d'entrée et de sortie, date du relevé ; un prix publié au-dessus de 10 et 50 dollars : arrêt de l'épreuve avant tout appel, nœud du directeur ; page non joignable : la session mère l'écrit, et le contrôle de la facture (3 bis) reste le seul ; (b) la garantie qu'aucun autre appel ne passera par les deux clés (ou leurs projets) pendant la fenêtre de l'essai de format (même point : « clé ou projet dédié à l'épreuve, pour que le relevé ne mêle aucun autre appel »). Sans (a) ni (b) : aucun lancement."
+ },
+ {
+  "id": "CO-08-comptes-du-manifeste-de-generation",
+  "n": 8,
+  "ancien": "sha256sum \"$GEN\"/* \"$TIRAGE/tirage-phase2-v1.jsonl\" | tee \"$CR/empreintes-generation-v1.txt\"\n",
+  "nouveau": "sha256sum \"$GEN\"/* \"$TIRAGE/tirage-phase2-v1.jsonl\" | tee \"$CR/empreintes-generation-v1.txt\"\n\"$PY\" -I -c \"\nimport json,sys\nm=json.load(open(sys.argv[1])); c=m['comptes']\nok=(c.get('items'),c.get('jumeaux'),c.get('taches'))==(396,60,60) and len(c['plantes'])==9 and set(c['plantes'].values())=={24} and len(c['placebos'])==6 and set(c['placebos'].values())=={20}\nprint('comptes', json.dumps(c, sort_keys=True))\nprint('comptes conformes' if ok else 'ARRET : comptes differents du texte scelle')\nprint('entropie', m.get('entropie'), 'commit', m.get('commit'), 'empreinte_script', m.get('empreinte_script'))\n\" \"$GEN/manifeste-generation-v2.json\"\n"
+ },
+ {
+  "id": "CO-09-attendu-2-4",
+  "n": 9,
+  "ancien": "Attendu : 396, 396, 20, 20, 80, 60 lignes ; trois codes 0 en 2.1 à 2.3. Sinon arrêt (liste d'arrêt : comptes différents du texte scellé, enquête écrite par la session mère). Les consoles de 2.1 à 2.3 ne sont pas ouvertes (le générateur y écrit son manifeste ; les comptes et empreintes ci-dessus suffisent).",
+  "nouveau": "Attendu : 396, 396, 20, 20, 80, 60 lignes ; trois codes 0 en 2.1 à 2.3 ; « comptes conformes » (texte scellé : 396 items, 24 par case plantée sur 9 cases, 20 placebos par sorte et par dose sur 6, 60 jumeaux, 60 tâches) ; entropie 17812956677980471985, commit `$COMMIT_CODE`, empreinte du script `ceeef529…`. Sinon arrêt (liste d'arrêt : comptes du manifeste ou du tirage différents du texte scellé, enquête écrite par la session mère). Le manifeste de la génération est `$GEN/manifeste-generation-v2.json` (ses comptes seuls sont imprimés) ; les consoles de 2.1 à 2.3 ne sont pas ouvertes."
+ },
+ {
+  "id": "CO-10-qui-genere",
+  "n": 10,
+  "ancien": "**Qui** : le texte scellé (« Ordre des opérations », point 3) confie la génération, le tirage de la phase 2 et la liste des relectures à la session mère. Marqueur à remplir par la session mère : `<<GENERATION_PAR>>` = « session mère » (l'exécutante saute alors 2.1 à 2.3, reçoit le dossier `$GEN` et `$TIRAGE` faits par ces mêmes commandes, et refait seulement 2.4)",
+  "nouveau": "**Qui** : le texte scellé place la génération, le tirage de la phase 2 et la liste des relectures au point 3 de « Ordre des opérations » sans nommer qui les fait, et nomme la session mère pour la liste des relectures seulement (« Scripts de la phase 1 » : « tirée de la clé par la session mère »). Marqueur à remplir par la session mère : `<<GENERATION_PAR>>` = « session mère » (la session mère exécute alors elle-même 1.1 à 2.4, sur la machine et dans la racine de l'exécutante, puis transmet l'ordre ; l'exécutante ne refait ni 1.1 ni 1.2 — la racine existe —, refait 1.3, 1.4 et 2.4, et compare ses empreintes de 2.4 à `$CR/empreintes-generation-v1.txt` ; une différence : arrêt ; si l'exécutante tourne sur une autre machine que la session mère, ce choix demande un transfert des items et de la clé qui n'est pas écrit : arrêt)"
+ },
+ {
+  "id": "CO-11-etat-relais-noms-des-champs",
+  "n": 11,
+  "ancien": "garde=('version','pid','modeles_permis','plafond_usd','max_appels','appels','depense_usd','prix_entree','prix_sortie','prix_cache')",
+  "nouveau": "garde=('version','pid','modeles_permis','plafond_usd','reserve_par_appel_usd','max_appels','appels','depense_usd','prix_entree_usd_par_million','prix_sortie_usd_par_million','prix_cache_usd_par_million','recherche_officielle')"
+ },
+ {
+  "id": "CO-12-etat-relais-attendu",
+  "n": 12,
+  "ancien": "Attendu : `modeles_permis` = `['kimi-k3.1-pro']`, `plafond_usd` 300, `max_appels` 100, `appels` 0, numéro de processus conforme,",
+  "nouveau": "Attendu : `modeles_permis` = `['kimi-k3.1-pro']`, `plafond_usd` 300, `max_appels` 100, `appels` 0, prix 2, 10 et 2 (`prix_entree_usd_par_million`, `prix_sortie_usd_par_million`, `prix_cache_usd_par_million`), `reserve_par_appel_usd` 0.4, `recherche_officielle` « inactive », numéro de processus conforme,"
+ },
+ {
+  "id": "CO-13-relais-pret-avant-etat",
+  "n": 13,
+  "ancien": "curl -sS --noproxy '*' --max-time 10 \"http://127.0.0.1:$PORT_RELAIS/relais/etat\" > \"$RELAIS_F/etat-avant-v1.json\"\n",
+  "nouveau": "timeout 20 bash -c 'until curl -sS --noproxy \"*\" --max-time 2 -o /dev/null \"$1\" 2>/dev/null; do sleep 0.5; done' _ \"http://127.0.0.1:$PORT_RELAIS/relais/etat\" || echo \"ARRET : relais muet après 20 secondes\"\ncurl -sS --noproxy '*' --max-time 10 \"http://127.0.0.1:$PORT_RELAIS/relais/etat\" > \"$RELAIS_F/etat-avant-v1.json\"\n"
+ },
+ {
+  "id": "CO-14-jetons-de-sortie-comprennent-la-pensee",
+  "n": 14,
+  "ancien": "pour Kimi, en plus, `appels` et `depense_usd` de l'état du relais après la lecture.",
+  "nouveau": "pour Kimi, en plus, `appels` et `depense_usd` de l'état du relais après la lecture. **Lecture des jetons** : pour les deux lecteurs, `jetons_sortie` comprend déjà la pensée (Argon : `candidatesTokenCount` + `thoughtsTokenCount` ; Kimi : `completion_tokens`, raisonnement compris) et `jetons_pensee` n'en est que la part ; le directeur compare la sortie facturée (pensée comprise) à `jetons_sortie`, jamais à `jetons_sortie + jetons_pensee`."
+ },
+ {
+  "id": "CO-15-attendu-1-2",
+  "n": 15,
+  "ancien": "Si `/home/user/controle-ia-travail` n'existe pas dans la session exécutante",
+  "nouveau": "Attendu : « commit du code conforme » et « arbre propre » ; une ligne manquante : arrêt. Si `/home/user/controle-ia-travail` n'existe pas dans la session exécutante"
+ },
+ {
+  "id": "CO-16-champ-lecteur-avant-analyse",
+  "n": 16,
+  "ancien": "print('A et B differentes' if e['A']!=e['B'] else 'ARRET : A et B identiques')\n\" \"$PRINC\"\n",
+  "nouveau": "print('A et B differentes' if e['A']!=e['B'] else 'ARRET : A et B identiques')\n\" \"$PRINC\"\n\"$PY\" -I -c \"\nimport json,sys,collections\nd=sys.argv[1]\nfor L in 'AB':\n    c=collections.Counter(); autre=0\n    for x in open(f'{d}/reponses-phase1-{L}-v4.jsonl',encoding='utf-8'):\n        if x.strip(): r=json.loads(x); c[r.get('lecture')]+=1; autre+=(r.get('lecteur')!=L)\n    print(L, dict(sorted(c.items())), 'lignes d un autre lecteur', autre, 'conforme' if (dict(c)=={'principale':396,'relecture':60} and autre==0) else 'ARRET')\n\" \"$PRINC\"\n"
+ }
+]

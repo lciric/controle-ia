@@ -1,0 +1,47 @@
+== (0) contrôle d'identité des coûts unitaires avec la v4
+   L supposé : 1.162 (v4 1.162) ; S 0.374 (v4 0.374) ; N 0.180 ; T 0.550 ; G 0.260 ; A 0.190 ; ADJ 0.260
+   L pire réaliste : 3.082 (v4 3.082) ; S 0.374 (v4 0.374) ; N 0.180 ; T 0.550 ; G 0.260 ; A 0.190 ; ADJ 0.260
+   réserve A7 : 32.00 ; en fin sans parallélisme : 12.00
+
+== (1) A8 : graines du pilote payables sous le plafond (charges hors graines et réserve A7 retranchées ; adjudication 30 %)
+   profil « supposé » : charges hors graines 110.74 + réserve 32 ; par graine 3.778 ; plafond minimal pour 40 graines 293.86, pour 60 369.42
+      450 : 81 ; 500 : 94 ; 550 : 107 ; 578 : 115 ; 600 : 121 ; 639 : 131 ; 650 : 134 ; 767 : 165
+   profil « pire réaliste » : charges hors graines 149.14 + réserve 32 ; par graine 7.618 ; plafond minimal pour 40 graines 485.86, pour 60 638.22
+      450 : 35 ; 500 : 41 ; 550 : 48 ; 578 : 52 ; 600 : 54 ; 639 : 60 ; 650 : 61 ; 767 : 76
+   profil « tout item L au plafond » : charges hors graines 167.50 + réserve 32 ; par graine 9.454 ; plafond minimal pour 40 graines 577.66, pour 60 766.74
+      450 : 26 ; 500 : 31 ; 550 : 37 ; 578 : 40 ; 600 : 42 ; 639 : 46 ; 650 : 47 ; 767 : 60
+
+   plafond de D-1b qui tient 40 graines même si chaque item L coûte 4 USD : 578
+      à 578 : profil « supposé » 115 graines ; réserve 12 (fin sans parallélisme) 120 ; lecture nue abandonnée 128 ; les deux 134
+      à 578 : profil « pire réaliste » 52 graines ; réserve 12 (fin sans parallélisme) 54 ; lecture nue abandonnée 55 ; les deux 57
+      à 578 : profil « tout item L au plafond » 40 graines ; réserve 12 (fin sans parallélisme) 42 ; lecture nue abandonnée 42 ; les deux 44
+   blocs équilibrés (5 graines) à 578, profil « supposé » : 12 blocs, 60 graines équilibrées (12 par classe)
+   blocs équilibrés (5 graines) à 578, profil « pire réaliste » : 10 blocs, 50 graines équilibrées (10 par classe)
+   blocs équilibrés (5 graines) à 578, profil « tout item L au plafond » : 8 blocs, 40 graines équilibrées (8 par classe)
+
+== (2) pilote (140 items) : attendu ordinaire et avec toutes les lignes conditionnelles (identique à la v4)
+   profil « supposé » : 30 % litigieux : 337.42 / 447.92 ; 60 % litigieux : 346.78 / 457.28
+   profil « pire réaliste » : 30 % litigieux : 606.22 / 716.72 ; 60 % litigieux : 615.58 / 726.08
+   profil « tout item L au plafond » : 30 % litigieux : 734.74 / 845.24 ; 60 % litigieux : 744.10 / 854.60
+
+== (3) phase 2 au plafond d'effectif (2 x 150 graines, 600 items)
+   profil « supposé » : 30 % litigieux : ordinaire 1299.40, avec conditionnelles 1865.20 ; 60 % litigieux : ordinaire 1346.20, avec conditionnelles 1912.00
+   profil « pire réaliste » : 30 % litigieux : ordinaire 2451.40, avec conditionnelles 3017.20 ; 60 % litigieux : ordinaire 2498.20, avec conditionnelles 3064.00
+   profil « tout item L au plafond » : 30 % litigieux : ordinaire 3002.20, avec conditionnelles 3568.00 ; 60 % litigieux : ordinaire 3049.00, avec conditionnelles 3614.80
+   plafond indicatif de la phase 2 (profil supposé, 60 % litigieux, lignes conditionnelles, réserve A7, arrondi à 50) : 1950
+
+== (4) machine : minuterie de destruction par identifiant (R10) contre le plafond, au prix horaire de borne haute 1,30
+   D-1a    : minuterie 48 h ; coût à 1,30 USD l'heure  62.40 ≤ plafond 65 : True ; heures payables sous le plafond à 1,30 : 50 ; à 0,40 : 162
+   D-1b    : minuterie 26 h ; coût à 1,30 USD l'heure  33.80 ≤ plafond 35 : True ; heures payables sous le plafond à 1,30 : 26 ; à 0,40 : 87
+   phase 2 : minuterie 70 h ; coût à 1,30 USD l'heure  91.00 ≤ plafond 91 : True ; heures payables sous le plafond à 1,30 : 70 ; à 0,40 : 227
+
+== (5) somme des plafonds et enveloppe au profil pire réaliste
+   somme des plafonds proposés ou indicatifs : 65 + 578 + 35 + 1950 + 91 = 2719
+   phase 2 complète au profil pire réaliste : de 2483.40 (ordinaire, 30 % litigieux, réserve) à 3096.00 (conditionnelles, 60 % litigieux, réserve)
+   enveloppe au profil pire réaliste (D-1a 65 + D-1b 578 + 35 + phase 2 + 91) : 3252.40 à 3865.00
+   pour mémoire, au calcul de la vérification courte (D-1b 550, 30 % litigieux) : 3224.40 à 3790.20
+   attendu au profil supposé (D-1b et phase 2, sans machine) : 1636.82 à 2369.28
+
+== (6) sensibilité : prix de Gemini 4 Argon lu sur la page archivée (au lieu de 10 / 50 supposés)
+   Argon jusqu'au 30 novembre 2026 : 2 / 10 : G 0.052, A 0.038, ADJ 0.052 ; pilote ordinaire (supposé, 30 %) 300.16 (contre 337.42) ; plafond minimal pour 40 graines, tout item L au plafond : 545.93
+   Argon à partir du 1er décembre 2026 : 4 / 20 : G 0.104, A 0.076, ADJ 0.104 ; pilote ordinaire (supposé, 30 %) 309.47 (contre 337.42) ; plafond minimal pour 40 graines, tout item L au plafond : 553.86

@@ -1,0 +1,1934 @@
+{
+ "version": "v2",
+ "statut": "exploratoire, non opposable ; seule la règle primaire porte un verdict",
+ "regle_primaire": {
+  "enonce": "Règle primaire unique, gelée avant toute exécution réelle (v2, 29 octobre 2026). Pour chaque sonde principale de P3 (une par concept, à sa couche : tromperie-difference_moyennes-c15, enjeux-lineaire-c15) et pour chacune des deux lentilles (logits, jacobienne), on décode la direction +w (variante « direction », sens de la classe 1). S = nombre de jetons de la liste du concept propre (concepts-sondes-p3-v2.json, jetons de début de mot) parmi les 20 jetons de tête, la tête étant restreinte aux jetons de début de mot (un espace initial, puis une lettre, puis lettres ou chiffres). On calcule la même statistique, par la même lentille et à la même couche, pour deux distributions nulles : 200 directions isotropes (graine 20261029, numpy.random.SeedSequence) et les planchers appariés en covariance de P3 pour ce concept (200 dans le run 20261019-230011-p3-reel ; refus en dessous de 100). Verdict « cohérent » si S >= 2 et si S est strictement supérieur au quantile 0,99 (méthode inverted_cdf de numpy) de chacune des deux distributions nulles ; sinon « non cohérent ». Quatre verdicts, lus tels quels, sans correction, sans seuil de rechange, sans autre liste de mots. Tout le reste de la sortie (scores z, p, têtes brutes, sens moins, autre concept, autres sondes et couches, variantes) est descriptif et ne sert pas de critère.",
+  "empreinte_enonce": "c1b21cd6f67bb4b46f9d4514abd1d00757226b28d35604ad87d780f30e250339",
+  "parametres": {
+   "k": 20,
+   "n_isotropes": 200,
+   "graine": 20261029,
+   "quantile": 0.99,
+   "methode_quantile": "inverted_cdf",
+   "min_jetons": 2,
+   "n_planchers_min": 100
+  },
+  "complete": false,
+  "verdicts": []
+ },
+ "convention_couche": "couche ℓ de P3 = clé ℓ de la lentille (sortie du bloc décodeur ℓ, indice à partir de 0) ; voir note-convention-couche-jlens-p3-v1.md",
+ "lecture_des_signes": "plus = direction +w (vers la classe 1 : consigne malhonnête pour « tromperie », « high-stakes » pour « enjeux ») ; moins = −w",
+ "run_sondes": "essai-factice-jlens-v2",
+ "principales": {
+  "tromperie": "tromperie-difference_moyennes-c15",
+  "enjeux": "enjeux-lineaire-c15"
+ },
+ "lentille_meta": {
+  "n_prompts": 461,
+  "d_model": 128,
+  "source_layers": [
+   0,
+   1,
+   2,
+   3,
+   4,
+   5,
+   6,
+   7,
+   8,
+   9,
+   10,
+   11,
+   12,
+   13,
+   14,
+   15,
+   16,
+   17,
+   18,
+   19,
+   20,
+   21,
+   22,
+   23,
+   24,
+   25,
+   26,
+   27,
+   28,
+   29,
+   30
+  ]
+ },
+ "lentille_ajustee_sur": "inconnu",
+ "largeur": 128,
+ "vocabulaire": {
+  "taille_desembedding": 2000,
+  "format": "tokenizer.json",
+  "jetons_lus": 2000,
+  "manquants": 0,
+  "jetons_mots": 1993,
+  "jetons_debut_de_mot": 1293
+ },
+ "parametres": {
+  "sondes": "principales-par-couche",
+  "un_seul_couple": "enjeux-lineaire-c7,7",
+  "variantes": [
+   "direction"
+  ],
+  "alpha": null,
+  "correspondance": "début de mot, exacte, casse libre"
+ },
+ "concepts": {
+  "tromperie": {
+   "mots": [
+    "lie",
+    "lies",
+    "lying",
+    "liar",
+    "lied",
+    "deceive",
+    "deceived",
+    "deception",
+    "deceptive",
+    "dishonest",
+    "falsely",
+    "fake",
+    "pretend",
+    "pretending",
+    "untrue",
+    "misleading",
+    "fraud",
+    "cheat",
+    "cheating",
+    "trick",
+    "fabricated",
+    "hoax",
+    "manipulate",
+    "conceal"
+   ],
+   "jetons": [
+    {
+     "id": 3,
+     "texte": " lie"
+    },
+    {
+     "id": 5,
+     "texte": " lies"
+    },
+    {
+     "id": 7,
+     "texte": " lying"
+    },
+    {
+     "id": 9,
+     "texte": " liar"
+    },
+    {
+     "id": 11,
+     "texte": " lied"
+    },
+    {
+     "id": 13,
+     "texte": " deceive"
+    },
+    {
+     "id": 15,
+     "texte": " deceived"
+    },
+    {
+     "id": 17,
+     "texte": " deception"
+    },
+    {
+     "id": 19,
+     "texte": " deceptive"
+    },
+    {
+     "id": 21,
+     "texte": " dishonest"
+    },
+    {
+     "id": 23,
+     "texte": " falsely"
+    },
+    {
+     "id": 25,
+     "texte": " fake"
+    },
+    {
+     "id": 27,
+     "texte": " pretend"
+    },
+    {
+     "id": 29,
+     "texte": " pretending"
+    },
+    {
+     "id": 31,
+     "texte": " untrue"
+    },
+    {
+     "id": 33,
+     "texte": " misleading"
+    },
+    {
+     "id": 35,
+     "texte": " fraud"
+    },
+    {
+     "id": 37,
+     "texte": " cheat"
+    },
+    {
+     "id": 39,
+     "texte": " cheating"
+    },
+    {
+     "id": 41,
+     "texte": " trick"
+    },
+    {
+     "id": 43,
+     "texte": " fabricated"
+    },
+    {
+     "id": 45,
+     "texte": " hoax"
+    },
+    {
+     "id": 47,
+     "texte": " manipulate"
+    },
+    {
+     "id": 49,
+     "texte": " conceal"
+    },
+    {
+     "id": 51,
+     "texte": " Lie"
+    }
+   ],
+   "jetons_par_mot": {
+    "lie": [
+     " lie",
+     " Lie"
+    ],
+    "lies": [
+     " lies"
+    ],
+    "lying": [
+     " lying"
+    ],
+    "liar": [
+     " liar"
+    ],
+    "lied": [
+     " lied"
+    ],
+    "deceive": [
+     " deceive"
+    ],
+    "deceived": [
+     " deceived"
+    ],
+    "deception": [
+     " deception"
+    ],
+    "deceptive": [
+     " deceptive"
+    ],
+    "dishonest": [
+     " dishonest"
+    ],
+    "falsely": [
+     " falsely"
+    ],
+    "fake": [
+     " fake"
+    ],
+    "pretend": [
+     " pretend"
+    ],
+    "pretending": [
+     " pretending"
+    ],
+    "untrue": [
+     " untrue"
+    ],
+    "misleading": [
+     " misleading"
+    ],
+    "fraud": [
+     " fraud"
+    ],
+    "cheat": [
+     " cheat"
+    ],
+    "cheating": [
+     " cheating"
+    ],
+    "trick": [
+     " trick"
+    ],
+    "fabricated": [
+     " fabricated"
+    ],
+    "hoax": [
+     " hoax"
+    ],
+    "manipulate": [
+     " manipulate"
+    ],
+    "conceal": [
+     " conceal"
+    ]
+   }
+  },
+  "enjeux": {
+   "mots": [
+    "danger",
+    "dangerous",
+    "risk",
+    "risky",
+    "urgent",
+    "urgency",
+    "emergency",
+    "critical",
+    "crisis",
+    "serious",
+    "severe",
+    "fatal",
+    "death",
+    "deadly",
+    "safety",
+    "threat",
+    "harm",
+    "lawsuit",
+    "catastrophic",
+    "disaster",
+    "stakes",
+    "consequences",
+    "surgery",
+    "bankrupt",
+    "fired",
+    "jail"
+   ],
+   "jetons": [
+    {
+     "id": 52,
+     "texte": " danger"
+    },
+    {
+     "id": 54,
+     "texte": " dangerous"
+    },
+    {
+     "id": 56,
+     "texte": " risk"
+    },
+    {
+     "id": 58,
+     "texte": " risky"
+    },
+    {
+     "id": 60,
+     "texte": " urgent"
+    },
+    {
+     "id": 62,
+     "texte": " urgency"
+    },
+    {
+     "id": 64,
+     "texte": " emergency"
+    },
+    {
+     "id": 66,
+     "texte": " critical"
+    },
+    {
+     "id": 68,
+     "texte": " crisis"
+    },
+    {
+     "id": 70,
+     "texte": " serious"
+    },
+    {
+     "id": 72,
+     "texte": " severe"
+    },
+    {
+     "id": 74,
+     "texte": " fatal"
+    },
+    {
+     "id": 76,
+     "texte": " death"
+    },
+    {
+     "id": 78,
+     "texte": " deadly"
+    },
+    {
+     "id": 80,
+     "texte": " safety"
+    },
+    {
+     "id": 82,
+     "texte": " threat"
+    },
+    {
+     "id": 84,
+     "texte": " harm"
+    },
+    {
+     "id": 86,
+     "texte": " lawsuit"
+    },
+    {
+     "id": 88,
+     "texte": " catastrophic"
+    },
+    {
+     "id": 90,
+     "texte": " disaster"
+    },
+    {
+     "id": 92,
+     "texte": " stakes"
+    },
+    {
+     "id": 94,
+     "texte": " consequences"
+    },
+    {
+     "id": 96,
+     "texte": " surgery"
+    },
+    {
+     "id": 98,
+     "texte": " bankrupt"
+    },
+    {
+     "id": 100,
+     "texte": " fired"
+    },
+    {
+     "id": 102,
+     "texte": " jail"
+    },
+    {
+     "id": 104,
+     "texte": " Danger"
+    }
+   ],
+   "jetons_par_mot": {
+    "danger": [
+     " danger",
+     " Danger"
+    ],
+    "dangerous": [
+     " dangerous"
+    ],
+    "risk": [
+     " risk"
+    ],
+    "risky": [
+     " risky"
+    ],
+    "urgent": [
+     " urgent"
+    ],
+    "urgency": [
+     " urgency"
+    ],
+    "emergency": [
+     " emergency"
+    ],
+    "critical": [
+     " critical"
+    ],
+    "crisis": [
+     " crisis"
+    ],
+    "serious": [
+     " serious"
+    ],
+    "severe": [
+     " severe"
+    ],
+    "fatal": [
+     " fatal"
+    ],
+    "death": [
+     " death"
+    ],
+    "deadly": [
+     " deadly"
+    ],
+    "safety": [
+     " safety"
+    ],
+    "threat": [
+     " threat"
+    ],
+    "harm": [
+     " harm"
+    ],
+    "lawsuit": [
+     " lawsuit"
+    ],
+    "catastrophic": [
+     " catastrophic"
+    ],
+    "disaster": [
+     " disaster"
+    ],
+    "stakes": [
+     " stakes"
+    ],
+    "consequences": [
+     " consequences"
+    ],
+    "surgery": [
+     " surgery"
+    ],
+    "bankrupt": [
+     " bankrupt"
+    ],
+    "fired": [
+     " fired"
+    ],
+    "jail": [
+     " jail"
+    ]
+   }
+  }
+ },
+ "sondes": [
+  {
+   "nom": "enjeux-lineaire-c7",
+   "concept": "enjeux",
+   "principale": false,
+   "famille": "lineaire",
+   "couche": 7,
+   "classe": "SondeLineaireJetons",
+   "agregation": "max",
+   "empreinte": "c2d988e28bb26a18de08e110ff8f0a6eb9d7a080033beea43a57ffc5b95066db",
+   "biais_b": -0.6133606828501018,
+   "norme_w": 10.383363081589831,
+   "norme_Jw_sur_norme_w": 1.0000002314420366,
+   "cosinus_w_Jw": -0.15505398942747525,
+   "regle": {
+    "logits": {
+     "S": 0,
+     "isotropes": {
+      "n": 200,
+      "quantile_0_99": 2.0,
+      "p_haut_diagnostic": 1.0,
+      "comptes": {
+       "0": 127,
+       "1": 61,
+       "2": 10,
+       "3": 1,
+       "4": 1
+      }
+     },
+     "planchers": {
+      "statut": "absents à cette couche pour ce concept"
+     },
+     "comptes_par_concept_diagnostic": {
+      "tromperie": 0,
+      "enjeux": 0
+     },
+     "statut": "descriptif, hors règle primaire ; planchers absents : isotropes seules",
+     "verdict_descriptif": "non cohérent"
+    },
+    "jacobienne": {
+     "S": 0,
+     "isotropes": {
+      "n": 200,
+      "quantile_0_99": 2.0,
+      "p_haut_diagnostic": 1.0,
+      "comptes": {
+       "0": 135,
+       "1": 54,
+       "2": 11
+      }
+     },
+     "planchers": {
+      "statut": "absents à cette couche pour ce concept"
+     },
+     "comptes_par_concept_diagnostic": {
+      "tromperie": 0,
+      "enjeux": 0
+     },
+     "statut": "descriptif, hors règle primaire ; planchers absents : isotropes seules",
+     "verdict_descriptif": "non cohérent"
+    }
+   },
+   "variantes": {
+    "direction": {
+     "logits": {
+      "plus": {
+       "tete": [
+        {
+         "id": 1139,
+         "texte": "prafo",
+         "logit": 3.614342
+        },
+        {
+         "id": 1857,
+         "texte": " riquizen",
+         "logit": 3.073279
+        },
+        {
+         "id": 1776,
+         "texte": "barmizen",
+         "logit": 2.875252
+        },
+        {
+         "id": 1461,
+         "texte": "barfoka",
+         "logit": 2.795633
+        },
+        {
+         "id": 1056,
+         "texte": " lodorri",
+         "logit": 2.760052
+        },
+        {
+         "id": 960,
+         "texte": " sunsunmi",
+         "logit": 2.758436
+        },
+        {
+         "id": 337,
+         "texte": " prater",
+         "logit": 2.728351
+        },
+        {
+         "id": 1371,
+         "texte": " pradorka",
+         "logit": 2.655509
+        },
+        {
+         "id": 1256,
+         "texte": " zenquizen",
+         "logit": 2.593303
+        },
+        {
+         "id": 1970,
+         "texte": " dorgosa",
+         "logit": 2.528776
+        },
+        {
+         "id": 780,
+         "texte": " prafo",
+         "logit": 2.520115
+        },
+        {
+         "id": 462,
+         "texte": "saka",
+         "logit": 2.517952
+        },
+        {
+         "id": 1483,
+         "texte": " godorka",
+         "logit": 2.512691
+        },
+        {
+         "id": 933,
+         "texte": " gopravel",
+         "logit": 2.496379
+        },
+        {
+         "id": 1261,
+         "texte": " barrimi",
+         "logit": 2.486812
+        },
+        {
+         "id": 722,
+         "texte": " dordorri",
+         "logit": 2.473287
+        },
+        {
+         "id": 1912,
+         "texte": "zenzenzen",
+         "logit": 2.451147
+        },
+        {
+         "id": 677,
+         "texte": "zenpraul",
+         "logit": 2.428995
+        },
+        {
+         "id": 1889,
+         "texte": " misundor",
+         "logit": 2.406014
+        },
+        {
+         "id": 915,
+         "texte": "rilo",
+         "logit": 2.35072
+        }
+       ],
+       "tete_mots": [
+        {
+         "id": 1139,
+         "texte": "prafo",
+         "logit": 3.614342
+        },
+        {
+         "id": 1857,
+         "texte": " riquizen",
+         "logit": 3.073279
+        },
+        {
+         "id": 1776,
+         "texte": "barmizen",
+         "logit": 2.875252
+        },
+        {
+         "id": 1461,
+         "texte": "barfoka",
+         "logit": 2.795633
+        },
+        {
+         "id": 1056,
+         "texte": " lodorri",
+         "logit": 2.760052
+        },
+        {
+         "id": 960,
+         "texte": " sunsunmi",
+         "logit": 2.758436
+        },
+        {
+         "id": 337,
+         "texte": " prater",
+         "logit": 2.728351
+        },
+        {
+         "id": 1371,
+         "texte": " pradorka",
+         "logit": 2.655509
+        },
+        {
+         "id": 1256,
+         "texte": " zenquizen",
+         "logit": 2.593303
+        },
+        {
+         "id": 1970,
+         "texte": " dorgosa",
+         "logit": 2.528776
+        },
+        {
+         "id": 780,
+         "texte": " prafo",
+         "logit": 2.520115
+        },
+        {
+         "id": 462,
+         "texte": "saka",
+         "logit": 2.517952
+        },
+        {
+         "id": 1483,
+         "texte": " godorka",
+         "logit": 2.512691
+        },
+        {
+         "id": 933,
+         "texte": " gopravel",
+         "logit": 2.496379
+        },
+        {
+         "id": 1261,
+         "texte": " barrimi",
+         "logit": 2.486812
+        },
+        {
+         "id": 722,
+         "texte": " dordorri",
+         "logit": 2.473287
+        },
+        {
+         "id": 1912,
+         "texte": "zenzenzen",
+         "logit": 2.451147
+        },
+        {
+         "id": 677,
+         "texte": "zenpraul",
+         "logit": 2.428995
+        },
+        {
+         "id": 1889,
+         "texte": " misundor",
+         "logit": 2.406014
+        },
+        {
+         "id": 915,
+         "texte": "rilo",
+         "logit": 2.35072
+        }
+       ],
+       "tete_debut_de_mot": [
+        {
+         "id": 1857,
+         "texte": " riquizen",
+         "logit": 3.073279
+        },
+        {
+         "id": 1056,
+         "texte": " lodorri",
+         "logit": 2.760052
+        },
+        {
+         "id": 960,
+         "texte": " sunsunmi",
+         "logit": 2.758436
+        },
+        {
+         "id": 337,
+         "texte": " prater",
+         "logit": 2.728351
+        },
+        {
+         "id": 1371,
+         "texte": " pradorka",
+         "logit": 2.655509
+        },
+        {
+         "id": 1256,
+         "texte": " zenquizen",
+         "logit": 2.593303
+        },
+        {
+         "id": 1970,
+         "texte": " dorgosa",
+         "logit": 2.528776
+        },
+        {
+         "id": 780,
+         "texte": " prafo",
+         "logit": 2.520115
+        },
+        {
+         "id": 1483,
+         "texte": " godorka",
+         "logit": 2.512691
+        },
+        {
+         "id": 933,
+         "texte": " gopravel",
+         "logit": 2.496379
+        },
+        {
+         "id": 1261,
+         "texte": " barrimi",
+         "logit": 2.486812
+        },
+        {
+         "id": 722,
+         "texte": " dordorri",
+         "logit": 2.473287
+        },
+        {
+         "id": 1889,
+         "texte": " misundor",
+         "logit": 2.406014
+        },
+        {
+         "id": 278,
+         "texte": " goqui",
+         "logit": 2.274446
+        },
+        {
+         "id": 595,
+         "texte": " prasun",
+         "logit": 2.274353
+        },
+        {
+         "id": 1543,
+         "texte": " ulkanex",
+         "logit": 2.199903
+        },
+        {
+         "id": 292,
+         "texte": " dorpra",
+         "logit": 2.174428
+        },
+        {
+         "id": 1555,
+         "texte": " fodor",
+         "logit": 2.105163
+        },
+        {
+         "id": 994,
+         "texte": " sarika",
+         "logit": 2.081097
+        },
+        {
+         "id": 1980,
+         "texte": " dorlozen",
+         "logit": 2.068875
+        }
+       ]
+      },
+      "moins": {
+       "tete": [
+        {
+         "id": 295,
+         "texte": " kariqui",
+         "logit": 3.066442
+        },
+        {
+         "id": 1708,
+         "texte": " ullofo",
+         "logit": 3.059996
+        },
+        {
+         "id": 330,
+         "texte": " lomi",
+         "logit": 2.996783
+        },
+        {
+         "id": 280,
+         "texte": "kari",
+         "logit": 2.921552
+        },
+        {
+         "id": 1643,
+         "texte": "barvelul",
+         "logit": 2.881922
+        },
+        {
+         "id": 770,
+         "texte": " ririka",
+         "logit": 2.878545
+        },
+        {
+         "id": 422,
+         "texte": "foulri",
+         "logit": 2.74424
+        },
+        {
+         "id": 372,
+         "texte": " nexul",
+         "logit": 2.632752
+        },
+        {
+         "id": 1870,
+         "texte": "mikaul",
+         "logit": 2.598141
+        },
+        {
+         "id": 673,
+         "texte": " bardor",
+         "logit": 2.525522
+        },
+        {
+         "id": 1739,
+         "texte": " bardordor",
+         "logit": 2.522586
+        },
+        {
+         "id": 189,
+         "texte": " ululfo",
+         "logit": 2.501772
+        },
+        {
+         "id": 1279,
+         "texte": " quinexdor",
+         "logit": 2.429297
+        },
+        {
+         "id": 377,
+         "texte": "nexdorqui",
+         "logit": 2.414645
+        },
+        {
+         "id": 819,
+         "texte": "lolo",
+         "logit": 2.398163
+        },
+        {
+         "id": 85,
+         "texte": "harm",
+         "logit": 2.321126
+        },
+        {
+         "id": 1869,
+         "texte": "rinexfo",
+         "logit": 2.300694
+        },
+        {
+         "id": 1520,
+         "texte": " sunvelfo",
+         "logit": 2.259749
+        },
+        {
+         "id": 1693,
+         "texte": " loulfo",
+         "logit": 2.255988
+        },
+        {
+         "id": 21,
+         "texte": " dishonest",
+         "logit": 2.224428
+        }
+       ],
+       "tete_mots": [
+        {
+         "id": 295,
+         "texte": " kariqui",
+         "logit": 3.066442
+        },
+        {
+         "id": 1708,
+         "texte": " ullofo",
+         "logit": 3.059996
+        },
+        {
+         "id": 330,
+         "texte": " lomi",
+         "logit": 2.996783
+        },
+        {
+         "id": 280,
+         "texte": "kari",
+         "logit": 2.921552
+        },
+        {
+         "id": 1643,
+         "texte": "barvelul",
+         "logit": 2.881922
+        },
+        {
+         "id": 770,
+         "texte": " ririka",
+         "logit": 2.878545
+        },
+        {
+         "id": 422,
+         "texte": "foulri",
+         "logit": 2.74424
+        },
+        {
+         "id": 372,
+         "texte": " nexul",
+         "logit": 2.632752
+        },
+        {
+         "id": 1870,
+         "texte": "mikaul",
+         "logit": 2.598141
+        },
+        {
+         "id": 673,
+         "texte": " bardor",
+         "logit": 2.525522
+        },
+        {
+         "id": 1739,
+         "texte": " bardordor",
+         "logit": 2.522586
+        },
+        {
+         "id": 189,
+         "texte": " ululfo",
+         "logit": 2.501772
+        },
+        {
+         "id": 1279,
+         "texte": " quinexdor",
+         "logit": 2.429297
+        },
+        {
+         "id": 377,
+         "texte": "nexdorqui",
+         "logit": 2.414645
+        },
+        {
+         "id": 819,
+         "texte": "lolo",
+         "logit": 2.398163
+        },
+        {
+         "id": 85,
+         "texte": "harm",
+         "logit": 2.321126
+        },
+        {
+         "id": 1869,
+         "texte": "rinexfo",
+         "logit": 2.300694
+        },
+        {
+         "id": 1520,
+         "texte": " sunvelfo",
+         "logit": 2.259749
+        },
+        {
+         "id": 1693,
+         "texte": " loulfo",
+         "logit": 2.255988
+        },
+        {
+         "id": 21,
+         "texte": " dishonest",
+         "logit": 2.224428
+        }
+       ],
+       "tete_debut_de_mot": [
+        {
+         "id": 295,
+         "texte": " kariqui",
+         "logit": 3.066442
+        },
+        {
+         "id": 1708,
+         "texte": " ullofo",
+         "logit": 3.059996
+        },
+        {
+         "id": 330,
+         "texte": " lomi",
+         "logit": 2.996783
+        },
+        {
+         "id": 770,
+         "texte": " ririka",
+         "logit": 2.878545
+        },
+        {
+         "id": 372,
+         "texte": " nexul",
+         "logit": 2.632752
+        },
+        {
+         "id": 673,
+         "texte": " bardor",
+         "logit": 2.525522
+        },
+        {
+         "id": 1739,
+         "texte": " bardordor",
+         "logit": 2.522586
+        },
+        {
+         "id": 189,
+         "texte": " ululfo",
+         "logit": 2.501772
+        },
+        {
+         "id": 1279,
+         "texte": " quinexdor",
+         "logit": 2.429297
+        },
+        {
+         "id": 1520,
+         "texte": " sunvelfo",
+         "logit": 2.259749
+        },
+        {
+         "id": 1693,
+         "texte": " loulfo",
+         "logit": 2.255988
+        },
+        {
+         "id": 21,
+         "texte": " dishonest",
+         "logit": 2.224428
+        },
+        {
+         "id": 1314,
+         "texte": " quivelsa",
+         "logit": 2.191919
+        },
+        {
+         "id": 1083,
+         "texte": " kago",
+         "logit": 2.184973
+        },
+        {
+         "id": 1931,
+         "texte": " golovel",
+         "logit": 2.136224
+        },
+        {
+         "id": 529,
+         "texte": " midor",
+         "logit": 2.102997
+        },
+        {
+         "id": 602,
+         "texte": " loter",
+         "logit": 2.102827
+        },
+        {
+         "id": 586,
+         "texte": " saul",
+         "logit": 2.100312
+        },
+        {
+         "id": 1392,
+         "texte": " lodorzen",
+         "logit": 2.078161
+        },
+        {
+         "id": 990,
+         "texte": " rigolo",
+         "logit": 2.071714
+        }
+       ]
+      },
+      "diagnostics_z": {
+       "tromperie": {
+        "z": -0.012406662523006174,
+        "jetons_concept": 25,
+        "n_concept_tete_plus": 0,
+        "n_concept_tete_moins": 1,
+        "meilleur_rang_plus": 60,
+        "meilleur_rang_moins": 20,
+        "isotropes": {
+         "n": 200,
+         "p_haut": 0.5373134328358209,
+         "p_bas": 0.46766169154228854,
+         "p_bilateral": 0.945273631840796,
+         "z_quantiles_5_50_95": [
+          -0.306896323977558,
+          -0.0012650257298578078,
+          0.30422059301556303
+         ]
+        },
+        "planchers": {
+         "statut": "pas de plancher de ce concept à cette couche"
+        }
+       },
+       "enjeux": {
+        "z": 0.3803038446908464,
+        "jetons_concept": 27,
+        "n_concept_tete_plus": 0,
+        "n_concept_tete_moins": 0,
+        "meilleur_rang_plus": 34,
+        "meilleur_rang_moins": 227,
+        "isotropes": {
+         "n": 200,
+         "p_haut": 0.03980099502487562,
+         "p_bas": 0.9651741293532339,
+         "p_bilateral": 0.06467661691542288,
+         "z_quantiles_5_50_95": [
+          -0.32473876958559933,
+          -0.009725679398424362,
+          0.36177384285898856
+         ]
+        },
+        "planchers": {
+         "statut": "pas de plancher de ce concept à cette couche"
+        }
+       }
+      }
+     },
+     "jacobienne": {
+      "plus": {
+       "tete": [
+        {
+         "id": 151,
+         "texte": " zengori",
+         "logit": 3.433383
+        },
+        {
+         "id": 1916,
+         "texte": "ulsasun",
+         "logit": 3.260785
+        },
+        {
+         "id": 1020,
+         "texte": " kakago",
+         "logit": 3.028434
+        },
+        {
+         "id": 1917,
+         "texte": " zenquiul",
+         "logit": 3.018
+        },
+        {
+         "id": 815,
+         "texte": " kasa",
+         "logit": 2.901649
+        },
+        {
+         "id": 1744,
+         "texte": " mimiri",
+         "logit": 2.706949
+        },
+        {
+         "id": 1977,
+         "texte": " miquigo",
+         "logit": 2.677712
+        },
+        {
+         "id": 254,
+         "texte": " nexlo",
+         "logit": 2.668485
+        },
+        {
+         "id": 478,
+         "texte": " zenfosun",
+         "logit": 2.667483
+        },
+        {
+         "id": 1717,
+         "texte": "sapraqui",
+         "logit": 2.632694
+        },
+        {
+         "id": 1068,
+         "texte": "quibarbar",
+         "logit": 2.619274
+        },
+        {
+         "id": 159,
+         "texte": " ul",
+         "logit": 2.613056
+        },
+        {
+         "id": 659,
+         "texte": " zensunter",
+         "logit": 2.573998
+        },
+        {
+         "id": 1852,
+         "texte": "gonexvel",
+         "logit": 2.446888
+        },
+        {
+         "id": 1458,
+         "texte": "velulmi",
+         "logit": 2.431661
+        },
+        {
+         "id": 1182,
+         "texte": " nexzenzen",
+         "logit": 2.397755
+        },
+        {
+         "id": 407,
+         "texte": "prabarfo",
+         "logit": 2.356993
+        },
+        {
+         "id": 1991,
+         "texte": " ulnexsun",
+         "logit": 2.345954
+        },
+        {
+         "id": 1299,
+         "texte": "quiquizen",
+         "logit": 2.332855
+        },
+        {
+         "id": 1688,
+         "texte": " mipra",
+         "logit": 2.317715
+        }
+       ],
+       "tete_mots": [
+        {
+         "id": 151,
+         "texte": " zengori",
+         "logit": 3.433383
+        },
+        {
+         "id": 1916,
+         "texte": "ulsasun",
+         "logit": 3.260785
+        },
+        {
+         "id": 1020,
+         "texte": " kakago",
+         "logit": 3.028434
+        },
+        {
+         "id": 1917,
+         "texte": " zenquiul",
+         "logit": 3.018
+        },
+        {
+         "id": 815,
+         "texte": " kasa",
+         "logit": 2.901649
+        },
+        {
+         "id": 1744,
+         "texte": " mimiri",
+         "logit": 2.706949
+        },
+        {
+         "id": 1977,
+         "texte": " miquigo",
+         "logit": 2.677712
+        },
+        {
+         "id": 254,
+         "texte": " nexlo",
+         "logit": 2.668485
+        },
+        {
+         "id": 478,
+         "texte": " zenfosun",
+         "logit": 2.667483
+        },
+        {
+         "id": 1717,
+         "texte": "sapraqui",
+         "logit": 2.632694
+        },
+        {
+         "id": 1068,
+         "texte": "quibarbar",
+         "logit": 2.619274
+        },
+        {
+         "id": 159,
+         "texte": " ul",
+         "logit": 2.613056
+        },
+        {
+         "id": 659,
+         "texte": " zensunter",
+         "logit": 2.573998
+        },
+        {
+         "id": 1852,
+         "texte": "gonexvel",
+         "logit": 2.446888
+        },
+        {
+         "id": 1458,
+         "texte": "velulmi",
+         "logit": 2.431661
+        },
+        {
+         "id": 1182,
+         "texte": " nexzenzen",
+         "logit": 2.397755
+        },
+        {
+         "id": 407,
+         "texte": "prabarfo",
+         "logit": 2.356993
+        },
+        {
+         "id": 1991,
+         "texte": " ulnexsun",
+         "logit": 2.345954
+        },
+        {
+         "id": 1299,
+         "texte": "quiquizen",
+         "logit": 2.332855
+        },
+        {
+         "id": 1688,
+         "texte": " mipra",
+         "logit": 2.317715
+        }
+       ],
+       "tete_debut_de_mot": [
+        {
+         "id": 151,
+         "texte": " zengori",
+         "logit": 3.433383
+        },
+        {
+         "id": 1020,
+         "texte": " kakago",
+         "logit": 3.028434
+        },
+        {
+         "id": 1917,
+         "texte": " zenquiul",
+         "logit": 3.018
+        },
+        {
+         "id": 815,
+         "texte": " kasa",
+         "logit": 2.901649
+        },
+        {
+         "id": 1744,
+         "texte": " mimiri",
+         "logit": 2.706949
+        },
+        {
+         "id": 1977,
+         "texte": " miquigo",
+         "logit": 2.677712
+        },
+        {
+         "id": 254,
+         "texte": " nexlo",
+         "logit": 2.668485
+        },
+        {
+         "id": 478,
+         "texte": " zenfosun",
+         "logit": 2.667483
+        },
+        {
+         "id": 159,
+         "texte": " ul",
+         "logit": 2.613056
+        },
+        {
+         "id": 659,
+         "texte": " zensunter",
+         "logit": 2.573998
+        },
+        {
+         "id": 1182,
+         "texte": " nexzenzen",
+         "logit": 2.397755
+        },
+        {
+         "id": 1991,
+         "texte": " ulnexsun",
+         "logit": 2.345954
+        },
+        {
+         "id": 1688,
+         "texte": " mipra",
+         "logit": 2.317715
+        },
+        {
+         "id": 245,
+         "texte": " gofo",
+         "logit": 2.304127
+        },
+        {
+         "id": 1281,
+         "texte": " dorfodor",
+         "logit": 2.278238
+        },
+        {
+         "id": 894,
+         "texte": " fonex",
+         "logit": 2.267963
+        },
+        {
+         "id": 1297,
+         "texte": " nexkalo",
+         "logit": 2.260919
+        },
+        {
+         "id": 1747,
+         "texte": " velsunka",
+         "logit": 2.218682
+        },
+        {
+         "id": 202,
+         "texte": " sunzenmi",
+         "logit": 2.18782
+        },
+        {
+         "id": 1301,
+         "texte": " barulgo",
+         "logit": 2.156304
+        }
+       ]
+      },
+      "moins": {
+       "tete": [
+        {
+         "id": 1366,
+         "texte": " praquinex",
+         "logit": 3.655886
+        },
+        {
+         "id": 156,
+         "texte": "barsater",
+         "logit": 3.112895
+        },
+        {
+         "id": 1944,
+         "texte": " sungonex",
+         "logit": 3.111699
+        },
+        {
+         "id": 23,
+         "texte": " falsely",
+         "logit": 3.092957
+        },
+        {
+         "id": 743,
+         "texte": "kasunlo",
+         "logit": 3.047992
+        },
+        {
+         "id": 820,
+         "texte": " zenmidor",
+         "logit": 2.740227
+        },
+        {
+         "id": 1435,
+         "texte": "termi",
+         "logit": 2.703444
+        },
+        {
+         "id": 1328,
+         "texte": " govelka",
+         "logit": 2.66158
+        },
+        {
+         "id": 1305,
+         "texte": " foterfo",
+         "logit": 2.63024
+        },
+        {
+         "id": 1593,
+         "texte": " foprapra",
+         "logit": 2.556313
+        },
+        {
+         "id": 1347,
+         "texte": " goloqui",
+         "logit": 2.498312
+        },
+        {
+         "id": 1131,
+         "texte": " dorsa",
+         "logit": 2.49253
+        },
+        {
+         "id": 144,
+         "texte": " pra",
+         "logit": 2.476804
+        },
+        {
+         "id": 1040,
+         "texte": "ribargo",
+         "logit": 2.464463
+        },
+        {
+         "id": 479,
+         "texte": "gosater",
+         "logit": 2.424038
+        },
+        {
+         "id": 1076,
+         "texte": "gofoul",
+         "logit": 2.404246
+        },
+        {
+         "id": 462,
+         "texte": "saka",
+         "logit": 2.362338
+        },
+        {
+         "id": 1116,
+         "texte": "lodorgo",
+         "logit": 2.337153
+        },
+        {
+         "id": 0,
+         "texte": "<|begin_of_text|>",
+         "logit": 2.324984
+        },
+        {
+         "id": 1830,
+         "texte": "dorvelsa",
+         "logit": 2.300103
+        }
+       ],
+       "tete_mots": [
+        {
+         "id": 1366,
+         "texte": " praquinex",
+         "logit": 3.655886
+        },
+        {
+         "id": 156,
+         "texte": "barsater",
+         "logit": 3.112895
+        },
+        {
+         "id": 1944,
+         "texte": " sungonex",
+         "logit": 3.111699
+        },
+        {
+         "id": 23,
+         "texte": " falsely",
+         "logit": 3.092957
+        },
+        {
+         "id": 743,
+         "texte": "kasunlo",
+         "logit": 3.047992
+        },
+        {
+         "id": 820,
+         "texte": " zenmidor",
+         "logit": 2.740227
+        },
+        {
+         "id": 1435,
+         "texte": "termi",
+         "logit": 2.703444
+        },
+        {
+         "id": 1328,
+         "texte": " govelka",
+         "logit": 2.66158
+        },
+        {
+         "id": 1305,
+         "texte": " foterfo",
+         "logit": 2.63024
+        },
+        {
+         "id": 1593,
+         "texte": " foprapra",
+         "logit": 2.556313
+        },
+        {
+         "id": 1347,
+         "texte": " goloqui",
+         "logit": 2.498312
+        },
+        {
+         "id": 1131,
+         "texte": " dorsa",
+         "logit": 2.49253
+        },
+        {
+         "id": 144,
+         "texte": " pra",
+         "logit": 2.476804
+        },
+        {
+         "id": 1040,
+         "texte": "ribargo",
+         "logit": 2.464463
+        },
+        {
+         "id": 479,
+         "texte": "gosater",
+         "logit": 2.424038
+        },
+        {
+         "id": 1076,
+         "texte": "gofoul",
+         "logit": 2.404246
+        },
+        {
+         "id": 462,
+         "texte": "saka",
+         "logit": 2.362338
+        },
+        {
+         "id": 1116,
+         "texte": "lodorgo",
+         "logit": 2.337153
+        },
+        {
+         "id": 1830,
+         "texte": "dorvelsa",
+         "logit": 2.300103
+        },
+        {
+         "id": 633,
+         "texte": " riloter",
+         "logit": 2.285799
+        }
+       ],
+       "tete_debut_de_mot": [
+        {
+         "id": 1366,
+         "texte": " praquinex",
+         "logit": 3.655886
+        },
+        {
+         "id": 1944,
+         "texte": " sungonex",
+         "logit": 3.111699
+        },
+        {
+         "id": 23,
+         "texte": " falsely",
+         "logit": 3.092957
+        },
+        {
+         "id": 820,
+         "texte": " zenmidor",
+         "logit": 2.740227
+        },
+        {
+         "id": 1328,
+         "texte": " govelka",
+         "logit": 2.66158
+        },
+        {
+         "id": 1305,
+         "texte": " foterfo",
+         "logit": 2.63024
+        },
+        {
+         "id": 1593,
+         "texte": " foprapra",
+         "logit": 2.556313
+        },
+        {
+         "id": 1347,
+         "texte": " goloqui",
+         "logit": 2.498312
+        },
+        {
+         "id": 1131,
+         "texte": " dorsa",
+         "logit": 2.49253
+        },
+        {
+         "id": 144,
+         "texte": " pra",
+         "logit": 2.476804
+        },
+        {
+         "id": 633,
+         "texte": " riloter",
+         "logit": 2.285799
+        },
+        {
+         "id": 1161,
+         "texte": " foterter",
+         "logit": 2.280881
+        },
+        {
+         "id": 336,
+         "texte": " terfozen",
+         "logit": 2.2684
+        },
+        {
+         "id": 942,
+         "texte": " prasunri",
+         "logit": 2.26481
+        },
+        {
+         "id": 1625,
+         "texte": " pranexpra",
+         "logit": 2.252856
+        },
+        {
+         "id": 1940,
+         "texte": " foquika",
+         "logit": 2.226296
+        },
+        {
+         "id": 527,
+         "texte": " nexgo",
+         "logit": 2.225341
+        },
+        {
+         "id": 620,
+         "texte": " pravel",
+         "logit": 2.173122
+        },
+        {
+         "id": 1705,
+         "texte": " ulquiri",
+         "logit": 2.166423
+        },
+        {
+         "id": 1348,
+         "texte": " kaquidor",
+         "logit": 2.164395
+        }
+       ]
+      },
+      "diagnostics_z": {
+       "tromperie": {
+        "z": -0.5420517482437781,
+        "jetons_concept": 25,
+        "n_concept_tete_plus": 0,
+        "n_concept_tete_moins": 1,
+        "meilleur_rang_plus": 147,
+        "meilleur_rang_moins": 4,
+        "isotropes": {
+         "n": 200,
+         "p_haut": 0.9900497512437811,
+         "p_bas": 0.014925373134328358,
+         "p_bilateral": 0.014925373134328358,
+         "z_quantiles_5_50_95": [
+          -0.2995867798506262,
+          0.013298720076700882,
+          0.3485736417703523
+         ]
+        },
+        "planchers": {
+         "statut": "pas de plancher de ce concept à cette couche"
+        }
+       },
+       "enjeux": {
+        "z": 0.24233278601030883,
+        "jetons_concept": 27,
+        "n_concept_tete_plus": 0,
+        "n_concept_tete_moins": 0,
+        "meilleur_rang_plus": 55,
+        "meilleur_rang_moins": 108,
+        "isotropes": {
+         "n": 200,
+         "p_haut": 0.1044776119402985,
+         "p_bas": 0.900497512437811,
+         "p_bilateral": 0.23880597014925373,
+         "z_quantiles_5_50_95": [
+          -0.32696605883999563,
+          -0.02267669816730755,
+          0.2901229686196697
+         ]
+        },
+        "planchers": {
+         "statut": "pas de plancher de ce concept à cette couche"
+        }
+       }
+      }
+     },
+     "recouvrement": {
+      "plus": {
+       "intersection": 0,
+       "jaccard": 0.0,
+       "communs": []
+      },
+      "moins": {
+       "intersection": 0,
+       "jaccard": 0.0,
+       "communs": []
+      },
+      "plus_mots": {
+       "intersection": 0,
+       "jaccard": 0.0,
+       "communs": []
+      },
+      "moins_mots": {
+       "intersection": 0,
+       "jaccard": 0.0,
+       "communs": []
+      },
+      "plus_debut_de_mot": {
+       "intersection": 0,
+       "jaccard": 0.0,
+       "communs": []
+      },
+      "cosinus_logits_centres": -0.1503156105816323
+     }
+    }
+   }
+  }
+ ]
+}

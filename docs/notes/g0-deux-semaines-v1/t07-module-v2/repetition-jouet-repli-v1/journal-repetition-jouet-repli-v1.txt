@@ -1,0 +1,63 @@
+$ /home/user/controle-ia-travail/.venv/bin/python -m controle_ia.t06.lanceur_v6 --config config-t06-jouet.json --run-id 20261110-060000-t06-jouet
+code 0 en 26.6 s
+--- sortie
+{"commit_cite": null, "config_sha256": "b833f0bccfb00ad81dbc084b899fbb5dccb31e1edc0630b899ee7495c4e661c6", "taches_evaluation_sha256": "96fa55ff0e30e14e4580b7d6e131d934a751ee9106c92163b39f7cd8611bc80d", "consignes_sha256": "a68468fef6286bbcaa31451ba461d0adab2af7d529dd5e4fa0695643e6d1d69c", "adaptateurs": {"saboteur": "f848cf8c768e06987add3e4a9e45b59879e36149c795a68125dc20ec54602b83", "temoin": "e369e02eec145993836666f72b29c987afa3a7b3f73a4d68696b203a1116edc4"}, "mesures_sha256": "4ed23d0656bb506fce869da26aa41844ce7857a8e6299d4d84157c83c2f81a97", "textes_sha256": "991fc16dea4f7863934340ad50b8bb23c32297e27b64e69ebce9cff5ed320659", "sous_ensemble_manifeste_sha256": "d026c4d194a6face0692424168c058c77665715fa3b1ae7af473ab54bc5138a9", "morceaux": 1, "morceaux_reecrits": 0, "episodes": 42, "actions": 84, "actions_notees": 84, "mahalanobis_calcul": "paquet_gele", "controles_negatifs": {"dose0": "conforme", "S50": "non concluant", "S100": "non concluant", "T100": "non concluant"}, "duree_s": 23.2}
+
+--- erreur
+PROGRES 2026-11-10T07:00:31Z etape=format verifie=True
+PROGRES 2026-11-10T07:00:31Z etape=disque libre_go=10.8 pire_cas_go=0.0
+PROGRES 2026-11-10T07:00:33Z etape=distillation-donnees lot=1/1
+PROGRES 2026-11-10T07:00:33Z etape=donnees-distillation saboteur_exemples=2 temoin_exemples=2
+PROGRES 2026-11-10T07:00:33Z etape=distillation adaptateur=saboteur epoque=1 perte=4.9585
+PROGRES 2026-11-10T07:00:33Z etape=adaptateur adaptateur=saboteur empreinte=f848cf8c768e06987add3e4a9e45b59879e36149c795a68125dc20ec54602b83 perte_finale=4.9585
+PROGRES 2026-11-10T07:00:34Z etape=distillation adaptateur=temoin epoque=1 perte=4.9588
+PROGRES 2026-11-10T07:00:34Z etape=adaptateur adaptateur=temoin empreinte=e369e02eec145993836666f72b29c987afa3a7b3f73a4d68696b203a1116edc4 perte_finale=4.9588
+PROGRES 2026-11-10T07:00:34Z etape=identite adaptateurs=2
+PROGRES 2026-11-10T07:00:35Z etape=episodes phase=dose0 lot=1/6 actions=8
+PROGRES 2026-11-10T07:00:36Z etape=episodes phase=dose0 lot=2/6 actions=16
+PROGRES 2026-11-10T07:00:37Z etape=episodes phase=dose0 lot=3/6 actions=24
+PROGRES 2026-11-10T07:00:38Z etape=episodes phase=dose0 lot=4/6 actions=32
+PROGRES 2026-11-10T07:00:39Z etape=episodes phase=dose0 lot=5/6 actions=40
+PROGRES 2026-11-10T07:00:40Z etape=episodes phase=dose0 lot=6/6 actions=48
+PROGRES 2026-11-10T07:00:41Z etape=episodes phase=S50 lot=1/2 actions=56
+PROGRES 2026-11-10T07:00:41Z etape=episodes phase=S50 lot=2/2 actions=60
+PROGRES 2026-11-10T07:00:42Z etape=episodes phase=S100 lot=1/2 actions=68
+PROGRES 2026-11-10T07:00:43Z etape=episodes phase=S100 lot=2/2 actions=72
+PROGRES 2026-11-10T07:00:43Z etape=episodes phase=T100 lot=1/2 actions=80
+PROGRES 2026-11-10T07:00:44Z etape=episodes phase=T100 lot=2/2 actions=84
+PROGRES 2026-11-10T07:00:44Z etape=episodes-ecrits episodes=42 actions=84 morceaux=1 reecrits=0
+PROGRES 2026-11-10T07:00:44Z etape=lecture-cout duree_s=14.9
+PROGRES 2026-11-10T07:00:44Z etape=test-croise jeux=2 duree_s=0.2
+PROGRES 2026-11-10T07:00:45Z etape=couple-descriptif couple=difference_moyennes-c1 duree_s=0.1
+PROGRES 2026-11-10T07:00:45Z etape=couple-descriptif couple=lineaire-c1 duree_s=0.5
+PROGRES 2026-11-10T07:00:46Z etape=couple-descriptif couple=perceptron-c1 duree_s=0.8
+PROGRES 2026-11-10T07:00:47Z etape=couple-descriptif couple=attention-c1 duree_s=0.8
+PROGRES 2026-11-10T07:00:47Z etape=couple-descriptif couple=mahalanobis-c1 duree_s=0.1
+PROGRES 2026-11-10T07:00:48Z etape=couple-descriptif couple=lineaire-c2 duree_s=0.5
+PROGRES 2026-11-10T07:00:48Z etape=couple-descriptif couple=perceptron-c2 duree_s=0.8
+PROGRES 2026-11-10T07:00:49Z etape=couple-descriptif couple=attention-c2 duree_s=0.8
+PROGRES 2026-11-10T07:00:49Z etape=couple-descriptif couple=mahalanobis-c2 duree_s=0.1
+PROGRES 2026-11-10T07:00:50Z etape=couple-descriptif couple=difference_moyennes-c3 duree_s=0.1
+PROGRES 2026-11-10T07:00:50Z etape=couple-descriptif couple=lineaire-c3 duree_s=0.5
+PROGRES 2026-11-10T07:00:51Z etape=couple-descriptif couple=perceptron-c3 duree_s=0.8
+PROGRES 2026-11-10T07:00:52Z etape=couple-descriptif couple=attention-c3 duree_s=0.8
+PROGRES 2026-11-10T07:00:52Z etape=couple-descriptif couple=mahalanobis-c3 duree_s=0.1
+PROGRES 2026-11-10T07:00:52Z etape=fin episodes=42 actions=84
+
+
+$ /home/user/controle-ia-travail/.venv/bin/python -m controle_ia.t07.lecture_v2 repli-recalcul /home/user/wt-t07/.essais-tmp/reprepli/depot 20261110-060000-t06-jouet /home/user/wt-t07/.essais-tmp/reprepli/depot/config-t07-jouet.json --instant 1794293453
+code 0 en 12.7 s
+--- sortie
+repli : 84 actions recalculées, garde d'équivalence passée ; notation scellée, fermée : donnees/20261110-065053-t07-lecture-jouet/scores-actions-t07.npz
+
+--- erreur
+
+
+$ /home/user/controle-ia-travail/.venv/bin/python -m controle_ia.t07.lecture_v2 etape-b /home/user/wt-t07/.essais-tmp/reprepli/depot 20261110-060000-t06-jouet 20261110-065053-t07-lecture-jouet /home/user/wt-t07/.essais-tmp/reprepli/depot/config-t07-jouet.json --instant 1794294165
+code 0 en 4.8 s
+--- sortie
+L1b : T7-P2 rapportée sans conclusion ; critère 3 non lisible pour (ii) (ligne A1b) ; (i) au-dessus
+
+--- erreur
+
+

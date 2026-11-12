@@ -1,0 +1,87 @@
+{
+  "donnees": [
+    {
+      "chemin": "episodes.csv",
+      "sha256": "ccb4e1b593aab87ca3bfacfc5144aca6978de3262a56df67288f66c49ef33ca1"
+    },
+    {
+      "chemin": "evaluateur_lois_v62.py",
+      "sha256": "26613fe72da7f049d5dd076aab51a3808221bf52686b9d0258a201c8b38b8632"
+    }
+  ],
+  "fiche": {
+    "empreinte": "c197af587685f3e0271f753f002a5f97f35778703b78b9f8e626822fd9c322f7",
+    "extraits": {
+      "enonce": "La loi gelée L prédit l'issue mieux que la marginale empirique de la tranche.",
+      "loi_predictive": {
+        "metrique": "richesse W du pari (juge) ; gain moyen de log-score (test de mort)",
+        "prediction": "gain moyen de log-score au moins 0,02 nat par épisode",
+        "signe": "+"
+      },
+      "nom": "Loi à éprouver",
+      "test_de_mort": {
+        "donnees": [
+          "episodes.csv",
+          "evaluateur_lois_v62.py"
+        ],
+        "seuil": "au moins 0,02",
+        "statistique": {
+          "colonne": "gain",
+          "fichier": "gains.csv",
+          "statistique": "moyenne"
+        },
+        "test": "Gain moyen par épisode du log-score de la loi gelée L sur la marginale empirique de la tranche (comptes + 0,5 ; nat), calculé sur episodes.csv par l'évaluateur de référence evaluateur_lois_v62.py (même fichier pour toutes les fiches). gains.csv : colonnes episode, gain ; une ligne par épisode ; valeurs en pleine précision (repr de Python), jamais arrondies. Script attendu, tel quel : import json, runpy ; ev = runpy.run_path('tranche/evaluateur_lois_v62.py') ; ev['ecrire_gains'](json.loads(LOI), 'tranche/episodes.csv', 'gains.csv') ; où LOI est le texte JSON de L ci-dessous, recopié exactement. Loi gelée L (JSON canonique) : {\"biais\":[0.105645,0.310307,-0.402978],\"poids\":[[0.020837,-1.204996],[-2.541291,3.046929],[0.51264,-3.745715]],\"type\":\"softmax\"}"
+      }
+    },
+    "identifiant_auteur": "F-49e67b6fd654",
+    "nom": "Loi à éprouver",
+    "rang_au_classement": 6
+  },
+  "hypothese": "La loi gelée L prédit l'issue mieux que la marginale empirique de la tranche.",
+  "liste_d_arret": [
+    "quota d'exécutions de la fiche épuisé (une demande refusée compte) ; une seule exécution par tour",
+    "délai d'une exécution dépassé : groupe de processus tué, exécution « tuée (délai) »",
+    "plafond en dollars de la fiche atteint ou consigne trop grosse pour le plafond restant : fin des tours de la fiche",
+    "12 tours joués : fin des tours de la fiche",
+    "session ≠ ok (hors dépassement de plafond de la fiche) ou refus de modèle (R-764) : arrêt de l'étage, manifeste écrit",
+    "classement.json modifié pendant l'étage : arrêt (N-053)"
+  ],
+  "metrique": "richesse W du pari (juge) ; gain moyen de log-score (test de mort)",
+  "plan_d_analyse": "le noyau calcule la statistique « moyenne » de la colonne « gain » du fichier « gains.csv » (CSV à en-tête, UTF-8) que le script écrit dans son dossier de travail, sur la copie scellée par le noyau, à la dernière exécution réussie (code 0, non tuée) ; survit si cette valeur ≥ 0.02, sans arrondi ; éliminée sinon ; non concluant si aucune exécution réussie, fichier non produit, non copié, altéré ou illisible, colonne absente, cellule non numérique ou valeur non finie ; le chiffre imprimé par le script (`RESULTAT:`) et toute ligne `CALCUL:` sont consignés comme témoins, jamais décisifs ; ordre des verdicts : non concluant < éliminée < survit, seule « survit » est retenue (R-1057)",
+  "prediction": {
+    "signe": "+",
+    "texte": "gain moyen de log-score au moins 0,02 nat par épisode",
+    "valeur": 0.02
+  },
+  "quotas": {
+    "budget_lecteur_usd": 0.1,
+    "budget_test_usd": 0.8,
+    "delai_execution_s": 120.0,
+    "executions_par_fiche": 3,
+    "memoire_mo": 768,
+    "taille_max_servie_par_fiche": 200000,
+    "tours_max_par_fiche": 12
+  },
+  "regle": "préenregistrement court automatique, extrait de la fiche gelée (aucun champ inventé), scellé avant la première session de l'expérimentateur (R1) ; aucune sélection sur le verdict (N-053)",
+  "regle_de_lecture": "le noyau calcule la statistique « moyenne » de la colonne « gain » du fichier « gains.csv » (CSV à en-tête, UTF-8) que le script écrit dans son dossier de travail, sur la copie scellée par le noyau, à la dernière exécution réussie (code 0, non tuée) ; survit si cette valeur ≥ 0.02, sans arrondi ; éliminée sinon ; non concluant si aucune exécution réussie, fichier non produit, non copié, altéré ou illisible, colonne absente, cellule non numérique ou valeur non finie ; le chiffre imprimé par le script (`RESULTAT:`) et toute ligne `CALCUL:` sont consignés comme témoins, jamais décisifs ; ordre des verdicts : non concluant < éliminée < survit, seule « survit » est retenue (R-1057)",
+  "seuil": {
+    "comparateur": "≥",
+    "origine_du_comparateur": "texte du seuil",
+    "texte": "au moins 0,02",
+    "valeur": 0.02
+  },
+  "statistique": {
+    "colonne": "gain",
+    "fichier": "gains.csv",
+    "statistique": "moyenne"
+  },
+  "statut": "exploratoire : ne confirme rien, ne change rien au classement de la course",
+  "test_de_mort": "Gain moyen par épisode du log-score de la loi gelée L sur la marginale empirique de la tranche (comptes + 0,5 ; nat), calculé sur episodes.csv par l'évaluateur de référence evaluateur_lois_v62.py (même fichier pour toutes les fiches). gains.csv : colonnes episode, gain ; une ligne par épisode ; valeurs en pleine précision (repr de Python), jamais arrondies. Script attendu, tel quel : import json, runpy ; ev = runpy.run_path('tranche/evaluateur_lois_v62.py') ; ev['ecrire_gains'](json.loads(LOI), 'tranche/episodes.csv', 'gains.csv') ; où LOI est le texte JSON de L ci-dessous, recopié exactement. Loi gelée L (JSON canonique) : {\"biais\":[0.105645,0.310307,-0.402978],\"poids\":[[0.020837,-1.204996],[-2.541291,3.046929],[0.51264,-3.745715]],\"type\":\"softmax\"}",
+  "tranche_index_sha256": "a4763cdb95cc5541763fcbc887d02602f8000fcfdc537d1fe488c8c712230552",
+  "verdicts_possibles": [
+    "survit",
+    "éliminée",
+    "non concluant"
+  ],
+  "version_etage": "tests_de_mort_v4 (v57, R-1057 : verdict calculé par le noyau)"
+}

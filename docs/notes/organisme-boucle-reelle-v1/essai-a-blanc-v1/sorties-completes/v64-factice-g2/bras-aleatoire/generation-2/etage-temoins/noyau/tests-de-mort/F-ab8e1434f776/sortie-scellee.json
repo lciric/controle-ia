@@ -1,0 +1,49 @@
+{
+  "executions": [
+    {
+      "code": 0,
+      "commande": [
+        "/home/user/controle-ia-travail/.venv/bin/python",
+        "-I",
+        "-B",
+        "-c",
+        "\nimport builtins, io, os, socket, sys, runpy\n_racine = os.path.realpath(os.getcwd())\ndef _dans_travail(chemin):\n    try:\n        p = os.path.realpath(os.fspath(chemin))\n    except Exception:\n        return False\n    return p == _racine or p.startswith(_racine + os.sep)\ndef _refuser_reseau(*a, **k):\n    raise OSError(101, \"Network is unreachable (exécuteur factice : réseau isolé)\")\nsocket.socket.connect = _refuser_reseau\nsocket.socket.connect_ex = _refuser_reseau\nsocket.create_connection = _refuser_reseau\n_ouvrir_vrai = builtins.open\ndef _ouvrir(fichier, mode=\"r\", *a, **k):\n    if isinstance(fichier, (str, bytes, os.PathLike)) and any(c in mode for c in \"wax+\") and not _dans_travail(fichier):\n        raise PermissionError(30, \"Read-only file system (exécuteur factice)\", fichier)\n    return _ouvrir_vrai(fichier, mode, *a, **k)\nbuiltins.open = _ouvrir\nio.open = _ouvrir\nscript = sys.argv[1]\nsys.argv = [script]\nrunpy.run_path(script, run_name=\"__main__\")\n",
+        "/tmp/claude-0/-home-user/4a4722d4-e39d-57bd-bde3-e6a99e2eecdf/scratchpad/tmp-essai/etage-travail-wdmskyum/F-ab8e1434f776-execution-01/script.py"
+      ],
+      "delai_depasse": false,
+      "duree_s": 0.069,
+      "entrees_non_copiees": [],
+      "fichiers_produits": [
+        {
+          "chemin": "gains.csv",
+          "copie": "produits/gains.csv.copie",
+          "copie_scellee": true,
+          "sha256": "d3ff54d9ebf31c68518d7d7bdd5f1484db95095080c0cc251c557a91ea3e9c40"
+        }
+      ],
+      "lignes_calcul": [],
+      "lignes_resultat": [
+        "RESULTAT: 0.5454389902847594"
+      ],
+      "limites_depassees": [],
+      "numero": 1,
+      "script_sha256": "8c3dfe38efc1c560ab316b1f31b32b2eac890b6e3bbb19ca5453c7e3f65b16d3",
+      "signaux_du_script": [],
+      "statut": "réussie",
+      "stderr": "",
+      "stderr_octets": 0,
+      "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "stderr_tronque": false,
+      "stdout": "RESULTAT: 0.5454389902847594\n",
+      "stdout_octets": 29,
+      "stdout_sha256": "b9dc4aabe60dc5ce43e773a850f3be75deda160bb5e1053f1c88cb22b1813f2f",
+      "stdout_tronque": false,
+      "tour": 1,
+      "travail_retire": true
+    }
+  ],
+  "fiche": "F-ab8e1434f776",
+  "fin_des_tours": "tour 2 : fin demandée",
+  "incidents": [],
+  "prereg_sha256": "5d5c5bb63f97f63fc3c6480432674094d238d192bbb689f267ce48c88643752d"
+}

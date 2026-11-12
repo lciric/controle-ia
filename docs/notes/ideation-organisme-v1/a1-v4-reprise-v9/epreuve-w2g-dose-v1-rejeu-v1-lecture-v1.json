@@ -1,0 +1,89 @@
+{
+  "attendu_section_4": {
+    "duree_max_s": 6700.0,
+    "grille": [
+      0.0,
+      0.05,
+      0.1,
+      0.15,
+      0.2,
+      0.25,
+      0.3,
+      0.4,
+      0.5,
+      0.75,
+      1.0
+    ],
+    "mode": "décisif (graine = empreinte du texte scellé)",
+    "modules_sha256": {
+      "demonstrations/banc_tricheurs_v7.py": "ef016d250b7b503f705dc95919719c68c8f968534fd901df7364a6062d67cf12",
+      "demonstrations/banc_tricheurs_v8.py": "0be47e4b5916a98499faf9c40d65369b41e3a5463d7ab444ed18ba18bba08c03",
+      "demonstrations/banc_tricheurs_v9.py": "7e4bff5995df2a7d62a4f5a2f5f9176da614e657a55b05183325fa2fc6e24e44",
+      "demonstrations/epreuve_w2g_dose_v1.py": "c691a43d9905e91a0ba91ddfef785e53a091768fa7dcd3007f03066aeef10dda",
+      "pole/attaque_goodhart_v2.py": "3c9de8b83b6fcf198d12cacf6a6738c2fc3fe4ade9391f943b3924592959e703",
+      "pole/attaque_goodhart_v4.py": "0077a6470781b8cd9e0599232ddd52e3601c8c4c8735a5cfcf817800bda3bb5c",
+      "pole/attaque_goodhart_v5.py": "8692746a1b02b15465062423d1f05e2084ce1d1861c979316ce1a5ef4384ba15",
+      "pole/nul_v9.py": "7ae450df2482246122bf9fbcf0fa5ef30b4a7e4c6f0d09531e83af048e46ee95"
+    },
+    "numpy": "2.5.3",
+    "python": "3.13.18",
+    "regle_de_choix": {
+      "promotions_recombinaison_v9_max": 0,
+      "seuil_promotion_monde_v9": 0.8
+    }
+  },
+  "code": 2,
+  "garde": 2,
+  "gardes_refusees": [
+    2
+  ],
+  "lecteur": {
+    "chemin": "/tmp/claude-0/-home-user/86976e6f-3fae-57b1-a905-26802f445363/scratchpad/epreuve-w2g-dose-v1-rejeu-v1-copie/ideation-organism/orchestrator/demonstrations/lecture_epreuve_w2g_dose_v1.py",
+    "sha256": "a9f462cb73b99680ed82ca8bc41b3241cd5b29591e5978044185786ab8467c71"
+  },
+  "lecture": "lecture-epreuve-w2g-dose-v1",
+  "motifs": [
+    {
+      "detail": "arrêt du script à la durée maximale (code 3 à la console)",
+      "garde": 2,
+      "motif": "code_3"
+    },
+    {
+      "detail": "« arret » non nul : 'dose 1.0 : durée maximale dépassée à la répétition 447'",
+      "garde": 2,
+      "motif": "arret"
+    },
+    {
+      "detail": "dose 1.0 : complete = False, répétitions 350 (lignes [350]) ; attendues 1000",
+      "garde": 2,
+      "motif": "dose_incomplete"
+    }
+  ],
+  "parametres": {
+    "processus_attendus": 4,
+    "repetitions_attendues": 1000
+  },
+  "pieces": {
+    "console": {
+      "chemin": "/home/user/controle-ia-travail/docs/notes/ideation-organisme-v1/a1-v4-reprise-v9/epreuve-w2g-dose-v1-rejeu-v1-console.txt",
+      "sha256": "9bc837912dbc43a6c82607252bcc32dcd45205b471e27a9ebbb8e39d16d7b755"
+    },
+    "manifeste": {
+      "chemin": "/home/user/controle-ia-travail/docs/notes/ideation-organisme-v1/a1-v4-reprise-v9/epreuve-w2g-dose-v1-rejeu-v1/manifeste.json",
+      "sha256": "c6de942f8be0f84733ed6b2cec4d8750f1088041372de5020520297ff845e497"
+    },
+    "sortie": {
+      "chemin": "/home/user/controle-ia-travail/docs/notes/ideation-organisme-v1/a1-v4-reprise-v9/epreuve-w2g-dose-v1-rejeu-v1/epreuve-w2g-dose-v1.json",
+      "sha256": "a475472382fe6327626e1d5b5e59c1efc29c92690e5c49f17d26d60a61df3980"
+    },
+    "table": {
+      "chemin": "/home/user/controle-ia-travail/docs/notes/ideation-organisme-v1/a1-v4-reprise-v9/epreuve-w2g-dose-v1-rejeu-v1/epreuve-w2g-dose-v1-table.txt",
+      "sha256": "94815f644112e0d8158b2de9cf7fb7355cdcc6b27a1d3291fa6ac4d85325c256"
+    },
+    "texte": {
+      "chemin": "/home/user/controle-ia-travail/docs/notes/ideation-organisme-v1/a1-v4-reprise-v9/epreuve-w2g-dose-v1-v1.md",
+      "sha256": "3415f70d8690708b4c7c558420c8c19ead1a211d68be277050c46d0ca8b21122"
+    }
+  },
+  "statut": "arrêt de garde : pas de λ*, aucun chiffre lu pour choisir une dose ; sortie rapportée telle quelle"
+}

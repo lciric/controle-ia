@@ -1,0 +1,1390 @@
+[
+ {
+  "essai": "contraste sans garde",
+  "attendu": "refus",
+  "code": 1,
+  "erreur": "refus : --ecarts-contraste sans --ecarts (GD3-03)",
+  "refus_nomme": true,
+  "brut": false
+ },
+ {
+  "essai": "contraste sans garde, sans effectif",
+  "attendu": "refus",
+  "code": 1,
+  "erreur": "refus : --ecarts-contraste sans --ecarts (GD3-03)",
+  "refus_nomme": true,
+  "brut": false
+ },
+ {
+  "essai": "garde sans contraste",
+  "attendu": "refus",
+  "code": 1,
+  "erreur": "refus : garde réelle sans fichier de contraste : donner --ecarts-contraste ou --contraste-synthetique-de-secours (GD3-03)",
+  "refus_nomme": true,
+  "brut": false
+ },
+ {
+  "essai": "garde sans contraste, secours explicite",
+  "attendu": "accepte",
+  "code": 0,
+  "erreur": "",
+  "refus_nomme": false,
+  "brut": false,
+  "lois": [
+   "reelle_recentree",
+   "reelle_brute",
+   "binomiale_Kh3_Ks3_taux0.01"
+  ],
+  "k": [
+   "1"
+  ],
+  "fichiers_observes": [
+   {
+    "chemin": "g1.json",
+    "role": "garde",
+    "comparateur": 1,
+    "sha256": "e79041d85a97774403433fa1cd1ef26b41366c902ad03d3a233949f01a4e9cf1",
+    "unites_identifiees": false,
+    "forme": "fA-fB",
+    "moyenne": 0.04
+   }
+  ],
+  "unites": {
+   "identifiees": false,
+   "regle": "un seul ensemble d'unités, même ordre dans tous les fichiers (provisoire ; les deux ensembles du pôle, honnêtes et sabotés, restent à faire : GD3-02)"
+  },
+  "lecture_des_seuils": "m/α_c : borne basse de la lecture e-BH ; 20 (m = 1) : borne haute, lâche (GD2-03)",
+  "seuils": [
+   20.0
+  ],
+  "etat_git": [
+   null,
+   "hors dépôt git"
+  ],
+  "secours_dans_reglages": true,
+  "deltas": "0.05"
+ },
+ {
+  "essai": "secours explicite + contraste réel",
+  "attendu": "?",
+  "code": 0,
+  "erreur": "",
+  "refus_nomme": false,
+  "brut": false,
+  "lois": [
+   "reelle_recentree",
+   "reelle_brute",
+   "binomiale_Kh3_Ks3_taux0.01"
+  ],
+  "k": [
+   "1"
+  ],
+  "fichiers_observes": [
+   {
+    "chemin": "g1.json",
+    "role": "garde",
+    "comparateur": 1,
+    "sha256": "e79041d85a97774403433fa1cd1ef26b41366c902ad03d3a233949f01a4e9cf1",
+    "unites_identifiees": false,
+    "forme": "fA-fB",
+    "moyenne": 0.04
+   },
+   {
+    "chemin": "r1.json",
+    "role": "contraste",
+    "comparateur": 1,
+    "sha256": "ebaa7443f3e7411427306e36857088da5abba52ca4f8ae25b2ce84dc9c31e512",
+    "unites_identifiees": false,
+    "forme": "rA-rB",
+    "moyenne": 0.09999999999999999
+   }
+  ],
+  "unites": {
+   "identifiees": false,
+   "regle": "un seul ensemble d'unités, même ordre dans tous les fichiers (provisoire ; les deux ensembles du pôle, honnêtes et sabotés, restent à faire : GD3-02)"
+  },
+  "lecture_des_seuils": "m/α_c : borne basse de la lecture e-BH ; 20 (m = 1) : borne haute, lâche (GD2-03)",
+  "seuils": [
+   20.0
+  ],
+  "etat_git": [
+   null,
+   "hors dépôt git"
+  ],
+  "secours_dans_reglages": true,
+  "deltas": "0.05"
+ },
+ {
+  "essai": "secours sans aucun fichier",
+  "attendu": "?",
+  "code": 0,
+  "erreur": "",
+  "refus_nomme": false,
+  "brut": false,
+  "lois": [
+   "binomiale_Kh3_Ks3_taux0.01"
+  ],
+  "k": [
+   "1",
+   "2",
+   "3"
+  ],
+  "fichiers_observes": [],
+  "unites": null,
+  "lecture_des_seuils": "m/α_c : borne basse de la lecture e-BH ; 20 (m = 1) : borne haute, lâche (GD2-03)",
+  "seuils": [
+   20.0
+  ],
+  "etat_git": [
+   null,
+   "hors dépôt git"
+  ],
+  "secours_dans_reglages": true,
+  "deltas": "0.05"
+ },
+ {
+  "essai": "comparateurs défaut 1,2,3 avec 2 fichiers",
+  "attendu": "refus",
+  "code": 1,
+  "erreur": "refus : --comparateurs 1,2,3 ≠ nombre de fichiers 2 (GD3-03)",
+  "refus_nomme": true,
+  "brut": false
+ },
+ {
+  "essai": "comparateurs 1 avec 2 fichiers",
+  "attendu": "refus",
+  "code": 1,
+  "erreur": "refus : --comparateurs 1 ≠ nombre de fichiers 2 (GD3-03)",
+  "refus_nomme": true,
+  "brut": false
+ },
+ {
+  "essai": "comparateurs 2 avec 2 fichiers",
+  "attendu": "accepte",
+  "code": 0,
+  "erreur": "",
+  "refus_nomme": false,
+  "brut": false,
+  "lois": [
+   "reelle_recentree",
+   "reelle_brute",
+   "binomiale_Kh3_Ks3_taux0.01"
+  ],
+  "k": [
+   "2"
+  ],
+  "fichiers_observes": [
+   {
+    "chemin": "g1.json",
+    "role": "garde",
+    "comparateur": 1,
+    "sha256": "e79041d85a97774403433fa1cd1ef26b41366c902ad03d3a233949f01a4e9cf1",
+    "unites_identifiees": false,
+    "forme": "fA-fB",
+    "moyenne": 0.04
+   },
+   {
+    "chemin": "g2.json",
+    "role": "garde",
+    "comparateur": 2,
+    "sha256": "e79041d85a97774403433fa1cd1ef26b41366c902ad03d3a233949f01a4e9cf1",
+    "unites_identifiees": false,
+    "forme": "fA-fB",
+    "moyenne": 0.04
+   },
+   {
+    "chemin": "r1.json",
+    "role": "contraste",
+    "comparateur": 1,
+    "sha256": "ebaa7443f3e7411427306e36857088da5abba52ca4f8ae25b2ce84dc9c31e512",
+    "unites_identifiees": false,
+    "forme": "rA-rB",
+    "moyenne": 0.09999999999999999
+   },
+   {
+    "chemin": "r2.json",
+    "role": "contraste",
+    "comparateur": 2,
+    "sha256": "ebaa7443f3e7411427306e36857088da5abba52ca4f8ae25b2ce84dc9c31e512",
+    "unites_identifiees": false,
+    "forme": "rA-rB",
+    "moyenne": 0.09999999999999999
+   }
+  ],
+  "unites": {
+   "identifiees": false,
+   "regle": "un seul ensemble d'unités, même ordre dans tous les fichiers (provisoire ; les deux ensembles du pôle, honnêtes et sabotés, restent à faire : GD3-02)"
+  },
+  "lecture_des_seuils": "m/α_c : borne basse de la lecture e-BH ; 20 (m = 1) : borne haute, lâche (GD2-03)",
+  "seuils": [
+   20.0
+  ],
+  "etat_git": [
+   null,
+   "hors dépôt git"
+  ],
+  "secours_dans_reglages": false,
+  "deltas": "0.05"
+ },
+ {
+  "essai": "comparateurs 02 avec 2 fichiers",
+  "attendu": "?",
+  "code": 0,
+  "erreur": "",
+  "refus_nomme": false,
+  "brut": false,
+  "lois": [
+   "reelle_recentree",
+   "reelle_brute",
+   "binomiale_Kh3_Ks3_taux0.01"
+  ],
+  "k": [
+   "2"
+  ],
+  "fichiers_observes": [
+   {
+    "chemin": "g1.json",
+    "role": "garde",
+    "comparateur": 1,
+    "sha256": "e79041d85a97774403433fa1cd1ef26b41366c902ad03d3a233949f01a4e9cf1",
+    "unites_identifiees": false,
+    "forme": "fA-fB",
+    "moyenne": 0.04
+   },
+   {
+    "chemin": "g2.json",
+    "role": "garde",
+    "comparateur": 2,
+    "sha256": "e79041d85a97774403433fa1cd1ef26b41366c902ad03d3a233949f01a4e9cf1",
+    "unites_identifiees": false,
+    "forme": "fA-fB",
+    "moyenne": 0.04
+   },
+   {
+    "chemin": "r1.json",
+    "role": "contraste",
+    "comparateur": 1,
+    "sha256": "ebaa7443f3e7411427306e36857088da5abba52ca4f8ae25b2ce84dc9c31e512",
+    "unites_identifiees": false,
+    "forme": "rA-rB",
+    "moyenne": 0.09999999999999999
+   },
+   {
+    "chemin": "r2.json",
+    "role": "contraste",
+    "comparateur": 2,
+    "sha256": "ebaa7443f3e7411427306e36857088da5abba52ca4f8ae25b2ce84dc9c31e512",
+    "unites_identifiees": false,
+    "forme": "rA-rB",
+    "moyenne": 0.09999999999999999
+   }
+  ],
+  "unites": {
+   "identifiees": false,
+   "regle": "un seul ensemble d'unités, même ordre dans tous les fichiers (provisoire ; les deux ensembles du pôle, honnêtes et sabotés, restent à faire : GD3-02)"
+  },
+  "lecture_des_seuils": "m/α_c : borne basse de la lecture e-BH ; 20 (m = 1) : borne haute, lâche (GD2-03)",
+  "seuils": [
+   20.0
+  ],
+  "etat_git": [
+   null,
+   "hors dépôt git"
+  ],
+  "secours_dans_reglages": false,
+  "deltas": "0.05"
+ },
+ {
+  "essai": "comparateurs 2,2 avec 2 fichiers",
+  "attendu": "?",
+  "code": 1,
+  "erreur": "refus : --comparateurs 2,2 ≠ nombre de fichiers 2 (GD3-03)",
+  "refus_nomme": true,
+  "brut": false
+ },
+ {
+  "essai": "effectif sans fichier",
+  "attendu": "refus",
+  "code": 1,
+  "erreur": "refus : --effectif-attendu sans fichier (GD3-03)",
+  "refus_nomme": true,
+  "brut": false
+ },
+ {
+  "essai": "même fichier de garde deux fois",
+  "attendu": "refus",
+  "code": 1,
+  "erreur": "refus : même fichier donné pour deux comparateurs (GD3-08)",
+  "refus_nomme": true,
+  "brut": false
+ },
+ {
+  "essai": "même fichier de garde, chemin ./",
+  "attendu": "?",
+  "code": 0,
+  "erreur": "",
+  "refus_nomme": false,
+  "brut": false,
+  "lois": [
+   "reelle_recentree",
+   "reelle_brute",
+   "binomiale_Kh3_Ks3_taux0.01"
+  ],
+  "k": [
+   "2"
+  ],
+  "fichiers_observes": [
+   {
+    "chemin": "g1.json",
+    "role": "garde",
+    "comparateur": 1,
+    "sha256": "e79041d85a97774403433fa1cd1ef26b41366c902ad03d3a233949f01a4e9cf1",
+    "unites_identifiees": false,
+    "forme": "fA-fB",
+    "moyenne": 0.04
+   },
+   {
+    "chemin": "./g1.json",
+    "role": "garde",
+    "comparateur": 2,
+    "sha256": "e79041d85a97774403433fa1cd1ef26b41366c902ad03d3a233949f01a4e9cf1",
+    "unites_identifiees": false,
+    "forme": "fA-fB",
+    "moyenne": 0.04
+   },
+   {
+    "chemin": "r1.json",
+    "role": "contraste",
+    "comparateur": 1,
+    "sha256": "ebaa7443f3e7411427306e36857088da5abba52ca4f8ae25b2ce84dc9c31e512",
+    "unites_identifiees": false,
+    "forme": "rA-rB",
+    "moyenne": 0.09999999999999999
+   },
+   {
+    "chemin": "r2.json",
+    "role": "contraste",
+    "comparateur": 2,
+    "sha256": "ebaa7443f3e7411427306e36857088da5abba52ca4f8ae25b2ce84dc9c31e512",
+    "unites_identifiees": false,
+    "forme": "rA-rB",
+    "moyenne": 0.09999999999999999
+   }
+  ],
+  "unites": {
+   "identifiees": false,
+   "regle": "un seul ensemble d'unités, même ordre dans tous les fichiers (provisoire ; les deux ensembles du pôle, honnêtes et sabotés, restent à faire : GD3-02)"
+  },
+  "lecture_des_seuils": "m/α_c : borne basse de la lecture e-BH ; 20 (m = 1) : borne haute, lâche (GD2-03)",
+  "seuils": [
+   20.0
+  ],
+  "etat_git": [
+   null,
+   "hors dépôt git"
+  ],
+  "secours_dans_reglages": false,
+  "deltas": "0.05"
+ },
+ {
+  "essai": "deux fichiers de garde de même contenu",
+  "attendu": "?",
+  "code": 0,
+  "erreur": "",
+  "refus_nomme": false,
+  "brut": false,
+  "lois": [
+   "reelle_recentree",
+   "reelle_brute",
+   "binomiale_Kh3_Ks3_taux0.01"
+  ],
+  "k": [
+   "2"
+  ],
+  "fichiers_observes": [
+   {
+    "chemin": "g1.json",
+    "role": "garde",
+    "comparateur": 1,
+    "sha256": "e79041d85a97774403433fa1cd1ef26b41366c902ad03d3a233949f01a4e9cf1",
+    "unites_identifiees": false,
+    "forme": "fA-fB",
+    "moyenne": 0.04
+   },
+   {
+    "chemin": "g2.json",
+    "role": "garde",
+    "comparateur": 2,
+    "sha256": "e79041d85a97774403433fa1cd1ef26b41366c902ad03d3a233949f01a4e9cf1",
+    "unites_identifiees": false,
+    "forme": "fA-fB",
+    "moyenne": 0.04
+   },
+   {
+    "chemin": "r1.json",
+    "role": "contraste",
+    "comparateur": 1,
+    "sha256": "ebaa7443f3e7411427306e36857088da5abba52ca4f8ae25b2ce84dc9c31e512",
+    "unites_identifiees": false,
+    "forme": "rA-rB",
+    "moyenne": 0.09999999999999999
+   },
+   {
+    "chemin": "r2.json",
+    "role": "contraste",
+    "comparateur": 2,
+    "sha256": "ebaa7443f3e7411427306e36857088da5abba52ca4f8ae25b2ce84dc9c31e512",
+    "unites_identifiees": false,
+    "forme": "rA-rB",
+    "moyenne": 0.09999999999999999
+   }
+  ],
+  "unites": {
+   "identifiees": false,
+   "regle": "un seul ensemble d'unités, même ordre dans tous les fichiers (provisoire ; les deux ensembles du pôle, honnêtes et sabotés, restent à faire : GD3-02)"
+  },
+  "lecture_des_seuils": "m/α_c : borne basse de la lecture e-BH ; 20 (m = 1) : borne haute, lâche (GD2-03)",
+  "seuils": [
+   20.0
+  ],
+  "etat_git": [
+   null,
+   "hors dépôt git"
+  ],
+  "secours_dans_reglages": false,
+  "deltas": "0.05"
+ },
+ {
+  "essai": "même fichier de contraste, chemin ./",
+  "attendu": "?",
+  "code": 0,
+  "erreur": "",
+  "refus_nomme": false,
+  "brut": false,
+  "lois": [
+   "reelle_recentree",
+   "reelle_brute",
+   "binomiale_Kh3_Ks3_taux0.01"
+  ],
+  "k": [
+   "2"
+  ],
+  "fichiers_observes": [
+   {
+    "chemin": "g1.json",
+    "role": "garde",
+    "comparateur": 1,
+    "sha256": "e79041d85a97774403433fa1cd1ef26b41366c902ad03d3a233949f01a4e9cf1",
+    "unites_identifiees": false,
+    "forme": "fA-fB",
+    "moyenne": 0.04
+   },
+   {
+    "chemin": "g2.json",
+    "role": "garde",
+    "comparateur": 2,
+    "sha256": "e79041d85a97774403433fa1cd1ef26b41366c902ad03d3a233949f01a4e9cf1",
+    "unites_identifiees": false,
+    "forme": "fA-fB",
+    "moyenne": 0.04
+   },
+   {
+    "chemin": "r1.json",
+    "role": "contraste",
+    "comparateur": 1,
+    "sha256": "ebaa7443f3e7411427306e36857088da5abba52ca4f8ae25b2ce84dc9c31e512",
+    "unites_identifiees": false,
+    "forme": "rA-rB",
+    "moyenne": 0.09999999999999999
+   },
+   {
+    "chemin": "./r1.json",
+    "role": "contraste",
+    "comparateur": 2,
+    "sha256": "ebaa7443f3e7411427306e36857088da5abba52ca4f8ae25b2ce84dc9c31e512",
+    "unites_identifiees": false,
+    "forme": "rA-rB",
+    "moyenne": 0.09999999999999999
+   }
+  ],
+  "unites": {
+   "identifiees": false,
+   "regle": "un seul ensemble d'unités, même ordre dans tous les fichiers (provisoire ; les deux ensembles du pôle, honnêtes et sabotés, restent à faire : GD3-02)"
+  },
+  "lecture_des_seuils": "m/α_c : borne basse de la lecture e-BH ; 20 (m = 1) : borne haute, lâche (GD2-03)",
+  "seuils": [
+   20.0
+  ],
+  "etat_git": [
+   null,
+   "hors dépôt git"
+  ],
+  "secours_dans_reglages": false,
+  "deltas": "0.05"
+ },
+ {
+  "essai": "contraste = garde (même chemin)",
+  "attendu": "refus",
+  "code": 1,
+  "erreur": "refus : fichiers de contraste doublés ou confondus avec ceux de garde (GD3-08)",
+  "refus_nomme": true,
+  "brut": false
+ },
+ {
+  "essai": "contraste = garde (chemin ./)",
+  "attendu": "?",
+  "code": 0,
+  "erreur": "",
+  "refus_nomme": false,
+  "brut": false,
+  "lois": [
+   "reelle_recentree",
+   "reelle_brute",
+   "binomiale_Kh3_Ks3_taux0.01"
+  ],
+  "k": [
+   "1"
+  ],
+  "fichiers_observes": [
+   {
+    "chemin": "e_ecarts.json",
+    "role": "garde",
+    "comparateur": 1,
+    "sha256": "72f40e8d253d63b8837c6f480e7b9faf4cd25b80e059068e3c98bfa8049143f2",
+    "unites_identifiees": false,
+    "forme": "ecarts",
+    "moyenne": 0.02
+   },
+   {
+    "chemin": "./e_ecarts.json",
+    "role": "contraste",
+    "comparateur": 1,
+    "sha256": "72f40e8d253d63b8837c6f480e7b9faf4cd25b80e059068e3c98bfa8049143f2",
+    "unites_identifiees": false,
+    "forme": "ecarts",
+    "moyenne": 0.02
+   }
+  ],
+  "unites": {
+   "identifiees": false,
+   "regle": "un seul ensemble d'unités, même ordre dans tous les fichiers (provisoire ; les deux ensembles du pôle, honnêtes et sabotés, restent à faire : GD3-02)"
+  },
+  "lecture_des_seuils": "m/α_c : borne basse de la lecture e-BH ; 20 (m = 1) : borne haute, lâche (GD2-03)",
+  "seuils": [
+   20.0
+  ],
+  "etat_git": [
+   null,
+   "hors dépôt git"
+  ],
+  "secours_dans_reglages": false,
+  "deltas": "0.05"
+ },
+ {
+  "essai": "identifiants identiques",
+  "attendu": "accepte",
+  "code": 0,
+  "erreur": "",
+  "refus_nomme": false,
+  "brut": false,
+  "lois": [
+   "reelle_recentree",
+   "reelle_brute",
+   "binomiale_Kh3_Ks3_taux0.01"
+  ],
+  "k": [
+   "2"
+  ],
+  "fichiers_observes": [
+   {
+    "chemin": "g1i.json",
+    "role": "garde",
+    "comparateur": 1,
+    "sha256": "b4ecdad012a1764a8395c507ea1c55957b66234a9f291f3e5503d901163059fe",
+    "unites_identifiees": true,
+    "forme": "fA-fB",
+    "moyenne": 0.04
+   },
+   {
+    "chemin": "g2i.json",
+    "role": "garde",
+    "comparateur": 2,
+    "sha256": "b4ecdad012a1764a8395c507ea1c55957b66234a9f291f3e5503d901163059fe",
+    "unites_identifiees": true,
+    "forme": "fA-fB",
+    "moyenne": 0.04
+   },
+   {
+    "chemin": "r1i.json",
+    "role": "contraste",
+    "comparateur": 1,
+    "sha256": "9d952066f5ed701aa0f057b7b90d1ef23e828ac955956f4ee8bc4df6965023d4",
+    "unites_identifiees": true,
+    "forme": "rA-rB",
+    "moyenne": 0.09999999999999999
+   },
+   {
+    "chemin": "r2i.json",
+    "role": "contraste",
+    "comparateur": 2,
+    "sha256": "9d952066f5ed701aa0f057b7b90d1ef23e828ac955956f4ee8bc4df6965023d4",
+    "unites_identifiees": true,
+    "forme": "rA-rB",
+    "moyenne": 0.09999999999999999
+   }
+  ],
+  "unites": {
+   "identifiees": true,
+   "regle": "un seul ensemble d'unités, même ordre dans tous les fichiers (provisoire ; les deux ensembles du pôle, honnêtes et sabotés, restent à faire : GD3-02)"
+  },
+  "lecture_des_seuils": "m/α_c : borne basse de la lecture e-BH ; 20 (m = 1) : borne haute, lâche (GD2-03)",
+  "seuils": [
+   20.0
+  ],
+  "etat_git": [
+   null,
+   "hors dépôt git"
+  ],
+  "secours_dans_reglages": false,
+  "deltas": "0.05"
+ },
+ {
+  "essai": "identifiants ordre différent",
+  "attendu": "refus",
+  "code": 1,
+  "erreur": "refus : g2i_ordre.json : identifiants d'unité absents ou différents du premier fichier (GD3-02 : mêmes unités, même ordre)",
+  "refus_nomme": true,
+  "brut": false
+ },
+ {
+  "essai": "identifiants sur garde seulement",
+  "attendu": "refus",
+  "code": 1,
+  "erreur": "refus : r1.json : identifiants d'unité absents ou différents des fichiers de garde (GD3-02)",
+  "refus_nomme": true,
+  "brut": false
+ },
+ {
+  "essai": "identifiants sur un seul fichier de garde",
+  "attendu": "refus",
+  "code": 1,
+  "erreur": "refus : r1.json : identifiants d'unité absents ou différents des fichiers de garde (GD3-02)",
+  "refus_nomme": true,
+  "brut": false
+ },
+ {
+  "essai": "aucun identifiant",
+  "attendu": "?",
+  "code": 0,
+  "erreur": "",
+  "refus_nomme": false,
+  "brut": false,
+  "lois": [
+   "reelle_recentree",
+   "reelle_brute",
+   "binomiale_Kh3_Ks3_taux0.01"
+  ],
+  "k": [
+   "2"
+  ],
+  "fichiers_observes": [
+   {
+    "chemin": "g1.json",
+    "role": "garde",
+    "comparateur": 1,
+    "sha256": "e79041d85a97774403433fa1cd1ef26b41366c902ad03d3a233949f01a4e9cf1",
+    "unites_identifiees": false,
+    "forme": "fA-fB",
+    "moyenne": 0.04
+   },
+   {
+    "chemin": "g2.json",
+    "role": "garde",
+    "comparateur": 2,
+    "sha256": "e79041d85a97774403433fa1cd1ef26b41366c902ad03d3a233949f01a4e9cf1",
+    "unites_identifiees": false,
+    "forme": "fA-fB",
+    "moyenne": 0.04
+   },
+   {
+    "chemin": "r1.json",
+    "role": "contraste",
+    "comparateur": 1,
+    "sha256": "ebaa7443f3e7411427306e36857088da5abba52ca4f8ae25b2ce84dc9c31e512",
+    "unites_identifiees": false,
+    "forme": "rA-rB",
+    "moyenne": 0.09999999999999999
+   },
+   {
+    "chemin": "r2.json",
+    "role": "contraste",
+    "comparateur": 2,
+    "sha256": "ebaa7443f3e7411427306e36857088da5abba52ca4f8ae25b2ce84dc9c31e512",
+    "unites_identifiees": false,
+    "forme": "rA-rB",
+    "moyenne": 0.09999999999999999
+   }
+  ],
+  "unites": {
+   "identifiees": false,
+   "regle": "un seul ensemble d'unités, même ordre dans tous les fichiers (provisoire ; les deux ensembles du pôle, honnêtes et sabotés, restent à faire : GD3-02)"
+  },
+  "lecture_des_seuils": "m/α_c : borne basse de la lecture e-BH ; 20 (m = 1) : borne haute, lâche (GD2-03)",
+  "seuils": [
+   20.0
+  ],
+  "etat_git": [
+   null,
+   "hors dépôt git"
+  ],
+  "secours_dans_reglages": false,
+  "deltas": "0.05"
+ },
+ {
+  "essai": "identifiants 1 (entier) contre \"1\" (chaîne)",
+  "attendu": "?",
+  "code": 1,
+  "erreur": "refus : r1.json : identifiants d'unité absents ou différents des fichiers de garde (GD3-02)",
+  "refus_nomme": true,
+  "brut": false
+ },
+ {
+  "essai": "identifiants mixtes doublés 1 et \"1\"",
+  "attendu": "refus",
+  "code": 1,
+  "erreur": "refus : g_ids_mixtes.json : « unite » doit être une liste d'identifiants distincts",
+  "refus_nomme": true,
+  "brut": false
+ },
+ {
+  "essai": "identifiants booléens, null, liste, objet",
+  "attendu": "?",
+  "code": 0,
+  "erreur": "",
+  "refus_nomme": false,
+  "brut": false,
+  "lois": [
+   "reelle_recentree",
+   "reelle_brute",
+   "binomiale_Kh3_Ks3_taux0.01"
+  ],
+  "k": [
+   "1"
+  ],
+  "fichiers_observes": [
+   {
+    "chemin": "g_ids_bool.json",
+    "role": "garde",
+    "comparateur": 1,
+    "sha256": "c19dc66eb07f788b0f876cb0db2e85ee5c268f743f0f0c5a0afe47004755e552",
+    "unites_identifiees": true,
+    "forme": "fA-fB",
+    "moyenne": 0.04
+   }
+  ],
+  "unites": {
+   "identifiees": true,
+   "regle": "un seul ensemble d'unités, même ordre dans tous les fichiers (provisoire ; les deux ensembles du pôle, honnêtes et sabotés, restent à faire : GD3-02)"
+  },
+  "lecture_des_seuils": "m/α_c : borne basse de la lecture e-BH ; 20 (m = 1) : borne haute, lâche (GD2-03)",
+  "seuils": [
+   20.0
+  ],
+  "etat_git": [
+   null,
+   "hors dépôt git"
+  ],
+  "secours_dans_reglages": true,
+  "deltas": "0.05"
+ },
+ {
+  "essai": "identifiants trop courts",
+  "attendu": "refus",
+  "code": 1,
+  "erreur": "refus : g_ids_courts.json : 4 identifiants pour 5 écarts",
+  "refus_nomme": true,
+  "brut": false
+ },
+ {
+  "essai": "colonne unite en CSV",
+  "attendu": "?",
+  "code": 1,
+  "erreur": "refus : CSV : en-tête ['unite', 'fA', 'fB'] ; admis exactement : [['ecart'], ['fA', 'fB']] (GD2-05)",
+  "refus_nomme": true,
+  "brut": false
+ },
+ {
+  "essai": "clé JSON doublée",
+  "attendu": "refus",
+  "code": 1,
+  "erreur": "refus : g_doublon.json : JSON illisible (ValueError)",
+  "refus_nomme": true,
+  "brut": false
+ },
+ {
+  "essai": "clé doublée imbriquée",
+  "attendu": "refus",
+  "code": 1,
+  "erreur": "refus : g_doublon_imbrique.json : JSON illisible (ValueError)",
+  "refus_nomme": true,
+  "brut": false
+ },
+ {
+  "essai": "entier JSON 31 chiffres",
+  "attendu": "refus",
+  "code": 1,
+  "erreur": "refus : g_entier31.json : JSON illisible (ValueError)",
+  "refus_nomme": true,
+  "brut": false
+ },
+ {
+  "essai": "entier JSON 30 chiffres",
+  "attendu": "refus",
+  "code": 1,
+  "erreur": "refus : g_entier30.json : écart hors de [−1 ; 1]",
+  "refus_nomme": true,
+  "brut": false
+ },
+ {
+  "essai": "entier JSON 401 chiffres",
+  "attendu": "refus",
+  "code": 1,
+  "erreur": "refus : g_entier401.json : JSON illisible (ValueError)",
+  "refus_nomme": true,
+  "brut": false
+ },
+ {
+  "essai": "souligné JSON",
+  "attendu": "refus",
+  "code": 1,
+  "erreur": "refus : g_souligne.json : JSON illisible (JSONDecodeError)",
+  "refus_nomme": true,
+  "brut": false
+ },
+ {
+  "essai": "souligné CSV ecart",
+  "attendu": "refus",
+  "code": 0,
+  "erreur": "",
+  "refus_nomme": false,
+  "brut": false,
+  "lois": [
+   "reelle_recentree",
+   "reelle_brute",
+   "binomiale_Kh3_Ks3_taux0.01"
+  ],
+  "k": [
+   "1"
+  ],
+  "fichiers_observes": [
+   {
+    "chemin": "g_souligne.csv",
+    "role": "garde",
+    "comparateur": 1,
+    "sha256": "1fe9fdc233f7b178a4a26cdac7dda70dc03d4d80498276a48a5c68196a344d46",
+    "unites_identifiees": false,
+    "forme": "csv ecart",
+    "moyenne": 0.01
+   }
+  ],
+  "unites": {
+   "identifiees": false,
+   "regle": "un seul ensemble d'unités, même ordre dans tous les fichiers (provisoire ; les deux ensembles du pôle, honnêtes et sabotés, restent à faire : GD3-02)"
+  },
+  "lecture_des_seuils": "m/α_c : borne basse de la lecture e-BH ; 20 (m = 1) : borne haute, lâche (GD2-03)",
+  "seuils": [
+   20.0
+  ],
+  "etat_git": [
+   null,
+   "hors dépôt git"
+  ],
+  "secours_dans_reglages": true,
+  "deltas": "0.05"
+ },
+ {
+  "essai": "souligné CSV fA,fB",
+  "attendu": "refus",
+  "code": 0,
+  "erreur": "",
+  "refus_nomme": false,
+  "brut": false,
+  "lois": [
+   "reelle_recentree",
+   "reelle_brute",
+   "binomiale_Kh3_Ks3_taux0.01"
+  ],
+  "k": [
+   "1"
+  ],
+  "fichiers_observes": [
+   {
+    "chemin": "g_souligne_fafb.csv",
+    "role": "garde",
+    "comparateur": 1,
+    "sha256": "081d5f2e803e69355ca13a1d360f598053b9438f2d2ef0280693b63ffa37c8a2",
+    "unites_identifiees": false,
+    "forme": "csv fA-fB",
+    "moyenne": 0.01
+   }
+  ],
+  "unites": {
+   "identifiees": false,
+   "regle": "un seul ensemble d'unités, même ordre dans tous les fichiers (provisoire ; les deux ensembles du pôle, honnêtes et sabotés, restent à faire : GD3-02)"
+  },
+  "lecture_des_seuils": "m/α_c : borne basse de la lecture e-BH ; 20 (m = 1) : borne haute, lâche (GD2-03)",
+  "seuils": [
+   20.0
+  ],
+  "etat_git": [
+   null,
+   "hors dépôt git"
+  ],
+  "secours_dans_reglages": true,
+  "deltas": "0.05"
+ },
+ {
+  "essai": "souligné dans --deltas",
+  "attendu": "?",
+  "code": 0,
+  "erreur": "",
+  "refus_nomme": false,
+  "brut": false,
+  "lois": [
+   "binomiale_Kh3_Ks3_taux0.01"
+  ],
+  "k": [
+   "1",
+   "2",
+   "3"
+  ],
+  "fichiers_observes": [],
+  "unites": null,
+  "lecture_des_seuils": "m/α_c : borne basse de la lecture e-BH ; 20 (m = 1) : borne haute, lâche (GD2-03)",
+  "seuils": [
+   20.0
+  ],
+  "etat_git": [
+   null,
+   "hors dépôt git"
+  ],
+  "secours_dans_reglages": false,
+  "deltas": "0.0_5"
+ },
+ {
+  "essai": "souligné dans --effectif-attendu",
+  "attendu": "?",
+  "code": 0,
+  "erreur": "",
+  "refus_nomme": false,
+  "brut": false,
+  "lois": [
+   "reelle_recentree",
+   "reelle_brute",
+   "binomiale_Kh3_Ks3_taux0.01"
+  ],
+  "k": [
+   "1"
+  ],
+  "fichiers_observes": [
+   {
+    "chemin": "g_ok.csv",
+    "role": "garde",
+    "comparateur": 1,
+    "sha256": "29075e6c267a4e410fc3e5ea3c2bd8809d3334ac8d0c1cd5cb39e45f4388e797",
+    "unites_identifiees": false,
+    "forme": "csv fA-fB",
+    "moyenne": 0.04
+   },
+   {
+    "chemin": "r_ok.csv",
+    "role": "contraste",
+    "comparateur": 1,
+    "sha256": "4db65ee0c08efce26e9d28220fd488abb523cd565320b0bd15c9d2e54ad08810",
+    "unites_identifiees": false,
+    "forme": "csv rA-rB",
+    "moyenne": 0.09999999999999999
+   }
+  ],
+  "unites": {
+   "identifiees": false,
+   "regle": "un seul ensemble d'unités, même ordre dans tous les fichiers (provisoire ; les deux ensembles du pôle, honnêtes et sabotés, restent à faire : GD3-02)"
+  },
+  "lecture_des_seuils": "m/α_c : borne basse de la lecture e-BH ; 20 (m = 1) : borne haute, lâche (GD2-03)",
+  "seuils": [
+   20.0
+  ],
+  "etat_git": [
+   null,
+   "hors dépôt git"
+  ],
+  "secours_dans_reglages": false,
+  "deltas": "0.05"
+ },
+ {
+  "essai": "CSV 1e400",
+  "attendu": "refus",
+  "code": 1,
+  "erreur": "refus : g_1e400.csv : écart non fini",
+  "refus_nomme": true,
+  "brut": false
+ },
+ {
+  "essai": "CSV infinity",
+  "attendu": "refus",
+  "code": 1,
+  "erreur": "refus : g_inf_txt.csv : écart non fini",
+  "refus_nomme": true,
+  "brut": false
+ },
+ {
+  "essai": "CSV espace avant nombre",
+  "attendu": "?",
+  "code": 0,
+  "erreur": "",
+  "refus_nomme": false,
+  "brut": false,
+  "lois": [
+   "reelle_recentree",
+   "reelle_brute",
+   "binomiale_Kh3_Ks3_taux0.01"
+  ],
+  "k": [
+   "1"
+  ],
+  "fichiers_observes": [
+   {
+    "chemin": "g_espace.csv",
+    "role": "garde",
+    "comparateur": 1,
+    "sha256": "7e26018ea9d47455784ec3e8d6957b5e1bb368b8be34e8e35ae32895a1bf50f4",
+    "unites_identifiees": false,
+    "forme": "csv ecart",
+    "moyenne": 0.02
+   }
+  ],
+  "unites": {
+   "identifiees": false,
+   "regle": "un seul ensemble d'unités, même ordre dans tous les fichiers (provisoire ; les deux ensembles du pôle, honnêtes et sabotés, restent à faire : GD3-02)"
+  },
+  "lecture_des_seuils": "m/α_c : borne basse de la lecture e-BH ; 20 (m = 1) : borne haute, lâche (GD2-03)",
+  "seuils": [
+   20.0
+  ],
+  "etat_git": [
+   null,
+   "hors dépôt git"
+  ],
+  "secours_dans_reglages": true,
+  "deltas": "0.05"
+ },
+ {
+  "essai": "--ecarts vide",
+  "attendu": "?",
+  "code": 0,
+  "erreur": "",
+  "refus_nomme": false,
+  "brut": false,
+  "lois": [
+   "binomiale_Kh3_Ks3_taux0.01"
+  ],
+  "k": [
+   "1",
+   "2",
+   "3"
+  ],
+  "fichiers_observes": [],
+  "unites": null,
+  "lecture_des_seuils": "m/α_c : borne basse de la lecture e-BH ; 20 (m = 1) : borne haute, lâche (GD2-03)",
+  "seuils": [
+   20.0
+  ],
+  "etat_git": [
+   null,
+   "hors dépôt git"
+  ],
+  "secours_dans_reglages": false,
+  "deltas": "0.05"
+ },
+ {
+  "essai": "--ecarts vide avec contraste vide",
+  "attendu": "?",
+  "code": 0,
+  "erreur": "",
+  "refus_nomme": false,
+  "brut": false,
+  "lois": [
+   "binomiale_Kh3_Ks3_taux0.01"
+  ],
+  "k": [
+   "1",
+   "2",
+   "3"
+  ],
+  "fichiers_observes": [],
+  "unites": null,
+  "lecture_des_seuils": "m/α_c : borne basse de la lecture e-BH ; 20 (m = 1) : borne haute, lâche (GD2-03)",
+  "seuils": [
+   20.0
+  ],
+  "etat_git": [
+   null,
+   "hors dépôt git"
+  ],
+  "secours_dans_reglages": false,
+  "deltas": "0.05"
+ },
+ {
+  "essai": "--ecarts virgule finale",
+  "attendu": "refus",
+  "code": 1,
+  "erreur": "FileNotFoundError: [Errno 2] No such file or directory: ''",
+  "refus_nomme": false,
+  "brut": true
+ },
+ {
+  "essai": "fichier absent",
+  "attendu": "refus",
+  "code": 1,
+  "erreur": "FileNotFoundError: [Errno 2] No such file or directory: 'absent.json'",
+  "refus_nomme": false,
+  "brut": true
+ },
+ {
+  "essai": "dossier au lieu d'un fichier",
+  "attendu": "refus",
+  "code": 1,
+  "erreur": "IsADirectoryError: [Errno 21] Is a directory: 'dossier.json'",
+  "refus_nomme": false,
+  "brut": true
+ },
+ {
+  "essai": "effet d'unité à τ = 0",
+  "attendu": "?",
+  "code": 0,
+  "erreur": "",
+  "refus_nomme": false,
+  "brut": false,
+  "lois": [
+   "binomiale_Kh3_Ks3_taux0.0_effetA1.0"
+  ],
+  "k": [
+   "1",
+   "2",
+   "3"
+  ],
+  "fichiers_observes": [],
+  "unites": null,
+  "lecture_des_seuils": "m/α_c : borne basse de la lecture e-BH ; 20 (m = 1) : borne haute, lâche (GD2-03)",
+  "seuils": [
+   20.0
+  ],
+  "etat_git": [
+   null,
+   "hors dépôt git"
+  ],
+  "secours_dans_reglages": false,
+  "deltas": "0.05"
+ },
+ {
+  "essai": "effet d'unité 3,0001",
+  "attendu": "refus",
+  "code": 1,
+  "erreur": "refus : --effet-unite-a dans [0 ; 3] (logit) ; --ecart-contraste dans ]0 ; 0,6[",
+  "refus_nomme": true,
+  "brut": false
+ },
+ {
+  "essai": "effet d'unité NaN",
+  "attendu": "refus",
+  "code": 1,
+  "erreur": "refus : --effet-unite-a dans [0 ; 3] (logit) ; --ecart-contraste dans ]0 ; 0,6[",
+  "refus_nomme": true,
+  "brut": false
+ },
+ {
+  "essai": "effet d'unité avec fichiers réels",
+  "attendu": "?",
+  "code": 0,
+  "erreur": "",
+  "refus_nomme": false,
+  "brut": false,
+  "lois": [
+   "reelle_recentree",
+   "reelle_brute",
+   "binomiale_Kh3_Ks3_taux0.01_effetA1.0"
+  ],
+  "k": [
+   "1"
+  ],
+  "fichiers_observes": [
+   {
+    "chemin": "g1.json",
+    "role": "garde",
+    "comparateur": 1,
+    "sha256": "e79041d85a97774403433fa1cd1ef26b41366c902ad03d3a233949f01a4e9cf1",
+    "unites_identifiees": false,
+    "forme": "fA-fB",
+    "moyenne": 0.04
+   },
+   {
+    "chemin": "r1.json",
+    "role": "contraste",
+    "comparateur": 1,
+    "sha256": "ebaa7443f3e7411427306e36857088da5abba52ca4f8ae25b2ce84dc9c31e512",
+    "unites_identifiees": false,
+    "forme": "rA-rB",
+    "moyenne": 0.09999999999999999
+   }
+  ],
+  "unites": {
+   "identifiees": false,
+   "regle": "un seul ensemble d'unités, même ordre dans tous les fichiers (provisoire ; les deux ensembles du pôle, honnêtes et sabotés, restent à faire : GD3-02)"
+  },
+  "lecture_des_seuils": "m/α_c : borne basse de la lecture e-BH ; 20 (m = 1) : borne haute, lâche (GD2-03)",
+  "seuils": [
+   20.0
+  ],
+  "etat_git": [
+   null,
+   "hors dépôt git"
+  ],
+  "secours_dans_reglages": false,
+  "deltas": "0.05"
+ },
+ {
+  "essai": "indépendants avec fichiers réels",
+  "attendu": "?",
+  "code": 0,
+  "erreur": "",
+  "refus_nomme": false,
+  "brut": false,
+  "lois": [
+   "reelle_recentree",
+   "reelle_brute",
+   "binomiale_Kh3_Ks3_taux0.01_independants"
+  ],
+  "k": [
+   "1"
+  ],
+  "fichiers_observes": [
+   {
+    "chemin": "g1.json",
+    "role": "garde",
+    "comparateur": 1,
+    "sha256": "e79041d85a97774403433fa1cd1ef26b41366c902ad03d3a233949f01a4e9cf1",
+    "unites_identifiees": false,
+    "forme": "fA-fB",
+    "moyenne": 0.04
+   },
+   {
+    "chemin": "r1.json",
+    "role": "contraste",
+    "comparateur": 1,
+    "sha256": "ebaa7443f3e7411427306e36857088da5abba52ca4f8ae25b2ce84dc9c31e512",
+    "unites_identifiees": false,
+    "forme": "rA-rB",
+    "moyenne": 0.09999999999999999
+   }
+  ],
+  "unites": {
+   "identifiees": false,
+   "regle": "un seul ensemble d'unités, même ordre dans tous les fichiers (provisoire ; les deux ensembles du pôle, honnêtes et sabotés, restent à faire : GD3-02)"
+  },
+  "lecture_des_seuils": "m/α_c : borne basse de la lecture e-BH ; 20 (m = 1) : borne haute, lâche (GD2-03)",
+  "seuils": [
+   20.0
+  ],
+  "etat_git": [
+   null,
+   "hors dépôt git"
+  ],
+  "secours_dans_reglages": false,
+  "deltas": "0.05"
+ },
+ {
+  "essai": "seuils m = 8 seul",
+  "attendu": "?",
+  "code": 0,
+  "erreur": "",
+  "refus_nomme": false,
+  "brut": false,
+  "lois": [
+   "binomiale_Kh3_Ks3_taux0.01"
+  ],
+  "k": [
+   "1",
+   "2",
+   "3"
+  ],
+  "fichiers_observes": [],
+  "unites": null,
+  "lecture_des_seuils": "m/α_c : borne basse de la lecture e-BH",
+  "seuils": [
+   160.0
+  ],
+  "etat_git": [
+   null,
+   "hors dépôt git"
+  ],
+  "secours_dans_reglages": false,
+  "deltas": "0.05"
+ },
+ {
+  "essai": "seuils α = 0,01, m = 8,1",
+  "attendu": "?",
+  "code": 0,
+  "erreur": "",
+  "refus_nomme": false,
+  "brut": false,
+  "lois": [
+   "binomiale_Kh3_Ks3_taux0.01"
+  ],
+  "k": [
+   "1",
+   "2",
+   "3"
+  ],
+  "fichiers_observes": [],
+  "unites": null,
+  "lecture_des_seuils": "m/α_c : borne basse de la lecture e-BH ; 100 (m = 1) : borne haute, lâche (GD2-03)",
+  "seuils": [
+   800.0,
+   100.0
+  ],
+  "etat_git": [
+   null,
+   "hors dépôt git"
+  ],
+  "secours_dans_reglages": false,
+  "deltas": "0.05"
+ },
+ {
+  "essai": "seuils m = 1 seul",
+  "attendu": "?",
+  "code": 0,
+  "erreur": "",
+  "refus_nomme": false,
+  "brut": false,
+  "lois": [
+   "binomiale_Kh3_Ks3_taux0.01"
+  ],
+  "k": [
+   "1",
+   "2",
+   "3"
+  ],
+  "fichiers_observes": [],
+  "unites": null,
+  "lecture_des_seuils": "m/α_c : borne basse de la lecture e-BH ; 20 (m = 1) : borne haute, lâche (GD2-03)",
+  "seuils": [
+   20.0
+  ],
+  "etat_git": [
+   null,
+   "hors dépôt git"
+  ],
+  "secours_dans_reglages": false,
+  "deltas": "0.05"
+ }
+]

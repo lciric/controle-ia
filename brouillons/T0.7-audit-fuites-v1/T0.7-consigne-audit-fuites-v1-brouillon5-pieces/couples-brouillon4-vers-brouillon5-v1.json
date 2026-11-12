@@ -1,0 +1,76 @@
+{
+  "de": {
+    "chemin": "brouillons/T0.7-audit-fuites-v1/T0.7-consigne-audit-fuites-v1-brouillon4.md",
+    "sha256": "f9f4bd380a3066371c88d39ede0ef60bde77070311cd2cd9ca221cf8f3f194c5"
+  },
+  "vers": {
+    "chemin": "brouillons/T0.7-audit-fuites-v1/T0.7-consigne-audit-fuites-v1-brouillon5.md",
+    "sha256": "7228ce724d4f2a7c146124ceb70156cf99118b2acebcdc4b3b7d9e5d977d2b67"
+  },
+  "regle": "appliqués dans l'ordre, chaque « ancien » présent une fois au moment de son remplacement ; défaits du dernier au premier (« nouveau » → « ancien », chaque « nouveau » présent une fois), ils redonnent le brouillon 4 à l'octet",
+  "decoupeur": {
+    "commit": "c7484c43657a2ce22d76af33efd06aaa11a6aafa",
+    "dossier": "donnees/decoupeur-llama-3.1-8b-instruct-0e9e39f2-v1",
+    "empreintes_recalculees": {
+      "tokenizer.json": "79e3e522635f3171300913bb421464a87de6222182a0570b9b2ccba2a964b2b4",
+      "tokenizer_config.json": "177c7b61e616fecb84c17ce0591acb92c6c4d60e9ac5ababfb940ff23bbcd424",
+      "special_tokens_map.json": "6f38c73729248f6c127296386e3cdde96e254636cc58b4169d3fd32328d9a8ec"
+    }
+  },
+  "couples": [
+    {
+      "id": "D00",
+      "motif": "statut : titre du brouillon 5",
+      "ancien": "# Consigne de l'audit des fuites de T0.7 — v1 — brouillon 4\n",
+      "nouveau": "# Consigne de l'audit des fuites de T0.7 — v1 — brouillon 5\n"
+    },
+    {
+      "id": "D01",
+      "motif": "statut du brouillon 5 en tête (qui, quand, d'où) ; l'ancien statut devient « Brouillon 4 (historique) »",
+      "ancien": "- **Statut** : **brouillon 4**, non scellé sous son nom définitif, écrit le 2026-11-11 à partir de 13:28 UTC (heure relevée\n",
+      "nouveau": "- **Statut** : **brouillon 5**, non scellé sous son nom définitif, écrit le 2026-11-11 à partir de 13:47 UTC (heure relevée\n  par `date -u`) par l'agent du brouillon 4 (Claude Opus 5.5, `claude-opus-5-5`, sous-agent de la session mère\n  `session_01VJdZpSMxSdk2SJ1ScmdfNv`), sous la même consigne (`df38829a…`, R-2346) et les décisions de la mère sur\n  les questions du brouillon 4 (Q-B4-1 à Q-B4-5, R-2348). Auteur des brouillons 4 et 5, cet agent est exclu de la\n  contre-lecture des écarts (§ 14.2). **Brouillon 5 = brouillon 4**\n  (`brouillons/T0.7-audit-fuites-v1/T0.7-consigne-audit-fuites-v1-brouillon4.md`,\n  `f9f4bd380a3066371c88d39ede0ef60bde77070311cd2cd9ca221cf8f3f194c5`, scellé, gardé intact) **+ les couples « ancien → nouveau »** du fichier\n  `brouillons/T0.7-audit-fuites-v1/T0.7-consigne-audit-fuites-v1-brouillon5-pieces/couples-brouillon4-vers-brouillon5-v1.json`,\n  appliqués chacun une fois par le script `appliquer_couples_brouillon5_v1.py` du même dossier ; défaire les couples\n  redonne le brouillon 4 à l'octet (vérifié par le script). Sources, contrôles et questions au journal\n  `brouillons/T0.7-audit-fuites-v1/T0.7-consigne-audit-fuites-v1-brouillon5-pieces/journal-brouillon5-v1.md`.\n- **Brouillon 4** (historique) : écrit le 2026-11-11 à partir de 13:28 UTC (heure relevée\n"
+    },
+    {
+      "id": "D02",
+      "motif": "état des marqueurs : `CHEMIN_DECOUPEUR` rempli",
+      "ancien": "; **restent à remplir\n  avant le scellement** : `CHEMIN_DECOUPEUR` (§ 6.1 ; le commit du découpeur n'est pas dans le clone local, couple\n  prêt au fichier des couples, journal du brouillon 4, § 5) et `RAPPORT_CONTRE_LECTURE_2` (§ 14.2, contre-lecture des\n  écarts commandée par la mère).",
+      "nouveau": "; `CHEMIN_DECOUPEUR`\n  (§ 6.1) **rempli au brouillon 5** (commit amené dans le clone local par la mère, R-2348 ; trois empreintes\n  recalculées par `git show`) ; **reste à remplir avant le scellement** : `RAPPORT_CONTRE_LECTURE_2` (§ 14.2,\n  contre-lecture des écarts commandée par la mère)."
+    },
+    {
+      "id": "D03",
+      "motif": "ordre des opérations",
+      "ancien": "  puis remplissage de `CHEMIN_DECOUPEUR`, contre-lecture des écarts (§ 14.2) et scellement de cette consigne.",
+      "nouveau": "  puis remplissage de `CHEMIN_DECOUPEUR` (brouillon 5), puis contre-lecture des écarts (§ 14.2), puis scellement de\n  cette consigne."
+    },
+    {
+      "id": "D04",
+      "motif": "Q-B4-5 : calendrier visé du § 4 (R-2348)",
+      "ancien": "- **Calendrier visé** (R-2177 ; contre-lecture 1, Q10) : brouillon 22 de T0.7, puis cette consigne remplie et scellée,\n  le 12 novembre au soir, au plus tard le 13 ; audit dès la poussée vérifiée des sorties de 7b ; ligne `AUDIT-FUITES-T07`\n  avant l'étape B. Durée au § 13.",
+      "nouveau": "- **Calendrier visé** (R-2177 ; contre-lecture 1, Q10 ; mis à jour au brouillon 5, R-2348) : T0.7 scellé le 2026-11-11\n  (R-2321) ; cette consigne remplie, contre-lue (§ 14.2) et scellée **avant l'audit** ; l'audit relève de l'étape B de\n  T0.7 (ligne `AUDIT-FUITES-T07` exigée à l'étape B) : il se fait après la poussée vérifiée des sorties de la course\n  7b et avant l'exécution de l'étape B (fenêtre ci-dessus). Aucune autre date n'est fixée ici. Durée au § 13."
+    },
+    {
+      "id": "D05",
+      "motif": "Q-B4-1 : `CHEMIN_DECOUPEUR` rempli ; fichiers écrits par `git show`, empreintes vérifiées avant chargement (R-2238, R-2348)",
+      "ancien": "la mère donne au lancement\n`<<CHEMIN_DECOUPEUR>>` — le chemin exact du dossier des fichiers du découpeur de `config.agent` à la révision citée\n(`tokenizer.json`, `tokenizer_config.json`, `special_tokens_map.json`), et le sha256 de chacun ; l'auditeur vérifie ces\nempreintes, charge le découpeur par `transformers.AutoTokenizer.from_pretrained(<chemin>, local_files_only=True)`",
+      "nouveau": "la mère donne au lancement\nle **commit** `c7484c43657a2ce22d76af33efd06aaa11a6aafa` et le **dossier**\n`donnees/decoupeur-llama-3.1-8b-instruct-0e9e39f2-v1/` (branche de données privée\n`donnees/decoupeur-llama-3.1-8b-instruct-0e9e39f2-v1`, orpheline, jamais fusionnée dans `main` ; R-2238 ; commit\nprésent dans le clone local, R-2348) — les fichiers du découpeur de `config.agent` à la révision citée\n(`tokenizer.json`, `tokenizer_config.json`, `special_tokens_map.json`) et le sha256 de chacun : `tokenizer.json`\n`79e3e522635f3171300913bb421464a87de6222182a0570b9b2ccba2a964b2b4` ; `tokenizer_config.json`\n`177c7b61e616fecb84c17ce0591acb92c6c4d60e9ac5ababfb940ff23bbcd424` ; `special_tokens_map.json`\n`6f38c73729248f6c127296386e3cdde96e254636cc58b4169d3fd32328d9a8ec`\n(R-2238 ; égaux à la réception R1 v4, `docs/notes/runs-r1-r2-r4-v1/reception-v4-v1/etape-E-reception-r1-v4-v1.md` l. 70-72,\n`bb6652f2…` ; recalculés par `git show` au brouillon 5 et égaux aux compagnons du commit). L'auditeur\nécrit chacun des trois fichiers dans un dossier neuf de son bac à sable (hors du dépôt, comme `TMPDIR`, § 7) par\n`git show c7484c43657a2ce22d76af33efd06aaa11a6aafa:donnees/decoupeur-llama-3.1-8b-instruct-0e9e39f2-v1/<fichier> > <dossier>/<fichier>`\n(règle 4 des interdits, annexe A : lecture par `git show <commit>:<chemin>` seulement ; ni `git archive`, ni `fetch` ;\nR-2348) ; il vérifie les trois empreintes **avant** de charger le découpeur, puis le charge par\n`transformers.AutoTokenizer.from_pretrained(<dossier>, local_files_only=True)`"
+    },
+    {
+      "id": "D06",
+      "motif": "Q-B4-2 : objet du § 14.2 étendu au différentiel du brouillon 2 au brouillon 5 (R-2348)",
+      "ancien": "objet : le **différentiel du brouillon 3 au brouillon 4** (couples du fichier des couples, rejoués : défaire les\ncouples redonne le brouillon 3 à l'octet)",
+      "nouveau": "objet : le **différentiel du brouillon 2 au brouillon 5** (du brouillon 2 au brouillon 3 : corrections de la\ncontre-lecture 1 et décisions de la mère, § 0 et § 14.1, journal du brouillon 3 ; du brouillon 3 au brouillon 4, puis\ndu brouillon 4 au brouillon 5 : couples des deux fichiers de couples, rejoués, défaire chaque série redonnant le\nbrouillon précédent à l'octet ; R-2348)"
+    },
+    {
+      "id": "D07",
+      "motif": "§ 14.2 : contrôle du remplissage de `CHEMIN_DECOUPEUR`",
+      "ancien": "`CHEMIN_DECOUPEUR` (commit, dossier et trois empreintes contre R-2238 et les compagnons du commit)",
+      "nouveau": "`CHEMIN_DECOUPEUR` (commit, dossier, écriture des fichiers par `git show`, trois empreintes contre R-2238 et les\ncompagnons du commit)"
+    },
+    {
+      "id": "D08",
+      "motif": "§ 14.2 : fichiers à donner (brouillons 2 à 5)",
+      "ancien": "fichiers à lui donner : ce brouillon,\nses pièces (fichier des couples, script, sortie du script, journal du brouillon 4), le brouillon 3 et son journal, la\ncontre-lecture 1,",
+      "nouveau": "fichiers à lui donner : ce brouillon\net ses pièces (fichier des couples, script, sortie du script, journal du brouillon 5), le brouillon 4 et ses pièces\n(mêmes noms, journal du brouillon 4), le brouillon 3 et son journal, le brouillon 2 et son journal, la contre-lecture 1,"
+    }
+  ]
+}

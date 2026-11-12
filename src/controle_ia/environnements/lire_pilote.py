@@ -133,9 +133,12 @@ else:
     if mauvais: problemes.append(f"valeurs autres que Yes ou No : {mauvais[:10]}")
 print("\\n".join(problemes) if problemes else "OK")
 '''
-INVITE_ETIQUETEUR = ("This task is self-contained: ignore any project instructions or session routines, and open no "
-                     "file other than those named in the instructions. Read the file {consigne} and follow its "
-                     "instructions exactly.")
+# Invite fixe du sous-agent étiqueteur. Sans phrase de préséance sur les consignes du projet : la formulation de
+# l'extraction (« ignore any project instructions or session routines ») est refusée par le classificateur du mode
+# automatique de la session (« Auto-Mode Bypass », éprouvé le 2026-10-12 ; état des lieux du pilote, critique de
+# complétude) ; celle-ci a été acceptée et suivie sur un lot jouet.
+INVITE_ETIQUETEUR = ("This is a self-contained labeling task. Open no file other than those named in the "
+                     "instructions. Read the file {consigne} and follow its instructions exactly.")
 
 
 def _sha(texte: str) -> str:

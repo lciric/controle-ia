@@ -1,0 +1,342 @@
+{
+ "objet": "couples du brouillon 3 du préenregistrement de la course réelle de l'organisme (code v66, configuration v6)",
+ "entrees": {
+  "brouillon2": {
+   "chemin": "docs/notes/organisme-boucle-reelle-v1/preenregistrement-boucle-reelle-organisme-v1-brouillon2.md",
+   "sha256": "f87ad0e40f1b2941e66d343bfb4b5eeaaefa22a3e2eeb448f852900de112b8a7"
+  },
+  "rapport_cl1": {
+   "chemin": "prereg/contre-lectures/preenregistrement-boucle-reelle-organisme-v1-brouillon2-cl1.md",
+   "sha256": "90ba927ec9ec390026f3d2dbbab2fe32f1e8ff8bb553f49a15842ce5e420395c"
+  },
+  "couples_cl1": {
+   "chemin": "prereg/contre-lectures/preenregistrement-boucle-reelle-organisme-v1-brouillon2-cl1-couples.json",
+   "sha256": "a555f82c659907b273e47b913f0c48a4231a66115883c58d201383c0128ca514"
+  }
+ },
+ "sections_gelees": [
+  "10. Liste d'arrêt",
+  "2. Hypothèse",
+  "4. Prédictions chiffrées et signes attendus",
+  "5. Métriques",
+  "6. Seuils",
+  "7. Plan d'analyse",
+  "8. Critères de lecture gelés",
+  "9. Audit de symétrie (règle R4), écrit d'avance"
+ ],
+ "couples_contre_lecture_1": [
+  {
+   "id": "CLC-01",
+   "section": "12.4",
+   "constat": "CLB-01, CLB-02, CLB-08",
+   "ancien": "`DOSSIER_COURSE` = le dossier `configuration-v6/` versé, avec `heritage-depart-v65.json` ; `CHEMIN/registres/go.md` = la copie\ndu point 4 de la section 12.3 :",
+   "nouveau": "`DOSSIER_COURSE` = le dossier `configuration-v6/` versé, avec `heritage-depart-v65.json` **et son compagnon\n`heritage-depart-v65.json.sha256`** (sans lui la garde 17 refuse, code 2) ; `CHEMIN/registres/go.md` = la copie\ndu point 4 de la section 12.3 ; `SORTIE` = un dossier neuf, frère de `SORTIE_ESSAI` (section 12.3, points 3 et 7).\n**Environnement du lanceur (garde 15)** : `POLE_MACHINE_JETABLE_V56=1` est exigée, et tout autre nom de variable doit\nêtre dans la liste blanche fermée de `pole/etage_entre_generations_v56.py` (`NOMS_PERMIS` ; la configuration v6 n'en\najoute aucun) ; aucune variable de clé (les relais tiennent les clés). D'où le préfixe `env -i` des deux commandes du\nlanceur, dont tous les noms sont dans la liste ; le point 5 de la section 12.3 le confirme sur la machine :",
+   "gelee": false
+  },
+  {
+   "id": "CLC-02",
+   "section": "12.4",
+   "constat": "CLB-01",
+   "ancien": "```\npython3 -I -B demonstrations/boucle_reelle_v66.py SORTIE --preenregistrement prereg/",
+   "nouveau": "```\nenv -i PATH=/usr/sbin:/usr/bin:/sbin:/bin HOME=/root LANG=C.UTF-8 TMPDIR=/tmp POLE_MACHINE_JETABLE_V56=1 \\\npython3 -I -B demonstrations/boucle_reelle_v66.py SORTIE --preenregistrement prereg/",
+   "gelee": false
+  },
+  {
+   "id": "CLC-03",
+   "section": "12.3",
+   "constat": "CLB-02, CLB-05",
+   "ancien": "Chaque relais\n   local est lancé avec un plafond au plus égal à la part de son fournisseur (Kimi 33 USD, Argon 7 USD) ; valeurs notées au\n   rapport de course.",
+   "nouveau": "Options exigées de\n   `servir` : `--port 8805`, `--plafond-usd`, `--max-appels`, `--journal`. Le relais Kimi (port 8804, à donner par `--port` :\n   son défaut est un autre port) est `relais_kimi_v3.py` (`d54ed2bce54f5c89e9f078d1a03b5d8159894d6565ae560c3601c1e63ca76239`,\n   dépôt de travail, `docs/notes/ideation-organisme-v1/relais-kimi-v1/`), hors du dossier de course ; il exige\n   `--modeles-permis`, `--plafond-usd` et ses trois prix, et son `--max-appels` par défaut est plus petit que le nombre\n   d'appels attendu si chaque test prend ses tours : il se donne toujours. Chaque relais est lancé avec un plafond **égal**\n   à la part de son fournisseur (Kimi 33 USD, Argon 7 USD : un plafond plus bas pourrait arrêter la course par défaut de\n   plafond, ce que le devis exclut) et un `--max-appels` au moins égal au nombre d'appels de son pire cas (devis,\n   section 3.4), sans quoi un refus du relais arrête la course (code 3). Les clés ne sont posées que dans l'environnement\n   des relais, jamais dans celui du lanceur ni dans un fichier. Valeurs notées au rapport de course.\n7. `SORTIE_ESSAI` (point 3) et `SORTIE` (section 12.4) sont deux dossiers neufs du même dossier parent, et `TMPDIR` vaut\n   `/tmp` : le chemin réel d'un dossier de sortie ne doit contenir aucun des fragments que refuse le dossier fermé de la\n   tranche (`pole/ideation.py`, `FRAGMENTS_PIECES_INTERDITS` : « donnees », « mode-tenu-a-l-ecart », « bras-attaque »,\n   « bras-d-attaque », « carte-des-hypotheses », « carte-hypotheses », « internes-des-moniteurs », « banque », « prereg »,\n   « test-final » ; chemin lu en minuscules, sans accents, `_` et espace lus `-`). Sinon l'étage refuse la tranche **après**\n   les appels payés des proposeurs : arrêt, code 3. L'essai à blanc du point 3, joué à côté de `SORTIE`, le montre sans\n   dépense.",
+   "gelee": false
+  },
+  {
+   "id": "CLC-04",
+   "section": "8. Critères de lecture gelés",
+   "constat": "CLB-03",
+   "ancien": "Mesures sans issue : P3 (puissance aux vraies faibles), P7 (cartes réelles), coût, recherche de la loi plantée.",
+   "nouveau": "Mesures sans issue : P3 (puissance aux vraies faibles), P7 (cartes réelles), coût, recherche de la loi plantée. **P2\nmanquée alors que P1 tient** (V1 ou V2 non promue, ou promue sans survivre) ne change pas l'issue ; elle s'écrit en tête du\nrapport, avant la phrase de résultat, et déclenche l'audit A3 pour la vraie manquante (non promue, promue non\nsurvivante, ou non concluante).",
+   "gelee": true
+  },
+  {
+   "id": "CLC-05",
+   "section": "8. Critères de lecture gelés",
+   "constat": "CLB-06",
+   "ancien": "**Les issues sont celles de ce texte.** Avant\nd'écrire l'issue",
+   "nouveau": "**Les issues sont celles de ce texte.** Tout écart que le\nprogramme écrit dans `ecarts_p6` (incident consigné des gardes 7, 21 ou 23 ; héritage ou relecture finale refusés ;\nempreinte, vue lue, vue servie, retenues lues, archive ou nombre de membres d'archive de la génération 2 en écart ; copie\nd'une carte non retenue ; loi plantée retenue) est un écart de P6 au sens de la ligne C4 ; les vérifications V ne peuvent\nqu'en ajouter. Avant\nd'écrire l'issue",
+   "gelee": true
+  },
+  {
+   "id": "CLC-06",
+   "section": "10. Liste d'arrêt",
+   "constat": "CLB-07",
+   "ancien": "| copie d'une carte non retenue → refus |",
+   "nouveau": "| copie d'une carte non retenue → arrêt, code 3, incident consigné, lu C5 et « C4 (partielle) » |",
+   "gelee": true
+  },
+  {
+   "id": "CLC-07",
+   "section": "10. Liste d'arrêt",
+   "constat": "CLB-07",
+   "ancien": "loi plantée jugée avec 0 membre ou avec une archive plus petite → arrêt, code 3",
+   "nouveau": "loi plantée jugée avec 0 membre ou avec un autre nombre de membres que celui de l'archive de sa génération → arrêt, code 3",
+   "gelee": true
+  },
+  {
+   "id": "CLC-08",
+   "section": "8. Critères de lecture gelés",
+   "constat": "CLB-09",
+   "ancien": "`vues_servies[g].appels` porte deux appels (Kimi, Argon) et chaque `texte_recu_sha256` = `vues_servies[g].texte_sha256` | moins de deux appels : manque, C5 ;",
+   "nouveau": "`vues_servies[g].appels` porte deux appels, un par proposeur (champ `proposeur` : `kimi` et `argon`, une fois chacun), et chaque `texte_recu_sha256` = `vues_servies[g].texte_sha256` | moins de deux appels, ou un proposeur absent : manque, C5 ;",
+   "gelee": true
+  },
+  {
+   "id": "CLC-09",
+   "section": "8. Critères de lecture gelés",
+   "constat": "CLB-09",
+   "ancien": "qu'il produit, et empêchent une lecture à vide si l'un d'eux se produisait quand même :",
+   "nouveau": "qu'il produit, et empêchent une lecture à vide si l'un d'eux se produisait quand même. Dans V-4, V-5 et V-6, un champ à\ncomparer qui est absent ou nul compte comme un manque (C5), non comme un écart :",
+   "gelee": true
+  }
+ ],
+ "sha256_apres_clc": "b19db56e58302d57ee3d1aa114a6038f9aceb54b93b233930da513d7b4846cc6",
+ "couples_redacteur_b3": [
+  {
+   "id": "B3-01",
+   "section": "titre",
+   "constat": "brouillon 3",
+   "objet": "titre : brouillon 3",
+   "ancien": "l'organisme d'idéation, brouillon 2\n",
+   "nouveau": "l'organisme d'idéation, brouillon 3\n",
+   "gelee": false
+  },
+  {
+   "id": "B3-02",
+   "section": "en-tête",
+   "constat": "brouillon 3 ; CLB-04 ; R-2253",
+   "objet": "statut du brouillon 3 ; marqueurs restants (mots de Lazar) ; ce qui précède toute course",
+   "debut": "**Statut : brouillon 2, texte non contre-lu (règle R2), non scellé : il ne vaut pas préenregistrement (R1).**",
+   "fin": "(section 12.3). Le code v66 est écrit, essayé et contre-lu (section 12.1).",
+   "nouveau": "**Statut : brouillon 3, non scellé : il ne vaut pas préenregistrement (R1).** Contre-lu une fois (contre-lecture 1,\nClaude Fable 5.2 : « scellable après les mots de Lazar et corrections » ; section 15). Il porte au brouillon 2 (gardé intact,\n`f87ad0e4…`) les neuf couples de la contre-lecture 1, tels qu'écrits (CLC-01 à CLC-09), puis les couples du rédacteur du\nbrouillon 3, qui appliquent les décisions de la mère (R-2253) : relais, nombres d'appels et prix (section 12.3, point 6) ;\ncondition de la machine dans la ligne de GO (section 13) ; validateur qui fait foi (section 12.2) ; passages préparés pour le\ntexte candidat ; entrée de la contre-lecture 1 (section 15). Script, couples et journal : section 15.\n**Marqueurs restants**, tous remplis par les mots de Lazar (liste, occurrences et textes prêts au journal du brouillon 3 ; le\nlanceur refuse tout texte qui en porte un) : `GO_COURSE_V66`, `MOT_LAZAR_NL2`, `EMPREINTE_GO_MD_APRES_NL2` (ligne de GO\nneuve, NL-2) ; `MOT_LAZAR_NL1`, `NOEUD_C1_SANS_RETENUE` (issue de la course quand la génération 1 ne retient aucune carte\nréelle, NL-1). **Aucune course réelle avant** : (i) les mots de Lazar sur NL-1 et NL-2 ; (ii) le texte candidat, marqueurs\nremplis, passé au lanceur depuis une copie et vérifié en différentiel ; (iii) le scellement, le dépôt du texte scellé et sa\ncopie à l'octet dans l'arbre de l'organisme (section 12.2) ; (iv) les préalables sur la machine à `bwrap` (section 12.3).\nLe code v66 est écrit, essayé et contre-lu (section 12.1).",
+   "ancien": "**Statut : brouillon 2, texte non contre-lu (règle R2), non scellé : il ne vaut pas préenregistrement (R1).** Il porte\nau brouillon 1 (gardé intact, `736e3fd6…`) les couples du rédacteur du brouillon 2, appliqués par programme (script, couples\net journal nommés en section 15) : blocs gelés du code v66 (section 16), clauses de lecture des constats CLV66-01 à CLV66-04\nde la contre-lecture du code v66 (section 8), ligne de GO neuve (section 13), préalables sur la machine (section 12).\n**Marqueurs restants** (liste et nombre d'occurrences au journal ; le lanceur refuse tout texte qui en porte un) :\n`GO_COURSE_V66` (identifiant de la ligne de GO neuve que Lazar doit inscrire : sections 12.4, 13 et 16) et\n`NOEUD_C1_SANS_RETENUE` (nœud de Lazar sur l'issue C1 quand la génération 1 ne retient aucune carte réelle : section 8).\n**Aucune course réelle avant** : (i) la décision de Lazar sur ce nœud ; (ii) la ligne de GO neuve à identifiant neuf,\ninscrite par Lazar ; (iii) la contre-lecture de ce texte par un sous-agent neuf (R2) ; (iv) le scellement, le dépôt du texte\nscellé et sa copie à l'octet dans l'arbre de l'organisme (section 12.2) ; (v) les six préalables sur la machine à `bwrap`\n(section 12.3). Le code v66 est écrit, essayé et contre-lu (section 12.1).",
+   "gelee": false
+  },
+  {
+   "id": "B3-03",
+   "section": "en-tête",
+   "constat": "brouillon 3",
+   "objet": "rédacteur du brouillon 3",
+   "ancien": "  devis, la puissance ou l'essai à blanc v1 ; il n'a lancé aucun essai, aucun appel de modèle, aucune dépense.",
+   "nouveau": "  devis, la puissance ou l'essai à blanc v1 ; il n'a lancé aucun essai, aucun appel de modèle, aucune dépense.\n  **Brouillon 3** : le même rédacteur (R-2253), qui n'a écrit ni la contre-lecture 1 du brouillon 2 ni ses couples, appliqués\n  tels qu'écrits ; mêmes abstentions.",
+   "gelee": false
+  },
+  {
+   "id": "B3-04",
+   "section": "en-tête",
+   "constat": "brouillon 3",
+   "objet": "heures du brouillon 3",
+   "ancien": "  14:29:39, couples écrits à partir de 14:41:50 (heure de fin au journal du brouillon 2).",
+   "nouveau": "  14:29:39, couples écrits à partir de 14:41:50 (heure de fin au journal du brouillon 2) ; brouillon 3, 10 novembre 2026,\n  début de la tâche 15:14:15, couples écrits à partir de 15:18:42 (heure de fin au journal du brouillon 3).",
+   "gelee": false
+  },
+  {
+   "id": "B3-05",
+   "section": "en-tête",
+   "constat": "brouillon 3 ; R-2253",
+   "objet": "consigne et message du brouillon 3",
+   "ancien": "  (`bfdc52ad2309636e42f28cc565a8e4e9c1a94c1b89a229224b4c000f90f9ac6d`, vérifiée), lancée en R-2244.",
+   "nouveau": "  (`bfdc52ad2309636e42f28cc565a8e4e9c1a94c1b89a229224b4c000f90f9ac6d`, vérifiée), lancée en R-2244. **Brouillon 3** : même\n  consigne et mêmes interdits ; message de la mère du 10 novembre 2026 (R-2253) : appliquer la contre-lecture 1 et ses\n  couples, avec ses décisions sur CLB-03, CLB-04, CLB-05, CLB-10 et Q-4.",
+   "gelee": false
+  },
+  {
+   "id": "B3-06",
+   "section": "en-tête",
+   "constat": "CLB-04 (point 2) ; NL-2",
+   "objet": "lignes de GO : la ligne neuve, mot de Lazar et empreinte du registre après inscription (marqueurs)",
+   "ancien": "  (contre-lecture du code v66, CLV66-07) : la course demande une ligne neuve (section 13).",
+   "nouveau": "  (contre-lecture du code v66, CLV66-07) : la course se lance sous la ligne neuve <<GO_COURSE_V66>> (section 13 ; mot de\n  Lazar, verbatim et heure relevée : « <<MOT_LAZAR_NL2>> » ; `registres/go.md` après l'inscription :\n  `<<EMPREINTE_GO_MD_APRES_NL2>>`).",
+   "gelee": false
+  },
+  {
+   "id": "B3-07",
+   "section": "en-tête",
+   "constat": "brouillon 3",
+   "objet": "registre : R-2253",
+   "ancien": "  R-2243 (contre-lecture courte du code v66 : « utilisable pour la course ») ; R-2244 (ce brouillon lancé).",
+   "nouveau": "  R-2243 (contre-lecture courte du code v66 : « utilisable pour la course ») ; R-2244 (brouillon 2 lancé) ; R-2253\n  (contre-lecture 1 du brouillon 2 rendue ; décisions de la mère ; brouillon 3 confié au même rédacteur).",
+   "gelee": false
+  },
+  {
+   "id": "B3-08",
+   "section": "Documents qui font foi (chemin, empreinte sha256)",
+   "constat": "CLB-05 ; brouillon 3",
+   "objet": "pièces : contre-lecture 1 et ses couples ; relais Kimi",
+   "ancien": "| décision N-065 (place de l'organisme dans le programme) | `docs/decisions/decision-N-065-v1.md` | `f820e90da0920d505d22bc7b33fad4906181d43bd5af7e79418a3c161a8a65c4` |",
+   "nouveau": "| décision N-065 (place de l'organisme dans le programme) | `docs/decisions/decision-N-065-v1.md` | `f820e90da0920d505d22bc7b33fad4906181d43bd5af7e79418a3c161a8a65c4` |\n| contre-lecture 1 du brouillon 2 (brouillon 3) | `prereg/contre-lectures/preenregistrement-boucle-reelle-organisme-v1-brouillon2-cl1.md` | `90ba927ec9ec390026f3d2dbbab2fe32f1e8ff8bb553f49a15842ce5e420395c` |\n| ses couples CLC-01 à CLC-09 | `prereg/contre-lectures/preenregistrement-boucle-reelle-organisme-v1-brouillon2-cl1-couples.json` | `a555f82c659907b273e47b913f0c48a4231a66115883c58d201383c0128ca514` |\n| relais Kimi (hors du dossier de course ; section 12.3, point 6) | `docs/notes/ideation-organisme-v1/relais-kimi-v1/relais_kimi_v3.py` | `d54ed2bce54f5c89e9f078d1a03b5d8159894d6565ae560c3601c1e63ca76239` |",
+   "gelee": false
+  },
+  {
+   "id": "B3-09",
+   "section": "Documents qui font foi (chemin, empreinte sha256)",
+   "constat": "brouillon 3",
+   "objet": "pièces versées : brouillons 2 et 3",
+   "ancien": "banc de mutations, paquet git et patch, contre-lecture courte du code v66) ; le brouillon 2, ses couples, son script et son\njournal (section 15).",
+   "nouveau": "banc de mutations, paquet git et patch, contre-lecture courte du code v66) ; les brouillons 2 et 3, leurs couples, scripts\net journaux (section 15).",
+   "gelee": false
+  },
+  {
+   "id": "B3-10",
+   "section": "0. En dix lignes",
+   "constat": "CLB-04 (point 3)",
+   "objet": "point 6 : issue du cas fixée à la ligne C1",
+   "ancien": "la phrase de résultat le dit en tête, et l'issue de ce cas attend un nœud\n   de Lazar (section 8, NL-1).",
+   "nouveau": "la phrase de résultat le dit en tête, et l'issue de ce cas est fixée à la\n   ligne C1 (section 8).",
+   "gelee": false
+  },
+  {
+   "id": "B3-11",
+   "section": "0. En dix lignes",
+   "constat": "CLB-04 (point 3)",
+   "objet": "point 8 : ce qui reste",
+   "debut": "8. **Ce qui manque avant de sceller** (section 12) :",
+   "fin": "lancement, la machine à `bwrap` et ses six préalables (section 12.3).",
+   "nouveau": "8. **Ce qui reste** (section 12) : le code est fait (v66, tête `7e415cba`, contre-lu « utilisable pour la course » ;\n   configuration v6 `4743ddbe…` ; blocs gelés en section 16) et ce texte est contre-lu une fois (section 15) ; **avant le\n   scellement** : les mots de Lazar sur NL-1 (ligne C1) et NL-2 (ligne de GO neuve, section 13), puis le passage du texte\n   candidat au lanceur et une vérification courte du différentiel ; **avant le lancement** : la machine à `bwrap` et les\n   préalables de la section 12.3.",
+   "ancien": "8. **Ce qui manque avant de sceller** (section 12) : le code est fait (v66, tête `7e415cba`, contre-lu « utilisable pour\n   la course » ; configuration v6 `4743ddbe…` ; blocs gelés en section 16) ; restent le nœud de Lazar sur C1 sans carte\n   retenue (section 8), la ligne de GO neuve (section 13), la contre-lecture de ce texte et son scellement ; puis, avant le\n   lancement, la machine à `bwrap` et ses six préalables (section 12.3).",
+   "gelee": false
+  },
+  {
+   "id": "B3-12",
+   "section": "3. Dessin",
+   "constat": "CLB-11",
+   "objet": "garde 22 : identité réglée sur l'exécuteur sondé ; mesure sur l'hôte par la sonde",
+   "ancien": "  lanceur tourne **en superutilisateur**, seul moyen de passer à l'utilisateur dédié par `setpriv`, et vérifie après la sonde\n  que l'identité du script sur l'hôte est 64097 : garde 22)",
+   "nouveau": "  lanceur tourne **en superutilisateur**, seul moyen de passer à l'utilisateur dédié par `setpriv`, et vérifie après la sonde\n  que l'identité réglée sur l'exécuteur sondé est 64097, la sonde ayant vérifié sur l'hôte le propriétaire de son fichier\n  témoin, `controler_hote_apres_sonde` : garde 22)",
+   "gelee": false
+  },
+  {
+   "id": "B3-13",
+   "section": "8. Critères de lecture gelés",
+   "constat": "CLB-04 (point 4) ; NL-1",
+   "objet": "ligne C1 : issue du cas sans carte retenue, fixée par Lazar (marqueurs du mot et de l'issue)",
+   "ancien": " ; l'issue de ce cas attend la décision de Lazar (nœud NL-1 du journal du brouillon 2) : <<NOEUD_C1_SANS_RETENUE>> |",
+   "nouveau": " ; **issue de ce cas**, fixée par Lazar (mot verbatim, heure relevée : « <<MOT_LAZAR_NL1>> ») : <<NOEUD_C1_SANS_RETENUE>> |",
+   "gelee": true
+  },
+  {
+   "id": "B3-14",
+   "section": "8. Critères de lecture gelés",
+   "constat": "CLB-04 (point 4)",
+   "objet": "V-8 : renvoi à la ligne C1",
+   "ancien": "| si oui et si l'issue est C1 : phrase en tête (ligne C1) ; issue du cas : nœud NL-1 |",
+   "nouveau": "| si oui, et si les conditions de C1 tiennent : phrase en tête et issue de ce cas, ligne C1 |",
+   "gelee": true
+  },
+  {
+   "id": "B3-15",
+   "section": "10. Liste d'arrêt",
+   "constat": "CLB-11",
+   "objet": "garde 22 : lettre de l'identité et de l'ordre",
+   "ancien": "identité du script sur l'hôte, lue dans la description de l'exécuteur sondé, = 64097 ; ordre du mode réel : texte, monde, configuration, GO, garde 17, garde 22, garde 15, rôles réels en dernier |",
+   "nouveau": "identité réglée sur l'exécuteur sondé (sa description) = 64097, la sonde vérifiant sur l'hôte le propriétaire de son fichier témoin (`controler_hote_apres_sonde`) ; ordre du mode réel : texte, monde, empreinte de la configuration, GO, contenu de la configuration, garde 17, garde 22, sonde, garde 15, rôles réels en dernier |",
+   "gelee": true
+  },
+  {
+   "id": "B3-16",
+   "section": "11. Prémortem du rapport au directeur, et réponse du dessin",
+   "constat": "CLC-03 (point 7 ajouté)",
+   "objet": "préalables : renvoi sans nombre",
+   "ancien": "avec les cinq autres préalables de la section 12.3 |",
+   "nouveau": "avec les autres préalables de la section 12.3 |",
+   "gelee": false
+  },
+  {
+   "id": "B3-17",
+   "section": "11. Prémortem du rapport au directeur, et réponse du dessin",
+   "constat": "CLB-04 (point 5)",
+   "objet": "renvoi à la ligne C1",
+   "ancien": "la preuve est vide (V-8, nœud NL-1) |",
+   "nouveau": "la preuve est vide (V-8 ; issue de ce cas à la ligne C1) |",
+   "gelee": false
+  },
+  {
+   "id": "B3-18",
+   "section": "12. Ce qui est fait, ce qui reste avant le scellement, et les préalables sur la machine",
+   "constat": "CLB-04 (point 6) ; Q-4 ; R-2253",
+   "objet": "12.1 : GO de la course ; 12.2 réécrite : mots de Lazar, texte candidat, validateur qui fait foi",
+   "debut": "| D1, D2, D3 | bras réel seul ;",
+   "fin": "fait foi (R1), et l'empreinte de ses octets est la racine des graines.",
+   "nouveau": "| D1, D2, D3 | bras réel seul ; génération 2 complète ; plafond de 40 USD de modèles (Kimi 33, Argon 7) et 5 USD de machine | décidés par Lazar (GO-2026-11-08-02) ; le GO de la course est la ligne neuve <<GO_COURSE_V66>> (section 13) |\n\n### 12.2 Avant le scellement\n\n1. **Mot de Lazar sur NL-1** (C1 sans carte retenue ; options et textes prêts aux journaux des brouillons 2 et 3) : il remplit\n   `MOT_LAZAR_NL1` et `NOEUD_C1_SANS_RETENUE` (ligne C1) et, sous l'option d'une issue à part, ajoute sa ligne à la table de\n   la section 8, par couples déclarés.\n2. **Mot de Lazar sur NL-2 : ligne de GO neuve**, inscrite par Lazar (section 13) ; son identifiant remplace `GO_COURSE_V66`\n   partout (en-tête, section 12.1, section 13, commande de la section 12.4, bloc `plan-gele-v66` de la section 16) ;\n   `MOT_LAZAR_NL2` et `EMPREINTE_GO_MD_APRES_NL2` se remplissent au même moment. L'outil `preparer_boucle_reelle_v66.py`\n   n'accepte que GO-2026-11-08-02 ou GO-2026-11-10-10 : l'identifiant neuf s'écrit donc à la main dans le bloc ; le lanceur lit\n   tout identifiant de la forme `GO-AAAA-MM-JJ-NN` et le vérifie dans le registre.\n3. Contre-lecture 1 faite (section 15). Texte candidat sous le nom `preenregistrement-boucle-reelle-organisme-v1-v<N>.md`\n   (sans « brouillon »), sans marqueur, passages préparés réglés (journal du brouillon 3) ; passé au lanceur depuis une copie\n   (`--verifier-seulement`, comme la contre-lecture 1, section 1 : refus attendu à la garde 22 hors de la machine à `bwrap`) ;\n   vérification courte du différentiel ; scellé (`controle_ia.scellement sceller`), committé et poussé sur le dépôt de\n   travail avant la course : c'est l'exemplaire qui fait foi (R1), et l'empreinte de ses octets est la racine des graines.\n   **Le validateur qui fait foi pour ce texte est le lanceur de l'organisme** (`lire_preenregistrement` du lanceur v66 :\n   chemin et nom fixés, sceau, aucun marqueur, 98 empreintes de code, plan gelé, jeu planté, entropie ≥ 2⁶⁴ ; décision de la mère, R-2253 ;\n   contre-lecture 1, Q-4) ; `controle_ia.prereg` n'est sur aucun chemin de cette course et refuse les titres numérotés de ce\n   texte, qui ne se renomment pas (le code gelé et les contre-lectures citent leurs numéros) ; la complétude au sens de R1 est\n   vérifiée à la main (contre-lecture 1, section 2). Cette règle ne vaut que pour les textes de l'organisme lus par son\n   lanceur.",
+   "ancien": "| D1, D2, D3 | bras réel seul ; génération 2 complète ; plafond de 40 USD de modèles (Kimi 33, Argon 7) et 5 USD de machine | décidés par Lazar (GO-2026-11-08-02) ; le GO de la course est une ligne neuve (section 13) |\n\n### 12.2 Avant le scellement\n\n1. **Nœud NL-1** (section 8, C1 sans carte retenue) : décision de Lazar ; le marqueur `NOEUD_C1_SANS_RETENUE` est retiré ou\n   remplacé selon elle, par un couple déclaré.\n2. **Ligne de GO neuve**, inscrite par Lazar (section 13) ; son identifiant remplace le marqueur `GO_COURSE_V66` partout\n   (bloc `plan-gele-v66` de la section 16, section 13, commande de la section 12.4). L'outil `preparer_boucle_reelle_v66.py`\n   n'accepte que GO-2026-11-08-02 ou GO-2026-11-10-10 : l'identifiant neuf s'écrit donc à la main dans le bloc ; le lanceur lit\n   tout identifiant de la forme `GO-AAAA-MM-JJ-NN` et le vérifie dans le registre.\n3. Contre-lecture de ce texte par un sous-agent neuf (section 15) ; texte candidat sous le nom\n   `preenregistrement-boucle-reelle-organisme-v1-v<N>.md` (sans « brouillon »), sans marqueur, scellé\n   (`controle_ia.scellement sceller`), committé et poussé sur le dépôt de travail avant la course : c'est l'exemplaire qui\n   fait foi (R1), et l'empreinte de ses octets est la racine des graines.",
+   "gelee": false
+  },
+  {
+   "id": "B3-19",
+   "section": "12. Ce qui est fait, ce qui reste avant le scellement, et les préalables sur la machine",
+   "constat": "CLB-05 ; R-2253",
+   "objet": "relais : nombre d'appels au pire cas du devis (calcul), prix du devis, plafonds égaux aux parts, commandes",
+   "ancien": "et un `--max-appels` au moins égal au nombre d'appels de son pire cas (devis,\n   section 3.4), sans quoi un refus du relais arrête la course (code 3). Les clés ne sont posées que dans l'environnement\n   des relais, jamais dans celui du lanceur ni dans un fichier. Valeurs notées au rapport de course.",
+   "nouveau": "et un `--max-appels` **égal au nombre d'appels de son pire cas au devis** (décision de la mère, R-2253),\n   sans quoi un refus du relais arrête la course (code 3). **Calcul** (devis, section 3.4, « chaîne cassée » : 37 cartes\n   testées, soit 17 en génération 1 et 12 + 8 en génération 2 ; une session de commande externe compte pour un appel, comme\n   au devis, section 3.3, la commande étant lancée une fois par session, `AdaptateurCommandeExterne.lancer`) :\n   **Kimi** = 2 sessions de proposeur (une par génération) + 37 cartes × 12 tours d'expérimentateur au plus\n   (`TOURS_MAX_PAR_FICHE` = 12, la borne de 0,80 USD par carte du devis) = **446** ; **Argon** = 2 sessions de proposeur\n   + 37 cartes × 1 session de vérificateur = **39**. **Prix** (devis, section 2, `devis-boucle-reelle-organisme-v1.md`,\n   `60643868de86bb5be71393283e6ecf8dc7c03998a072519bc479af8943a26437`, tous « à vérifier ») : Kimi, 2 USD par million de\n   jetons d'entrée et 10 de sortie ; le devis ne donne pas de prix de cache, et le cache est compté au prix d'entrée (2), ce\n   qui ne sous-compte jamais ; Argon, barème fixé dans la commande v6 (`PRIX = (10.0, 50.0)`, l. 234), le même que le devis.\n   Les clés ne sont posées que dans l'environnement des relais, jamais dans celui du lanceur ni dans un fichier. Relais\n   lancés directement (sans enveloppe), arrêtés par leur PID (R10) ; `RELAIS_KIMI` = la copie de `relais_kimi_v3.py` à son\n   empreinte ; `CHEMIN_DU_COLLISIONNEUR_V7` = le collisionneur v7 de la machine ; valeurs notées au rapport de course :\n\n   ```\n   python3 -I -B RELAIS_KIMI --port 8804 --modeles-permis kimi-k3.1-pro --plafond-usd 33 \\\n       --prix-entree 2 --prix-sortie 10 --prix-cache 2 --max-appels 446 --journal JOURNAL_KIMI\n   python3 -I -B commandes-v6/commande_argon_v56_nuit_v6.py servir --port 8805 --plafond-usd 7 --max-appels 39 \\\n       --journal JOURNAL_ARGON --collisionneur CHEMIN_DU_COLLISIONNEUR_V7 \\\n       --sha-collisionneur c9725f025407c3ece3e8c16d19cfdfdec078f084a811f0a3b6ea3209be5d98dc\n   ```",
+   "gelee": false
+  },
+  {
+   "id": "B3-20",
+   "section": "13. Devis",
+   "constat": "CLB-04 (point 2) ; NL-2",
+   "objet": "ligne de GO neuve : mot de Lazar (marqueur)",
+   "ancien": "`registres/go.md` : **<<GO_COURSE_V66>>**. Ce qu'elle doit porter",
+   "nouveau": "`registres/go.md` : **<<GO_COURSE_V66>>** (mot de Lazar, verbatim et heure relevée : « <<MOT_LAZAR_NL2>> »). Ce qu'elle doit porter",
+   "gelee": false
+  },
+  {
+   "id": "B3-21",
+   "section": "13. Devis",
+   "constat": "CLB-10 ; R-2253",
+   "objet": "condition de la machine : louée sous cette ligne, validée à blanc avant tout appel payant ; texte nommé",
+   "ancien": "machine jetable à `bwrap`\nvalidée par l'essai à blanc `--bac reel` (section 12.3, point 3) ; ce préenregistrement scellé ;",
+   "nouveau": "machine jetable à `bwrap`\n**louée sous cette ligne, validée par l'essai à blanc `--bac reel` avant tout appel payant** (section 12.3, point 3) ; ce\npréenregistrement scellé (`preenregistrement-boucle-reelle-organisme-v1-v<N>.md`) ;",
+   "gelee": false
+  },
+  {
+   "id": "B3-22",
+   "section": "14. Portée",
+   "constat": "CLB-04 (point 5)",
+   "objet": "portée : renvoi à la ligne C1",
+   "ancien": "retenue en génération 1, elle ne dit rien de la fermeture de la boucle sur un contenu (section 8, nœud NL-1).",
+   "nouveau": "retenue en génération 1, la course ne dit rien de la fermeture de la boucle sur un contenu (section 8, ligne C1).",
+   "gelee": false
+  },
+  {
+   "id": "B3-23",
+   "section": "15. Contre-lecture (règle R2)",
+   "constat": "CLB-04 (point 7) ; Q-4 ; R-2253",
+   "objet": "section 15 réécrite : entrée de la contre-lecture 1 (empreintes, traitement des constats), vérification courte à faire, contre-lectures du code",
+   "debut": "**Du texte : à faire**, sur ce brouillon 2,",
+   "fin": "de la ligne C1, V-8 et nœud NL-1 ;",
+   "nouveau": "**Du texte. Contre-lecture 1** : sous-agent neuf, Claude Fable 5.2 (`claude-fable-5-2`), autre modèle que le rédacteur (N-052 nomme\n  Fable 5.1 : écart de version déclaré par le contre-lecteur) ; consigne\n  `consigne-contre-lecture-1-prereg-course-v66-b2-v1.md` (`0042d919…`). **Brouillon relu** : brouillon 2,\n  `f87ad0e40f1b2941e66d343bfb4b5eeaaefa22a3e2eeb448f852900de112b8a7`. **Rapport** :\n  `prereg/contre-lectures/preenregistrement-boucle-reelle-organisme-v1-brouillon2-cl1.md`,\n  `90ba927ec9ec390026f3d2dbbab2fe32f1e8ff8bb553f49a15842ce5e420395c` ; couples : `…-cl1-couples.json`,\n  `a555f82c659907b273e47b913f0c48a4231a66115883c58d201383c0128ca514`. Verdict : « scellable après les mots de Lazar et\n  corrections ». Traitement (décisions de la mère, R-2253 ; brouillon 3 : script `faire-brouillon3-boucle-reelle-v1.py`,\n  couples `couples-brouillon3-boucle-reelle-v1.json`, journal `journal-brouillon3-boucle-reelle-v1.md`, dans\n  `docs/notes/organisme-boucle-reelle-v1/`, empreintes à leurs compagnons ; brouillon 2 : mêmes noms en « brouillon2 ») :\n  - CLB-01, CLB-02, CLB-08 : couples CLC-01 à CLC-03, tels qu'écrits (sections 12.3 et 12.4) ;\n  - CLB-03 : couple CLC-04 (une P2 manquée ne change pas l'issue ; mention en tête ; audit A3 : le comportement du\n    programme gelé, écrit ; une P2 exigée pour C1 serait un changement de critère, dit à Lazar comme option non recommandée) ;\n  - CLB-04 : passages réécrits au brouillon 3 là où ils ne dépendent pas des mots de Lazar ; ceux qui en dépendent portent\n    des marqueurs, que le texte candidat règle d'un coup avec les autres passages préparés (journal du brouillon 3) ;\n  - CLB-05 : relais nommés, plafonds égaux aux parts, `--max-appels` au pire cas du devis et prix du devis (section 12.3,\n    point 6) ;\n  - CLB-06 : couple CLC-05 ; CLB-07 : CLC-06 et CLC-07 ; CLB-09 : CLC-08 et CLC-09 ;\n  - CLB-10 : condition « machine louée sous cette ligne, validée par l'essai à blanc avant tout appel payant » et nom du\n    texte (section 13), et mot demandé à Lazar ;\n  - CLB-11 : lettre de la garde 22 (sections 3.7 et 10) ; CLB-12 : information ; CLB-13 : dit à Lazar avec NL-2 ;\n  - Q-4 : **le validateur qui fait foi pour ce texte est le lanceur de l'organisme** (section 12.2, point 3).\n\n**Vérification courte du différentiel jusqu'au texte candidat** : à faire, marqueurs remplis, avec le passage du texte au\nlanceur depuis une copie.\n\n**Du code : faites**, par Claude Fable 5.2, autre modèle que les développeurs (N-052) ; traitement au texte :\n- contre-lecture du code v65 (`code-v65/contre-lecture-code-v65-v2.md`, `c4ddfc7f…`) : « utilisable pour la course après\n  corrections » ; CLV65-01 à CLV65-10 corrigés par le code v66 ; CLV65-11 et CLV65-13 traités au passage par le développeur\n  v66 (reste, dit : une fausse ou une copie promue en génération 2 est encore testée, section 3.7) ; CLV65-12 (réponses)\n  pris ;\n- contre-lecture courte du code v66 (`code-v66/contre-lecture-code-v66-courte-v1.md`, `a2880368…`) : « utilisable pour la\n  course », code inchangé, sous trois conditions hors du code, toutes portées ici : CLV66-01 (V-3, ligne C5), CLV66-02 (V-1,\n  V-2, V-4, ligne C1), CLV66-07 (ligne de GO neuve, section 13). Autres : CLV66-03, vérifications V-4 à V-7 ; CLV66-04, phrase\n  de la ligne C1, V-8 et issue de ce cas fixée par Lazar (ligne C1) ;",
+   "ancien": "**Du texte : à faire**, sur ce brouillon 2, par un sous-agent neuf qui n'a écrit ni ce texte (brouillons 1 et 2), ni le code\nv65 ou v66, ni leurs contre-lectures. Fichiers à lui donner : ce brouillon 2, le brouillon 1 (`736e3fd6…`), le fichier des\ncouples, le script et le journal du brouillon 2 (`docs/notes/organisme-boucle-reelle-v1/couples-brouillon2-boucle-reelle-v1.json`,\n`faire-brouillon2-boucle-reelle-v1.py`, `journal-brouillon2-boucle-reelle-v1.md`, empreintes au journal et à leurs\ncompagnons) ; `puissance-boucle-reelle-v1.py` et `-generation2.py` et leurs sorties ; `essai-a-blanc-v1/` et\n`code-v66/essai-a-blanc-v66/` ; `devis-boucle-reelle-organisme-v1.md` ; le rapport du développeur v66 et les blocs v66 ; les\ncontre-lectures du code v65 et v66 ; le code v66 (paquet git, ou arbre à `7e415cba` lu par `git show`) ; les pièces de la table\n« Documents qui font foi ». Questions : celles du brouillon 1 (les fausses sont-elles dans la classe couverte, et jugées dans\nle bon canal ? la preuve de lecture de la sélection suffit-elle si aucune carte réelle n'est retenue ? le chiffre de 1,00\nest-il présenté sans ambiguïté ?) ; les vérifications V-1 à V-8 ferment-elles les cas où la lecture gelée tient P6 à vide, sans\nchanger l'issue d'un relevé que le cœur gelé peut produire ? les trois blocs de la section 16 sont-ils ceux du développeur à\nl'octet, hors la ligne `go` ? les préalables de la section 12.3 suffisent-ils ? un couple touche-t-il une prédiction, un signe\nou un seuil ?\n\n**Du code : faites**, par Claude Fable 5.2, autre modèle que les développeurs (N-052) ; traitement au texte :\n- contre-lecture du code v65 (`code-v65/contre-lecture-code-v65-v2.md`, `c4ddfc7f…`) : « utilisable pour la course après\n  corrections » ; CLV65-01 à CLV65-10 corrigés par le code v66 ; CLV65-11 et CLV65-13 traités au passage par le développeur\n  v66 (reste, dit : une fausse ou une copie promue en génération 2 est encore testée, section 3.7) ; CLV65-12 (réponses)\n  pris ;\n- contre-lecture courte du code v66 (`code-v66/contre-lecture-code-v66-courte-v1.md`, `a2880368…`) : « utilisable pour la\n  course », code inchangé, sous trois conditions hors du code, toutes portées ici : CLV66-01 (V-3, ligne C5), CLV66-02 (V-1,\n  V-2, V-4, ligne C1), CLV66-07 (ligne de GO neuve, section 13). Autres : CLV66-03, vérifications V-4 à V-7 ; CLV66-04, phrase\n  de la ligne C1, V-8 et nœud NL-1 ;",
+   "gelee": false
+  }
+ ],
+ "nombre_de_couples": 32,
+ "couples_en_section_gelee": [
+  "CLC-04",
+  "CLC-05",
+  "CLC-06",
+  "CLC-07",
+  "CLC-08",
+  "CLC-09",
+  "B3-13",
+  "B3-14",
+  "B3-15"
+ ],
+ "marqueurs_restants": {
+  "<<GO_COURSE_V66>>": 5,
+  "<<MOT_LAZAR_NL2>>": 2,
+  "<<EMPREINTE_GO_MD_APRES_NL2>>": 1,
+  "<<MOT_LAZAR_NL1>>": 1,
+  "<<NOEUD_C1_SANS_RETENUE>>": 1
+ },
+ "sortie": {
+  "chemin": "/home/user/controle-ia-travail/docs/notes/organisme-boucle-reelle-v1/preenregistrement-boucle-reelle-organisme-v1-brouillon3.md",
+  "sha256": "04598de62300185806975ae5df5fcdd054557f9a46b935e40d7d3479c240ec23"
+ }
+}

@@ -1,0 +1,15 @@
+# test-lecture-seule-v13.sh lancé seul depuis la copie, 2026-10-28T08:42:36Z
+test-lecture-seule : (A) garde isolée 0/7 ; (B) mode LECTURE_SEULE 8 (commit), 0 (sain, note refaite), 7 (déjà scellée), 0 (note supprimée, lecture scellée), ≠0 (lecture corrompue), 6 (sans sortie) — conformes
+code : 0 ; durée : 38 s
+
+# test-garde-trace-v12.sh lancé seul depuis la copie
+OK   sain + répétition → code 0
+OK   témoin posé → code 3
+OK   sortie finale → code 3
+OK   partiel → code 3
+OK   dossier vide → code 0
+garde-trace : tous les cas conformes
+code : 0
+
+# reste-t-il quelque chose au premier niveau de la copie après les tests (fichiers plus récents que le début de la répétition) ?
+(fin)

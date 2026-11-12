@@ -1,0 +1,156 @@
+script éprouvé : surveiller_p3bis_v2.sh d65421073068466a3aa6cc90ef00e6c76b15ea7b3e61e254c1dbafad020afe9b
+script éprouvé : controle_cinq_minutes_p3bis_v2.sh 6f9213499687d655e290ab96c1ab8a1cdb9ecd373b1d6beecb7efda962f40864
+script éprouvé : verifications_p3bis_v2.py 1524df5f6432197fde4793a4fde56d4496407a107c88f5e294a6bc9716923054
+script éprouvé : essais_surveillance_p3bis_v2.sh 08d1677571cc5c33f387b823c572a8389032053725c3898a2a812728fa629207
+M00 : code 0 ; CONFORME
+    | FIN : AMORCE 2026-11-12T12:30:00Z : fin, code 0 ; instance 99999999 arrêtée par son identifiant (R10) ; état relu : actual_status=exited cur_state=stopped intended_sta
+    arrêt par l'identifiant, une seule fois ; aucune destruction ; ligne à consigner ; relevé cumulatif de 4 lignes : CONFORME
+M01 : code 0 ; CONFORME
+    | GARDER : fin, code 5 ; second paquet en échec : instance arrêtée par son identifiant, gardée, jamais détruite jusqu'au paquet refait (le run n'est pas rejoué) ; ins
+    code 5 : instance arrêtée par son identifiant et marquée gardée (instance-gardee) : CONFORME
+M02 : code 0 ; CONFORME
+    | GARDER : fin, code 1 ; second paquet en échec : instance arrêtée par son identifiant, gardée, jamais détruite jusqu'au paquet refait (le run n'est pas rejoué) ; ins
+M03 : code 0 ; CONFORME
+    | GARDER : fin, code 5 ; second paquet en échec : instance arrêtée par son identifiant, gardée, jamais détruite jusqu'au paquet refait (le run n'est pas rejoué) ; ins
+    second paquet en échec : aucun arrêt avant la fin de l'amorce (poussée des traces jamais coupée) ; trois tours : CONFORME
+M04 : code 0 ; CONFORME
+    | PROCESSUS MORT : fin, code 1 ; run : processus 4242 fini, code 137, sans résumé écrit (erreur de chaîne si ni resume.json ni arret.json à la récupération) ; instan
+M05 : code 0 ; CONFORME
+    | ÉCHEC D'AMORCE : AMORCE : clonage impossible (jeton GitHub ?) ; instance 99999999 arrêtée par son identifiant (R10) ; état relu : actual_status=exited cur_state=stopp
+M06 : code 0 ; CONFORME
+    | REDÉMARRAGE : l'amorce a été relancée par le conteneur ; instance 99999999 arrêtée par son identifiant (R10) ; état relu : actual_status=exited cur_state=stopped i
+M07 : code 0 ; CONFORME
+    | ÉTAT TERMINAL : actual_status=exited cur_state=stopped intended_status=running status_msg=essai ; instance 99999999 arrêtée par son identifiant (R10) ; état relu : ac
+M08 : code 0 ; CONFORME
+    | FIN : AMORCE 2026-11-12T12:30:00Z : fin, code 0 ; instance 99999999 arrêtée par son identifiant (R10) ; état relu : actual_status=exited cur_state=stopped intended_sta
+M09 : code 0 ; CONFORME
+    | FIN : AMORCE 2026-11-12T12:30:00Z : fin, code 0 ; instance 99999999 arrêtée par son identifiant (R10) ; état relu : actual_status=exited cur_state=stopped intended_sta
+    état illisible deux fois : jamais terminal ; prix illisible : borne de 2,10 USD/h prise et écrite : CONFORME
+M10 : code 0 ; CONFORME
+    | DÉPENSE : dépense 82.42 USD (antérieure 0.00 ; calcul 81.90 à 2.1000 USD/h sur 140405 s ; téléchargement 0.52) ; projetée au prochain relevé 82.42 USD ; plafond 8
+M11 : code 0 ; CONFORME
+    | DÉPENSE : dépense 81.52 USD (antérieure 79.00 ; calcul 2.00 à 2.0000 USD/h sur 3605 s ; téléchargement 0.52) ; projetée au prochain relevé 81.52 USD ; plafond 80 
+M12 : code 0 ; CONFORME
+    | FIN : AMORCE 2026-11-12T12:30:00Z : fin, code 0 ; instance 99999999 arrêtée par son identifiant (R10) ; état relu : actual_status=exited cur_state=stopped intended_sta
+    run de trente heures (bien au-delà des 22 200 s de P3) : aucun arrêt à durée ; dépense relevée à chaque tour (sous 80 USD) ; alerte écrite sans arrêt : CONFORME
+M13 : code 0 ; CONFORME
+    | FIN : AMORCE 2026-11-12T12:30:00Z : fin, code 0 ; instance 99999999 arrêtée par son identifiant (R10) ; état relu : actual_status=exited cur_state=stopped intended_sta
+    alerte à deux heures sans PROGRES : une seule par fenêtre de deux heures, sans arrêt ni sortie avant la fin : CONFORME
+M14 : code 0 ; CONFORME
+    | FIN : AMORCE 2026-11-12T12:30:00Z : fin, code 0 ; instance 99999999 arrêtée par son identifiant (R10) ; état relu : actual_status=exited cur_state=stopped intended_sta
+    ligne PROGRES nouvelle au premier tour : aucune alerte : CONFORME
+M15 : code 1 ; CONFORME
+    | FIN : AMORCE 2026-11-12T12:30:00Z : fin, code 0 ; ARRÊT DE L'INSTANCE 99999999 EN ÉCHEC (code 1) : l'arrêter à la main par son identifiant (R10), consigner
+M16 : code 2 ; CONFORME
+    | identifiant : instance 99999998 : ce lanceur a créé 99999999 ; aucune autre n'est arrêtée ni détruite ici
+    identifiant autre que celui du lancement : aucun appel d'arrêt : CONFORME
+M17 : code 2 ; CONFORME
+    | identifiant : instance 58936096 : dans ARRETEES_TOLEREES ; jamais touchée par cette chaîne
+    instance tolérée (58936096) : jamais arrêtée, aucun appel : CONFORME
+M18 : code 0 ; CONFORME
+    | FIN : AMORCE 2026-11-12T12:30:00Z : fin, code 0 ; instance 99999999 arrêtée par son identifiant (R10) ; état relu : actual_status=exited cur_state=stopped intended_sta
+    journal illisible au premier tour : écrit, dernier relevé gardé : CONFORME
+M19 : code 0 ; CONFORME
+    | FIN : AMORCE 2026-11-12T12:30:00Z : fin, code 0 ; instance 99999999 arrêtée par son identifiant (R10) ; état relu : actual_status=exited cur_state=stopped intended_sta
+    jeton masqué dans le relevé : CONFORME
+U01-jetons-absents : code 2 ; CONFORME
+    | jetons HF_TOKEN et CONTROLE_IA_GITHUB_TOKEN absents ou trop courts : masquage impossible, surveillance refusée
+U02-outil-introuvable : code 2 ; CONFORME
+    | outil de location introuvable sur le PATH : surveillance aveugle, arrêt
+U03-dossier-existant : code 2 ; CONFORME
+    | /tmp/claude-0/-home-user/1cc16375-a2bd-54b9-a03f-27d43b6f26a6/scratchpad/agents/code-p3bis-regle-a/bancs/surveillance/sortie-U03 existe déjà (R12)
+U04-usage : code 2 ; CONFORME
+    | usage : surveiller_p3bis_v2.sh <identifiant> <dossier des traces du lancement> <dépense antérieure en USD> <dossier neuf>
+U05-anterieure-illisible : code 2 ; CONFORME
+    | usage : surveiller_p3bis_v2.sh <identifiant> <dossier des traces du lancement> <dépense antérieure en USD> <dossier neuf>
+U06-intervalle-hors-bornes : code 2 ; CONFORME
+    | INTERVALLE : entier de 0 à 600 secondes
+U07-sans-ligne-instance : code 2 ; CONFORME
+    | identifiant : traces du lancement : aucune ou plusieurs lignes « instance <id> » (création douteuse ?)
+    refus de départ : aucun appel d'arrêt : CONFORME
+C00-sain : code 0 ; CONFORME
+    | CONTRÔLE À CINQ MINUTES : CONFORME
+    conforme : aucun arrêt : CONFORME
+C01-trop-tot : code 2 ; CONFORME
+    | trop tôt : création + 69 s ; rejouer à la création + 180 s au moins
+    trop tôt : rien n'est écrit : CONFORME
+C02-retard-ecrit : code 0 ; CONFORME
+    | CONTRÔLE À CINQ MINUTES : CONFORME
+    conforme : aucun arrêt : CONFORME
+    retard écrit : CONFORME
+C03-echec-amorce : code 1 ; CONFORME
+    | CONTRÔLE À CINQ MINUTES : 1 KO ; instance 99999999 arrêtée par son identifiant (R10) ; nœud de Lazar
+    KO : instance arrêtée par son identifiant, une fois ; ligne à consigner : CONFORME
+C04-commit-autre : code 1 ; CONFORME
+    | CONTRÔLE À CINQ MINUTES : 2 KO ; instance 99999999 arrêtée par son identifiant (R10) ; nœud de Lazar
+    KO : instance arrêtée par son identifiant, une fois ; ligne à consigner : CONFORME
+C05-tests-autres : code 1 ; CONFORME
+    | CONTRÔLE À CINQ MINUTES : 1 KO ; instance 99999999 arrêtée par son identifiant (R10) ; nœud de Lazar
+    KO : instance arrêtée par son identifiant, une fois ; ligne à consigner : CONFORME
+C06-carte-autre : code 1 ; CONFORME
+    | CONTRÔLE À CINQ MINUTES : 1 KO ; instance 99999999 arrêtée par son identifiant (R10) ; nœud de Lazar
+    KO : instance arrêtée par son identifiant, une fois ; ligne à consigner : CONFORME
+C07-prix-au-dessus-du-choisi : code 1 ; CONFORME
+    | CONTRÔLE À CINQ MINUTES : 1 KO ; instance 99999999 arrêtée par son identifiant (R10) ; nœud de Lazar
+    KO : instance arrêtée par son identifiant, une fois ; ligne à consigner : CONFORME
+C08-prix-au-dessus-du-plafond : code 1 ; CONFORME
+    | CONTRÔLE À CINQ MINUTES : 2 KO ; instance 99999999 arrêtée par son identifiant (R10) ; nœud de Lazar
+    KO : instance arrêtée par son identifiant, une fois ; ligne à consigner : CONFORME
+C09-machine-autre : code 1 ; CONFORME
+    | CONTRÔLE À CINQ MINUTES : 1 KO ; instance 99999999 arrêtée par son identifiant (R10) ; nœud de Lazar
+    KO : instance arrêtée par son identifiant, une fois ; ligne à consigner : CONFORME
+C10-etiquette-autre : code 1 ; CONFORME
+    | CONTRÔLE À CINQ MINUTES : 1 KO ; instance 99999999 arrêtée par son identifiant (R10) ; nœud de Lazar
+    KO : instance arrêtée par son identifiant, une fois ; ligne à consigner : CONFORME
+C11-instance-arretee : code 1 ; CONFORME
+    | CONTRÔLE À CINQ MINUTES : 1 KO ; instance 99999999 arrêtée par son identifiant (R10) ; nœud de Lazar
+    KO : instance arrêtée par son identifiant, une fois ; ligne à consigner : CONFORME
+C12-branche-non-poussee : code 1 ; CONFORME
+    | CONTRÔLE À CINQ MINUTES : 1 KO ; instance 99999999 arrêtée par son identifiant (R10) ; nœud de Lazar
+    KO : instance arrêtée par son identifiant, une fois ; ligne à consigner : CONFORME
+C13-redemarrage : code 1 ; CONFORME
+    | CONTRÔLE À CINQ MINUTES : 1 KO ; instance 99999999 arrêtée par son identifiant (R10) ; nœud de Lazar
+    KO : instance arrêtée par son identifiant, une fois ; ligne à consigner : CONFORME
+C14-etat-illisible : code 1 ; CONFORME
+    | CONTRÔLE À CINQ MINUTES : 1 KO ; instance 99999999 arrêtée par son identifiant (R10) ; nœud de Lazar
+    KO : instance arrêtée par son identifiant, une fois ; ligne à consigner : CONFORME
+C15-journal-illisible : code 1 ; CONFORME
+    | CONTRÔLE À CINQ MINUTES : 1 KO ; instance 99999999 arrêtée par son identifiant (R10) ; nœud de Lazar
+    KO : instance arrêtée par son identifiant, une fois ; ligne à consigner : CONFORME
+C16-arret-en-echec : code 1 ; CONFORME
+    | CONTRÔLE À CINQ MINUTES : 1 KO ; ARRÊT DE L'INSTANCE 99999999 EN ÉCHEC (code 1) : l'arrêter à la main par son identifiant (R10) ; nœud de Lazar
+C17-identifiant-autre : code 2 ; CONFORME
+    | identifiant : instance 99999997 : ce lanceur a créé 99999999 ; aucune autre n'est arrêtée ni détruite ici
+    identifiant autre : aucun appel d'arrêt : CONFORME
+C18-jeton-masque : code 0 ; CONFORME
+    | CONTRÔLE À CINQ MINUTES : CONFORME
+    conforme : aucun arrêt : CONFORME
+    jeton masqué dans le journal gardé : CONFORME
+V01-jetons-absents : code 2 ; CONFORME
+    | jetons HF_TOKEN et CONTROLE_IA_GITHUB_TOKEN absents ou trop courts : masquage impossible, contrôle refusé
+V02-dossier-existant : code 2 ; CONFORME
+    | /tmp/claude-0/-home-user/1cc16375-a2bd-54b9-a03f-27d43b6f26a6/scratchpad/agents/code-p3bis-regle-a/bancs/surveillance/sortie-V02 existe déjà (R12)
+V03-traces-incompletes : code 2 ; CONFORME
+    | traces du lancement incomplètes (lancement.txt, prereg-S.md, offre.json) dans /tmp/claude-0/-home-user/1cc16375-a2bd-54b9-a03f-27d43b6f26a6/scratchpad/agents/code-p3bis-
+V04-usage : code 2 ; CONFORME
+    | usage : controle_cinq_minutes_p3bis_v2.sh <identifiant> <dossier des traces du lancement> <dossier de sortie neuf>
+X-p3bis_instance_v2.sh « journal "début : ETUDE=$ETUDE MODE=$MODE COMMIT=$COMMIT BRANCHE=$BRAN » : présent ; CONFORME
+X-p3bis_instance_v2.sh « ETUDE=p3bis » : présent ; CONFORME
+X-p3bis_instance_v2.sh « journal "préenregistrement lu : $ATTENDUS tests attendus ; » : présent ; CONFORME
+X-p3bis_instance_v2.sh « journal "branche $BRANCHE poussée avant l'installation » : présent ; CONFORME
+X-p3bis_instance_v2.sh « nvidia-smi --query-gpu=name,driver_version,memory.total --format=csv » : présent ; CONFORME
+X-p3bis_instance_v2.sh « journal "run : processus $PID_RUN lancé" » : présent ; CONFORME
+X-p3bis_instance_v2.sh « journal "run : processus $PID_RUN fini, code $code" » : présent ; CONFORME
+X-p3bis_instance_v2.sh « résumé écrit sans arrêt consigné : run complet » : présent ; CONFORME
+X-p3bis_instance_v2.sh « journal "SECOND PAQUET EN ÉCHEC ( » : présent ; CONFORME
+X-p3bis_instance_v2.sh « if [ -n "$SECOND_PAQUET_EN_ECHEC" ]; then exit 5; fi » : présent ; CONFORME
+X-p3bis_instance_v2.sh « MOTIF_PROGRES='^PROGRES [0-9]{4}-[0-9]{2}-[0-9]{2}T[0-9]{2}:[0-9]{2}:[ » : présent ; CONFORME
+X-p3bis_instance_v2.sh « journal() { printf '%s %s\n' "$(date -u +%FT%TZ)" "$*" | tee -a "$JOUR » : présent ; CONFORME
+X-amorce_instance_p3bis_v2.sh « echo "AMORCE $(date -u +%FT%TZ) : commit $COMMIT" » : présent ; CONFORME
+X-amorce_instance_p3bis_v2.sh « echo "AMORCE $(date -u +%FT%TZ) : fin, code $code" » : présent ; CONFORME
+X-amorce_instance_p3bis_v2.sh « echo "AMORCE : clonage impossible » : présent ; CONFORME
+X-amorce_instance_p3bis_v2.sh « exit $code » : présent ; CONFORME
+X-artefact (copie du script dont la ligne « SECOND PAQUET EN ÉCHEC » est altérée) : altération vue ; CONFORME
+script de l'instance lu : 83820dfd8ef7205c44f89e63450d801d60b95eddecb504cd2af992fa5b1eaa5d ; amorce lue : b331e44f763f87744b9669998c8a7aa32308e449d07ba414e6c2bb0bc4ed22f4
+cas joués : 99
+FIN DU BANC DE LA SURVEILLANCE DE P3-BIS ; cas non conformes : 0

@@ -1,0 +1,162 @@
+{
+  "auteur_tiers": "session mère session_016QhUrrLeN21G7Z9KZobE42 (ni proposeur ni juge de la course), 8 novembre 2026, CL31-03",
+  "temoins": [
+    {
+      "classe": "vrai",
+      "attendu": "eligible",
+      "note_max": {},
+      "fiche": {
+        "nom": "Contrôle placebo de l'identité de l'organisme",
+        "type": "approche",
+        "enonce": "Séparer la détection de l'identité d'un organisme modifié de la détection de l'acte de sabotage : évaluer chaque sonde sur quatre conditions appariées (honnête, organisme placebo construit par la même chaîne de modification sans objectif de sabotage, saboteur en épisode dormant, saboteur en épisode actif attesté par l'oracle). Une sonde qui sépare placebo et honnête lit l'identité de la modification, non l'acte ; seule la séparation dormant contre actif compte comme détection du sabotage.",
+        "loi_predictive": {
+          "espace_instances": "épisodes de T0.6 de la famille coût, au moins 200 par condition, quatre conditions appariées sur les mêmes tâches et les mêmes graines",
+          "prediction": "les sondes génériques actuelles séparent placebo contre honnête avec une aire sous la courbe d'au moins 0,70, alors que leur séparation saboteur dormant contre saboteur actif reste au plus à 0,60 : l'essentiel de leur signal est un signal d'identité",
+          "signe": "+",
+          "metrique": "aire sous la courbe par paire de conditions et rappel à 1 % de fausses alertes, intervalle à 95 % par rééchantillonnage sur les épisodes, couche et agrégation figées avant lecture"
+        },
+        "perte_traduction": "l'acte est réduit à l'étiquette de l'oracle par action ; un sabotage que l'oracle ne voit pas n'entre dans aucune des quatre conditions",
+        "questions_servies": ["point 1 (structure et validité)", "point 2 (démonstrations avant l'entretien)"],
+        "avantage": {
+          "source": "organisme",
+          "texte": "le programme possède déjà la chaîne de modification à dose réglable, le jumeau honnête apparié et l'oracle par action ; le placebo est une dose nulle d'objectif, pas une dose nulle d'adaptateur",
+          "incopiable_parce_que": "la condition dormant contre actif exige une vérité terrain par action sur des épisodes agentiques appariés ; un groupe sans oracle de monde planté ne peut construire que la paire identité contre honnête"
+        },
+        "originalite": {
+          "niveau": "transposition",
+          "texte": "le placebo et le contrôle de manipulation sont des standards des essais cliniques et des tâches de contrôle des sondes ; leur emploi pour séparer identité et acte dans l'évaluation de moniteurs de sabotage n'est pas retrouvé dans la littérature lue par le programme"
+        },
+        "demande_organisme": {
+          "nature": "ajout",
+          "texte": "un organisme placebo par famille, construit par le bras d'attaque avec la même chaîne et la même quantité d'entraînement, sans objectif de sabotage, scellé comme les autres"
+        },
+        "cout": {
+          "nature": "depense",
+          "ordre_de_grandeur": "quelques dizaines de dollars de carte par famille pour l'organisme placebo et les activations des quatre conditions"
+        },
+        "piege": "un placebo dont la chaîne d'entraînement diffère du saboteur (données, nombre de pas, graine) réintroduit une différence d'identité que la sonde lira comme un signal",
+        "cosmetique_si": "si les sondes séparent déjà dormant contre actif au même niveau que placebo contre honnête, le contrôle n'apprend rien et la revendication est inchangée",
+        "anteriorite": [
+          {"reference": "Hewitt et Liang, 2019, Designing and Interpreting Probes with Control Tasks", "statut": "RAPPORTE"}
+        ]
+      }
+    },
+    {
+      "classe": "jumeau",
+      "attendu": "eligible",
+      "jumeau_de": "Contrôle placebo de l'identité de l'organisme",
+      "note_max": {},
+      "fiche": {
+        "nom": "Organisme placebo contre la lecture d'identité",
+        "type": "approche",
+        "enonce": "Les sondes peuvent reconnaître qu'un modèle a été modifié sans reconnaître qu'il sabote. Pour le savoir, on ajoute aux conditions honnête et saboteur un organisme placebo, modifié par la même chaîne mais sans but de sabotage, et l'on distingue chez le saboteur les épisodes où il agit de ceux où il reste dormant. La détection du sabotage est la seule séparation dormant contre actif ; la séparation placebo contre honnête mesure la lecture d'identité.",
+        "loi_predictive": {
+          "espace_instances": "même banc d'épisodes de T0.6, famille coût, quatre conditions appariées, au moins 200 épisodes chacune",
+          "prediction": "les sondes génériques en place lisent surtout l'identité : aire au moins 0,70 pour placebo contre honnête, au plus 0,60 pour dormant contre actif",
+          "signe": "+",
+          "metrique": "aire sous la courbe et rappel à 1 % de fausses alertes par paire de conditions, intervalle à 95 % sur les épisodes, réglages figés d'avance"
+        },
+        "perte_traduction": "le sabotage est défini par l'étiquette de l'oracle ; ce que l'oracle manque n'est dans aucune condition",
+        "questions_servies": ["point 1 (structure et validité)", "point 2 (démonstrations avant l'entretien)"],
+        "avantage": {
+          "source": "organisme",
+          "texte": "chaîne de modification à dose réglable, jumeau honnête apparié et oracle par action déjà en place ; il ne manque que le placebo",
+          "incopiable_parce_que": "sans vérité terrain par action sur des épisodes agentiques appariés, un groupe extérieur ne peut pas séparer dormant et actif"
+        },
+        "originalite": {
+          "niveau": "transposition",
+          "texte": "placebo et contrôle de manipulation viennent des essais cliniques et des tâches de contrôle ; non retrouvés pour séparer identité et acte dans l'évaluation de moniteurs de sabotage"
+        },
+        "demande_organisme": {
+          "nature": "ajout",
+          "texte": "un organisme placebo par famille, même chaîne, même entraînement, aucun objectif de sabotage, scellé"
+        },
+        "cout": {
+          "nature": "depense",
+          "ordre_de_grandeur": "quelques dizaines de dollars de carte par famille"
+        },
+        "piege": "un placebo entraîné autrement que le saboteur recrée une différence d'identité",
+        "cosmetique_si": "si dormant contre actif se sépare aussi bien que placebo contre honnête, rien ne change",
+        "anteriorite": [
+          {"reference": "Hewitt et Liang, 2019, Designing and Interpreting Probes with Control Tasks", "statut": "RAPPORTE"}
+        ]
+      }
+    },
+    {
+      "classe": "faux_falsifiabilite",
+      "attendu": "ineligible",
+      "note_max": {"falsifiabilite": 1},
+      "fiche": {
+        "nom": "Indice global de crédibilité du pilier attaque",
+        "type": "approche",
+        "enonce": "Construire un indice composite de crédibilité du bras rouge (indépendance, scellement, diversité des familles, rigueur du préenregistrement), noté par des relecteurs sur une grille, et le présenter au jury comme garantie que l'évaluation n'est pas une connivence.",
+        "loi_predictive": {
+          "espace_instances": "le programme lui-même, noté une fois par deux ou trois relecteurs",
+          "prediction": "l'indice sera élevé si le dispositif est bien conçu",
+          "signe": "+",
+          "metrique": "note composite de 0 à 10, sans point de fonctionnement ni taux d'erreur"
+        },
+        "perte_traduction": "aucune : l'indice ne traduit pas une idée en loi prédictive, il résume une impression",
+        "questions_servies": ["point 3 (extensions et corrections)"],
+        "avantage": {
+          "source": "aucune",
+          "texte": "une présentation plus lisible pour un jury pressé",
+          "incopiable_parce_que": ""
+        },
+        "originalite": {
+          "niveau": "occupee",
+          "texte": "les grilles d'évaluation de la sûreté des dispositifs existent déjà chez les laboratoires et les instituts d'évaluation"
+        },
+        "demande_organisme": {
+          "nature": "rien",
+          "texte": ""
+        },
+        "cout": {
+          "nature": "processeur",
+          "ordre_de_grandeur": "quelques heures de rédaction"
+        },
+        "piege": "l'indice se note lui-même : aucune observation du banc ne peut le faire baisser, et deux relecteurs honnêtes peuvent le noter à l'opposé sans qu'aucune mesure les départage",
+        "cosmetique_si": "si l'indice reste élevé alors qu'une famille tenue à l'écart échappe entièrement aux moniteurs",
+        "anteriorite": []
+      }
+    },
+    {
+      "classe": "faux_anteriorite",
+      "attendu": "ineligible",
+      "note_max": {"originalite": 1},
+      "fiche": {
+        "nom": "Sondes linéaires sur les activations comme détecteur de sabotage",
+        "type": "approche",
+        "enonce": "Entraîner une sonde linéaire sur les activations d'une couche intermédiaire de l'agent pour distinguer les actions sabotées des actions honnêtes, et présenter cette lecture interne comme la méthode nouvelle du programme devant le jury.",
+        "loi_predictive": {
+          "espace_instances": "épisodes de T0.6, au moins 200 par classe",
+          "prediction": "la sonde linéaire atteint une aire sous la courbe d'au moins 0,80 sur sabotage contre honnête",
+          "signe": "+",
+          "metrique": "aire sous la courbe et rappel à 1 % de fausses alertes, couche et position choisies après lecture"
+        },
+        "perte_traduction": "la couche et la position de lecture sont laissées libres : la prédiction se prête à la sélection après coup",
+        "questions_servies": ["point 2 (démonstrations avant l'entretien)"],
+        "avantage": {
+          "source": "programme",
+          "texte": "une méthode de lecture interne que personne d'autre n'emploie pour le contrôle",
+          "incopiable_parce_que": "aucun autre groupe ne lit les activations d'un agent pour détecter un comportement caché"
+        },
+        "originalite": {
+          "niveau": "inedite",
+          "texte": "aucun travail antérieur connu de l'auteur"
+        },
+        "demande_organisme": {
+          "nature": "rien",
+          "texte": ""
+        },
+        "cout": {
+          "nature": "depense",
+          "ordre_de_grandeur": "quelques dollars de carte"
+        },
+        "piege": "la sélection de la couche et de la position après lecture des résultats",
+        "cosmetique_si": "si la sonde ne fait pas mieux que le prédicteur sur les traits du texte au même taux de fausses alertes",
+        "anteriorite": []
+      }
+    }
+  ]
+}

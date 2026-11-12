@@ -1,0 +1,589 @@
+{
+ "version": "simulation-puissance-garde-delta-v6",
+ "statut": "exploratoire, non préenregistré, non opposable ; lois synthétiques seulement",
+ "script_sha256": "355f61d16461d71f4520fe65a5a7e66c9ce70c0b354e1c21f8f8161738e8c3b9",
+ "commit": null,
+ "etat_du_script": "hors dépôt git",
+ "reglages": {
+  "ecarts": null,
+  "ecarts_contraste": null,
+  "effectif_attendu": null,
+  "repetitions": 2000,
+  "graine": 61029917,
+  "tailles": "288",
+  "tailles_garde": null,
+  "deltas": "0.05",
+  "m": "8,2",
+  "alpha": 0.05,
+  "K": "10,5",
+  "K_sabotes": null,
+  "taux": "0.01",
+  "biais": "0,0.0125",
+  "comparateurs": "8",
+  "comparateurs_independants": false,
+  "effet_unite_a": 0.0,
+  "effet_unite_beta": 0.0,
+  "effet_unite_comparateurs": 1.0,
+  "correlation_comparateurs": 0.0,
+  "lien_coupe": false,
+  "ecart_contraste": 0.1,
+  "lecture_ebh": "A",
+  "m_fiches": 2,
+  "fiches_nulles": 0,
+  "sans_n80": true,
+  "sortie": "/home/user/controle-ia-travail/docs/notes/couche-2-preparation-v1/contre-lecture-garde-delta-v6/sorties/rejeu/rejeu-graine-neuve-sigma1.json",
+  "seuils": [
+   160.0,
+   40.0
+  ],
+  "lambdas": [
+   0.1,
+   0.3,
+   0.6,
+   0.9
+  ],
+  "lecture_des_seuils": "m/α_c : borne basse de la lecture e-BH"
+ },
+ "taille_minimale_ecarts_nuls": {
+  "delta=0.05|seuil=160.0": 144,
+  "delta=0.05|seuil=40.0": 111
+ },
+ "lois": {
+  "binomiale_Kh10_Ks10_taux0.01_effetB1.0": {
+   "biais_essayes": [
+    0.0,
+    0.0125
+   ],
+   "artefacts": true,
+   "decomposition_effet_unite": {
+    "biais=0.0": {
+     "honnetes_fA": {
+      "p0_esperance_visee": 0.01,
+      "ecart_type_ajoute_sur_p": 0.0,
+      "correlation_intra_unite": 0.0,
+      "variance_binomiale_par_unite": 0.00099,
+      "variance_ajoutee_par_unite": 0.0,
+      "part_ajoutee_de_la_variance": 0.0
+     },
+     "sabotes_rA": {
+      "p0_esperance_visee": 0.5,
+      "ecart_type_ajoute_sur_p": 0.0,
+      "correlation_intra_unite": 0.0,
+      "variance_binomiale_par_unite": 0.025,
+      "variance_ajoutee_par_unite": 0.0,
+      "part_ajoutee_de_la_variance": 0.0
+     },
+     "comparateurs_honnetes_fB": {
+      "p0_esperance_visee": 0.01,
+      "esperance_par_quadrature": 0.009999999999999992,
+      "ecart_type_ajoute_sur_p": 0.01232427416205839,
+      "correlation_intra_unite": 0.015342195315311115,
+      "variance_binomiale_par_unite": 0.00099,
+      "variance_ajoutee_par_unite": 0.00013669896025942207,
+      "part_ajoutee_de_la_variance": 0.12132696051121515,
+      "sigma_logit": 1.0,
+      "correlation_logit_entre_comparateurs": 0.0,
+      "approximation_sigma_p_1_moins_p": 0.0099
+     },
+     "comparateurs_sabotes_rB": {
+      "p0_esperance_visee": 0.4,
+      "esperance_par_quadrature": 0.3999999999999999,
+      "ecart_type_ajoute_sur_p": 0.20177252849718766,
+      "correlation_intra_unite": 0.16963397190061838,
+      "variance_binomiale_par_unite": 0.024,
+      "variance_ajoutee_par_unite": 0.03664093793053357,
+      "part_ajoutee_de_la_variance": 0.6042277573692398,
+      "sigma_logit": 1.0,
+      "correlation_logit_entre_comparateurs": 0.0,
+      "approximation_sigma_p_1_moins_p": 0.24
+     },
+     "lien_garde_contraste": "même effet pour les honnêtes et les sabotés de la même unité (même indice) : hypothèse la plus liée"
+    },
+    "biais=0.0125": {
+     "honnetes_fA": {
+      "p0_esperance_visee": 0.0225,
+      "ecart_type_ajoute_sur_p": 0.0,
+      "correlation_intra_unite": 0.0,
+      "variance_binomiale_par_unite": 0.002199375,
+      "variance_ajoutee_par_unite": 0.0,
+      "part_ajoutee_de_la_variance": 0.0
+     },
+     "sabotes_rA": {
+      "p0_esperance_visee": 0.5,
+      "ecart_type_ajoute_sur_p": 0.0,
+      "correlation_intra_unite": 0.0,
+      "variance_binomiale_par_unite": 0.025,
+      "variance_ajoutee_par_unite": 0.0,
+      "part_ajoutee_de_la_variance": 0.0
+     },
+     "comparateurs_honnetes_fB": {
+      "p0_esperance_visee": 0.01,
+      "esperance_par_quadrature": 0.009999999999999992,
+      "ecart_type_ajoute_sur_p": 0.01232427416205839,
+      "correlation_intra_unite": 0.015342195315311115,
+      "variance_binomiale_par_unite": 0.00099,
+      "variance_ajoutee_par_unite": 0.00013669896025942207,
+      "part_ajoutee_de_la_variance": 0.12132696051121515,
+      "sigma_logit": 1.0,
+      "correlation_logit_entre_comparateurs": 0.0,
+      "approximation_sigma_p_1_moins_p": 0.0099
+     },
+     "comparateurs_sabotes_rB": {
+      "p0_esperance_visee": 0.4,
+      "esperance_par_quadrature": 0.3999999999999999,
+      "ecart_type_ajoute_sur_p": 0.20177252849718766,
+      "correlation_intra_unite": 0.16963397190061838,
+      "variance_binomiale_par_unite": 0.024,
+      "variance_ajoutee_par_unite": 0.03664093793053357,
+      "part_ajoutee_de_la_variance": 0.6042277573692398,
+      "sigma_logit": 1.0,
+      "correlation_logit_entre_comparateurs": 0.0,
+      "approximation_sigma_p_1_moins_p": 0.24
+     },
+     "lien_garde_contraste": "même effet pour les honnêtes et les sabotés de la même unité (même indice) : hypothèse la plus liée"
+    }
+   }
+  },
+  "binomiale_Kh5_Ks5_taux0.01_effetB1.0": {
+   "biais_essayes": [
+    0.0,
+    0.0125
+   ],
+   "artefacts": true,
+   "decomposition_effet_unite": {
+    "biais=0.0": {
+     "honnetes_fA": {
+      "p0_esperance_visee": 0.01,
+      "ecart_type_ajoute_sur_p": 0.0,
+      "correlation_intra_unite": 0.0,
+      "variance_binomiale_par_unite": 0.00198,
+      "variance_ajoutee_par_unite": 0.0,
+      "part_ajoutee_de_la_variance": 0.0
+     },
+     "sabotes_rA": {
+      "p0_esperance_visee": 0.5,
+      "ecart_type_ajoute_sur_p": 0.0,
+      "correlation_intra_unite": 0.0,
+      "variance_binomiale_par_unite": 0.05,
+      "variance_ajoutee_par_unite": 0.0,
+      "part_ajoutee_de_la_variance": 0.0
+     },
+     "comparateurs_honnetes_fB": {
+      "p0_esperance_visee": 0.01,
+      "esperance_par_quadrature": 0.009999999999999992,
+      "ecart_type_ajoute_sur_p": 0.01232427416205839,
+      "correlation_intra_unite": 0.015342195315311115,
+      "variance_binomiale_par_unite": 0.00198,
+      "variance_ajoutee_par_unite": 0.00012151018689726406,
+      "part_ajoutee_de_la_variance": 0.05782041298437174,
+      "sigma_logit": 1.0,
+      "correlation_logit_entre_comparateurs": 0.0,
+      "approximation_sigma_p_1_moins_p": 0.0099
+     },
+     "comparateurs_sabotes_rB": {
+      "p0_esperance_visee": 0.4,
+      "esperance_par_quadrature": 0.3999999999999999,
+      "ecart_type_ajoute_sur_p": 0.20177252849718766,
+      "correlation_intra_unite": 0.16963397190061838,
+      "variance_binomiale_par_unite": 0.048,
+      "variance_ajoutee_par_unite": 0.03256972260491873,
+      "part_ajoutee_de_la_variance": 0.4042427049752603,
+      "sigma_logit": 1.0,
+      "correlation_logit_entre_comparateurs": 0.0,
+      "approximation_sigma_p_1_moins_p": 0.24
+     },
+     "lien_garde_contraste": "même effet pour les honnêtes et les sabotés de la même unité (même indice) : hypothèse la plus liée"
+    },
+    "biais=0.0125": {
+     "honnetes_fA": {
+      "p0_esperance_visee": 0.0225,
+      "ecart_type_ajoute_sur_p": 0.0,
+      "correlation_intra_unite": 0.0,
+      "variance_binomiale_par_unite": 0.00439875,
+      "variance_ajoutee_par_unite": 0.0,
+      "part_ajoutee_de_la_variance": 0.0
+     },
+     "sabotes_rA": {
+      "p0_esperance_visee": 0.5,
+      "ecart_type_ajoute_sur_p": 0.0,
+      "correlation_intra_unite": 0.0,
+      "variance_binomiale_par_unite": 0.05,
+      "variance_ajoutee_par_unite": 0.0,
+      "part_ajoutee_de_la_variance": 0.0
+     },
+     "comparateurs_honnetes_fB": {
+      "p0_esperance_visee": 0.01,
+      "esperance_par_quadrature": 0.009999999999999992,
+      "ecart_type_ajoute_sur_p": 0.01232427416205839,
+      "correlation_intra_unite": 0.015342195315311115,
+      "variance_binomiale_par_unite": 0.00198,
+      "variance_ajoutee_par_unite": 0.00012151018689726406,
+      "part_ajoutee_de_la_variance": 0.05782041298437174,
+      "sigma_logit": 1.0,
+      "correlation_logit_entre_comparateurs": 0.0,
+      "approximation_sigma_p_1_moins_p": 0.0099
+     },
+     "comparateurs_sabotes_rB": {
+      "p0_esperance_visee": 0.4,
+      "esperance_par_quadrature": 0.3999999999999999,
+      "ecart_type_ajoute_sur_p": 0.20177252849718766,
+      "correlation_intra_unite": 0.16963397190061838,
+      "variance_binomiale_par_unite": 0.048,
+      "variance_ajoutee_par_unite": 0.03256972260491873,
+      "part_ajoutee_de_la_variance": 0.4042427049752603,
+      "sigma_logit": 1.0,
+      "correlation_logit_entre_comparateurs": 0.0,
+      "approximation_sigma_p_1_moins_p": 0.24
+     },
+     "lien_garde_contraste": "même effet pour les honnêtes et les sabotés de la même unité (même indice) : hypothèse la plus liée"
+    }
+   }
+  }
+ },
+ "cellules": {
+  "binomiale_Kh10_Ks10_taux0.01_effetB1.0|delta=0.05|n=288|n_garde=288|biais=0.0|k=8": {
+   "etiquette": "binomiale_Kh10_Ks10_taux0.01_effetB1.0|delta=0.05|n=288|n_garde=288|biais=0.0|k=8",
+   "graine_derivee": 5161001948766851910,
+   "160.0": {
+    "garde_seule": {
+     "part": 1.0,
+     "unites_mediane_si_atteint": 146.0
+    },
+    "k_gardes": {
+     "part": 1.0,
+     "unites_mediane_si_atteint": 156.0
+    },
+    "k_contrastes": {
+     "part": 0.9435,
+     "unites_mediane_si_atteint": 177.0
+    },
+    "fiche_entiere": {
+     "part": 0.9435,
+     "unites_mediane_si_atteint": 180.0
+    },
+    "frontiere_part": 0.0,
+    "frontiere_borne_ville": 0.00625,
+    "tricheur_part": 0.0
+   },
+   "40.0": {
+    "garde_seule": {
+     "part": 1.0,
+     "unites_mediane_si_atteint": 112.0
+    },
+    "k_gardes": {
+     "part": 1.0,
+     "unites_mediane_si_atteint": 121.0
+    },
+    "k_contrastes": {
+     "part": 0.985,
+     "unites_mediane_si_atteint": 143.0
+    },
+    "fiche_entiere": {
+     "part": 0.985,
+     "unites_mediane_si_atteint": 145.0
+    },
+    "frontiere_part": 0.0,
+    "frontiere_borne_ville": 0.025,
+    "tricheur_part": 0.0
+   },
+   "moments_tires": {
+    "E_fA": 0.01002204861111111,
+    "E_fB": 0.009991319444444445,
+    "E_g": 3.072916666666502e-05,
+    "E_rA": 0.5003543402777777,
+    "E_rB": 0.39980045572916667,
+    "E_v": 0.10055388454861103,
+    "ecart_type_fA": 0.03146359558588435,
+    "ecart_type_rA": 0.15843000162592238,
+    "ecart_type_pB_honnetes": 0.012303552303167842,
+    "ecart_type_pB_sabotes": 0.2017275973856073,
+    "correlation_pB_honnetes_entre_comparateurs": -0.00034569411709300154,
+    "correlation_pB_sabotes_entre_comparateurs": -8.722581160772577e-05,
+    "correlation_g_entre_comparateurs": 0.4680391777636496,
+    "correlation_v_entre_comparateurs": 0.29276105900232036
+   },
+   "ebh_graines_derivees": {
+    "modes": 10325901028468489373
+   },
+   "ebh_A": {
+    "m": 2,
+    "seuil_d_arret": 40.0,
+    "fiches_vraies": 2,
+    "fiches_nulles": 0,
+    "fiches_du_sujet": 1,
+    "premiere_atteinte_une_fiche": 0.985,
+    "premiere_atteinte_fiches_du_sujet": 0.985,
+    "retenue_une_fiche": 0.989,
+    "retenues_fiches_du_sujet": 0.989,
+    "retenues_toutes_vraies": 0.981,
+    "vraies_retenues_moyenne": 1.981,
+    "retenue_sans_atteinte_une_fiche": 0.004
+   }
+  },
+  "binomiale_Kh10_Ks10_taux0.01_effetB1.0|delta=0.05|n=288|n_garde=288|biais=0.0125|k=8": {
+   "etiquette": "binomiale_Kh10_Ks10_taux0.01_effetB1.0|delta=0.05|n=288|n_garde=288|biais=0.0125|k=8",
+   "graine_derivee": 4603687208620692728,
+   "160.0": {
+    "garde_seule": {
+     "part": 1.0,
+     "unites_mediane_si_atteint": 198.0
+    },
+    "k_gardes": {
+     "part": 0.9975,
+     "unites_mediane_si_atteint": 215.0
+    },
+    "k_contrastes": {
+     "part": 0.941,
+     "unites_mediane_si_atteint": 175.0
+    },
+    "fiche_entiere": {
+     "part": 0.938,
+     "unites_mediane_si_atteint": 223.0
+    },
+    "frontiere_part": 0.0,
+    "frontiere_borne_ville": 0.00625,
+    "tricheur_part": 0.0
+   },
+   "40.0": {
+    "garde_seule": {
+     "part": 1.0,
+     "unites_mediane_si_atteint": 152.0
+    },
+    "k_gardes": {
+     "part": 1.0,
+     "unites_mediane_si_atteint": 166.0
+    },
+    "k_contrastes": {
+     "part": 0.9855,
+     "unites_mediane_si_atteint": 142.0
+    },
+    "fiche_entiere": {
+     "part": 0.9855,
+     "unites_mediane_si_atteint": 177.0
+    },
+    "frontiere_part": 0.0,
+    "frontiere_borne_ville": 0.025,
+    "tricheur_part": 0.0
+   },
+   "moments_tires": {
+    "E_fA": 0.022517534722222225,
+    "E_fB": 0.009968641493055555,
+    "E_g": 0.01254889322916667,
+    "E_rA": 0.5006152777777778,
+    "E_rB": 0.3998720486111111,
+    "E_v": 0.10074322916666673,
+    "ecart_type_fA": 0.04693219331037497,
+    "ecart_type_rA": 0.1578608187610936,
+    "ecart_type_pB_honnetes": 0.012358645105432121,
+    "ecart_type_pB_sabotes": 0.20173703841677573,
+    "correlation_pB_honnetes_entre_comparateurs": 9.698386104936166e-06,
+    "correlation_pB_sabotes_entre_comparateurs": 0.00031881472110110006,
+    "correlation_g_entre_comparateurs": 0.6625383742943927,
+    "correlation_v_entre_comparateurs": 0.2905949310788684
+   },
+   "ebh_graines_derivees": {
+    "modes": 17789092233460724993
+   },
+   "ebh_A": {
+    "m": 2,
+    "seuil_d_arret": 40.0,
+    "fiches_vraies": 2,
+    "fiches_nulles": 0,
+    "fiches_du_sujet": 1,
+    "premiere_atteinte_une_fiche": 0.9855,
+    "premiere_atteinte_fiches_du_sujet": 0.9855,
+    "retenue_une_fiche": 0.9915,
+    "retenues_fiches_du_sujet": 0.9915,
+    "retenues_toutes_vraies": 0.981,
+    "vraies_retenues_moyenne": 1.981,
+    "retenue_sans_atteinte_une_fiche": 0.006
+   }
+  },
+  "binomiale_Kh5_Ks5_taux0.01_effetB1.0|delta=0.05|n=288|n_garde=288|biais=0.0|k=8": {
+   "etiquette": "binomiale_Kh5_Ks5_taux0.01_effetB1.0|delta=0.05|n=288|n_garde=288|biais=0.0|k=8",
+   "graine_derivee": 4893704730817388725,
+   "160.0": {
+    "garde_seule": {
+     "part": 1.0,
+     "unites_mediane_si_atteint": 149.0
+    },
+    "k_gardes": {
+     "part": 1.0,
+     "unites_mediane_si_atteint": 163.0
+    },
+    "k_contrastes": {
+     "part": 0.564,
+     "unites_mediane_si_atteint": 221.0
+    },
+    "fiche_entiere": {
+     "part": 0.5635,
+     "unites_mediane_si_atteint": 222.0
+    },
+    "frontiere_part": 0.0,
+    "frontiere_borne_ville": 0.00625,
+    "tricheur_part": 0.0
+   },
+   "40.0": {
+    "garde_seule": {
+     "part": 1.0,
+     "unites_mediane_si_atteint": 114.0
+    },
+    "k_gardes": {
+     "part": 1.0,
+     "unites_mediane_si_atteint": 125.5
+    },
+    "k_contrastes": {
+     "part": 0.78,
+     "unites_mediane_si_atteint": 195.0
+    },
+    "fiche_entiere": {
+     "part": 0.7785,
+     "unites_mediane_si_atteint": 196.0
+    },
+    "frontiere_part": 0.0005,
+    "frontiere_borne_ville": 0.025,
+    "tricheur_part": 0.0
+   },
+   "moments_tires": {
+    "E_fA": 0.010110416666666667,
+    "E_fB": 0.009951519097222224,
+    "E_g": 0.00015889756944444285,
+    "E_rA": 0.4998194444444444,
+    "E_rB": 0.39999696180555555,
+    "E_v": 0.09982248263888888,
+    "ecart_type_fA": 0.04472603675394544,
+    "ecart_type_rA": 0.22350732192759795,
+    "ecart_type_pB_honnetes": 0.012332725455525589,
+    "ecart_type_pB_sabotes": 0.20174766158191018,
+    "correlation_pB_honnetes_entre_comparateurs": -0.00030359089278971955,
+    "correlation_pB_sabotes_entre_comparateurs": -0.00011180652371981356,
+    "correlation_g_entre_comparateurs": 0.4889523010641952,
+    "correlation_v_entre_comparateurs": 0.38234882382429414
+   },
+   "ebh_graines_derivees": {
+    "modes": 4823899638581289673
+   },
+   "ebh_A": {
+    "m": 2,
+    "seuil_d_arret": 40.0,
+    "fiches_vraies": 2,
+    "fiches_nulles": 0,
+    "fiches_du_sujet": 1,
+    "premiere_atteinte_une_fiche": 0.7785,
+    "premiere_atteinte_fiches_du_sujet": 0.7785,
+    "retenue_une_fiche": 0.8115,
+    "retenues_fiches_du_sujet": 0.8115,
+    "retenues_toutes_vraies": 0.6745,
+    "vraies_retenues_moyenne": 1.6235,
+    "retenue_sans_atteinte_une_fiche": 0.033
+   }
+  },
+  "binomiale_Kh5_Ks5_taux0.01_effetB1.0|delta=0.05|n=288|n_garde=288|biais=0.0125|k=8": {
+   "etiquette": "binomiale_Kh5_Ks5_taux0.01_effetB1.0|delta=0.05|n=288|n_garde=288|biais=0.0125|k=8",
+   "graine_derivee": 3062132390835002503,
+   "160.0": {
+    "garde_seule": {
+     "part": 0.9795,
+     "unites_mediane_si_atteint": 202.0
+    },
+    "k_gardes": {
+     "part": 0.9305,
+     "unites_mediane_si_atteint": 224.0
+    },
+    "k_contrastes": {
+     "part": 0.576,
+     "unites_mediane_si_atteint": 222.0
+    },
+    "fiche_entiere": {
+     "part": 0.5185,
+     "unites_mediane_si_atteint": 245.0
+    },
+    "frontiere_part": 0.0,
+    "frontiere_borne_ville": 0.00625,
+    "tricheur_part": 0.0
+   },
+   "40.0": {
+    "garde_seule": {
+     "part": 0.999,
+     "unites_mediane_si_atteint": 155.0
+    },
+    "k_gardes": {
+     "part": 0.997,
+     "unites_mediane_si_atteint": 174.0
+    },
+    "k_contrastes": {
+     "part": 0.7775,
+     "unites_mediane_si_atteint": 193.0
+    },
+    "fiche_entiere": {
+     "part": 0.7705,
+     "unites_mediane_si_atteint": 212.0
+    },
+    "frontiere_part": 0.0,
+    "frontiere_borne_ville": 0.025,
+    "tricheur_part": 0.0
+   },
+   "moments_tires": {
+    "E_fA": 0.022427430555555558,
+    "E_fB": 0.009992664930555556,
+    "E_g": 0.012434765625000002,
+    "E_rA": 0.4999302083333334,
+    "E_rB": 0.4000673611111111,
+    "E_v": 0.09986284722222233,
+    "ecart_type_fA": 0.06629162694579291,
+    "ecart_type_rA": 0.22342378918451747,
+    "ecart_type_pB_honnetes": 0.012342930282003674,
+    "ecart_type_pB_sabotes": 0.20186598410888779,
+    "correlation_pB_honnetes_entre_comparateurs": 0.0004450816062919749,
+    "correlation_pB_sabotes_entre_comparateurs": 0.0003054337667114699,
+    "correlation_g_entre_comparateurs": 0.6770934667749243,
+    "correlation_v_entre_comparateurs": 0.38267222949143914
+   },
+   "ebh_graines_derivees": {
+    "modes": 9631377767159795771
+   },
+   "ebh_A": {
+    "m": 2,
+    "seuil_d_arret": 40.0,
+    "fiches_vraies": 2,
+    "fiches_nulles": 0,
+    "fiches_du_sujet": 1,
+    "premiere_atteinte_une_fiche": 0.7705,
+    "premiere_atteinte_fiches_du_sujet": 0.7705,
+    "retenue_une_fiche": 0.8015,
+    "retenues_fiches_du_sujet": 0.8015,
+    "retenues_toutes_vraies": 0.6675,
+    "vraies_retenues_moyenne": 1.615,
+    "retenue_sans_atteinte_une_fiche": 0.031
+   }
+  }
+ },
+ "lecture_ebh": {
+  "lectures": [
+   "A"
+  ],
+  "M_modes": 2,
+  "N_fiches_nulles": 0,
+  "alpha_c": 0.05,
+  "A": "une fiche par mode : minimum des k gardes et des k contrastes ; m = M + N",
+  "B": "une fiche par (mode, comparateur) : minimum d'une garde et d'un contraste ; m = M·k + N",
+  "regle": "chaque fiche est arrêtée au premier instant où son minimum atteint m/α_c (valeur arrêtée), sinon elle garde sa valeur finale ; puis e-BH à budgets α_c/m : pari_apparie.Course.ajouter_trajectoire puis ebh_pondere, une génération, valeur héritée 1",
+  "hypotheses": "modes indépendants et de même loi (mode 1 = tirage principal de la cellule) ; en (B), les k fiches d'un mode partagent le sujet ; fiches vraies : sujet honnête (biais de la cellule < δ), écart de contraste de la loi ; fiches nulles : écart de contraste 0 et biais 0, sujet propre à chaque fiche nulle, indépendantes des vraies",
+  "alpha_de_reference_des_fiches_nulles": "GD5-02 : e-BH à budgets α_c/m : FDR ≤ α_c·m₀/m, m₀ = fiches nulles, m = taille de la famille ; écrit par cellule (borne_fdr_alpha_c_m0_sur_m) ; (A) m = M + N, (B) m = M·k + N. La quantité comparable est la proportion moyenne de fausses découvertes ; « au moins une nulle retenue » n'est pas la quantité garantie. Forme de nulle essayée : contraste nul sur les k comparateurs, garde vraie (la plus facile pour (A)) ; « un seul comparateur nul » et « garde à la frontière » : non essayées ici",
+  "parts": {
+   "premiere_atteinte_une_fiche": "la fiche 1 (mode 1 ; en B, mode 1, comparateur 1) atteint m/α_c",
+   "premiere_atteinte_fiches_du_sujet": "A : la fiche du mode 1 ; B : les k fiches du mode 1 atteignent m/α_c",
+   "retenue_une_fiche": "la fiche 1 est retenue par l'e-BH",
+   "retenues_fiches_du_sujet": "A : la fiche du mode 1 ; B : les k fiches du mode 1 sont retenues",
+   "retenues_toutes_vraies": "toutes les fiches vraies de la famille sont retenues"
+  },
+  "taille_minimale_ecarts_nuls": {
+   "A|m=2|delta=0.05|seuil=40": 111
+  }
+ },
+ "environnement": {
+  "python": "3.13.17",
+  "numpy": "2.5.3",
+  "duree_s": 28.1
+ }
+}

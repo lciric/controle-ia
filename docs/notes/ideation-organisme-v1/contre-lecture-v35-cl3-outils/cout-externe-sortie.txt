@@ -1,0 +1,12 @@
+absent         → statut=erreur          cout=0.0        erreur='commande du juge externe : cout_usd manquant (obligatoire)'
+nul 0          → statut=ok              cout=0.0        erreur=None
+négatif        → statut=erreur          cout=0.0        erreur='commande du juge externe : cout_usd non numérique ou négatif'
+chaîne         → statut=erreur          cout=0.0        erreur='commande du juge externe : cout_usd non numérique ou négatif'
+null           → statut=erreur          cout=0.0        erreur='commande du juge externe : cout_usd non numérique ou négatif'
+booléen        → statut=erreur          cout=0.0        erreur='commande du juge externe : cout_usd non numérique ou négatif'
+NaN            → statut=ok              cout=nan        erreur=None
+Infinity       → statut=budget_depasse  cout=inf        erreur='coût déclaré au-dessus du plafond de session'
+1e308 (fini)   → statut=budget_depasse  cout=1e+308     erreur='coût déclaré au-dessus du plafond de session'
+liste          → statut=erreur          cout=0.0        erreur='commande du juge externe : cout_usd non numérique ou négatif'
+normal 0.4     → statut=ok              cout=0.4        erreur=None
+code 3 + 1.7   → statut=erreur          cout=0.0        erreur='commande du juge externe : code 3 : '

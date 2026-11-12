@@ -1,0 +1,211 @@
+TACHE 11
+=== D 1
+ACTION: ADD
+TITLE: Reproducing episodic and online test-time adaptation for CLIP under one protocol
+PROPOSAL: We re-run eight test-time adaptation methods for CLIP, four episodic (TPT, DiffTPT, C-TPT, MTA) and four online (TDA, DMN, DPE, BoostAdapter), from their public code but under a single harness: the same ViT-B/16 and ResNet-50 checkpoints, the same hand-crafted prompt per dataset, the same preprocessing and the same evaluation script, on ImageNet, its four distribution-shift variants and the ten fine-grained datasets. We report top-1 accuracy for each method and for the unadapted model, and we tabulate the difference between our numbers and those printed in each paper.
+CONTROLS: The unadapted zero-shot model, each method with the checkpoint and prompt used in its own paper to confirm we can reproduce the printed number before changing conditions, three stream orders for the online methods, and three seeds.
+COST: 150
+PREDICTION: Gains over zero-shot should shrink to under half of the printed gaps once checkpoints and prompts are aligned, and the ranking of the four online methods should change. If printed numbers cannot be reproduced even under original conditions, the discrepancy is in the code rather than in the protocol.
+=== D 2
+ACTION: ADD
+TITLE: Does test-time adaptation compound with prompt learning or cancel it
+PROPOSAL: We take CLIP ViT-B/16 checkpoints already tuned at training time with CoOp, CoCoOp, MaPLe and PromptSRC on the 16-shot ImageNet protocol, then apply two episodic methods, TPT and MTA, and two online methods, TDA and DPE, at test time on ImageNet, ImageNet-A, ImageNet-R, ImageNet-Sketch, ImageNet-V2 and the fine-grained transfer datasets. For every combination we report accuracy and the change relative to the tuned model alone, and we also report the change relative to the zero-shot model with the same test-time method, which tells us whether the two kinds of gain add, overlap or interfere.
+CONTROLS: Zero-shot CLIP with and without each test-time method, each tuned model without adaptation, a tuned model whose learned prompt is replaced by the hand-crafted prompt to separate the effect of tuning from that of the prompt tokens, and three seeds.
+COST: 90
+PREDICTION: Test-time gains on tuned models should be less than half of the gains on zero-shot CLIP, and on in-domain ImageNet they may become negative for the online methods. Where the hand-crafted prompt substitution restores the test-time gain, the interference comes from the learned prompt rather than from the tuned weights.
+=== D 3
+ACTION: ADD
+TITLE: What test-time adaptation does to calibration, selective prediction and shift detection
+PROPOSAL: We measure, beyond accuracy, what adaptation does to the reliability of CLIP ViT-B/16 predictions: expected calibration error, negative log-likelihood, area under the risk-coverage curve for selective prediction, and the AUROC of maximum softmax probability for separating ImageNet from ImageNet-O as an out-of-distribution detection task. Methods are TPT, C-TPT, MTA, TDA and DPE, run on ImageNet, ImageNet-A, ImageNet-R and the fine-grained datasets. We report every metric before and after adaptation for the same test images, so that each method is characterised by a vector of changes rather than a single accuracy delta.
+CONTROLS: The unadapted model, temperature scaling of the unadapted model fitted on a held-out split as a calibration-only baseline, each method with its confidence-selection step disabled, and three stream orders for the online methods.
+COST: 48
+PREDICTION: Entropy-minimising methods should lower calibration error on the shifted sets while raising it on in-domain ImageNet, and the risk-coverage area should improve less than accuracy does. If temperature scaling alone matches the calibration changes, the adaptation adds nothing to reliability beyond a confidence rescaling.
+=== D 4
+ACTION: ADD
+TITLE: Transferring test-time adaptation methods from CLIP to SigLIP and BLIP-2
+PROPOSAL: We port five test-time adaptation methods designed for CLIP, TPT, MTA, TDA, DMN and DPE, to two vision-language models with different training objectives and architectures: SigLIP ViT-B/16, trained with a sigmoid loss, and the image-text matching head of BLIP-2. Each method is re-implemented against the model's own text encoder and similarity function, with hyperparameters re-tuned on a held-out split of ImageNet, and evaluated on ImageNet, its four shift variants and the fine-grained datasets. We report accuracy gains over each unadapted model and the rank correlation between the gains on CLIP and the gains on the other model.
+CONTROLS: The CLIP ViT-B/16 results under the same harness, each method with CLIP hyperparameters transferred unchanged to check whether re-tuning matters, the unadapted SigLIP and BLIP-2 models, and three seeds.
+COST: 260
+PREDICTION: Gains on SigLIP should be smaller than on CLIP and the ranking of methods should differ, with the online cache-based methods transferring best. If gains vanish without re-tuning but return with it, the methods are sound but their defaults are tied to CLIP's similarity scale.
+=== D 5
+ACTION: ADD
+TITLE: How much of reported progress survives a single checkpoint and prompt
+PROPOSAL: We quantify the share of reported test-time adaptation progress attributable to protocol differences by decomposing the gap between the earliest method, TPT, and a recent online method, DPE, into three parts: checkpoint, prompt template and evaluation protocol. We run both methods on CLIP ViT-B/16 under every combination of two checkpoints, three prompt sets and two protocols, on ImageNet and its shift variants, and we fit an additive model to the resulting accuracies to attribute the printed gap to each factor and to the method itself.
+CONTROLS: The unadapted model under each combination, both methods with their original settings to reproduce the printed numbers, three stream orders for DPE, and a second recent method, TDA, to check that the attribution is not specific to DPE.
+COST: 72
+PREDICTION: Less than half of the printed gap between TPT and DPE should remain once checkpoint and prompt are equalised, with prompt choice the largest single factor. If the method term dominates instead, recent progress is mostly algorithmic.
+=== D 6
+ACTION: ADD
+TITLE: Stability of online test-time adaptation under stream order and label shift
+PROPOSAL: We test whether online methods for CLIP keep their accuracy when the test stream changes character: we run TDA, DMN, DPE and BoostAdapter on ImageNet-R, ImageNet-Sketch and the fine-grained datasets under four stream regimes, a random order, a class-sorted order, a stream with a sudden switch between two datasets, and a stream that repeats a small subset many times. We record accuracy over the stream in windows of 500 samples and calculate the variance of windowed accuracy and the worst window for each method. We also measure how fast each method recovers after the dataset switch.
+CONTROLS: The unadapted model, each episodic method as an order-independent reference, each online method with its cache reset every window, and five random orders to bound the variance expected from sampling alone.
+COST: 36
+PREDICTION: Cache-based methods should lose several points under class-sorted streams and recover slowly after a switch, while episodic methods stay flat. If resetting the cache every window removes the loss, the instability sits in cache contents rather than in the update rule.
+=== D 7
+ACTION: ADD
+TITLE: Adversarial and corruption robustness of CLIP after test-time adaptation
+PROPOSAL: We ask whether accuracy-oriented adaptation makes CLIP predictions more fragile. For TPT, MTA, TDA and DPE on ViT-B/16, we evaluate on ImageNet-C at severities one to five and under a transfer attack with PGD crafted on the unadapted model, as well as an adaptive attack that targets the adapted prediction for the episodic methods. We report clean accuracy, corrupted accuracy per severity, attacked accuracy and the gap between clean and attacked accuracy before and after adaptation, on ImageNet and two fine-grained datasets.
+CONTROLS: The unadapted model, a model with temperature scaling only, each method with its augmentation views replaced by the unaugmented image repeated, and three seeds for the attack.
+COST: 200
+PREDICTION: Adaptation should raise corrupted accuracy at low severity and lower it at severity five, and the attacked gap should widen for the episodic methods whose augmentation selection the attack can target. If the repeated-image variant shows the same fragility, the views are not the entry point.
+=== D 8
+ACTION: ADD
+TITLE: Reporting test-time adaptation gains with confidence intervals across checkpoints
+PROPOSAL: Run every public episodic and online method for CLIP under one harness across four checkpoints, ViT-B/32, ViT-B/16, ViT-L/14 and a ResNet-50, with the same prompts and protocol, and compute for each method and dataset a bootstrap confidence interval over test images together with the standard deviation across checkpoints. Report which pairwise differences between methods remain outside the intervals on ImageNet, its shift variants and the fine-grained datasets, and produce a ranking that only separates methods whose intervals do not overlap on a majority of datasets.
+CONTROLS: The unadapted model for each checkpoint, three stream orders for online methods, and a repeat of the whole table with the prompt template changed to test the stability of the ranking.
+COST: 400
+PREDICTION: Most pairwise gaps among recent methods should fall inside the intervals on the majority of datasets, leaving two or three distinguishable tiers. If the ranking changes with the prompt template, the comparison is dominated by prompt choice.
+=== D 9
+ACTION: ADD
+TITLE: Does entropy minimisation help on reliability, a metric-by-metric audit of TPT descendants
+PROPOSAL: We take the family of episodic methods built on entropy minimisation over augmented views, TPT, DiffTPT, C-TPT and RLCF, and audit each on CLIP ViT-B/16 with a panel of reliability metrics: expected calibration error, Brier score, prediction consistency across augmentations, and the fraction of test images whose predicted class flips between the unadapted and adapted model. We run the panel on ImageNet, ImageNet-A and ImageNet-R and on five fine-grained datasets, and we relate the accuracy gain of each method to the flip fraction to see how much of the gain comes from correcting errors versus introducing new ones.
+CONTROLS: The unadapted model, TPT with the entropy objective replaced by a confidence-maximisation objective, TPT with randomly selected views instead of confidence-selected views, and three seeds.
+COST: 110
+PREDICTION: Flip fractions should exceed the net accuracy gain by a factor of three or more, meaning methods swap many predictions to gain a few. If the random-view variant matches the confidence-selected one, the selection step is not what drives the gain.
+=== D 10
+ACTION: ADD
+TITLE: Replaying the adaptation literature in order to measure cumulative progress
+PROPOSAL: We arrange ten test-time adaptation methods for CLIP in order of their appearance, from TPT to the most recent online method, and run each under the same harness on ViT-B/16 with the same prompts on ImageNet, its shift variants and the fine-grained datasets. We then plot the accuracy of each method against its position in the sequence and fit a piecewise-linear trend, which gives the cumulative gain over the first method and the gain of each method over its immediate predecessor under equal conditions. We repeat the plot for the gains each paper printed to compare the two trends.
+CONTROLS: The unadapted model as the origin of both curves, each method also run with its own paper's checkpoint and prompt, and three stream orders for the online methods.
+COST: 180
+PREDICTION: The printed trend should rise steadily while the equal-conditions trend should flatten after the first two online methods. If the two trends agree, protocol variation has not contributed to the reported progress.
+=== A 1 0
+ACTION: ADD
+TITLE: One harness for episodic and online adaptation on CLIP
+PROPOSAL: We rerun four episodic methods, TPT, DiffTPT, C-TPT and MTA, and four online methods, TDA, DMN, DPE and BoostAdapter, on CLIP ViT-B/16 with one checkpoint, one prompt template per dataset and one evaluation script, on ImageNet, its four shift variants and the fine-grained datasets, and we compare every method's gain over the unadapted model with the gain printed in its paper.
+CONTROLS: The unadapted zero-shot model as the floor, each method first rerun with its own paper's checkpoint and prompt to confirm the printed number before changing conditions, the ResNet-50 checkpoint as a second backbone, the unadapted accuracy checked against its published zero-shot number, three stream orders for the online methods, bootstrap intervals over test images, and three seeds.
+COST: 150
+PREDICTION: Printed gains should shrink by at least a third under equal conditions and the online ranking should change. The claim fails if printed numbers cannot be reproduced under the original conditions, which would point at code rather than protocol.
+=== A 1 1
+ACTION: ADD
+TITLE: Rerunning test-time adaptation methods for CLIP under a common script
+PROPOSAL: Eight methods are rerun inside a single evaluation script on CLIP ViT-B/16 with one prompt template per dataset: TPT, DiffTPT, C-TPT and MTA among the episodic ones and TDA, DMN, DPE and BoostAdapter among the online ones. The benchmark covers ImageNet, the ImageNet shift benchmarks and the fine-grained suite, and for each method we report top-1 accuracy and its gain over the unadapted model.
+CONTROLS: Each method at two learning rates and two augmentation view counts, the online cache at two sizes, the evaluation script checked against the unadapted model's published zero-shot accuracy, inference time per image for every method, bootstrap intervals over test images, and three seeds.
+COST: 150
+PREDICTION: The gains should hold across the two learning rates, and the online methods should take about twice the inference time of the episodic ones. The claim fails if the zero-shot accuracy does not match the published number, which would mean the script is wrong.
+=== A 2 0
+ACTION: ADD
+TITLE: Do CLIP adaptation methods transfer to SigLIP and EVA-CLIP
+PROPOSAL: We port TPT, MTA, TDA and DPE to SigLIP ViT-B/16 and EVA-CLIP ViT-B/16, re-implementing each against the model's own text tower and similarity, and evaluate on ImageNet, its shift variants and the fine-grained datasets.
+CONTROLS: CLIP ViT-B/16 under the same harness as the reference, each unadapted model as its own floor, each method with CLIP hyperparameters carried over unchanged against hyperparameters re-tuned on a held-out ImageNet split, the same methods with the text tower frozen to a single prompt to separate prompt effects from feature effects, three stream orders for the online methods, and three seeds.
+COST: 400
+PREDICTION: Gains should be smaller on SigLIP than on CLIP and the ranking should change. The claim fails if re-tuning erases the difference, which would mean the methods transfer and only their defaults do not.
+=== A 2 1
+ACTION: ADD
+TITLE: Test-time adaptation on vision-language models beyond CLIP
+PROPOSAL: We implement TPT, MTA, TDA and DPE for SigLIP ViT-B/16 and EVA-CLIP ViT-B/16, adapting the loss of each method to the model's similarity function, and we report accuracy before and after adaptation on ImageNet, its shift variants and the fine-grained datasets, together with the gain on each dataset.
+CONTROLS: Each method at two learning rates and two numbers of augmented views, the cache of the online methods at two sizes, SigLIP at two input resolutions, the unadapted accuracy of each model checked against its published zero-shot number, a repeat of ImageNet with a second prompt template, inference time per image, bootstrap intervals, and three seeds.
+COST: 400
+PREDICTION: Gains should appear on both models at the tuned learning rate, with the higher input resolution giving the larger gain. The claim fails if the published zero-shot numbers are not reproduced, pointing at an implementation error.
+=== A 3 0
+ACTION: ADD
+TITLE: Test-time adaptation applied on top of prompt-tuned CLIP
+PROPOSAL: We apply TPT, MTA, TDA and DPE to CLIP ViT-B/16 models already tuned with CoOp, MaPLe and PromptSRC on 16-shot ImageNet, and evaluate on ImageNet, its shift variants and the fine-grained datasets, recording the change relative to the tuned model alone and relative to zero-shot CLIP with the same test-time method.
+CONTROLS: Zero-shot CLIP with and without each test-time method, each tuned model without adaptation, a tuned model with its learned prompt swapped for the hand-crafted prompt to separate prompt tokens from tuned weights, a tuned model with the test-time learning rate re-tuned rather than inherited from the zero-shot setting, three stream orders for the online methods, and three seeds.
+COST: 90
+PREDICTION: Test-time gains should be under half of those on zero-shot CLIP and may turn negative on in-domain ImageNet. The claim fails if re-tuning the learning rate restores the full gain, which would mean the interaction is a tuning artefact.
+=== A 3 1
+ACTION: ADD
+TITLE: Combining training-time prompt tuning with test-time adaptation
+PROPOSAL: We apply TPT, MTA, TDA and DPE to CLIP ViT-B/16 models tuned with CoOp, MaPLe and PromptSRC on 16-shot ImageNet, and we report accuracy on ImageNet, its shift variants and the fine-grained datasets for every pairing of a training-time method and a test-time method.
+CONTROLS: Each training-time method retrained with two prompt lengths, the few-shot count at two levels, each test-time method at two numbers of views, the tuned models checked against the accuracies printed in their papers, the combined accuracy compared with the best number printed for any method on each dataset, three stream orders, bootstrap intervals, and three seeds.
+COST: 90
+PREDICTION: The combination of PromptSRC with DPE should give the best accuracy on most datasets, with the longer prompt helping on the fine-grained sets. The claim fails if the tuned models do not reproduce the printed accuracies.
+=== A 4 0
+ACTION: ADD
+TITLE: Reliability after adaptation measured against a calibration-only baseline
+PROPOSAL: For TPT, C-TPT, MTA, TDA and DPE on CLIP ViT-B/16, we measure expected calibration error, negative log-likelihood, selective-prediction risk at coverage 0.8 and out-of-distribution AUROC against ImageNet-O, on ImageNet, ImageNet-A, ImageNet-R and the fine-grained datasets, before and after adaptation on the same images.
+CONTROLS: The unadapted model, temperature scaling fitted on a held-out split as the calibration-only comparison, each method with its confidence-selection step disabled, each method with its augmentation views replaced by the plain image repeated, three stream orders for the online methods, and three seeds.
+COST: 48
+PREDICTION: Calibration error should fall on shifted sets and rise on in-domain ImageNet, with selective risk improving less than accuracy. The claim fails if temperature scaling alone reproduces the calibration changes.
+=== A 4 1
+ACTION: ADD
+TITLE: Does accuracy-oriented adaptation keep calibration across bins and checkpoints
+PROPOSAL: We run TPT, C-TPT, MTA, TDA and DPE on CLIP ViT-B/16 and record, on ImageNet, ImageNet-A, ImageNet-R and the fine-grained datasets, the expected calibration error, negative log-likelihood, selective-prediction risk at coverage 0.8 and out-of-distribution AUROC against ImageNet-O after adaptation, and we tabulate these alongside accuracy for each method.
+CONTROLS: The number of calibration bins at two settings, the coverage level at two further values, the out-of-distribution set swapped for a texture dataset, each method at two learning rates, bootstrap intervals over images for every metric, a repeat with a second checkpoint, and three seeds.
+COST: 48
+PREDICTION: Calibration error should be lowest for C-TPT and highest for the online methods, and the ordering should hold across bin counts. The claim fails if the ordering changes with the checkpoint.
+=== A 5 0
+ACTION: ADD
+TITLE: Measuring cumulative progress from TPT to current online methods
+PROPOSAL: We order nine methods from TPT to the most recent online method, rerun each on CLIP ViT-B/16 and ResNet-50 under one protocol on ImageNet, its shift variants and the fine-grained datasets, and plot accuracy against order of appearance to obtain each method's gain over its predecessor under equal conditions.
+CONTROLS: The unadapted model as the origin, each method rerun with its own paper's checkpoint and prompt to reproduce the printed number, the printed trend plotted on the same axes, TPT with its hyperparameters re-tuned under the current protocol so that later methods are not compared with an untuned first method, three stream orders, inference time per image logged, bootstrap intervals, and three seeds.
+COST: 260
+PREDICTION: The equal-conditions trend should flatten after the first two online methods while the printed trend keeps rising. The claim fails if re-tuned TPT closes most of the gap, which would mean progress is mostly tuning.
+=== A 5 1
+ACTION: ADD
+TITLE: Charting the accuracy of adaptation methods by order of appearance
+PROPOSAL: We rerun nine methods from TPT to the most recent online method on CLIP ViT-B/16 and ResNet-50 under one protocol on ImageNet, its shift variants and the fine-grained datasets, and plot each method's accuracy against its order of appearance, fitting a trend line per dataset family to show how accuracy has moved.
+CONTROLS: Each method at two augmentation view counts, inference time per image for each method, memory use of the online caches at two sizes, the trend fitted with linear and piecewise forms, a repeat with a second prompt template, three stream orders, bootstrap intervals over images, and three seeds.
+COST: 260
+PREDICTION: Accuracy should rise with order of appearance on the shifted sets, with the steepest step at the first online method. The claim fails if the piecewise fit prefers a flat trend, in which case recent methods add nothing.
+=== A 6 0
+ACTION: ADD
+TITLE: Attributing the printed gap between TPT and DPE to checkpoint, prompt and protocol
+PROPOSAL: We run TPT and DPE on CLIP ViT-B/16 under every combination of two checkpoints, three prompt sets and two evaluation protocols on ImageNet and its shift variants, fit an additive model to the accuracies with each cell run on the full validation set, and read off how much of the printed gap each factor explains and how much is left for the method itself.
+CONTROLS: The unadapted model under each combination, both methods at their original settings to reproduce the printed numbers, TDA as a second recent method, bootstrap intervals over images, three stream orders, three seeds.
+COST: 72
+PREDICTION: Prompt choice should be the largest factor and under half of the printed gap should remain. It fails if the method term dominates, in which case progress is algorithmic.
+=== A 6 1
+ACTION: ADD
+TITLE: A meta-analysis of printed test-time adaptation results across papers
+PROPOSAL: We collect the accuracy tables printed in twenty-five papers on test-time adaptation for CLIP, record for each entry the checkpoint, prompt template, evaluation protocol and dataset, and fit a mixed-effects regression of printed accuracy on these covariates with a random effect per paper, so that each method's coefficient is adjusted for them. We then rank methods by their adjusted coefficient on ImageNet and its shift variants and compare the adjusted ranking with the raw ranking.
+CONTROLS: The regression refitted without the paper random effect, with the covariates permuted across entries, and with the entries restricted to papers that report all four covariates.
+COST: 72
+PREDICTION: The adjusted ranking should differ from the raw one for about a third of the methods, with prompt template the strongest covariate. It fails if the permuted fit gives the same coefficients, meaning the covariates carry no information.
+=== A 7 0
+ACTION: ADD
+TITLE: Testing adaptation on three vision-language families with training-time tuning crossed in
+PROPOSAL: We port TPT, MTA, TDA and DPE to SigLIP ViT-B/16 and to BLIP-2's image-text matching head, each re-implemented against the model's own similarity function with hyperparameters re-tuned on a held-out ImageNet split, and we cross this with training-time tuning by also running each method on CoOp- and MaPLe-tuned versions of CLIP and SigLIP, so that both the model axis and the tuning axis are covered in one table on ImageNet, its shift variants and the fine-grained datasets.
+CONTROLS: CLIP ViT-B/16 under the same harness, each unadapted and each tuned model alone, CLIP hyperparameters carried over unchanged, three stream orders, and three seeds.
+COST: 500
+PREDICTION: Gains should shrink on SigLIP and shrink further on tuned models, with online methods transferring best. It fails if re-tuned hyperparameters restore CLIP-level gains everywhere, meaning only the defaults were tied to CLIP.
+=== A 7 1
+ACTION: ADD
+TITLE: How test-time adaptation gains scale with CLIP model size
+PROPOSAL: We run TPT, MTA, TDA and DPE on four CLIP checkpoints of increasing size, ViT-B/32, ViT-B/16, ViT-L/14 and ViT-H/14, under one harness on ImageNet, its shift variants and the fine-grained datasets, and we fit the gain of each method against the zero-shot accuracy of the checkpoint to see whether adaptation helps less as the base model improves, reporting the slope per method and per dataset family.
+CONTROLS: Each unadapted checkpoint, each method with hyperparameters re-tuned per checkpoint against the ViT-B/16 defaults carried over, three stream orders, and three seeds.
+COST: 500
+PREDICTION: Gains should fall with zero-shot accuracy for the episodic methods and stay flat for the online ones. It fails if re-tuning per checkpoint changes the slopes, meaning the trend reflects defaults rather than scale.
+=== A 8 0
+ACTION: ADD
+TITLE: Does adaptation trade reliability for accuracy across the full method set
+PROPOSAL: We run ten episodic and online methods on CLIP ViT-B/16 and ViT-L/14 across ImageNet, its shift variants, ImageNet-C at five severities and the fine-grained datasets, and for each we record accuracy together with calibration error, selective risk, out-of-distribution AUROC against ImageNet-O, consistency under stream order and accuracy under a transfer PGD attack, before and after adaptation on the same images, so that every change is attributable to the adaptation step.
+CONTROLS: The unadapted models, temperature scaling as a calibration-only comparison, each method with confidence selection disabled, each method with its augmentation views replaced by the plain image repeated, five stream orders, three attack seeds.
+COST: 1200
+PREDICTION: Methods with the largest accuracy gains should show the largest calibration and attack degradation. It fails if the two are uncorrelated across methods.
+=== A 8 1
+ACTION: ADD
+TITLE: An uncertainty-weighted cache for online adaptation of CLIP
+PROPOSAL: We propose an online method in which each cached test feature is weighted by the agreement between its augmented views, so that entries whose predictions vary across views contribute less to the class prototypes, and we combine the weighted prototypes with the zero-shot logits through a learned mixing coefficient updated by entropy minimisation. We run it on CLIP ViT-B/16 and ViT-L/14 on ImageNet, its shift variants, ImageNet-C at five severities and the fine-grained datasets, and we report accuracy against TDA, DMN, DPE and BoostAdapter under one harness.
+CONTROLS: The unadapted models, the cache with uniform weights, the mixing coefficient fixed, five stream orders, three seeds.
+COST: 1200
+PREDICTION: The weighted cache should beat DPE by about one point on the shifted sets. It fails if uniform weights do as well.
+=== A 9 0
+ACTION: ADD
+TITLE: Stability of online adaptation under adversarial stream orders
+PROPOSAL: We run TDA, DMN, DPE and BoostAdapter on CLIP ViT-B/16 over ImageNet-R, ImageNet-Sketch and the fine-grained datasets under random, class-sorted, dataset-switching and repeated-subset streams, record accuracy in windows of 500 samples, and report windowed variance, worst window and recovery time after a switch, so that stability is measured directly rather than inferred from average accuracy.
+CONTROLS: The unadapted model, episodic TPT and MTA as order-independent references, each online method with its cache reset per window, five random orders, three seeds.
+COST: 36
+PREDICTION: Cache methods should lose several points under sorted streams and recover slowly after a switch. It fails if cache resets remove the loss, placing the instability in cache contents.
+=== A 9 1
+ACTION: ADD
+TITLE: Latency and memory profile of test-time adaptation methods for deployment
+PROPOSAL: We profile TPT, DiffTPT, C-TPT, MTA, TDA, DMN, DPE and BoostAdapter on CLIP ViT-B/16 and ViT-L/14, measuring per-image latency, peak memory, number of forward and backward passes, and cache growth over a stream of ImageNet and ImageNet-R, at two batch sizes, and we plot each method's accuracy against its latency to find the methods on the accuracy-latency frontier for each dataset.
+CONTROLS: The unadapted model as the origin of the frontier, each method with fewer augmentation views, the online caches capped at two sizes, five runs per measurement, three seeds.
+COST: 36
+PREDICTION: The online methods should sit on the frontier below ten times the unadapted latency while the episodic methods fall off it. It fails if accuracy with fewer views matches the full set, in which case the frontier collapses.
+=== A 10 0
+ACTION: ADD
+TITLE: Corruption and attack robustness of CLIP before and after adaptation
+PROPOSAL: We evaluate TPT, MTA, TDA and DPE on CLIP ViT-B/16 over ImageNet-C at severities one to five and under a transfer PGD attack crafted on the unadapted model plus an adaptive attack aimed at the adapted prediction for the episodic methods, on ImageNet and two fine-grained datasets, with attacks run on a fixed subset of one thousand images per dataset, reporting clean, corrupted and attacked accuracy and the clean-to-attacked gap before and after adaptation.
+CONTROLS: The unadapted model, temperature scaling only, each method with views replaced by the plain image repeated, attack strength at two levels, bootstrap intervals over images, three attack seeds.
+COST: 200
+PREDICTION: Adaptation should help at low severity and hurt at severity five, and the attacked gap should widen for episodic methods. It fails if the repeated-image variant is equally fragile.
+=== A 10 1
+ACTION: ADD
+TITLE: Prompt template sensitivity of zero-shot CLIP across checkpoints and datasets
+PROPOSAL: We measure how much zero-shot accuracy of CLIP moves with the prompt template alone, running ViT-B/32, ViT-B/16 and ViT-L/14 with eighty hand-written templates, the single default template and the ensemble of all templates, on ImageNet, its shift variants and the fine-grained datasets, and we report for each dataset the spread between the best and worst template, the gain of the ensemble over the default, and the correlation of template quality across checkpoints.
+CONTROLS: Templates with the class name removed as a floor, templates with words shuffled, the ensemble restricted to ten random templates, three random template subsets.
+COST: 200
+PREDICTION: The spread between templates should exceed the gains most adaptation papers print, and template quality should correlate across checkpoints. It fails if the shuffled templates match the default, meaning the text encoder ignores word order.

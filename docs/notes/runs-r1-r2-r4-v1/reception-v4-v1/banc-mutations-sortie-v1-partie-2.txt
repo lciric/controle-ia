@@ -1,0 +1,12 @@
+Banc de mutations de verifier_reception_r1_v4_v1.py (sha256 3ea2352d57c7283420591fcbb8f6975aa4533fc2ee49257b1bb8703a2f4e93a4) ; essais test_verifier_reception_r1_v4_v1.py (sha256 23b7241edce90e37f056491159785d7f050a7e538bd1cd99f40bc5547fbe076d) ; début 2026-11-05T00:33:27Z ; python 3.13.18
+témoin (script non muté) : code 0 ; « 118 passed in 51.89s » ; 55.9 s ; conforme
+mutation (garde entière, ou garde#rang pour une seule occurrence) | occurrences mutées | issue | premier essai en échec | durée
+octets | 4 | tuée | test_verse_different_de_la_source | 9.5 s
+octets#1 | 1 (rang 1) | tuée | test_branche_source_non_attendue | 10.8 s
+octets#2 | 1 (rang 2) | tuée | test_arbre_recu_different_du_commit | 11.1 s
+octets#3 | 1 (rang 3) | tuée | test_verse_different_de_la_source | 10.2 s
+octets#4 | 1 (rang 4) | tuée | test_empreinte_du_temoin_autre | 9.7 s
+presence | 1 | tuée | test_fichier_en_trop_dans_un_run_recu | 10.1 s
+compagnon | 1 | tuée | test_compagnon_faux_verse | 13.8 s
+temoin | 1 | tuée | test_temoin_resultat_autre_etape | 15.4 s
+bilan : 8 mutants (4 motifs : compagnon,octets,presence,temoin, entiers et par occurrence), tous tués ; témoin conforme ; fin 2026-11-05T00:35:09Z → CONFORME

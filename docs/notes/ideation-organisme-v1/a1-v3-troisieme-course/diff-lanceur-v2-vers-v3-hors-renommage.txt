@@ -1,0 +1,190 @@
+# Différentiel du lanceur durable v2 → v3, hors renommage (module puis amorce ; v2 renommée par sed : V2→V3, _v2→_v3, durable v2→durable v3, v2.log/.sh→v3)
+--- v2-renommee
++++ v3
+@@ -1,5 +1,20 @@
+ #!/usr/bin/env python3
+-"""Hôte durable de la troisième course d'A1-v3, **version 2** (machine : GO-2026-11-05-03 ; course : GO-2026-11-04-06).
++"""Hôte durable de la troisième course d'A1-v3, **version 3** (machine : GO-2026-11-05-03 ; course : GO-2026-11-04-06).
++
++Version 3 (R12 : v1 et v2 inchangées) : la v2, plus **seulement** trois corrections demandées après la contre-lecture n° 4
++(`contre-lecture-n4-texte-v3-v1.md`, `b524b41c…`) et le fait relevé par la mère sur la sonde v10 (`faits-hote.json`,
++`e53876b5` : sur l'image, `/usr/bin/python3` est Python 3.11.2, l'interpréteur de l'image, `/usr/local/bin/python3`, 3.13) :
++
++- **C1** — le relais, la commande d'Argon et la course tournent sous l'interpréteur 3.13 de l'image : `python_relais` et
++  `python_course` par chemin absolu (`PYTHON_IMAGE`), `PATH` du relais avec `/usr/local/bin` d'abord ; `/usr/bin/python3`
++  (chemin écrit dans la configuration gelée, qui lance la commande d'Argon) devient, par l'amorce, un lien vers lui ;
++  l'amorce refuse (destruction) si l'un des deux n'est pas 3.13 ; la machine revérifie et écrit les deux versions au journal.
++- **C2** — la course ne part pas si le signe de vie n'est pas vérifié par `ls-remote` : refus avant la course (arrêt propre,
++  versé sur la branche de refus), jamais une course détruite en marche par le contrôle du pilote à T0 + 30 min.
++- **C3** — à la reprise du conteneur, le versement passe par une copie de nom neuf (`…-versement-interrompue-v1`) : une
++  poussée finale manquée avant la reprise (copie `…-versement` restée sur le disque) n'empêche plus le versement.
++
++Ce qui suit décrit la v2 :
+ 
+ Version 2 (R12 : `hote_durable_a1_v3.py`, la v1, inchangée). C'est la v1, plus **seulement** :
+ 
+@@ -75,6 +90,22 @@
+ FICHIERS_DEMARRAGE = ("a1v3-minuterie.txt", "a1v3-minuterie.log", "a1v3-temps.txt", "amorce-a1v3-v3.log", "a1v3-memoire.txt")
+ DETRUIRE_MAINTENANT = "a1v3-detruire-maintenant"  # posé par le script de démarrage si l'amorce refuse (code 2) : rien n'a tourné
+ CODE_REFUS_AMORCE = 2
++PYTHON_IMAGE = "/usr/local/bin/python3"     # C1 : l'interpréteur 3.13 de l'image (`python:3.13-bookworm`)
++PYTHON_CONFIGURATION = "/usr/bin/python3"   # C1 : chemin écrit dans la configuration gelée (commande d'Argon) ; Debian : 3.11
++VERSION_PYTHON = "3.13"
++
++
++def version_python(chemin: str) -> tuple[str, str]:
++    """C1 : (« 3.13 », « Python 3.13.x ») de l'interpréteur ; (« illisible », motif) s'il ne répond pas."""
++    try:
++        court = h.lancer([chemin, "-c", "import sys; print('%d.%d' % sys.version_info[:2])"], delai=60)
++        long = h.lancer([chemin, "--version"], delai=60)
++    except (OSError, subprocess.TimeoutExpired) as x:
++        return "illisible", type(x).__name__
++    if court.returncode != 0:
++        return "illisible", f"code {court.returncode}"
++    return (court.stdout.decode("utf-8", "replace").strip(),
++            (long.stdout + long.stderr).decode("utf-8", "replace").strip().splitlines()[0][:80] if (long.stdout + long.stderr).strip() else "?")
+ 
+ 
+ def cles_interdites(environ: dict) -> list[str]:
+@@ -477,9 +508,10 @@
+     signe de vie (m2) ; journaux du démarrage versés (f5) ; versement borné, « partie de main » sans clone entier (m1, m5) ;
+     fin et geste sur la machine qui attrapent toute exception (M1 b) ; étiquette et instances protégées contrôlées (f8)."""
+ 
+-    def __init__(self, r: h.Reglages, environ: dict[str, str]):
++    def __init__(self, r: h.Reglages, environ: dict[str, str], python_configuration: str = PYTHON_CONFIGURATION):
+         super().__init__(r, environ)
+         self.racine = r.travail.parent
++        self.python_configuration = python_configuration  # C1
+         t0 = None
+         try:
+             t0 = float((self.racine / "a1v3-minuterie.txt").read_text().split()[0])
+@@ -517,6 +549,18 @@
+             self.nature_fin = "exception_de_l_hote"
+         return self.fin(h.BRANCHE_DONNEES if self.course is not None else h.BRANCHE_REFUS)
+ 
++    def env_relais(self) -> dict:  # C1 : `/usr/local/bin` d'abord (la v1 mettait `/usr/bin` d'abord)
++        return {"PATH": "/usr/local/bin:/usr/bin:/bin", "LANG": "C.UTF-8", "GEMINI_API_KEY": self.secrets["CLE_ARGON"]}
++
++    def verifier_interpreteurs(self) -> None:
++        """C1 : relais, course et chemin de la configuration gelée sous Python 3.13 ; les versions au journal ; sinon refus."""
++        vus = {nom: (chemin, *version_python(chemin)) for nom, chemin in (("relais", self.r.python_relais),
++               ("course", self.r.python_course), ("configuration gelée", self.python_configuration))}
++        self.j.ecrire("interpréteurs (C1) : " + " ; ".join(f"{n} {c} : {lg}" for n, (c, _, lg) in vus.items()))
++        faux = [f"{n} {c} ({v})" for n, (c, v, _) in vus.items() if v != VERSION_PYTHON]
++        if faux:
++            raise h.Refus(f"interpréteur autre que Python {VERSION_PYTHON} (C1) : {', '.join(faux)} : rien ne part")
++
+     def _show(self, commit: str, chemin: str) -> bytes:
+         try:
+             return git_octets("show", f"{commit}:{chemin}", cwd=self.r.clone_prive, gh_token=self.secrets["GH_TOKEN"])
+@@ -534,6 +578,7 @@
+         if not (0 < self.prix_h <= h.PRIX_MAX_H_USD):
+             raise h.Refus(f"prix horaire {self.prix_h} hors de ]0 ; {h.PRIX_MAX_H_USD}]")
+         verifier_plafond(self.prix_h)
++        self.verifier_interpreteurs()  # C1
+         if not re.fullmatch(r"[0-9]{9,11}", e["ECHEANCE_UTC_S"]):
+             raise h.Refus("ECHEANCE_UTC_S (échéance absolue du pilote, M-B) illisible")
+         depart = self.depart_conteneur or time.time()
+@@ -575,8 +620,10 @@
+         self.sha_registre = h.sha256_fichier(reg)
+         self.j.ecrire(f"registre-go.md : commit {cr} de {h.SOURCE_REGISTRE}, aucun doublon, sha256 {self.sha_registre} ; grep : "
+                       + " ; ".join(self._grep(reg, e["GO_ID"])))
+-        # 4. Signe de vie (m2), puis la suite de la v1
+-        self.signe_de_vie()
++        # 4. Signe de vie (m2), exigé (C2), puis la suite de la v1
++        if not self.signe_de_vie():
++            raise h.Refus("signe de vie non vérifié par ls-remote (C2) : la course ne part pas (le contrôle du pilote "
++                          "détruirait à T0 + 30 min une course en marche)")
+         self.extraire_sources()
+         h.git("clone", "-q", r.depot_public, str(r.clone_public))
+         h.git("checkout", "-q", "--detach", e["COMMIT_PUBLIC"], cwd=r.clone_public)
+@@ -647,9 +694,9 @@
+                 time.sleep(self.r.attente_poussee_s)
+         return None
+ 
+-    def signe_de_vie(self) -> None:
++    def signe_de_vie(self) -> bool:
+         """m2 : branche orpheline poussée tôt (aucune donnée de la course) ; le pilote ne détruit pas à T0 + 30 min une machine
+-        qui l'a poussée. Une mesure : son échec est écrit, la préparation continue."""
++        qui l'a poussée. C2 : rend vrai seulement si la poussée est vérifiée par `ls-remote` ; sinon la course ne part pas."""
+         f = self.t / "signe-de-vie.json"
+         f.write_text(json.dumps({"utc": h.maintenant(), "machine": self.env.get("CONTAINER_ID"),
+                                  "depart_conteneur": self.depart_conteneur, "version": VERSION}) + "\n")
+@@ -669,8 +716,10 @@
+                   delai=DELAI_GIT_S)
+             c = self._pousser(v, BRANCHE_VIE, url)
+             self.j.ecrire(f"signe de vie poussé : {BRANCHE_VIE} = {c}" if c else "signe de vie non vérifié par ls-remote")
++            return bool(c)
+         except Exception as x:
+             self.j.ecrire(f"signe de vie non poussé : {type(x).__name__} : {self.j.masquer(str(x))[:200]}")
++            return False
+ 
+     def copier_journaux_du_demarrage(self) -> None:
+         d = self.t / "demarrage"
+@@ -692,7 +741,8 @@
+         url = self._url()
+         if h.git("ls-remote", url, f"refs/heads/{branche}", gh_token=gh, delai=DELAI_GIT_S).strip():
+             raise h.Refus(f"branche {branche} déjà présente (R12) : rien n'est écrasé")
+-        v = r.travail.parent / (r.travail.name + "-versement")
++        suffixe = "-versement-interrompue-v1" if branche == h.BRANCHE_INTERROMPUE else "-versement"  # C3
++        v = r.travail.parent / (r.travail.name + suffixe)
+         if v.exists():
+             raise h.Refus(f"copie de versement {v} déjà présente (R12)")
+         h.git("clone", "-q", "--depth", "1", "--filter=blob:none", "--sparse", "--single-branch", "--branch", "main", url,
+@@ -801,7 +851,8 @@
+ 
+ def reglages() -> h.Reglages:
+     """Défauts de la v1 (chemins écrits par le texte v3, 80 h, 32 USD, relevé chaque minute), versement borné (m1)."""
+-    return h.Reglages(essais_poussee=ESSAIS_POUSSEE, attente_poussee_s=ATTENTE_POUSSEE_S)
++    return h.Reglages(essais_poussee=ESSAIS_POUSSEE, attente_poussee_s=ATTENTE_POUSSEE_S, python_relais=PYTHON_IMAGE,
++                      python_course=PYTHON_IMAGE)  # C1 : chemins absolus de l'interpréteur 3.13
+ 
+ 
+ def principal(argv=None) -> int:
+--- amorce-v2-renommee
++++ amorce-v3
+@@ -1,6 +1,10 @@
+ #!/usr/bin/env bash
+-# Amorce de l'hôte durable de la troisième course d'A1-v3, v2 (machine : GO-2026-11-05-03, une carte ; course :
+-# GO-2026-11-04-06). Nom neuf (R12 : l'amorce v1 est inchangée). Lancée par le script de démarrage du conteneur
++# Amorce de l'hôte durable de la troisième course d'A1-v3, v3 (machine : GO-2026-11-05-03, une carte ; course :
++# GO-2026-11-04-06). Nom neuf (R12 : amorces v1 et v2 inchangées). v3 = v2 + C1 : l'interpréteur de l'image
++# (`/usr/local/bin/python3`) doit être Python 3.13 ; `/usr/bin/python3` (chemin écrit dans la configuration gelée ; Debian y
++# met 3.11.2 sur `python:3.13-bookworm`, sonde v10) devient un lien vers lui ; les deux versions, avant et après, au journal ;
++# sinon, rien ne part (code 2 : destruction immédiate par la minuterie). Essai local : A1V3_PYTHON_IMAGE et
++# A1V3_PYTHON_CONFIGURATION (chemins absolus). Lancée par le script de démarrage du conteneur
+ # (`script_de_demarrage` de `src/controle_ia/hote_durable_a1_v3_v3.py`) APRÈS la minuterie de destruction, sous un `timeout` borné
+ # par la fin de vie (m-2). Un refus de cette amorce (code 2) fait demander au script de démarrage la destruction immédiate par la
+ # minuterie (rien n'a tourné) ; tout autre code laisse la minuterie à son échéance.
+@@ -38,15 +42,26 @@
+ for f in hote_durable_a1_v3.py hote_durable_a1_v3_v3.py sonde_hote_durable_a1_v3.py sonde_hote_durable_a1_v3_v10.py; do
+     [ -f "$D/$f" ] || { echo "AMORCE A1-V3 V3 : $f absent du commit $COMMIT_PRIVE : rien ne part"; exit 2; }
+ done
++PY_IMAGE="${A1V3_PYTHON_IMAGE:-/usr/local/bin/python3}"; case "$PY_IMAGE" in /*) ;; *) PY_IMAGE=/usr/local/bin/python3;; esac
++PY_CONF="${A1V3_PYTHON_CONFIGURATION:-/usr/bin/python3}"; case "$PY_CONF" in /*) ;; *) PY_CONF=/usr/bin/python3;; esac
++version() { "$1" -c 'import sys; print("%d.%d" % sys.version_info[:2])' 2>/dev/null; }
++complete() { "$1" --version 2>&1 | head -1; }
++echo "AMORCE A1-V3 V3 : interpréteurs avant (C1) : $PY_IMAGE $(complete "$PY_IMAGE") ; $PY_CONF $(complete "$PY_CONF")"
++[ "$(version "$PY_IMAGE")" = "3.13" ] || { echo "AMORCE A1-V3 V3 : $PY_IMAGE n'est pas Python 3.13 (C1) : rien ne part"; exit 2; }
+ if [ "${SAUTER_INSTALLATION:-0}" != "1" ] && [ ! -e "$RACINE_AMORCE/a1-v3-troisieme-v1/ETAT" ]; then
+     export DEBIAN_FRONTEND=noninteractive
+     t0=$(date +%s)
+     command -v git >/dev/null || timeout -k 5 300 sh -c 'apt-get update -qq && apt-get install -y -qq git ca-certificates >/dev/null' \
+         || { echo "AMORCE A1-V3 V3 : installation de git impossible : rien ne part"; exit 2; }
+-    python3 -c 'import numpy' 2>/dev/null || timeout -k 5 600 python3 -m pip install -q --no-cache-dir "numpy==2.5.3" \
++    "$PY_IMAGE" -c 'import numpy' 2>/dev/null || timeout -k 5 600 "$PY_IMAGE" -m pip install -q --no-cache-dir "numpy==2.5.3" \
+         || { echo "AMORCE A1-V3 V3 : installation de numpy==2.5.3 impossible : rien ne part"; exit 2; }
+-    [ -x /usr/bin/python3 ] || ln -s "$(command -v python3)" /usr/bin/python3
+-    echo "AMORCE A1-V3 V3 $(date -u +%FT%TZ) : installations en $(( $(date +%s) - t0 )) s ; $(python3 --version 2>&1) ;" \
+-         "numpy $(python3 -c 'import numpy; print(numpy.__version__)' 2>/dev/null || echo absent)"
++    echo "AMORCE A1-V3 V3 $(date -u +%FT%TZ) : installations en $(( $(date +%s) - t0 )) s ; $(complete "$PY_IMAGE") ;" \
++         "numpy $("$PY_IMAGE" -c 'import numpy; print(numpy.__version__)' 2>/dev/null || echo absent)"
+ fi
+-exec python3 -I -B "$D/hote_durable_a1_v3_v3.py" hote
++# C1 : le chemin de la configuration gelée devient un lien vers l'interpréteur de l'image, s'il n'est pas déjà 3.13
++if [ "$(version "$PY_CONF")" != "3.13" ]; then
++    ln -sfn "$PY_IMAGE" "$PY_CONF" 2>/dev/null || { echo "AMORCE A1-V3 V3 : lien $PY_CONF -> $PY_IMAGE impossible (C1) : rien ne part"; exit 2; }
++fi
++[ "$(version "$PY_CONF")" = "3.13" ] || { echo "AMORCE A1-V3 V3 : $PY_CONF n'est pas Python 3.13 (C1) : rien ne part"; exit 2; }
++echo "AMORCE A1-V3 V3 : interpréteurs après (C1) : $PY_IMAGE $(complete "$PY_IMAGE") ; $PY_CONF -> $(readlink -f "$PY_CONF") $(complete "$PY_CONF")"
++exec "$PY_IMAGE" -I -B "$D/hote_durable_a1_v3_v3.py" hote

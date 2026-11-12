@@ -1,0 +1,342 @@
+C = c6efe532e07d50c73c49115d5c458ea3a2c3d620
+script éprouvé : controles_avant_depense_p3_v1.sh c9a9e43679758f7506501e880031f33b3ce6d244b929c7076f79ebe6fdb1b56b
+script éprouvé : verifications_p3_v1.py 6667ac0ee7db2e7fe3f95eeb02d550565c75f4a26abc202cf204bc508405f1cc
+script éprouvé : essais_controles_p3_v1.sh 35a434ac1fdaf23837d0cdd657654aaf1efe516c5b652ce7b1df94ec7d3dc8f8
+lignes changées dans la copie des contrôles : 3 ; copie au vrai tokeniseur : 2
+tests 908 ; commit antérieur au dernier changement du lanceur de P3 : bc05768a8eaa340a339b984d54f2a10af1b21f50 ; un rapport : P3-premier-test-v1-relecture-chaine-v1.md
+A00-sain : code 0 ; 51 OK, 0 KO ; CONFORME
+A01-go-absent : code 1 ; 49 OK, 2 KO ; CONFORME
+    KO  GO de calcul et décision de Lazar (GO, révocation ou registre) : GO-2026-10-04-08 absent, en double ou mal formé
+    KO  garde de calcul sur le registre de S
+A02-go-autre-type : code 1 ; 49 OK, 2 KO ; CONFORME
+    KO  GO de calcul et décision de Lazar (GO, révocation ou registre) : GO-2026-10-04-08 : revendication, Lazar : GO de type « calcul », accordé par Lazar, attendu
+    KO  garde de calcul sur le registre de S
+A03-go-accorde-par-un-autre : code 1 ; 49 OK, 2 KO ; CONFORME
+    KO  GO de calcul et décision de Lazar (GO, révocation ou registre) : GO-2026-10-04-08 : calcul, session : GO de type « calcul », accordé par Lazar, attendu
+    KO  garde de calcul sur le registre de S
+A04-go-revoque : code 1 ; 49 OK, 2 KO ; CONFORME
+    KO  GO de calcul et décision de Lazar (GO, révocation ou registre) : GO-2026-10-04-08 révoqué au registre des GO (GO-2026-10-17-98)
+    KO  garde de calcul sur le registre de S
+A04b-ligne-revocation-mal-formee : code 1 ; 50 OK, 1 KO ; CONFORME
+    KO  garde de calcul sur le registre de S
+A04c-ligne-go-qui-mentionne-une-revocation : code 0 ; 51 OK, 0 KO ; CONFORME
+A05-decision-absente : code 1 ; 50 OK, 1 KO ; CONFORME
+    KO  GO de calcul et décision de Lazar (GO, révocation ou registre) : R-192 absent, en double, ou sans la décision de Lazar « (b) P1 + P2 + P3 + pilote du papier C »
+A05b-decision-sans-son-texte : code 1 ; 50 OK, 1 KO ; CONFORME
+    KO  GO de calcul et décision de Lazar (GO, révocation ou registre) : R-192 absent, en double, ou sans la décision de Lazar « (b) P1 + P2 + P3 + pilote du papier C »
+A06-texte-autre-go : code 1 ; 49 OK, 2 KO ; CONFORME
+    KO  GO de calcul et décision de Lazar (GO, révocation ou registre) : GO-2026-10-17-97 : seul GO-2026-10-04-08 est accepté pour P3 (GO de calcul de la phase 0, R-192)
+    KO  prereg/P3-premier-test-i-a-v1.md de S ≠ candidat relu
+A06b-texte-go-de-calcul-d-un-autre-perimetre : code 1 ; 49 OK, 2 KO ; CONFORME
+    KO  GO de calcul et décision de Lazar (GO, révocation ou registre) : GO-2026-10-17-01 : seul GO-2026-10-04-08 est accepté pour P3 (GO de calcul de la phase 0, R-192)
+    KO  prereg/P3-premier-test-i-a-v1.md de S ≠ candidat relu
+A07-texte-sans-ligne-go : code 1 ; 48 OK, 3 KO ; CONFORME
+    KO  GO de calcul et décision de Lazar (GO, révocation ou registre) : ligne « GO de calcul et décision de Lazar » absente, en double ou mal formée
+    KO  prereg/P3-premier-test-i-a-v1.md de S ≠ candidat relu
+    KO  intitulés absents ou cités plusieurs fois : « GO de calcul et décision de Lazar »
+A08-decision-revoquee-au-registre-des-go : code 1 ; 50 OK, 1 KO ; CONFORME
+    KO  GO de calcul et décision de Lazar (GO, révocation ou registre) : décision R-192 révoquée au registre des GO (GO-2026-10-17-96)
+A08b-forme-exacte-au-registre-des-decisions : code 1 ; 50 OK, 1 KO ; CONFORME
+    KO  GO de calcul et décision de Lazar (GO, révocation ou registre) : décision R-192 révoquée par R-998 (registre des décisions, « **Révocation de R-192** »)
+A11-texte-autre-que-le-candidat : code 1 ; 50 OK, 1 KO ; CONFORME
+    KO  prereg/P3-premier-test-i-a-v1.md de S ≠ candidat relu
+A12-configuration-autre-que-la-relue : code 1 ; 49 OK, 2 KO ; CONFORME
+    KO  prereg/P3-premier-test-config-v1.json de S ≠ configuration relue
+    KO  gardes du lanceur, paramètres, bornes ou valeurs : AssertionError: paramètres différents de ceux du pilote : ['lot']
+A12b-consignes-autres-que-les-relues : code 1 ; 48 OK, 3 KO ; CONFORME
+    KO  prereg/P3-consignes-v1.md non cité par son empreinte
+    KO  prereg/P3-consignes-v1.md de S ≠ consignes relues
+    KO  gardes du lanceur, paramètres, bornes ou valeurs : controle_ia.gardes.GardeArret: prereg/P3-consignes-v1.md : empreinte 9e9f114562d4 ≠ empreinte citée a68468fef628 (R11)
+A13-commit-du-code-cite-deux-fois : code 1 ; 48 OK, 3 KO ; CONFORME
+    KO  commit du code cité illisible, cité 2 fois, ou non ancêtre de S
+    KO  prereg/P3-premier-test-i-a-v1.md de S ≠ candidat relu
+    KO  intitulés absents ou cités plusieurs fois : « Commit du code d'analyse »
+A13b-commit-du-code-non-ancetre : code 1 ; 49 OK, 2 KO ; CONFORME
+    KO  commit du code cité illisible, cité 1 fois, ou non ancêtre de S
+    KO  prereg/P3-premier-test-i-a-v1.md de S ≠ candidat relu
+A14-code-modifie-apres-cite : code 1 ; 48 OK, 3 KO ; CONFORME
+    KO  arbre gelé modifié depuis le commit du code
+    KO  arbre gelé de S ≠ code relu épinglé (7a54d431d89745839220f882b41b13e8c62ecfdd)
+    KO  gardes du lanceur, paramètres, bornes ou valeurs : controle_ia.gardes.GardeArret: arbre gelé (code, tests, scripts, dépendances, configuration) modifié depuis le commit cité 7a54d431d897
+A16-script-de-l-instance-modifie : code 1 ; 47 OK, 4 KO ; CONFORME
+    KO  arbre gelé modifié depuis le commit du code
+    KO  arbre gelé de S ≠ code relu épinglé (7a54d431d89745839220f882b41b13e8c62ecfdd)
+    KO  empreinte de scripts/p3_instance.sh (6fd77f4b6bca07b0e4fb78353b03c96e7c3e2b28c9aa69816415d6642b184188) non citée
+    KO  gardes du lanceur, paramètres, bornes ou valeurs : controle_ia.gardes.GardeArret: arbre gelé (code, tests, scripts, dépendances, configuration) modifié depuis le commit cité 7a54d431d897
+A17-verdict-altere : code 1 ; 50 OK, 1 KO ; CONFORME
+    KO  docs/verdicts/verdict-T0.5-pilote-v1.md non cité par son empreinte
+A19-provenance-sans-sceau : code 1 ; 49 OK, 2 KO ; CONFORME
+    KO  docs/sources/donnees-T0.7/provenance-donnees-sondes-v1.md ou son sceau absent ou non conforme
+    KO  verifier-arbre : ÉCHEC docs/sources/donnees-T0.7/provenance-donnees-sondes-v1.md : docs/sources/donnees-T0.7/provenance-donnees-sondes-v1.md : empreinte compagnon provenance-donnees-sondes-v1.md.sha256 absente 
+A20-faits-retires : code 1 ; 47 OK, 4 KO ; CONFORME
+    KO  donnees/T0.7-faits-repe-v1/facts_true_false.csv ou son sceau absent ou non conforme
+    KO  donnees/T0.7-faits-repe-v1/facts_true_false.csv non cité par son empreinte
+    KO  sceaux
+    KO  gardes du lanceur, paramètres, bornes ou valeurs : controle_ia.gardes.GardeArret: donnees/T0.7-faits-repe-v1/facts_true_false.csv : fichier absent sur disque
+A21-s-ajoute-un-autre-fichier : code 1 ; 47 OK, 4 KO ; CONFORME
+    KO  contenu de S inattendu : M README.md A prereg/P3-consignes-v1.md A prereg/P3-consignes-v1.md.sha256 A prereg/P3-premier-test-config-v1.json A prereg/P3-premier-test-config-v1.json.sha256 A prereg/P3-premier-test-
+    KO  arbre gelé modifié depuis le commit du code
+    KO  arbre gelé de S ≠ code relu épinglé (7a54d431d89745839220f882b41b13e8c62ecfdd)
+    KO  gardes du lanceur, paramètres, bornes ou valeurs : controle_ia.gardes.GardeArret: arbre gelé (code, tests, scripts, dépendances, configuration) modifié depuis le commit cité 7a54d431d897
+A21b-consignes-ajoutees-avant-s : code 1 ; 50 OK, 1 KO ; CONFORME
+    KO  contenu de S inattendu : A prereg/P3-premier-test-config-v1.json A prereg/P3-premier-test-config-v1.json.sha256 A prereg/P3-premier-test-i-a-v1.md A prereg/P3-premier-test-i-a-v1.md.sha256 
+A22-lecture-precoce-citation-en-double : code 1 ; 48 OK, 3 KO ; CONFORME
+    KO  prereg/P3-premier-test-i-a-v1.md de S ≠ candidat relu
+    KO  lecture précoce : citation absente, en double, ou chemin inattendu
+    KO  intitulés absents ou cités plusieurs fois : « Chemin des consignes de P3 »
+A22b-intitule-en-double : code 1 ; 49 OK, 2 KO ; CONFORME
+    KO  prereg/P3-premier-test-i-a-v1.md de S ≠ candidat relu
+    KO  intitulés absents ou cités plusieurs fois : « Tâches de P3 »
+A23-problemes-non-vide : code 1 ; 49 OK, 2 KO ; CONFORME
+    KO  prereg/P3-premier-test-i-a-v1.md de S ≠ candidat relu
+    KO  problemes() non vide
+A24-ligne-lancement-autre : code 1 ; 49 OK, 2 KO ; CONFORME
+    KO  prereg/P3-premier-test-i-a-v1.md de S ≠ candidat relu
+    KO  PREREG ou BRANCHE : la ligne « Lancement » cite autre chose
+A25-suite-autre-nombre : code 1 ; 50 OK, 1 KO ; CONFORME
+    KO  suite complète : « 909 passed in 1.00s » (code 0 ; 908 attendus)
+A26-rapport-altere : code 1 ; 50 OK, 1 KO ; CONFORME
+    KO  rapport P3-premier-test-v1-relecture-chaine-v1.md absent, non scellé ou d'empreinte différente
+A26b-rapport-present-mais-non-cite : code 1 ; 49 OK, 2 KO ; CONFORME
+    KO  prereg/P3-premier-test-i-a-v1.md de S ≠ candidat relu
+    KO  rapport P3-premier-test-v1-relecture-chaine-v1.md présent et scellé, mais non cité par le texte
+A27-rapport-de-trop : code 1 ; 50 OK, 1 KO ; CONFORME
+    KO  rapports présents « P3-premier-test-v1-relecture-autre-v1.md P3-premier-test-v1-relecture-chaine-v1.md P3-premier-test-v1-relecture-courte-chaine-v1.md P3-premier-test-v1-relecture-courte-code-v1.md P3-premier-
+A28-journal-repetition-altere : code 1 ; 50 OK, 1 KO ; CONFORME
+    KO  répétition jouet : journal absent de S, d'une autre empreinte que l'épingle, ou sceau différent
+A29-copie-versee-de-la-recuperation-modifiee : code 1 ; 50 OK, 1 KO ; CONFORME
+    KO  répétition jouet : script répété ≠ copie versée à S : recuperation_p3_v1.sh
+A30-code-relu-autre : code 1 ; 49 OK, 2 KO ; CONFORME
+    KO  arbre gelé de S ≠ code relu épinglé (bc05768a8eaa340a339b984d54f2a10af1b21f50)
+    KO  répétition jouet : ligne absente ou en double : commit du code répété : bc05768a8eaa340a339b984d54f2a10af1b21f50
+A31-journal-autre-commit : code 1 ; 50 OK, 1 KO ; CONFORME
+    KO  répétition jouet : ligne absente ou en double : commit du code répété : 7a54d431d89745839220f882b41b13e8c62ecfdd
+A30b-candidat-relu-autre : code 1 ; 48 OK, 3 KO ; CONFORME
+    KO  candidat relu absent, non scellé ou d'empreinte différente
+    KO  prereg/P3-premier-test-i-a-v1.md de S ≠ candidat relu
+    KO  répétition jouet : ligne absente ou en double : candidat répété : P3-premier-test-i-a-v1-candidat4.md e996f291499ef4190e47d296e2d958987f3dbc7be497f56aabb63c3a629cdab6
+A30c-configuration-relue-autre : code 1 ; 49 OK, 2 KO ; CONFORME
+    KO  configuration relue absente, non scellée ou d'empreinte différente
+    KO  prereg/P3-premier-test-config-v1.json de S ≠ configuration relue
+A30d-consignes-relues-autres : code 1 ; 48 OK, 3 KO ; CONFORME
+    KO  consignes relues absentes, non scellées ou d'empreinte différente
+    KO  prereg/P3-consignes-v1.md de S ≠ consignes relues
+    KO  répétition jouet : ligne absente ou en double : consignes répétées : P3-consignes-v1-candidat2.md e996f291499ef4190e47d296e2d958987f3dbc7be497f56aabb63c3a629cdab6
+Z1a-candidat-non-epingle : code 2 ; 0 OK, 0 KO ; CONFORME
+    | candidat relu non épinglé
+Z1b-candidat-hors-des-brouillons : code 2 ; 0 OK, 0 KO ; CONFORME
+    | candidat relu non épinglé
+Z1c-configuration-non-epinglee : code 2 ; 0 OK, 0 KO ; CONFORME
+    | configuration relue non épinglée
+Z1c4-configuration-hors-des-brouillons : code 2 ; 0 OK, 0 KO ; CONFORME
+    | configuration relue non épinglée
+Z1c2-consignes-non-epinglees : code 2 ; 0 OK, 0 KO ; CONFORME
+    | consignes relues non épinglées
+Z1c3-consignes-hors-des-brouillons : code 2 ; 0 OK, 0 KO ; CONFORME
+    | consignes relues non épinglées
+Z1d-rapports-mal-formes : code 2 ; 0 OK, 0 KO ; CONFORME
+    | rapports attendus mal formés : P3-premier-test-v1-mal-forme.txt=00
+Z1e-un-seul-rapport : code 2 ; 0 OK, 0 KO ; CONFORME
+    | rapports attendus : au moins les deux rapports des contre-lectures R2
+Z1f-code-non-epingle : code 2 ; 0 OK, 0 KO ; CONFORME
+    | code relu ou répétition jouet non épinglés
+Z1g-repetition-non-epinglee : code 2 ; 0 OK, 0 KO ; CONFORME
+    | code relu ou répétition jouet non épinglés
+Z1h-module-commun-absent : code 2 ; 0 OK, 0 KO ; CONFORME
+    | module commun /tmp/claude-0/-home-user/5a6b9d1d-b17d-59a1-a770-8737a831fe0a/scratchpad/p3-v2-banc-controles/module-absent/verifications_p3_v1.py absent
+Z1i-clonage-impossible : code 2 ; 0 OK, 0 KO ; CONFORME
+    | clonage impossible
+Z2a-dossier-existant : code 2 ; CONFORME
+    | /tmp/claude-0/-home-user/5a6b9d1d-b17d-59a1-a770-8737a831fe0a/scratchpad/p3-v2-banc-controles/existant existe déjà
+Z2b-dossier-de-travail-existant : code 2 ; CONFORME
+    | /tmp/claude-0/-home-user/5a6b9d1d-b17d-59a1-a770-8737a831fe0a/scratchpad/p3-v2-banc-controles/travail-existe.travail existe déjà
+    dossier de travail existant gardé : CONFORME
+Z2c-troisieme-argument : code 2 ; CONFORME
+    | usage : controles_avant_depense_p3_v1.sh S DOSSIER_NEUF (deux arguments ; aucun relancement)
+Z2d-dossier-vide : code 2 ; CONFORME
+    | dossier neuf absent
+Z2d2-un-seul-argument : code 2 ; CONFORME
+    | usage : controles_avant_depense_p3_v1.sh S DOSSIER_NEUF (deux arguments ; aucun relancement)
+Z2e-s-invalide : code 2 ; CONFORME
+    | S invalide
+Z2f-trace-de-la-suite-existante : code 2 ; CONFORME
+    | /tmp/claude-0/-home-user/5a6b9d1d-b17d-59a1-a770-8737a831fe0a/scratchpad/p3-v2-banc-controles/suite-existe.suite.txt existe déjà (R12)
+Z2g-s-bien-forme-mais-absent : code 2 ; CONFORME
+    | commit 0000000000000000000000000000000000000000 introuvable
+A50-candidat-relu-sans-sceau : code 1 ; 50 OK, 1 KO ; CONFORME
+    KO  candidat relu absent, non scellé ou d'empreinte différente
+A51-configuration-relue-sans-sceau : code 1 ; 50 OK, 1 KO ; CONFORME
+    KO  configuration relue absente, non scellée ou d'empreinte différente
+A51b-consignes-relues-sans-sceau : code 1 ; 50 OK, 1 KO ; CONFORME
+    KO  consignes relues absentes, non scellées ou d'empreinte différente
+A44b-borne-non-citee : code 1 ; 49 OK, 2 KO ; CONFORME
+    KO  prereg/P3-premier-test-i-a-v1.md de S ≠ candidat relu
+    KO  gardes du lanceur, paramètres, bornes ou valeurs : AssertionError: valeur non citée par le texte : 22 200 s
+A53-dependances-autres : code 1 ; 46 OK, 5 KO ; CONFORME
+    KO  arbre gelé modifié depuis le commit du code
+    KO  arbre gelé de S ≠ code relu épinglé (7a54d431d89745839220f882b41b13e8c62ecfdd)
+    KO  dépendances différentes de celles du pilote (1c6c90081964), code 1
+    KO  gardes du lanceur, paramètres, bornes ou valeurs : controle_ia.gardes.GardeArret: arbre gelé (code, tests, scripts, dépendances, configuration) modifié depuis le commit cité 7a54d431d897
+    KO  environnement des contrôles : 11 dépendances épinglées relues ; écarts : ['paquet-essai None ≠ 1.0']
+A54-verifier-arbre-seul : code 1 ; 50 OK, 1 KO ; CONFORME
+    KO  verifier-arbre : ÉCHEC docs/notes/P3-mesures-v2/puissance-p3-v1.txt : docs/notes/P3-mesures-v2/puissance-p3-v1.txt : empreinte 2b6ed2666223… ≠ scellée 8a08307c2ea1… 
+A55-module-du-pilote-modifie : code 1 ; 47 OK, 4 KO ; CONFORME
+    KO  arbre gelé modifié depuis le commit du code
+    KO  arbre gelé de S ≠ code relu épinglé (7a54d431d89745839220f882b41b13e8c62ecfdd)
+    KO  modules gelés d'étapes antérieures modifiés (pilote : code 1 ; notations : code 0)
+    KO  gardes du lanceur, paramètres, bornes ou valeurs : controle_ia.gardes.GardeArret: arbre gelé (code, tests, scripts, dépendances, configuration) modifié depuis le commit cité 7a54d431d897
+A55b-module-des-notations-modifie : code 1 ; 47 OK, 4 KO ; CONFORME
+    KO  arbre gelé modifié depuis le commit du code
+    KO  arbre gelé de S ≠ code relu épinglé (7a54d431d89745839220f882b41b13e8c62ecfdd)
+    KO  modules gelés d'étapes antérieures modifiés (pilote : code 0 ; notations : code 1)
+    KO  gardes du lanceur, paramètres, bornes ou valeurs : controle_ia.gardes.GardeArret: arbre gelé (code, tests, scripts, dépendances, configuration) modifié depuis le commit cité 7a54d431d897
+A52-go-de-calcul-echu : code 1 ; 50 OK, 1 KO ; CONFORME
+    KO  garde de calcul sur le registre de S
+A39-sceau-ajoute-avant-s : code 1 ; 49 OK, 2 KO ; CONFORME
+    KO  S n'est pas le commit qui ajoute prereg/P3-premier-test-i-a-v1.md.sha256
+    KO  contenu de S inattendu : A prereg/P3-consignes-v1.md A prereg/P3-consignes-v1.md.sha256 A prereg/P3-premier-test-config-v1.json A prereg/P3-premier-test-config-v1.json.sha256 
+A40-sceau-des-taches-altere : code 1 ; 48 OK, 3 KO ; CONFORME
+    KO  donnees/t05-pilote-v1/taches-pilote-60-v1.json ou son sceau absent ou non conforme
+    KO  sceaux
+    KO  gardes du lanceur, paramètres, bornes ou valeurs : controle_ia.gardes.GardeArret: donnees/t05-pilote-v1/taches-pilote-60-v1.json.sha256 : ligne illisible '0000  autre'
+A41-delai-du-run-change : code 1 ; 47 OK, 4 KO ; CONFORME
+    KO  arbre gelé modifié depuis le commit du code
+    KO  arbre gelé de S ≠ code relu épinglé (7a54d431d89745839220f882b41b13e8c62ecfdd)
+    KO  empreinte de scripts/p3_instance.sh (e15b1fe031b5b5064ff9e3d7798397bd63229d8d7acc71ea65d07455b7ac7246) non citée
+    KO  gardes du lanceur, paramètres, bornes ou valeurs : AssertionError: délai externe du run
+A42-plafond-de-l-amorce-change : code 1 ; 47 OK, 4 KO ; CONFORME
+    KO  arbre gelé modifié depuis le commit du code
+    KO  arbre gelé de S ≠ code relu épinglé (7a54d431d89745839220f882b41b13e8c62ecfdd)
+    KO  empreinte de scripts/amorce_instance_p3.sh (c3ffdfafa9027834d33140444ad437ce57f3301dc45d2a167104cedaabce88b5) non citée
+    KO  gardes du lanceur, paramètres, bornes ou valeurs : AssertionError: plafond de l'amorce
+A43-credit-change : code 1 ; 50 OK, 1 KO ; CONFORME
+    KO  gardes du lanceur, paramètres, bornes ou valeurs : AssertionError: heures du crédit exigé
+A43b-prix-plafond-change : code 1 ; 50 OK, 1 KO ; CONFORME
+    KO  gardes du lanceur, paramètres, bornes ou valeurs : AssertionError: prix plafond du lanceur
+A43c-prix-plafond-du-controle-a-cinq-minutes-change : code 1 ; 50 OK, 1 KO ; CONFORME
+    KO  gardes du lanceur, paramètres, bornes ou valeurs : AssertionError: prix plafond du contrôle à cinq minutes
+A44-plafond-de-la-surveillance-change : code 1 ; 50 OK, 1 KO ; CONFORME
+    KO  gardes du lanceur, paramètres, bornes ou valeurs : AssertionError: plafond de la surveillance
+A44c-plafond-ecrit-par-le-lanceur-change : code 1 ; 50 OK, 1 KO ; CONFORME
+    KO  gardes du lanceur, paramètres, bornes ou valeurs : AssertionError: plafond de la surveillance écrit par le lanceur
+A44d-coeurs-de-l-offre-changes : code 1 ; 50 OK, 1 KO ; CONFORME
+    KO  gardes du lanceur, paramètres, bornes ou valeurs : AssertionError: cœurs effectifs exigés de l'offre
+A44e-memoire-vive-de-l-offre-changee : code 1 ; 50 OK, 1 KO ; CONFORME
+    KO  gardes du lanceur, paramètres, bornes ou valeurs : AssertionError: mémoire vive exigée de l'offre
+A44f-borne-de-telechargement-autre : code 1 ; 50 OK, 1 KO ; CONFORME
+    KO  gardes du lanceur, paramètres, bornes ou valeurs : AssertionError: valeur non citée par le texte : téléchargement au plus 0,99 USD par Go
+A44g-borne-de-telechargement-non-fixee : code 1 ; 50 OK, 1 KO ; CONFORME
+    KO  gardes du lanceur, paramètres, bornes ou valeurs : AssertionError: borne de téléchargement du lanceur non fixée (['A_FIXER'])
+A44h-borne-de-stockage-autre : code 1 ; 50 OK, 1 KO ; CONFORME
+    KO  gardes du lanceur, paramètres, bornes ou valeurs : AssertionError: valeur non citée par le texte : stockage au plus 0,04 USD de l'heure
+A44i-borne-de-stockage-non-fixee : code 1 ; 50 OK, 1 KO ; CONFORME
+    KO  gardes du lanceur, paramètres, bornes ou valeurs : AssertionError: borne de stockage du lanceur non fixée (['A_FIXER'])
+A44j-texte-sans-la-forme-de-revocation : code 1 ; 49 OK, 2 KO ; CONFORME
+    KO  prereg/P3-premier-test-i-a-v1.md de S ≠ candidat relu
+    KO  gardes du lanceur, paramètres, bornes ou valeurs : AssertionError: valeur non citée par le texte : **Révocation de R-192**
+A44k-texte-sans-la-forme-d-accord : code 1 ; 49 OK, 2 KO ; CONFORME
+    KO  prereg/P3-premier-test-i-a-v1.md de S ≠ candidat relu
+    KO  gardes du lanceur, paramètres, bornes ou valeurs : AssertionError: valeur non citée par le texte : **Accord de Lazar pour le lancement de P3**
+A44l-texte-sans-la-borne-de-stockage : code 1 ; 49 OK, 2 KO ; CONFORME
+    KO  prereg/P3-premier-test-i-a-v1.md de S ≠ candidat relu
+    KO  gardes du lanceur, paramètres, bornes ou valeurs : AssertionError: valeur non citée par le texte : stockage au plus 0,03 USD de l'heure
+A44m-forme-du-module-autre-que-celle-du-texte : code 1 ; 50 OK, 1 KO ; CONFORME
+    KO  gardes du lanceur, paramètres, bornes ou valeurs : AssertionError: valeur non citée par le texte : **Accord de Lazar pour P3**
+A45-parametre-autre-que-celui-du-pilote : code 1 ; 49 OK, 2 KO ; CONFORME
+    KO  prereg/P3-premier-test-config-v1.json de S ≠ configuration relue
+    KO  gardes du lanceur, paramètres, bornes ou valeurs : AssertionError: paramètres différents de ceux du pilote : ['temperature']
+A46-chemin-des-consignes-autre : code 1 ; 49 OK, 2 KO ; CONFORME
+    KO  prereg/P3-premier-test-config-v1.json de S ≠ configuration relue
+    KO  gardes du lanceur, paramètres, bornes ou valeurs : AssertionError: chemin des consignes de la configuration
+A47-durees-autres : code 1 ; 49 OK, 2 KO ; CONFORME
+    KO  prereg/P3-premier-test-config-v1.json de S ≠ configuration relue
+    KO  gardes du lanceur, paramètres, bornes ou valeurs : AssertionError: durées de la configuration
+A48-mode-jouet : code 1 ; 49 OK, 2 KO ; CONFORME
+    KO  prereg/P3-premier-test-config-v1.json de S ≠ configuration relue
+    KO  gardes du lanceur, paramètres, bornes ou valeurs : AssertionError: mode jouet
+A49-configuration-incomplete : code 1 ; 49 OK, 2 KO ; CONFORME
+    KO  prereg/P3-premier-test-config-v1.json de S ≠ configuration relue
+    KO  gardes du lanceur, paramètres, bornes ou valeurs : controle_ia.gardes.GardeArret: configuration de P3 incomplète : ['n_plancher']
+A49b-n-faits-max-non-nul : code 1 ; 49 OK, 2 KO ; CONFORME
+    KO  prereg/P3-premier-test-config-v1.json de S ≠ configuration relue
+    KO  gardes du lanceur, paramètres, bornes ou valeurs : AssertionError: n_faits_max non nul : les faits comptés au bloc 10 ne seraient plus ceux du run (CH-19)
+A32-branche-presente : code 1 ; 50 OK, 1 KO ; CONFORME
+    KO  branche calcul/p3-reel-v1 : code 0 (2 attendu)
+B00-sain-vrai-tokeniseur : code 0 ; 52 OK, 0 KO ; CONFORME
+B01-consigne-du-temoin-plus-longue : code 1 ; 47 OK, 5 KO ; CONFORME
+    KO  prereg/P3-consignes-v1.md non cité par son empreinte
+    KO  prereg/P3-premier-test-config-v1.json de S ≠ configuration relue
+    KO  prereg/P3-consignes-v1.md de S ≠ consignes relues
+    KO  gardes du lanceur, paramètres, bornes ou valeurs : controle_ia.gardes.GardeArret: configuration 99f4b8248d4f ≠ configuration citée 2f343a6fb92e
+    KO  vrai tokeniseur de l'agent : AssertionError: temoin, consigne : 57 jetons à l'encodage seul, 51 cités
+B01b-indication-du-temoin-plus-longue : code 1 ; 47 OK, 5 KO ; CONFORME
+    KO  prereg/P3-consignes-v1.md non cité par son empreinte
+    KO  prereg/P3-premier-test-config-v1.json de S ≠ configuration relue
+    KO  prereg/P3-consignes-v1.md de S ≠ consignes relues
+    KO  gardes du lanceur, paramètres, bornes ou valeurs : controle_ia.gardes.GardeArret: configuration 19fd8c9745f4 ≠ configuration citée 2f343a6fb92e
+    KO  vrai tokeniseur de l'agent : AssertionError: temoin, indication : 16 jetons à l'encodage seul, 10 cités
+B01c-consigne-de-la-mention-plus-longue : code 1 ; 47 OK, 5 KO ; CONFORME
+    KO  prereg/P3-consignes-v1.md non cité par son empreinte
+    KO  prereg/P3-premier-test-config-v1.json de S ≠ configuration relue
+    KO  prereg/P3-consignes-v1.md de S ≠ consignes relues
+    KO  gardes du lanceur, paramètres, bornes ou valeurs : controle_ia.gardes.GardeArret: configuration de2689afc255 ≠ configuration citée 2f343a6fb92e
+    KO  vrai tokeniseur de l'agent : AssertionError: mention, consigne : 57 jetons à l'encodage seul, 51 cités
+B02-faits-exclus-autre-compte : code 1 ; 49 OK, 3 KO ; CONFORME
+    KO  prereg/P3-premier-test-config-v1.json de S ≠ configuration relue
+    KO  gardes du lanceur, paramètres, bornes ou valeurs : controle_ia.gardes.GardeArret: configuration 222518d3a03b ≠ configuration citée 2f343a6fb92e
+    KO  vrai tokeniseur de l'agent : AssertionError: 7 faits exclus (['fait-26', 'fait-28', 'fait-77', 'fait-134', 'fait-153', 'fait-251', 'fait-281']) ; 6 cités
+B03-texte-attendu-absent-de-l-ouverture : code 1 ; 49 OK, 3 KO ; CONFORME
+    KO  prereg/P3-premier-test-config-v1.json de S ≠ configuration relue
+    KO  gardes du lanceur, paramètres, bornes ou valeurs : AssertionError: paramètres différents de ceux du pilote : ['agent']
+    KO  vrai tokeniseur de l'agent : controle_ia.gardes.GardeArret: agent : ouverture sans 'Today Date: 1 Jan 2000' (variables du gabarit non lues)
+B04-longueurs-dans-le-gabarit-autres-que-citees : code 1 ; 51 OK, 1 KO ; CONFORME
+    KO  vrai tokeniseur de l'agent : AssertionError: consignes dans le gabarit {52: 56, 51: 4} ≠ valeurs citées {52: 55, 51: 5}
+B05-indications-dans-le-gabarit-autres-que-citees : code 1 ; 51 OK, 1 KO ; CONFORME
+    KO  vrai tokeniseur de l'agent : AssertionError: indications dans le gabarit {10: 60} ≠ valeurs citées {11: 60}
+G00-go-sain : code 0 ; CONFORME
+G01-ligne-go-en-double : code 1 ; CONFORME
+G02-ligne-go-mal-formee : code 1 ; CONFORME
+G03-go-en-double-au-registre : code 1 ; CONFORME
+G04-go-a-sept-colonnes : code 1 ; CONFORME
+G05-decision-qui-cite-r-192-sans-la-revoquer : code 0 ; CONFORME
+G06-revocation-qui-nomme-r-192-pour-un-autre-go : code 1 ; CONFORME
+G07-registre-des-decisions-absent : code 1 ; CONFORME
+G08-registre-reel-avec-r-215-qui-decrit-les-formes : code 0 ; CONFORME
+G09-aucune-revocation-de-r-192 : code 0 ; CONFORME
+G10-forme-b-exacte : code 1 ; CONFORME
+G11-forme-b-ailleurs-qu-en-tete : code 0 ; CONFORME
+G12-forme-a-qui-nomme-le-go : code 1 ; CONFORME
+G13-forme-a-identifiants-voisins : code 0 ; CONFORME
+G14-texte-qui-cite-une-autre-decision : code 1 ; CONFORME
+M00-journal-sain : code 0 ; CONFORME
+M01-candidat-absent : code 1 ; CONFORME
+M02-candidat-autre : code 1 ; CONFORME
+M03-deux-lignes-candidat : code 1 ; CONFORME
+M03b-deux-candidats-differents : code 1 ; CONFORME
+M04-passage-manquant : code 1 ; CONFORME
+M05-passage-autre-code : code 1 ; CONFORME
+M06-recuperation-conforme-absente : code 1 ; CONFORME
+M06b-gardes-reelles-absentes : code 1 ; CONFORME
+M07-ko-dans-un-cas-sain : code 1 ; CONFORME
+M08-artefact-a-deux-ko : code 1 ; CONFORME
+M09-artefact-autre-ko : code 1 ; CONFORME
+M10-ko-hors-du-bloc : code 1 ; CONFORME
+M11-script-mal-forme : code 1 ; CONFORME
+M12-script-en-double : code 1 ; CONFORME
+M13-script-manquant : code 1 ; CONFORME
+M14-fin-absente : code 1 ; CONFORME
+M15-consignes-absentes : code 1 ; CONFORME
+M16-consignes-autres : code 1 ; CONFORME
+M17-tous-conformes-de-trop : code 1 ; CONFORME
+M19-texte-degenere-absent : code 1 ; CONFORME
+M20-artefact-texte-echappe-absent : code 1 ; CONFORME
+M18-usage-faux : code 2 ; CONFORME
+P00-preuves-saines : code 0 ; 11 scripts éprouvés ; CONFORME
+P00b-preuves-trois-journaux : code 0 ; 8 scripts éprouvés ; CONFORME
+P01-preuves-ligne-d-echec : code 1 ; CONFORME
+P02-preuves-ligne-d-echec : code 1 ; CONFORME
+P03-preuves-ligne-d-echec : code 1 ; CONFORME
+P04-preuves-deux-empreintes : code 1 ; CONFORME
+P05-preuves-script-manquant : code 1 ; CONFORME
+P06-preuves-journal-inconnu : code 1 ; CONFORME
+FIN DU BANC DES CONTRÔLES DE P3 ; cas non conformes : 0

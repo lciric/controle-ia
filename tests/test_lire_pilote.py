@@ -118,10 +118,14 @@ CONFIG = {"max_nouveaux": 400, **lp.CONFIG_ATTENDUE,
 def construire(depot: Path, n: int = 50, steriles: int = 20, bruit_juge: float = 1.0, etapes: str = "tout",
                graine: int = 3, config: dict | None = None) -> dict:
     """Run de pilote synthétique sous un manifeste décisif : tâches scellées, fiches, notations des deux juges (avec
-    l'empreinte de l'ensemble noté), appariements (propositions et énoncé seul), résumé. `etapes`, dans l'ordre du
-    lanceur (décisives, appariement, descriptives) : « tout » ; « descriptives » (arrêt pendant les notations de D) ;
-    « appariement » (arrêt pendant l'appariement) ; « 3B » (arrêt pendant les notations décisives du 3B) ;
-    « aucune » (arrêt pendant les épisodes)."""
+    l'empreinte de l'ensemble noté), appariements (propositions et énoncé seul), résumé. `etapes` : « tout » ;
+    « descriptives » (arrêt pendant les notations de D) ; « aucune » (arrêt pendant les épisodes) ; dans l'ordre du
+    lanceur depuis l'état des lieux du pilote (SI-01 : appariement, décisives, descriptives), « episodes-seuls » (arrêt
+    pendant l'appariement : épisodes écrits seuls ; relecture R2, CO-04), « decisives-8B » (arrêt pendant les notations
+    décisives du 8B, appariement écrit) et « decisives-3B » (arrêt pendant celles du 3B) ; dans
+    l'ordre antérieur (décisives, appariement, descriptives), gardé pour éprouver la lecture de ces états,
+    « appariement » (arrêt pendant l'appariement, notations décisives écrites) et « 3B » (arrêt pendant les notations
+    décisives du 3B, sans appariement)."""
     rng = np.random.default_rng(graine)
     _modules(depot)
     taches = _taches(n, steriles)
@@ -144,6 +148,10 @@ def construire(depot: Path, n: int = 50, steriles: int = 20, bruit_juge: float =
             fiches.append(_fiche(t, k, invalide=(i == 0 and k == 0), vide=(i == 1 and k == 2)))
     ecrire_resultat(depot, chemin_m, "episodes", {"fiches": fiches, "controle_negatif": {"lecture": "conforme"},
                                                   "descriptifs": {"duree_s": 1.0}})
+    if etapes == "episodes-seuls":                              # ordre SI-01 : arrêt pendant l'appariement
+        ecrire_resultat(depot, chemin_m, "arret", arret)
+        committer(depot)
+        return {"taches": f, "prereg": prereg}
     ensembles = {x["episode"]: x["bilan"]["ensemble"] for x in fiches}
     effets = {t["identifiant"]: rng.normal(0, 1.0) for t in taches}
     bases = {(t["identifiant"], k): _base(rng, effets[t["identifiant"]] + rng.normal(0, 0.5))
@@ -164,6 +172,24 @@ def construire(depot: Path, n: int = 50, steriles: int = 20, bruit_juge: float =
                                "reponse": reponse, "jetons_reponse": 50})
         return sortie
 
+    def appariements():
+        from controle_ia.environnements.lancer_pilote_a import paires_d_appariement, paires_enonce_seul
+
+        par_id = {t["identifiant"]: t for t in taches}
+        app = [{"cle": q["cle"], "famille": q["famille"], "p_oui": float(rng.beta(0.6, 0.9)), "masse_oui_non": 0.9}
+               for q in paires_d_appariement(fiches, par_id)]
+        enonce = [{"cle": q["cle"], "famille": q["famille"], "p_oui": 0.9 if q["cle"].endswith("/C1") else 0.1,
+                   "masse_oui_non": 0.9} for q in paires_enonce_seul(taches)]
+        ecrire_resultat(depot, chemin_m, "appariements", {"juge": "8B", "appariements": app, "enonce_seul": enonce})
+
+    if etapes in ("decisives-8B", "decisives-3B"):              # ordre du lanceur depuis SI-01 : appariement d'abord
+        appariements()
+        if etapes == "decisives-3B":
+            ecrire_resultat(depot, chemin_m, "notations-8B-decisives",
+                            {"notations": notations("8B", bruit_juge, ((0, 0), (0, 1), (1, 0)))})
+        ecrire_resultat(depot, chemin_m, "arret", arret)
+        committer(depot)
+        return {"taches": f, "prereg": prereg}
     for j, bruit in (("8B", bruit_juge), ("3B", 2 * bruit_juge)):
         if etapes == "3B" and j == "3B":
             continue
@@ -173,14 +199,7 @@ def construire(depot: Path, n: int = 50, steriles: int = 20, bruit_juge: float =
         ecrire_resultat(depot, chemin_m, "arret", arret)
         committer(depot)
         return {"taches": f, "prereg": prereg}
-    from controle_ia.environnements.lancer_pilote_a import paires_d_appariement, paires_enonce_seul
-
-    par_id = {t["identifiant"]: t for t in taches}
-    app = [{"cle": q["cle"], "famille": q["famille"], "p_oui": float(rng.beta(0.6, 0.9)), "masse_oui_non": 0.9}
-           for q in paires_d_appariement(fiches, par_id)]
-    enonce = [{"cle": q["cle"], "famille": q["famille"], "p_oui": 0.9 if q["cle"].endswith("/C1") else 0.1,
-               "masse_oui_non": 0.9} for q in paires_enonce_seul(taches)]
-    ecrire_resultat(depot, chemin_m, "appariements", {"juge": "8B", "appariements": app, "enonce_seul": enonce})
+    appariements()
     if etapes == "descriptives":
         ecrire_resultat(depot, chemin_m, "arret", arret)
         committer(depot)
@@ -409,7 +428,7 @@ def test_version_de_numpy_et_etat_de_l_arbre(depot, travail, monkeypatch):
 def test_lecture_de_bout_en_bout(depot, travail):
     d = construire(depot)
     r = lp.preparer_etiquetage(depot, RUN, ANALYSE, d["prereg"], d["taches"], travail)
-    assert r["lots"] and r["invite"].startswith("This task is self-contained")
+    assert r["lots"] and r["invite"] == lp.INVITE_ETIQUETEUR and r["invite"].startswith("This is a self-contained labeling task")
     texte_ech = (depot / "diag" / ANALYSE / "echantillon-etiquetage.json").read_text(encoding="utf-8")
     ech = json.loads(texte_ech)["resultat"]
     # D-16 : avant l'étiquetage, `diag/` ne reçoit que les empreintes des lots et l'engagement des éléments
@@ -688,7 +707,8 @@ def test_descriptifs_cle_absente_arrete(depot):
         lp.descriptifs(p)
 
 
-# --- runs partiels (ordre du lanceur : décisives, appariement, descriptives) -----------------------------------
+# --- runs partiels (ordre du lanceur depuis SI-01 : appariement, décisives, descriptives ; les états de l'ordre
+# antérieur restent éprouvés : la lecture se fait sur les fichiers présents, non sur l'ordre) ------------------
 
 def test_run_partiel_pendant_les_notations_descriptives(depot, travail):
     """Arrêt pendant les notations de D : appariement écrit, familles lisibles (contre-lecture 2, D-6)."""
@@ -717,6 +737,40 @@ def test_run_partiel_pendant_les_notations_decisives_du_3B(depot, travail):
     lecture = lp.analyser(depot, RUN, ANALYSE, d["taches"])
     assert lecture["juges"]["8B"]["decomposition_concluante"] and lecture["juges"]["3B"]["plan_b"] == "nœud"
     assert lecture["predictions"]["P3"] == "non concluant" and "nœud" in lecture["familles"]
+
+
+def test_run_partiel_pendant_les_notations_decisives_du_8B_appariement_ecrit(depot, travail):
+    """SI-01 : arrêt pendant les notations décisives du 8B, appariement écrit : familles lisibles ; les deux juges en
+    nœud ; P3 non concluant."""
+    _jusqu_a_l_analyse(depot, travail, etapes="decisives-8B")
+    lecture = lp.analyser(depot, RUN, ANALYSE, depot / "taches.json")
+    assert lecture["run_partiel"] and isinstance(lecture["familles"], dict)
+    assert lecture["retenue"]["controls"] in ("retenue", "non retenue", "non concluant")
+    assert all(lecture["juges"][j]["plan_b"] == "nœud" for j in ("8B", "3B"))
+    assert lecture["predictions"]["P3"] == "non concluant"
+
+
+def test_run_partiel_pendant_les_notations_decisives_du_3B_appariement_ecrit(depot, travail):
+    """SI-01 : arrêt pendant les notations décisives du 3B, appariement écrit : le 8B est lu, le 3B en nœud, P3 non
+    concluant, familles lisibles."""
+    _jusqu_a_l_analyse(depot, travail, etapes="decisives-3B")
+    lecture = lp.analyser(depot, RUN, ANALYSE, depot / "taches.json")
+    assert lecture["juges"]["8B"]["decomposition_concluante"] and lecture["juges"]["3B"]["plan_b"] == "nœud"
+    assert lecture["predictions"]["P3"] == "non concluant" and isinstance(lecture["familles"], dict)
+
+
+def test_run_partiel_pendant_l_appariement_episodes_seuls(depot, travail):
+    """SI-01 (relecture R2, CO-04) : arrêt pendant l'appariement dans l'ordre en vigueur, épisodes écrits seuls :
+    aucun lot à étiqueter ; familles et deux juges en nœud ; P1 lu, P2 à P7 non concluantes."""
+    d = construire(depot, etapes="episodes-seuls")
+    r = lp.preparer_etiquetage(depot, RUN, ANALYSE, d["prereg"], d["taches"], travail)
+    assert r["lots"] == {}
+    committer(depot)
+    lecture = lp.analyser(depot, RUN, ANALYSE, d["taches"])
+    assert lecture["run_partiel"] and "nœud" in lecture["familles"]
+    assert all("nœud" in str(lecture["juges"][j]) for j in ("8B", "3B"))
+    assert lecture["predictions"]["P1"] != "non concluant"
+    assert all(lecture["predictions"][k] == "non concluant" for k in ("P2", "P3", "P4", "P5", "P6", "P7"))
 
 
 def test_run_partiel_pendant_les_episodes(depot, travail):
@@ -843,3 +897,14 @@ def test_gardes_des_lots_et_des_etiquettes(depot, travail, monkeypatch):
     (t1 / "paires.json").write_text(json.dumps(paires), encoding="utf-8")
     with pytest.raises(GardeArret, match="paires de la première tentative modifiées"):
         lp.refaire_lot(depot, ANALYSE, travail, "lot-01")
+
+
+def test_invite_de_l_etiqueteur_sans_preseance_sur_les_consignes():
+    """État des lieux du pilote (critique de complétude) : l'invite fixe de l'étiqueteur ne demande pas d'ignorer les
+    consignes du projet (formulation refusée par le classificateur du mode automatique) ; elle nomme la consigne une
+    seule fois, et son empreinte est une constante de lecture."""
+    i = lp.INVITE_ETIQUETEUR
+    assert "ignore" not in i.lower() and "instructions or session" not in i
+    assert i.count("{consigne}") == 1 and i.format(consigne="x/consigne.txt").count("x/consigne.txt") == 1
+    assert lp.constantes()["INVITE_ETIQUETEUR_SHA256"] == hashlib.sha256(i.encode("utf-8")).hexdigest()
+

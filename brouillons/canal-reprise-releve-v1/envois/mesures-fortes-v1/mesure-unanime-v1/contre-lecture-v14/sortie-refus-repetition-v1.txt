@@ -1,0 +1,65 @@
+# Refus du mode REPETITION, sur une copie isolée (2026-11-10T09:16:24Z). Aucun fichier de donnees/ passé en argument : le chemin (a) est un nom INEXISTANT sous le préfixe refusé.
+## (a) refus par chemin : chemin inexistant sous le préfixe, empreinte quelconque
++ set -euo pipefail
++++ readlink -f commandes-lecture-reelle-v14.sh
+++ dirname /tmp/claude-0/-home-user-controle-ia-travail/93df3b72-2b1b-57a4-ad34-9903a14ef86d/scratchpad/copie/mesure-unanime-v1/commandes-lecture-reelle-v14.sh
++ cd /tmp/claude-0/-home-user-controle-ia-travail/93df3b72-2b1b-57a4-ad34-9903a14ef86d/scratchpad/copie/mesure-unanime-v1
++ MODE=REPETITION
++ PY=/opt/venv-essaim-sim-v1/bin/python
++ export PYTHONPATH=/home/claude/canal-conv-audit-n04/src
++ PYTHONPATH=/home/claude/canal-conv-audit-n04/src
++ SCRIPT=analyse_fausses_alertes_v8.py
++ PREREG=preenregistrement-mesure-unanime-v14.md
+++ sha256sum analyse_fausses_alertes_v8.py
+++ cut '-d ' -f1
++ EMP_SCRIPT=52b1760a09970526a926f2119dceeef7f20e2f280bdb6a6c2d890962556c5400
++ DONNEES_REELLES=/home/claude/canal-conv-audit-n04/donnees/20261019-230011-p3-reel/scores-p3.npz
++ EMPREINTE_REELLE=968414fc7ce7db935c2c4a390a13e2eceebe2fd722628cccb52caf27128004cf
++ TEMOIN=execution-reelle-v14.commencee
++ SORTIE=sortie-reelle-v14.json
++ '[' REPETITION = REPETITION ']'
++ DONNEES=/home/claude/canal-conv-audit-n04/donnees/INEXISTANT-contre-lecture-v14.npz
++ EMPREINTE=0000
++ NR=3
++ NP=2
++ COMMIT=repetition-generale
++ case "$DONNEES" in
++ echo 'la répétition ne lit jamais les données réelles (chemin)'
+la répétition ne lit jamais les données réelles (chemin)
++ exit 4
+code = 4
+## (b) refus par empreinte : fichier synthétique déposé, empreinte annoncée = celle des données réelles (chaîne tirée de la séquence, ligne 38)
++ set -euo pipefail
++++ readlink -f commandes-lecture-reelle-v14.sh
+++ dirname /tmp/claude-0/-home-user-controle-ia-travail/93df3b72-2b1b-57a4-ad34-9903a14ef86d/scratchpad/copie/mesure-unanime-v1/commandes-lecture-reelle-v14.sh
++ cd /tmp/claude-0/-home-user-controle-ia-travail/93df3b72-2b1b-57a4-ad34-9903a14ef86d/scratchpad/copie/mesure-unanime-v1
++ MODE=REPETITION
++ PY=/opt/venv-essaim-sim-v1/bin/python
++ export PYTHONPATH=/home/claude/canal-conv-audit-n04/src
++ PYTHONPATH=/home/claude/canal-conv-audit-n04/src
++ SCRIPT=analyse_fausses_alertes_v8.py
++ PREREG=preenregistrement-mesure-unanime-v14.md
+++ sha256sum analyse_fausses_alertes_v8.py
+++ cut '-d ' -f1
++ EMP_SCRIPT=52b1760a09970526a926f2119dceeef7f20e2f280bdb6a6c2d890962556c5400
++ DONNEES_REELLES=/home/claude/canal-conv-audit-n04/donnees/20261019-230011-p3-reel/scores-p3.npz
++ EMPREINTE_REELLE=968414fc7ce7db935c2c4a390a13e2eceebe2fd722628cccb52caf27128004cf
++ TEMOIN=execution-reelle-v14.commencee
++ SORTIE=sortie-reelle-v14.json
++ '[' REPETITION = REPETITION ']'
++ DONNEES=synthetique-format-reel-repetition.npz
++ EMPREINTE=968414fc7ce7db935c2c4a390a13e2eceebe2fd722628cccb52caf27128004cf
++ NR=3
++ NP=2
++ COMMIT=repetition-generale
++ case "$DONNEES" in
++ '[' 968414fc7ce7db935c2c4a390a13e2eceebe2fd722628cccb52caf27128004cf '!=' 968414fc7ce7db935c2c4a390a13e2eceebe2fd722628cccb52caf27128004cf ']'
++ echo 'la répétition ne lit jamais les données réelles (empreinte = réelle)'
+la répétition ne lit jamais les données réelles (empreinte = réelle)
++ exit 4
+code = 4
+## repetition-v14/ de la copie intact après les deux refus (le rm -rf de la ligne 69 n'est pas atteint) : oui ; fichiers : 10
+## (c) comparaison de chaînes seulement (aucun fichier touché) : le chemin résolu du lien n'est PAS couvert par le refus par chemin
+refusé par chemin : /home/claude/canal-conv-audit-n04/donnees/x.npz
+NON refusé par chemin (reste la garde par empreinte + la comparaison du script) : /home/user/controle-ia-travail/donnees/x.npz
+NON refusé par chemin (reste la garde par empreinte + la comparaison du script) : ../../../../../donnees/x.npz

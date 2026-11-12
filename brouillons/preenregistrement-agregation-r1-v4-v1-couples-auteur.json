@@ -1,0 +1,70 @@
+[
+ {
+  "ancien": "- Commit du code d'analyse : `9421aaa9d6815d478b2da8e69bbca0a86892aaac` (branche `prep/fille-11-agregation-v1` ; module",
+  "nouveau": "- Commit du code d'analyse : `c88cfd47137a61c64eecca4598f17e9876f07275` (branche `prep/fille-11-agregation-v1`, qui contient `9421aaa9` ; module"
+ },
+ {
+  "ancien": "  - trois analyses scellées de R1/R2 (citées par leurs empreintes, **non lues directement**, voir « Lectures préalables ») :",
+  "nouveau": "  - trois analyses scellées de R1/R2 (lues sur `main` au commit `a113adb6`, compagnons vérifiés, voir « Lectures préalables ») :"
+ },
+ {
+  "ancien": "(branche `canal/conv-audit-n04`, `4b164694`) ;",
+  "nouveau": "(copies sur `main`, commit `a113adb6`, de même empreinte que les textes de `canal/conv-audit-n04`, `4b164694`, cités par la lecture préparatoire) ;"
+ },
+ {
+  "ancien": "- **Les trois analyses scellées n'ont pas été lues directement** : elles vivent sur `canal/conv-audit-n04`, branche que l'ordre\n  interdit. Tout ce que ce texte en dit vient de la lecture préparatoire (fille 8), qui les cite ligne à ligne avec leurs\n  empreintes. Écart à l'ordre déclaré (il les met dans les pièces permises) ; le contre-lecteur confronte aux textes eux-mêmes.",
+  "nouveau": "- **Les trois analyses scellées et l'addendum v4 de R1 ont été lus sur `main` au commit `a113adb6`** (copies faites par la\n  session mère, R-1632 ; `sha256sum -c` de leurs compagnons : OK), après le brouillon 1 et avant ce brouillon 2. Le brouillon 1\n  les citait d'après la lecture préparatoire (fille 8), parce qu'ils n'étaient alors que sur `canal/conv-audit-n04`, branche que\n  l'ordre interdit (erreur d'ordre reconnue par la mère). Confrontation faite : les extraits cités ici (principale l. 9, 15, 35,\n  57, 60, 61, 80, 163, 167, 188, 190, 231 ; par épisode l. 14, 17, 30, 38-40, 133 ; blanche / noire l. 4, 14, 70, 72, 109-112,\n  122, 164, 199, 207) sont conformes aux textes. Deux précisions en viennent : la recette exacte de W (principale, Métrique 2 et\n  3), reprise par `analyse_v2.py` ; la principale corrige ses deux comparaisons principales par Bonferroni, pas par Holm."
+ },
+ {
+  "ancien": "noire v3 ((i) − `i_max`, l. 122 selon la lecture préparatoire)",
+  "nouveau": "noire v3 ((i) − `i_max`, l. 122)"
+ },
+ {
+  "ancien": "**Ce que ce texte ne teste pas.**",
+  "nouveau": "**Ce que les épisodes hybrides prouvent et ne prouvent pas.** Un épisode hybride est une **recombinaison de données réelles**\n(scores d'actions réellement jouées, honnêtes et saboteuses, d'une même tâche, au même pas), **pas un épisode joué** : aucun agent\nn'a produit cette suite. Il réalise exactement la classe M à m actions **si** les actions d'un même pas sont comparables d'un\népisode à l'autre (même tâche, même position) et si le score d'une action ne dépend pas des actions qui la précèdent dans\nl'épisode. Une issue confirmée sur les hybrides prouve donc que, **sur ces scores réels**, l'ordre somme / maximum se renverse\nquand on concentre le décalage comme le lemme le prévoit ; elle ne prouve pas qu'un saboteur qui concentrerait réellement son\nsabotage sur une action produirait le même score (effet de contexte : le saboteur est rappelé à chaque pas, son action d'un pas\nporte la trace de toute sa trajectoire), ni que la somme ou le maximum détecterait un tel saboteur. Une issue réfutée sur les\nhybrides peut venir de la non-échangeabilité des actions (effets de pas, de contexte) autant que d'un écart au lemme : l'audit R4\nregarde d'abord les effets de pas.\n\n**Ce que ce texte ne teste pas.**"
+ },
+ {
+  "ancien": "  tolérance `gtol` 10⁻⁶, au plus 2 000 itérations ; non-convergence : arrêt. C'est la recette de W telle que la lecture\n  préparatoire la cite (l. 38) ; le code de la principale n'a pas été lu (branche interdite) : **les scores ne sont pas ceux de\n  la principale**, ils sont recalculés ici.",
+  "nouveau": "  tolérance `gtol` 10⁻⁵, au plus 10 000 itérations ; non-convergence : arrêt. Recette de W de la principale (Métrique 3, l. 60,\n  lue sur `main`) : perte Σ log(1 + e^{−y z}) + ‖w‖²/2, constante non pénalisée, L-BFGS-B depuis zéro, double précision,\n  entrées centrées réduites par la moyenne et l'écart type **sans correction** des lignes d'entraînement, écart type sous 10⁻⁸\n  remplacé par 1 ; code `analyse_v2.py` (la v1, plancher 10⁻⁶, `gtol` 10⁻⁶, 2 000 itérations, 10 plis, reste au dépôt, jamais\n  lancée). Les plis sont tirés par la clé « plis » de ce run, pas par celle de la principale : **les scores ne sont pas ceux de\n  la principale**, ils sont recalculés ici avec sa recette."
+ },
+ {
+  "ancien": "  `activations-p3-rejeu-v1-maximum.npz`, converti en float64, centré-réduit avec la moyenne et l'écart type (plancher 10⁻⁶) des\n  lignes d'entraînement ;",
+  "nouveau": "  `activations-p3-rejeu-v1-maximum.npz`, converti en float64, centré-réduit (ci-dessous) ;"
+ },
+ {
+  "ancien": "- **Plis** : 10 plis de 6 tâches ; les 60 identifiants de tâche triés (ordre lexicographique de `str`), permutés par un\n  générateur dérivé de la tâche « plis » du manifeste (R9), coupés en dix blocs consécutifs.",
+  "nouveau": "- **Plis** : 5 plis de 12 tâches, comme la principale (Métrique 2) ; les 60 identifiants de tâche triés (ordre lexicographique\n  de `str`), permutés par un générateur dérivé de la tâche « plis » du manifeste (R9), coupés par `np.array_split` en cinq parts ;\n  garde : 60 tâches, partition exacte."
+ },
+ {
+  "ancien": "sources (règle de la principale, l. 57 selon la lecture préparatoire).",
+  "nouveau": "sources (règle de la principale, l. 57)."
+ },
+ {
+  "ancien": "ceux des descriptives de l'analyse blanche / noire v3 (l. 110 selon la\n  lecture préparatoire).",
+  "nouveau": "ceux des descriptives de l'analyse blanche / noire v3 (l. 110)."
+ },
+ {
+  "ancien": "Membres confirmatoires déjà scellés, inchangés et non\n  re-prédits (d'après la lecture préparatoire) : principale W − G et W − J3s (intervalles à 97,5 %),",
+  "nouveau": "Membres confirmatoires déjà scellés, inchangés et non\n  re-prédits (lus sur `main`) : principale W − G et W − J3s (Bonferroni sur ces deux, intervalles à 97,5 %, l. 80),"
+ },
+ {
+  "ancien": "  applique donc Holm à sa propre famille à α = 0,05 et déclare la borne d'union :",
+  "nouveau": "  applique donc Holm à sa propre famille à α = 0,05 et déclare la borne d'union (conduite que la session mère tient pour\n  acceptable, message du 6 novembre vers 12:02 UTC ; elle reste soumise au contre-lecteur) :"
+ },
+ {
+  "ancien": "python -m controle_ia.agregation_r1_v4.analyse_v1",
+  "nouveau": "python -m controle_ia.agregation_r1_v4.analyse_v2"
+ },
+ {
+  "ancien": "`puissance_v1.py`, `entrees_v1.py`, `analyse_v1.py` ;",
+  "nouveau": "`puissance_v1.py`, `entrees_v1.py`, `analyse_v2.py` (commande décisive ; `analyse_v1.py` reste au dépôt, non lancée) ;"
+ },
+ {
+  "ancien": "| `brouillons/preenregistrement-agregation-r1-v4-v1-puissance.json` | `531166428bc461ac32e930b860466f8abdecfd79b8a0832580f46648ce5b7afd` |",
+  "nouveau": "| `brouillons/preenregistrement-agregation-r1-v4-v1-puissance.json` | `531166428bc461ac32e930b860466f8abdecfd79b8a0832580f46648ce5b7afd` |\n\nAjoutés au commit `c88cfd47137a61c64eecca4598f17e9876f07275` (les fichiers ci-dessus y sont inchangés) :\n\n| fichier | sha256 |\n|---|---|\n| `src/controle_ia/agregation_r1_v4/analyse_v2.py` | `f02b75808b345230c58a70b566a2c2f62cf6fb1e17aa1bde2062813c94fdfa60` |\n| `tests/test_agregation_r1_v4_v2.py` | `ef0fb00cb05ad1966380bdd54387dfef5c23074604f41fe8f53dc33a5eecddc7` |"
+ },
+ {
+  "ancien": "| régression non convergée dans un pli | arrêt |",
+  "nouveau": "| régression non convergée dans un pli (L-BFGS-B, 10 000 itérations) | arrêt |\n| moins de 60 tâches ou partition des plis inexacte | arrêt |"
+ }
+]

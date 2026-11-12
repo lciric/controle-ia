@@ -1,0 +1,51 @@
+début 2026-11-10T09:35:26Z — copie isolée
+analyse_fausses_alertes_v8.py: OK
+table_m2bis_m4_v8.py: OK
+table-m2bis-m4-v8.json: OK
+lecture_mecanique_v8.py: OK
+rediger_note_lecture_v7.py: OK
+commandes-lecture-reelle-v15.sh: OK
+garde-trace-reelle-v14.sh: OK
+test-garde-trace-v15.sh: OK
+garde-lecture-seule-v12.sh: OK
+test-lecture-seule-v15.sh: OK
+OK   sain + répétition → code 0
+OK   témoin posé → code 3
+OK   sortie finale → code 3
+OK   partiel → code 3
+OK   dossier vide → code 0
+OK   noms du test = noms de la séquence v15
+garde-trace : tous les cas conformes
+test-lecture-seule : (A) garde isolée 0/7 ; (B) mode LECTURE_SEULE 8 (commit), 0 (sain, note refaite), 7 (déjà scellée), 0 (note supprimée, lecture scellée), ≠0 (lecture corrompue), 6 (sans sortie) — conformes
+E = 60 (09:35:51 UTC)
+c05aa6faf9383f08e5adf67a8c93422b88067e4092ee59e7020c448515363f1b  repetition-v15/effectifs-reel-v15.json
+f6e65b725c5314f0ed3132ed55941454e550816fdbabd7056eb67bbf82442563  repetition-v15/table-en-vigueur-v15.txt
+étape (2) lancée à 09:35:51 UTC (≈ 40 minutes avec 430 sondes)
+aa4934d6b6ce0102e1c5d6c43b43d977985bfe936ab5477eb7ed4dadc56ed4fa  repetition-v15/sortie-reelle-v15.json
+étape (2) finie à 09:36:17 UTC
+346cb4a5a86989f799beb7d176ca54287588cbec3266b005dadadfaeaaddbaad  repetition-v15/lecture-mecanique-reelle-v15.json
+4bfef6b9916fa8254327e3b7ab1755613c0c9821359b4ff45692fd4a1abf72b3  repetition-v15/note-lecture-mecanique-v15.md
+table : table-m2bis-m4-v8.json ; note : repetition-v15/note-lecture-mecanique-v15.md ; fin 09:36:17 UTC
+{
+ "M1": "confirmé",
+ "M1_bis": "ni l'un ni l'autre",
+ "M2_controle": "attendu",
+ "M2_bis": "conforme à la table ; signe > 0 attendu : tenu",
+ "M2_ter": "(1) Ville tenue sur P3 à τ = 0",
+ "M3": "tenu",
+ "M4": "confirmé",
+ "placebo": "mêmes médianes (aucun écart > 0,05)",
+ "cellule_a_zero": "aucune"
+}
+première ligne : la synthèse a raison (comparateur par épisode entier ; sommes sans niveau sous dépendance non vue, maximum tenu) — proposé à Lazar pour G1 et H2
+réserves : []
+code = 0
+fin 2026-11-10T09:36:17Z
+## refus par empreinte
+la répétition ne lit jamais les données réelles (empreinte = réelle)
+code = 4
+## refus par chemin (nom inexistant sous le préfixe)
+la répétition ne lit jamais les données réelles (chemin)
+code = 4
+10
+premier niveau inchangé

@@ -1,0 +1,107 @@
+banc : essais_controles_pilote_v1.sh 340f5b16c932c1c0f674a4428355e00803d7f2315d91cd8b1ef12d6f9f0e76b1
+commit des préalables : 3881fb7183a6448ace018b26efd5bfed247287df
+C = 3881fb7183a6448ace018b26efd5bfed247287df
+lignes changées dans la copie des contrôles : 4
+texte sain : normalisé 83056d15157ef9043daab5275e7d4665aa7e087bbb3b5a1556e7d9830cf9ed63 ; épingle 83056d15157ef9043daab5275e7d4665aa7e087bbb3b5a1556e7d9830cf9ed63
+date de S 2026-10-12 05:58 ; tests 689 ; index adb4b8bca7788baf2c4714df96dcdcc2c5043e8f1943542d0fbe1863491ae2d9 ; commit antérieur au dernier changement du lanceur du pilote : f8ab64abbc44894426f803b53dd17bac0e206a5e
+A00-sain : code 0 ; 52 OK, 0 KO ; CONFORME
+A01-go-absent : code 1 ; 51 OK, 1 KO ; CONFORME
+    KO  décision de Lazar sur N-019 (GO, révocation, N-019 ou registre) : AssertionError: GO-2026-10-12-99 absent, en double ou mal formé
+A02-go-autre-type : code 1 ; 51 OK, 1 KO ; CONFORME
+    KO  décision de Lazar sur N-019 (GO, révocation, N-019 ou registre) : AssertionError: GO-2026-10-12-99 : calcul, Lazar
+A03-go-option-b : code 1 ; 51 OK, 1 KO ; CONFORME
+    KO  décision de Lazar sur N-019 (GO, révocation, N-019 ou registre) : AssertionError: GO-2026-10-12-99 : revendication, Lazar
+A04-go-revoque : code 1 ; 51 OK, 1 KO ; CONFORME
+    KO  décision de Lazar sur N-019 (GO, révocation, N-019 ou registre) : AssertionError: GO-2026-10-12-99 révoqué
+A05-go-calcul-revoque : code 1 ; 50 OK, 2 KO ; CONFORME
+    KO  décision de Lazar sur N-019 (GO, révocation, N-019 ou registre) : AssertionError: GO-2026-10-04-08 révoqué
+    KO  garde de calcul sur le registre de S
+A05b-go-revoque-ligne-mal-formee : code 1 ; 50 OK, 2 KO ; CONFORME
+    KO  décision de Lazar sur N-019 (GO, révocation, N-019 ou registre) : AssertionError: GO-2026-10-12-99 révoqué
+    KO  garde de calcul sur le registre de S
+A05c-ligne-go-qui-mentionne-une-revocation : code 0 ; 52 OK, 0 KO ; CONFORME
+A06-n019-forme-inexacte : code 1 ; 51 OK, 1 KO ; CONFORME
+    KO  décision de Lazar sur N-019 (GO, révocation, N-019 ou registre) : AssertionError: N-019 : colonne d'état ≠ « tranché (a) par Lazar : GO-2026-10-12-99 (R-990) »
+A07-n019-suite-ajoutee : code 1 ; 51 OK, 1 KO ; CONFORME
+    KO  décision de Lazar sur N-019 (GO, révocation, N-019 ou registre) : AssertionError: N-019 : colonne d'état ≠ « tranché (a) par Lazar : GO-2026-10-12-99 (R-990) »
+A08-n019-en-attente : code 1 ; 51 OK, 1 KO ; CONFORME
+    KO  décision de Lazar sur N-019 (GO, révocation, N-019 ou registre) : AssertionError: N-019 : colonne d'état ≠ « tranché (a) par Lazar : GO-2026-10-12-99 (R-990) »
+A09-registre-absent : code 1 ; 51 OK, 1 KO ; CONFORME
+    KO  décision de Lazar sur N-019 (GO, révocation, N-019 ou registre) : AssertionError: R-990 absent, en double ou sans GO-2026-10-12-99
+A10-texte-autre-go : code 1 ; 51 OK, 1 KO ; CONFORME
+    KO  décision de Lazar sur N-019 (GO, révocation, N-019 ou registre) : AssertionError: GO-2026-10-12-98 absent, en double ou mal formé
+A11-index-autre-empreinte : code 1 ; 49 OK, 3 KO ; CONFORME
+    KO  docs/sources/invites-2606.08892-v1/index.json non cité par son empreinte
+    KO  index des invites : empreinte de S (adb4b8bca7788baf2c4714df96dcdcc2c5043e8f1943542d0fbe1863491ae2d9) non citée
+    KO  préenregistrement de S ≠ candidat relu normalisé (f9a1d02186f015ed871a342bdd7beb19c121578e0bfb855807ffdc2db4716c26)
+A12-dates-anciennes : code 1 ; 51 OK, 1 KO ; CONFORME
+    KO  parties masquées : reconstruction différente : AssertionError: date 2026-10-12 02:58 à 11224 s du commit S
+A13-dates-differentes : code 1 ; 51 OK, 1 KO ; CONFORME
+    KO  parties masquées : reconstruction différente : AssertionError: dates ['2026-10-12 02:58'] ['2026-10-12 05:58']
+A14-tests-differents : code 1 ; 51 OK, 1 KO ; CONFORME
+    KO  parties masquées : reconstruction différente : AssertionError: tests ['689'] ['690']
+A15-rapport-autre-empreinte : code 1 ; 50 OK, 2 KO ; CONFORME
+    KO  parties masquées : reconstruction différente : AssertionError: ligne de la relecture R2
+    KO  rapport T0.5-pilote-v1-relecture-b8-fichiers-de-travail-v1.tar absent, non scellé, d'empreinte différente ou non cité
+A16-journal-repetition-altere : code 1 ; 51 OK, 1 KO ; CONFORME
+    KO  répétition jouet : journal absent de S, d'une autre empreinte que l'épingle, ou sceau différent
+    (copie /tmp/claude-0/-home-user/5a6b9d1d-b17d-59a1-a770-8737a831fe0a/scratchpad/banc-controles-pilote-C/controles-A17.sh : une ligne de plus changée)
+A17-journal-autre-commit : code 1 ; 51 OK, 1 KO ; CONFORME
+    KO  répétition jouet : AssertionError: ligne absente : commit du code répété : 7b073008585279a06251b08d6b456694320a3c58
+    (copie /tmp/claude-0/-home-user/5a6b9d1d-b17d-59a1-a770-8737a831fe0a/scratchpad/banc-controles-pilote-C/controles-A18.sh : une ligne de plus changée)
+A18-code-relu-autre : code 1 ; 50 OK, 2 KO ; CONFORME
+    KO  arbre gelé de S ≠ code relu épinglé (f8ab64abbc44894426f803b53dd17bac0e206a5e)
+    KO  répétition jouet : AssertionError: ligne absente : commit du code répété : f8ab64abbc44894426f803b53dd17bac0e206a5e
+A31-copie-versee-du-generateur-modifiee : code 1 ; 51 OK, 1 KO ; CONFORME
+    KO  répétition jouet : script répété ≠ copie versée à S : remplir_pilote_v1.py
+    (copie /tmp/claude-0/-home-user/5a6b9d1d-b17d-59a1-a770-8737a831fe0a/scratchpad/banc-controles-pilote-C/controles-A32.sh : une ligne de plus changée)
+A32-journal-sans-scripts-repetes : code 1 ; 51 OK, 1 KO ; CONFORME
+    KO  répétition jouet : AssertionError: scripts répétés [] : les cinq attendus exactement
+    (copie /tmp/claude-0/-home-user/5a6b9d1d-b17d-59a1-a770-8737a831fe0a/scratchpad/banc-controles-pilote-C/controles-A33.sh : une ligne de plus changée)
+A33-script-repete-en-double : code 1 ; 51 OK, 1 KO ; CONFORME
+    KO  répétition jouet : AssertionError: script répété en double : remplir_pilote_v1.py
+    (copie /tmp/claude-0/-home-user/5a6b9d1d-b17d-59a1-a770-8737a831fe0a/scratchpad/banc-controles-pilote-C/controles-A34.sh : une ligne de plus changée)
+A34-script-repete-mal-forme : code 1 ; 51 OK, 1 KO ; CONFORME
+    KO  répétition jouet : AssertionError: ligne « script répété » mal formée : script répété : remplir_pilote_v1.py abc
+A19-code-modifie-apres-cite : code 1 ; 49 OK, 3 KO ; CONFORME
+    KO  arbre gelé modifié depuis le commit du code
+    KO  arbre gelé de S ≠ code relu épinglé (7b073008585279a06251b08d6b456694320a3c58)
+    KO  valeurs, configuration, tâches ou gardes du lanceur : controle_ia.gardes.GardeArret: arbre gelé (code, tests, scripts, dépendances, configuration) modifié depuis le commit cité d66276b79a1c
+A20-config-duree-autre : code 1 ; 51 OK, 1 KO ; CONFORME
+    KO  valeurs, configuration, tâches ou gardes du lanceur : AssertionError: ('defaut', 14940, 'defaut', 15000)
+A20b-config-autre-cle : code 1 ; 51 OK, 1 KO ; CONFORME
+    KO  valeurs, configuration, tâches ou gardes du lanceur : AssertionError: configuration ≠ brouillon
+A21-lecture-math-alteree-rescellee : code 1 ; 51 OK, 1 KO ; CONFORME
+    KO  valeurs, configuration, tâches ou gardes du lanceur : AssertionError: lecture gelée rejouée à 192 épisodes ≠ lecture scellée (nœud)
+A22-taches-alterees : code 1 ; 50 OK, 2 KO ; CONFORME
+    KO  donnees/t05-pilote-v1/taches-pilote-60-v1.json non cité par son empreinte
+    KO  valeurs, configuration, tâches ou gardes du lanceur : AssertionError: tâches ≠ 60 premières de la source
+A23-proposition-alteree : code 1 ; 51 OK, 1 KO ; CONFORME
+    KO  docs/decisions/proposition-N-019-v2.md non cité par son empreinte
+A24-rapport-non-epingle : code 1 ; 51 OK, 1 KO ; CONFORME
+    KO  rapports présents « T0.5-pilote-v1-etat-des-lieux-fichiers-de-travail-v1.tar T0.5-pilote-v1-etat-des-lieux-resultats-v1.json T0.5-pilote-v1-relecture-b8-fichiers-de-travail-v1.tar T0.5-pilote-v1-relecture-b8-re
+A25-rapport-altere-rescelle : code 1 ; 51 OK, 1 KO ; CONFORME
+    KO  rapport T0.5-pilote-v1-relecture-b8-fichiers-de-travail-v1.tar absent, non scellé, d'empreinte différente ou non cité
+A26-suite-autre-compte : code 1 ; 51 OK, 1 KO ; CONFORME
+    KO  suite complète : « 688 passed in 1.00s » (code 0 ; 689 attendus)
+A27-branche-presente : code 1 ; 51 OK, 1 KO ; CONFORME
+    KO  branche calcul/t05-pilote-reel-v1 : code 0 (2 attendu)
+A28-lancement-autre-branche : code 1 ; 50 OK, 2 KO ; CONFORME
+    KO  préenregistrement de S ≠ candidat relu normalisé (d174634e4a86ee4bd1f050d5dd13eef174a6001b09b52622e29aa40efff5926a)
+    KO  PREREG ou BRANCHE : la ligne « Lancement » cite autre chose
+A29-corps-modifie : code 1 ; 51 OK, 1 KO ; CONFORME
+    KO  préenregistrement de S ≠ candidat relu normalisé (e302d809d3457c21795fae6bc2dfee3a65c4783e2fe930940167266f80633edf)
+R1-relance-saine : code 0 ; 53 OK, 0 KO ; CONFORME
+R2-relance-v1-avec-episodes : code 1 ; 52 OK, 1 KO ; CONFORME
+    KO  -v1 porte un episodes.json : relancement interdit (préséance)
+R3-relance-v2-presente : code 1 ; 52 OK, 1 KO ; CONFORME
+    KO  branche de relance : code 0 (2 attendu)
+R4-relance-v1-absente : code 1 ; 52 OK, 1 KO ; CONFORME
+    KO  -v1 absente ou illisible : pas de relancement
+    (copie /tmp/claude-0/-home-user/5a6b9d1d-b17d-59a1-a770-8737a831fe0a/scratchpad/banc-controles-pilote-C/controles-A30.sh : une ligne de plus changée)
+A30-epingle-candidat-fausse : code 1 ; 51 OK, 1 KO ; CONFORME
+    KO  candidat relu absent, non scellé ou d'empreinte différente
+    (copie /tmp/claude-0/-home-user/5a6b9d1d-b17d-59a1-a770-8737a831fe0a/scratchpad/banc-controles-pilote-C/controles-Z1.sh : une ligne de plus changée)
+Z1-code-relu-non-epingle : code 2 ; CONFORME
+FIN DU BANC DES CONTRÔLES DU PILOTE
+code 0

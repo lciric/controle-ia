@@ -1,0 +1,25 @@
+........................................................................ [ 10%]
+........................................................................ [ 21%]
+........................................................................ [ 32%]
+........................................................................ [ 42%]
+........................................................................ [ 53%]
+........................................................................ [ 64%]
+........................................................................ [ 75%]
+........................................................................ [ 85%]
+.............................................................F.......... [ 96%]
+......................                                                   [100%]
+=================================== FAILURES ===================================
+___________________ test_p4_contraire_se_lit_au_vu_du_repere ___________________
+
+depot = PosixPath('/tmp/pytest-of-root/pytest-0/test_p4_contraire_se_lit_au_vu0')
+
+    def test_p4_contraire_se_lit_au_vu_du_repere(depot):
+        """M-1 : un écart de production au-dessus du seuil arrête le run après le repère, le rejeu et le stockage."""
+        stricte = dict(PETITE, production=dict(PETITE["production"], tolerance=1e-9))
+>       with pytest.raises(GardeArret, match="production : .* faute"):
+E       Failed: DID NOT RAISE GardeArret
+
+tests/test_validation_reelle.py:492: Failed
+=========================== short test summary info ============================
+FAILED tests/test_validation_reelle.py::test_p4_contraire_se_lit_au_vu_du_repere
+1 failed, 669 passed in 501.51s (0:08:21)

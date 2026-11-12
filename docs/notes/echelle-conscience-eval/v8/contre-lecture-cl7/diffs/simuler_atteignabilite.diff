@@ -1,0 +1,152 @@
+--- echelle-v6/scripts/simuler_atteignabilite_v6.py	2026-10-27 07:08:16.123717007 +0000
++++ echelle-v7/scripts/simuler_atteignabilite_v7.py	2026-10-27 07:50:33.386473590 +0000
+@@ -1,20 +1,22 @@
+ #!/usr/bin/env python3
+-"""Atteignabilité des issues de la comparaison d'échelle v6 (contre-lecture n° 5, CLV-01, CLV-04 ; lignée
+-« session-depot », 27 octobre 2026). Déclinée de `simuler_atteignabilite_v5.py` (R12) : l'analyse v6 inchangée (mode
+-répétition, 300 tirages au lieu de 2 000) sur des activations synthétiques à vérité connue. Les vingt et un cas de la
+-v5 (seize de la v4, cinq de la v5 : CLW-01, CLW-02, CLW-09), dans le même ordre et aux mêmes graines (mêmes
+-activations), puis neuf cas nouveaux : signatures croisées (un seul jeu à chaque taille, jeux différents), négatives
+-dans les deux ordres, aux tau 0,15 et 0,4 (CLV-01), et positives dans les deux ordres ; les trois signatures d'un seul
+-jeu qui manquaient (jeu b négatif au petit, jeu b positif et négatif au grand ; CLV-04) ; H_A sous la double signature
+-négative au petit, et sous des signatures croisées de signes opposés (perte de puissance, CLV-04). Aucun modèle,
++"""Atteignabilité des issues de la comparaison d'échelle v7 (contre-lecture n° 6, CLU-01 ; lignée « session-depot »,
++27 octobre 2026). Déclinée de `simuler_atteignabilite_v6.py` (R12) : l'analyse v7 inchangée (mode répétition, 300
++tirages au lieu de 2 000) sur des activations synthétiques à vérité connue. Les trente cas de la v6 (vingt et un de
++la v5, neuf de la v6 : CLV-01, CLV-04), dans le même ordre et aux mêmes graines (mêmes activations), puis les cas de la
++v7 (CLU-01), à graines nouvelles, chacun répété REPETITIONS_V7 fois : sous H_0 avec une fuite égale non nulle (λ 0,5
++et 0,5), signatures d'un seul jeu à chaque taille, de jeux différents et de signes opposés, dans les deux ordres et en
++miroir (signes échangés), en dimension 64 (tau 0,15 : amplitude 3 ; tau 0,4 : amplitude 0,9) et 256 (tau 0,15 et 0,4 :
++amplitudes 0,9 et 1,3) ; témoins en dimension 256 (H_0 égal, H_A) ; H_A avec un contexte du jeu b plus faible
++(× 0,6 et × 0,8), en dimension 64 et 256, H_0 avec un contexte du jeu b × 0,8, et H_A sous la signature négative d'un
++seul jeu au petit, en dimension 256, pour compter ce que la cohérence des deux sens coûte en puissance. Aucun modèle,
+ processeur seulement ; les analyses tournent en parallèle sur PROCESSUS processus, chacune à sa graine fixe : le
+ résultat ne dépend pas de l'ordre d'exécution. Versions, commit et réglage des fils de calcul (FILS) consignés (R9, CLY-15) ; lancer avec
+ OMP_NUM_THREADS=1 OPENBLAS_NUM_THREADS=1 MKL_NUM_THREADS=1 pour reproduire la sortie scellée.
+ 
+-Modèle synthétique (d = 64) : x = contenu + s_f·F + s_c·κ_jeu·C + cadrage(jeu, paire, classe) + bruit, κ_a = 1,
++Modèle synthétique (d = 64, ou 256 où le cas le dit) : x = contenu + s_f·F + s_c·κ_jeu·C + cadrage(jeu, paire, classe) + bruit, κ_a = 1,
+ κ_b = contexte_b ; F = alpha·C + F⊥ + signature·(moyenne des particularités des paires du jeu a) + signature_b·(idem,
+ jeu b). λ vrai (concept) ≈ alpha, relativement à l'effet du contexte du jeu mesuré.
+-    python -I -B simuler_atteignabilite_v6.py STIMULI_JSON SORTIE_DOSSIER
++    python -I -B simuler_atteignabilite_v7.py STIMULI_JSON SORTIE_DOSSIER
+ """
+ import collections
+ import hashlib
+@@ -30,7 +32,7 @@
+ import numpy as np
+ 
+ ICI = pathlib.Path(__file__).resolve().parent
+-spec = importlib.util.spec_from_file_location("an", ICI / "analyser_echelle_v6.py")
++spec = importlib.util.spec_from_file_location("an", ICI / "analyser_echelle_v7.py")
+ AN = importlib.util.module_from_spec(spec)
+ spec.loader.exec_module(AN)
+ N_BOOT_SIMULATION = 300
+@@ -80,6 +82,40 @@
+      0.2, {"signature": -2.0}, {"signature_b": 2.0}, (0.4,)),
+ ]
+ REPETITIONS = 4
++# v7 (contre-lecture n° 6, CLU-01) : (nom, alpha petit, alpha grand, options petit, options grand, taus), options
++# communes de dimension comprises ; graines à la suite de celles de la v6
++REPETITIONS_V7 = 6
++
++
++def croisees_opposees(s, d):
++    """Signatures d'un seul jeu à chaque taille, jeux différents, signes opposés, sous H_0 (0,5 et 0,5) : les deux
++    ordres et leurs miroirs (CLU-01)."""
++    a = f"{s:g}".replace(".", ",")
++    return [(f"H0 (0,5 et 0,5), jeu a +{a} au petit, jeu b −{a} au grand, d {d}", 0.5, 0.5,
++             {"signature": s, "d": d}, {"signature_b": -s, "d": d}),
++            (f"H0 (0,5 et 0,5), jeu b +{a} au petit, jeu a −{a} au grand, d {d}", 0.5, 0.5,
++             {"signature_b": s, "d": d}, {"signature": -s, "d": d}),
++            (f"H0 (0,5 et 0,5), jeu a −{a} au petit, jeu b +{a} au grand, d {d}", 0.5, 0.5,
++             {"signature": -s, "d": d}, {"signature_b": s, "d": d}),
++            (f"H0 (0,5 et 0,5), jeu b −{a} au petit, jeu a +{a} au grand, d {d}", 0.5, 0.5,
++             {"signature_b": -s, "d": d}, {"signature": s, "d": d})]
++
++
++VERITES_V7 = (
++    [v + ((0.15,),) for v in croisees_opposees(3.0, 64)] + [v + ((0.4,),) for v in croisees_opposees(0.9, 64)]
++    + [v + ((0.15, 0.4),) for v in croisees_opposees(0.9, 256)] + [v + ((0.15, 0.4),) for v in croisees_opposees(1.3, 256)]
++    + [("H0 (0,5 et 0,5), d 256", 0.5, 0.5, {"d": 256}, {"d": 256}, (0.15, 0.4)),
++       ("H1 (1,0 et 0,2), d 256", 1.0, 0.2, {"d": 256}, {"d": 256}, (0.15, 0.4)),
++       ("H1 (1,0 et 0,2), contexte du jeu b × 0,6", 1.0, 0.2, {"contexte_b": 0.6}, {"contexte_b": 0.6}, (0.15, 0.4)),
++       ("H1 (1,0 et 0,2), contexte du jeu b × 0,8", 1.0, 0.2, {"contexte_b": 0.8}, {"contexte_b": 0.8}, (0.15, 0.4)),
++       ("H1 (1,0 et 0,2), contexte du jeu b × 0,6, d 256", 1.0, 0.2, {"contexte_b": 0.6, "d": 256},
++        {"contexte_b": 0.6, "d": 256}, (0.15,)),
++       ("H1 (1,0 et 0,2), contexte du jeu b × 0,8, d 256", 1.0, 0.2, {"contexte_b": 0.8, "d": 256},
++        {"contexte_b": 0.8, "d": 256}, (0.15,)),
++       ("H0 (0,5 et 0,5), contexte du jeu b × 0,8", 0.5, 0.5, {"contexte_b": 0.8}, {"contexte_b": 0.8}, (0.15,)),
++       ("H0 (0,5 et 0,5), contexte du jeu b × 0,8, d 256", 0.5, 0.5, {"contexte_b": 0.8, "d": 256},
++        {"contexte_b": 0.8, "d": 256}, (0.15,)),
++       ("H1 (1,0 et 0,2), jeu a −1 au petit, d 256", 1.0, 0.2, {"signature": -1.0, "d": 256}, {"d": 256}, (0.15,))])
+ FILS = ("OMP_NUM_THREADS", "OPENBLAS_NUM_THREADS", "MKL_NUM_THREADS")
+ 
+ 
+@@ -136,13 +172,15 @@
+ 
+ 
+ def travaux():
+-    """Liste ordonnée (case, tau, graine, alphas, options) ; graines comme la v3 : 3002, 3004, … dans cet ordre."""
++    """Liste ordonnée (case, tau, graine, alphas, options) ; graines comme la v3 : 3002, 3004, … dans cet ordre, les cas
++    de la v7 à la suite."""
+     out, graine = [], 3000
+-    for nom, a8, a70, o8, o70, taus in VERITES:
+-        for tau in taus:
+-            for _ in range(REPETITIONS):
+-                graine += 2
+-                out.append((f"{nom} ; tau {tau}", tau, graine, a8, a70, o8, o70))
++    for liste, n in ((VERITES, REPETITIONS), (VERITES_V7, REPETITIONS_V7)):
++        for nom, a8, a70, o8, o70, taus in liste:
++            for tau in taus:
++                for _ in range(n):
++                    graine += 2
++                    out.append((f"{nom} ; tau {tau}", tau, graine, a8, a70, o8, o70))
+     return out
+ 
+ 
+@@ -158,12 +196,14 @@
+         code = AN.principal([str(stimuli), str(base / "p"), str(base / "g"), str(graine), str(base / "s"),
+                              "--repetition"])
+         if code != 0:
+-            return cle, graine, "arrêt", None, None, None
+-        lu = json.loads((base / "s" / "analyse-echelle-v6.json").read_text(encoding="utf-8"))
++            return cle, graine, "arrêt", None, None, None, None
++        lu = json.loads((base / "s" / "analyse-echelle-v7.json").read_text(encoding="utf-8"))
+     lecture = lu["lecture"].removeprefix("répétition, non décisive (").removesuffix(")")
+     if lu["reserves"]:
+         lecture += f" ({len(lu['reserves'])} réserve(s))"
+-    return cle, graine, lecture, lu["lecture_par_sens"], lu["issues_tenues_par_sens"], lu["reserves"]
++    return (cle, graine, lecture, lu["lecture_par_sens"], lu["issues_tenues_par_sens"], lu["reserves"],
++            {"ecart_sens": lu["ecart_sens"], "ecart_sens_ic": lu["ecart_sens_ic"],
++             "coherence_des_sens": lu["coherence_des_sens"], "conditions_manquantes": lu["conditions_manquantes"]})
+ 
+ 
+ def principal(argv):
+@@ -174,20 +214,21 @@
+     with multiprocessing.get_context("fork").Pool(PROCESSUS) as pool:
+         resultats = pool.map(un_travail, liste, chunksize=1)
+     comptes, par_sens, detail = {}, {}, []
+-    for cle, graine, lecture, sens, tenues, reserves in resultats:
++    for cle, graine, lecture, sens, tenues, reserves, coherence in resultats:
+         comptes.setdefault(cle, collections.Counter())[lecture] += 1
+         if sens is not None:
+             par_sens.setdefault(cle, collections.Counter())[f"a→b : {sens['a→b']} ; b→a : {sens['b→a']}"] += 1
+         detail.append({"cas": cle, "graine": graine, "lecture": lecture, "lecture_par_sens": sens,
+-                       "issues_tenues_par_sens": tenues, "reserves": reserves})
++                       "issues_tenues_par_sens": tenues, "reserves": reserves, **(coherence or {})})
+     for cle in comptes:
+         print(cle, dict(comptes[cle]), flush=True)
+     commit, propre = AN.etat_scripts()
+     sortie.mkdir(parents=True)
+-    f = sortie / "atteignabilite-echelle-v6.json"
+-    f.write_text(json.dumps({"version": "atteignabilite-echelle-v6", "analyse_sha256": sha(ICI / "analyser_echelle_v6.py"),
++    f = sortie / "atteignabilite-echelle-v7.json"
++    f.write_text(json.dumps({"version": "atteignabilite-echelle-v7", "analyse_sha256": sha(ICI / "analyser_echelle_v7.py"),
+                              "simulation_sha256": sha(__file__), "stimuli_sha256": sha(stimuli),
+-                             "n_boot": N_BOOT_SIMULATION, "repetitions": REPETITIONS, "processus": PROCESSUS,
++                             "n_boot": N_BOOT_SIMULATION, "repetitions": REPETITIONS,
++                             "repetitions_v7": REPETITIONS_V7, "processus": PROCESSUS,
+                              "commit_scripts": commit, "arbre_scripts_propre": propre,
+                              "python": platform.python_version(), "numpy": np.__version__,
+                              "fils_de_calcul": {k: os.environ.get(k) for k in FILS},

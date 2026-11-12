@@ -21,7 +21,7 @@ from dataclasses import asdict, dataclass, field
 import numpy as np
 import torch
 
-from ..gardes import GardeArret
+from ..gardes import GardeArret, exiger_sans_signal
 from .activations import (Crochets, agreger, ecart_decale_zone_generee, ecart_equivalence, exiger_equivalence,
                           passe_unique, profil_ecarts, sonde_de_comparaison)
 from .formats import FormatBrut
@@ -204,6 +204,7 @@ def jouer_episodes(modele, fmt, environnement, identifiants: list[str], N: int, 
     acts_generation, longueurs, logits, lignes_info = {}, {}, {}, {}
     for t in range(T):
         for i in range(N):
+            exiger_sans_signal(f"au pas {t}, agent {i}")
             if echeance is not None and time.perf_counter() > echeance:
                 raise GardeArret(f"limite de durée dépassée au pas {t}, agent {i}")
             contextes = []

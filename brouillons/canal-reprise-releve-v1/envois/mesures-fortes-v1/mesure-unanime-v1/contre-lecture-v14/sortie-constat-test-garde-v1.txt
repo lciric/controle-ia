@@ -1,0 +1,34 @@
+# Constat signalé par l'auteur sur test-garde-trace-v14.sh (lignes 28 à 30), démontré sur des copies MUTÉES de la séquence (hors dépôt, 2026-11-10T09:19:03Z)
+## cas A : TEMOIN de la séquence changé
+OK   dossier vide → code 0
+ÉCHEC : le TEMOIN de la séquence ne correspond pas
+OK   noms du test = noms de la séquence v14
+garde-trace : AU MOINS UN ÉCHEC
+code du test = 1
+## cas B : SORTIE de la séquence changée (le nom reste dans les commentaires)
+OK   partiel → code 3
+OK   dossier vide → code 0
+OK   noms du test = noms de la séquence v14
+garde-trace : tous les cas conformes
+code du test = 0
+## cas C : toute occurrence du nom de SORTIE retirée, commentaires compris
+OK   dossier vide → code 0
+ÉCHEC : la SORTIE de la séquence ne correspond pas
+OK   noms du test = noms de la séquence v14
+garde-trace : AU MOINS UN ÉCHEC
+code du test = 1
+## garde paramétrée : la séquence passe "$TEMOIN" "$SORTIE" "$SORTIE.partiel" (ligne 50), les mêmes variables qu'elle écrit (lignes 52, 53, 101, 102)
+50:    bash garde-trace-reelle-v14.sh "$TEMOIN" "$SORTIE" "$SORTIE.partiel"  # exit 3 si une trace d'exécution réelle existe (CV13-1 : noms en arguments)
+52:    ( set -o noclobber; : > "$TEMOIN" ) 2>/dev/null || { echo "témoin déjà posé : exécution réelle déjà commencée (R12)" >&2; exit 3; }
+53:    printf '%s UTC — exécution réelle commencée, commit %s\n' "$(date -u +%Y-%m-%dT%H:%M:%SZ)" "$COMMIT" >> "$TEMOIN"
+101:  $PY -I -B $SCRIPT --reel "$DONNEES" --empreinte-attendue "$EMPREINTE" --sondes-reelles "$NR" --sondes-placebo "$NP" --commit "$COMMIT" > "${PREF}$SORTIE.partiel"
+102:  mv "${PREF}$SORTIE.partiel" "${PREF}$SORTIE"; sceller "${PREF}$SORTIE"
+110:  $PY -I -B lecture_mecanique_v8.py "${PREF}$SORTIE" "$TABLE" --empreinte-donnees "$EMPREINTE" --empreinte-script "$EMP_SCRIPT" > "${PREF}lecture-mecanique-reelle-v14
+116:  $PY -I -B rediger_note_lecture_v7.py "${PREF}lecture-mecanique-reelle-v14.json" "${PREF}$SORTIE" --prereg "$PREREG" --commit "$COMMIT" --heure "$HEURE" --date "$DAT
+## garde seule sur noms arbitraires (dossier vide puis trace plantée) et sans argument
+vide -> 0
+trace d'exécution réelle : b (la relance est une version nouvelle, R12 ; ne rien renommer ni effacer)
+b planté -> 3
+usage : garde-trace-reelle-v14.sh TEMOIN [SORTIE [PARTIEL]]
+sans argument -> 2
+argument vide -> 0

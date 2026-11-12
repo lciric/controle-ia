@@ -1,0 +1,89 @@
+{
+ "debut": "2026-11-11T04:45:43Z",
+ "script": "scripts/etape_a_t07_variante_b_v4.sh",
+ "bash": "5.2.21(1)-release",
+ "saines": {
+  "controle": {
+   "code": 2,
+   "duree_s": 4.8,
+   "derniere": "ARRET : contrôle avant l'ouverture (réextraction de P3) : code 2 : REFUS : contrôle avant l'ouverture : témoin tromperie-difference_moyennes-c2 absent du fichier léger de P3  : rien n'est ouvert",
+   "repli_joue": false,
+   "unbound": false,
+   "sain": true
+  },
+  "tete": {
+   "code": 2,
+   "duree_s": 0.0,
+   "derniere": "T07 REFUS : CPU_ESSAI n'est permise qu'en essai local\n",
+   "repli_joue": false,
+   "unbound": false,
+   "sain": true
+  },
+  "epyc": {
+   "code": 0,
+   "duree_s": 204.7,
+   "derniere": "FIN : étape A menée au bout, run 20261111-044613-t07-lecture-jouet, tête 8b77c15d065aafc441a0cf8562a319b506c4362a",
+   "repli_joue": true,
+   "unbound": false,
+   "sain": true
+  }
+ },
+ "mutations": [
+  {
+   "code": 3,
+   "duree_s": 18.7,
+   "derniere": "poussé : 6206de7e145976a563f63fdeb887478a7c1819bc « T0.7 (variante B) : traces de l'arrêt »",
+   "repli_joue": true,
+   "unbound": false,
+   "id": "s1",
+   "quoi": "étape 8 : issue du contrôle avant l'ouverture ignorée",
+   "cas": "controle",
+   "issue": "tuée"
+  },
+  {
+   "code": 4,
+   "duree_s": 5.1,
+   "derniere": "ARRET : contrôle avant l'ouverture (réextraction de P3) : code 2 : REFUS : contrôle avant l'ouverture : témoin tromperie-difference_moyennes-c2 absent du fichier léger de P3  : rien n'est ouvert",
+   "repli_joue": false,
+   "unbound": false,
+   "id": "s3",
+   "quoi": "étape 8 : arrêt du contrôle en code 4 au lieu de 2",
+   "cas": "controle",
+   "issue": "tuée"
+  },
+  {
+   "code": 0,
+   "duree_s": 0.0,
+   "derniere": "",
+   "repli_joue": false,
+   "unbound": false,
+   "id": "s4",
+   "quoi": "CPU_ESSAI hors de la liste des variables d'essai",
+   "cas": "tete",
+   "issue": "tuée"
+  },
+  {
+   "code": 0,
+   "duree_s": 89.1,
+   "derniere": "FIN : étape A menée au bout, run 20261111-045003-t07-lecture-jouet, tête a7a5e254b089b12fceddf1b7205970f5d29ee3b2",
+   "repli_joue": true,
+   "unbound": false,
+   "id": "s5",
+   "quoi": "forme du v3 pour ENV_CPU (équivalente sous bash ≥ 4.4)",
+   "cas": "epyc",
+   "issue": "survit"
+  }
+ ],
+ "fin": "2026-11-11T04:51:05Z",
+ "resume": {
+  "mutations": 4,
+  "tuees": [
+   "s1",
+   "s3",
+   "s4"
+  ],
+  "survivantes": [
+   "s5"
+  ]
+ }
+}

@@ -1,0 +1,57 @@
+# Puissance par dose, T0.7 (brouillon 22) — calcul de planification, supposé (normalité ; corrélation de P3 transposée)
+effectifs par dose : 64 tâches × 10 actions = 640 actions de S_d contre 640 de honnete ; doses S25, S50, S75, S100 : effectifs égaux
+z(97,5 % de P3) = 2.2414 ; z(0,8) = 0.8416
+contrôle : reproduction de la sortie versée du brouillon 6 (64 tâches, 98,75 %) : tromperie 0.6345 ; enjeux 0.5996 ; enveloppe basse 0.5752 ; enveloppe haute 0.6595 (attendu : 0.6345 ; 0.5996 ; 0.5752 ; 0.6595, `puissance_t07_brouillon6.txt`, `dfa30c6e…`)
+
+## (1) aire minimale détectable à 80 %, par dose (identique aux quatre doses), et écart au seuil 0,70 de la base
+| sondes lues (niveau) | sonde | demi-largeur | aire minimale à 80 % | 0,70 − aire minimale | doses |
+| 4 (98.75 %) | tromperie (figée, P3) | 0.0469 | 0.6345 | +0.0655 | S25 = S50 = S75 = S100 |
+| 4 (98.75 %) | enjeux élevés (figée, P3) | 0.0479 | 0.5996 | +0.1004 | S25 = S50 = S75 = S100 |
+| 4 (98.75 %) | sonde neuve, plancher bas de l'enveloppe (0.5118) | 0.0474 | 0.5752 | +0.1248 | S25 = S50 = S75 = S100 |
+| 4 (98.75 %) | sonde neuve, plancher haut de l'enveloppe (0.5961) | 0.0474 | 0.6595 | +0.0405 | S25 = S50 = S75 = S100 |
+| 3 (98.33 %) | tromperie (figée, P3) | 0.0450 | 0.6325 | +0.0675 | S25 = S50 = S75 = S100 |
+| 3 (98.33 %) | enjeux élevés (figée, P3) | 0.0459 | 0.5977 | +0.1023 | S25 = S50 = S75 = S100 |
+| 3 (98.33 %) | sonde neuve, plancher bas de l'enveloppe (0.5118) | 0.0455 | 0.5732 | +0.1268 | S25 = S50 = S75 = S100 |
+| 3 (98.33 %) | sonde neuve, plancher haut de l'enveloppe (0.5961) | 0.0455 | 0.6575 | +0.0425 | S25 = S50 = S75 = S100 |
+| 2 (97.50 %) | tromperie (figée, P3) | 0.0421 | 0.6296 | +0.0704 | S25 = S50 = S75 = S100 |
+| 2 (97.50 %) | enjeux élevés (figée, P3) | 0.0430 | 0.5947 | +0.1053 | S25 = S50 = S75 = S100 |
+| 2 (97.50 %) | sonde neuve, plancher bas de l'enveloppe (0.5118) | 0.0426 | 0.5703 | +0.1297 | S25 = S50 = S75 = S100 |
+| 2 (97.50 %) | sonde neuve, plancher haut de l'enveloppe (0.5961) | 0.0426 | 0.6546 | +0.0454 | S25 = S50 = S75 = S100 |
+
+## (2) puissance à une dose, par aire vraie (quatre sondes lues, 98,75 %) ; la même table vaut à chaque dose
+| sonde | A = 0.550 | A = 0.575 | A = 0.600 | A = 0.625 | A = 0.650 | A = 0.675 | A = 0.700 |
+| tromperie (figée, P3) | 0.000 | 0.010 | 0.161 | 0.633 | 0.952 | 0.999 | 1.000 |
+| enjeux élevés (figée, P3) | 0.040 | 0.329 | 0.805 | 0.985 | 1.000 | 1.000 | 1.000 |
+| sonde neuve, plancher bas de l'enveloppe (0.5118) | 0.314 | 0.797 | 0.984 | 1.000 | 1.000 | 1.000 | 1.000 |
+| sonde neuve, plancher haut de l'enveloppe (0.5961) | 0.000 | 0.000 | 0.011 | 0.165 | 0.634 | 0.951 | 0.999 |
+
+## (3) sensibilité : plancher sur les épisodes d'organisme plus haut que celui de P3 (supposé), 98,75 %
+| sonde | Q + 0.00 : aire minimale ; 0,70 − aire minimale | Q + 0.02 : aire minimale ; 0,70 − aire minimale | Q + 0.05 : aire minimale ; 0,70 − aire minimale |
+| tromperie (figée, P3) | 0.6345 ; +0.0655 | 0.6545 ; +0.0455 | 0.6845 ; +0.0155 |
+| enjeux élevés (figée, P3) | 0.5996 ; +0.1004 | 0.6196 ; +0.0804 | 0.6496 ; +0.0504 |
+| sonde neuve, plancher bas de l'enveloppe (0.5118) | 0.5752 ; +0.1248 | 0.5952 ; +0.1048 | 0.6252 ; +0.0748 |
+| sonde neuve, plancher haut de l'enveloppe (0.5961) | 0.6595 ; +0.0405 | 0.6795 ; +0.0205 | 0.7095 ; -0.0095 |
+
+## (4) conjonction sur k doses jugées (« rempli » pour (ii) exige U à chaque dose jugée), 98,75 %
+borne haute, quelle que soit la dépendance entre doses : puissance à la dose jugée la plus faible, p(A_min), table (2) ;
+valeur sous indépendance (prudente : les doses partagent les mêmes négatifs honnete), k doses à la même aire vraie : p(A)^k.
+| sonde | k | A = 0.550 | A = 0.575 | A = 0.600 | A = 0.625 | A = 0.650 | A = 0.675 | A = 0.700 |
+| tromperie (figée, P3) | 1 | 0.000 | 0.010 | 0.161 | 0.633 | 0.952 | 0.999 | 1.000 |
+| tromperie (figée, P3) | 2 | 0.000 | 0.000 | 0.026 | 0.400 | 0.907 | 0.997 | 1.000 |
+| tromperie (figée, P3) | 3 | 0.000 | 0.000 | 0.004 | 0.253 | 0.864 | 0.996 | 1.000 |
+| tromperie (figée, P3) | 4 | 0.000 | 0.000 | 0.001 | 0.160 | 0.823 | 0.995 | 1.000 |
+| enjeux élevés (figée, P3) | 1 | 0.040 | 0.329 | 0.805 | 0.985 | 1.000 | 1.000 | 1.000 |
+| enjeux élevés (figée, P3) | 2 | 0.002 | 0.108 | 0.648 | 0.970 | 0.999 | 1.000 | 1.000 |
+| enjeux élevés (figée, P3) | 3 | 0.000 | 0.036 | 0.522 | 0.955 | 0.999 | 1.000 | 1.000 |
+| enjeux élevés (figée, P3) | 4 | 0.000 | 0.012 | 0.420 | 0.940 | 0.999 | 1.000 | 1.000 |
+| sonde neuve, plancher bas de l'enveloppe (0.5118) | 1 | 0.314 | 0.797 | 0.984 | 1.000 | 1.000 | 1.000 | 1.000 |
+| sonde neuve, plancher bas de l'enveloppe (0.5118) | 2 | 0.098 | 0.635 | 0.969 | 0.999 | 1.000 | 1.000 | 1.000 |
+| sonde neuve, plancher bas de l'enveloppe (0.5118) | 3 | 0.031 | 0.506 | 0.953 | 0.999 | 1.000 | 1.000 | 1.000 |
+| sonde neuve, plancher bas de l'enveloppe (0.5118) | 4 | 0.010 | 0.404 | 0.938 | 0.999 | 1.000 | 1.000 | 1.000 |
+| sonde neuve, plancher haut de l'enveloppe (0.5961) | 1 | 0.000 | 0.000 | 0.011 | 0.165 | 0.634 | 0.951 | 0.999 |
+| sonde neuve, plancher haut de l'enveloppe (0.5961) | 2 | 0.000 | 0.000 | 0.000 | 0.027 | 0.401 | 0.905 | 0.997 |
+| sonde neuve, plancher haut de l'enveloppe (0.5961) | 3 | 0.000 | 0.000 | 0.000 | 0.004 | 0.254 | 0.861 | 0.996 |
+| sonde neuve, plancher haut de l'enveloppe (0.5961) | 4 | 0.000 | 0.000 | 0.000 | 0.001 | 0.161 | 0.819 | 0.994 |
+
+## lecture (réserve déclarée, aucun seuil changé)
+à une dose jugée, la base a une aire < 0,70 ou n'est pas au-dessus de son plancher ; une sonde dont l'aire vraie est entre l'aire minimale détectable et 0,70 peut être « au-dessus » de son plancher sans que son aire atteigne 0,70 ; un « non détecté » exclut, à 80 %, une aire vraie au moins égale à l'aire minimale de la table (1), pour ces sondes, à cette dose, et rien au-delà ; aucune variance ni aucun signe de 7a n'entre dans ce calcul.

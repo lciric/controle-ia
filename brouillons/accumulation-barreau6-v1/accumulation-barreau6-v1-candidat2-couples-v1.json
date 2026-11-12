@@ -1,0 +1,63 @@
+{
+ "objet": "barreau 6, candidat 1 → candidat 2",
+ "candidat_1_sha256": "b8bbea6a371335311a1e42cc7b37b0d1ffb632ec670746a4695c8ee6c49bc742",
+ "commit_code": "5ee8a4ac8712221a31599e2a92dfbae981cc5704",
+ "complement2_sha256": "94226fc8908d4746e63f945892d7a3aaea804c7d301f0bd241bcbfaa46ef3d7f",
+ "decisions": "mère R-2275, R-2276 : COMMIT_CODE_ACCB6 = 5ee8a4ac… ; section « Code » ; « Reste avant le scellement » ; énumération inchangée",
+ "couples": [
+  {
+   "id": "C2-01",
+   "source": "titre",
+   "ancien": "— v1 — candidat 1\n\n- **Auteur**",
+   "nouveau": "— v1 — candidat 2\n\n- **Auteur**"
+  },
+  {
+   "id": "C2-02",
+   "source": "date",
+   "ancien": "candidat 1 à partir de 19:50 UTC (journal `accumulation-barreau6-v1-candidat1-journal-v1.md`) ; heures relevées par `date -u`.",
+   "nouveau": "candidat 1 à partir de 19:50 UTC (journal `accumulation-barreau6-v1-candidat1-journal-v1.md`) ; candidat 2 à partir de 20:27 UTC (journal `accumulation-barreau6-v1-candidat2-journal-v1.md`) ; heures relevées par `date -u`."
+  },
+  {
+   "id": "C2-03",
+   "source": "statut",
+   "ancien": "- **Statut** : **candidat 1** = brouillon 2 (",
+   "nouveau": "- **Statut** : **candidat 2** = candidat 1 (`accumulation-barreau6-v1-candidat1.md`, `b8bbea6a371335311a1e42cc7b37b0d1ffb632ec670746a4695c8ee6c49bc742`, gardé tel quel, R12) + les couples C2-01 à C2-09 du rédacteur (code au commit `5ee8a4ac…`, qui porte la garde de non-relance ; R-2275, R-2276), par script (couples `accumulation-barreau6-v1-candidat2-couples-v1.json`, script `accumulation-barreau6-v1-candidat2-faire-v1.py`), et rien d'autre ; ils ne touchent que l'en-tête, « Ce que les auteurs savaient », la section « Code » et « Reste avant le scellement » : aucune section gelée du préenregistrement. **Candidat 1** = brouillon 2 ("
+  },
+  {
+   "id": "C2-04",
+   "source": "COMMIT_CODE_ACCB6 (R-2276)",
+   "ancien": "`56c624ddb02941e09ff5bb96d8c848214e6b576a` (branche `prep/accumulation-b6-code-v1`, poussée, non fusionnée ; R-2272, R-2274 ; section « Code ») ;",
+   "nouveau": "`5ee8a4ac8712221a31599e2a92dfbae981cc5704` (branche `prep/accumulation-b6-code-v1`, poussée, non fusionnée ; parent `56c624dd…` ; il porte la garde de non-relance ; R-2272, R-2274, R-2276 ; section « Code ») ;"
+  },
+  {
+   "id": "C2-05",
+   "source": "documents qui font foi",
+   "ancien": "`rapport-developpeur-accb6-v1-complement-v1.md`, `02d837c9b22c5da31d1694b25ddcb6604877e4aa119df8edb8c5953f0df09e5a` ; code au commit `56c624ddb02941e09ff5bb96d8c848214e6b576a` (R-2272, R-2274) ;",
+   "nouveau": "`rapport-developpeur-accb6-v1-complement-v1.md`, `02d837c9b22c5da31d1694b25ddcb6604877e4aa119df8edb8c5953f0df09e5a`, et `rapport-developpeur-accb6-v1-complement2-v1.md`, `94226fc8908d4746e63f945892d7a3aaea804c7d301f0bd241bcbfaa46ef3d7f` ; code au commit `5ee8a4ac8712221a31599e2a92dfbae981cc5704` (R-2272, R-2274, R-2276) ;"
+  },
+  {
+   "id": "C2-06",
+   "source": "ce que les auteurs savaient",
+   "ancien": "une recherche de mots dans `phrases_v1.py` ; aucune sortie de T0.7, de P3-bis ni de `agregation-r1-v4`.",
+   "nouveau": "une recherche de mots dans `phrases_v1.py` ; aucune sortie de T0.7, de P3-bis ni de `agregation-r1-v4`. **Candidat 2** : le complément 2 du développeur, entier ; le message de la mère portant R-2276 ; au commit `5ee8a4ac…`, par `git show`, les empreintes de quatre fichiers (`garde_v1.py`, `tests/test_accb6_relance_v1.py`, le script d'énumération et sa sortie) ; aucune sortie de T0.7, de P3-bis ni de `agregation-r1-v4`."
+  },
+  {
+   "id": "C2-07",
+   "source": "section « Code » (R-2275, R-2276)",
+   "ancien": "**État** (rapports du développeur, `docs/notes/g0-deux-semaines-v1/accumulation-b6-code-v1/rapport-developpeur-accb6-v1.md`, `2a6880e4e3ef65db858a60f67b2eb723001fdb7df364993fc7b21e46f203fb1c`, et complément, `02d837c9b22c5da31d1694b25ddcb6604877e4aa119df8edb8c5953f0df09e5a`) : commit `56c624ddb02941e09ff5bb96d8c848214e6b576a` de la branche `prep/accumulation-b6-code-v1`, poussée, **non fusionnée** (fusion après le scellement de T0.7, R-2231 : le contrôle du code de T0.7 refuse un `src/controle_ia/` différent du commit de `CODE-T07`) ; 165 essais du paquet passent ; 65 mutations sur 65 tuées ; énumération rejouée égale à l'octet ; essais de T0.7 d'issues identiques avant et après le commit, dans une extraction réduite (suite complète à rejouer par la mère). **Écart déclaré** : la garde « aucune relance après un arrêt » (plan, point 2 ; C1-12) n'est pas dans le code à ce commit (point ouvert 4 du développeur) ; section « Reste avant le scellement ». Les lignes ci-dessous décrivent le paquet.",
+   "nouveau": "**État** (rapports du développeur, `docs/notes/g0-deux-semaines-v1/accumulation-b6-code-v1/rapport-developpeur-accb6-v1.md`, `2a6880e4e3ef65db858a60f67b2eb723001fdb7df364993fc7b21e46f203fb1c`, complément, `02d837c9b22c5da31d1694b25ddcb6604877e4aa119df8edb8c5953f0df09e5a`, et complément 2, `rapport-developpeur-accb6-v1-complement2-v1.md`, `94226fc8908d4746e63f945892d7a3aaea804c7d301f0bd241bcbfaa46ef3d7f`) : commit `5ee8a4ac8712221a31599e2a92dfbae981cc5704` de la branche `prep/accumulation-b6-code-v1` (parent `56c624ddb02941e09ff5bb96d8c848214e6b576a`), poussée, **non fusionnée** (fusion après le scellement de T0.7, R-2231 : le contrôle du code de T0.7 refuse un `src/controle_ia/` différent du commit de `CODE-T07`) ; 168 essais du paquet passent ; 67 mutations sur 67 tuées ; énumération rejouée égale à l'octet ; essais de T0.7 d'issues identiques avant et après le premier commit du paquet, dans une extraction réduite (suite complète à rejouer par la mère). **Garde de non-relance** (plan, point 2, et liste d'arrêt ; C1-12, C1-13) : **dans le code à ce commit** — `src/controle_ia/accumulation_b6/garde_v1.py` (`2885c1f49958ce8ff4c20b3e8283051de9c03e3b0ab3f864a509bc49de80928e`) : `diag/*/arret-accb6.json` d'un run quelconque présent → refus, code 2, ligne `REFUS-ACCB6` au journal propre, avant le contrôle du code, l'aiguillage et tout calcul, aucun run créé ; éprouvée par `tests/test_accb6_relance_v1.py` (`cc458330b2d3b7731c5a571ee71baf0a2e8eedf6a1d0521fbdc521d166ff3a0d`) : **cas sain** (un `arret.json` de T0.6 ou un `arret-etape-b.json` de T0.7 ne la déclenchent pas), **artefact** (`arret-accb6.json` sous un run quelconque : refus, rien d'autre d'écrit), **bout en bout** (lecture arrêtée en code 3, relance refusée en code 2 sans contrôle du code, sans lecture de E4 ni run neuf ; la commande rend 2) ; mutations R01 (garde retirée) et R02 (autre nom de fichier) tuées. **L'écart déclaré au candidat 1 est levé.** Les lignes ci-dessous décrivent le paquet."
+  },
+  {
+   "id": "C2-08",
+   "source": "ENUMERATION_ETATS_ACCB6 au nouveau commit",
+   "ancien": "; au commit `56c624ddb02941e09ff5bb96d8c848214e6b576a` : script",
+   "nouveau": "; au commit `5ee8a4ac8712221a31599e2a92dfbae981cc5704` (inchangés depuis `56c624dd…`, empreintes vérifiées au nouveau commit) : script"
+  },
+  {
+   "id": "C2-09",
+   "source": "« Reste avant le scellement » mis à jour",
+   "ancien": "## Reste avant le scellement\n\nVérification : `grep -o '<<[A-Z0-9_]\\+>>' <ce fichier> | sort | uniq -c` ; `controle_ia.prereg.problemes` refuse tout marqueur restant ; au candidat 1, il ne relève que `REVERIFICATION_T07_SCELLE`.\n\n| marqueur | ce qui le remplit | quand | qui |\n|---|---|---|---|\n| `REVERIFICATION_T07_SCELLE` | revérification des noms de champs et des lignes de T0.7 cités ici, sur T0.7 **scellé** et sur le commit de `CODE-T07` (chemin et sha256 du compte rendu) | **après le scellement de T0.7**, avant celui de ce texte | session mère ou contre-lecteur |\n\nAutres pas, hors marqueurs :\n1. **Garde de non-relance dans le code** (C1-12) : absente au commit `56c624dd…` ; ou bien une version du code qui la porte (commit neuf, fichier et ligne `CODE-ACCB6` à ce commit, essais, mutation), ou bien, tant qu'elle manque, la session mère ne relance jamais une lecture arrêtée (garde de procédure), déclarée : à trancher par la mère.\n2. **Ligne `CODE-ACCB6`** au registre propre (`registres/accumulation-b6-v1.md`) : fichier `{commit, fichiers, entropie}` au commit retenu, entropie `186246456082298562823446322699284949559` (R-2274), scellé ; strictement avant la première ouverture des scores par T0.7 (sinon R-B6-CODE).\n3. **Ligne `SCELLEMENT-ACCB6`** strictement avant `SCORES-T07` (sinon refus, nœud) ; visée : avant la création de 7b.\n4. **Suite des essais de T0.7 dans un arbre complet** (rapport du développeur, point ouvert 1) ; **fusion** du paquet après le scellement de T0.7 (R-2231).\n5. Vérification courte des couples du candidat 1 (CP-01 à CP-19, C1-01 à C1-17), si la mère la demande.",
+   "nouveau": "## Reste avant le scellement\n\nVérification : `grep -o '<<[A-Z0-9_]\\+>>' <ce fichier> | sort | uniq -c` ; `controle_ia.prereg.problemes` refuse tout marqueur restant ; au candidat 2, il ne relève que `REVERIFICATION_T07_SCELLE`.\n\n| marqueur | ce qui le remplit | quand | qui |\n|---|---|---|---|\n| `REVERIFICATION_T07_SCELLE` | revérification des noms de champs et des lignes de T0.7 cités ici, sur T0.7 **scellé** et sur le commit de `CODE-T07` (chemin et sha256 du compte rendu) | **après le scellement de T0.7**, avant celui de ce texte | session mère ou contre-lecteur |\n\nAutres pas, hors marqueurs :\n1. **Garde de non-relance** : dans le code au commit `5ee8a4ac…` (section « Code ») ; rien d'autre à faire.\n2. **Ligne `CODE-ACCB6`** au registre propre (`registres/accumulation-b6-v1.md`) : fichier `{commit, fichiers, entropie}` **au commit `5ee8a4ac8712221a31599e2a92dfbae981cc5704`** (le fichier écrit pour `56c624dd…` ne vaut plus : `garde_v1.py` a changé ; complément 2, § 1), scellé ; une seule ligne `CODE-ACCB6` (si une ligne pour `56c624dd…` y est déjà, nœud de procédure, complément 2, § 8) ; entropie `186246456082298562823446322699284949559` (R-2274) — `code_accb6_v1 ecrire` en tire une neuve : la passer à `ecrire_fichier_code(…, entropie=…)`, ou remplir `ENTROPIE_ACCB6` de nouveau (question à la mère) ; strictement avant la première ouverture des scores par T0.7 (sinon R-B6-CODE).\n3. **Ligne `SCELLEMENT-ACCB6`** strictement avant `SCORES-T07` (sinon refus, nœud) ; visée : avant la création de 7b.\n4. **Suite des essais de T0.7 dans un arbre complet** (rapport du développeur, point ouvert 1) ; **fusion** du paquet après le scellement de T0.7 (R-2231).\n5. Vérification courte des couples des candidats 1 et 2 (CP-01 à CP-19, C1-01 à C1-17, C2-01 à C2-09), si la mère la demande."
+  }
+ ]
+}

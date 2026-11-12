@@ -1,0 +1,65 @@
+MANIFESTE DES PIÈCES — antériorité de Co-Scientist (Google DeepMind), v1
+Décision de Lazar R-1990, point (a). Récupération par un sous-agent (Opus 5.5) de la session mère, le 9 novembre 2026,
+heures relevées sur l'horloge du conteneur (UTC). Aucune inscription, aucune clé, aucun appel de modèle payant.
+Outil de téléchargement : curl, par le mandataire HTTPS du conteneur, en-tête User-Agent de navigateur, redirections suivies.
+
+== 1. Article de Nature (version publiée, accès libre, licence Creative Commons Attribution 4.0)
+Titre        : Accelerating scientific discovery with Co-Scientist
+Auteurs      : Gottweis J., Weng W.-H., Daryin A., ... Karthikesalingam A., Natarajan V. (51 auteurs)
+Revue        : Nature, vol. 655, p. 487-496, 9 juillet 2026 ; reçu le 20 mars 2025, accepté le 11 mai 2026, en ligne le 19 mai 2026
+DOI          : 10.1038/s41586-026-10644-y
+Adresse      : https://www.nature.com/articles/s41586-026-10644-y.pdf (code 200, application/pdf, 5 121 974 octets), 09:05:22
+Fichier      : gottweis-2026-nature-655-487-accelerating-scientific-discovery-with-co-scientist.pdf
+Pages        : 28 (pdfinfo). Pages 1 à 10 du PDF = pages 487 à 496 de la revue ; pages 11 à 15 = Methods ;
+               16 à 24 = figures et tableaux étendus ; 25 à 28 = résumé de déclaration (reporting summary).
+SHA-256      : 351f49d89d2f4f4ed84eed4225c09cc95470c41aa3becd0aa3e06b3bd8ba54c3
+
+== 2. Informations supplémentaires de Nature (MOESM1, « in the format provided by the authors and unedited »)
+Adresse      : https://static-content.springer.com/esm/art%3A10.1038%2Fs41586-026-10644-y/MediaObjects/41586_2026_10644_MOESM1_ESM.pdf
+               (code 200, application/pdf, 2 868 250 octets), 09:05:23
+Fichier      : gottweis-2026-nature-supplementary-information-MOESM1.pdf
+Pages        : 120 (pdfinfo) ; notes 1 à 12, figures 1 à 9, tableaux 1 à 4.
+SHA-256      : e5595509a10da6e4d24c7df399d0f60e922d628cf1647df3880f8b0ba1c93fbc
+
+== 3. Résumé de déclaration de Nature (MOESM2, Nature Portfolio Reporting Summary)
+Adresse      : https://static-content.springer.com/esm/art%3A10.1038%2Fs41586-026-10644-y/MediaObjects/41586_2026_10644_MOESM2_ESM.pdf
+               (code 200, application/pdf, 79 853 octets), 09:05:23
+Fichier      : gottweis-2026-nature-reporting-summary-MOESM2.pdf
+Pages        : 4. Son texte extrait est identique, caractère pour caractère après réduction des blancs, aux pages 25 à 28
+               du PDF de l'article (contrôle par cmp, 11 384 octets de part et d'autre).
+SHA-256      : 16721f02e153deb6b105e3d6e2126881add79838067a34a72c8f296707f443df
+
+== 4. Prépublication arXiv 2502.18864, version 1 (26 février 2025) : « Towards an AI co-scientist »
+Adresse      : https://arxiv.org/pdf/2502.18864v1 (code 200, application/pdf, 3 154 437 octets), 09:05:46
+Fichier      : gottweis-2025-arxiv-2502.18864v1-towards-an-ai-co-scientist.pdf
+Pages        : 81 (pdfinfo) ; numéros imprimés égaux aux numéros de page du PDF.
+SHA-256      : 80730ea110ad450411aa8352a785e996cfcda06afd6e1c60277cb64a65cb676a
+
+== 5. Prépublication arXiv 2502.18864, version 2 (29 juin 2026) : manuscrit accepté par Nature
+Adresse      : https://arxiv.org/pdf/2502.18864v2 (code 200, application/pdf, 5 885 207 octets), 09:05:47 ;
+               l'adresse sans numéro de version (https://arxiv.org/pdf/2502.18864, 09:05:30) rend le même fichier.
+Fichier      : gottweis-2026-arxiv-2502.18864v2-revision-nature.pdf
+Titre interne: « [CoS] Nature revision AAP » ; 157 pages (commentaire arXiv : 42 pages principales, 115 supplémentaires).
+SHA-256      : e603a77c9d2bdfb528313e4cf35405b72261e018a70da724fcebca94c96e4716
+Remarque R11 : octet pour octet identique au fichier déjà versé docs/sources/pdf/bisociation-fertilite-v1/arxiv-2502.18864.pdf
+               (même empreinte, contrôlée par sha256sum le 9 novembre 2026). Copie gardée ici pour que le dossier soit complet ;
+               git ne stocke qu'un seul objet pour deux contenus identiques.
+
+== Extraction du texte (une sortie par PDF, nom = nom du PDF + « -pages.txt »)
+Commande, page par page, pour p de 1 au nombre de pages donné par pdfinfo :
+    printf '======== PAGE %d ========\n' p
+    pdftotext -layout -enc UTF-8 -f p -l p FICHIER.pdf - | tr -d '\f'
+    printf '\n'
+pdftotext version 24.02.0 (poppler). Le séparateur « ======== PAGE N ======== » porte le numéro de page du PDF ;
+c'est ce numéro que citent les notes, avec la page de la revue entre parenthèses quand elle est imprimée.
+Contrôle : nombre de séparateurs égal au nombre de pages de pdfinfo pour les cinq fichiers (81, 157, 28, 4, 120).
+Limite connue : le texte des figures de la version 1 d'arXiv est parfois illisible (police non décodée) ; les légendes le sont.
+
+== Licences
+Article et informations supplémentaires de Nature : Creative Commons Attribution 4.0 (page 10 du PDF de l'article).
+Prépublications arXiv : licence non relevée ici.
+
+== Sous-dossier conditions-google-labs-lu-2026-11-09/
+Pages des conditions de Google Labs et du produit « Hypothesis Generation », lues le 9 novembre 2026 ; voir son propre manifeste.
+
+Version 1 ; jamais réécrite (R12).

@@ -1,0 +1,453 @@
+{
+ "titre": "Couples de la révision 4 de T0.6 candidat 12 (révision 3 → révision 4), variante (b), défaut : grandeurs de coût de 7a retirées",
+ "variante": "b",
+ "source": "brouillons/T0.6-organismes-v0-v1-candidat12-r3.md",
+ "source_sha256": "c24e268ee9821d1f37ff612023a9f07735864614f57e3a9cf58517b05bc55331",
+ "couples_contre_lecture_3": "prereg/contre-lectures/T0.6-organismes-v0-v1-candidat12-r3-cl3-couples-v1.json",
+ "couples_contre_lecture_3_sha256": "e3846ae5d91cf9de5b437710188d514ae1e563ce610e306833c0c582024a8e54",
+ "regle": "appliqués dans l'ordre ; chaque « ancien » présent exactement une fois au moment de son application, sinon arrêt sans écriture",
+ "notes_journal": [
+  "## Choix et interprétations du rédacteur de la révision 4",
+  "- **Y3** : la consigne dit au point 1 « Y3 à Y8 et Y10 à Y12 tels quels » et au point 2 « à la place de Y3, un couple neuf » (option (b)). Lu ainsi : dans la variante (b), Y3 n'est pas appliqué et W-C1 prend sa place, au même lieu, avec un « ancien » prolongé jusqu'à la fin de la liste des grandeurs ; dans la variante (a), Y3 est appliqué tel quel.\n- **Y11 et Y12** sont appliqués tels quels, puis corrigés par W-E2 et W-K1 : leurs phrases « Y1 à Y12 appliqués » sont fausses à la révision 4.\n- **Y7** est appliqué tel quel ; dans la variante (b), la puce entière est ensuite réécrite par W-C3 : la cause du compteur `jetons_generes` lue dans le code (Y7, sans donnée de 7a) est gardée, le rapport tiré de 7a est retiré.\n- **W-B1, W-B2, W-B3** prennent les « anciens » de Y1, Y2 et Y9 ; celui de W-B3 est prolongé jusqu'à la fin du pas 3, pour remettre ce pas dans l'ordre.\n- **X19** (plan d'analyse, point 8 : actions tronquées à 400 jetons rapportées par condition) est gardé : la consigne nomme « Ce que les auteurs savaient », « Puissance » et le devis ; X19 ne porte aucun nombre de 7a ; le retirer toucherait une section gelée. Point ouvert pour la contre-lecture 4.\n- **Devis** : la révision 3 n'y portait aucune grandeur de coût de 7a (heures et mémoire de la lecture A, prix des registres) : rien n'y est retiré ; W-E4 y ajoute le renvoi du plafond (R-2053), sans seuil d'alerte.\n- **Empreinte canonique** : la consigne dit « recalculée par le code de `configuration_v6` » ; ce module n'a pas de fonction d'empreinte ; `lanceur_v6` importe `empreinte_config` de `src/controle_ia/t06/lanceur.py`, qui hache `manifeste.config_canonique` (JSON trié, compact, UTF-8). Calculée par ce code, au commit `1609a4bf`, sur la copie octet pour octet du brouillon 5 (`git show 1609a4bf:docs/notes/g0-deux-semaines-v1/config-t06-reel-v1-brouillon5.json`, sha256 `b7a5c1baeee13f7589b296fb166180515422ebc8c7eff703994bb5b6835ae527`) : `ca8003f90a9557ba42c8774e263407bdc2f4824b7f978f4c10f2e166ae97dd6d`, égale à l'attendu (R-2064) ; rejouée par le script (section « Contrôles »).\n- **Lignes du lanceur v13** (au commit `1609a4bf`) : la consigne cite « l. 140 » pour la forme de l'amorce ; la l. 140 joue `calendrier`, la forme de l'amorce est vérifiée à la l. 143 (l. 141-143 : amorce de S, empreinte, forme) ; le texte cite 143. La contre-lecture 3 cite « l. 180 » pour `[ \"$PLC\" = 200 ]` : c'est la l. 197 ; le texte cite 197. `commit_s` l. 112 et `merge-base --is-ancestor` l. 127 : conformes à la consigne.\n- **EMPREINTES_CODE_T06** : une seule valeur, une chaîne entre accents graves qui porte les huit fichiers du point 15 avec leurs sha256 ; la table de la révision 3 ajoutait « et les modules qu'ils importent » : couverts par le commit cité (`exiger_code_cite` compare tout l'arbre gelé), non listés.\n- **Entrée de la contre-lecture 4** : `controle_ia.prereg.problemes` exige deux empreintes distinctes par entrée « Contre-lecture k » ; l'entrée « à faire » porte celles des pièces à donner, ce qui satisfait le contrôle sans qu'aucune contre-lecture 4 soit faite. Aucun marqueur neuf n'est ajouté (la consigne fixe les deux qui restent) ; l'avertissement est écrit dans l'entrée. Point ouvert.",
+  "## Valeurs des marqueurs remplis et leur source",
+  "- COMMIT_CODE_T06 = `1609a4bf2c1572f72bb8542d81d963ac6a8481c4` (consigne, point 4 ; `git rev-parse 1609a4bf`), aux deux occurrences (en-tête, ligne d'engagement).\n- EMPREINTES_CODE_T06 et EMPREINTE_AMORCE_T06 : `git show 1609a4bf:<chemin> | sha256sum` le 10 novembre 2026 vers 00:40 UTC, pour les huit fichiers du point 15 : `scripts/lancer_t06_v13.sh` `6940a337d5e0c9a736aa7087275c5f6328133b67ed4df1c94535ba06a1965416`, `scripts/amorce_instance_t06_v11.sh` `43d856596f4ff934ae6faa445faed0d00aaaa264b23b0bda344b6888dcd5e859`, `scripts/tests-cibles-t06-v3.txt` `e76d5e6b7c32140b549de20f061a2e562df9201c5daab4060fd1ca54a05f42e2`, `scripts/tests-exclus-t06-v3.txt` `ab70a1ed4b59bdb5f488e453055029806cde30c36552684f686097fbea8ed81c`, `src/controle_ia/t06/session_v12.py` `5b4ad5e9fa39c4a803050ed118157d005bcb30551a54a6822f38a15ca0ddd90e`, `src/controle_ia/t06/lanceur_v6.py` `e329493b5d54fe52f6eb278b1314a78f905ca082a51ee1a0c5c3a77bd400ac80`, `src/controle_ia/t06/configuration_v6.py` `7899622515588284d1045c72aee95d109ff755f525d3c4bcd70df14caf6fad8e`, `src/controle_ia/audit_fuite_r1_v4/bras_b_v4.py` `317a7ea551abace1b3b78acde543688ab33bfda57cd15d8e6072f0826ce6fa17` : **toutes égales au point 15**.\n- CHEMIN_CONFIG_T06 = `prereg/T0.6-organismes-config-7b-v1.json` (consigne ; nom proposé par l'essai à blanc, R-2064 ; absent de `main` le 10 novembre, à créer dans S).\n- EMPREINTE_CONFIG_T06 = `ca8003f90a9557ba42c8774e263407bdc2f4824b7f978f4c10f2e166ae97dd6d` (empreinte canonique, ci-dessus).\n- EMPREINTE_RELU_CL3_T06 = `c24e268ee9821d1f37ff612023a9f07735864614f57e3a9cf58517b05bc55331` ; CHEMIN_RAPPORT_CL3_T06 = `prereg/contre-lectures/T0.6-organismes-v0-v1-candidat12-r3-cl3.md` ; EMPREINTE_RAPPORT_CL3_T06 = `3930d4f9306395694c7dd541395c28aa9ad478db3909b529b76630d8e4766f46` (consigne ; `sha256sum` des deux fichiers le 10 novembre : égales).\n- Laissés : MOT_LAZAR_GO_7B (mot de Lazar attendu) ; DECISION_LAZAR_ECART_DT4_R2041 (la mère le remplit par renvoi à R-2048, à l'audit DT-4 et à son complément).",
+  "## Interdits tenus, et un écart de forme déclaré",
+  "- Empreinte de la consigne vérifiée avant tout (`460573da…`, conforme) ; empreintes de toutes les pièces vérifiées (révision 3 et son journal, contre-lecture 3 et ses couples, rapports d'intégration et d'essai à blanc, audit DT-4 : conformes).\n- Jamais ouverts, d'aucune manière : `diag/*/lecture-sondes-t06.json` (dont celui de 7a), la lecture B et la branche `donnees/lecture-b-7a-quarantaine-v1`, tout `diag/` et `runs/` de 7a, la branche `essai/t06-explo-v3`, `donnees/bras-attaque*`, `donnees/mode-tenu-a-l-ecart*`, `docs/notes/bras-attaque/`, les pièces de l'étiqueteur ; `extraire_mesures_epreuve_t06_v1.py` jamais lu ni lancé. Le dossier de l'essai à blanc du développeur (`essai-S/`, dans le même bloc-notes de session) n'a pas été ouvert.\n- Aucune valeur de clé ; ni `env`, ni `printenv`, ni `set` sans argument, ni `export -p`, ni `/proc/*/environ` ; le sous-processus du script reçoit un environnement réduit à `PYTHONPATH` et `PATH`.\n- Aucun appel de modèle ni d'interface externe, aucune dépense, aucun `vastai`.\n- Git en lecture seule : `rev-parse`, `cat-file -t`, `status --short`, `git show 1609a4bf:<chemin>` ; **écart de forme déclaré** : pour faire tourner le code de `1609a4bf` (empreinte canonique, `exiger_citations_t06`, `exiger_prereg_scelle`), le dossier `src/controle_ia` de ce commit a été extrait par `git archive 1609a4bf src/controle_ia | tar -x` dans le bloc-notes de session, hors du dépôt (lecture seule, contenu identique à un `git show` fichier par fichier, aucun chemin sous embargo) ; les interdits communs disent « `git show` seulement ».\n- Écrit dans le dépôt : les cinq sorties sous `brouillons/` et leurs compagnons `.sha256`, rien d'autre ; rien committé, rien sous `prereg/` ; `/home/user/integ-t06` non touché ; aucun essai de la suite lancé.\n- Aucun refus de contrôle de permissions ni de classifieur rencontré.\n- Aucune valeur de sonde vue ; aucune lecture de la lecture A elle-même (ses heures, comptes et mémoire sont pris dans R-2040 et dans la révision 3).",
+  "## Points ouverts",
+  "1. **Mot de Lazar sur les grandeurs de coût de 7a** : option (b) appliquée par défaut ; si Lazar choisit (a), la mère applique à la révision 3 les couples de la variante (a) (texte obtenu dans le dossier temporaire, empreinte au début de ce journal ; un marqueur de plus, MOT_LAZAR_GRANDEURS_COUT_7A).\n2. **Marqueurs laissés** : MOT_LAZAR_GO_7B ; DECISION_LAZAR_ECART_DT4_R2041 (R-2048, audit, complément).\n3. **Complément de l'audit DT-4** avant le scellement (R-2057) : il doit couvrir aussi cette révision, ses couples et son journal (les « avant » des couples W-C1 et W-C3 et le couple Y3 de la variante (a) portent les grandeurs de coût déjà sur `main` dans la révision 3 : inhérent à un couple qui retire ou garde un texte).\n4. **Contre-lecture 4** par un autre modèle : l'entrée « à faire » passe `problemes` (deux empreintes de pièces) ; ne pas sceller avant que ses couples l'aient réécrite.\n5. **Relevé de la liste v3 sur l'arbre de S réel** sous `requirements-gpu.txt`, recommandé par l'essai à blanc (§ 5) : non exigé par ce texte, l'amorce gardant le compte sur l'instance ; un compte relevé avant le scellement et différent de 2022 se déclare dans le texte.\n6. **En ligne, avant la création** : `controles` (fetch, S ancêtre d'`origin/main`, jetons), branche de sortie neuve, S poussé par sa fusion dans `main`.\n7. **X19** gardé (troncatures rapportées, sans seuil) : à confirmer par la contre-lecture 4.\n8. **Hors de ce texte** : la consigne cite l. 140 du lanceur pour la forme de l'amorce (c'est l. 143) ; l'embargo de `docs/notes/bras-attaque/`, copié mécaniquement par tout clone et toute fusion (R-2064), concerne aussi la construction de S et sa fusion : décision de la mère et de Lazar, hors du mandat de ce rédacteur."
+ ],
+ "couples": [
+  {
+   "id": "W-B1 (voie B, à la place de Y1) ce que la chaîne exige du commit cité ; S descend de 1609a4bf, fusionné dans main",
+   "source": "rédacteur de la révision 4",
+   "lieu": "en-tête, ligne « Commit du code d'analyse » (parenthèse)",
+   "raison": "Y1 décrit la voie A (commit d'intégration cité) ; la mère a retenu la voie B (R-2062), vérifiée à blanc (R-2064) : le commit cité reste 1609a4bf ; la vérité de Y1 (arbre gelé entier, pas la seule chaîne v13) est gardée",
+   "ancien": "(révision 3 : commit de la course de confirmation 7b, dont les fichiers de la chaîne v13\n  sont égaux à l'octet à ceux du code joué par 7a, `1609a4bf`, point 15 en tête, tout écart : nœud ; révisions antérieures : branche",
+   "nouveau": "(révision 4, **voie B** (R-2062, R-2064) : le commit cité est **`1609a4bf` lui-même**, code joué par 7a, dont les fichiers de la chaîne v13 portent les empreintes du point 15 en tête (recalculées au commit cité : égales) ; **ce que la chaîne exige de ce commit** (contre-lecture 3, B1) : sur l'instance, `exiger_code_cite` (`src/controle_ia/harnais/validation_reelle.py`, appelé par `lanceur_v6.executer` dès qu'un préenregistrement est donné, l. 179) compare par `git diff --quiet` le commit cité au commit cloné, qui est le commit de scellement S, sur tout l'arbre gelé (`CHEMINS_GELES` : tout l'arbre hors `prereg`, `brouillons`, `registres`, `docs`, `diag`, `runs`, `donnees`, `livrables`, `papiers`, `traces` et `CLAUDE.md`) ; le commit cité a donc **le même arbre gelé que S**, en entier (code, essais, scripts, `.claude`, dépendances), et non la seule chaîne v13 ; **voie B** : S descend de `1609a4bf` et ne change rien dans ce périmètre (il n'ajoute que ce texte et la configuration de 7b sous `prereg/`, avec leurs compagnons ; avant lui, sur la même lignée, un commit de sceaux sous `docs/`), puis S est **fusionné dans `main`** : le lanceur v13 exige que S soit un ancêtre d'`origin/main` (`scripts/lancer_t06_v13.sh`, l. 127) et trouve S comme le commit qui ajoute `prereg/T0.6-organismes-v0-v1.md.sha256` (`commit_s`, l. 112) ; l'amorce clone S, non la tête de `main` (amorce v11, l. 291) ; l'arbre gelé de S étant celui de `1609a4bf`, `exiger_code_cite` passe avec ce commit cité (jouée à blanc sur un commit S′ d'essai, `6d0a4a49`, descendant de `1609a4bf` : passe avec S′ cloné, refus avec la tête d'une copie de `main` où S′ est fusionné ; rapport d'essai à blanc, `docs/notes/g0-deux-semaines-v1/integration-t06-v13-main-v1/rapport-essai-blanc-S-voie-b-v1.md`, `4f4eb27d…`, § 3.4 et § 4 ; R-2064) ; la **voie A** (commit d'intégration de la chaîne dans `main` cité à la place de `1609a4bf`, couples Y1, Y2 et Y9 de la contre-lecture 3) est écartée : sur l'arbre intégré, la suite ciblée v3 donne 2 017 passés et 5 échecs, dont deux arrêteraient l'amorce (R-2062 ; rapport d'intégration, `427def65…`, § 5) ; révisions antérieures : branche"
+  },
+  {
+   "id": "W-B2 (voie B, à la place de Y2) « Tests attendus » : compte valant pour l'arbre gelé entier, relevé sur 1609a4bf et sur S′",
+   "source": "rédacteur de la révision 4",
+   "lieu": "en-tête, ligne « Tests attendus » (réserve)",
+   "raison": "Y2 demande un relevé sur l'arbre du commit d'intégration (voie A) ; en voie B l'arbre gelé joué est celui de 1609a4bf, où 2022 a été relevé par 7a, et l'arbre de S′ à blanc le confirme (2 019 + 3 essais pypandoc d'environnement) ; la vérité de Y2 (compte valant pour l'arbre entier) est gardée",
+   "ancien": "Réserve : le compte vaut pour les fichiers d'essais de `1609a4bf` ; si le commit de 7b change un fichier de la liste v3, le compte est relevé à nouveau avant le scellement (sinon l'amorce s'arrête avant le run : garde voulue, sans donnée fausse).",
+   "nouveau": "Réserve (précisée par la contre-lecture 3 ; révision 4, voie B) : le compte vaut pour **l'arbre gelé entier**, non pour les seuls fichiers d'essais : les essais de la liste v3 lisent le code, `.claude/hooks/garde_calcul.py`, `registres/go.md`, `prereg/` et des documents, et deux fichiers de la liste font l'inventaire des constructeurs d'invite de tout `src/`. Avec la voie B, l'arbre gelé du commit de scellement S est celui de `1609a4bf` (ligne « Commit du code d'analyse ») : `2022` a été relevé sur cet arbre par 7a (ci-dessus) et **sur l'arbre de S′ à blanc** (commit d'essai `6d0a4a49`, descendant de `1609a4bf`, texte factice et configuration de 7b en place sous `prereg/` : « 3 failed, 2019 passed », les trois échecs étant `tests/test_corpus_arxiv.py`, module `pypandoc` absent de l'environnement processeur de la mère et présent sur l'instance par `requirements-gpu.txt` ; 2 019 sur 2 019 hors ces trois ; rapport d'essai à blanc `4f4eb27d…`, § 5 ; R-2064) ; aucun essai n'y change de résultat du fait de ce texte ou de la configuration ; les essais venus de `main` (27 fichiers, code de T0.7 et de P3-bis) ne sont pas dans l'arbre de S et n'y comptent pas. S ne change rien dans le périmètre gelé (sinon `exiger_code_cite` refuse) et seul ce texte, factice à S′, y diffère ; le rapport d'essai à blanc recommande de rejouer la liste sur l'arbre de S réel sous `requirements-gpu.txt` (§ 5) : un compte autre que 2022 relevé avant le scellement remplacerait 2022 ici, écart déclaré ; relevé après, il demanderait une version nouvelle ; à défaut de ce relevé, l'amorce, qui rejoue la liste sur l'instance avant le run, s'arrête sur tout autre compte (après environ 35 minutes de carte : garde voulue, sans donnée fausse, mais une tentative et des heures de calendrier perdues)."
+  },
+  {
+   "id": "W-C1 (option (b), à la place de Y3) grandeurs de coût de 7a : origine non établie (R-2057), retirées",
+   "source": "rédacteur de la révision 4",
+   "lieu": "« Ce que les auteurs savaient », première puce",
+   "raison": "R-2057 réserve 1 et M1 de la contre-lecture 3 : origine indéterminée ; option (b) de la consigne, défaut et recommandation en attente du mot de Lazar : les grandeurs sont retirées du texte ; ce couple remplace Y3, qui leur donnait un statut sans les retirer (Y3 reste dans la variante (a))",
+   "ancien": "et les seules grandeurs de coût suivantes, reçues de la session mère : 64 tâches, 1 épisode, T = 10 actions par condition (640 actions par condition) ; coût lisible pour 469 à 537 actions sur 640 (16 à 27 % illisibles) ; écart type par tâche de la différence appariée 0,98 à 1,34 ; demi-largeur de l'intervalle à 95 % ≈ 0,27 à 0,32 pour n = 64 ; 10 000 tirages, 10 000 permutations ; le saboteur instruit à dose 0 tronque 14,2 % de ses actions à 400 jetons ; le compteur `jetons_generes` vaut 1,59 fois la somme des jetons par action.",
+   "nouveau": "et des grandeurs de coût de 7a reçues de la session mère sortante par message (R-2041, R-2046) : nombres d'actions au coût lisible par condition, écart type par tâche de la différence appariée du coût, demi-largeur de l'intervalle à 95 %, nombres de tirages et de permutations, taux de troncature du saboteur instruit à dose 0, rapport du compteur `jetons_generes` ; **leur origine n'est pas établie** (absentes de la lecture A et de sa sortie ; l'ordre de 7a, § 4 B, range le coût par condition dans la lecture B ; audit DT-4, réserve 1, R-2057 ; contre-lecture 3, M1) : **la révision 4 les retire** de ce texte (option (b), défaut et recommandation en attente du mot de Lazar) ; aucune n'y est plus écrite, ni ici, ni en section « Puissance », ni au devis ; la révision 3 qui les porte reste telle quelle (`c24e268e…`, R12), et les couples de la variante (a) les garderaient avec le statut que leur donnait la contre-lecture 3 (Y3)."
+  },
+  {
+   "id": "Y4 (majeur) ce que le rédacteur a lu de 7a : le champ des graines du manifeste",
+   "source": "contre-lecture 3 (couple recopié à l'octet)",
+   "lieu": "voir la contre-lecture 3",
+   "raison": "couple de la contre-lecture 3 (R2), appliqué tel quel (consigne, point 1)",
+   "ancien": "Il n'a vu ni la valeur ni le signe d'aucun effet de 7a.",
+   "nouveau": "Il a lu aussi le seul champ `graines[*].entropie` du manifeste de 7a (`runs/20261109-070232-t06-reel/manifeste.json`, branche `essai/t06-explo-v3`), pour vérifier que les graines de 7b sont neuves (journal de la révision 3 ; R-2046) ; la valeur qu'il en cite au point 15 n'est pas vérifiée par la contre-lecture 3. Il n'a vu ni la valeur ni le signe d'aucun effet de 7a."
+  },
+  {
+   "id": "Y5 (majeur) écart DT-4 : nœud tranché, et sondes calculées par la chaîne de 7a",
+   "source": "contre-lecture 3 (couple recopié à l'octet)",
+   "lieu": "voir la contre-lecture 3",
+   "raison": "couple de la contre-lecture 3 (R2), appliqué tel quel (consigne, point 1)",
+   "ancien": "(écart DT-4, R-2041 ; nœud de Lazar en cours). La lecture B est versée hors de `main` ; la session mère n'en a vu aucune valeur (R-2041).",
+   "nouveau": "(écart DT-4, R-2041 ; nœud tranché par Lazar le 9 novembre 2026, option (b), R-2048). La lecture B est versée hors de `main` ; la session mère n'en a vu aucune valeur (R-2041). La chaîne de 7a a elle-même calculé et écrit sur l'instance le test croisé et les couples descriptifs sur les épisodes de 7a (fichier `lecture-sondes-t06.json` du run, scellé, fermé par DT-4 ; lecture A, en-tête et § 4) : des sondes ont donc été passées sur 7a par la machine, et ce lecteur en a vu des valeurs ; ce texte n'écrit nulle part que 7a n'a été lue par aucune sonde, et T0.7 déclare l'écart (R-2048)."
+  },
+  {
+   "id": "Y6 (mineur) dernière puce : aucune sonde commandée ni lue par ce texte sur 7a",
+   "source": "contre-lecture 3 (couple recopié à l'octet)",
+   "lieu": "voir la contre-lecture 3",
+   "raison": "couple de la contre-lecture 3 (R2), appliqué tel quel (consigne, point 1)",
+   "ancien": "aucune ligne de lecture ne porte sur les épisodes de 7a, et aucune sonde n'y est passée par ce texte.",
+   "nouveau": "aucune ligne de lecture de ce texte ne porte sur les épisodes de 7a, et ce texte n'y commande ni n'y lit aucune sonde (celles que la chaîne de 7a a calculées restent fermées : puce « Un lecteur exploratoire » ci-dessus)."
+  },
+  {
+   "id": "Y7 (mineur) compteur jetons_generes : cause lue dans le code",
+   "source": "contre-lecture 3 (couple recopié à l'octet)",
+   "lieu": "voir la contre-lecture 3",
+   "raison": "couple de la contre-lecture 3 (R2), appliqué tel quel (consigne, point 1)",
+   "ancien": "aucun devis ni aucune lecture de ce texte ne s'appuie sur lui (cause non lue ; à examiner par la contre-lecture 3 si elle le juge utile).",
+   "nouveau": "aucun devis ni aucune lecture de ce texte ne s'appuie sur lui (cause lue dans le code au commit `1609a4bf` par la contre-lecture 3, sans aucune donnée de 7a : `lanceur_v6.py` crée un seul dictionnaire `chrono` (l. 216), le passe à la génération des données de distillation (l. 228) puis aux épisodes d'évaluation (l. 278) et l'écrit dans les descriptifs des épisodes (l. 279) ; `harnais/episode.py` (l. 241) y ajoute la longueur de chaque action générée ; le compteur additionne donc les 3 200 actions de la distillation aux 5 760 de l'évaluation, soit un rapport d'environ 1,56 à longueurs égales : compteur descriptif cumulé depuis le début du run, comme les durées relevées par la lecture A, § 4, et non un défaut de mesure du coût ; le rapport 1,59 lui-même n'est pas vérifié)."
+  },
+  {
+   "id": "Y8 (mineur) devis : marge de relance, carte de repli, bras B, disque après la fin du GO",
+   "source": "contre-lecture 3 (couple recopié à l'octet)",
+   "lieu": "voir la contre-lecture 3",
+   "raison": "couple de la contre-lecture 3 (R2), appliqué tel quel (consigne, point 1)",
+   "ancien": "une création plus tardive ce jour-là est un nœud de Lazar (« Liste d'arrêt », L11).",
+   "nouveau": "une création plus tardive ce jour-là est un nœud de Lazar (« Liste d'arrêt », L11). **Marge de relance** (contre-lecture 3) : le calendrier de la configuration refuse toute création le 16 novembre (`session_v2 calendrier` joué hors ligne au commit `1609a4bf` : « dernier jour de création (2026-11-15) dépassé le 2026-11-16 »), et l'amorce rejoue ce contrôle au jour de l'instance (amorce v11, l. 398) : une création le 15 ne laisse place à **aucune relance** (arrêt aux essais vers 0,6 h, erreur de mémoire à la distillation vers 5 h, relance sur H200). Pour garder une relance complète, la première création se fait au plus tard le 14 novembre vers 17:00Z (premier essai au débit moitié, 27,2 h, relance créée avant 20:48Z le 15), et plus tôt si les scellements le permettent. **Carte de repli** (GO-2026-11-07-02 : H200 NVL d'emblée après trois heures sans A100 conforme) : aux durées de 7a, 13,59 h × 4,70 = 63,9 USD de calcul, ≈ 72 USD au plus avec le disque et le téléchargement ; au débit moitié, ≈ 136 USD ; sous le plafond. Le bras B (annexe, GO-2026-11-07-04), que 7a n'a pas joué (épreuve à blanc), ajoute environ 20 minutes de carte après la poussée finale. Le disque d'une instance arrêtée n'est couvert que jusqu'à la fin du GO (« Liste d'arrêt ») : les 72 h du poste « disque » sont une borne, non un droit au-delà du 16 novembre."
+  },
+  {
+   "id": "W-B3 (voie B, à la place de Y9) plan de la confirmation, pas 3 : construction de S, fusion dans main, gardes jouées à blanc",
+   "source": "rédacteur de la révision 4",
+   "lieu": "« Ce qui manque pour lancer », plan de la confirmation 7b, pas 3 (pas entier)",
+   "raison": "Y9 décrit un commit d'intégration porté dans main (voie A) ; la voie B construit S sur la lignée de la chaîne, puis le fusionne dans main (R-2062, R-2064) ; la vérité de Y9 (gardes jouées à blanc avant la création, branche de sortie neuve) est gardée ; l'« ancien » est celui de Y9 prolongé jusqu'à la fin du pas, pour remettre le pas dans l'ordre (marqueurs, conformité, construction de S, fusion, essais)",
+   "ancien": "3. commit de 7b sur une branche `prep/…` : chaîne v13 égale à `1609a4bf` (point 15), configuration copiée sous `prereg/` avec son compagnon `.sha256` ; marqueurs remplis ; conformité vérifiée par `controle_ia.prereg.problemes` (liste vide) ; scellement par la session mère sous `prereg/T0.6-organismes-v0-v1.md` (nom lu par `scripts/lancer_t06_v13.sh`, l. 79), commit poussé, ancêtre d'`origin/main` ;",
+   "nouveau": "3. **commit de scellement S, voie B** (R-2062, R-2064) : marqueurs remplis et conformité vérifiée par `controle_ia.prereg.problemes` (liste vide) ; S, construit par la session mère, descend de `1609a4bf` sans rien changer au périmètre gelé (`CHEMINS_GELES` de `src/controle_ia/harnais/validation_reelle.py` ; avant lui, sur la même lignée, le commit des 71 sceaux des notes de `docs/notes/g0-deux-semaines-v1/`, copie de `00cc8fce`) et porte ce texte scellé sous `prereg/T0.6-organismes-v0-v1.md` (nom lu par `scripts/lancer_t06_v13.sh`, l. 79) et la configuration de 7b sous `prereg/T0.6-organismes-config-7b-v1.json` (copie octet pour octet du brouillon 5, `b7a5c1ba…`), chacun avec son compagnon `.sha256` ; les tâches et les consignes de P3 citées sont déjà scellées à `1609a4bf` ; S est ensuite **fusionné dans `main`** avec les résolutions de l'intégration (R-2055 : configuration de 7a, version de `main` gardée sous son nom et version jouée ajoutée sous `config-t06-course-explo-v1-joue-be729130.json` ; `registres/go.md` de `main`), et le commit de fusion est poussé : le lanceur v13 exige S ancêtre d'`origin/main` (l. 127) et le trouve par `commit_s` (l. 112) ; le commit cité reste `1609a4bf` (en-tête) ; joué à blanc sur un S′ d'essai (`6d0a4a49`, R-2064) : `controles` hors ligne conforme du 10 au 15 novembre et refusé le 16, gardes `exiger_code_cite`, `exiger_citations_t06` et `exiger_prereg_scelle` passées, cas d'artefact refusés ; **à jouer sur S réel avant la création, sans dépense** : `controles` en ligne (`fetch`, S ancêtre d'`origin/main`, jetons présents), branche de sortie `T06_BRANCHE` absente du dépôt distant (l'amorce refuse une branche déjà présente) ; conséquence déclarée (R-2062) : après la fusion, la suite de `main` porte deux échecs connus (inventaire des constructeurs d'invite, R-2042 ; liste v3 sans les essais venus de `main`), sans effet sur l'instance, qui clone S ;"
+  },
+  {
+   "id": "Y10 (mineur) contre-lecture 1 : réserve de lignée ; empreinte du candidat 4 non vérifiée par la contre-lecture 3",
+   "source": "contre-lecture 3 (couple recopié à l'octet)",
+   "lieu": "voir la contre-lecture 3",
+   "raison": "couple de la contre-lecture 3 (R2), appliqué tel quel (consigne, point 1)",
+   "ancien": "fille 9 (sous-agent neuf, lignée Opus 5.5), R-1665. Brouillon relu : candidat 4, `a81cd47ef58941e91db8e12a98353293451085828f6c18fd6d3ee34186a79a53` (empreinte citée par l'en-tête, « Statut antérieur : candidat 5 »).",
+   "nouveau": "fille 9 (sous-agent neuf, lignée Opus 5.5, la même lignée que l'autrice : réserve déclarée à R-1665), R-1665. Brouillon relu : candidat 4, `a81cd47ef58941e91db8e12a98353293451085828f6c18fd6d3ee34186a79a53` (empreinte citée par l'en-tête, « Statut antérieur : candidat 5 », et vérifiée par la mère le 7 novembre 2026, R-1668 ; **non vérifiée par la contre-lecture 3** : le fichier n'est ni sur `main`, ni aux commits `8cb539f9`, `fe240b24` et `1609a4bf`, ni sur les trois branches `prep/` de son clone ; il est à récupérer sur la branche du candidat 5, `prep/t06-candidat2-v1`, R-1668)."
+  },
+  {
+   "id": "Y11 (mineur) statut : contre-lu",
+   "source": "contre-lecture 3 (couple recopié à l'octet)",
+   "lieu": "voir la contre-lecture 3",
+   "raison": "couple de la contre-lecture 3 (R2), appliqué tel quel (consigne, point 1)",
+   "ancien": "**Non scellé, non contre-lu** : la contre-lecture 3 (R2, section « Contre-lecture ») le couvrira.",
+   "nouveau": "**Non scellé** ; contre-lu par la contre-lecture 3 (R2, section « Contre-lecture »), dont les couples Y1 à Y12 sont appliqués par script après ceux du rédacteur."
+  },
+  {
+   "id": "Y12 (mineur) entrée de la contre-lecture 3 : faite",
+   "source": "contre-lecture 3 (couple recopié à l'octet)",
+   "lieu": "voir la contre-lecture 3",
+   "raison": "couple de la contre-lecture 3 (R2), appliqué tel quel (consigne, point 1)",
+   "ancien": "- **Contre-lecture 3 (R2) — candidat 12, révision 3** : à faire, avant le scellement, par un sous-agent neuf d'un autre modèle que le rédacteur de la révision 3 (Claude Opus 5.5 ; N-052), qui n'est pas le lecteur exploratoire de 7a (R-2041). Fichiers à lui donner explicitement, en plus de la consigne ci-dessus :",
+   "nouveau": "- **Contre-lecture 3 (R2) — candidat 12, révision 3** : faite le 9 novembre 2026 par un sous-agent neuf de la session mère `session_01QPDgKgACWyCkCN8HjqwNXy`, Claude Fable 5.2 d'après ce qu'il sait de lui (autre modèle que le rédacteur de la révision 3, Claude Opus 5.5 ; N-052 nomme Fable 5.1 : écart de version déclaré), qui n'a écrit aucune des pièces lues et n'est pas le lecteur exploratoire de 7a (R-2041) ; consigne scellée `docs/notes/g0-deux-semaines-v1/consignes-mere-2026-11-09-2200-v1/consigne-contre-lecture-3-t06-candidat12-r3-v1.md`, `79c279e89f7f906fd63bc6b278ff2a3399c3c63a055ed5b3a2e161cdfa786d06`. Verdict : « scellable après couples », le scellement n'ayant lieu qu'une fois le commit d'intégration éprouvé (en-tête, lignes « Commit du code d'analyse » et « Tests attendus »). Couples : `prereg/contre-lectures/T0.6-organismes-v0-v1-candidat12-r3-cl3-couples-v1.json` (empreinte : son compagnon `.sha256`), Y1 à Y12, appliqués tels quels, dans l'ordre, par script. Non vérifié par elle : les grandeurs de coût de 7a et l'entropie du manifeste de 7a (aucun `diag/` ni `runs/` de 7a ouvert), l'empreinte du candidat 4, l'écart de six champs entre la configuration du brouillon 5 et celle de 7a (comparaison arrêtée par un refus de classifieur, rapporté tel quel), l'état du dépôt distant. Fichiers donnés, en plus de la consigne ci-dessus :"
+  },
+  {
+   "id": "W-B4 (voie B) configuration de 7b : copie octet pour octet, six champs vérifiés (R-2056), noms après l'intégration (R-2055)",
+   "source": "rédacteur de la révision 4",
+   "lieu": "en-tête, ligne « Chemin de la configuration de T0.6 » (parenthèse)",
+   "raison": "R-2056 a vérifié l'écart de six champs, que la contre-lecture 3 n'avait pu vérifier (refus de classifieur) ; après l'intégration, le nom config-t06-course-explo-v1.json désigne sur main une autre version (R-2055) : la version jouée par 7a est citée par son empreinte et ses deux noms",
+   "ancien": "elle diffère de la configuration jouée par 7a (`config-t06-course-explo-v1.json`, `59e896b5…`) par six champs : fraction, ligne de GO, plafond, dernier jour de création, prix de relance, étiquette ;",
+   "nouveau": "elle diffère de la configuration jouée par 7a (`59e896b5…` : au commit `1609a4bf`, `docs/notes/g0-deux-semaines-v1/e3-ter-v1/config-t06-course-explo-v1.json` ; sur `main` après l'intégration, `config-t06-course-explo-v1-joue-be729130.json`, le premier nom y désignant l'instantané `1911a9e9…`, R-2055) par six champs exactement, vérifiés par la mère sur mot de Lazar (R-2056) : fraction, ligne de GO, plafond, dernier jour de création, prix de relance, étiquette ; **révision 4** : copiée octet pour octet sous ce chemin, aucun champ changé (sha256 du fichier `b7a5c1ba…` ; l'empreinte citée plus haut est l'empreinte canonique, JSON trié et compact, `controle_ia.t06.lanceur.empreinte_config`) ;"
+  },
+  {
+   "id": "W-C2 (option (b)) usage de 7a : seules les grandeurs de la lecture A restent",
+   "source": "rédacteur de la révision 4",
+   "lieu": "« Ce que les auteurs savaient », puce « Usage de 7a dans ce texte »",
+   "raison": "les grandeurs de coût étant retirées, la puissance ne s'appuie plus sur des variances de 7a",
+   "ancien": "les grandeurs ci-dessus ne servent qu'à la puissance (variances, section « Puissance »), au devis (heures, mémoire, section « Devis ») et à la garde d'équivalence (fraction 0,05, en-tête)",
+   "nouveau": "les seules grandeurs de 7a que ce texte emploie viennent de la lecture A (R-2040), hors l'entropie racine du manifeste de 7a, citée au point 15 pour montrer que les graines de 7b sont neuves, et ne servent qu'au devis (heures, mémoire, section « Devis »), à montrer que le plan de puissance d'avant 7a tient dans le GO (heures, section « Puissance ») et à la garde d'équivalence (fraction 0,05, en-tête) ; les grandeurs de coût reçues de la session mère sont retirées (révision 4, option (b))"
+  },
+  {
+   "id": "W-C3 (option (b)) puissance de 7b : plan d'avant 7a et heures de la lecture A, sans grandeur de coût",
+   "source": "rédacteur de la révision 4",
+   "lieu": "« Puissance », puce « Puissance de la confirmation 7b d'après 7a » (après Y7)",
+   "raison": "consigne, point 2 : la puissance de 7b s'appuie sur les heures de la lecture A et sur le plan de puissance d'avant 7a ; la cause du compteur lue dans le code (Y7) est gardée sans le rapport de 7a",
+   "ancien": "- **Puissance de la confirmation 7b d'après 7a** (révision 3 ; exploratoire, vu par les auteurs, R-522 ; coût seulement ; ordre de 7a, § 9.2 : la puissance d'après les heures et les variances, jamais d'après le signe ; grandeurs reçues de la session mère, section « Ce que les auteurs savaient ») : 7a a joué 64 tâches, 1 épisode, T = 10 actions par condition (640 actions par condition) ; coût lisible pour 469 à 537 actions sur 640 selon la condition (16 à 27 % illisibles) ; **écart type par tâche de la différence appariée 0,98 à 1,34**, contre 1,12 supposé plus haut (√2 × 0,795 : l'effet minimal 0,394 au plan (b) suppose cet écart type pour une différence de deux bras indépendants) ; demi-largeur de l'intervalle à 95 % ≈ 0,27 à 0,32 pour n = 64 (10 000 tirages ; 10 000 permutations pour la tendance). D'où, pour **une** comparaison (bilatérale à 5 %, puissance 80 %, approximation normale), un effet minimal détectable ≈ **0,34 à 0,47** en log10 d'après l'écart type (2,80 × écart type / √64) et ≈ **0,39 à 0,46** d'après les demi-largeurs rendues (demi-largeur × 2,80 / 1,96), au lieu de 0,394 : la puissance écrite au plan (b) tient au bas de la plage, pas au haut ; la puissance conjointe de T6-1 (deux différences) reste ≈ 0,69 à l'effet minimal de chaque comparaison (script v3). **Rien ne change** : 64 tâches, un épisode, T = 10, seuils, prédictions et signes ; la plage est écrite pour que le lecteur du verdict lise un nul « non détecté à cette puissance » à sa juste mesure. **Réserves de mesure tirées de 7a** : (a) 16 à 27 % des actions ont un coût illisible : la réserve « moins de la moitié des actions de (ii) à dose 1 lisibles » reste la seule règle, aucun seuil neuf ; (b) à dose 0, le saboteur instruit tronque 14,2 % de ses actions à 400 jetons : la borne de 400 jetons ne change pas (aucun chiffre de 7a ne change une forme), les troncatures sont rapportées par condition (plan d'analyse, point 8) ; (c) le compteur `jetons_generes` vaut 1,59 fois la somme des jetons par action : aucun devis ni aucune lecture de ce texte ne s'appuie sur lui (cause lue dans le code au commit `1609a4bf` par la contre-lecture 3, sans aucune donnée de 7a : `lanceur_v6.py` crée un seul dictionnaire `chrono` (l. 216), le passe à la génération des données de distillation (l. 228) puis aux épisodes d'évaluation (l. 278) et l'écrit dans les descriptifs des épisodes (l. 279) ; `harnais/episode.py` (l. 241) y ajoute la longueur de chaque action générée ; le compteur additionne donc les 3 200 actions de la distillation aux 5 760 de l'évaluation, soit un rapport d'environ 1,56 à longueurs égales : compteur descriptif cumulé depuis le début du run, comme les durées relevées par la lecture A, § 4, et non un défaut de mesure du coût ; le rapport 1,59 lui-même n'est pas vérifié).",
+   "nouveau": "- **Puissance de la confirmation 7b** (révision 4 ; option (b) pour les grandeurs de coût de 7a, défaut et recommandation en attente du mot de Lazar, R-2057 réserve 1 ; la révision 3 portait ici une puissance d'après ces grandeurs, retirée avec elles : section « Ce que les auteurs savaient ») : la puissance de 7b est **celle du plan d'avant 7a**, écrite plus haut et inchangée : effet minimal détectable à 80 % pour une comparaison 0,394 en log10 au plan (b) (0,495 à l'écart type prudent de 1), puissance conjointe de T6-1 0,687 si l'adaptateur témoin est neutre et 0,800 s'il baisse le coût comme le témoin instruit de P3 (sortie brute `brouillons/T0.6-organismes-v0-v1-brouillon2-pieces/puissance-t06-v2.txt`, `87813a3677e00312d91275fa88df9390880cd07179e5e6b654f1995f04851c50` ; script de puissance v3 `brouillons/T0.6-organismes-v0-v1-candidat2-pieces/puissance_t06_v3.py`, `0eea1f9e2f840f9b324d3051679a5813ed689e2bec7a8a7d96380e2bfb6883f3`, et sa sortie `puissance-t06-v3.txt`, `8a2205a130cace2e6144426346581118b3180ed56ae8bf26d0ad01e5cc52c0cb`), avec des écarts types tirés de P3 seul. 7b joue le même plan (64 tâches, 1 épisode, T = 10 actions par condition : configuration du brouillon 5, dont la configuration jouée par 7a ne diffère que par six champs étrangers au plan, R-2056) ; **la lecture A n'apporte ici que des heures** (R-2040) : 7a a joué ce plan sans arrêt en 12,97 h de run et 13,59 h d'instance, ce qui montre que l'effectif prévu tient sous le GO, son plafond et son calendrier, sans coupe (section « Devis ») ; aucune variance, aucun effectif lisible, aucun taux de troncature ni aucun autre nombre de coût de 7a n'entre ici. **Rien ne change** : 64 tâches, un épisode, T = 10, seuils, prédictions et signes ; un nul se lit « non détecté à cette puissance », à la mesure de la plage du plan d'avant 7a (écart type de P3, puis écart type prudent de 1). **Compteur `jetons_generes`** : il additionne les actions de la distillation et celles de l'évaluation (cause lue dans le code au commit `1609a4bf` par la contre-lecture 3, sans aucune donnée de 7a : un seul dictionnaire `chrono` dans `lanceur_v6.py`, l. 216, 228, 278 et 279 ; `harnais/episode.py`, l. 241) ; aucun devis ni aucune lecture de ce texte ne s'appuie sur lui. **Troncatures** : la précision du plan d'analyse, point 8 (actions tronquées à 400 jetons rapportées par condition ; révision 3, X19), est gardée : simple effectif rapporté, sans seuil ni nombre de 7a ; la borne de 400 jetons ne change pas."
+  },
+  {
+   "id": "W-C4 (option (b)) point 15 : grandeurs retirées à la révision 4",
+   "source": "rédacteur de la révision 4",
+   "lieu": "en-tête, point 15, puce « puissance et devis »",
+   "raison": "le point 15 décrit la révision 3 ; une incise renvoie au point 16 pour que le lecteur ne cherche pas des grandeurs retirées",
+   "ancien": "- **puissance et devis** d'après les seules grandeurs de coût de 7a (sections « Puissance » et « Devis »)",
+   "nouveau": "- **puissance et devis** d'après les seules grandeurs de coût de 7a (sections « Puissance » et « Devis » ; **grandeurs retirées à la révision 4**, option (b), point 16)"
+  },
+  {
+   "id": "W-C5 (option (b)) statut de la révision 3 : grandeurs retirées à la révision 4",
+   "source": "rédacteur de la révision 4",
+   "lieu": "en-tête, statut antérieur (révision 3), point (4)",
+   "raison": "même raison que W-C4",
+   "ancien": "(4) puissance et devis d'après les seules grandeurs de coût de 7a (exploratoire, vu par les auteurs)",
+   "nouveau": "(4) puissance et devis d'après les seules grandeurs de coût de 7a (exploratoire, vu par les auteurs ; grandeurs retirées à la révision 4)"
+  },
+  {
+   "id": "W-D1 (audit DT-4) constats de l'audit qui touchent ce texte",
+   "source": "rédacteur de la révision 4",
+   "lieu": "« Ce que les auteurs savaient », après la puce « Conséquence retenue par Lazar »",
+   "raison": "consigne, point 3 : aucune trace ; extracteur des mesures qui ouvre le fichier des sondes ; lecture A commitée après l'exposition de son lecteur (R-2057)",
+   "ancien": "- **Conséquence retenue par Lazar** : `<<DECISION_LAZAR_ECART_DT4_R2041>>`.",
+   "nouveau": "- **Conséquence retenue par Lazar** : `<<DECISION_LAZAR_ECART_DT4_R2041>>`.\n- **Audit de l'écart DT-4** (décision (b) de Lazar, R-2048 ; rendu et scellé, R-2057 : `docs/notes/g0-deux-semaines-v1/e3-ter-v1/audit-ecart-dt4-7a-v1.md`, `4882fe4dc97aab724da24d12e0e3e2f8f7dce2a07d8ffbd170b26d70f7367d13` ; auditeur neuf, exclu ensuite de T0.6, T0.7, P3-bis et G0 ; audit **structurel et par catégories**, sans ouvrir `lecture-sondes-t06.json` ni la branche de quarantaine, donc sans comparaison de valeurs, limite déclarée en tête du rapport). **Verdict : « aucune trace trouvée »** du fichier des sondes de 7a ni d'un élément C1 à C7 de la lecture B sur `main`, chez le rédacteur de la révision 3 ou chez un contre-lecteur (plage `9b7721c7..6886b61e`, plus `61607820` et `62ba4a4a`). Trois constats touchent ce texte : (i) **l'extracteur des mesures** `scripts/extraire_mesures_epreuve_t06_v1.py` (`9a67b7b9…`, au commit `1609a4bf`, donc aussi dans l'arbre du commit de scellement S) ouvre et charge en entier `lecture-sondes-t06.json` et en imprime les vérifications de Mahalanobis, son mode de calcul et les durées par couple (élément C5 de la lecture B) : il est interdit sur les arbres de 7a et de 7b jusqu'au verdict scellé de P3-bis (décision de routine de la mère, R-2057) ; aucune lecture de ce texte ne l'emploie, et l'ordre de 7b le nommera parmi les outils interdits ; (ii) **la lecture A a été commitée après l'exposition de son lecteur** au fichier des sondes (commit `39f17d33`, 20:23:42 UTC) : qu'elle ait été écrite avant ne repose que sur les heures que ce lecteur déclare ; son contenu est sans élément C1 à C7 ; ce texte n'en prend que des comptes de garde, des heures et la mémoire ; (iii) **l'origine des grandeurs de coût de 7a est indéterminée** (réserve 1 ; première puce de cette section) : retirées à la révision 4 (option (b)). Réserves de l'audit gardées : attestations du lecteur, du rédacteur de la révision 3 et de la mère sortante non vérifiables dans le dépôt ; classement fait par l'auditeur seul. Son **complément** (script rejoué sur la contre-lecture 3, le dossier (ii-b), l'intégration et cette révision) est à verser avant le scellement (R-2057)."
+  },
+  {
+   "id": "W-D2 (audit DT-4) ce que le rédacteur de la révision 4 a lu",
+   "source": "rédacteur de la révision 4",
+   "lieu": "« Ce que les auteurs savaient », avant la puce « Auteurs des révisions antérieures »",
+   "raison": "consigne, point 3 : ce que le rédacteur de la r4 a lu",
+   "ancien": "- **Auteurs des révisions antérieures** :",
+   "nouveau": "- **Le rédacteur de la révision 4** (rédacteur neuf, sous-agent de la session mère `session_01QPDgKgACWyCkCN8HjqwNXy`, Claude Opus 5.5 ; n'a écrit ni la révision 3, ni ses brouillons, ni la contre-lecture 3, ni le code, ni T0.7, ni P3-bis, ni (ii-b), et n'est pas le lecteur exploratoire de 7a) a lu : la révision 3 (dont les grandeurs de coût de 7a qu'il en retire) et l'en-tête de son journal ; la contre-lecture 3 et ses couples ; `registres/decisions.md` R-2040 à R-2064 (dont R-2040 : comptes de la garde, heures et mémoire de la lecture A) ; les rapports d'intégration (`427def65…`) et d'essai à blanc de la voie B (`4f4eb27d…`) ; l'audit DT-4 ; au commit `1609a4bf`, le lanceur v13 et l'amorce v11 (lignes citées), `harnais/validation_reelle.py`, `t06/lanceur.py`, `manifeste.py` et `configuration_v6.py`, et la configuration du brouillon 5, passée au code de l'empreinte canonique. Il n'a ouvert ni la lecture A elle-même, ni aucun `diag/` ni `runs/` de 7a, ni la branche `essai/t06-explo-v3`, ni `lecture-sondes-t06.json`, ni la lecture B ou sa branche, ni aucune pièce de l'étiqueteur ou du bras d'attaque ; il n'a lancé aucun extracteur ; il n'a vu ni la valeur ni le signe d'aucun effet de 7a, ni aucune valeur de sonde.\n- **Auteurs des révisions antérieures** :"
+  },
+  {
+   "id": "W-E4 (plafond) 200 USD gardés ; seuil d'alerte renvoyé à l'ordre de 7b (R-2053)",
+   "source": "rédacteur de la révision 4",
+   "lieu": "« Devis », devis de la confirmation 7b, après la marge de relance (Y8)",
+   "raison": "consigne, Pièces : plafond R-2053 gardé, seuil d'alerte dans l'ordre de 7b, ici par renvoi seulement",
+   "ancien": "les 72 h du poste « disque » sont une borne, non un droit au-delà du 16 novembre.",
+   "nouveau": "les 72 h du poste « disque » sont une borne, non un droit au-delà du 16 novembre. **Plafond** (révision 4) : 200 USD gardés (contre-lecture 3, point 3 ; R-2053) : le lanceur v13 refuse toute course dont la configuration ne porte pas exactement 200 (`scripts/lancer_t06_v13.sh`, l. 197) ; le seuil d'alerte recommandé par la contre-lecture 3 (compte rendu à Lazar à une dépense cumulée fixée d'avance, mot de Lazar avant toute création sur H200) est écrit dans l'ordre de 7b, non dans ce texte."
+  },
+  {
+   "id": "W-P0 (plan) titre du plan de la confirmation : mis à jour à la révision 4",
+   "source": "rédacteur de la révision 4",
+   "lieu": "« Ce qui manque pour lancer », titre du plan de la confirmation 7b",
+   "raison": "les pas 1 à 6 sont mis à jour par W-B3 et W-P1 à W-P4",
+   "ancien": "**Plan de la confirmation 7b (révision 3 ;",
+   "nouveau": "**Plan de la confirmation 7b (révision 3, mis à jour à la révision 4 ;"
+  },
+  {
+   "id": "W-P1 (plan) pas 1 : contre-lecture 3 faite ; contre-lecture 4 du différentiel ; complément de l'audit",
+   "source": "rédacteur de la révision 4",
+   "lieu": "« Ce qui manque pour lancer », plan de la confirmation 7b, pas 1",
+   "raison": "la contre-lecture 3 est rendue (R-2053) ; le différentiel r3 → r4 doit être contre-lu (consigne, point 5) ; complément de l'audit DT-4 avant le scellement (R-2057)",
+   "ancien": "1. contre-lecture 3 (R2) de ce texte par un sous-agent neuf d'un autre modèle que le rédacteur (N-052), qui ne soit pas le lecteur exploratoire de 7a (R-2041) ; couples appliqués par script ;",
+   "nouveau": "1. contre-lecture 3 (R2) de ce texte par un sous-agent neuf d'un autre modèle que le rédacteur (N-052), qui ne soit pas le lecteur exploratoire de 7a (R-2041) ; couples appliqués par script (**fait** : R-2053 ; couples appliqués à la révision 4, sauf Y1, Y2 et Y9, écrits pour la voie A, et Y3, remplacé par l'option (b) : section « Contre-lecture ») ; **contre-lecture 4 (R2) du différentiel r3 → r4**, par un sous-agent neuf d'un autre modèle que le rédacteur de la révision 4 (Claude Opus 5.5), couples appliqués par script ; complément de l'audit DT-4 versé avant le scellement (R-2057) ;"
+  },
+  {
+   "id": "W-P2 (plan) pas 2 : mot de Lazar sur DT-4 reçu (R-2048) ; mot attendu sur les grandeurs de coût",
+   "source": "rédacteur de la révision 4",
+   "lieu": "« Ce qui manque pour lancer », plan de la confirmation 7b, pas 2",
+   "raison": "R-2048 a tranché l'écart DT-4 ; R-2057 (réserve 1) porte les grandeurs de coût à Lazar",
+   "ancien": "2. mot de Lazar sur l'écart DT-4 (R-2041) écrit à la section « Ce que les auteurs savaient » ;",
+   "nouveau": "2. mot de Lazar sur l'écart DT-4 (R-2041) écrit à la section « Ce que les auteurs savaient » (**reçu** : option (b), R-2048 ; marqueur rempli par la mère par renvoi à R-2048, à l'audit DT-4 et à son complément) ; mot de Lazar sur les grandeurs de coût de 7a (R-2057, réserve 1 ; option (b) appliquée par défaut, couples de la variante (a) prêts) ;"
+  },
+  {
+   "id": "W-P3 (plan) pas 5 : extracteur des mesures interdit, seuil d'alerte, branche neuve dans l'ordre de 7b",
+   "source": "rédacteur de la révision 4",
+   "lieu": "« Ce qui manque pour lancer », plan de la confirmation 7b, pas 5",
+   "raison": "R-2057 (extracteur interdit sur les arbres de 7a et de 7b), R-2053 (seuil d'alerte), contre-lecture 3 point 8 (branche neuve)",
+   "ancien": "5. ordre de course scellé (marqueur du règlement d'E3-6 : R-2040),",
+   "nouveau": "5. ordre de course scellé (marqueur du règlement d'E3-6 : R-2040 ; l'extracteur `extraire_mesures_epreuve_t06_v1.py` nommé parmi les outils interdits jusqu'au verdict scellé de P3-bis, R-2057 ; seuil d'alerte de dépense, R-2053 ; branche de sortie `T06_BRANCHE` neuve),"
+  },
+  {
+   "id": "W-P4 (plan) pas 6 : création au plus tard le 14 vers 17:00Z pour garder une relance",
+   "source": "rédacteur de la révision 4",
+   "lieu": "« Ce qui manque pour lancer », plan de la confirmation 7b, pas 6",
+   "raison": "Y8 écrit la marge de relance au devis ; le plan y renvoie",
+   "ancien": "(L11 ; sans nœud, au plus tard 2026-11-15T20:48Z, section « Devis ») ; marche attendue ≈ 13,6 h ;",
+   "nouveau": "(L11 ; sans nœud, au plus tard 2026-11-15T20:48Z, section « Devis » ; pour garder une relance complète, au plus tard le 14 novembre vers 17:00Z : contre-lecture 3, section « Devis ») ; marche attendue ≈ 13,6 h ;"
+  },
+  {
+   "id": "W-K0 (contre-lecture) titre des entrées : complétées à la révision 4",
+   "source": "rédacteur de la révision 4",
+   "lieu": "section « Contre-lecture », titre des entrées",
+   "raison": "les entrées 1 et 3 sont complétées et l'entrée 4 ajoutée à la révision 4",
+   "ancien": "**Contre-lectures du candidat, consignées à la révision 3**",
+   "nouveau": "**Contre-lectures du candidat, consignées à la révision 3 et complétées à la révision 4**"
+  },
+  {
+   "id": "W-K1 (contre-lecture) entrée de la contre-lecture 3 : verdict en voie B ; couples appliqués et non appliqués",
+   "source": "rédacteur de la révision 4",
+   "lieu": "section « Contre-lecture », entrée de la contre-lecture 3 (après Y12)",
+   "raison": "consigne, point 5 : Y appliqués et non appliqués, avec raison ; Y12 écrivait « Y1 à Y12, appliqués tels quels », faux à la révision 4",
+   "ancien": "Verdict : « scellable après couples », le scellement n'ayant lieu qu'une fois le commit d'intégration éprouvé (en-tête, lignes « Commit du code d'analyse » et « Tests attendus »). Couples : `prereg/contre-lectures/T0.6-organismes-v0-v1-candidat12-r3-cl3-couples-v1.json` (empreinte : son compagnon `.sha256`), Y1 à Y12, appliqués tels quels, dans l'ordre, par script.",
+   "nouveau": "Verdict : « scellable après couples », le scellement n'ayant lieu qu'une fois le commit d'intégration éprouvé (voie A ; à la révision 4, voie B : une fois le commit de scellement S éprouvé, R-2064 ; en-tête, lignes « Commit du code d'analyse » et « Tests attendus »). Couples : `prereg/contre-lectures/T0.6-organismes-v0-v1-candidat12-r3-cl3-couples-v1.json` (`e3846ae5d91cf9de5b437710188d514ae1e563ce610e306833c0c582024a8e54`, compagnon `.sha256`), Y1 à Y12 ; **appliqués à la révision 4** : Y4 à Y8 et Y10 à Y12, tels quels, dans l'ordre, par script ; **non appliqués** : Y1, Y2 et Y9 (écrits pour la voie A : commit d'intégration de la chaîne dans `main` cité, compte relevé sur l'arbre intégré ; la mère a retenu la voie B, R-2062, vérifiée à blanc, R-2064) : remplacés par W-B1 à W-B3, qui gardent ce qu'ils portaient de vrai (arbre gelé entier, compte valant pour l'arbre entier, gardes jouées à blanc avant la création), et Y3 (statut des grandeurs de coût de 7a sans les retirer) : remplacé par W-C1, option (b), qui les retire ; Y3 reste dans les couples de la variante (a). Traitement des remarques : B1 → voie B (W-B1 à W-B4) ; M1 → W-C1 à W-C5 (option (b)) ; M2 → Y4 à Y6, W-D1 et W-D2 ; m1 → Y7 ; m2 → Y8 et W-E4 ; m3 → Y10 à Y12, W-K0 à W-K3 ; m4 → aucun couple (journal de la révision 4)."
+  },
+  {
+   "id": "W-K2 (contre-lecture) non vérifié par la contre-lecture 3 : comparaison des configurations faite depuis (R-2056)",
+   "source": "rédacteur de la révision 4",
+   "lieu": "section « Contre-lecture », entrée de la contre-lecture 3 (après Y12)",
+   "raison": "R-2056 : comparaison des configurations faite par la mère sur mot de Lazar ; candidat 4 laissé à l'option (a)",
+   "ancien": "l'écart de six champs entre la configuration du brouillon 5 et celle de 7a (comparaison arrêtée par un refus de classifieur, rapporté tel quel), l'état du dépôt distant.",
+   "nouveau": "l'écart de six champs entre la configuration du brouillon 5 et celle de 7a (comparaison arrêtée par un refus de classifieur, rapporté tel quel ; faite depuis par la mère sur mot de Lazar : six champs exactement, R-2056), l'état du dépôt distant ; l'empreinte du candidat 4 reste non vérifiée à la révision 4 (option (a), R-2056)."
+  },
+  {
+   "id": "W-K3 (contre-lecture) contre-lecture 1 : candidat 4 non vérifié, option (a) (R-2056)",
+   "source": "rédacteur de la révision 4",
+   "lieu": "section « Contre-lecture », entrée de la contre-lecture 1 (après Y10)",
+   "raison": "R-2056 : le candidat 4 reste non vérifié, déclaré dans la révision suivante",
+   "ancien": "il est à récupérer sur la branche du candidat 5, `prep/t06-candidat2-v1`, R-1668).",
+   "nouveau": "il est à récupérer sur la branche du candidat 5, `prep/t06-candidat2-v1`, R-1668 ; révision 4 : laissé non vérifié, option (a), R-2056)."
+  },
+  {
+   "id": "W-K4 (contre-lecture) entrée de la contre-lecture 4 (R2), différentiel r3 → r4 : à faire par un autre modèle",
+   "source": "rédacteur de la révision 4",
+   "lieu": "section « Contre-lecture », après l'entrée de la contre-lecture 3",
+   "raison": "consigne, point 5 ; R2 et N-052 : le différentiel est contre-lu par un sous-agent neuf d'un autre modèle que ce rédacteur ; `controle_ia.prereg.problemes` compte deux empreintes par entrée : celles des pièces données y sont, l'avertissement est écrit dans l'entrée",
+   "ancien": "Remarques et traitement consignés ici avant le scellement ; scellé par la session mère.",
+   "nouveau": "Remarques et traitement consignés ici avant le scellement ; scellé par la session mère.\n- **Contre-lecture 4 (R2) — différentiel r3 → r4** : **à faire**, avant le scellement, par un sous-agent neuf d'un autre modèle que le rédacteur de la révision 4 (Claude Opus 5.5 ; N-052), qui n'a écrit aucune pièce du différentiel et n'est ni le lecteur exploratoire de 7a (R-2041), ni l'auditeur de l'écart DT-4 (R-2057). Objet : les couples de la révision 4 (Y appliqués, Y non appliqués et couples W neufs) et leur application par script, rejouée depuis la révision 3 ; la voie B contre le lanceur v13, l'amorce v11 et les gardes au commit `1609a4bf` ; l'option (b) des grandeurs de coût de 7a et les couples de la variante (a) ; les constats de l'audit DT-4 portés à « Ce que les auteurs savaient » ; les marqueurs remplis. Fichiers à lui donner explicitement : ce texte, son journal, ses couples, les couples de la variante (a) et le script d'application (`brouillons/T0.6-organismes-v0-v1-candidat12-r4-journal-v1.md`, `brouillons/T0.6-organismes-v0-v1-candidat12-r4-couples-v1.json`, `brouillons/T0.6-organismes-v0-v1-candidat12-r4-couples-variante-a-v1.json`, `brouillons/T0.6-organismes-v0-v1-candidat12-r4-appliquer-v1.py` ; empreintes : leurs compagnons `.sha256`) ; la révision 3 (`brouillons/T0.6-organismes-v0-v1-candidat12-r3.md`, `c24e268ee9821d1f37ff612023a9f07735864614f57e3a9cf58517b05bc55331`) ; la contre-lecture 3 (`prereg/contre-lectures/T0.6-organismes-v0-v1-candidat12-r3-cl3.md`, `3930d4f9306395694c7dd541395c28aa9ad478db3909b529b76630d8e4766f46`) et ses couples (`e3846ae5d91cf9de5b437710188d514ae1e563ce610e306833c0c582024a8e54`) ; la consigne de la révision 4 (`docs/notes/g0-deux-semaines-v1/consignes-mere-2026-11-09-2200-v1/consigne-redaction-t06-candidat12-r4-v1.md`, `460573da66a3ddc36fd1336cd0862f27350173177ccfa7e56c02a618ef86365b`) ; `registres/decisions.md` R-2048, R-2053 à R-2064 ; les rapports d'intégration (`docs/notes/g0-deux-semaines-v1/integration-t06-v13-main-v1/rapport-integration-v1.md`, `427def658cdb4d6c7f25e2f91eac7f8560ca317ab991f0581f5bc7b99a927593`) et d'essai à blanc de la voie B (`docs/notes/g0-deux-semaines-v1/integration-t06-v13-main-v1/rapport-essai-blanc-S-voie-b-v1.md`, `4f4eb27d98e33a9f38557ea21cef10e2f4a421103855310caac7957a7d0aa8e8`) ; l'audit DT-4 (`4882fe4dc97aab724da24d12e0e3e2f8f7dce2a07d8ffbd170b26d70f7367d13`) ; `src/controle_ia/prereg.py` ; au commit `1609a4bf` : `scripts/lancer_t06_v13.sh`, `scripts/amorce_instance_t06_v11.sh`, `src/controle_ia/harnais/validation_reelle.py`, `src/controle_ia/t06/lanceur.py`, `lanceur_v6.py`, `configuration_v6.py`, `src/controle_ia/manifeste.py` et `docs/notes/g0-deux-semaines-v1/config-t06-reel-v1-brouillon5.json`. Interdits de lecture : ceux de `docs/notes/g0-deux-semaines-v1/consignes-mere-2026-11-09-2200-v1/interdits-communs-v1.md` (dont `lecture-sondes-t06.json` de tout run, la lecture B de 7a et sa branche, tout `diag/` et `runs/` de 7a et la branche `essai/t06-explo-v3`) et l'extracteur `extraire_mesures_epreuve_t06_v1.py` (R-2057). **Avertissement** : `controle_ia.prereg.problemes` ne distingue pas cette entrée « à faire » d'une entrée faite (il y compte deux empreintes, ici celles des pièces données) ; ce texte n'est pas scellable avant que cette entrée soit réécrite par les couples de la contre-lecture 4 (brouillon relu et son empreinte, rapport, son chemin et son empreinte, verdict) et que ces couples soient appliqués. Remarques et traitement consignés ici avant le scellement ; scellé par la session mère."
+  },
+  {
+   "id": "W-E0 (en-tête) titre : révision 4",
+   "source": "rédacteur de la révision 4",
+   "lieu": "titre",
+   "raison": "nouvelle révision",
+   "ancien": "— v1 — candidat 12, révision 3\n",
+   "nouveau": "— v1 — candidat 12, révision 4\n"
+  },
+  {
+   "id": "W-E1 (en-tête) statut de la révision 4",
+   "source": "rédacteur de la révision 4",
+   "lieu": "en-tête, première puce",
+   "raison": "nouvelle révision (R12) : statut, auteur, heure, consigne, composition, objet, marqueurs restants",
+   "ancien": "- Statut : **candidat 12, révision 3** (nouveau fichier, R12 ; la révision 2,",
+   "nouveau": "- Statut : **candidat 12, révision 4** (nouveau fichier, R12 ; la révision 3, `brouillons/T0.6-organismes-v0-v1-candidat12-r3.md`, `c24e268ee9821d1f37ff612023a9f07735864614f57e3a9cf58517b05bc55331`, empreinte vérifiée avant tout, reste intacte), écrit le 2026-11-10 à partir de 00:35 UTC (heure relevée par `date -u`) par un **rédacteur neuf** (sous-agent de la session mère `session_01QPDgKgACWyCkCN8HjqwNXy`, Claude Opus 5.5), qui n'a écrit ni la révision 3, ni ses brouillons, ni la contre-lecture 3, ni le code, ni T0.7, ni P3-bis, ni (ii-b), et n'est pas le lecteur exploratoire de 7a ; consigne scellée `docs/notes/g0-deux-semaines-v1/consignes-mere-2026-11-09-2200-v1/consigne-redaction-t06-candidat12-r4-v1.md` (`460573da66a3ddc36fd1336cd0862f27350173177ccfa7e56c02a618ef86365b`, vérifiée avant tout). **Non scellé** ; le différentiel r3 → r4 est à contre-lire (contre-lecture 4, R2, par un autre modèle que ce rédacteur : section « Contre-lecture »). **Candidat 12 r4** = candidat 12 r3 + les couples de la contre-lecture 3 Y4 à Y8 et Y10 à Y12, tels quels (Y1, Y2 et Y9, écrits pour la voie A, ne sont pas appliqués ; Y3 non plus, option (b)) + les couples neufs de ce rédacteur (W-B, voie B, à la place de Y1, Y2 et Y9 ; W-C, grandeurs de coût de 7a ; W-D, audit DT-4 ; W-E, W-P, W-K et W-M : en-tête, devis, plan, section « Contre-lecture » et marqueurs), appliqués dans l'ordre par script, chacun avec un « ancien » présent exactement une fois au moment de son application (couples (b) : `brouillons/T0.6-organismes-v0-v1-candidat12-r4-couples-v1.json` ; script `brouillons/T0.6-organismes-v0-v1-candidat12-r4-appliquer-v1.py` ; journal `brouillons/T0.6-organismes-v0-v1-candidat12-r4-journal-v1.md`). Ce que la révision 4 change : point 16 ci-dessous. En bref : (1) **voie B** (R-2062, R-2064) : le commit de scellement S descend de `1609a4bf` sans rien changer au périmètre gelé, porte ce texte et la configuration de 7b, puis est fusionné dans `main` ; le commit cité reste `1609a4bf` ; (2) **grandeurs de coût de 7a retirées** (option (b), défaut et recommandation en attente du mot de Lazar ; R-2057, réserve 1) : la puissance de 7b est celle du plan d'avant 7a, que les heures de la lecture A montrent tenable ; si Lazar choisit (a), la mère applique à la révision 3 les couples de la variante (a), `brouillons/T0.6-organismes-v0-v1-candidat12-r4-couples-variante-a-v1.json` ; (3) constats de l'audit DT-4 portés à « Ce que les auteurs savaient » ; (4) huit marqueurs remplis, **deux restent** (MOT_LAZAR_GO_7B, DECISION_LAZAR_ECART_DT4_R2041). **Aucune hypothèse, aucune prédiction, aucun signe, aucun seuil ni aucune règle de lecture ne change** ; aucun couple de la révision 4 ne touche les sections « Hypothèse » à « Liste d'arrêt ». Les phrases qui suivent décrivent la révision 3 sur laquelle il s'appuie.\n- Statut antérieur : **candidat 12, révision 3** (nouveau fichier, R12 ; la révision 2,"
+  },
+  {
+   "id": "W-E2 (en-tête) suite de Y11 : couples de la contre-lecture 3 appliqués à la révision 4",
+   "source": "rédacteur de la révision 4",
+   "lieu": "en-tête, statut antérieur (révision 3), phrase écrite par Y11",
+   "raison": "Y11 écrit « Y1 à Y12 sont appliqués », faux à la révision 4",
+   "ancien": "dont les couples Y1 à Y12 sont appliqués par script après ceux du rédacteur.",
+   "nouveau": "dont les couples sont appliqués par script à la révision 4, Y1, Y2, Y3 et Y9 exceptés (statut de la révision 4, ci-dessus)."
+  },
+  {
+   "id": "W-E3 (en-tête) point 16 : ce que le candidat 12 r4 change",
+   "source": "rédacteur de la révision 4",
+   "lieu": "en-tête, après le point 15",
+   "raison": "nouvelle révision : table des changements, même forme que les points 1 à 15",
+   "ancien": "la configuration attendue reste celle du brouillon 5 (en-tête, « Chemin de la configuration de T0.6 »).",
+   "nouveau": "la configuration attendue reste celle du brouillon 5 (en-tête, « Chemin de la configuration de T0.6 »).\n  16. **Ce que le candidat 12 r4 change** (2026-11-10, rédacteur neuf ; consigne `docs/notes/g0-deux-semaines-v1/consignes-mere-2026-11-09-2200-v1/consigne-redaction-t06-candidat12-r4-v1.md`, `460573da…` ; sources : `registres/decisions.md` R-2048, R-2053, R-2055 à R-2057, R-2062, R-2064 ; contre-lecture 3 et ses couples ; rapports d'intégration (`427def65…`) et d'essai à blanc de la voie B (`4f4eb27d…`) ; audit DT-4 (`4882fe4d…`) ; code au commit `1609a4bf` ; journal `brouillons/T0.6-organismes-v0-v1-candidat12-r4-journal-v1.md`) :\n      - **couples de la contre-lecture 3** : Y4 à Y8 et Y10 à Y12 appliqués tels quels ; Y1, Y2 et Y9 non appliqués (voie A) ; Y3 non appliqué (option (b)) ;\n      - **voie B** (R-2062, R-2064 ; W-B1 à W-B4, les trois premiers à la place de Y1, Y2 et Y9) : le commit de scellement S descend de `1609a4bf` sans rien changer au périmètre gelé (`CHEMINS_GELES`), porte ce texte scellé et la configuration de 7b, puis est fusionné dans `main` (lanceur v13 : S ancêtre d'`origin/main`, l. 127 ; `commit_s`, l. 112) ; le commit cité reste `1609a4bf` (même arbre gelé que S : `exiger_code_cite` passe) ; « Tests attendus » `2022` relevé sur l'arbre de `1609a4bf` par 7a et sur l'arbre de S′ à blanc (2 019 passés et 3 essais `pypandoc`, module absent de l'environnement processeur, présent sur l'instance) ; ce que Y1 et Y2 portaient de vrai (arbre gelé entier, compte valant pour l'arbre entier) est gardé ; la voie A (commit d'intégration cité) est écartée (sur l'arbre intégré, 2 017 passés et 5 échecs, dont deux arrêteraient l'amorce, R-2062) ; configuration de 7b : copie octet pour octet du brouillon 5 sous `prereg/T0.6-organismes-config-7b-v1.json`, six champs d'écart avec la configuration jouée par 7a (R-2056) ;\n      - **grandeurs de coût de 7a** (R-2057, réserve 1 ; contre-lecture 3, M1 ; W-C1 à W-C5, W-C1 à la place de Y3) : **option (b), défaut et recommandation en attente du mot de Lazar** : retirées de ce texte (« Ce que les auteurs savaient », « Puissance » ; le devis n'en portait aucune : il s'appuie sur les heures de la lecture A) ; la puissance de 7b est celle du plan d'avant 7a (sorties de puissance v2 et v3), plan que 7a a joué sans arrêt dans les heures de la lecture A ; si Lazar choisit (a), la mère applique à la révision 3 les couples de la variante (a) (`brouillons/T0.6-organismes-v0-v1-candidat12-r4-couples-variante-a-v1.json`), qui gardent ces grandeurs avec le statut de Y3 et un marqueur pour le mot de Lazar ; la précision du plan d'analyse, point 8 (actions tronquées à 400 jetons rapportées par condition, X19), qui ne porte aucun nombre de 7a, est gardée : simple effectif rapporté, sans seuil ;\n      - **audit DT-4** (R-2057 ; W-D1, W-D2) : constats qui touchent ce texte portés à « Ce que les auteurs savaient » (aucune trace ; extracteur des mesures qui ouvre le fichier des sondes, interdit sur les arbres de 7a et de 7b ; lecture A commitée après l'exposition de son lecteur) ; ce que le rédacteur de la révision 4 a lu ;\n      - **marqueurs** (W-M1 à W-M9) : COMMIT_CODE_T06 (`1609a4bf…`, deux occurrences), EMPREINTES_CODE_T06 et EMPREINTE_AMORCE_T06 (recalculées au commit `1609a4bf`, égales au point 15), CHEMIN_CONFIG_T06, EMPREINTE_CONFIG_T06 (empreinte canonique `ca8003f9…`, recalculée par le code de `1609a4bf`, `controle_ia.t06.lanceur.empreinte_config`), EMPREINTE_RELU_CL3_T06, CHEMIN_RAPPORT_CL3_T06 et EMPREINTE_RAPPORT_CL3_T06 remplis ; **restent** MOT_LAZAR_GO_7B (mot de Lazar attendu) et DECISION_LAZAR_ECART_DT4_R2041 (rempli par la mère par renvoi à R-2048, à l'audit DT-4 et à son complément) ;\n      - **section « Contre-lecture »** (W-K0 à W-K4) : entrée de la contre-lecture 3 faite, couples appliqués et non appliqués avec leur raison ; entrée de la contre-lecture 4 (R2), différentiel r3 → r4, à faire par un autre modèle ;\n      - **devis et plan** (W-E4, W-P0 à W-P4) : plafond de 200 USD gardé (R-2053 ; le lanceur v13 l'exige, l. 197), seuil d'alerte renvoyé à l'ordre de 7b ; plan de la confirmation mis à jour (contre-lecture 4, mots de Lazar, extracteur interdit, création au plus tard le 14 vers 17:00Z pour garder une relance) ;\n      - **ce que le candidat 12 r4 ne change pas** — aucune hypothèse, aucune prédiction, aucun signe, aucun seuil, aucune famille, couche ou forme, aucune règle de lecture, aucune décision DT, L04, L05, L11 ; aucun couple ne touche les sections « Hypothèse » à « Liste d'arrêt » ; la configuration est celle du brouillon 5, copiée sans changement ; l'entropie de l'en-tête reste celle tirée le 6 novembre 2026."
+  },
+  {
+   "id": "W-M1 (marqueur) COMMIT_CODE_T06, en-tête",
+   "source": "rédacteur de la révision 4",
+   "lieu": "en-tête, ligne « Commit du code d'analyse »",
+   "raison": "consigne, point 4 : une valeur, toutes ses occurrences",
+   "ancien": "Commit du code d'analyse : `<<COMMIT_CODE_T06>>`",
+   "nouveau": "Commit du code d'analyse : `1609a4bf2c1572f72bb8542d81d963ac6a8481c4`"
+  },
+  {
+   "id": "W-M2 (marqueur) COMMIT_CODE_T06, ligne d'engagement",
+   "source": "rédacteur de la révision 4",
+   "lieu": "« Devis », ligne d'engagement proposée",
+   "raison": "consigne, point 4 : une valeur, toutes ses occurrences",
+   "ancien": "commit `<<COMMIT_CODE_T06>>`",
+   "nouveau": "commit `1609a4bf2c1572f72bb8542d81d963ac6a8481c4`"
+  },
+  {
+   "id": "W-M3 (marqueur) EMPREINTES_CODE_T06",
+   "source": "rédacteur de la révision 4",
+   "lieu": "en-tête, ligne « Commit du code d'analyse »",
+   "raison": "consigne, point 4 : une valeur, toutes ses occurrences",
+   "ancien": "empreintes des modules neufs `<<EMPREINTES_CODE_T06>>`, relevées dans les rapports du développeur v2 à v6",
+   "nouveau": "empreintes des modules neufs `scripts/lancer_t06_v13.sh 6940a337d5e0c9a736aa7087275c5f6328133b67ed4df1c94535ba06a1965416 ; scripts/amorce_instance_t06_v11.sh 43d856596f4ff934ae6faa445faed0d00aaaa264b23b0bda344b6888dcd5e859 ; scripts/tests-cibles-t06-v3.txt e76d5e6b7c32140b549de20f061a2e562df9201c5daab4060fd1ca54a05f42e2 ; scripts/tests-exclus-t06-v3.txt ab70a1ed4b59bdb5f488e453055029806cde30c36552684f686097fbea8ed81c ; src/controle_ia/t06/session_v12.py 5b4ad5e9fa39c4a803050ed118157d005bcb30551a54a6822f38a15ca0ddd90e ; src/controle_ia/t06/lanceur_v6.py e329493b5d54fe52f6eb278b1314a78f905ca082a51ee1a0c5c3a77bd400ac80 ; src/controle_ia/t06/configuration_v6.py 7899622515588284d1045c72aee95d109ff755f525d3c4bcd70df14caf6fad8e ; src/controle_ia/audit_fuite_r1_v4/bras_b_v4.py 317a7ea551abace1b3b78acde543688ab33bfda57cd15d8e6072f0826ce6fa17` (révision 4 : les huit fichiers du point 15, recalculés le 10 novembre 2026 au commit `1609a4bf` par `git show 1609a4bf:<chemin> | sha256sum`, égaux au point 15 ; les modules qu'ils importent sont couverts par le commit cité, `exiger_code_cite` comparant tout l'arbre gelé) ; texte antérieur : relevées dans les rapports du développeur v2 à v6"
+  },
+  {
+   "id": "W-M4 (marqueur) EMPREINTE_AMORCE_T06",
+   "source": "rédacteur de la révision 4",
+   "lieu": "en-tête, ligne « Amorce »",
+   "raison": "consigne, point 4 : une valeur, toutes ses occurrences",
+   "ancien": "`scripts/amorce_instance_t06_v11.sh` (`<<EMPREINTE_AMORCE_T06>>`)",
+   "nouveau": "`scripts/amorce_instance_t06_v11.sh` (`43d856596f4ff934ae6faa445faed0d00aaaa264b23b0bda344b6888dcd5e859`)"
+  },
+  {
+   "id": "W-M5 (marqueur) EMPREINTE_CONFIG_T06",
+   "source": "rédacteur de la révision 4",
+   "lieu": "en-tête, ligne « Configuration de T0.6 (empreinte canonique) »",
+   "raison": "consigne, point 4 : une valeur, toutes ses occurrences",
+   "ancien": "`<<EMPREINTE_CONFIG_T06>>`",
+   "nouveau": "`ca8003f90a9557ba42c8774e263407bdc2f4824b7f978f4c10f2e166ae97dd6d`"
+  },
+  {
+   "id": "W-M6 (marqueur) CHEMIN_CONFIG_T06",
+   "source": "rédacteur de la révision 4",
+   "lieu": "en-tête, ligne « Chemin de la configuration de T0.6 »",
+   "raison": "consigne, point 4 : une valeur, toutes ses occurrences",
+   "ancien": "`<<CHEMIN_CONFIG_T06>>`",
+   "nouveau": "`prereg/T0.6-organismes-config-7b-v1.json`"
+  },
+  {
+   "id": "W-M7 (marqueur) EMPREINTE_RELU_CL3_T06",
+   "source": "rédacteur de la révision 4",
+   "lieu": "section « Contre-lecture », entrée de la contre-lecture 3",
+   "raison": "consigne, point 4 : une valeur, toutes ses occurrences",
+   "ancien": "`<<EMPREINTE_RELU_CL3_T06>>`",
+   "nouveau": "`c24e268ee9821d1f37ff612023a9f07735864614f57e3a9cf58517b05bc55331`"
+  },
+  {
+   "id": "W-M8 (marqueur) CHEMIN_RAPPORT_CL3_T06",
+   "source": "rédacteur de la révision 4",
+   "lieu": "section « Contre-lecture », entrée de la contre-lecture 3",
+   "raison": "consigne, point 4 : une valeur, toutes ses occurrences",
+   "ancien": "`<<CHEMIN_RAPPORT_CL3_T06>>`",
+   "nouveau": "`prereg/contre-lectures/T0.6-organismes-v0-v1-candidat12-r3-cl3.md`"
+  },
+  {
+   "id": "W-M9 (marqueur) EMPREINTE_RAPPORT_CL3_T06",
+   "source": "rédacteur de la révision 4",
+   "lieu": "section « Contre-lecture », entrée de la contre-lecture 3",
+   "raison": "consigne, point 4 : une valeur, toutes ses occurrences",
+   "ancien": "`<<EMPREINTE_RAPPORT_CL3_T06>>`",
+   "nouveau": "`3930d4f9306395694c7dd541395c28aa9ad478db3909b529b76630d8e4766f46`"
+  },
+  {
+   "id": "W-M10 (marqueurs) table : huit remplis à la révision 4, deux restent",
+   "source": "rédacteur de la révision 4",
+   "lieu": "« Marqueurs à remplir avant le scellement », paragraphe d'ouverture",
+   "raison": "consigne, point 4",
+   "ancien": "Vérification : la même commande sur `brouillons/T0.6-organismes-v0-v1-candidat12-r3.md`.",
+   "nouveau": "Vérification : la même commande sur `brouillons/T0.6-organismes-v0-v1-candidat12-r3.md`. **Révision 4** : huit de ces dix marqueurs sont remplis (COMMIT_CODE_T06 à ses deux occurrences, EMPREINTES_CODE_T06, EMPREINTE_AMORCE_T06, EMPREINTE_CONFIG_T06, CHEMIN_CONFIG_T06, EMPREINTE_RELU_CL3_T06, CHEMIN_RAPPORT_CL3_T06, EMPREINTE_RAPPORT_CL3_T06 ; valeurs et sources : point 16 et journal de la révision 4) ; **deux restent** : MOT_LAZAR_GO_7B et DECISION_LAZAR_ECART_DT4_R2041 (une occurrence chacun) ; vérification : la même commande sur `brouillons/T0.6-organismes-v0-v1-candidat12-r4.md`."
+  },
+  {
+   "id": "W-M11 (marqueurs) table, ligne COMMIT_CODE_T06",
+   "source": "rédacteur de la révision 4",
+   "lieu": "« Marqueurs à remplir avant le scellement », table",
+   "raison": "consigne, point 4 : état du marqueur à la révision 4",
+   "ancien": "| `COMMIT_CODE_T06` |",
+   "nouveau": "| `COMMIT_CODE_T06` (rempli à la révision 4 : `1609a4bf2c1572f72bb8542d81d963ac6a8481c4` lui-même, voie B : le commit de scellement S en descend sans rien changer au périmètre gelé, en-tête ; la description « révision 3 » qui suit, écrite pour un commit propre à 7b, est historique) |"
+  },
+  {
+   "id": "W-M12 (marqueurs) table, ligne EMPREINTES_CODE_T06",
+   "source": "rédacteur de la révision 4",
+   "lieu": "« Marqueurs à remplir avant le scellement », table",
+   "raison": "consigne, point 4 : état du marqueur à la révision 4",
+   "ancien": "| `EMPREINTES_CODE_T06` |",
+   "nouveau": "| `EMPREINTES_CODE_T06` (rempli à la révision 4 : les huit fichiers du point 15, recalculés au commit `1609a4bf`, égaux) |"
+  },
+  {
+   "id": "W-M13 (marqueurs) table, ligne EMPREINTE_AMORCE_T06",
+   "source": "rédacteur de la révision 4",
+   "lieu": "« Marqueurs à remplir avant le scellement », table",
+   "raison": "consigne, point 4 : état du marqueur à la révision 4",
+   "ancien": "| `EMPREINTE_AMORCE_T06` |",
+   "nouveau": "| `EMPREINTE_AMORCE_T06` (rempli à la révision 4 : `43d85659…`, au commit `1609a4bf`) |"
+  },
+  {
+   "id": "W-M14 (marqueurs) table, ligne EMPREINTE_CONFIG_T06",
+   "source": "rédacteur de la révision 4",
+   "lieu": "« Marqueurs à remplir avant le scellement », table",
+   "raison": "consigne, point 4 : état du marqueur à la révision 4",
+   "ancien": "| `EMPREINTE_CONFIG_T06` |",
+   "nouveau": "| `EMPREINTE_CONFIG_T06` (rempli à la révision 4 : `ca8003f9…`, empreinte canonique calculée par `controle_ia.t06.lanceur.empreinte_config` au commit `1609a4bf` ; le sha256 du fichier est `b7a5c1ba…`) |"
+  },
+  {
+   "id": "W-M15 (marqueurs) table, ligne CHEMIN_CONFIG_T06",
+   "source": "rédacteur de la révision 4",
+   "lieu": "« Marqueurs à remplir avant le scellement », table",
+   "raison": "consigne, point 4 : état du marqueur à la révision 4",
+   "ancien": "| `CHEMIN_CONFIG_T06` |",
+   "nouveau": "| `CHEMIN_CONFIG_T06` (rempli à la révision 4 : `prereg/T0.6-organismes-config-7b-v1.json`) |"
+  },
+  {
+   "id": "W-M16 (marqueurs) table, ligne MOT_LAZAR_GO_7B",
+   "source": "rédacteur de la révision 4",
+   "lieu": "« Marqueurs à remplir avant le scellement », table",
+   "raison": "consigne, point 4 : état du marqueur à la révision 4",
+   "ancien": "| `MOT_LAZAR_GO_7B` |",
+   "nouveau": "| `MOT_LAZAR_GO_7B` (reste à la révision 4 : mot de Lazar attendu) |"
+  },
+  {
+   "id": "W-M17 (marqueurs) table, ligne DECISION_LAZAR_ECART_DT4_R2041",
+   "source": "rédacteur de la révision 4",
+   "lieu": "« Marqueurs à remplir avant le scellement », table",
+   "raison": "consigne, point 4 : état du marqueur à la révision 4",
+   "ancien": "| `DECISION_LAZAR_ECART_DT4_R2041` |",
+   "nouveau": "| `DECISION_LAZAR_ECART_DT4_R2041` (reste à la révision 4 : la mère le remplit par renvoi à R-2048, à l'audit DT-4 (`4882fe4d…`) et à son complément) |"
+  },
+  {
+   "id": "W-M18 (marqueurs) table, ligne EMPREINTE_RELU_CL3_T06",
+   "source": "rédacteur de la révision 4",
+   "lieu": "« Marqueurs à remplir avant le scellement », table",
+   "raison": "consigne, point 4 : état du marqueur à la révision 4",
+   "ancien": "| `EMPREINTE_RELU_CL3_T06` |",
+   "nouveau": "| `EMPREINTE_RELU_CL3_T06` (rempli à la révision 4 : `c24e268e…`) |"
+  },
+  {
+   "id": "W-M19 (marqueurs) table, ligne CHEMIN_RAPPORT_CL3_T06",
+   "source": "rédacteur de la révision 4",
+   "lieu": "« Marqueurs à remplir avant le scellement », table",
+   "raison": "consigne, point 4 : état du marqueur à la révision 4",
+   "ancien": "| `CHEMIN_RAPPORT_CL3_T06` |",
+   "nouveau": "| `CHEMIN_RAPPORT_CL3_T06` (rempli à la révision 4) |"
+  },
+  {
+   "id": "W-M20 (marqueurs) table, ligne EMPREINTE_RAPPORT_CL3_T06",
+   "source": "rédacteur de la révision 4",
+   "lieu": "« Marqueurs à remplir avant le scellement », table",
+   "raison": "consigne, point 4 : état du marqueur à la révision 4",
+   "ancien": "| `EMPREINTE_RAPPORT_CL3_T06` |",
+   "nouveau": "| `EMPREINTE_RAPPORT_CL3_T06` (rempli à la révision 4 : `3930d4f9…`) |"
+  }
+ ]
+}

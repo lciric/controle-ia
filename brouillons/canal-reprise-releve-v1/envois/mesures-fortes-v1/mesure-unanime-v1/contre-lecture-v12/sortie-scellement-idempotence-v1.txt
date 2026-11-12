@@ -1,0 +1,14 @@
+## sceller une première fois
+87428fc522803d31065e7bce3cf03fe475096631e5e07bbd7a0fde60c4cf25c7  f.txt
+rc=0
+87428fc522803d31065e7bce3cf03fe475096631e5e07bbd7a0fde60c4cf25c7  f.txt
+## sceller une seconde fois (idempotent attendu)
+87428fc522803d31065e7bce3cf03fe475096631e5e07bbd7a0fde60c4cf25c7  f.txt
+rc=0
+## modifier le fichier puis sceller (refus attendu)
+ARRÊT : f.txt est déjà scellé avec une autre empreinte (87428fc52280…) : R12 interdit d'écraser — une nouvelle version prend un nouveau nom
+rc=1
+87428fc522803d31065e7bce3cf03fe475096631e5e07bbd7a0fde60c4cf25c7  f.txt
+## verifier (refus attendu)
+ARRÊT : f.txt : empreinte 911169ddaaf1… ≠ scellée 87428fc52280…
+rc=1

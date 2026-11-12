@@ -1,0 +1,210 @@
+{
+ "arbre_64_combinaisons": {
+  "feuilles_atteintes": {
+   "(1)": 32,
+   "(2b)": 8,
+   "(2a)": 8,
+   "(4d)": 2,
+   "(4c)": 2,
+   "(4a)": 2,
+   "(4b)": 2,
+   "(3b)": 4,
+   "(3a)": 4
+  },
+  "nombre_de_feuilles": 9,
+  "desaccords": []
+ },
+ "arbre_bornes_exactes": [
+  {
+   "entree": [
+    0.05,
+    0.01,
+    0.03,
+    0.01,
+    0.03,
+    0.0
+   ],
+   "lecture": "(1) Ville tenue sur P3 à τ = 0",
+   "texte_apres_arrondi": "(1)"
+  },
+  {
+   "entree": [
+    0.05000000000000001,
+    0.01,
+    0.03,
+    0.01,
+    0.03,
+    0.0
+   ],
+   "lecture": "(1) Ville tenue sur P3 à τ = 0",
+   "texte_apres_arrondi": "(1)"
+  },
+  {
+   "entree": [
+    0.08,
+    0.0,
+    0.05,
+    0.0,
+    0.03,
+    0.0
+   ],
+   "lecture": "(2b) non attribuable",
+   "texte_apres_arrondi": "(2b)"
+  },
+  {
+   "entree": [
+    0.08,
+    3.5e-18,
+    0.03,
+    -3.5e-18,
+    0.03,
+    3.5e-18
+   ],
+   "lecture": "(2b) non attribuable",
+   "texte_apres_arrondi": "(2b)"
+  },
+  {
+   "entree": [
+    0.08,
+    0.01,
+    0.05000000000000001,
+    0.0,
+    0.05,
+    0.0
+   ],
+   "lecture": "(4d) structure intra-épisode non attribuée",
+   "texte_apres_arrondi": "(4d)"
+  },
+  {
+   "entree": [
+    0.08,
+    0.01,
+    0.03,
+    0.01,
+    0.05000000000000001,
+    0.0
+   ],
+   "lecture": "(4a) dépendance naturelle suffisante",
+   "texte_apres_arrondi": "(4a)"
+  }
+ ],
+ "audits_et_cellule_a_zero": {
+  "essai_tel_quel": {
+   "verdicts": {
+    "M1": "confirmé",
+    "M2_controle": "attendu",
+    "M3": "tenu",
+    "M4": "confirmé",
+    "placebo": "mêmes médianes (aucun écart > 0,05)",
+    "cellule_a_zero": "aucune"
+   },
+   "audits": [],
+   "ligne_de_lecture": "première ligne : la synthèse a raison (comparateur par épisode entier ; sommes sans niveau sous dépendance non vue, maximum tenu) — proposé à Lazar pour G1 et H2"
+  },
+  "placebo_ecart_0.08_sur_tau1_somme_terminale": {
+   "verdicts": {
+    "M1": "confirmé",
+    "M2_controle": "attendu",
+    "M3": "tenu",
+    "M4": "confirmé",
+    "placebo": "AUDIT R4 sur ['tau=1.0:somme_terminale']",
+    "cellule_a_zero": "aucune"
+   },
+   "audits": [
+    "placebo"
+   ],
+   "ligne_de_lecture": "AUDIT R4 avant toute lecture (placebo) : rien d'autre n'est lu ; les verdicts ci-dessus sont rapportés sans être lus"
+  },
+  "maximum_M4_0.12": {
+   "verdicts": {
+    "M1": "confirmé",
+    "M2_controle": "attendu",
+    "M3": "tenu",
+    "M4": "AUDIT (maximum conforme > 0,10)",
+    "placebo": "AUDIT R4 sur ['M4:max']",
+    "cellule_a_zero": "aucune"
+   },
+   "audits": [
+    "M4",
+    "placebo"
+   ],
+   "ligne_de_lecture": "AUDIT R4 avant toute lecture (M4, placebo) : rien d'autre n'est lu ; les verdicts ci-dessus sont rapportés sans être lus"
+  },
+  "M3_cellule_0.11": {
+   "verdicts": {
+    "M1": "confirmé",
+    "M2_controle": "attendu",
+    "M3": "AUDIT R4 — rien d'autre n'est lu",
+    "M4": "confirmé",
+    "placebo": "AUDIT R4 sur ['tau=0.5:page']",
+    "cellule_a_zero": "aucune"
+   },
+   "audits": [
+    "M3",
+    "placebo"
+   ],
+   "ligne_de_lecture": "AUDIT R4 avant toute lecture (M3, placebo) : rien d'autre n'est lu ; les verdicts ci-dessus sont rapportés sans être lus"
+  },
+  "M2_controle_0.07": {
+   "verdicts": {
+    "M1": "confirmé",
+    "M2_controle": "AUDIT (bogue : médiane de Ville à τ = 2 < 0,075)",
+    "M3": "tenu",
+    "M4": "confirmé",
+    "placebo": "mêmes médianes (aucun écart > 0,05)",
+    "cellule_a_zero": "aucune"
+   },
+   "audits": [
+    "M2_controle"
+   ],
+   "ligne_de_lecture": "AUDIT R4 avant toute lecture (M2_controle) : rien d'autre n'est lu ; les verdicts ci-dessus sont rapportés sans être lus"
+  },
+  "cellule_a_zero_tau0_somme_terminale": {
+   "verdicts": {
+    "M1": "confirmé",
+    "M2_controle": "attendu",
+    "M3": "tenu, fragile sur 1 cellule(s) (rapporté, la lecture continue)",
+    "M4": "confirmé",
+    "placebo": "mêmes médianes (aucun écart > 0,05)",
+    "cellule_a_zero": "trop propre (médiane et troisième quartile nuls) : ['tau=0.0:somme_terminale']"
+   },
+   "audits": [],
+   "ligne_de_lecture": "première ligne : la synthèse a raison (comparateur par épisode entier ; sommes sans niveau sous dépendance non vue, maximum tenu) — proposé à Lazar pour G1 et H2"
+  },
+  "maximum_M4_a_zero": {
+   "verdicts": {
+    "M1": "confirmé",
+    "M2_controle": "attendu",
+    "M3": "tenu",
+    "M4": "confirmé",
+    "placebo": "mêmes médianes (aucun écart > 0,05)",
+    "cellule_a_zero": "aucune"
+   },
+   "audits": [],
+   "ligne_de_lecture": "première ligne : la synthèse a raison (comparateur par épisode entier ; sommes sans niveau sous dépendance non vue, maximum tenu) — proposé à Lazar pour G1 et H2"
+  }
+ },
+ "mode_reel_sur_synthetique": {
+  "cle_E_au_manifeste": false,
+  "gardes": 60,
+  "tirages": 20,
+  "bootstrap": 2000,
+  "lecture_v3": "REFUS : E de la table (60) ≠ E de la sortie (None)"
+ },
+ "mode_reel_sur_synthetique_si_E_au_manifeste": {
+  "verdicts": {
+   "M1": "confirmé",
+   "M1_bis": "ni l'un ni l'autre",
+   "M2_controle": "attendu",
+   "M2_bis": "conforme à la table",
+   "M2_ter": "(4a) dépendance naturelle suffisante",
+   "M3": "tenu",
+   "M4": "confirmé",
+   "placebo": "mêmes médianes (aucun écart > 0,05)",
+   "cellule_a_zero": "aucune"
+  },
+  "ligne_de_lecture": "première ligne : la synthèse a raison (comparateur par épisode entier ; sommes sans niveau sous dépendance non vue, maximum tenu) — proposé à Lazar pour G1 et H2"
+ },
+ "manifeste_non_verifie": "passe (ni l'empreinte du script, ni les tirages, ni le commit ne sont vérifiés)",
+ "essai_avec_empreinte_reelle_attendue": "refus : empreinte des données de la sortie ≠ celle attendue"
+}

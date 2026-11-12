@@ -1,0 +1,100 @@
+script éprouvé : recuperation_p3bis_v2.sh f95c60b95e4e11563f29476560b0190228729f60c65162120c48a6bc6bdc467d
+script éprouvé : detruire_p3bis_v2.sh cae56ec9cbd00485a9506a1af1bb9dfd8e4b493e966003cb0ed365fe6973ae46
+script éprouvé : verifications_p3bis_v2.py 1524df5f6432197fde4793a4fde56d4496407a107c88f5e294a6bc9716923054
+script éprouvé : essais_recuperation_p3bis_v2.sh 9e39f5ca204806b4b93c67917053fe03683ac393f39bc5c88281fc34d9975507
+lignes changées dans la copie de la récupération : 2 (DEPOT_URL, PY)
+R00-sain : code 0 ; 0 KO ; CONFORME
+    | RÉCUPÉRATION : TOUS CONFORMES ; paquet des lectures 665b6aed5298eff9879117a220914169eb5c9b6058edf032cebb493654279f28 poussé sur calcul/p3bis-reel-v1
+    paquet poussé relu par le banc (vrai module v2) : deux lectures décisives sous le texte, lecture complémentaire lecture_p3bis_v2 (règle (a') sur 800 directions, ancienne règle sur 200), issue mécanique « vu », ligne 4, durées écrites : CONFORME
+    branche distante : un seul commit de plus, qui n'ajoute que le paquet et son compagnon ; paquet de 16 783 360 octets à l'empreinte imprimée : CONFORME
+    clone en extraction partielle : témoin docs/notes/bras-attaque/ absent du disque (CD-05) : CONFORME
+    rapport écrit (récupération.rapport.txt) ; aucune ligne de la classe 2 affichée (seules les lignes de code et l'empreinte) : CONFORME
+    clone : aucun fichier du run en clair, aucune sortie de lecture restée (non suivis et ignorés compris) : CONFORME
+R01-branche-main : code 2 ; 0 KO ; CONFORME
+    | BRANCHE : calcul/p3bis-reel-v1, -v2 ou -v3 (jamais main)
+R01b-branche-autre : code 2 ; 0 KO ; CONFORME
+    | BRANCHE : calcul/p3bis-reel-v1, -v2 ou -v3 (jamais main)
+R01c-dossier-existant : code 2 ; 0 KO ; CONFORME
+    | /tmp/claude-0/-home-user/1cc16375-a2bd-54b9-a03f-27d43b6f26a6/scratchpad/agents/code-p3bis-regle-a/bancs/recuperation/recup-R01c-dossier-existant existe déjà (R12)
+R01d-s-invalide : code 2 ; 0 KO ; CONFORME
+    | S invalide
+R01e-epingle-non-remplie : code 2 ; CONFORME
+R02-s-non-ancetre : code 1 ; 3 KO ; CONFORME
+    | KO  0 récupération exécutée ≠ copie versée à S
+    | KO  1a S n'est pas ancêtre de la branche
+    | RÉCUPÉRATION : 3 CONTRÔLE(S) EN ÉCHEC
+R03-donnees-en-clair : code 1 ; 2 KO ; CONFORME
+    | KO  1c FICHIER DU RUN EN CLAIR sur la branche (écart « Toute ouverture hors de la garde », à consigner) : donnees/20261112-080000-p3bis-reel/scores-p3.npz donnees/202
+    | KO  1c chemins hors périmètre : donnees/20261112-080000-p3bis-reel/scores-p3.npz donnees/20261112-080000-p3bis-reel/scores-p3.npz.sha256 
+    | RÉCUPÉRATION : 2 CONTRÔLE(S) EN ÉCHEC (aucune lecture, aucun commit)
+    fichier du run en clair : aucune lecture, aucun commit poussé : CONFORME
+R04-episodes-en-clair : code 1 ; 3 KO ; CONFORME
+    | KO  1c FICHIER DU RUN EN CLAIR sur la branche (écart « Toute ouverture hors de la garde », à consigner) : diag/20261112-080000-p3bis-reel/episodes-p3.json 
+    | KO  1c chemins hors périmètre : diag/20261112-080000-p3bis-reel/episodes-p3.json 
+    | RÉCUPÉRATION : 3 CONTRÔLE(S) EN ÉCHEC (aucune lecture, aucun commit)
+R05-modification : code 1 ; 3 KO ; CONFORME
+    | KO  1b 1 changement(s) autre(s) qu'un ajout
+    | KO  1c chemins hors périmètre : docs/procedures/P3-bis-temoin-positif-v1/detruire_p3bis_v2.sh 
+    | RÉCUPÉRATION : 3 CONTRÔLE(S) EN ÉCHEC (aucune lecture, aucun commit)
+R06-deux-runs : code 1 ; 2 KO ; CONFORME
+    | KO  1d runs : 20261112-080000-p3bis-reel 20261112-090000-p3bis-reel (un seul, au motif, avec son manifeste, attendu)
+    | KO  3 run : résumé et arrêt tous deux présents, ou runs illisibles
+    | RÉCUPÉRATION : 2 CONTRÔLE(S) EN ÉCHEC (aucune lecture, aucun commit)
+R07-auteur-autre : code 1 ; 1 KO ; CONFORME
+    | KO  1e auteurs : autre,instance de calcul (P3-bis)
+    | RÉCUPÉRATION : 1 CONTRÔLE(S) EN ÉCHEC (aucune lecture, aucun commit)
+R08-sceau-faux : code 1 ; 1 KO ; CONFORME
+    | KO  2a verifier-arbre : ÉCHEC diag/20261112-080000-p3bis-reel/resume.json : diag/20261112-080000-p3bis-reel/resume.json : empreinte 9294b03e4881… ≠ scellée 00000000
+    | RÉCUPÉRATION : 1 CONTRÔLE(S) EN ÉCHEC (aucune lecture, aucun commit)
+R09-run-sans-resume : code 4 ; 0 KO ; CONFORME
+    | RÉCUPÉRATION SANS LECTURE (RUN SANS RÉSUMÉ) : TOUS CONFORMES
+    run sans résumé : rapport « SANS LECTURE », aucun commit poussé : CONFORME
+R10-aucun-run : code 4 ; 0 KO ; CONFORME
+    | RÉCUPÉRATION DES TRACES SEULES (AUCUN RUN), SANS LECTURE : TOUS CONFORMES
+    aucun run : traces seules, code 4 : CONFORME
+R11-second-paquet-absent : code 1 ; 1 KO ; CONFORME
+    | KO  3 second paquet absent (index ou morceaux)
+    | RÉCUPÉRATION : 1 CONTRÔLE(S) EN ÉCHEC (aucune lecture, aucun commit)
+R12-second-paquet-altere : code 1 ; 3 KO ; CONFORME
+    | KO  4 lectures fermées : code 1, 0 code(s) 0 sur 4 (une garde a arrêté une étape : nœud ; la lecture n'est jamais rejouée pour la mise en paquet)
+    | KO  4 paquet des lectures absent, d'une autre taille, ou compagnon autre
+    | RÉCUPÉRATION : 3 CONTRÔLE(S) EN ÉCHEC (aucun commit)
+    second paquet altéré : la ligne « motif du dépliage » du module v2 est admise (classe 1) et affichée : CONFORME
+    second paquet altéré : dépliage refusé, aucun commit poussé, aucun fichier en clair resté : CONFORME
+R13-entropie-autre : code 1 ; 1 KO ; CONFORME
+    | KO  3 entropie du texte « 111111111111111111111 » (citée 1 fois) ≠ 173398867739501636779144561928402532101
+    | RÉCUPÉRATION : 1 CONTRÔLE(S) EN ÉCHEC (aucune lecture, aucun commit)
+R14-lecture-en-echec : code 1 ; 1 KO ; CONFORME
+    | KO  4 lectures fermées : code 1, 2 code(s) 0 sur 4 (une garde a arrêté une étape : nœud ; la lecture n'est jamais rejouée pour la mise en paquet)
+    | RÉCUPÉRATION : 1 CONTRÔLE(S) EN ÉCHEC (aucun commit)
+    lecture refusée par sa propre garde (configuration citée autre que celle du run) : aucun commit poussé : CONFORME
+R15-copie-non-versee : code 1 ; CONFORME
+R16-extraction-entiere-refusee : code 2 ; CONFORME
+    | REFUS : docs/notes/bras-attaque extrait sur disque (interdits communs v2, règle 9 ; CD-05) : aucune récupération
+D00-sain : code 0 ; CONFORME
+    | DESTRUCTION : instance 99999999 détruite par son identifiant (R10), absente de la liste relue
+    destruction : un seul appel, par l'identifiant ; ligne à consigner : CONFORME
+D01-instance-gardee : code 2 ; CONFORME
+    | REFUS : instance gardée (second paquet en échec) : jamais détruite avant le paquet refait
+D01b-gardee-meme-motif-fin : code 2 ; CONFORME
+    | REFUS : instance gardée (second paquet en échec) : jamais détruite avant le paquet refait
+D02-processus-mort : code 2 ; CONFORME
+    | REFUS : surveillance sans motif FIN (PROCESSUS MORT) : nœud de Lazar, aucune destruction ici
+D02b-sans-motif : code 2 ; CONFORME
+    | REFUS : surveillance sans motif FIN (absent) : nœud de Lazar, aucune destruction ici
+D03-recuperation-non-conforme : code 2 ; CONFORME
+    | REFUS : récupération non conforme, ou d'une autre branche que calcul/p3bis-reel-v1 (« RÉCUPÉRATION : 3 CONTRÔLE(S) EN ÉCHEC (aucun commit) »)
+D04-autre-branche : code 2 ; CONFORME
+    | REFUS : récupération non conforme, ou d'une autre branche que calcul/p3bis-reel-v1 (« RÉCUPÉRATION : TOUS CONFORMES ; paquet des lectures aaaaaaaaaaaaaaaaaaaaaaaaaaa
+D05-identifiant-autre : code 2 ; CONFORME
+    | REFUS : identifiant : instance 99999998 : ce lanceur a créé 99999999 ; aucune autre n'est arrêtée ni détruite ici
+D06-instance-toleree : code 2 ; CONFORME
+    | REFUS : identifiant : instance 58936099 : dans ARRETEES_TOLEREES ; jamais touchée par cette chaîne
+D07-destruction-en-echec : code 1 ; CONFORME
+    | DESTRUCTION EN ÉCHEC : code 1, liste relue « présente » : agir par l'identifiant 99999999, à la main (R10), consigner
+D08-encore-listee : code 1 ; CONFORME
+    | DESTRUCTION EN ÉCHEC : code 0, liste relue « présente » : agir par l'identifiant 99999999, à la main (R10), consigner
+D09-usage : code 2 ; CONFORME
+    les instances tolérées ne sont jamais visées par un verbe (tout le banc) : CONFORME
+cas joués : 46
+FIN DU BANC DE LA RÉCUPÉRATION DE P3-BIS ; cas non conformes : 0

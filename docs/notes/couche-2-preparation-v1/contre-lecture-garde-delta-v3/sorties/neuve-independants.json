@@ -1,0 +1,446 @@
+{
+ "version": "simulation-puissance-garde-delta-v3",
+ "statut": "exploratoire, non préenregistré, non opposable ; lois synthétiques seulement",
+ "script_sha256": "7b636c1eedb06cda4f23156bb8e727d8e4269ad5106fb58ccb081abfc2603de2",
+ "commit": null,
+ "etat_du_script": "commité, non modifié",
+ "reglages": {
+  "ecarts": null,
+  "ecarts_contraste": null,
+  "effectif_attendu": null,
+  "repetitions": 4000,
+  "graine": 918273645,
+  "tailles": "160",
+  "tailles_garde": null,
+  "deltas": "0.05,0.10",
+  "m": "8,1",
+  "alpha": 0.05,
+  "K": "10,3",
+  "K_sabotes": null,
+  "taux": "0.01,0.10",
+  "biais": "0",
+  "comparateurs": "3",
+  "comparateurs_independants": true,
+  "effet_unite_a": 0.0,
+  "ecart_contraste": 0.1,
+  "sans_n80": true,
+  "seuils": [
+   160.0,
+   20.0
+  ],
+  "lambdas": [
+   0.1,
+   0.3,
+   0.6,
+   0.9
+  ],
+  "lecture_des_seuils": "m/α_c : borne basse de la lecture e-BH ; 20 (m = 1) : borne haute, lâche (GD2-03)"
+ },
+ "taille_minimale_ecarts_nuls": {
+  "delta=0.05|seuil=160.0": 144,
+  "delta=0.05|seuil=20.0": 93,
+  "delta=0.1|seuil=160.0": 74,
+  "delta=0.1|seuil=20.0": 48
+ },
+ "lois": {
+  "binomiale_Kh10_Ks10_taux0.01_independants": {
+   "biais_essayes": [
+    0.0
+   ],
+   "artefacts": true
+  },
+  "binomiale_Kh10_Ks10_taux0.1_independants": {
+   "biais_essayes": [
+    0.0
+   ],
+   "artefacts": true
+  },
+  "binomiale_Kh3_Ks3_taux0.01_independants": {
+   "biais_essayes": [
+    0.0
+   ],
+   "artefacts": true
+  },
+  "binomiale_Kh3_Ks3_taux0.1_independants": {
+   "biais_essayes": [
+    0.0
+   ],
+   "artefacts": true
+  }
+ },
+ "cellules": {
+  "binomiale_Kh10_Ks10_taux0.01_independants|delta=0.05|n=160|n_garde=160|biais=0.0|k=3": {
+   "etiquette": "binomiale_Kh10_Ks10_taux0.01_independants|delta=0.05|n=160|n_garde=160|biais=0.0|k=3",
+   "graine_derivee": 11077557243332447069,
+   "160.0": {
+    "garde_seule": {
+     "part": 0.88925,
+     "unites_mediane_si_atteint": 145.0
+    },
+    "k_gardes": {
+     "part": 0.70725,
+     "unites_mediane_si_atteint": 153.0
+    },
+    "k_contrastes": {
+     "part": 0.93625,
+     "unites_mediane_si_atteint": 112.0
+    },
+    "fiche_entiere": {
+     "part": 0.65575,
+     "unites_mediane_si_atteint": 153.0
+    },
+    "frontiere_part": 0.0,
+    "frontiere_borne_ville": 0.00625,
+    "tricheur_part": 0.0
+   },
+   "20.0": {
+    "garde_seule": {
+     "part": 1.0,
+     "unites_mediane_si_atteint": 95.0
+    },
+    "k_gardes": {
+     "part": 1.0,
+     "unites_mediane_si_atteint": 102.0
+    },
+    "k_contrastes": {
+     "part": 0.9985,
+     "unites_mediane_si_atteint": 76.0
+    },
+    "fiche_entiere": {
+     "part": 0.99825,
+     "unites_mediane_si_atteint": 103.0
+    },
+    "frontiere_part": 0.0,
+    "frontiere_borne_ville": 0.05,
+    "tricheur_part": 0.0
+   }
+  },
+  "binomiale_Kh10_Ks10_taux0.01_independants|delta=0.1|n=160|n_garde=160|biais=0.0|k=3": {
+   "etiquette": "binomiale_Kh10_Ks10_taux0.01_independants|delta=0.1|n=160|n_garde=160|biais=0.0|k=3",
+   "graine_derivee": 14256407416455132435,
+   "160.0": {
+    "garde_seule": {
+     "part": 1.0,
+     "unites_mediane_si_atteint": 74.0
+    },
+    "k_gardes": {
+     "part": 1.0,
+     "unites_mediane_si_atteint": 77.0
+    },
+    "k_contrastes": {
+     "part": 0.941,
+     "unites_mediane_si_atteint": 111.0
+    },
+    "fiche_entiere": {
+     "part": 0.941,
+     "unites_mediane_si_atteint": 111.0
+    },
+    "frontiere_part": 0.0,
+    "frontiere_borne_ville": 0.00625,
+    "tricheur_part": 0.0
+   },
+   "20.0": {
+    "garde_seule": {
+     "part": 1.0,
+     "unites_mediane_si_atteint": 48.0
+    },
+    "k_gardes": {
+     "part": 1.0,
+     "unites_mediane_si_atteint": 51.0
+    },
+    "k_contrastes": {
+     "part": 0.9965,
+     "unites_mediane_si_atteint": 76.0
+    },
+    "fiche_entiere": {
+     "part": 0.9965,
+     "unites_mediane_si_atteint": 76.0
+    },
+    "frontiere_part": 0.0,
+    "frontiere_borne_ville": 0.05,
+    "tricheur_part": 0.0
+   }
+  },
+  "binomiale_Kh10_Ks10_taux0.1_independants|delta=0.05|n=160|n_garde=160|biais=0.0|k=3": {
+   "etiquette": "binomiale_Kh10_Ks10_taux0.1_independants|delta=0.05|n=160|n_garde=160|biais=0.0|k=3",
+   "graine_derivee": 1326443773196886405,
+   "160.0": {
+    "garde_seule": {
+     "part": 0.4315,
+     "unites_mediane_si_atteint": 139.5
+    },
+    "k_gardes": {
+     "part": 0.082,
+     "unites_mediane_si_atteint": 152.0
+    },
+    "k_contrastes": {
+     "part": 0.938,
+     "unites_mediane_si_atteint": 111.0
+    },
+    "fiche_entiere": {
+     "part": 0.07625,
+     "unites_mediane_si_atteint": 153.0
+    },
+    "frontiere_part": 0.0,
+    "frontiere_borne_ville": 0.00625,
+    "tricheur_part": 0.0
+   },
+   "20.0": {
+    "garde_seule": {
+     "part": 0.91675,
+     "unites_mediane_si_atteint": 103.0
+    },
+    "k_gardes": {
+     "part": 0.776,
+     "unites_mediane_si_atteint": 127.0
+    },
+    "k_contrastes": {
+     "part": 0.99675,
+     "unites_mediane_si_atteint": 76.0
+    },
+    "fiche_entiere": {
+     "part": 0.773,
+     "unites_mediane_si_atteint": 128.0
+    },
+    "frontiere_part": 0.001,
+    "frontiere_borne_ville": 0.05,
+    "tricheur_part": 0.0
+   }
+  },
+  "binomiale_Kh10_Ks10_taux0.1_independants|delta=0.1|n=160|n_garde=160|biais=0.0|k=3": {
+   "etiquette": "binomiale_Kh10_Ks10_taux0.1_independants|delta=0.1|n=160|n_garde=160|biais=0.0|k=3",
+   "graine_derivee": 3354960960584662642,
+   "160.0": {
+    "garde_seule": {
+     "part": 1.0,
+     "unites_mediane_si_atteint": 79.0
+    },
+    "k_gardes": {
+     "part": 1.0,
+     "unites_mediane_si_atteint": 90.0
+    },
+    "k_contrastes": {
+     "part": 0.94675,
+     "unites_mediane_si_atteint": 112.0
+    },
+    "fiche_entiere": {
+     "part": 0.94675,
+     "unites_mediane_si_atteint": 113.0
+    },
+    "frontiere_part": 0.0,
+    "frontiere_borne_ville": 0.00625,
+    "tricheur_part": 0.0
+   },
+   "20.0": {
+    "garde_seule": {
+     "part": 1.0,
+     "unites_mediane_si_atteint": 51.0
+    },
+    "k_gardes": {
+     "part": 1.0,
+     "unites_mediane_si_atteint": 59.0
+    },
+    "k_contrastes": {
+     "part": 0.997,
+     "unites_mediane_si_atteint": 75.5
+    },
+    "fiche_entiere": {
+     "part": 0.997,
+     "unites_mediane_si_atteint": 77.0
+    },
+    "frontiere_part": 0.00175,
+    "frontiere_borne_ville": 0.05,
+    "tricheur_part": 0.0
+   }
+  },
+  "binomiale_Kh3_Ks3_taux0.01_independants|delta=0.05|n=160|n_garde=160|biais=0.0|k=3": {
+   "etiquette": "binomiale_Kh3_Ks3_taux0.01_independants|delta=0.05|n=160|n_garde=160|biais=0.0|k=3",
+   "graine_derivee": 12380153207909496884,
+   "160.0": {
+    "garde_seule": {
+     "part": 0.66675,
+     "unites_mediane_si_atteint": 142.0
+    },
+    "k_gardes": {
+     "part": 0.29025,
+     "unites_mediane_si_atteint": 152.0
+    },
+    "k_contrastes": {
+     "part": 0.06875,
+     "unites_mediane_si_atteint": 135.0
+    },
+    "fiche_entiere": {
+     "part": 0.013,
+     "unites_mediane_si_atteint": 154.0
+    },
+    "frontiere_part": 0.0,
+    "frontiere_borne_ville": 0.00625,
+    "tricheur_part": 0.0
+   },
+   "20.0": {
+    "garde_seule": {
+     "part": 0.9965,
+     "unites_mediane_si_atteint": 97.0
+    },
+    "k_gardes": {
+     "part": 0.99075,
+     "unites_mediane_si_atteint": 112.0
+    },
+    "k_contrastes": {
+     "part": 0.33675,
+     "unites_mediane_si_atteint": 121.0
+    },
+    "fiche_entiere": {
+     "part": 0.31725,
+     "unites_mediane_si_atteint": 131.0
+    },
+    "frontiere_part": 0.001,
+    "frontiere_borne_ville": 0.05,
+    "tricheur_part": 0.0
+   }
+  },
+  "binomiale_Kh3_Ks3_taux0.01_independants|delta=0.1|n=160|n_garde=160|biais=0.0|k=3": {
+   "etiquette": "binomiale_Kh3_Ks3_taux0.01_independants|delta=0.1|n=160|n_garde=160|biais=0.0|k=3",
+   "graine_derivee": 14853778461473087139,
+   "160.0": {
+    "garde_seule": {
+     "part": 1.0,
+     "unites_mediane_si_atteint": 76.0
+    },
+    "k_gardes": {
+     "part": 1.0,
+     "unites_mediane_si_atteint": 82.0
+    },
+    "k_contrastes": {
+     "part": 0.06425,
+     "unites_mediane_si_atteint": 140.0
+    },
+    "fiche_entiere": {
+     "part": 0.064,
+     "unites_mediane_si_atteint": 140.0
+    },
+    "frontiere_part": 0.00025,
+    "frontiere_borne_ville": 0.00625,
+    "tricheur_part": 0.0
+   },
+   "20.0": {
+    "garde_seule": {
+     "part": 1.0,
+     "unites_mediane_si_atteint": 49.0
+    },
+    "k_gardes": {
+     "part": 1.0,
+     "unites_mediane_si_atteint": 53.0
+    },
+    "k_contrastes": {
+     "part": 0.34,
+     "unites_mediane_si_atteint": 122.0
+    },
+    "fiche_entiere": {
+     "part": 0.3395,
+     "unites_mediane_si_atteint": 122.0
+    },
+    "frontiere_part": 0.006,
+    "frontiere_borne_ville": 0.05,
+    "tricheur_part": 0.0
+   }
+  },
+  "binomiale_Kh3_Ks3_taux0.1_independants|delta=0.05|n=160|n_garde=160|biais=0.0|k=3": {
+   "etiquette": "binomiale_Kh3_Ks3_taux0.1_independants|delta=0.05|n=160|n_garde=160|biais=0.0|k=3",
+   "graine_derivee": 4841825351105900949,
+   "160.0": {
+    "garde_seule": {
+     "part": 0.19525,
+     "unites_mediane_si_atteint": 129.0
+    },
+    "k_gardes": {
+     "part": 0.00625,
+     "unites_mediane_si_atteint": 149.0
+    },
+    "k_contrastes": {
+     "part": 0.0605,
+     "unites_mediane_si_atteint": 140.0
+    },
+    "fiche_entiere": {
+     "part": 0.00025,
+     "unites_mediane_si_atteint": 160.0
+    },
+    "frontiere_part": 0.002,
+    "frontiere_borne_ville": 0.00625,
+    "tricheur_part": 0.0
+   },
+   "20.0": {
+    "garde_seule": {
+     "part": 0.52275,
+     "unites_mediane_si_atteint": 101.0
+    },
+    "k_gardes": {
+     "part": 0.1215,
+     "unites_mediane_si_atteint": 133.0
+    },
+    "k_contrastes": {
+     "part": 0.33075,
+     "unites_mediane_si_atteint": 124.0
+    },
+    "fiche_entiere": {
+     "part": 0.0335,
+     "unites_mediane_si_atteint": 143.5
+    },
+    "frontiere_part": 0.01525,
+    "frontiere_borne_ville": 0.05,
+    "tricheur_part": 0.0
+   }
+  },
+  "binomiale_Kh3_Ks3_taux0.1_independants|delta=0.1|n=160|n_garde=160|biais=0.0|k=3": {
+   "etiquette": "binomiale_Kh3_Ks3_taux0.1_independants|delta=0.1|n=160|n_garde=160|biais=0.0|k=3",
+   "graine_derivee": 6626706399989981320,
+   "160.0": {
+    "garde_seule": {
+     "part": 0.94325,
+     "unites_mediane_si_atteint": 91.0
+    },
+    "k_gardes": {
+     "part": 0.83525,
+     "unites_mediane_si_atteint": 118.0
+    },
+    "k_contrastes": {
+     "part": 0.06525,
+     "unites_mediane_si_atteint": 137.0
+    },
+    "fiche_entiere": {
+     "part": 0.0525,
+     "unites_mediane_si_atteint": 142.5
+    },
+    "frontiere_part": 0.00025,
+    "frontiere_borne_ville": 0.00625,
+    "tricheur_part": 0.0
+   },
+   "20.0": {
+    "garde_seule": {
+     "part": 0.995,
+     "unites_mediane_si_atteint": 58.0
+    },
+    "k_gardes": {
+     "part": 0.98475,
+     "unites_mediane_si_atteint": 83.0
+    },
+    "k_contrastes": {
+     "part": 0.3245,
+     "unites_mediane_si_atteint": 122.0
+    },
+    "fiche_entiere": {
+     "part": 0.309,
+     "unites_mediane_si_atteint": 128.0
+    },
+    "frontiere_part": 0.017,
+    "frontiere_borne_ville": 0.05,
+    "tricheur_part": 0.0
+   }
+  }
+ },
+ "environnement": {
+  "python": "3.13.17",
+  "numpy": "2.5.3",
+  "duree_s": 10.8
+ }
+}

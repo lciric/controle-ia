@@ -1,0 +1,157 @@
+{
+ "objet": "substitutions exactes du candidat 1 de T0.6, appliquées APRÈS les 7 couples (numérotés 1 à 7 dans l'ordre) de la contre-lecture neuve du lanceur v2 et du brouillon 5 (rédacteur neuf, sous-agent de la fille 7, T1 bis, 5 novembre 2026) ; chaque « ancien » doit apparaître exactement « occurrences » fois (1 par défaut) au moment de son application ; {HEURE} est l'heure UTC de l'exécution du script (date -u), {SHA_CL}, {SHA_COUPLES} et {SHA_CORR} les sha256 complets de la contre-lecture v2, de ses couples et des corrections de code v3",
+ "substitutions": [
+  {
+   "id": "C01",
+   "quoi": "titre : candidat 1",
+   "ancien": "critères 2 et 3 de G0) — v1 — brouillon 5",
+   "nouveau": "critères 2 et 3 de G0) — v1 — candidat 1"
+  },
+  {
+   "id": "C02",
+   "quoi": "statut : candidat 1, provenance, méthode ; le statut du brouillon 5 devient « statut antérieur »",
+   "ancien": "- Statut : **brouillon 5**, écrit le 2026-11-05 à partir de 20:05 UTC",
+   "nouveau": "- Statut : **candidat 1**, écrit le 2026-11-05 à partir de {HEURE} UTC (heure relevée par `date -u`) par un rédacteur neuf (Claude Fable 5.1,\n  sous-agent de la fille 7, tâche T1 bis), qui n'a écrit ni les brouillons 1 à 5, ni la conception, ni P3, ni le code, ni les\n  contre-lectures du lanceur. **Non scellé, non contre-lu** : la contre-lecture R2 du candidat (plan daté, 9 novembre) le couvrira.\n  **Candidat 1 = brouillon 5 (`e95d4d48825bdb427207be87964fa46ad62918ff8b9dac5e0c106aa35f38f817`, empreinte vérifiée avant tout) + les\n  7 couples de la contre-lecture neuve du lanceur v2 et du brouillon 5** (R2, lignée Opus 5.5, fille 9, branche\n  `prep/fille-9-contre-lectures-v1`, commit `15d2ce93`, `docs/notes/g0-deux-semaines-v1/contre-lecture-lanceur-T0.6-v2/contre-lecture-lanceur-T0.6-v2.md`,\n  `{SHA_CL}`, et `couples-brouillon5-vers-candidat1-T0.6-v1.json`, `{SHA_COUPLES}`, liste nue de 7 couples, numérotés 1 à 7\n  dans l'ordre), appliqués dans l'ordre par script (chaque « ancien » unique au moment de son application), puis les substitutions\n  C01 et suivantes (en-tête, lanceur v3, deux marqueurs neufs, clés de citation, ligne Mahalanobis) ; script, copie des couples à\n  l'octet, substitutions et journal dans `brouillons/T0.6-organismes-v0-v1-candidat1-pieces/`. Ce que le candidat 1 change : point 8\n  ci-dessous. Rien n'est lancé, rien n'est dépensé.\n- Statut antérieur : **brouillon 5**, écrit le 2026-11-05 à partir de 20:05 UTC"
+  },
+  {
+   "id": "C03",
+   "quoi": "en-tête, point 8 : ce que le candidat 1 change (couples 1 à 7, substitutions, marqueurs neufs, plan)",
+   "ancien": "(e) les choix du code que le texte ne fixe pas (contre-lecture, point 9) sont déclarés dans la\n     section « Ce qui manque pour lancer ».",
+   "nouveau": "(e) les choix du code que le texte ne fixe pas (contre-lecture, point 9) sont déclarés dans la\n     section « Ce qui manque pour lancer ».\n  8. **Ce que le candidat 1 change** (rédacteur neuf, sous-agent de la fille 7, T1 bis, 5 novembre 2026, {HEURE} UTC ; source : la\n     contre-lecture neuve du lanceur v2 et du brouillon 5, `contre-lecture-lanceur-T0.6-v2.md`, `{SHA_CL}`, points 7 à 10, et ses\n     7 couples, `{SHA_COUPLES}` ; corrections de code `corrections-code-lanceur-T0.6-v3.md`, `{SHA_CORR}`) :\n     - **couple 1, plan daté, 11 nov.** — `controles` reçoit l'argument facultatif `[JOUR]` ;\n     - **couple 2, plan daté, 11 nov.** — `creation` reçoit `[ECHEANCE_UTC_S]` ; CARTE vaut `course` ou `relance` ;\n     - **couple 3, plan daté, 11 nov.** — après la commande de création imprimée, la session enchaîne `apres-creation FICHIER CODE DOSSIER` ;\n     - **couple 4, plan daté, 11 nov.** — signature réelle de `surveillance <ID> <DOSSIER> [FACTURE_USD]` (heure de création, prix,\n       dépense antérieure et forfait de téléchargement relus dans `DOSSIER/lancement.txt`) ; `<CREATION_S>` était faux ;\n     - **couple 5, citations lues par la chaîne** — la liste des clés est réécrite sans accent grave après les clés, pour ne plus\n       doubler « Tests attendus » ni les quatre « Chemin … » (contre-lecture, point 7) ; « Tests attendus » défini : dernière ligne\n       exacte de la suite complète sous l'image de l'instance, aucun essai sauté ni désélectionné ;\n     - **couple 6, table des marqueurs** — procédure de `<<EMPREINTES_CODE_T06>>` (`git show <COMMIT>:<chemin> \\| sha256sum`,\n       comparaison à la table du rapport du développeur, tout écart : nœud) et forme de la citation de l'amorce ;\n     - **couple 7, devis, poste « mise en place »** — épreuve E0 du lanceur v2 (≈ 2 h sur 4 cœurs sans Mahalanobis) ; coût de la\n       notation de Mahalanobis du paquet gelé (18 à 26 ms par jeton, 8 à 30 h de carte) déclaré : nœud de Lazar (contre-lecture, point 8) ;\n     - **substitutions** : (i) le code à lancer est le **lanceur v3** (`scripts/lancer_t06_v3.sh`, `scripts/amorce_instance_t06_v3.sh`,\n       modules v3 sous `src/controle_ia/t06/` ; corrections **C-V3-1 à C-V3-4** : morceaux d'activations remplis sous la borne de\n       90 Mo, poussée des commits avant destruction au redémarrage après dépense épuisée ou échéance passée, prix de l'offre lu au\n       disque demandé, Mahalanobis selon le nœud ; sous-commandes v3 aux **mêmes signatures que la v2** ; branche `prep/t06-lanceur-v2` ;\n       rapports du développeur v2 et v3, additifs) dans le plan daté (7 et 11 nov.), la ligne d'engagement, la table des marqueurs et\n       les citations ; les mentions historiques (points 5 et 7 ci-dessus, ligne du 5 nov. du plan, traitement de la contre-lecture)\n       restent telles quelles ; (ii) **deux marqueurs neufs** : « Tests attendus » reçoit `<<TESTS_ATTENDUS_T06>>` (en-tête, seule\n       ligne de citation de cette clé) et l'amorce est citée par son empreinte `<<EMPREINTE_AMORCE_T06>>` (en-tête, ligne « Amorce »,\n       forme lue par `controles`) ; onze marqueurs distincts ; (iii) les clés de citation que la chaîne lit et que le brouillon 5 ne\n       portait que dans la liste des clés (configuration, tâches, chemins) sont ajoutées dans l'en-tête, chacune une fois, valeur\n       « à remplir au candidat 2 » ; (iv) ligne **Mahalanobis** dans la table des décisions (nœud de Lazar, `<<MOT_LAZAR_DT>>`) ;\n       (v) plan daté : le candidat 1 est ce texte (5 nov., en avance, valeurs non remplies) ; le 8 nov. produit le **candidat 2**\n       (valeurs remplies), le 9 nov. le contre-lit (→ candidat 3). Aucun couple ni aucune substitution ne touche les sections\n       « Hypothèses » à « Liste d'arrêt » (le couple 7 touche le devis ; 1 à 4 le plan daté ; 5 et 6 la table des marqueurs)."
+  },
+  {
+   "id": "C04",
+   "quoi": "valeurs de configuration : lanceur v3 (table des décisions L04, L05, L11 ; Métrique ; plan d'analyse point 3 ; liste d'arrêt ; choix du code) — 7 occurrences",
+   "occurrences": 7,
+   "ancien": "configuration du lanceur v2",
+   "nouveau": "configuration du lanceur v3"
+  },
+  {
+   "id": "C05",
+   "quoi": "table des décisions : ligne Mahalanobis (nœud de Lazar)",
+   "ancien": "autre dernier jour ; valeurs de configuration du lanceur v3) |\n",
+   "nouveau": "autre dernier jour ; valeurs de configuration du lanceur v3) |\n| Mahalanobis (test croisé, couples descriptifs) | paquet gelé `sondes/familles.py` par défaut (clé de configuration du lanceur v3 ; `sondes/familles_v2.py` éprouvée égale à 10⁻¹² près disponible) | nœud de Lazar : (a) retirer, (b) hors ligne, (d) version neuve ; `<<MOT_LAZAR_DT>>` |\n"
+  },
+  {
+   "id": "C06",
+   "quoi": "en-tête : auteurs ; rapports du développeur v2 et v3 ; ligne « Amorce » citée par son empreinte (marqueur neuf)",
+   "ancien": "- Auteur : rédacteur neuf (brouillon 4) ; sous-agent de reprise de conv-audit (brouillons 2 et 3). Date (UTC) : celle du\n  commit de scellement. Commit du code d'analyse : `<<COMMIT_CODE_T06>>` (branche `prep/t06-lanceur-v2` fusionnée ou citée\n  au commit ; empreintes des modules neufs `<<EMPREINTES_CODE_T06>>`, relevées dans le rapport du développeur,\n  `<<EMPREINTE_RAPPORT_LANCEUR_T06>>`).",
+   "nouveau": "- Auteur : rédacteur neuf (candidat 1) ; fille 7 (brouillon 5) ; rédacteur neuf (brouillon 4) ; sous-agent de reprise de conv-audit\n  (brouillons 2 et 3). Date (UTC) : celle du\n  commit de scellement. Commit du code d'analyse : `<<COMMIT_CODE_T06>>` (branche `prep/t06-lanceur-v2` fusionnée ou citée\n  au commit ; empreintes des modules neufs `<<EMPREINTES_CODE_T06>>`, relevées dans les rapports du développeur v2 et v3\n  (rapports additifs), `<<EMPREINTE_RAPPORT_LANCEUR_T06>>`).\n- Amorce : `scripts/amorce_instance_t06_v3.sh` (`<<EMPREINTE_AMORCE_T06>>`) — forme exacte lue par `controles` (chemin entre\n  accents graves, puis, entre parenthèses, sha256 entre accents graves) ; empreinte au commit cité (table des marqueurs)."
+  },
+  {
+   "id": "C07",
+   "quoi": "en-tête : ligne de citation « Tests attendus » (marqueur neuf) et clés de citation absentes, une fois chacune",
+   "ancien": "chaque plancher) (R9).\n- GO : **GO-2026-11-02-28**",
+   "nouveau": "chaque plancher) (R9).\n- Tests attendus : `<<TESTS_ATTENDUS_T06>>` — dernière ligne exacte de la suite complète (`N passed`, aucun essai sauté ni\n  désélectionné) rejouée sous l'image et `requirements-gpu.txt` de l'instance (épreuve E3), lue mécaniquement par l'amorce (couple 5).\n- Citations que la chaîne lit et que le brouillon 5 ne portait que dans sa liste des clés, écrites ici une fois chacune, à remplir\n  au candidat 2 (liste des clés et forme exacte : fin du texte) :\n  - Configuration de T0.6 (empreinte canonique) : `à remplir au candidat 2` ;\n  - Tâches d'évaluation de T0.6 : `à remplir au candidat 2` (attendu : l'empreinte des 64 tâches d'évaluation citée plus bas) ;\n  - Chemin de la configuration de T0.6 : `à remplir au candidat 2` (configuration réelle copiée sous `prereg/`, scellée) ;\n  - Chemin des tâches d'évaluation de T0.6 : `à remplir au candidat 2` ;\n  - Chemin des tâches de distillation de T0.6 : `à remplir au candidat 2` ;\n  - Chemin des consignes de P3 : `à remplir au candidat 2` (attendu : les consignes de P3 citées plus bas).\n- GO : **GO-2026-11-02-28**"
+  },
+  {
+   "id": "C08",
+   "quoi": "ligne d'engagement : lanceur v3",
+   "ancien": "lanceur\n`scripts/lancer_t06_v2.sh` (empreinte `<<EMPREINTES_CODE_T06>>`)",
+   "nouveau": "lanceur\n`scripts/lancer_t06_v3.sh` (empreinte `<<EMPREINTES_CODE_T06>>`)"
+  },
+  {
+   "id": "C09",
+   "quoi": "plan daté, 11 nov. : sous-commande controles, lanceur v3 (signature du couple 1)",
+   "ancien": "`bash scripts/lancer_t06_v2.sh controles <DOSSIER_NEUF> [JOUR]`",
+   "nouveau": "`bash scripts/lancer_t06_v3.sh controles <DOSSIER_NEUF> [JOUR]`"
+  },
+  {
+   "id": "C10",
+   "quoi": "plan daté, 11 nov. : sous-commande creation, lanceur v3 (signature du couple 2)",
+   "ancien": "`bash scripts/lancer_t06_v2.sh creation <OFFRE> <CARTE> <DEPENSE_ANTERIEURE_USD> <DOSSIER> [ECHEANCE_UTC_S]`",
+   "nouveau": "`bash scripts/lancer_t06_v3.sh creation <OFFRE> <CARTE> <DEPENSE_ANTERIEURE_USD> <DOSSIER> [ECHEANCE_UTC_S]`"
+  },
+  {
+   "id": "C11",
+   "quoi": "plan daté, 11 nov. : sous-commande apres-creation, lanceur v3 (signature du couple 3)",
+   "ancien": "`bash scripts/lancer_t06_v2.sh apres-creation FICHIER CODE DOSSIER`",
+   "nouveau": "`bash scripts/lancer_t06_v3.sh apres-creation FICHIER CODE DOSSIER`"
+  },
+  {
+   "id": "C12",
+   "quoi": "plan daté, 11 nov. : sous-commande surveillance, lanceur v3 (signature du couple 4)",
+   "ancien": "`bash scripts/lancer_t06_v2.sh surveillance <ID> <DOSSIER> [FACTURE_USD]`",
+   "nouveau": "`bash scripts/lancer_t06_v3.sh surveillance <ID> <DOSSIER> [FACTURE_USD]`"
+  },
+  {
+   "id": "C13",
+   "quoi": "plan daté, 11 nov. : arguments exacts dans les rapports v2 et v3 (2 occurrences)",
+   "occurrences": 2,
+   "ancien": "arguments exacts : rapport du développeur v2",
+   "nouveau": "arguments exacts : rapports du développeur v2 et v3, additifs ; sous-commandes v3 aux mêmes signatures que la v2"
+  },
+  {
+   "id": "C14",
+   "quoi": "plan daté, 7 nov. : contre-lecture neuve faite le 5 nov. ; corrections v3 : C-V3-1 à C-V3-4 ; Tests attendus relevés à E3",
+   "ancien": "E2 et E3 ≤ 5 USD sous un GO à part, nœud) ; contre-lecture neuve du lanceur v2 ;",
+   "nouveau": "E2 et E3 ≤ 5 USD sous un GO à part, nœud) ; contre-lecture neuve du lanceur v2 (**faite le 5 nov. en avance**, lignée Opus 5.5, fille 9 : sept couples portés au candidat 1, C-V3-1 à C-V3-4 proposées) ; **corrections v3 : C-V3-1 à C-V3-4** (lanceur v3 : `scripts/lancer_t06_v3.sh`, `scripts/amorce_instance_t06_v3.sh`, modules v3 sous `src/controle_ia/t06/`, sous-commandes aux mêmes signatures que la v2, branche `prep/t06-lanceur-v2`, rapport additif v3 ; C-V3-1 et C-V3-2 avant E2) ; E3 relève la dernière ligne exacte de la suite complète sous l'image (`<<TESTS_ATTENDUS_T06>>`, session principale, avant le scellement) ;"
+  },
+  {
+   "id": "C15",
+   "quoi": "plan daté, 8 nov. : candidat 2 (le candidat 1 est ce texte) ; amorce citée par son empreinte",
+   "ancien": "**T0.6 candidat 1** : entropie neuve tirée une fois, sans lecture de données (`<<ENTROPIE_T06>>`) ; commit et empreintes du code (`<<COMMIT_CODE_T06>>`, `<<EMPREINTES_CODE_T06>>`) ;",
+   "nouveau": "**T0.6 candidat 2** (le candidat 1 est ce texte, fait le 5 nov. en avance, valeurs non remplies) : entropie neuve tirée une fois, sans lecture de données (`<<ENTROPIE_T06>>`) ; commit et empreintes du code (`<<COMMIT_CODE_T06>>`, `<<EMPREINTES_CODE_T06>>`), amorce citée par son empreinte (`<<EMPREINTE_AMORCE_T06>>`) ; clés de citation remplies ;"
+  },
+  {
+   "id": "C16",
+   "quoi": "plan daté, 8 nov. : livrable candidat 2",
+   "ancien": "| 7 nov. | T0.6 candidat 1 ; contre-lecture de T0.7 |",
+   "nouveau": "| 7 nov. | T0.6 candidat 2 ; contre-lecture de T0.7 |"
+  },
+  {
+   "id": "C17",
+   "quoi": "plan daté, 9 nov. : contre-lecture R2 du candidat 2, rapports v2 et v3, → candidat 3",
+   "ancien": "**contre-lecture R2 du candidat 1 de T0.6**",
+   "nouveau": "**contre-lecture R2 du candidat 2 de T0.6**"
+  },
+  {
+   "id": "C18",
+   "quoi": "plan daté, 9 nov. : fichiers à donner, rapports v2 et v3",
+   "ancien": "P3-bis, rapport du développeur, modules `t06/`) ; couples appliqués par script → candidat 2 ; couples de T0.7 appliqués → candidat | 8 nov. | T0.6 candidat 2 ; T0.7 candidat |",
+   "nouveau": "P3-bis, rapports du développeur v2 et v3, modules `t06/`, pièces du candidat 1) ; couples appliqués par script → candidat 3 ; couples de T0.7 appliqués → candidat | 8 nov. | T0.6 candidat 3 ; T0.7 candidat |"
+  },
+  {
+   "id": "C19",
+   "quoi": "table des marqueurs, EMPREINTES_CODE_T06 (après le couple 6) : modules v3, scripts v3, rapports v2 et v3",
+   "ancien": "sha256 des modules `src/controle_ia/t06/` (modules v1 que la v2 importe et modules v2), de `scripts/amorce_instance_t06_v2.sh` et `scripts/lancer_t06_v2.sh`, recalculés au commit cité par `git show <COMMIT>:<chemin> \\| sha256sum` et comparés à la table du rapport du développeur v2 (tout écart : nœud)",
+   "nouveau": "sha256 des modules `src/controle_ia/t06/` (modules v1 et v2 que la v3 importe, modules v2 et v3 compris), de `scripts/amorce_instance_t06_v3.sh` et `scripts/lancer_t06_v3.sh`, recalculés au commit cité par `git show <COMMIT>:<chemin> \\| sha256sum` et comparés aux tables des rapports du développeur v2 et v3 (rapports additifs ; tout écart : nœud)"
+  },
+  {
+   "id": "C20",
+   "quoi": "table des marqueurs, EMPREINTE_RAPPORT_LANCEUR_T06 : rapport v3 additif",
+   "ancien": "rapport-developpeur-lanceur-T0.6-v1.md` et de `rapport-developpeur-lanceur-T0.6-v2.md` (rapport additif, corrections C01 à C16) | 6 novembre | session principale |",
+   "nouveau": "rapport-developpeur-lanceur-T0.6-v1.md`, de `rapport-developpeur-lanceur-T0.6-v2.md` (rapport additif, corrections C01 à C16) et de `rapport-developpeur-lanceur-T0.6-v3.md` (rapport additif, corrections C-V3-1 à C-V3-4) | 6 novembre (v1, v2) ; 7 novembre (v3) | session principale |"
+  },
+  {
+   "id": "C21",
+   "quoi": "table des marqueurs, ENTROPIE_T06 : candidat 2",
+   "ancien": "| 8 novembre, candidat 1 | rédacteur du candidat |",
+   "nouveau": "| 8 novembre, candidat 2 | rédacteur du candidat 2 |"
+  },
+  {
+   "id": "C22",
+   "quoi": "table des marqueurs : lignes des deux marqueurs neufs",
+   "ancien": "| `<<SCRIPT_PUISSANCE_V3>>` | chemin et sha256 du script de puissance v3 et de sa sortie brute (puissance conjointe de T6-1) | 7 novembre | sous-agent neuf |\n",
+   "nouveau": "| `<<SCRIPT_PUISSANCE_V3>>` | chemin et sha256 du script de puissance v3 et de sa sortie brute (puissance conjointe de T6-1) | 7 novembre | sous-agent neuf |\n| `<<TESTS_ATTENDUS_T06>>` | dernière ligne exacte de la suite complète (`N passed`, aucun essai sauté) rejouée sous l'image et `requirements-gpu.txt` de l'instance, épreuve E3 ; écrite dans l'en-tête, sur la seule ligne de citation de la clé « Tests attendus » | E3, avant le scellement | session principale |\n| `<<EMPREINTE_AMORCE_T06>>` | sha256 de l'amorce au commit cité, `git show <COMMIT>:scripts/amorce_instance_t06_v3.sh \\| sha256sum` ; écrit dans l'en-tête, ligne « Amorce », sous la forme lue par `controles` (chemin entre accents graves, puis, entre parenthèses, sha256 entre accents graves) | 8 novembre | rédacteur du candidat 2 |\n"
+  },
+  {
+   "id": "C23",
+   "quoi": "vérification des marqueurs sur candidat1.md ; onze marqueurs distincts",
+   "ancien": "Vérification : `grep -o '<<[A-Z0-9_]\\+>>' brouillons/T0.6-organismes-v0-v1-brouillon5.md | sort | uniq -c`. Neuf marqueurs\ndistincts ; aucun ne peut être rempli le 5 novembre.",
+   "nouveau": "Vérification : `grep -o '<<[A-Z0-9_]\\+>>' brouillons/T0.6-organismes-v0-v1-candidat1.md | sort | uniq -c`. Onze marqueurs\ndistincts (les neuf du brouillon 5, plus `<<TESTS_ATTENDUS_T06>>` et `<<EMPREINTE_AMORCE_T06>>`) ; aucun ne peut être rempli le 5 novembre."
+  },
+  {
+   "id": "C24",
+   "quoi": "citations lues par la chaîne (après le couple 5) : lanceur v3",
+   "ancien": "(`scripts/lancer_t06_v2.sh controles`, amorce, lanceur)",
+   "nouveau": "(`scripts/lancer_t06_v3.sh controles`, amorce, lanceur)"
+  },
+  {
+   "id": "C25",
+   "quoi": "section « Contre-lecture » : paragraphe « Candidat 1 »",
+   "ancien": "\n## Marqueurs à remplir avant le scellement\n",
+   "nouveau": "\n**Candidat 1 (5 novembre 2026, {HEURE} UTC, `date -u`)** : rédacteur neuf (Claude Fable 5.1, sous-agent de la fille 7, T1 bis) ;\n**contre-lecture neuve du lanceur v2 et du brouillon 5** (R2, lignée Opus 5.5, fille 9, branche `prep/fille-9-contre-lectures-v1`,\ncommit `15d2ce93`, `docs/notes/g0-deux-semaines-v1/contre-lecture-lanceur-T0.6-v2/contre-lecture-lanceur-T0.6-v2.md`,\n`{SHA_CL}`), points 7 à 10 : texte contre code, coût de Mahalanobis, ce qu'E2 et E3 doivent prouver, ce qui peut encore\nfaire perdre la course ; **7 couples appliqués tels quels, dans l'ordre, par script** (`couples-brouillon5-vers-candidat1-T0.6-v1.json`,\n`{SHA_COUPLES}`, copié à l'octet dans les pièces ; script `appliquer-candidat1-v1.py`, substitutions `substitutions-candidat1-v1.json`\net journal `journal-candidat1-v1.md` dans `brouillons/T0.6-organismes-v0-v1-candidat1-pieces/`) ; substitutions vers le lanceur v3\n(C-V3-1 à C-V3-4, `corrections-code-lanceur-T0.6-v3.md`, `{SHA_CORR}`), deux marqueurs neufs, clés de citation, ligne Mahalanobis\n(en tête, point 8). Aucun couple ni aucune substitution ne touche les sections « Hypothèses » à « Liste d'arrêt ». Ce texte n'est\npas contre-lu : la contre-lecture R2 du candidat (plan daté, 9 novembre) le couvrira. Rien n'est lancé, rien n'est dépensé.\n\n## Marqueurs à remplir avant le scellement\n"
+  }
+ ]
+}

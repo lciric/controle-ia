@@ -1,0 +1,32 @@
+1. executer_ideation défini aux lignes [766, 870] ; actif : 870
+   première définition : noms non définis dans sa portée : ['cout_controles_externes_prevu_usd', 'cout_controles_prevu_usd']
+   dernière instruction de la première définition : Return ligne 864
+2. pari_apparie
+   verifier_coefficients(constante=nan) : ACCEPTÉ
+   verifier_coefficients(constante=inf) : refusé (règle double violée : positifs + constante = inf, négatifs − constante = -inf (chacun ≤ 1))
+   verifier_coefficients(constante=-inf) : refusé (règle double violée : positifs + constante = -inf, négatifs − constante = inf (chacun ≤ 1))
+   contraste(parts x=0, coef x=0,5, constante=NaN) = 1.0
+   contraste(parts x=0,2, coef x=NaN, constante=0) = 1.0
+   contraste(parts x=0,2, coef x=inf, constante=0) = 1.0
+   contraste_plafonne(constante NaN) = 1.0
+   evaluer(12 unités à v = contraste(constante NaN)) : promue = True à l'instant 7
+   trajectoire_log_sans_remise avec NaN : ACCEPTÉ, rend [0.046, -690.729, -1381.505]
+   trajectoire_log_sans_remise avec +inf : ACCEPTÉ, rend [0.046, nan, nan]
+   trajectoire_log_sans_remise avec 5,0 (hors [-1;1]) : ACCEPTÉ, rend [0.046, 1.013, 1.728]
+   borne_basse avec NaN : ACCEPTÉ, rend -0.98
+   borne_basse avec 5,0 : ACCEPTÉ, rend 0.99
+   evaluer(alpha=NaN) : ACCEPTÉ, seuil_log=nan, promue=False
+   evaluer(alpha=inf) : refusé (ValueError: math domain error)
+   evaluer(m=NaN) : ACCEPTÉ, seuil_log=nan, promue=False
+   ebh_pondere(log_e de b = NaN) : ACCEPTÉ, retenues []
+   ebh_pondere(log_e de b = +inf) : ACCEPTÉ, retenues ['b']
+   e-BH dérangé par NaN : [0.0, 'NaN', 3.0] retenues ['f0', 'f1', 'f2'] au lieu de []
+   e-BH dérangé par NaN : [0.0, 'NaN', 3.7] retenues ['f0', 'f1', 'f2'] au lieu de []
+   e-BH dérangé par NaN : [0.0, 'NaN', 4.4] retenues ['f0', 'f1', 'f2'] au lieu de ['f2']
+   familles où un NaN fait retenir une fiche que la même famille (NaN → −∞) ne retient pas : 22088
+   Course.ajouter_trajectoire(+inf) : log_e(a) = inf ; (NaN au milieu) log_e(b) = 0.2
+   Course.lire() → promues : ['a']
+3. porte_pace
+   comparer(gain_reel NaN) : refusé (ResultatInvalide: candidat 'c00' : gain réel non fini : nan)
+   comparer(delta NaN avec écarts) : refusé (PorteInvalide: garde : δ dans ]0 ; 1[ : nan)
+construire() s arrêterait ici : ValueError - Out of range float values are not JSON compliant: nan

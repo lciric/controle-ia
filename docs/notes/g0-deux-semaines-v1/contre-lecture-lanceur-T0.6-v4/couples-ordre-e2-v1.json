@@ -1,0 +1,30 @@
+[
+ {
+  "ancien": "- **Clés, par leur nom seulement** : `VAST_API_KEY`, `CONTROLE_IA_GITHUB_TOKEN`. (`HF_TOKEN` n'est pas utilisé par E2.) Chaque appel\n  de `scripts/lancer_t06_v4.sh` ou de `vastai` passe sous `env -i PATH=\"$PATH\" HOME=\"$HOME\" VAST_API_KEY=\"$VAST_API_KEY\"\n  CONTROLE_IA_GITHUB_TOKEN=\"$CONTROLE_IA_GITHUB_TOKEN\" …` : les valeurs ne sont jamais lues par toi, seulement transmises.",
+  "nouveau": "- **Clés, par leur nom seulement** : `VAST_API_KEY`, `CONTROLE_IA_GITHUB_TOKEN`, `HF_TOKEN`. `HF_TOKEN` ne sert pas au run\n  jouet, mais `surveillance` refuse de tourner si `HF_TOKEN` ou `CONTROLE_IA_GITHUB_TOKEN` a moins de 8 caractères (masquage,\n  `scripts/lancer_t06_v4.sh`, sous-commande `surveillance`) : sans lui, l'instance tournerait sans surveillance. Chaque appel\n  de `scripts/lancer_t06_v4.sh` ou de `vastai` passe sous `env -i PATH=\"$PATH\" HOME=\"$HOME\" VAST_API_KEY=\"$VAST_API_KEY\"\n  CONTROLE_IA_GITHUB_TOKEN=\"$CONTROLE_IA_GITHUB_TOKEN\" HF_TOKEN=\"$HF_TOKEN\" …` : les valeurs ne sont jamais lues par toi,\n  seulement transmises. Préalable 3 : vérifie aussi la présence de `HF_TOKEN` (sans affichage)."
+ },
+ {
+  "ancien": "session_v3.main(['go','registres/go.md','GO-2026-11-06-01','5'])",
+  "nouveau": "session_v3.main(['go','$REGGO','GO-2026-11-06-01','5'])"
+ },
+ {
+  "ancien": "(jeton par l'aide d'authentification `credential.helper` à la manière de l'amorce, jamais dans une URL)",
+  "nouveau": "(par le même moyen que le clone du préalable 1 ; jamais de jeton dans une URL ni dans la configuration de `git`)"
+ },
+ {
+  "ancien": "**dépense antérieure = coût relevé de A** (dépense d'E2 cumulée)",
+  "nouveau": "**dépense antérieure = coût de A** (dépense d'E2 cumulée) : la facture de Vast pour A si elle est disponible, sinon\n(prix de la carte + prix du stockage relevés dans `$W/a/lancement.txt`) × heures de la création à la destruction + forfait de\ntéléchargement, arrondi au centime supérieur ; le plus grand des deux s'ils existent tous deux ; écris le calcul"
+ },
+ {
+  "ancien": "= **création + DUREE_A − 20 s** (au moins 600 s après maintenant ;",
+  "nouveau": "= **`date -u +%s` au moment de lancer `creation` + 60 s + DUREE_A − 20 s** (au moins 600 s après maintenant ;"
+ },
+ {
+  "ancien": "- Cadence : lecture de `surveillance.txt` toutes les 5 minutes pendant qu'une instance tourne ; aucune instance laissée sans surveillance.",
+  "nouveau": "- Cadence : lecture de `surveillance.txt` toutes les 5 minutes pendant qu'une instance tourne ; aucune instance laissée sans surveillance.\n- **Après chaque `vastai start instance`** (étapes 6, 7, 8), `surveillance` n'est pas relancée (son dossier porte déjà la fin\n  du premier run) : relis toi-même, toutes les 5 minutes, `vastai show instances --raw` filtré sur l'identifiant et\n  `vastai logs <ID> --tail 2000` ; si l'instance n'est ni arrêtée ni détruite 20 minutes après le démarrage, détruis-la par\n  son identifiant (`timeout -k 5 120 vastai destroy instance <ID>`) et écris-le comme attendu manquant."
+ },
+ {
+  "ancien": "Choix de l'offre de l'instance A : la moins chère",
+  "nouveau": "**Relecture par identifiant (0 USD, avant toute création ; R-577, R-578).** `creation` relit l'offre par\n`vastai search offers \"id=<OFFRE>\" --storage 150 --raw` ; R-577 consigne que cette recherche a rendu une liste **vide** sous\nvastai 1.8.3 pour toute offre, et R-578 que l'identifiant d'une même offre change d'une requête à l'autre. Avant l'étape 4, joue\ncette relecture seule, telle quelle, sur l'offre retenue, aussitôt après la recherche : si la liste est vide ou si l'offre a un\nautre identifiant, **aucune création** ; arrêt et message à la mère (la relecture de `creation` refuserait, et la course aussi).\nRelève la sortie (clés et nombre d'offres) dans ton compte rendu.\nChoix de l'offre de l'instance A : la moins chère"
+ }
+]

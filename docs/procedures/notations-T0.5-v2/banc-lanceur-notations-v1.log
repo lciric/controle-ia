@@ -1,0 +1,276 @@
+script éprouvé : lancer_notations_v1.sh 8fb447071fceb7c72c79b25e5ea8381e9fec6fa1be40eac656202779a609c8db
+script éprouvé : verifications_notations_v1.py 25d7faf1b71a7b0fab16e15dbf206273db023d80d73e65d2c520d1300640ff03
+script éprouvé : essais_lanceur_notations_v1.sh 744c6337a6363e20af955ced57a8d254d3f12f6bc9af5bb1efee0a28bdcdd71d
+lignes changées dans la copie du lanceur : 2
+S = b546d4fd19162aa1248db95dbe57284072d80036
+P00-sain : code 0 ; créations factices 1 ; CONFORME
+    | prix 1.1000 USD/h ; autres projets en marche 0.0000 USD/h ; crédit 20.00 USD ; minimum 9.45 USD (7.5 h)
+    | succès : True ; identifiant 99999999 ; message : 
+    > etiquette t05-notations-v1
+    > env COMMIT présent
+    > env PREREG=prereg/T0.5-pilote-notations-v1.md
+    > env BRANCHE=calcul/t05-notations-reel-v1
+    > env DEPOT_URL=https://github.com/lciric/controle-ia-travail.git
+    > plafond de la surveillance = création + 26 400 s : True ; branche v1 : True ; étiquette : True ; ETUDE absente : True ; instances arrêtées tolérées (dont 55538944) : True
+P01-creee-mais-code-1 : code 4 ; créations factices 1 ; CONFORME
+    | succès : True ; identifiant 99999999 ; message : 
+    | création douteuse (statuts 1 0 0) : vérifier « vastai show instances », sans --raw
+P02-reponse-illisible : code 4 ; créations factices 1 ; CONFORME
+    | réponse illisible (300 premiers caractères masqués dans reponse-masquee.txt) ; vérifier par « vastai show instances », sans --raw
+    | création douteuse (statuts 0 4 0) : vérifier « vastai show instances », sans --raw
+P03-echec-creation : code 4 ; créations factices 1 ; CONFORME
+    | succès : False ; identifiant None ; message : non
+    | création douteuse (statuts 0 4 0) : vérifier « vastai show instances », sans --raw
+P04-heure-2345-avant-creation : code 3 ; créations factices 0 ; CONFORME
+    | prix 1.1000 USD/h ; autres projets en marche 0.0000 USD/h ; crédit 20.00 USD ; minimum 9.45 USD (7.5 h)
+    | heure UTC 2345 : pas de création entre 23:30 et 00:00 (T-7)
+P04b-heure-2340-au-depart : code 3 ; créations factices 0 ; CONFORME
+    | heure UTC 2340 : pas de création entre 23:30 et 00:00 (T-7)
+P04c-heure-2329-au-depart : code 0 ; créations factices 1 ; CONFORME
+    | prix 1.1000 USD/h ; autres projets en marche 0.0000 USD/h ; crédit 20.00 USD ; minimum 9.45 USD (7.5 h)
+    | succès : True ; identifiant 99999999 ; message : 
+P05-place-traces : code 3 ; créations factices 0 ; CONFORME
+    | place disque des traces : 2900000 ko
+P06-controles-ko : code 2 ; créations factices 0 ; CONFORME
+    | KO  essai : faute simulée
+    | contrôles avant dépense en échec : pas de création
+P07-offre-sans-prix : code 2 ; créations factices 0 ; CONFORME
+    | offre 111 sans prix lisible
+    | arrêt avant la création (ligne 195)
+P07b-prix-au-dessus-du-devis : code 3 ; créations factices 0 ; CONFORME
+    | preuves des essais : cinq journaux conformes ; 10 scripts éprouvés égaux à leurs copies versées à S
+    | prix 1.35 USD/h au-dessus du devis (1.30) : nœud, pas de création
+P07c-processeur-autre : code 2 ; créations factices 0 ; CONFORME
+    | offre 111 : processeur 'Intel Xeon Platinum 8480+' ; seul celui du pilote (AMD EPYC 7513) est admis
+    | arrêt avant la création (ligne 195)
+P07d-processeur-voisin : code 2 ; créations factices 0 ; CONFORME
+    | offre 111 : processeur 'AMD EPYC 7513' ; seul celui du pilote (AMD EPYC 7513) est admis
+    | arrêt avant la création (ligne 195)
+P07e-carte-pcie : code 2 ; créations factices 0 ; CONFORME
+    | offre 111 : carte 'A100 PCIE' ; seule l'A100 SXM4 du pilote est admise
+    | arrêt avant la création (ligne 195)
+P08-credit-insuffisant : code 3 ; créations factices 0 ; CONFORME
+    | prix 1.1000 USD/h ; autres projets en marche 0.0000 USD/h ; crédit 9.44 USD ; minimum 9.45 USD (7.5 h)
+    | crédit insuffisant pour les notations et les autres projets en marche : pas de lancement ; recharge demandée à Lazar
+P08b-credit-juste : code 0 ; créations factices 1 ; CONFORME
+    | prix 1.1000 USD/h ; autres projets en marche 0.0000 USD/h ; crédit 9.45 USD ; minimum 9.45 USD (7.5 h)
+    | succès : True ; identifiant 99999999 ; message : 
+P09-jeton-hf-absent : code 2 ; créations factices 0 ; CONFORME
+    | preuves des essais : cinq journaux conformes ; 10 scripts éprouvés égaux à leurs copies versées à S
+    | jeton absent (HF_TOKEN ou CONTROLE_IA_GITHUB_TOKEN) : pas de création
+P09b-jeton-github-absent : code 2 ; créations factices 0 ; CONFORME
+    | preuves des essais : cinq journaux conformes ; 10 scripts éprouvés égaux à leurs copies versées à S
+    | jeton absent (HF_TOKEN ou CONTROLE_IA_GITHUB_TOKEN) : pas de création
+P10-argument-absent : code 2 ; créations factices 0 ; CONFORME
+    | usage : lancer_notations_v1.sh OFFRE DOSSIER_TRACES AUTRES_PROJETS [relance R-NNN RELEVE_DU_PREMIER_LANCEMENT]
+P10b-relance-sans-cause : code 2 ; créations factices 0 ; CONFORME
+    | usage : lancer_notations_v1.sh OFFRE DOSSIER_TRACES AUTRES_PROJETS [relance R-NNN RELEVE_DU_PREMIER_LANCEMENT]
+P10c-relance-sans-releve : code 2 ; créations factices 0 ; CONFORME
+    | usage : lancer_notations_v1.sh OFFRE DOSSIER_TRACES AUTRES_PROJETS [relance R-NNN RELEVE_DU_PREMIER_LANCEMENT]
+P11-instance-non-toleree : code 2 ; créations factices 0 ; CONFORME
+    | autres instances sur le compte : 1 (running, running)
+    | instances : non tolérée(s), ou liste illisible (voir la ligne ci-dessus) : pas de création
+P11b-pilote-en-marche : code 2 ; créations factices 0 ; CONFORME
+    | autres instances sur le compte : 55538944 (running, running)
+    | instances : non tolérée(s), ou liste illisible (voir la ligne ci-dessus) : pas de création
+P11c-aucune-instance : code 0 ; créations factices 1 ; CONFORME
+    | prix 1.1000 USD/h ; autres projets en marche 0.0000 USD/h ; crédit 20.00 USD ; minimum 9.45 USD (7.5 h)
+    | succès : True ; identifiant 99999999 ; message : 
+P11d-liste-des-instances-illisible : code 2 ; créations factices 0 ; CONFORME
+    | vastai show instances : réponse illisible ou commande en échec
+    | instances : non tolérée(s), ou liste illisible (voir la ligne ci-dessus) : pas de création
+P12-n021-forme-inexacte : code 2 ; créations factices 0 ; CONFORME
+    | N-021
+    | registre des décisions : N-021 non tranchée par Lazar (forme exacte), ou relance non consignée
+P12b-n021-en-attente : code 2 ; créations factices 0 ; CONFORME
+    | N-021
+    | registre des décisions : N-021 non tranchée par Lazar (forme exacte), ou relance non consignée
+P12d-n021-option-b : code 2 ; créations factices 0 ; CONFORME
+    | N-021
+    | registre des décisions : N-021 non tranchée par Lazar (forme exacte), ou relance non consignée
+P12e-n021-suite-ajoutee : code 2 ; créations factices 0 ; CONFORME
+    | N-021
+    | registre des décisions : N-021 non tranchée par Lazar (forme exacte), ou relance non consignée
+P12f-n021-texte-avant : code 2 ; créations factices 0 ; CONFORME
+    | N-021
+    | registre des décisions : N-021 non tranchée par Lazar (forme exacte), ou relance non consignée
+P12c-n021-absente : code 2 ; créations factices 0 ; CONFORME
+    | N-021
+    | registre des décisions : N-021 non tranchée par Lazar (forme exacte), ou relance non consignée
+P12g-ligne-r-qui-mentionne-une-revocation : code 0 ; créations factices 1 ; CONFORME
+    | prix 1.1000 USD/h ; autres projets en marche 0.0000 USD/h ; crédit 20.00 USD ; minimum 9.45 USD (7.5 h)
+    | succès : True ; identifiant 99999999 ; message : 
+P17-go-n021-revoque : code 2 ; créations factices 0 ; CONFORME
+    | preuves des essais : cinq journaux conformes ; 10 scripts éprouvés égaux à leurs copies versées à S
+    | décision de Lazar sur N-021 : GO-2026-10-12-99 révoqué
+P17b-go-calcul-revoque : code 2 ; créations factices 0 ; CONFORME
+    | preuves des essais : cinq journaux conformes ; 10 scripts éprouvés égaux à leurs copies versées à S
+    | décision de Lazar sur N-021 : GO-2026-10-04-08 révoqué
+P17h-go-revoque-ligne-mal-formee : code 2 ; créations factices 0 ; CONFORME
+    | preuves des essais : cinq journaux conformes ; 10 scripts éprouvés égaux à leurs copies versées à S
+    | décision de Lazar sur N-021 : GO-2026-10-12-99 révoqué
+P17i-ligne-go-qui-mentionne-une-revocation : code 0 ; créations factices 1 ; CONFORME
+    | prix 1.1000 USD/h ; autres projets en marche 0.0000 USD/h ; crédit 20.00 USD ; minimum 9.45 USD (7.5 h)
+    | succès : True ; identifiant 99999999 ; message : 
+P17c-go-absent-du-registre : code 2 ; créations factices 0 ; CONFORME
+    | preuves des essais : cinq journaux conformes ; 10 scripts éprouvés égaux à leurs copies versées à S
+    | décision de Lazar sur N-021 : GO-2026-10-12-99 absent, en double ou mal formé
+P17d-n021-autre-go : code 2 ; créations factices 0 ; CONFORME
+    | preuves des essais : cinq journaux conformes ; 10 scripts éprouvés égaux à leurs copies versées à S
+    | décision de Lazar sur N-021 : N-021 : colonne d'état ≠ « tranché (a) par Lazar : GO-2026-10-12-99 (R-146) »
+P17e-n021-autre-registre : code 2 ; créations factices 0 ; CONFORME
+    | preuves des essais : cinq journaux conformes ; 10 scripts éprouvés égaux à leurs copies versées à S
+    | décision de Lazar sur N-021 : N-021 : colonne d'état ≠ « tranché (a) par Lazar : GO-2026-10-12-99 (R-146) »
+P17f-registre-du-go-absent : code 2 ; créations factices 0 ; CONFORME
+    | preuves des essais : cinq journaux conformes ; 10 scripts éprouvés égaux à leurs copies versées à S
+    | décision de Lazar sur N-021 : R-146 absent, en double ou sans GO-2026-10-12-99
+P17g-go-sur-l-option-b : code 2 ; créations factices 0 ; CONFORME
+    | preuves des essais : cinq journaux conformes ; 10 scripts éprouvés égaux à leurs copies versées à S
+    | décision de Lazar sur N-021 : GO-2026-10-12-99 : revendication, Lazar : GO de type « revendication », accordé par Lazar, sur N-021 (a), attendu
+P17j-go-d-un-autre-noeud : code 2 ; créations factices 0 ; CONFORME
+    | preuves des essais : cinq journaux conformes ; 10 scripts éprouvés égaux à leurs copies versées à S
+    | décision de Lazar sur N-021 : GO-2026-10-12-99 : revendication, Lazar : GO de type « revendication », accordé par Lazar, sur N-021 (a), attendu
+P13-relance-non-consignee : code 2 ; créations factices 0 ; CONFORME
+    | relance non consignée
+    | registre des décisions : N-021 non tranchée par Lazar (forme exacte), ou relance non consignée
+P13b-relance-cause-sans-infrastructure : code 2 ; créations factices 0 ; CONFORME
+    | relance non consignée
+    | registre des décisions : N-021 non tranchée par Lazar (forme exacte), ou relance non consignée
+P13g-relance-du-pilote-et-non-des-notations : code 2 ; créations factices 0 ; CONFORME
+    | relance non consignée
+    | registre des décisions : N-021 non tranchée par Lazar (forme exacte), ou relance non consignée
+P13d-relance-sans-instance-nommee : code 2 ; créations factices 0 ; CONFORME
+    | relance : la ligne de la cause ne nomme pas, une seule fois, l'instance du premier lancement
+    | registre des décisions : N-021 non tranchée par Lazar (forme exacte), ou relance non consignée
+P13k-relance-sans-depense-engagee : code 2 ; créations factices 0 ; CONFORME
+    | relance : la ligne de la cause ne porte pas, une seule fois, « dépense engagée X,XX USD »
+    | registre des décisions : N-021 non tranchée par Lazar (forme exacte), ou relance non consignée
+P13c-relance-saine : code 0 ; créations factices 1 ; CONFORME
+    | prix 1.1000 USD/h ; autres projets en marche 0.0000 USD/h ; crédit 20.00 USD ; minimum 9.45 USD (7.5 h)
+    | succès : True ; identifiant 99999999 ; message : 
+P13e-relance-premiere-en-marche : code 2 ; créations factices 0 ; CONFORME
+    | autres instances sur le compte : 12345678 (running, running)
+    | instances : non tolérée(s), ou liste illisible (voir la ligne ci-dessus) : pas de création
+P13f-traces-en-chemin-relatif : code 0 ; créations factices 1 ; CONFORME
+    | prix 1.1000 USD/h ; autres projets en marche 0.0000 USD/h ; crédit 20.00 USD ; minimum 9.45 USD (7.5 h)
+    | succès : True ; identifiant 99999999 ; message : 
+    > etiquette t05-notations-v1-relance
+    > env BRANCHE=calcul/t05-notations-reel-v2
+    P13c : étiquette t05-notations-v1-relance et branche calcul/t05-notations-reel-v2 : CONFORME
+P13h-releve-avec-fin-de-juge : code 2 ; créations factices 0 ; CONFORME
+    | un juge a fini, ou peut avoir fini, au premier lancement (PROGRES 2026-10-13T11:20:00Z juge=8B fin=échu lots_faits=20/23 duree_s=12000.0) : préséance, aucun relancement
+    | relevé du premier lancement : relancement interdit (voir la ligne ci-dessus)
+P13o-releve-avec-dernier-lot : code 2 ; créations factices 0 ; CONFORME
+    | un juge a fini, ou peut avoir fini, au premier lancement (PROGRES 2026-10-13T11:19:00Z juge=8B lot=23/23 duree_s=200.4) : préséance, aucun relancement
+    | relevé du premier lancement : relancement interdit (voir la ligne ci-dessus)
+P13p-releve-lot-2-sur-23-sain : code 0 ; créations factices 1 ; CONFORME
+    | prix 1.1000 USD/h ; autres projets en marche 0.0000 USD/h ; crédit 20.00 USD ; minimum 9.45 USD (7.5 h)
+    | succès : True ; identifiant 99999999 ; message : 
+P13i-releve-absent : code 2 ; créations factices 0 ; CONFORME
+    | relevé passé en argument ≠ copie versée (traces/t05-notations-releve-12345678/releve-cumulatif.txt) : relancement interdit
+P13j-releve-sans-amorce : code 2 ; créations factices 0 ; CONFORME
+    | relevé du premier lancement sans ligne « AMORCE … : commit » du commit de scellement : pas un relevé de ce lancement
+    | relevé du premier lancement : relancement interdit (voir la ligne ci-dessus)
+P13s-releve-d-un-autre-commit : code 2 ; créations factices 0 ; CONFORME
+    | relevé du premier lancement sans ligne « AMORCE … : commit » du commit de scellement : pas un relevé de ce lancement
+    | relevé du premier lancement : relancement interdit (voir la ligne ci-dessus)
+P13r-releve-au-sceau-faux : code 2 ; créations factices 0 ; CONFORME
+    | relevé du premier lancement : sceau absent ou non conforme (traces/t05-notations-releve-12345678/releve-cumulatif.txt.sha256) : relancement interdit
+P13q-releve-non-verse : code 2 ; créations factices 0 ; CONFORME
+    | relevé du premier lancement non versé au dépôt (traces/t05-notations-releve-12345678/releve-cumulatif.txt) : relancement interdit
+P13m-relance-dans-le-plafond : code 0 ; créations factices 1 ; CONFORME
+    | prix 1.1000 USD/h ; autres projets en marche 0.0000 USD/h ; crédit 20.00 USD ; minimum 9.45 USD (7.5 h)
+    | succès : True ; identifiant 99999999 ; message : 
+P13l-relance-hors-plafond : code 3 ; créations factices 0 ; CONFORME
+    | plafond de l étape : dépense engagée 2.00 + 7.5 h × 1.1000 + 0,50 = 10.75 USD (au plus 10.5)
+    | relancement hors du plafond de GO-2026-10-12-02 : nœud, pas de création
+P13n-relance-au-plafond-juste : code 0 ; créations factices 1 ; CONFORME
+    | prix 1.1000 USD/h ; autres projets en marche 0.0000 USD/h ; crédit 20.00 USD ; minimum 9.45 USD (7.5 h)
+    | succès : True ; identifiant 99999999 ; message : 
+P14-controles-non-verses : code 2 ; créations factices 0 ; CONFORME
+    | controles_avant_depense_notations_v1.sh exécuté ≠ copie versée au commit S
+P31-surveillance-non-versee : code 2 ; créations factices 0 ; CONFORME
+    | surveiller_notations_v1.sh exécuté ≠ copie versée au commit S
+P14b-lanceur-non-verse : code 2 ; créations factices 0 ; CONFORME
+    | lancer_notations_v1.sh exécuté ≠ copie versée au commit S
+P15-s-absent-du-distant : code 2 ; créations factices 0 ; CONFORME
+    | commit de scellement b546d4fd19162aa1248db95dbe57284072d80036 absent du dépôt distant
+P16-sain-rejoue : code 0 ; créations factices 1 ; CONFORME
+    | prix 1.1000 USD/h ; autres projets en marche 0.0000 USD/h ; crédit 20.00 USD ; minimum 9.45 USD (7.5 h)
+    | succès : True ; identifiant 99999999 ; message : 
+P14c-module-commun-non-verse : code 2 ; créations factices 0 ; CONFORME
+    | verifications_notations_v1.py exécuté ≠ copie versée au commit S
+N07-controles-derniere-ligne-autre : code 2 ; créations factices 0 ; CONFORME
+    | preuves des essais : cinq journaux conformes ; 10 scripts éprouvés égaux à leurs copies versées à S
+    | contrôles : dernière ligne inattendue
+N05-traces-existantes : code 2 ; créations factices 0 ; CONFORME
+    | /tmp/claude-0/-home-user/1cc16375-a2bd-54b9-a03f-27d43b6f26a6/scratchpad/c1v2/banc-lanceur/traces-existantes existe déjà (R12)
+N06-offre-absente : code 2 ; créations factices 0 ; CONFORME
+    | offre 333 absente des offres conformes au filtre du plan
+    | arrêt avant la création (ligne 195)
+N04-jeton-dans-la-reponse : code 0 ; créations factices 1 ; CONFORME
+    | prix 1.1000 USD/h ; autres projets en marche 0.0000 USD/h ; crédit 20.00 USD ; minimum 9.45 USD (7.5 h)
+    | succès : True ; identifiant 99999999 ; message : jeton *** et ***
+N04b-jeton-dans-une-reponse-illisible : code 4 ; créations factices 1 ; CONFORME
+    | réponse illisible (300 premiers caractères masqués dans reponse-masquee.txt) ; vérifier par « vastai show instances », sans --raw
+    | création douteuse (statuts 0 4 0) : vérifier « vastai show instances », sans --raw
+N03-go-calcul-echu : code 2 ; créations factices 0 ; CONFORME
+    | GARDE (registres/go, R10) — commande bloquée : GO-2026-10-04-08 hors de sa période de validité (2026-10-04 → 2026-10-11)
+    | arrêt avant la création (ligne 253)
+N08-s-introuvable : code 2 ; créations factices 0 ; CONFORME
+    | commit de scellement introuvable
+N01-amorce-non-citee : code 2 ; créations factices 0 ; CONFORME
+    | preuves des essais : cinq journaux conformes ; 10 scripts éprouvés égaux à leurs copies versées à S
+    | empreinte de l'amorce (c751190226eb0f6a11c4621bc6c5ef99f95b025e4138874f4a555bf39f42d8d1) non citée par le préenregistrement
+N02-branche-autre : code 2 ; créations factices 0 ; CONFORME
+    | preuves des essais : cinq journaux conformes ; 10 scripts éprouvés égaux à leurs copies versées à S
+    | PREREG ou BRANCHE : le préenregistrement de S cite autre chose
+N00-sain-apres-retablissement : code 0 ; créations factices 1 ; CONFORME
+    | prix 1.1000 USD/h ; autres projets en marche 0.0000 USD/h ; crédit 20.00 USD ; minimum 9.45 USD (7.5 h)
+    | succès : True ; identifiant 99999999 ; message : 
+P30a-preuve-verdict-non-conforme : code 2 ; créations factices 0 ; CONFORME
+    | preuves des essais : journal banc-controles-notations-v1.log : dernière ligne ≠ « FIN DU BANC DES CONTRÔLES DES NOTATIONS ; cas non conformes : 0 »
+P30b-preuve-script-autre-que-la-copie : code 2 ; créations factices 0 ; CONFORME
+    | preuves des essais : sceller_notations_v1.sh éprouvé (7777777777777777777777777777777777777777777777777777777777777777) ≠ copie versée à S
+P30c-preuve-absente : code 2 ; créations factices 0 ; CONFORME
+    | preuves des essais : journal banc-surveillance-notations-v1.log absent de S
+P30d-preuve-sans-son-sceau : code 2 ; créations factices 0 ; CONFORME
+    | preuves des essais : sceau de banc-lanceur-notations-v1.log absent ou non conforme à S
+P30e-preuve-script-non-eprouve : code 2 ; créations factices 0 ; CONFORME
+    | preuves des essais : scripts éprouvés ['controles_avant_depense_notations_v1.sh', 'essais_controles_notations_v1.sh', 'essais_lanceur_notations_v1.sh', 'essais_scellement_notations_v1.sh', 'la
+P30g-preuve-echec-non-compte : code 2 ; créations factices 0 ; CONFORME
+    | preuves des essais : journal banc-controles-notations-v1.log : ligne d'échec avant le verdict : Traceback (most recent call last): essai
+P30h-preuve-deux-empreintes : code 2 ; créations factices 0 ; CONFORME
+    | preuves des essais : sceller_notations_v1.sh éprouvé sous deux empreintes
+P30i-preuve-ligne-mal-formee : code 2 ; créations factices 0 ; CONFORME
+    | preuves des essais : journal banc-lanceur-notations-v1.log : ligne « script éprouvé » mal formée : script éprouvé : Autre.sh abc
+P30j-preuve-sans-ligne : code 2 ; créations factices 0 ; CONFORME
+    | preuves des essais : journal banc-surveillance-notations-v1.log : aucune ligne « script éprouvé »
+P30f-preuves-saines-apres-retablissement : code 0 ; créations factices 1 ; CONFORME
+    | prix 1.1000 USD/h ; autres projets en marche 0.0000 USD/h ; crédit 20.00 USD ; minimum 9.45 USD (7.5 h)
+    | succès : True ; identifiant 99999999 ; message : 
+V01-autre-projet-en-marche-tolere : code 0 ; créations factices 1 ; CONFORME
+    | prix 1.1000 USD/h ; autres projets en marche 4.0040 USD/h ; crédit 39.48 USD ; minimum 39.48 USD (7.5 h)
+    | succès : True ; identifiant 99999999 ; message : 
+V02-autre-projet-non-declare : code 2 ; créations factices 0 ; CONFORME
+    | autres instances sur le compte : 55555587 (running, running)
+    | instances : non tolérée(s), ou liste illisible (voir la ligne ci-dessus) : pas de création
+V03-credit-insuffisant-avec-autre-projet : code 3 ; créations factices 0 ; CONFORME
+    | prix 1.1000 USD/h ; autres projets en marche 4.0040 USD/h ; crédit 39.47 USD ; minimum 39.48 USD (7.5 h)
+    | crédit insuffisant pour les notations et les autres projets en marche : pas de lancement ; recharge demandée à Lazar
+V04-autre-projet-etiquette-t05 : code 2 ; créations factices 0 ; CONFORME
+    | autres instances sur le compte : 55555587 (running, running)
+    | instances : non tolérée(s), ou liste illisible (voir la ligne ci-dessus) : pas de création
+V05-autres-mal-forme : code 2 ; créations factices 0 ; CONFORME
+    | AUTRES_PROJETS : identifiants d'instances séparés par des virgules, ou « - »
+V06-autre-declare-absent : code 0 ; créations factices 1 ; CONFORME
+    | prix 1.1000 USD/h ; autres projets en marche 0.0000 USD/h ; crédit 20.00 USD ; minimum 9.45 USD (7.5 h)
+    | succès : True ; identifiant 99999999 ; message : 
+V07-autre-projet-arrete-non-compte : code 0 ; créations factices 1 ; CONFORME
+    | prix 1.1000 USD/h ; autres projets en marche 0.0000 USD/h ; crédit 9.45 USD ; minimum 9.45 USD (7.5 h)
+    | succès : True ; identifiant 99999999 ; message : 
+V08-autre-projet-sans-prix : code 2 ; créations factices 0 ; CONFORME
+    | autres instances sur le compte : 55555587 (prix illisible)
+    | instances : non tolérée(s), ou liste illisible (voir la ligne ci-dessus) : pas de création
+aucun jeton affiché : CONFORME
+FIN DU BANC DU LANCEUR DES NOTATIONS ; cas non conformes : 0

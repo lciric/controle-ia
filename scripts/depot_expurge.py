@@ -6,7 +6,10 @@ fichiers de travail des relecteurs de l'extraction, sorties de l'extraction), sa
 Les empreintes des fichiers retirés restent, et `EXPURGE.md` les liste. Les invites transcrites ou adaptées que le
 code et ses tests chargent restent, avec leur source : le README de la copie le dit. Avant d'écrire le paquet, le
 script vérifie qu'aucun fichier retiré ne survit dans une archive gardée (zip, tar ou paquet git, à toute profondeur,
-par empreinte et par chemin) ; une archive d'un format qu'il n'examine pas l'arrête.
+par empreinte et par chemin) ; une archive d'un format qu'il n'examine pas l'arrête. Garde des secrets (R-349) : il
+s'arrête aussi si un fichier gardé, ou un membre d'une archive gardée, contient la valeur d'une clé de l'environnement
+ou un jeton d'une forme connue ; il ne dit que le chemin et le nom de la variable ou de la forme, jamais la valeur.
+Depuis R-351 (interdit des clés `RR_*` levé par Lazar), leurs valeurs sont comparées comme les autres.
 
 Rien n'est poussé : le paquet git est écrit dans SORTIE. Sa mise en ligne sur un dépôt distant demande un GO de Lazar.
 Le script n'écrit que dans SORTIE, qui ne doit pas exister ; il ne touche pas au dépôt.
@@ -20,6 +23,7 @@ import hashlib
 import io
 import json
 import os
+import re
 import subprocess
 import sys
 import tarfile
@@ -33,6 +37,7 @@ RACINE = Path(__file__).resolve().parents[1]
 # Un `*` ne traverse pas les dossiers ; un motif qui finit par `/**` vise tout le dossier, à toute profondeur.
 RETRAITS = [
     ("docs/sources/pdf/*.pdf", "copie d'un PDF d'arXiv de tiers"),
+    ("docs/sources/pdf/**/*.pdf", "copie d'un PDF de tiers (sous-dossier ; bisociation, R-590 de conv-audit)"),
     ("docs/sources/lecture-pdf-niveau1/*.tar", "fichiers de travail d'un lecteur : pages extraites des PDF de tiers"),
     ("docs/sources/lecture-pdf-niveau2/*.tar", "fichiers de travail d'un lecteur : pages extraites des PDF de tiers"),
     ("docs/sources/invites-2606.08892-v1/extrait.tar", "texte complet extrait d'un papier de tiers"),
@@ -48,6 +53,7 @@ RETRAITS = [
     ("livrables/candidature-ea-funds-v1.zip", "candidature à un autre fonds, confidentielle"),
     ("livrables/candidature-ea-funds-v1.zip.sha256", "candidature à un autre fonds, confidentielle"),
     ("registres/**", "registres de travail : messages de Lazar cités mot pour mot, montants, instances (R-116)"),
+    ("gemini/**", "travaux de la relève de Gemini, non audités ; un fichier y porte une clé en clair (R-333, N-038, R-348)"),
     ("livrables/reponse-amitie-v1/**", "textes d'une candidature (séminaire AFFINE), privés (R-116)"),
     ("livrables/reponse-amitie-v1.zip", "textes d'une candidature (séminaire AFFINE), privés (R-116)"),
     ("livrables/reponse-amitie-v1.zip.sha256", "textes d'une candidature (séminaire AFFINE), privés (R-116)"),
@@ -56,6 +62,10 @@ RETRAITS = [
     ("livrables/anteriorite-niveau1-v1.zip", "archive qui contient les registres de travail (R-116)"),
     ("livrables/premier-rendu-v1.zip", "archive qui contient les registres de travail (R-116)"),
     ("livrables/controle-ia-v1.bundle", "paquet git qui contient les registres de travail (R-116)"),
+    ("brouillons/**/corpus-primaire-*/**", "corpus intégral des idées : ne quitte jamais le dépôt privé"),
+    ("livrables/lot-ideation-tournoi-*.zip", "lot de l'orchestrateur avec le corpus des idées : ne quitte jamais le dépôt privé"),
+    ("brouillons/canal-reprise-releve-v1/envois/candidature-pivotal-v1/**",
+     "candidature personnelle de Lazar au Pivotal Research Fellowship, privée (n° 322 de conv-audit, R-984)"),
 ]
 # L'ancien paquet git (`livrables/controle-ia-v1.bundle`, cinq commits du 2026-10-04, recopié dans
 # `livrables/premier-rendu-v1.zip`) reste : aucun fichier de son historique n'est visé ici (garde des archives).
@@ -99,11 +109,21 @@ GARDES = ("docs/sources/invites-2606.08892-v1/invites/*.txt", "docs/sources/invi
 
 
 def correspond(chemin: str, motif: str) -> bool:
-    """Appariement par segment : `*` ne traverse pas les dossiers ; `/**` final vise tout le dossier."""
-    if motif.endswith("/**"):
+    """Appariement par segment : `*` ne traverse pas les dossiers ; `/**` final vise tout le dossier ; un segment `**`
+    au milieu vaut zéro, un ou plusieurs dossiers."""
+    if motif.endswith("/**") and "**" not in motif[:-3]:
         return chemin.startswith(motif[:-2])
-    c, m = chemin.split("/"), motif.split("/")
-    return len(c) == len(m) and all(fnmatch.fnmatchcase(a, b) for a, b in zip(c, m))
+    return _segments(chemin.split("/"), motif.split("/"))
+
+
+def _segments(c: list[str], m: list[str]) -> bool:
+    if not m:
+        return not c
+    if m[0] == "**":
+        if len(m) == 1:
+            return bool(c)                      # `/**` final : au moins un segment sous le dossier
+        return any(_segments(c[i:], m[1:]) for i in range(len(c) + 1))
+    return bool(c) and fnmatch.fnmatchcase(c[0], m[0]) and _segments(c[1:], m[1:])
 
 
 def motif_de(chemin: str) -> str | None:
@@ -176,6 +196,43 @@ def survivants(nom: str, data: bytes, empreintes: set[str]) -> list[str]:
     return trouves
 
 
+# Garde des secrets (R-349, demande de Lazar après N-038 (c)). Variables lues : celles dont le nom évoque une clé, `RR_*`
+# comprises depuis R-351, sauf les noms en `_FILE` (des chemins) ; valeurs retenues : 20 caractères au moins, sans
+# espace, hors chemin, avec des lettres et des chiffres. Formes : jetons des fournisseurs connus.
+NOMS_DE_CLES = re.compile(r"(API_KEY|_KEY$|TOKEN|SECRET|PASSWORD|PASSWD|CREDENTIAL|GIT_CONFIG_VALUE)", re.I)
+FORMES_DE_CLES = [
+    ("clé Anthropic", re.compile(rb"sk-ant-[A-Za-z0-9_\-]{20,}")),
+    ("clé Google", re.compile(rb"AIza[0-9A-Za-z_\-]{35}")),
+    ("jeton Hugging Face", re.compile(rb"hf_[A-Za-z0-9]{30,}")),
+    ("jeton GitHub", re.compile(rb"gh[pousr]_[A-Za-z0-9]{36,}")),
+    ("clé dans une adresse", re.compile(rb"api_key=[0-9A-Fa-f]{32,}")),
+]
+
+
+def valeurs_secretes(environ=None) -> dict[str, bytes]:
+    env = os.environ if environ is None else environ
+    sortie = {}
+    for nom, valeur in env.items():
+        v = str(valeur or "").strip()
+        if nom.upper().endswith("_FILE") or not NOMS_DE_CLES.search(nom):
+            continue
+        if len(v) < 20 or v.startswith("/") or any(c.isspace() for c in v) \
+                or not (re.search(r"[A-Za-z]", v) and re.search(r"[0-9]", v)):
+            continue
+        sortie[nom] = v.encode("utf-8")
+    return sortie
+
+
+def secrets_dans(nom: str, contenu: bytes, valeurs: dict[str, bytes]) -> list[str]:
+    """Secrets d'un fichier gardé, et des membres de ses archives à toute profondeur : chemin et nature seulement."""
+    trouves = [f"{nom} : valeur de {var}" for var, v in valeurs.items() if v and v in contenu]
+    trouves += [f"{nom} : {forme}" for forme, motif in FORMES_DE_CLES if motif.search(contenu)]
+    if est_archive(contenu):
+        for membre, c in _membres(nom, contenu):
+            trouves += secrets_dans(f"{nom}!{membre}", c, valeurs)
+    return trouves
+
+
 def main(argv: list[str]) -> int:
     if len(argv) != 2:
         print(__doc__)
@@ -191,6 +248,7 @@ def main(argv: list[str]) -> int:
     arbre = sortie / "controle-ia-expurge"
     arbre.mkdir(parents=True)
     retraits, gardes, archives, empreintes_gardees = [], 0, [], set()
+    valeurs, secrets = valeurs_secretes(), []
     with tarfile.open(fileobj=io.BytesIO(_git("archive", "--format=tar", commit))) as tar:
         for membre in tar.getmembers():
             if not membre.isfile():
@@ -207,8 +265,12 @@ def main(argv: list[str]) -> int:
             os.chmod(cible, membre.mode & 0o777)
             gardes += 1
             empreintes_gardees.add(hashlib.sha256(contenu).hexdigest())
+            secrets += secrets_dans(membre.name, contenu, valeurs)
             if est_archive(contenu) or contenu.startswith(COMPRESSIONS_NON_EXAMINEES):
                 archives.append((membre.name, contenu))
+    if secrets:
+        print("secrets dans des fichiers gardés : arrêt (aucun paquet écrit)\n  " + "\n  ".join(secrets), file=sys.stderr)
+        return 1
     # un contenu retiré qui reste aussi en fichier gardé (la feuille de style commune aux deux propositions) n'est pas
     # caché par une archive : seuls comptent les contenus que la copie n'a plus
     empreintes = {r["sha256"] for r in retraits if r["octets"]} - empreintes_gardees

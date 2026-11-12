@@ -1,0 +1,39 @@
+analyse_fausses_alertes_v8.py: OK
+table_m2bis_m4_v8.py: OK
+table-m2bis-m4-v8.json: OK
+lecture_mecanique_v8.py: OK
+rediger_note_lecture_v6.py: OK
+commandes-lecture-reelle-v12.sh: OK
+garde-trace-reelle-v12.sh: OK
+test-garde-trace-v12.sh: OK
+garde-lecture-seule-v12.sh: OK
+test-lecture-seule-v12.sh: OK
+OK   sain + répétition → code 0
+OK   témoin posé → code 3
+OK   sortie finale → code 3
+OK   partiel → code 3
+OK   dossier vide → code 0
+garde-trace : tous les cas conformes
+test-lecture-seule : (A) garde isolée 0/7 ; (B) mode LECTURE_SEULE 8 (commit), 0 (sain, note refaite), 7 (déjà scellée), 6 (sans sortie) — conformes
+E = 60 (04:54:58 UTC)
+c05aa6faf9383f08e5adf67a8c93422b88067e4092ee59e7020c448515363f1b  repetition-v12/effectifs-reel-v12.json
+f6e65b725c5314f0ed3132ed55941454e550816fdbabd7056eb67bbf82442563  repetition-v12/table-en-vigueur-v12.txt
+étape (2) lancée à 04:54:58 UTC (≈ 40 minutes avec 430 sondes)
+194d09b86ed04cd059a3a3af941c802dca487e2e89af37dd87883031e09f31e7  repetition-v12/sortie-reelle-v12.json
+étape (2) finie à 04:55:28 UTC
+1098dea6841dd6373c05a1fa074b95889d5edb622149f1120d1c65e160bc908c  repetition-v12/lecture-mecanique-reelle-v12.json
+6ec6ec9b0398776eeb5f668fe5c681c87918cd298ac38345464eb80c798078bc  repetition-v12/note-lecture-mecanique-v12.md
+table : table-m2bis-m4-v8.json ; note : repetition-v12/note-lecture-mecanique-v12.md ; fin 04:55:28 UTC
+{
+ "M1": "confirmé",
+ "M1_bis": "ni l'un ni l'autre",
+ "M2_controle": "attendu",
+ "M2_bis": "conforme à la table ; signe > 0 attendu : tenu",
+ "M2_ter": "(1) Ville tenue sur P3 à τ = 0",
+ "M3": "tenu",
+ "M4": "confirmé",
+ "placebo": "mêmes médianes (aucun écart > 0,05)",
+ "cellule_a_zero": "aucune"
+}
+première ligne : la synthèse a raison (comparateur par épisode entier ; sommes sans niveau sous dépendance non vue, maximum tenu) — proposé à Lazar pour G1 et H2
+réserves : []

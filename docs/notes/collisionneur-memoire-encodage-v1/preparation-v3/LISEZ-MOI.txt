@@ -1,0 +1,25 @@
+Préparatifs des deux tours du collisionneur accordés par anticipation (R-543), dans cet ordre :
+  1. « mémoire du pôle : encodage et redites », question v3 de conv-audit (78690618…), faits v2 (63e09aa3…), GO-2026-10-27-01
+     (extension), plafond 22 USD, devis 21,41 USD au pire cas ;
+  2. « Boucle d'or », question v1 de conv-audit (2e9db80b…), faits v1 (fe9a65de…), GO-2026-10-27-02, plafond 22 USD,
+     devis 20,95 USD au pire cas.
+Lancés dès qu'une clé Anthropic a du crédit, sans redemander à Lazar ; arrêt au plafond ; un refus arrête le tour ; rien
+n'est servi à un organisme. Versé le 27 octobre 2026 vers 10:20 UTC par l'instance « session-depot » ; aucune clé ici.
+Remplace, pour la mémoire, `../preparation/` (question v2, faits v1), gardé sans modification.
+
+Contenu : collisionneur-memoire-v3/tour/ et collisionneur-boucle-d-or/tour/ (question, faits, outil v2.6 0e63febd… et ses
+tests, appel de contrôle, vérification du crédit, lanceur) ; enchainer-tours-v1.sh (contrôle, tour 1, contrôle, tour 2 ;
+un tour ne part que si les trois espèces répondent) ; pip-freeze-memoire-v1.txt (versions figées).
+
+Marche à suivre dans une session neuve (routine R14 faite d'abord ; lire les messages de conv-audit sur
+canal/conv-audit-n04 avant tout lancement) :
+  1. Vérifier les empreintes (compagnons .sha256) et les deux GO (lire_go, decider ; échéance 2026-10-31).
+  2. Copier ce dossier dans le bloc-notes ; y créer l'environnement : python3 -m venv venv &&
+     venv/bin/pip install --no-cache-dir -r pip-freeze-memoire-v1.txt (sans la dernière ligne) ; puis un lien
+     `venv` dans chacun des deux dossiers de tour (les scripts de tour/ appellent ../venv/bin/python).
+  3. bash collisionneur-memoire-v3/tour/verifier-credit-v1.sh (code 0 : crédit) ; si la clé Anthropic neuve porte un
+     autre nom que RR_ANTHROPIC_API_KEY, Lazar le dit : adapter les scripts sous des noms nouveaux (R12).
+  4. bash enchainer-tours-v1.sh en tâche de fond, borne de durée explicite d'au moins 2 h.
+  5. Verser chaque tour sur une branche neuve (donnees/collisionneur-memoire-encodage-v1,
+     donnees/collisionneur-boucle-d-or-v1), empreintes à l'appui ; consigner la dépense ; synthèses à Lazar ; message sur
+     canal/session-depot-reprise-n54.

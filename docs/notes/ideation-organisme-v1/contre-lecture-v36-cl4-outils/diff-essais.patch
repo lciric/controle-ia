@@ -1,0 +1,442 @@
+index 393229fe..71b413ea 100644
+--- a/brouillons/canal-reprise-releve-v1/envois/pole-scientifique-automatique-v1/orchestrateur-pole-v7/essais/test_v7_ideation.py
++++ b/brouillons/canal-reprise-releve-v1/envois/pole-scientifique-automatique-v1/orchestrateur-pole-v7/essais/test_v7_ideation.py
+@@ -467,21 +467,25 @@ class TestCourse(CasAvecDossier):
+             self.assertEqual(o["max_turns"], 2)
+ 
+ 
+-class TestJugeExterne(CasAvecDossier):
+-    """v33 : juge d'une autre lignée en bras rapporté (adaptateur à commande)."""
++class TestCommandeExterne(CasAvecDossier):
++    """v33 → v36 : juge d'une autre lignée (Argon) par commande externe ; v36 : à poids égal et proposeur à égalité."""
+ 
+-    def commande(self, script):
+-        chemin = os.path.join(self.tmp, "juge.py")
++    def commande(self, script, nom="juge.py"):
++        chemin = os.path.join(self.tmp, nom)
+         with open(chemin, "w", encoding="utf-8") as f:
+             f.write(script)
+         return [sys.executable, "-I", chemin]
+ 
++    FICHE = json.dumps(fiche_brute(nom="Argon A"), ensure_ascii=False)
+     SCRIPT_OK = (
+         "import sys, json, re\n"
+         "consigne = sys.stdin.read()\n"
+-        "idents = sorted(set(re.findall(r'\"identifiant\": \"(T\\d\\d)\"', consigne)))\n"
+         "if 'exactement OK' in consigne:\n"
+         "    print(json.dumps({'texte': 'OK', 'cout_usd': 0.001})); sys.exit(0)\n"
++        "if 'passe de proposition' in consigne:\n"
++        "    f1 = json.loads(%r); f2 = dict(f1, nom='Argon B')\n"
++        "    if 'première passe' in consigne: f1['nom'] = 'Argon A (revue)'\n"
++        "    print(json.dumps({'texte': '```json\\n' + json.dumps({'fiches': [f1, f2]}, ensure_ascii=False) + '\\n```', 'cout_usd': 0.25})); sys.exit(0)\n"
+         "bloc = json.loads(re.search(r'```json\\n(\\[.*\\])\\n```', consigne, re.S).group(1))\n"
+         "par_nom = {f['nom']: f['identifiant'] for f in bloc}\n"
+         "notes = []\n"
+@@ -489,135 +493,302 @@ class TestJugeExterne(CasAvecDossier):
+         "    c = {k: 2 for k in ('avantage','originalite','falsifiabilite','traitabilite','robustesse')}\n"
+         "    if f['nom'] == 'Verbeux vide': c.update({'avantage': 1, 'originalite': 1, 'falsifiabilite': 0})\n"
+         "    if f['nom'] == 'Assuré occupé': c.update({'avantage': 1, 'originalite': 0})\n"
++        "    if f['nom'].startswith('Argon'): c.update({'avantage': 3})\n"
+         "    notes.append({'identifiant': f['identifiant'], 'criteres': c, 'justifications': {}})\n"
+         "doublons = [[par_nom['Jumeau'], par_nom['Sobre fort']]] if 'Jumeau' in par_nom and 'Sobre fort' in par_nom else []\n"
+-        "print(json.dumps({'texte': '```json\\n' + json.dumps({'notes': notes, 'doublons': doublons}) + '\\n```', 'cout_usd': 0.3}))\n")
++        "print(json.dumps({'texte': '```json\\n' + json.dumps({'notes': notes, 'doublons': doublons}) + '\\n```', 'cout_usd': 0.3}))\n") % FICHE
+ 
+     def test_commande_factice_notes_et_controle(self):
+-        from pole.adaptateurs import AdaptateurJugeExterne
+-        ad = AdaptateurJugeExterne(self.commande(self.SCRIPT_OK), environnement={})
++        from pole.adaptateurs import AdaptateurCommandeExterne, AdaptateurJugeExterne
++        self.assertIs(AdaptateurJugeExterne, AdaptateurCommandeExterne)
++        ad = AdaptateurCommandeExterne(self.commande(self.SCRIPT_OK), environnement={})
+         r = ad.lancer("juge_ideation", idn.APPEL_DE_CONTROLE_CONSIGNE, self.tmp, 0.1, 1, modele="autre-lignee-x")
+-        self.assertEqual((r.statut, r.texte_final, r.cout_declare_usd), ("ok", "OK", 0.001))
++        self.assertEqual((r.statut, r.texte_final, r.cout_declare_usd, r.cout_inconnu), ("ok", "OK", 0.001, False))
++        with self.assertRaises(ValueError):
++            ad.lancer("experimentateur", "x", self.tmp, 1.0, 1)
++        self.assertEqual(sorted(ad.description()), ["commande", "delai_s", "empreintes", "variables_transmises"])
++        self.assertIn(ad.commande[-1], ad.description()["empreintes"])
+         with self.assertRaises(ValueError):
+-            ad.lancer("proposeur_ideation", "x", self.tmp, 1.0, 1)
++            AdaptateurCommandeExterne(self.commande("x"), delai_s=0)
+ 
+     def test_artefacts_de_la_commande(self):
+-        from pole.adaptateurs import AdaptateurJugeExterne
+-        for script, attendu in (("import sys; sys.exit(3)", "erreur"), ("print('pas du json')", "erreur"),
+-                                ("import json; print(json.dumps({'texte': 'x', 'cout_usd': 9.0}))", "budget_depasse"),
+-                                ("import json; print(json.dumps({'texte': 'x'}))", "erreur"),  # v35 : coût obligatoire
+-                                ("import json; print(json.dumps({'cout_usd': 1}))", "erreur")):
+-            ad = AdaptateurJugeExterne(self.commande(script), environnement={})
++        """R5 : coût absent, NaN, infini, nul, négatif, sortie non JSON, code ≠ 0 → erreur ; coût imprimé avant un échec
++        compté (CL35-02) ; coût illisible → plafond de session compté et marqué inconnu."""
++        from pole.adaptateurs import AdaptateurCommandeExterne
++        cas = (("import sys; sys.exit(3)", "erreur", 1.0, True),
++               ("print('pas du json')", "erreur", 1.0, True),
++               ("import json; print(json.dumps({'texte': 'x', 'cout_usd': 9.0}))", "budget_depasse", 9.0, False),
++               ("import json; print(json.dumps({'texte': 'x'}))", "erreur", 1.0, True),
++               ("import json; print(json.dumps({'cout_usd': 1}))", "erreur", 1.0, True),
++               ("print('{\"texte\": \"x\", \"cout_usd\": NaN}')", "erreur", 1.0, True),
++               ("print('{\"texte\": \"x\", \"cout_usd\": Infinity}')", "erreur", 1.0, True),
++               ("import json; print(json.dumps({'texte': 'x', 'cout_usd': 0}))", "erreur", 1.0, True),
++               ("import json; print(json.dumps({'texte': 'x', 'cout_usd': -1}))", "erreur", 1.0, True),
++               ("import json, sys; print(json.dumps({'texte': 'x', 'cout_usd': 0.4})); sys.exit(3)", "erreur", 0.4, False),
++               ("import json; print(json.dumps({'texte': 'x', 'cout_usd': 0.5}))", "ok", 0.5, False))
++        for script, attendu, cout, inconnu in cas:
++            ad = AdaptateurCommandeExterne(self.commande(script), environnement={})
+             r = ad.lancer("juge_ideation", "consigne", self.tmp, 1.0, 1)
+-            self.assertEqual(r.statut, attendu, script)
++            self.assertEqual((r.statut, r.cout_declare_usd, r.cout_inconnu), (attendu, cout, inconnu), script)
+         from pole.relais import CleDansEnvironnement
+-        ad = AdaptateurJugeExterne(self.commande("print(1)"), environnement={"ANTHROPIC_API_KEY": "x"})
++        ad = AdaptateurCommandeExterne(self.commande("print(1)"), environnement={"ANTHROPIC_API_KEY": "x"})
+         with self.assertRaises(CleDansEnvironnement):
+             ad.lancer("juge_ideation", "consigne", self.tmp, 1.0, 1)
+ 
+-    def test_bras_rapporte_toujours_differe(self):
+-        """v35 (CL34-01, CL34-04) : la course n'appelle jamais le juge externe ; le bras se joue différé, après une
+-        attestation qui porte l'empreinte des fiches ET de la consigne ; jamais rejoué ; témoins lus chez lui."""
+-        from pole.adaptateurs import AdaptateurJugeExterne
+-        cours = TestCourse("test_course_complete")
+-        cours.tmp = self.tmp
++    def test_delai_arrete_tout_le_groupe(self):
++        """CL35-13 : au délai, le petit-enfant de la commande est arrêté aussi ; coût inconnu → plafond compté."""
++        import time
++        from pole.adaptateurs import AdaptateurCommandeExterne
++        pid_f = os.path.join(self.tmp, "petit-enfant.pid")
++        script = ("import subprocess, sys, time\n"
++                  f"p = subprocess.Popen([sys.executable, '-c', 'import time; time.sleep(60)'])\n"
++                  f"open({pid_f!r}, 'w').write(str(p.pid))\n"
++                  "time.sleep(60)\n")
++        ad = AdaptateurCommandeExterne(self.commande(script), environnement={}, delai_s=1.5)
++        r = ad.lancer("juge_ideation", "consigne", self.tmp, 0.7, 1)
++        self.assertEqual((r.statut, r.cout_declare_usd, r.cout_inconnu), ("erreur", 0.7, True))
++        self.assertIn("délai", r.erreur)
++        pid = int(open(pid_f).read())
++        for _ in range(20):
++            try:
++                os.kill(pid, 0)
++                time.sleep(0.1)
++            except ProcessLookupError:
++                break
++        else:
++            os.kill(pid, 9)
++            self.fail("le petit-enfant a survécu au délai")
++
++    def test_environnement_minimal_de_la_commande(self):
++        """CL34-09 / CL35-05 : environnement explicite et minimal, plus plafond de session et rôle."""
++        from pole.adaptateurs import AdaptateurCommandeExterne
++        from pole.relais import CleDansEnvironnement
++        script = "import os, json; print(json.dumps({'texte': ','.join(sorted(os.environ)), 'cout_usd': 0.01}))"
++        env = {"PATH": os.environ.get("PATH", "/usr/bin"), "HOME": "/tmp", "LANG": "C.UTF-8", "HTTPS_PROXY": "http://x",
++               "CHEMIN_CLE_JUGE": "/dev/null", "AUTRE": "1"}
++        ad = AdaptateurCommandeExterne(self.commande(script), environnement=env, variables_transmises=("CHEMIN_CLE_JUGE",))
++        self.assertEqual(sorted(ad.environnement_commande()), ["CHEMIN_CLE_JUGE", "HOME", "LANG", "PATH"])
++        r = ad.lancer("juge_ideation", "consigne", self.tmp, 1.0, 1)
++        self.assertEqual(r.statut, "ok")
++        self.assertEqual(r.texte_final, "CHEMIN_CLE_JUGE,HOME,LANG,PATH,PLAFOND_SESSION_USD,ROLE_POLE")
++        with self.assertRaises(CleDansEnvironnement):
++            AdaptateurCommandeExterne(self.commande(script), environnement=env, variables_transmises=("ANTHROPIC_API_KEY",))
++
++    def cours(self):
++        c = TestCourse("test_course_complete")
++        c.tmp = self.tmp
++        return c
++
++    def test_adaptateur_principal_externe_refuse(self):
++        """CL35-06 : une commande externe ne peut pas être l'adaptateur principal (ni le rôle réel d'un mixte)."""
++        from pole.adaptateurs import AdaptateurCommandeExterne
++        c = self.cours()
++        ad = AdaptateurCommandeExterne(self.commande(self.SCRIPT_OK), environnement={})
++        with self.assertRaises(idn.CourseInterrompue):
++            c.lancer(ad, "cx-principal")
++        self.assertFalse(os.path.exists(os.path.join(self.tmp, "cx-principal")))
++
++        class Mixte:
++            nom = "mixte"
++            reel = ad
++        with self.assertRaises(idn.CourseInterrompue):
++            c.lancer(Mixte(), "cx-mixte")
++        # moteur réel déclaré avec un adaptateur qui n'est pas celui du kit
++        faux = FauxAdaptateur({"opus": [fiche_brute()], "fable": [fiche_brute()]})
++        with self.assertRaises(idn.CourseInterrompue):
++            c.lancer(faux, "cx-moteur", moteur="claude-sdk")
++        self.assertEqual(faux.appels, [])
++
++    def test_proposeur_externe_dans_la_course(self):
++        """n° 119 : Argon propose à égalité dans la course (question et pièces) ; sa seconde passe exige l'attestation du
++        matériau ; il ne voit jamais les fiches des autres ; plafond externe séparé."""
++        from pole.adaptateurs import AdaptateurCommandeExterne
++        c = self.cours()
++        fiches = {"opus": [fiche_brute(nom="O1")], "fable": [fiche_brute(nom="F1")]}
++        ad = FauxAdaptateur(fiches, notes_par_juge={"juge-fable": c.notes_temoins_ok, "juge-opus": c.notes_temoins_ok})
++        ext = AdaptateurCommandeExterne(self.commande(self.SCRIPT_OK), environnement={})
++        budgets = dict(c.budgets())
++        budgets[("proposeur_ideation", "gemini-argon")] = 1.0
++        prop_ext = [("argon", "gemini-argon", ext)]
++        with self.assertRaises(idn.CourseInterrompue):  # plafond externe nul
++            c.lancer(ad, "cx-0", budgets=budgets, proposeurs_externes=prop_ext, budget_externe_usd=0.0)
++        with self.assertRaises(idn.CourseInterrompue):  # seconde passe avec matériau sans attestation : refus avant tout appel
++            c.lancer(ad, "cx-1", budgets=budgets, proposeurs_externes=prop_ext, budget_externe_usd=3.0, seconde_passe=True)
++        self.assertEqual(ad.appels, [])
++        res = c.lancer(ad, "cx-2", budgets=budgets, proposeurs_externes=prop_ext, budget_externe_usd=3.0)
++        auteurs = {f["auteur"] for f in res["fiches"]}
++        self.assertEqual(auteurs, {"opus", "fable", "argon"})
++        self.assertAlmostEqual(res["journal"]["cout_externe_usd"], 0.25)
++        self.assertAlmostEqual(res["journal"]["cout_total_usd"], 4 * 0.5)
++        self.assertEqual(res["lecture"]["quarantaine_par_proposeur"]["argon"]["validees"], 2)
++        # attestation du matériau scellée → seconde passe ; Argon reçoit le matériau et SES fiches seulement
++        att = os.path.join(self.tmp, "attestation-materiau.json")
++        prep = c._prep
++        idn.ecrire_json_scelle(att, {"lecteur": "Lazar", "lu_le": "2026-10-28",
++                                     "materiau_sha256": {os.path.basename(prep["materiau"][0]):
++                                                         idn.sha256_fichier(prep["materiau"][0])}})
++        res = c.lancer(ad, "cx-3", budgets=budgets, proposeurs_externes=prop_ext, budget_externe_usd=3.0,
++                       seconde_passe=True, attestation_materiau=att)
++        consigne2 = open(os.path.join(self.tmp, "cx-3", "proposeurs", "traces-argon", "passe-2", "consigne.md")
++                         if os.path.exists(os.path.join(self.tmp, "cx-3", "proposeurs", "traces-argon", "passe-2", "consigne.md"))
++                         else os.path.join(self.tmp, "cx-3", "proposeurs", "argon", "traces-passe-2", "consigne.md"),
++                         encoding="utf-8").read()
++        self.assertIn("Matériau servi", consigne2)
++        self.assertIn("Argon A", consigne2)
++        self.assertNotIn('"O1"', consigne2)
++        self.assertNotIn('"F1"', consigne2)
++        self.assertEqual(sum(1 for f in res["fiches"] if f["auteur"] == "argon" and f["passe"] == 2), 2)
++        # attestation à l'empreinte fausse → refus avant tout appel
++        att2 = os.path.join(self.tmp, "attestation-materiau-fausse.json")
++        idn.ecrire_json_scelle(att2, {"lecteur": "Lazar", "lu_le": "2026-10-28",
++                                      "materiau_sha256": {os.path.basename(prep["materiau"][0]): "0" * 64}})
++        n = len(ad.appels)
++        with self.assertRaises(idn.CourseInterrompue):
++            c.lancer(ad, "cx-4", budgets=budgets, proposeurs_externes=prop_ext, budget_externe_usd=3.0,
++                     seconde_passe=True, attestation_materiau=att2)
++        self.assertEqual(len(ad.appels), n)
++
++    def attester(self, chemin, sortie, etiquette="argon"):
++        consigne = os.path.join(sortie, "juges-bras-rapporte", f"traces-{etiquette}", "consigne-en-attente.md")
++        idn.ecrire_json_scelle(chemin, {"lecteur": "Lazar", "lu_le": "2026-10-28",
++                                        "fiches_validees_sha256": idn.sha256_fichier(os.path.join(sortie, "fiches-validees.json")),
++                                        "consignes_en_attente_sha256": {etiquette: idn.sha256_fichier(consigne)}})
++        return chemin
++
++    def test_bras_differe_a_poids_egal(self):
++        """CL34-01, CL34-04, n° 118 : la course n'appelle jamais le juge externe et n'écrit aucun classement ; le bras,
++        après attestation scellée, note à poids égal : classement à trois juges (médiane), accords par paire ; jamais rejoué."""
++        from pole.adaptateurs import AdaptateurCommandeExterne
++        c = self.cours()
+         fiches = {"opus": [fiche_brute(nom="O1"), fiche_brute(nom="O2")], "fable": [fiche_brute(nom="F1")]}
+-        ad = FauxAdaptateur(fiches, notes_par_juge={"juge-fable": cours.notes_temoins_ok, "juge-opus": cours.notes_temoins_ok})
+-        externe = AdaptateurJugeExterne(self.commande(self.SCRIPT_OK), environnement={})
+-        budgets = dict(cours.budgets())
++        ad = FauxAdaptateur(fiches, notes_par_juge={"juge-fable": c.notes_temoins_ok, "juge-opus": c.notes_temoins_ok})
++        externe = AdaptateurCommandeExterne(self.commande(self.SCRIPT_OK), environnement={})
++        budgets = dict(c.budgets())
+         budgets[("juge_ideation", "autre-lignee-x")] = 1.0
+-        # R5 : une attestation donnée à la course est refusée avant tout appel
+-        att = os.path.join(self.tmp, "attestation.json")
+-        with open(att, "w") as f:
+-            json.dump({"lecteur": "Lazar"}, f)
++        # R5 : attestation donnée à la course → refus avant tout appel
+         with self.assertRaises(idn.CourseInterrompue):
+-            cours.lancer(ad, "cx-refus", budgets=budgets, juges_externes=[("argon", "autre-lignee-x", None)],
+-                         attestation_lecture_humaine=att)
++            c.lancer(ad, "cx-refus", budgets=budgets, juges_externes=[("argon", "autre-lignee-x")],
++                     attestation_lecture_humaine=os.path.join(self.tmp, "x.json"))
+         self.assertEqual(ad.appels, [])
+-        # course : consigne en attente scellée, aucun appel externe, témoins servis scellés
+-        res = cours.lancer(ad, "cx-differe", budgets=budgets, juges_externes=[("argon", "autre-lignee-x", None)])
+-        self.assertNotIn("bras_rapporte", res["lecture"])
+-        differe = res["lecture"]["bras_rapporte_differe"][0]
+-        self.assertEqual(differe["etiquette"], "argon")
+-        sortie_d = os.path.join(self.tmp, "cx-differe")
+-        consigne = os.path.join(sortie_d, "juges-bras-rapporte", "traces-argon", "consigne-en-attente.md")
+-        self.assertTrue(os.path.exists(consigne + ".sha256"))
+-        self.assertEqual(differe["consigne_en_attente_sha256"], idn.sha256_fichier(consigne))
+-        self.assertTrue(os.path.exists(os.path.join(sortie_d, "noyau", "temoins-servis.json.sha256")))
+-        self.assertFalse(os.path.exists(os.path.join(sortie_d, "notes-bras-rapporte.json")))
+-        self.assertTrue(all(a["role"] != "juge_ideation" or "argon" not in a["dossier"] for a in ad.appels))
+-        empreinte_fiches = idn.sha256_fichier(os.path.join(sortie_d, "fiches-validees.json"))
++        res = c.lancer(ad, "cx", budgets=budgets, juges_externes=[("argon", "autre-lignee-x")], budget_externe_usd=2.0)
++        sortie = os.path.join(self.tmp, "cx")
++        self.assertTrue(res["en_attente_bras"])
++        self.assertIsNone(res["classement"])
++        for nom in ("classement.json", "classements-par-juge.json", "lecture.json"):
++            self.assertFalse(os.path.exists(os.path.join(sortie, nom)), nom)
++        for nom in ("lecture-course.json", "notes-par-juge.json", "noyau/temoins-servis.json", "noyau/modeles.json",
++                    "juges-bras-rapporte/traces-argon/consigne-en-attente.md"):
++            self.assertTrue(os.path.exists(os.path.join(sortie, nom + ".sha256")), nom)
++        self.assertTrue(all("argon" not in a["dossier"] for a in ad.appels))
+         externes = [("argon", "autre-lignee-x", externe)]
+-
+-        def attester(**champs):
+-            o = {"lecteur": "Lazar", "lu_le": "2026-10-28", "fiches_validees_sha256": empreinte_fiches,
+-                 "consignes_en_attente_sha256": {"argon": idn.sha256_fichier(consigne)}}
+-            o.update(champs)
+-            with open(att, "w") as f:
+-                json.dump(o, f)
+-        # attestations fausses : empreinte des fiches, consigne absente, consigne fausse → refus, aucun manifeste du bras
+-        for champs in ({"fiches_validees_sha256": "0" * 64}, {"consignes_en_attente_sha256": None},
+-                       {"consignes_en_attente_sha256": {"argon": "0" * 64}}):
+-            attester(**champs)
+-            with self.assertRaises(idn.CourseInterrompue):
+-                idn.executer_bras_rapporte(sortie_d, attestation_lecture_humaine=att, budgets=budgets,
+-                                           juges_externes=externes, exiger_cout_controle=True)
+-        self.assertFalse(os.path.exists(os.path.join(sortie_d, "manifeste-bras-rapporte.json")))
+-        # plafond total trop bas pour la session externe → refus après le contrôle, manifeste écrit, aucune réponse
+-        attester()
++        # attestation non scellée → refus
++        att_nue = os.path.join(self.tmp, "att-nue.json")
++        with open(att_nue, "w") as f:
++            json.dump({"lecteur": "Lazar"}, f)
+         with self.assertRaises(idn.CourseInterrompue):
+-            idn.executer_bras_rapporte(sortie_d, attestation_lecture_humaine=att, budgets=budgets,
+-                                       juges_externes=externes, budget_total_usd=0.5)
+-        self.assertTrue(os.path.exists(os.path.join(sortie_d, "manifeste-bras-rapporte.json")))
+-        self.assertFalse(os.path.exists(os.path.join(sortie_d, "juges-bras-rapporte", "traces-argon", "reponse.md")))
+-        # un manifeste du bras existe : jamais rejoué
++            idn.executer_bras_differe(sortie, attestation_lecture_humaine=att_nue, budgets=budgets, juges_externes=externes)
++        # attestation scellée mais consigne fausse → refus ; aucun manifeste du bras
++        att_f = os.path.join(self.tmp, "att-fausse.json")
++        idn.ecrire_json_scelle(att_f, {"lecteur": "Lazar", "lu_le": "2026-10-28",
++                                       "fiches_validees_sha256": idn.sha256_fichier(os.path.join(sortie, "fiches-validees.json")),
++                                       "consignes_en_attente_sha256": {"argon": "0" * 64}})
+         with self.assertRaises(idn.CourseInterrompue):
+-            idn.executer_bras_rapporte(sortie_d, attestation_lecture_humaine=att, budgets=budgets, juges_externes=externes)
+-        # course neuve, attestation juste → le bras se joue : contrôle fait, témoins lus, accord de rang, manifeste
+-        res2 = cours.lancer(ad, "cx-2", budgets=budgets, juges_externes=[("argon", "autre-lignee-x", None)])
+-        sortie_2 = os.path.join(self.tmp, "cx-2")
+-        consigne_2 = os.path.join(sortie_2, "juges-bras-rapporte", "traces-argon", "consigne-en-attente.md")
+-        with open(att, "w") as f:
+-            json.dump({"lecteur": "Lazar", "lu_le": "2026-10-28",
+-                       "fiches_validees_sha256": idn.sha256_fichier(os.path.join(sortie_2, "fiches-validees.json")),
+-                       "consignes_en_attente_sha256": {"argon": idn.sha256_fichier(consigne_2)}}, f)
+-        apres = idn.executer_bras_rapporte(sortie_2, attestation_lecture_humaine=att, budgets=budgets, juges_externes=externes)
+-        self.assertIn("argon", apres["lecture"]["accord_avec_le_classement_agrege"])
++            idn.executer_bras_differe(sortie, attestation_lecture_humaine=att_f, budgets=budgets, juges_externes=externes)
++        att = self.attester(os.path.join(self.tmp, "att.json"), sortie)
++        # juges donnés ≠ course → refus ; plafond externe insuffisant → refus AVANT le contrôle (CL35-05), sans manifeste
++        with self.assertRaises(idn.CourseInterrompue):
++            idn.executer_bras_differe(sortie, attestation_lecture_humaine=att, budgets=budgets,
++                                      juges_externes=[("argon", "autre-modele", externe)])
++        with self.assertRaises(idn.CourseInterrompue):
++            idn.executer_bras_differe(sortie, attestation_lecture_humaine=att, budgets=budgets, juges_externes=externes,
++                                      budget_externe_usd=0.5)
++        self.assertFalse(os.path.exists(os.path.join(sortie, "manifeste-bras-rapporte.json")))
++        self.assertFalse(os.path.exists(os.path.join(sortie, "bras-rapporte-controle")))
++        # cas sain : trois juges
++        apres = idn.executer_bras_differe(sortie, attestation_lecture_humaine=att, budgets=budgets, juges_externes=externes)
++        self.assertFalse(apres["sans_bras"])
++        self.assertTrue(all(l["nombre_juges"] == 3 and l["nom_agregat"] == "mediane" for l in apres["classement"]))
++        self.assertEqual(sorted(apres["lecture"]["juges_agreges"]), ["argon", "juge-fable", "juge-opus"])
++        self.assertEqual(len(apres["lecture"]["accords_de_rang_par_paire"]), 3)
+         self.assertTrue(apres["lecture"]["temoins"]["temoins_ok"])
++        self.assertTrue(apres["lecture"]["temoins_juge_externe"]["temoins_ok"])
++        self.assertTrue(apres["lecture"]["lisible_L2_L4"])
++        self.assertIn("argon", apres["lecture"]["auto_preference"])
+         self.assertEqual(apres["journal"]["controle"]["argon"]["texte"], "OK")
+-        self.assertGreater(apres["journal"]["cout_total_usd"], 0.3)  # contrôle 0,001 + notes 0,3
+-        self.assertTrue(os.path.exists(os.path.join(sortie_2, "notes-bras-rapporte.json.sha256")))
+-        self.assertTrue(os.path.exists(os.path.join(sortie_2, "manifeste-bras-rapporte.json.sha256")))
+-        self.assertTrue(all(l["nombre_juges"] == 2 for l in res2["classement"]))  # jamais agrégé
+-        # sceau faux sur la course → refus avant tout appel
+-        res3 = cours.lancer(ad, "cx-3", budgets=budgets, juges_externes=[("argon", "autre-lignee-x", None)])
+-        sortie_3 = os.path.join(self.tmp, "cx-3")
+-        with open(os.path.join(sortie_3, "classement.json"), "a") as f:
+-            f.write(" ")
+-        consigne_3 = os.path.join(sortie_3, "juges-bras-rapporte", "traces-argon", "consigne-en-attente.md")
+-        with open(att, "w") as f:
+-            json.dump({"lecteur": "Lazar", "lu_le": "2026-10-28",
+-                       "fiches_validees_sha256": idn.sha256_fichier(os.path.join(sortie_3, "fiches-validees.json")),
+-                       "consignes_en_attente_sha256": {"argon": idn.sha256_fichier(consigne_3)}}, f)
++        self.assertFalse(apres["journal"]["cout_fictif"])
++        for nom in ("classement.json", "classements-par-juge.json", "lecture.json", "manifeste-bras-rapporte.json",
++                    "notes-bras-rapporte.json"):
++            self.assertTrue(os.path.exists(os.path.join(sortie, nom + ".sha256")), nom)
++        with open(os.path.join(sortie, "manifeste-bras-rapporte.json")) as f:
++            m = json.load(f)["reglages"]
++        self.assertEqual(m["commande_externe"][0]["commande"], externe.commande)  # CL35-03
++        # rejeu → refus
+         with self.assertRaises(idn.CourseInterrompue):
+-            idn.executer_bras_rapporte(sortie_3, attestation_lecture_humaine=att, budgets=budgets, juges_externes=externes)
+-        self.assertFalse(os.path.exists(os.path.join(sortie_3, "juges-bras-rapporte", "traces-argon", "reponse.md")))
++            idn.executer_bras_differe(sortie, attestation_lecture_humaine=att, budgets=budgets, juges_externes=externes)
+ 
+-    def test_environnement_minimal_de_la_commande(self):
+-        """v35 (CL34-09) : la commande reçoit un environnement explicite et minimal, le même que celui qui est vérifié."""
+-        from pole.adaptateurs import AdaptateurJugeExterne
+-        from pole.relais import CleDansEnvironnement
+-        script = "import os, json; print(json.dumps({'texte': ','.join(sorted(os.environ)), 'cout_usd': 0.0}))"
+-        env = {"PATH": os.environ.get("PATH", "/usr/bin"), "HOME": "/tmp", "LANG": "C.UTF-8", "HTTPS_PROXY": "http://x",
+-               "CHEMIN_CLE_JUGE": "/dev/null", "AUTRE": "1"}
+-        ad = AdaptateurJugeExterne(self.commande(script), environnement=env, variables_transmises=("CHEMIN_CLE_JUGE",))
+-        self.assertEqual(sorted(ad.environnement_commande()), ["CHEMIN_CLE_JUGE", "HOME", "LANG", "PATH"])
+-        r = ad.lancer("juge_ideation", "consigne", self.tmp, 1.0, 1)
+-        self.assertEqual(r.statut, "ok")
+-        self.assertNotIn("HTTPS_PROXY", r.texte_final)
+-        self.assertNotIn("AUTRE", r.texte_final)
+-        with self.assertRaises(CleDansEnvironnement):
+-            AdaptateurJugeExterne(self.commande(script), environnement=env, variables_transmises=("ANTHROPIC_API_KEY",))
++    def test_bras_en_panne_classement_sans_bras(self):
++        """n° 118 point 3 : Argon en panne → classement à deux juges marqué illisible, manifeste avec l'erreur, code distinct ;
++        témoins échoués chez Argon → classement à trois juges illisible."""
++        from pole.adaptateurs import AdaptateurCommandeExterne
++        c = self.cours()
++        fiches = {"opus": [fiche_brute(nom="O1"), fiche_brute(nom="O2")], "fable": [fiche_brute(nom="F1")]}
++        ad = FauxAdaptateur(fiches, notes_par_juge={"juge-fable": c.notes_temoins_ok, "juge-opus": c.notes_temoins_ok})
++        budgets = dict(c.budgets())
++        budgets[("juge_ideation", "autre-lignee-x")] = 1.0
++        panne = AdaptateurCommandeExterne(self.commande(
++            "import sys, json\nc = sys.stdin.read()\n"
++            "if 'exactement OK' in c: print(json.dumps({'texte': 'OK', 'cout_usd': 0.001})); sys.exit(0)\n"
++            "print(json.dumps({'texte': 'x', 'cout_usd': 0.2})); sys.exit(3)\n", "panne.py"), environnement={})
++        c.lancer(ad, "cp", budgets=budgets, juges_externes=[("argon", "autre-lignee-x")], budget_externe_usd=2.0)
++        sortie = os.path.join(self.tmp, "cp")
++        att = self.attester(os.path.join(self.tmp, "att-p.json"), sortie)
++        with self.assertRaises(idn.SansJugeExterne) as cm:
++            idn.executer_bras_differe(sortie, attestation_lecture_humaine=att, budgets=budgets,
++                                      juges_externes=[("argon", "autre-lignee-x", panne)])
++        res = cm.exception.resultat
++        self.assertTrue(res["sans_bras"])
++        self.assertTrue(all(l["nombre_juges"] == 2 for l in res["classement"]))
++        self.assertFalse(res["lecture"]["lisible_L2_L4"])
++        self.assertAlmostEqual(res["journal"]["cout_total_usd"], 0.201)  # le coût imprimé avant l'échec est compté
++        self.assertTrue(os.path.exists(os.path.join(sortie, "classement-sans-bras.json.sha256")))
++        self.assertFalse(os.path.exists(os.path.join(sortie, "classement.json")))
++        with open(os.path.join(sortie, "manifeste-bras-rapporte.json")) as f:
++            self.assertIn("code 3", json.load(f)["reglages"]["erreur"])
++        # témoins échoués chez Argon : trois juges, illisible
++        mauvais = AdaptateurCommandeExterne(self.commande(self.SCRIPT_OK.replace("'avantage': 1, 'originalite': 0", "'avantage': 3, 'originalite': 3"), "mauvais.py"), environnement={})
++        c.lancer(ad, "ct", budgets=budgets, juges_externes=[("argon", "autre-lignee-x")], budget_externe_usd=2.0)
++        sortie = os.path.join(self.tmp, "ct")
++        att = self.attester(os.path.join(self.tmp, "att-t.json"), sortie)
++        apres = idn.executer_bras_differe(sortie, attestation_lecture_humaine=att, budgets=budgets,
++                                          juges_externes=[("argon", "autre-lignee-x", mauvais)])
++        self.assertFalse(apres["lecture"]["lisible_L2_L4"])
++        self.assertFalse(apres["lecture"]["temoins_juge_externe"]["temoins_ok"])
++        self.assertTrue(all(l["nombre_juges"] == 3 for l in apres["classement"]))
++
++    def test_bras_simule_sur_course_reelle_refuse(self):
++        """CL35-04 : course marquée réelle (adaptateur du kit, modèles permis) → un adaptateur qui n'est pas une commande
++        externe est refusé avant tout écrit ; CL35-03 : la commande est consignée."""
++        c = self.cours()
++        fiches = {"opus": [fiche_brute(nom="O1")], "fable": [fiche_brute(nom="F1")]}
++        ad = FauxAdaptateur(fiches, notes_par_juge={"juge-fable": c.notes_temoins_ok, "juge-opus": c.notes_temoins_ok})
++        ad.nom = "claude-sdk"
++        budgets = dict(c.budgets())
++        budgets[("juge_ideation", "autre-lignee-x")] = 1.0
++        c.lancer(ad, "cr", budgets=budgets, juges_externes=[("argon", "autre-lignee-x")], budget_externe_usd=2.0,
++                 moteur="claude-sdk")
++        sortie = os.path.join(self.tmp, "cr")
++        att = self.attester(os.path.join(self.tmp, "att-r.json"), sortie)
++        simule = FauxAdaptateur({}, notes_par_juge={"argon": c.notes_temoins_ok})
++        with self.assertRaises(idn.CourseInterrompue):
++            idn.executer_bras_differe(sortie, attestation_lecture_humaine=att, budgets=budgets,
++                                      juges_externes=[("argon", "autre-lignee-x", simule)])
++        self.assertEqual(simule.appels, [])
++        self.assertFalse(os.path.exists(os.path.join(sortie, "manifeste-bras-rapporte.json")))
++        # et un proposeur externe simulé sur une course réelle est refusé aussi
++        with self.assertRaises(idn.CourseInterrompue):
++            budgets[("proposeur_ideation", "gemini-argon")] = 1.0
++            c.lancer(ad, "cr2", budgets=budgets,
++                     proposeurs_externes=[("argon", "gemini-argon", simule)], budget_externe_usd=2.0, moteur="claude-sdk")
+ 
+ 
+ class TestReglagesV35(CasAvecDossier):

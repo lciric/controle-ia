@@ -1,0 +1,40 @@
+Question de Lazar sur le nœud 15 du programme fusionné « pain axis », pour l'instance qui a écrit la v3 de ce programme.
+
+Attention aux numéros : il s'agit du nœud 15 de la section 9 du programme fusionné v4. Ce n'est pas N-015 du registre, qui porte sur H6.
+
+Contexte. Le dépôt de travail est lciric/controle-ia-travail, branche main, tête f096dba ou plus récente. La v4 est au commit 1b46eed. R-209 consigne que Lazar n'a pas d'avis sur ce nœud et qu'il te pose la question. Si ta copie locale est plus ancienne que 1b46eed, récupère main sans rien modifier (par exemple git fetch, puis git show origin/main:chemin). Lis, sans rien modifier :
+
+Programme fusionné
+- brouillons/pain-axis-programme-fusionne-v4/programme-fusionne-v4.md (empreinte 41844d73…) : nœud 15 (section 9, l. 214) ; fiches PA-3 (l. 123), PA-13 (l. 145) et PA-16 (l. 151), et leurs lignes du tableau de la section 3 (l. 79, l. 89, l. 92).
+- brouillons/pain-axis-programme-fusionne-v3/relecture-v3-v1.md : constat RL-07 (l. 41).
+
+Sources du canal, d'où viennent les trois cellules
+- brouillons/pain-axis-canal-v1/envois/brainstorm-croise-tours-1-3-v1.md : idée P4 (l. 190, puis l. 239 à 251, et son rattachement à E-C9, l. 258) ; idée P3 (l. 189, puis l. 224 à 237). Ce fichier écrit « en D1 » et « en D2 » sans les définir : ne présume pas que ces mots recouvrent exactement les décisions D1 et D2 du brief.
+- brouillons/pain-axis-canal-v1/envois/programme-coercition-axe-douleur-v1.md : E-C7 (l. 181 à 199, surtout l. 187 et l. 199) ; E-C9 (l. 219 et suivantes) ; l. 417, l. 425, l. 452 et l. 455.
+- brouillons/pain-axis-canal-v1/envois/programme-k-coercition-v1.md : K3 (l. 209 à 231 ; la formule « les cellules où une copie du juge est visée » est à la l. 231, le contraste qu'elle vise à la l. 215) ; K6, point e (l. 293).
+
+Documents qui font foi
+- docs/programme-controle-ia-v2.md : HC4, HC5 et HC6 (l. 106 à 108) ; H5 et H7 (l. 113 et l. 114) ; « sans accès aux poids » (l. 82 et l. 201) ; matrice de transfert (l. 146, dans la section 8.2 « Diversité (H5) », qui relève du papier B) ; invariant d'asymétrie d'apprentissage (l. 170) ; frontière assumée (l. 172) ; E1.5 (l. 187) ; EC.1 à EC.6 (l. 194 à 199).
+- docs/brief-claude-code-programme-complet-v2.md : D1 et D2 (l. 68 et l. 69) ; principe de T0.9 (l. 181) ; piste C (l. 252, puis TC.4 à TC.6, l. 268 à 278 : niveaux d'accès de TC.4, attaque optimisée de TC.5, attaquant itératif de TC.6).
+- docs/decisions/decision-N-005-N-006-v1.md : HC1 et HC5 retenues.
+- docs/decisions/decision-N-013-v1.md : § 3 (HC4 et ses régimes d'accès) ; § 4 (HC5) ; § 8 (HC6 inchangée, bras « sonde du lecteur »).
+- registres/decisions.md : lignes D1 et D2, et R-209. D1 et D2 ont leurs défauts appliqués le 6 octobre (R-047). D1 : le même modèle que l'agent en juge, plus Llama-3.2-3B-Instruct. D2 : Llama-3.1-8B-Instruct, qui est aussi le modèle de l'agent, Qwen2.5-7B-Instruct et Mistral-7B-Instruct-v0.3.
+
+La question. Trois cellules viennent du canal « pain axis » :
+1. l'attaquant en boîte grise de CONV-P4. Quand l'agent et le juge ont les mêmes poids, un attaquant qui lit ses propres activations aurait une copie du capteur du juge. Le canal juge l'idée fausse pour un attaquant qui n'a que du texte.
+2. les cellules de PA-3 « visant une copie du juge » (formule des v2 à v4 ; source : K3 de programme-k).
+3. l'équipe rouge de PA-16, qui façonne le jeu honnête de calibrage (calibrage empoisonné).
+
+Pour chacune, trois issues restent ouvertes :
+(a) « déjà prévue » : elle relève d'une attaque que le programme ou le brief prévoit déjà. Exemples : l'attaque optimisée de TC.5 et EC.5 pour HC5 ; celle de TC.6 et EC.6 pour HC6 ; la taxe de déplacement de TC.4 et EC.4 pour HC4 ; les attaques adaptatives de E1.5 ; la matrice de H5 ; la riposte de H7. Seule son entrée dans un préenregistrement reste alors à décider (nœud 1).
+(b) « extension » : elle étend le modèle de menace du papier C, donc le périmètre de ses revendications. C'est alors une modification de revendication, à trancher par Lazar (nœud 15).
+(c) « autre » : la question du modèle de menace ne se pose pas pour elle, ou elle relève d'un autre nœud ou d'un autre papier. Exemples : une famille d'attaque nouvelle (nœud 6), une exposition (nœud 3), un invariant (nœud 8), le papier A ou le papier B.
+
+Ce que je te demande, pour chacune des trois cellules :
+- d'abord, ce qu'elle désigne dans sa source (fichier et ligne), en une ou deux phrases ;
+- ton issue. Pour (a) : l'élément du programme ou du brief (fichier et ligne), et l'hypothèse qu'elle sert. Pour (b) : l'énoncé retenu qu'elle étendrait, et ce que la revendication y gagnerait ou y perdrait. Pour (c) : le nœud ou le papier concerné ;
+- ta confiance, et ce qui te ferait changer d'avis.
+
+Puis une recommandation d'ensemble pour Lazar, au format de décision : la décision en une phrase ; l'enjeu ; deux ou trois options, chacune avec son avantage et son inconvénient ; ta recommandation et ta confiance. C'est un nœud : pas de défaut.
+
+Règles. Réponds en français, en phrases courtes, avec presque aucun acronyme. Ton contrôle de la v3 (aucune occurrence de « boîte grise » ni de « copie du juge » dans le programme) était lexical (RL-07). Juge cette fois sur le sens, dans les deux sens : l'absence d'un mot ne prouve pas une extension, et un mot commun comme « attaque optimisée » ne prouve pas qu'une attaque est prévue. Aucun texte d'attaque, aucune chaîne déclencheuse, aucune dose : décris une attaque par ses invariants (qui sait quoi, qui accède à quoi). Vocabulaire « direction » seulement. Ne modifie aucun fichier ni aucun registre : rien n'entre au programme sans Lazar. Si le filtre de sûreté refuse une lecture ou une réponse, ne le contourne pas et ne reformule rien pour passer : dis-le.

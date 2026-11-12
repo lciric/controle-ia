@@ -1,0 +1,61 @@
+== 1. Règle v1 de C2 sur 120 placebos : réussi k<=5 ; échec décisif k>=12 ; zone morte 6..11 ==
+p vrai 0.02 : P(réussi) 0.966  P(échec décisif) 0.000  P(non tranché) 0.034
+p vrai 0.03 : P(réussi) 0.847  P(échec décisif) 0.000  P(non tranché) 0.153
+p vrai 0.05 : P(réussi) 0.442  P(échec décisif) 0.017  P(non tranché) 0.541
+p vrai 0.07 : P(réussi) 0.148  P(échec décisif) 0.135  P(non tranché) 0.717
+p vrai 0.09 : P(réussi) 0.036  P(échec décisif) 0.396  P(non tranché) 0.569
+p vrai 0.10 : P(réussi) 0.016  P(échec décisif) 0.544  P(non tranché) 0.439
+p vrai 0.12 : P(réussi) 0.003  P(échec décisif) 0.789  P(non tranché) 0.208
+p vrai 0.15 : P(réussi) 0.000  P(échec décisif) 0.958  P(non tranché) 0.042
+
+== 2. Demi-largeur de l'intervalle exact à 95 % au taux observé p, selon n ==
+p=0.05 n= 120 k=  6 : [0.019 ; 0.106] demi-largeur 0.044
+p=0.05 n= 240 k= 12 : [0.026 ; 0.086] demi-largeur 0.030
+p=0.05 n= 300 k= 15 : [0.028 ; 0.081] demi-largeur 0.026
+p=0.05 n= 360 k= 18 : [0.030 ; 0.078] demi-largeur 0.024
+p=0.05 n= 480 k= 24 : [0.032 ; 0.073] demi-largeur 0.021
+p=0.05 n= 560 k= 28 : [0.033 ; 0.071] demi-largeur 0.019
+p=0.05 n= 600 k= 30 : [0.034 ; 0.071] demi-largeur 0.018
+p=0.10 n= 120 k= 12 : [0.053 ; 0.168] demi-largeur 0.058
+p=0.10 n= 240 k= 24 : [0.065 ; 0.145] demi-largeur 0.040
+p=0.10 n= 300 k= 30 : [0.068 ; 0.140] demi-largeur 0.036
+p=0.10 n= 360 k= 36 : [0.071 ; 0.136] demi-largeur 0.032
+p=0.10 n= 480 k= 48 : [0.075 ; 0.130] demi-largeur 0.028
+p=0.10 n= 560 k= 56 : [0.076 ; 0.128] demi-largeur 0.026
+p=0.10 n= 600 k= 60 : [0.077 ; 0.127] demi-largeur 0.025
+
+== 2 bis. Plus petit n tel que l'intervalle exact à 95 % autour de k=round(p n) ait une demi-largeur <= 0,025 ==
+p=0.05 : n = 330 (k=16, [0.028 ; 0.078])
+p=0.10 : n = 600 (k=60, [0.077 ; 0.127])
+
+== 3. Règle à seuil unique, sans zone morte : « validé » si k <= k*, sinon « non validé » ==
+   Contrainte : P(validé | p=0,10) <= 0,05 et P(validé | p=0,05) >= 0,90 ; plus petit n, et son k*
+   n = 240, k* = 16 (seuil 0.067) : P(validé|0,05)=0.904 P(validé|0,10)=0.047 P(validé|0,03)=0.999 P(validé|0,07)=0.484 P(validé|0,09)=0.122
+   Même règle, hypothèses plus serrées : P(validé | p=0,08) <= 0,05 et P(validé | p=0,04) >= 0,90
+   n = 300, k* = 16 (seuil 0.053)
+
+== 4. Caractéristiques de la règle à seuil unique pour quelques n (seuil 0,07 arrondi en dessous) ==
+   n=240 k*=16 : P(validé|0.03)=0.999  P(validé|0.05)=0.904  P(validé|0.07)=0.484  P(validé|0.09)=0.122  P(validé|0.10)=0.047  P(validé|0.12)=0.005
+   n=300 k*=21 : P(validé|0.03)=1.000  P(validé|0.05)=0.951  P(validé|0.07)=0.558  P(validé|0.09)=0.132  P(validé|0.10)=0.046  P(validé|0.12)=0.003
+   n=360 k*=25 : P(validé|0.03)=1.000  P(validé|0.05)=0.960  P(validé|0.07)=0.536  P(validé|0.09)=0.099  P(validé|0.10)=0.028  P(validé|0.12)=0.001
+
+== 5. Garde d'instabilité des relectures : au plus 5 % ; selon n relectures ==
+   n=60 : garde « au plus 1 » (borne haute 0.089) ; P(tenue|0.01)=0.879  P(tenue|0.03)=0.459  P(tenue|0.05)=0.192  P(tenue|0.08)=0.042  P(tenue|0.10)=0.014
+   n=120 : garde « au plus 5 » (borne haute 0.095) ; P(tenue|0.01)=0.999  P(tenue|0.03)=0.847  P(tenue|0.05)=0.442  P(tenue|0.08)=0.075  P(tenue|0.10)=0.016
+   n=180 : garde « au plus 9 » (borne haute 0.093) ; P(tenue|0.01)=1.000  P(tenue|0.03)=0.954  P(tenue|0.05)=0.587  P(tenue|0.08)=0.083  P(tenue|0.10)=0.012
+
+== 6. Observé en phase 1 : intervalles exacts ==
+   étiqueteur C2: 11/120 = 0.092 [0.047 ; 0.158]
+   Argon seul C2: 12/120 = 0.100 [0.053 ; 0.168]
+   Kimi seul C2: 27/120 = 0.225 [0.154 ; 0.310]
+   étiqueteur relectures: 5/60 = 0.083 [0.028 ; 0.184]
+   Argon relectures: 4/60 = 0.067 [0.018 ; 0.162]
+   Kimi relectures: 13/60 = 0.217 [0.121 ; 0.342]
+
+== 7. Comparer deux lecteurs/paires sur les mêmes placebos : différence détectable (approximation normale) ==
+   n=240 : 0.05 contre 0.10 : écart 0.05, écart-type 0.024, z=2.09 (appariement ignoré : prudent)
+   n=240 : 0.05 contre 0.08 : écart 0.03, écart-type 0.022, z=1.34 (appariement ignoré : prudent)
+   n=240 : 0.09 contre 0.15 : écart 0.06, écart-type 0.030, z=2.03 (appariement ignoré : prudent)
+   n=360 : 0.05 contre 0.10 : écart 0.05, écart-type 0.020, z=2.56 (appariement ignoré : prudent)
+   n=360 : 0.05 contre 0.08 : écart 0.03, écart-type 0.018, z=1.64 (appariement ignoré : prudent)
+   n=360 : 0.09 contre 0.15 : écart 0.06, écart-type 0.024, z=2.49 (appariement ignoré : prudent)

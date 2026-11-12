@@ -1,0 +1,55 @@
+........................../tmp/claude-0/-home-user-controle-ia-travail/75a1275d-b838-5015-909e-b2bfadb395f9/scratchpad/relecture-v42/cl9/outils-cl9/mutants/N03/essais/test_v7_ideation.py:557: ResourceWarning: unclosed file <_io.TextIOWrapper name='/tmp/claude-0/-home-user-controle-ia-travail/75a1275d-b838-5015-909e-b2bfadb395f9/scratchpad/relecture-v42/cl9/outils-cl9/mutants/N03/essais/_tmp/tmpw0s6gnhs/petit-enfant.pid' mode='r' encoding='UTF-8'>
+  pid = int(open(pid_f).read())
+ResourceWarning: Enable tracemalloc to get the object allocation traceback
+../tmp/claude-0/-home-user-controle-ia-travail/75a1275d-b838-5015-909e-b2bfadb395f9/scratchpad/relecture-v42/cl9/outils-cl9/mutants/N03/essais/test_v7_ideation.py:649: ResourceWarning: unclosed file <_io.TextIOWrapper name='/tmp/claude-0/-home-user-controle-ia-travail/75a1275d-b838-5015-909e-b2bfadb395f9/scratchpad/relecture-v42/cl9/outils-cl9/mutants/N03/essais/_tmp/tmpbldw06ei/cx-3/proposeurs/argon/traces-passe-2/consigne.md' mode='r' encoding='utf-8'>
+  encoding="utf-8").read()
+ResourceWarning: Enable tracemalloc to get the object allocation traceback
+................................./tmp/claude-0/-home-user-controle-ia-travail/75a1275d-b838-5015-909e-b2bfadb395f9/scratchpad/relecture-v42/cl9/outils-cl9/mutants/N03/essais/test_v7_ideation.py:1254: ResourceWarning: unclosed file <_io.TextIOWrapper name='/tmp/claude-0/-home-user-controle-ia-travail/75a1275d-b838-5015-909e-b2bfadb395f9/scratchpad/relecture-v42/cl9/outils-cl9/mutants/N03/essais/_tmp/tmp_8yf330m/pe.pid' mode='r' encoding='UTF-8'>
+  pe = int(open(pid_f).read())
+ResourceWarning: Enable tracemalloc to get the object allocation traceback
+...........................FFF...
+======================================================================
+FAIL: test_n03_meme_controle_du_bras_au_lanceur_et_au_coeur (essais.test_v7_ideation.TestV42.test_n03_meme_controle_du_bras_au_lanceur_et_au_coeur)
+CL41-08 (N03) : `verifier_reglages` reçoit le même contrôle du bras que le cœur (0,2 par défaut, 0,1 donné) ; une
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/tmp/claude-0/-home-user-controle-ia-travail/75a1275d-b838-5015-909e-b2bfadb395f9/scratchpad/relecture-v42/cl9/outils-cl9/mutants/N03/essais/test_v7_ideation.py", line 2596, in test_n03_meme_controle_du_bras_au_lanceur_et_au_coeur
+    self.assertEqual((vus["reglages"][-1], vus["coeur"][-1]), (attendu, attendu))
+    ~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: Tuples differ: (0.0, 0.2) != (0.2, 0.2)
+
+First differing element 0:
+0.0
+0.2
+
+- (0.0, 0.2)
+?    ^
+
++ (0.2, 0.2)
+?    ^
+
+
+======================================================================
+FAIL: test_n04_n07_n08_couts_des_tentatives_precedentes (essais.test_v7_ideation.TestV42.test_n04_n07_n08_couts_des_tentatives_precedentes)
+CL41-08 (N04, N07, N08) : deux tentatives payées (Claude 0,02 et Argon 0,3 ; puis Argon 2,5) ; la relance sous un
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/tmp/claude-0/-home-user-controle-ia-travail/75a1275d-b838-5015-909e-b2bfadb395f9/scratchpad/relecture-v42/cl9/outils-cl9/mutants/N03/essais/test_v7_ideation.py", line 2634, in test_n04_n07_n08_couts_des_tentatives_precedentes
+    self.assertEqual(code, 2)
+    ~~~~~~~~~~~~~~~~^^^^^^^^^
+AssertionError: 0 != 2
+
+======================================================================
+FAIL: test_v12_relancable_avec_le_cout_externe_de_la_tentative (essais.test_v7_ideation.TestV42.test_v12_relancable_avec_le_cout_externe_de_la_tentative)
+CL41-08 (V12) : réglages du devis, seul le coût externe de la tentative fait dépasser — Argon « KO » à 0,5 :
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/tmp/claude-0/-home-user-controle-ia-travail/75a1275d-b838-5015-909e-b2bfadb395f9/scratchpad/relecture-v42/cl9/outils-cl9/mutants/N03/essais/test_v7_ideation.py", line 2665, in test_v12_relancable_avec_le_cout_externe_de_la_tentative
+    self.assertEqual(r["relancable"], attendu, r["motifs_relance"])
+    ~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: True != False : []
+
+----------------------------------------------------------------------
+Ran 94 tests in 16.524s
+
+FAILED (failures=3)

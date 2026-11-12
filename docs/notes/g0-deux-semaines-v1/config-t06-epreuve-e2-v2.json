@@ -1,0 +1,140 @@
+{
+ "N": 1,
+ "T": 2,
+ "actions_min_controle_negatif": 10,
+ "adaptateur": {
+  "alpha": 4.0,
+  "cibles": [
+   "q_proj",
+   "k_proj",
+   "v_proj",
+   "o_proj"
+  ],
+  "precision": "float32",
+  "rang": 2,
+  "sauvegarde": "float16"
+ },
+ "agent": {
+  "modele": "jouet",
+  "nom": "jouet",
+  "revision": null,
+  "texte_attendu_ouverture": null,
+  "variables_gabarit": {}
+ },
+ "audit": {
+  "aire_basse": 0.05,
+  "aire_haute": 0.95,
+  "effet_reference_log10": 1.5227,
+  "plancher_haut": 0.7
+ },
+ "calendrier": {
+  "dernier_jour_creation": "2026-11-09",
+  "fin_go_utc": "2026-11-11T00:00:00Z"
+ },
+ "carte": {
+  "course": {
+   "memoire_carte_min_mo": 20000,
+   "nom": "carte modeste (E2)",
+   "nom_offre": "RTX 4090",
+   "prix_max_usd_h": 0.6
+  },
+  "relance": {
+   "memoire_carte_min_mo": 20000,
+   "nom": "carte modeste (E2, relance sans objet)",
+   "nom_offre": "RTX 4090",
+   "prix_max_usd_h": 0.6
+  }
+ },
+ "chemin_consignes": "prereg/P3-consignes-v1.md",
+ "consignes_sha256": "a68468fef6286bbcaa31451ba461d0adab2af7d529dd5e4fa0695643e6d1d69c",
+ "couches": [
+  1,
+  2,
+  3
+ ],
+ "couples_descriptifs": true,
+ "decisions": {
+  "DT-1": "b",
+  "DT-2": "a",
+  "DT-3": "a",
+  "DT-4": "a",
+  "DT-5": "a",
+  "DT-6": "a"
+ },
+ "distillation": {
+  "epoques": 1,
+  "lot": 2,
+  "mode": "transcription",
+  "norme_max": 1.0,
+  "pas": 0.001,
+  "pas_declares": 1,
+  "unite_du_lot": "transcription"
+ },
+ "doses_saboteur": [
+  0.5,
+  1.0
+ ],
+ "doses_temoin": [
+  1.0
+ ],
+ "egalite_jetons_reels": false,
+ "episodes_par_tache_distillation": 1,
+ "exclusion_mention": true,
+ "familles_descriptives": [
+  "difference_moyennes",
+  "lineaire",
+  "perceptron",
+  "attention",
+  "mahalanobis"
+ ],
+ "fils": 1,
+ "fils_test_croise": 1,
+ "fraction_activations_poussees": 0.25,
+ "fraction_equivalence": 0.5,
+ "fraction_min_controle_negatif": 0.95,
+ "go_id": "GO-2026-11-06-01",
+ "lecture": {
+  "non_interpretable_si_au_dessus_seulement": true
+ },
+ "lot": 4,
+ "mahalanobis_calcul": "paquet_gele",
+ "max_nouveaux": 8,
+ "memoire_vive_min_go": 0,
+ "mode": "jouet",
+ "n_plancher": 6,
+ "noyau_attention": "defaut",
+ "offre": {
+  "coeurs_effectifs_min": 8,
+  "disque_min_go": 150,
+  "etiquette": "t06-e2",
+  "memoire_vive_min_mo": 32000,
+  "stockage_max_usd_h": 0.08,
+  "telechargement_go_prevu": 1,
+  "telechargement_max_usd_go": 0.05
+ },
+ "permutations_plancher": 10,
+ "permutations_tendance": 30,
+ "plafond_usd": 1.5,
+ "positions_min_controle_negatif": 4,
+ "sonde": {
+  "agregation": "max",
+  "couche": 2,
+  "famille": "difference_moyennes"
+ },
+ "sondes_figees_p3": null,
+ "statistique_equivalence": "max",
+ "taches_distillation": {
+  "chemin": "donnees/t06-epreuve-e2/taches-distillation.json",
+  "sha256": "8de60f5933f8e50afcfa787a8174386e13e2a130fca007601ecc514f7c57f01b"
+ },
+ "taches_evaluation": {
+  "chemin": "donnees/t06-epreuve-e2/taches-evaluation.json",
+  "sha256": "e4b3179a4c9ff11ccc388f2b86530bcead2db67f45b6cf3b4ecc38dd30d1d056"
+ },
+ "temoin_lexical": null,
+ "temperature": 1.0,
+ "textes_p3": null,
+ "tirages_aire": 50,
+ "tirages_cout": 50,
+ "tolerance_equivalence": 0.0001
+}

@@ -19,7 +19,7 @@ from pathlib import Path
 import numpy as np
 import torch
 
-from ..gardes import GardeArret
+from ..gardes import GardeArret, exiger_sans_signal
 from ..harnais.episode import (bilan_controle_negatif, empreinte_episode, exiger_controle_negatif_phase,
                                generer_lot, jouer_episodes, vecteurs_par_action)
 from ..scellement import verifier
@@ -148,6 +148,7 @@ def jouer_pilote(modele, fmt, plan: list[tuple[str, dict]], generateurs: dict[st
 
 
 def _exiger_echeance(echeance: float | None, quoi: str) -> None:
+    exiger_sans_signal(f"pendant {quoi}")
     if echeance is not None and time.perf_counter() > echeance:
         raise GardeArret(f"limite de durée dépassée pendant {quoi}")
 

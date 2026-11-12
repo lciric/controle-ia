@@ -23,3 +23,13 @@ def depot(tmp_path):
 def committer(racine):
     git(racine, "add", "-A")
     git(racine, "commit", "-q", "-m", "etape")
+
+
+@pytest.fixture(autouse=True)
+def _signal_term_efface():
+    """Le drapeau du signal TERM (gardes, D-1) est global au processus : effacé avant et après chaque test."""
+    from controle_ia import gardes
+
+    gardes.SIGNAL_TERM_RECU.clear()
+    yield
+    gardes.SIGNAL_TERM_RECU.clear()

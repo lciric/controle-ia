@@ -1,0 +1,83 @@
+{
+ "verdict": "Scellable après corrections. Le brouillon est complet au sens du gabarit, les chiffres du PDF sont justes (page et panneau vérifiés, image de la page 7 comprise ; une seule page mal citée, mineure), les graines suivent R9, l'ordre de lecture protège R1 et le critère de mort n'est pas contournable par les analyses secondaires. Trois points majeurs à régler avant scellement : (1) la population du test B exclut les paires reliées en 2023, ce qui conditionne sur l'issue proche et biaise l'aire vers le bas à seuil fixe (0,85) — à trancher par Lazar entre fenêtre 2023–2026 depuis fin 2022 (recommandé) et formulation littérale 2024–2026 du message n° 261 ; (2) contradiction interne sur les maxima de normalisation (scellés à B0 avant moisson, mais calculés en B3 sur une population qui dépend des arêtes 2023 moissonnées) — la réutilisation d'un même maximum pour l'échantillon apparié est, elle, correcte et sans biais ; (3) R5 : seule la garde « pickle » est annoncée testée sur cas sain et artefact, les autres gardes de la liste d'arrêt ne le sont pas. S'y ajoutent les préalables déjà reconnus par l'auteur : code d'analyse écrit, testé et commité, devis et GO, section Contre-lecture remplie avec les deux empreintes. Sur le choix B contre B′ (point 1 de l'auteur) : garder B comme test décisif est fidèle au message n° 261 ; la correction (1) le rapproche de B′ sans changer sa nature de transfert de tâche, et B′ reste information. Rien n'a été exécuté, téléchargé ni calculé par cette contre-lecture ; frp_example non ouvert.",
+ "constats": [
+  {
+   "gravite": "majeur",
+   "probleme": "Biais de sélection dans la population de B : les paires reliées en 2023 sortent de la population alors que les traits sont de fin 2022. Les paires les mieux classées à fin 2022 sont celles qui se relient le plus tôt ; les retirer enlève les positives les plus faciles et abaisse mécaniquement B-i et B-ii, à seuil fixe (B-i ≥ 0,85, B-ii > 0,60). Le biais est unidirectionnel (contre le modèle) et peut déclencher le critère de mort pour une raison de montage, pas de science. De plus, la population dépend des arêtes 2023 de notre moisson, ce qui contredit « figé avant toute lecture des données postérieures à 2022 » pour ce qui touche l'échantillon évalué.",
+   "citation": "B3 : « population = paires non reliées au 31 décembre 2023 (leur graphe jusqu'à fin 2022 plus nos arêtes de 2023) ; les paires reliées en 2023 sortent de la population. Étiquette = au moins un article publié du 1er janvier 2024 au 30 septembre 2026 »",
+   "correction": "Recommandé : population = paires non reliées au 31 décembre 2022 sur leur graphe tronqué (aucune donnée moissonnée dans la définition de la population), étiquette = au moins un article du 1er janvier 2023 au 30 septembre 2026 ; fenêtre 2024–2026 rapportée en information avec le nombre de paires reliées en 2023. Si Lazar tient à la formulation littérale « 2024–2026 », garder le montage actuel mais le déclarer comme conditionné sur l'issue 2023, rapporter le nombre et la part de paires exclues, et dire explicitement que le biais joue contre le modèle. Nœud de décision (modification du test décisif) : à soumettre à Lazar avant scellement."
+  },
+  {
+   "gravite": "majeur",
+   "probleme": "Contradiction interne sur les maxima de normalisation. B0 dit que les maxima sont scellés avant toute moisson ; B3 dit qu'ils sont calculés sur les 10 millions de paires de B-i, dont la population dépend des arêtes 2023 moissonnées. Les deux ne peuvent être vrais. Sur le fond (point 4 de l'auteur) : réutiliser un même jeu de maxima pour l'échantillon aléatoire et l'échantillon apparié est correct — la fonction de score est alors identique pour toutes les paires, indépendante de la composition de l'échantillon, ce qui est ce qu'il faut pour comparer B-i et B-ii et contre les règles simples ; aucune étiquette 2024–2026 n'entre dans ces maxima, donc pas de fuite d'issue. Ce qui manque est la cohérence du moment du gel. Précision de lecture du code : `rescaling_col` n'est pas appelé dans `prepare_eval_feature_data.py` mais dans `get_all_feature` (`features_utils.py` l. 384–392), que l'évaluation et l'entraînement (`preprocess_utils.py` l. 145, `prepare_train_data`) appellent tous deux : leur chaîne normalise les traits de paire sur l'échantillon d'entraînement équilibré d'un côté et sur l'échantillon évalué de l'autre.",
+   "citation": "B0 : « poids, traits de fin 2022 et maxima de normalisation **scellés avant toute moisson** » ; B3 : « les maxima sont calculés une fois sur les 10 millions de paires de B-i et **réutilisés** pour l'échantillon apparié »",
+   "correction": "À B0, avec une graine dédiée (enfant supplémentaire du spawn), tirer 10 millions de paires non reliées à fin 2022 sur leur graphe seul, en calculer les maxima de colonne, les sceller ; réutiliser ces maxima pour B-i, B-ii, B-iii et B′ (l'écart avec les maxima « à leur manière » sur un autre échantillon de 10 millions est négligeable et peut être rapporté). Écrire que l'entraînement de B0 garde leur normalisation sur l'échantillon d'entraînement (fidélité), et que l'asymétrie entraînement/évaluation est la leur. Corriger la citation du code (get_all_feature, features_utils.py l. 384–392 ; preprocess_utils.py l. 145)."
+  },
+  {
+   "gravite": "majeur",
+   "probleme": "R5 non couvert : seule la garde contre les pickles est annoncée testée sur un cas sain et sur un artefact. Les autres gardes de la liste d'arrêt (date postérieure au 31 décembre 2022 dans les traits ou l'entraînement, moisson sous 99 %, moins de 2 000 positives, plus de 10 % de positives sans témoins, pont, contrôle des traits, contrôle de métrique, plafond du devis, divergence ou absence d'arrêt précoce) n'ont ni test annoncé ni chemin de test. Une garde non testée peut se replier en silence, ce que R5 interdit.",
+   "citation": "Liste d'arrêt : « garde refuse et arrête ; garde testée sur un cas sain et sur un artefact (R5) » — mention présente pour la seule garde « pickle »",
+   "correction": "Ajouter en tête de la Liste d'arrêt : « Chaque garde de cette liste est codée dans scripts/gu_krenn_*_v1.py et testée dans tests/test_gu_krenn_gardes_v1.py sur un cas sain (passe, code 0) et sur un artefact (arrêt, code 1) avant scellement ; les gardes qui ne peuvent que rendre l'arrêt plus fréquent sont nommées comme telles. » Citer le commit de ces tests avec celui du code d'analyse."
+  },
+  {
+   "gravite": "majeur",
+   "probleme": "Préalables au scellement non remplis, reconnus par l'auteur mais à rappeler car le validateur ne les détecte pas : « Commit du code d'analyse : aucun encore » (le validateur ne lit pas ce champ) ; aucun script scripts/gu_krenn_*_v1.py n'existe dans le dépôt ; pas de devis ni de GO ; section Contre-lecture à remplir avec les deux empreintes (brouillon relu et rapport).",
+   "citation": "« Commit du code d'analyse : aucun encore. Le code d'analyse (`scripts/gu_krenn_*_v1.py`, à écrire) sera scellé et son commit inscrit ici **avant** le scellement »",
+   "correction": "Écrire le code d'analyse et ses tests de gardes, les commiter, inscrire le commit ; obtenir devis et GO (nœud de dépense) ; remplir la section Contre-lecture (identifiant du contre-lecteur, empreinte 1920d150… du brouillon relu, chemin et empreinte de ce rapport, traitement de chaque remarque) ; puis sceller par sceller_prereg et déposer le compagnon .sha256 (R12 : nouvelle version = nouveau nom si le texte change, prereg-…-v2.md)."
+  },
+  {
+   "gravite": "mineur",
+   "probleme": "Cible ambiguë pour IR = 100 dans A2 : deux valeurs publiées (0,95 fig. 11 ; 0,948 texte de l'annexe D). Même fragilité pour le contrôle de métrique : tolérance 0,005 égale à la demi-largeur d'arrondi des valeurs à deux décimales (0,94 couvre 0,935–0,945), si bien qu'un code d'aire exact peut échouer par arrondi.",
+   "citation": "« IR = 10 / 50 / 100 | 0,94 / 0,96 / 0,95 [p. 12, fig. 11] ; IR = 100 : 0,948 [p. 12] » ; B2 : « écart ≤ 0,005 à 0,94 / 0,96 / 0,95 [p. 12] »",
+   "correction": "Cible unique 0,948 pour IR = 100 (A2 et contrôle de métrique). Pour IR = 10 et 50, tolérance du contrôle de métrique = 0,005 (arrondi) + 0,005 (code) = 0,010, déclarée ainsi ; ou, mieux, définir le contrôle de métrique comme la comparaison de notre code d'aire à roc_auc_score sur les mêmes sorties (écart ≤ 10⁻⁶), le rapprochement avec les valeurs publiées étant rapporté en information."
+  },
+  {
+   "gravite": "mineur",
+   "probleme": "Page mal citée : « 141 traits » est en page 4, pas en page 3 (37 960 est bien p. 3). Tous les autres chiffres sont retrouvés à la page citée : 0,9455/0,9442 et 0,9588/0,9561 p. 7, ligne « Train: 2016-2019, Eval: 2019-2022 » des panneaux (a) et (b), titres au-dessus des panneaux (vérifié sur la page rendue en image) ; 0,9463 → 0,9311 p. 8, ligne IR = 10 de la fig. 7 ; 0,8880 p. 13 ; 0,747/0,694 p. 5 ; 689 millions, 85 %/15 %, quatre couches de 600, 3 × 10⁻⁵, lots de 1000 p. 11 ; 0,94/0,96/0,95 et 0,948 p. 12 ; 10 millions p. 4 ; trois couches de 600 p. 8.",
+   "citation": "Hypothèse : « réseau entièrement connecté sur 141 traits d'un graphe de 37 960 concepts d'optique et de physique quantique [p. 3] »",
+   "correction": "« 141 traits [p. 4] d'un graphe de 37 960 concepts [p. 3] »."
+  },
+  {
+   "gravite": "mineur",
+   "probleme": "Seuil B-ii (borne basse > 0,60) sans justification. Avec jusqu'à 200 000 positives × 5 témoins, l'intervalle est étroit : le critère revient à une aire appariée ponctuelle d'environ 0,60–0,61, ce qui est faible pour conclure « instrument fiable ». Ce n'est pas un seuil choisi pour passer (l'attente est ≈ 0,70), mais le lien entre 0,60 et l'usage dans le bisociateur n'est pas écrit.",
+   "citation": "Seuil : « borne basse de l'intervalle de B-ii > 0,60 ; borne basse de l'intervalle de B-iii > 0. SUPPOSÉ »",
+   "correction": "Une phrase qui relie 0,60 à l'usage prévu (par exemple : à ce niveau, le modèle apporte au bisociateur un classement au-delà du degré et de l'âge suffisant pour proposer des paires), ou relever le seuil ; sinon écrire que « B réussi » signifie « HB non réfutée », pas « fiable »."
+  },
+  {
+   "gravite": "mineur",
+   "probleme": "Le critère de mort A1 porte sur quatre cas dont deux XGBoost, qui n'est pas l'instrument ; la reproduction de XGBoost dépend d'une version de bibliothèque non épinglée (aucun requirements.txt chez eux, E-6). Le bras peut mourir sur un modèle qu'il n'utilise pas.",
+   "citation": "Seuil : « A1 retrouvée : les quatre cas à moins de 0,010 de la cible ; non retrouvée : un cas au-delà de 0,020 »",
+   "correction": "Décisif : les deux cas du réseau (IR = 10 et 50) ; XGBoost rapporté en information avec sa version épinglée au manifeste. Ou garder les quatre cas en épinglant la version de xgboost et en l'écrivant."
+  },
+  {
+   "gravite": "mineur",
+   "probleme": "Contrôle des traits trop strict et placé tard : écart relatif maximal ≤ 10⁻⁵ sur 141 traits × 10 000 lignes, alors que PageRank et les rangs sont régénérés (networkx non épinglé, convergence à 10⁻⁶) : un écart purement numérique suspendrait B (« non concluant ») sans raison scientifique. Et ce contrôle n'est lu qu'après A2 et B0, c'est-à-dire après les entraînements les plus chers, alors qu'il ne dépend que des archives déjà nécessaires à A2.",
+   "citation": "B2 : « écart relatif maximal ≤ 10⁻⁵ (SUPPOSÉ) » ; Ordre de lecture, étape 7 : « B1, puis B2 (pont et contrôle des traits) »",
+   "correction": "Tolérance par famille, déclarée : écart absolu ≤ 10⁻⁴ sur les traits normalisés de voisinage et de citations ; corrélation de rang ≥ 0,999 et écart relatif ≤ 10⁻³ pour PageRank et rangs. Avancer ce contrôle à l'étape 4 bis, avant A2, avec une graine dédiée pour les 10 000 lignes."
+  },
+  {
+   "gravite": "mineur",
+   "probleme": "Graines (R9) incomplètes : pas de graine pour le tirage des 10 000 lignes du contrôle des traits ni pour le tirage des ≤ 200 000 positives de B4 ; non dit si les trois graines d'entraînement de A1 sont partagées par les quatre configurations (réseau/XGBoost × IR) et celles de A2 et de B0 par les trois IR ; pas de graine pour les maxima proposés au constat 2.",
+   "citation": "Plan d'analyse : « `.spawn(6)` : 0 → graines d'entraînement A1 (trois, par `.spawn(3)` …), 1 → A2, 2 → modèle figé … 3 → tirage des 10 millions …, 4 → témoins de B-ii, 5 → rééchantillons »",
+   "correction": "Passer à `.spawn(9)` (ou dériver par `.spawn` des enfants existants) : enfants supplémentaires pour les 10 000 lignes du contrôle des traits, le tirage des positives de B4, l'échantillon des maxima ; écrire que les trois graines d'entraînement sont partagées par toutes les configurations d'une même étape (A1 : 4 ; A2 : 3 IR ; B0 : 3 IR), chacune consignée au manifeste."
+  },
+  {
+   "gravite": "mineur",
+   "probleme": "Critères de lecture : la ligne « A1 et A2 passent, B échoué » omet le cas « passent avec réserve », alors que la ligne précédente le couvre ; et B-iii ne dit pas si « la plus haute des deux règles simples » est prise par rééchantillon ou une fois pour toutes. Enfin, l'attachement préférentiel (produit des degrés) est presque constant dans une case appariée sur le degré : son aire appariée est ≈ 0,5 par construction, ce qui est un contrôle de bon appariement, pas une base à battre ; à écrire pour ne pas le lire comme un résultat.",
+   "citation": "Critères de lecture : « A1 et A2 passent, B échoué (une des trois conditions) » ; Métrique : « aire appariée du modèle − la plus haute des aires appariées des deux règles simples, calculées sur les mêmes rééchantillons »",
+   "correction": "Écrire « passent ou passent avec réserve » dans les deux lignes ; B-iii : maximum des deux règles pris dans chaque rééchantillon (conservateur) ; ajouter une phrase : l'aire appariée de l'attachement préférentiel sert de contrôle d'appariement (attendue ≈ 0,5 ; au-delà de 0,55, l'appariement est jugé insuffisant → non concluant), la base réelle étant Simpson."
+  },
+  {
+   "gravite": "mineur",
+   "probleme": "Le tronquage de leur graphe n'est pas explicite : le parquet publié va jusqu'en avril 2023 (p. 3) ; « leur graphe jusqu'à fin 2022 » suppose un filtre sur la date des arêtes au 31 décembre 2022 avant tout calcul de traits, d'âge, de population et de pont. La garde « date postérieure au 31 décembre 2022 » doit porter sur ce filtre et sur les citations par année utilisées.",
+   "citation": "B3 : « leur graphe jusqu'à fin 2022 » ; Liste d'arrêt : « Date postérieure au 31 décembre 2022 dans les traits ou l'entraînement de B0 → arrêt, B invalide »",
+   "correction": "À B0 : « leur graphe est filtré sur la date d'arête ≤ 31 décembre 2022 avant tout calcul ; la garde vérifie la date maximale des arêtes et l'année maximale des colonnes de citations utilisées ; testée sur un cas sain et un artefact (R5) »."
+  },
+  {
+   "gravite": "mineur",
+   "probleme": "Les analyses rapportées en information (B′, IR = 50 et 100, variante « mot entier », variante conditionnée) n'ont ni signe ni ordre de grandeur attendu ; sans attente écrite, leur lecture après coup devient libre, même si elles n'entrent dans aucun verdict.",
+   "citation": "Plan d'analyse : « Rapporté comme information, sans verdict : B avec les modèles IR = 50 et 100 ; B′, même tâche que la leur … variante « mot entier » … »",
+   "correction": "Une ligne d'attente par analyse secondaire, marquée SUPPOSÉ : B′ attendue au-dessus de B-i (même tâche que la leur) ; IR = 50 et 100 attendues au-dessus de IR = 10 sur B-i (comme fig. 11) ; « mot entier » attendue à moins de 0,01 de la sous-chaîne ; conditionnée attendue ≈ 0,70 (0,747 / 0,694 [p. 5])."
+  }
+ ]
+}

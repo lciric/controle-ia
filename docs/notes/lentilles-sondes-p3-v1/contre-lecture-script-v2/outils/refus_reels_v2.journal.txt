@@ -1,0 +1,48 @@
+1
+== 1 lentille-illisible (.pt tronqué, torch présent)
+REFUS lentille-illisible : /tmp/claude-0/-home-user-controle-ia-travail/75a1275d-b838-5015-909e-b2bfadb395f9/scratchpad/lentilles-p3/relecture-v2/refus-reels-v2/entrees/lentille-tronquee.pt : torch.load a échoué (RuntimeError: PytorchStreamReader failed reading zip archive: failed finding central directory. This is an internal miniz error. If you are seeing this error, there is a high)
+code 2
+== 2 lentille-config-discordante
+sortie : /tmp/claude-0/-home-user-controle-ia-travail/75a1275d-b838-5015-909e-b2bfadb395f9/scratchpad/lentilles-p3/relecture-v2/refus-reels-v2/sorties/s2.json (51056ca42fd7…) ; manifeste : /tmp/claude-0/-home-user-controle-ia-travail/75a1275d-b838-5015-909e-b2bfadb395f9/scratchpad/lentilles-p3/relecture-v2/refus-reels-v2/sorties/s2-manifeste.json ; 6 sondes, variantes ['direction']
+code 0
+== 3 empreinte-attendue-absente
+REFUS empreinte-attendue-absente : lentille-config.yaml (lentille_config) n'a pas de ligne dans empreintes-incompletes.txt
+code 2
+== 4 empreinte-entree (vocabulaire)
+REFUS empreinte-entree : /tmp/claude-0/-home-user-controle-ia-travail/75a1275d-b838-5015-909e-b2bfadb395f9/scratchpad/lentilles-p3/entrees/tokenizer.json : 79e3e522635f… ≠ attendue 00000000635f… (empreintes-fausses.txt)
+code 2
+== 5 mot-sans-jeton (comparer)
+REFUS mot-sans-jeton : mots sans jeton de début de mot dans le vocabulaire : {'tromperie': ['mislead']} — retirer ces mots dans une nouvelle version de la liste, scellée avant l'exécution
+code 2
+== 6 mot-sans-jeton (verifier-concepts)
+enjeux	fired	2	[' fired', ' Fired']
+enjeux	jail	2	[' jail', ' Jail']
+code 2
+== 7 empreinte-sondes-npz par option (CLJ-06)
+REFUS empreinte-sondes-npz : /tmp/claude-0/-home-user-controle-ia-travail/75a1275d-b838-5015-909e-b2bfadb395f9/scratchpad/lentilles-p3/entrees/sondes-figees-legeres.npz : 701f73bd3a8e… ≠ attendue 000000000000… (option --sha256-sondes-npz)
+code 2
+== 8 un-seul-couple forme fausse
+REFUS parametre : --un-seul-couple 'tromperie-difference_moyennes-c15' : forme SONDE,COUCHE attendue
+code 2
+== 9 un-seul-couple couche fausse
+sortie : /tmp/claude-0/-home-user-controle-ia-travail/75a1275d-b838-5015-909e-b2bfadb395f9/scratchpad/lentilles-p3/relecture-v2/refus-reels-v2/sorties/s9.json (22ec214cf46c…) ; manifeste : /tmp/claude-0/-home-user-controle-ia-travail/75a1275d-b838-5015-909e-b2bfadb395f9/scratchpad/lentilles-p3/relecture-v2/refus-reels-v2/sorties/s9-manifeste.json ; 1 sondes, variantes ['direction']
+code 0
+== 10 concepts sans sceau
+REFUS sceau-absent : /tmp/claude-0/-home-user-controle-ia-travail/75a1275d-b838-5015-909e-b2bfadb395f9/scratchpad/lentilles-p3/relecture-v2/refus-reels-v2/entrees/lentille-config.yaml.sha256 absent
+code 2
+== sorties laissées :
+s2-manifeste.json
+s2-manifeste.json.sha256
+s2.json
+s2.json.sha256
+s9-manifeste.json
+s9-manifeste.json.sha256
+s9.json
+s9.json.sha256
+(fin)
+== 9bis un-seul-couple couche fausse (nom complet)
+REFUS sonde-introuvable : --un-seul-couple : tromperie-difference_moyennes-c15 est à la couche 15, pas 23
+code 2
+ls: cannot access '/tmp/claude-0/-home-user-controle-ia-travail/75a1275d-b838-5015-909e-b2bfadb395f9/scratchpad/lentilles-p3/relecture-v2/refus-reels-v2/sorties-9bis': No such file or directory
+== CLJ-06 route index.json (lecture directe des tableaux, sans calcul)
+index.json route: (4096,) ['index.json', 'model-00004-of-00004.safetensors'] ; identique au fragment direct: True

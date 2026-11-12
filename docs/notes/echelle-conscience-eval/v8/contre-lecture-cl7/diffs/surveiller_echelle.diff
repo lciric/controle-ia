@@ -1,0 +1,71 @@
+--- echelle-v6/scripts/surveiller_echelle_v6.sh	2026-10-27 07:08:16.123717007 +0000
++++ echelle-v7/scripts/surveiller_echelle_v7.sh	2026-10-27 07:20:30.241013542 +0000
+@@ -1,7 +1,11 @@
+ #!/usr/bin/env bash
+-# Surveillance de l'instance de la comparaison d'échelle 8B contre 70B, v6 (GO cité au lancement), lignée
+-# « session-depot », 27 octobre 2026 ; déclinée de `surveiller_echelle_v5.sh` sous un nom nouveau (R12) après la
+-# contre-lecture n° 5 :
++# Surveillance de l'instance de la comparaison d'échelle 8B contre 70B, v7 (GO cité au lancement), lignée
++# « session-depot », 27 octobre 2026 ; déclinée de `surveiller_echelle_v6.sh` sous un nom nouveau (R12) après la
++# contre-lecture n° 6 :
++#   - CLU-02 : les réglages APPEL_S, PAS_S et ATTENTE_ARRET_S sont contrôlés au départ (entiers décimaux, dans [1 ; 30],
++#     [1 ; 60] et [0 ; 60] s), sinon refus de partir (code 2) ; les valeurs employées sont écrites en tête d'etats.txt
++#     et dans arret.txt.
++# Depuis la v6 (contre-lecture n° 5) :
+ #   - CLV-02 : chaque appel à vastai est borné à APPEL_S (30) secondes ; le plafond est testé en tête de boucle et après
+ #     les deux appels, sur l'heure relue ; la pause ne dépasse pas le temps qui reste avant le plafond. L'arrêt est donc
+ #     demandé au plus deux appels (60 s) après le plafond, et l'appel d'arrêt dure au plus 30 s de plus ;
+@@ -16,21 +20,29 @@
+ # l'environnement de l'instance) et dernières lignes « AMORCE » / « ECHELLE » du journal du conteneur. Arrêt de
+ # l'instance par son identifiant (R10) dès la fin de l'amorce, dès que le conteneur est sorti, ou au plafond
+ # (création + DUREE_MAX_S), consigné ; jamais de destruction ici (elle suit la vérification des résultats poussés).
+-# PAS_S, ATTENTE_ARRET_S et APPEL_S ne servent qu'aux essais (R5).
++# PAS_S, ATTENTE_ARRET_S et APPEL_S ne servent qu'aux essais (R5), dans leurs bornes (CLU-02).
+ # Usage : VASTAI=<chemin de vastai 1.8.3> DUREE_MAX_S=<plafond du lanceur> \
+-#             surveiller_echelle_v6.sh ID CREATION DOSSIER_DU_LANCEMENT DOSSIER_NEUF
++#             surveiller_echelle_v7.sh ID CREATION DOSSIER_DU_LANCEMENT DOSSIER_NEUF
+ # Codes : 0 arrêt après la fin de l'amorce, code 0 ; 7 arrêt après la fin de l'amorce, code ≠ 0 (consigné) ; 5 arrêt au
+ # plafond ou conteneur sorti sans ligne de fin ; 6 arrêt non relu ; 2 usage ou refus de partir.
+ set -uo pipefail
+-[ $# -eq 4 ] || { echo "usage : surveiller_echelle_v6.sh ID CREATION DOSSIER_DU_LANCEMENT DOSSIER_NEUF"; exit 2; }
++[ $# -eq 4 ] || { echo "usage : surveiller_echelle_v7.sh ID CREATION DOSSIER_DU_LANCEMENT DOSSIER_NEUF"; exit 2; }
+ ID=$1; CREATION=$2; L=$(realpath -m "$3"); D=$(realpath -m "$4")
+ V=${VASTAI:?VASTAI : chemin de l outil vastai 1.8.3}
+ DUREE_MAX_S=${DUREE_MAX_S:-}
+-PAS_S=${PAS_S:-60}
+-ATTENTE_ARRET_S=${ATTENTE_ARRET_S:-20}
+-APPEL_S=${APPEL_S:-30}
++PAS_S=${PAS_S-60}                   # défauts si absents ; une valeur vide est refusée, sans repli (CLU-02)
++ATTENTE_ARRET_S=${ATTENTE_ARRET_S-20}
++APPEL_S=${APPEL_S-30}
+ [[ "$DUREE_MAX_S" =~ ^[0-9]+$ ]] && [ "$DUREE_MAX_S" -ge 4500 ] && [ "$DUREE_MAX_S" -le 7200 ] \
+     || { echo "DUREE_MAX_S absente, illisible ou hors de [4 500 ; 7 200] s"; exit 2; }
++borne() {        # NOM VALEUR MIN MAX : entier décimal sans zéro de tête, dans [MIN ; MAX], sinon refus (CLU-02)
++    [[ "$2" =~ ^(0|[1-9][0-9]{0,3})$ ]] && [ "$2" -ge "$3" ] && [ "$2" -le "$4" ] \
++        || { echo "$1=$2 illisible ou hors de [$3 ; $4] s (CLU-02)"; exit 2; }
++}
++borne APPEL_S "$APPEL_S" 1 30
++borne PAS_S "$PAS_S" 1 60
++borne ATTENTE_ARRET_S "$ATTENTE_ARRET_S" 0 60
++REGLAGES="réglages : APPEL_S=$APPEL_S PAS_S=$PAS_S ATTENTE_ARRET_S=$ATTENTE_ARRET_S DUREE_MAX_S=$DUREE_MAX_S"
+ [[ "$ID" =~ ^[0-9]{6,10}$ ]] && [[ "$CREATION" =~ ^[0-9]{10}$ ]] || { echo "ID ou CREATION illisible"; exit 2; }
+ [ -f "$L/lancement.txt" ] || { echo "$L/lancement.txt absent"; exit 2; }
+ ATTENDUE=$(grep '^surveillance attendue ' "$L/lancement.txt" | tail -1 | cut -d' ' -f3)
+@@ -42,6 +54,7 @@
+ grep -q "identifiant $ID " "$L/lancement.txt" || { echo "instance $ID absente de lancement.txt"; exit 2; }
+ [ -e "$D" ] && { echo "$D existe déjà (R12)"; exit 2; }
+ mkdir -p "$D"
++echo "$REGLAGES" > "$D/etats.txt"                    # valeurs employées (CLU-02)
+ FIN=$((CREATION + DUREE_MAX_S))
+ etat() {
+     timeout "$APPEL_S" "$V" show instance "$ID" --raw 2>/dev/null | python3 -I -B -c '
+@@ -71,7 +84,8 @@
+     [ "$reste" -le 0 ] && { motif="plafond de durée ($DUREE_MAX_S s)"; break; }
+     sleep "$((reste < PAS_S ? reste : PAS_S))"           # le réveil ne passe pas le plafond (CLV-02)
+ done
+-echo "$(date -u +%FT%TZ) : arrêt demandé, motif : $motif ; plafond $(date -u -d "@$FIN" +%FT%TZ)" | tee -a "$D/arret.txt"
++echo "$(date -u +%FT%TZ) : arrêt demandé, motif : $motif ; plafond $(date -u -d "@$FIN" +%FT%TZ) ; $REGLAGES" \
++    | tee -a "$D/arret.txt"
+ timeout "$APPEL_S" "$V" stop instance "$ID" >> "$D/arret.txt" 2>&1
+ sleep "$ATTENTE_ARRET_S"
+ e=$(etat)

@@ -415,7 +415,13 @@ def test_panne_de_memoire_pendant_le_repere(depot, monkeypatch):
 
 def test_signal_term_dans_un_sous_processus(depot):
     """W-7 (c) : un vrai signal TERM, envoyé par l'identifiant du processus (R10) au lanceur en mode jouet après son
-    manifeste, devient un arrêt consigné (arret.json, motif « signal TERM »), code de sortie 1."""
+    manifeste, devient un arrêt consigné (arret.json, motif « signal TERM »), code de sortie 1.
+
+    Minutage d'origine : le signal part 0,5 s après le sceau du manifeste, donc pendant la mise en place (le premier
+    pas vient 2,5 à 3,5 s après le sceau). L'exception levée par le gestionnaire y était parfois avalée ou convertie
+    par un import paresseux de torch, et le run finissait en code 0 (relecture du remplissage, D-1 : 1 échec sur 6 à
+    1 sur 60). Le drapeau du signal (gardes) est relevé au premier point de contrôle : l'issue ne dépend plus de
+    l'endroit où tombe le signal."""
     import os
     import signal
     import subprocess
@@ -439,6 +445,125 @@ def test_signal_term_dans_un_sous_processus(depot):
     assert sceau.exists() and p.poll() is None
     os.kill(p.pid, signal.SIGTERM)
     _, err = p.communicate(timeout=600)
-    assert p.returncode == 1 and "signal TERM" in err
+    assert p.returncode == 1 and "signal TERM" in err, err[-2000:]
     arret = json.loads((depot / "diag" / run / "arret.json").read_text())["resultat"]
     assert "signal TERM" in arret["motif"]
+    assert not (depot / "diag" / run / "resume.json").exists()
+
+
+# --- signal TERM avalé ou converti par une bibliothèque (relecture du remplissage, D-1) ----------------------------
+
+def _term_dans_une_bibliotheque(conversion: bool = False) -> None:
+    """Le gestionnaire est appelé pendant du code de bibliothèque qui avale l'exception, ou la convertit."""
+    try:
+        rv._signal_term(15, None)
+    except GardeArret:
+        if conversion:
+            raise AttributeError("op sans surcharge (conversion simulée par une bibliothèque)") from None
+
+
+def test_term_avale_pendant_la_mise_en_place_est_releve(depot, monkeypatch):
+    e, v = _fichiers(depot, _taches("2601", 4), EVALUATION)
+    vrai = rv._charger_bas
+
+    def charger(config, graine):
+        _term_dans_une_bibliotheque()
+        return vrai(config, graine)
+    monkeypatch.setattr(rv, "_charger_bas", charger)
+    run = "20261010-000001-revalidation-term-avale"
+    with pytest.raises(GardeArret, match="signal TERM"):
+        rv.executer(CONFIG, depot, run, None, e, v, entropie_essai=11)
+    arret = json.loads((depot / "diag" / run / "arret.json").read_text())["resultat"]
+    assert "signal TERM" in arret["motif"] and "relevé au pas 0" in arret["motif"]
+    assert not (depot / "diag" / run / "resume.json").exists()
+
+
+def test_term_converti_par_une_bibliotheque_fait_foi(depot, monkeypatch):
+    e, v = _fichiers(depot, _taches("2601", 4), EVALUATION)
+
+    def charger(config, graine):
+        _term_dans_une_bibliotheque(conversion=True)
+    monkeypatch.setattr(rv, "_charger_bas", charger)
+    run = "20261010-000002-revalidation-term-converti"
+    with pytest.raises(GardeArret, match="signal TERM") as info:
+        rv.executer(CONFIG, depot, run, None, e, v, entropie_essai=11)
+    assert isinstance(info.value.__cause__, AttributeError)
+    arret = json.loads((depot / "diag" / run / "arret.json").read_text())["resultat"]
+    assert arret["motif"].startswith("signal TERM") and "AttributeError" in arret["motif"]
+
+
+def test_term_avale_apres_le_dernier_controle_empeche_le_resume(depot, monkeypatch):
+    from controle_ia import gardes
+
+    e, v = _fichiers(depot, _taches("2601", 4), EVALUATION)
+    vrai = rv.choisir_noyau
+
+    def choisir(lectures):                       # appelé juste avant le résumé, après le dernier point de contrôle
+        if not gardes.signal_term_recu():
+            _term_dans_une_bibliotheque()
+        return vrai(lectures)
+    monkeypatch.setattr(rv, "choisir_noyau", choisir)
+    run = "20261010-000003-revalidation-term-resume"
+    with pytest.raises(GardeArret, match="relevé avant le résumé"):
+        rv.executer(CONFIG, depot, run, None, e, v, entropie_essai=11)
+    arret = json.loads((depot / "diag" / run / "arret.json").read_text())["resultat"]
+    assert arret["etape"] == "résumé" and "signal TERM" in arret["motif"]
+    assert not (depot / "diag" / run / "resume.json").exists()
+
+
+def test_second_term_pendant_la_consignation_n_empeche_pas_arret(depot, monkeypatch):
+    """K-1 : timeout relaie TERM au processus puis à son groupe ; un second signal arrivé pendant la consignation de
+    l'arrêt n'empêche pas d'écrire arret.json, au motif « signal TERM »."""
+    e, v = _fichiers(depot, _taches("2601", 4), EVALUATION)
+    vrai_charger, vrai_ecrire = rv._charger_bas, rv.ecrire_resultat
+
+    def charger(config, graine):
+        _term_dans_une_bibliotheque()
+        return vrai_charger(config, graine)
+
+    def ecrire(racine, chemin_m, nom, contenu, *a, **k):
+        if nom == "arret":
+            rv._signal_term(15, None)            # second signal, en pleine consignation
+        return vrai_ecrire(racine, chemin_m, nom, contenu, *a, **k)
+    monkeypatch.setattr(rv, "_charger_bas", charger)
+    monkeypatch.setattr(rv, "ecrire_resultat", ecrire)
+    run = "20261010-000004-revalidation-term-double"
+    with pytest.raises(GardeArret, match="signal TERM"):
+        rv.executer(CONFIG, depot, run, None, e, v, entropie_essai=11)
+    arret = json.loads((depot / "diag" / run / "arret.json").read_text())["resultat"]
+    assert "signal TERM" in arret["motif"]
+
+
+def test_term_avale_pendant_le_repere_releve_avant_le_repere(depot, monkeypatch):
+    """K-2 : un signal avalé pendant les passes uniques du repère est relevé avant le repère du bras."""
+    e, v = _fichiers(depot, _taches("2601", 4), EVALUATION)
+    vrai = rv._activations
+
+    def activations(*a, **k):
+        _term_dans_une_bibliotheque()
+        return vrai(*a, **k)
+    monkeypatch.setattr(rv, "_activations", activations)
+    run = "20261010-000005-revalidation-term-repere"
+    with pytest.raises(GardeArret, match="relevé avant le repère du bras defaut"):
+        rv.executer(CONFIG, depot, run, None, e, v, entropie_essai=11)
+    arret = json.loads((depot / "diag" / run / "arret.json").read_text())["resultat"]
+    assert "signal TERM" in arret["motif"] and arret["bras_lus"] == []
+
+
+def test_term_avale_apres_le_repere_aucune_lecture(depot, monkeypatch):
+    """K-2 : un signal avalé après le dernier point de contrôle du bras (audit) empêche d'écrire sa lecture."""
+    from controle_ia import gardes
+
+    e, v = _fichiers(depot, _taches("2601", 4), EVALUATION)
+    vrai = rv.audit_symetrie
+
+    def audit(*a, **k):
+        if not gardes.signal_term_recu():
+            _term_dans_une_bibliotheque()
+        return vrai(*a, **k)
+    monkeypatch.setattr(rv, "audit_symetrie", audit)
+    run = "20261010-000006-revalidation-term-lecture"
+    with pytest.raises(GardeArret, match="relevé avant la lecture du bras defaut"):
+        rv.executer(CONFIG, depot, run, None, e, v, entropie_essai=11)
+    assert not (depot / "diag" / run / "lecture-defaut.json").exists()
+

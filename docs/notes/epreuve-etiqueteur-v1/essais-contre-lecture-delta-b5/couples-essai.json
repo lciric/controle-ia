@@ -1,0 +1,68 @@
+[
+ {
+  "id": "CD5-01-statut",
+  "n": 1,
+  "ancien": "**non contre-lu dans cet état** (contre-lecture du delta suivante, bornée à ces correctifs, requise), **non scellé**.",
+  "nouveau": "**contre-lu dans cet état par la contre-lecture bornée du delta du brouillon 5** (scellable après ses couples : D1 et D2 levés, aucun bloquant ; voir la section « Contre-lecture »), **non scellé**."
+ },
+ {
+  "id": "CD5-02-masquage-portee",
+  "n": 3,
+  "ancien": "valeur refusée jamais recopiée",
+  "nouveau": "valeur refusée jamais recopiée, hors des deux chemins résiduels de la limite 14"
+ },
+ {
+  "id": "CD5-03-limite-14",
+  "n": 1,
+  "ancien": "appeler un nouveau devis.",
+  "nouveau": "appeler un nouveau devis.\n14. **Masquage : deux chemins résiduels** (contre-lecture bornée du delta du brouillon 5 : 46 scénarios à fausse clé, en mode réel sans réseau et en mode simulé ; 40 sans aucun fragment de 6 caractères de la clé). Le script ne masque qu'une valeur qu'il connaît comme clé : celle de la variable nommée, lue après le contrôle des formes et celui du GO ; la clé de Kimi, qui vit dans le relais, ne lui est jamais connue. Deux chemins écrivent encore une valeur de clé en entier, sur la sortie d'erreur seulement (jamais au manifeste, au journal ni aux réponses) : (a) une option abrégée et ambiguë écrite avec « = » (`--re=<valeur>`, `--relais=<valeur>`), qu'`argparse` recopie hors apostrophes, avant que la clé soit lue ; (b) une valeur de clé passée à la place d'un chemin, que le message d'erreur du système recopie : `--registre-go` en mode réel (lu avant la clé), tout chemin en mode simulé quand la variable de la clé n'est pas posée. L'un et l'autre demandent d'écrire une valeur de clé dans un argument qui ne la concerne pas. Règle d'exécution : aucune valeur de clé sur une ligne de commande, options écrites en entier, commandes copiées de l'ordre des opérations. Correctif recommandé à toute version ultérieure du script : dans `Parseur.error`, ne rien recopier après un « = » ; ajouter la clé aux secrets dès le contrôle des formes ; ne pas recopier le nom de fichier d'une erreur du système."
+ },
+ {
+  "id": "CD5-04-ordre-lancements",
+  "n": 1,
+  "ancien": "6. Phase 1, en deux lancements, le relais de Kimi relancé avant chacun avec `--max-appels` 100 puis 2 280 :",
+  "nouveau": "6. Phase 1, en deux lancements (aucune valeur de clé sur une ligne de commande, options écrites en entier : limite 14), le relais de Kimi relancé avant chacun avec `--max-appels` 100 puis 2 280, et le script lancé avec la même valeur à `--relais-max-appels` :"
+ },
+ {
+  "id": "CD5-05-ordre-controle-des-prix",
+  "n": 1,
+  "ancien": "puis lecture principale et relecture (`--lectures principale+relecture --feu-vert-format …`, même `--plafond-dollars 300`,",
+  "nouveau": "puis, **après le contrôle des prix** sur le relevé du fournisseur (section « Points ouverts », prix : le feu vert du script est nécessaire, non suffisant), lecture principale et relecture (`--lectures principale+relecture --feu-vert-format …`, même `--plafond-dollars 300`,"
+ },
+ {
+  "id": "CD5-06-prix-argon",
+  "n": 1,
+  "ancien": "il est à vérifier avant le scellement de préférence, au plus tard avant la décision de dépense ;",
+  "nouveau": "il n'a pas été vérifié avant la décision de dépense (GO-2026-11-07-07, donnée avant ce brouillon) ; il est contrôlé en deux temps : (1) avant l'essai de format, sur la page publique des prix de Google si elle est joignable (par le directeur, ou par un réseau permis sur sa décision) : un prix publié au-dessus de 10 et 50 dollars par million arrête l'épreuve avant tout appel ; (2) après l'essai de format et avant le second lancement, qui attend ce relevé, sur le relevé d'usage ou la facture du fournisseur pour les seuls appels d'Argon de l'essai de format (clé ou projet dédié à l'épreuve, pour que le relevé ne mêle aucun autre appel) : le montant facturé, en dollars hors taxes, doit être au plus la somme des `cout_estime` du lecteur A au journal de l'essai de format, et les jetons facturés égaux, à l'arrondi près, aux jetons écrits ; même contrôle pour Kimi sur le relevé de Moonshot ; sinon, pas de lecture principale, barème corrigé en version nouvelle, nœud du directeur ;"
+ },
+ {
+  "id": "CD5-07-analyse-fichiers",
+  "n": 1,
+  "ancien": "contrôlés par le script) ; analyse ;",
+  "nouveau": "contrôlés par le script) ; analyse, lancée sur les deux fichiers finals du dernier lancement allé à son terme, après un contrôle écrit : empreintes égales aux champs `sorties` de son manifeste et différentes l'une de l'autre, champ `lecteur` de chaque ligne égal au lecteur du fichier ; sinon, pas d'analyse (`analyser_phase1_v3.py` ne contrôle pas ce champ : le même fichier passé pour les deux lecteurs rendrait un verdict ; contre-lecture bornée du delta du brouillon 5) ; un arrêt de l'analyse s'écrit comme issue au fichier de résultat, avec le code de sortie 0 ;"
+ },
+ {
+  "id": "CD5-08-analyse-phase-2",
+  "n": 1,
+  "ancien": "script d'analyse de la phase 2 écrit, essayé sur des réponses fabriquées pour chaque issue et contre-lu avant son départ, appliquant les règles de ce texte sans les changer",
+  "nouveau": "script d'analyse de la phase 2 écrit, essayé sur des réponses fabriquées pour chaque issue, contre-lu et scellé avant son départ (avant la réception de toute réponse d'annotateur), appliquant les règles de ce texte et les seuils déposés chez le tiers sans les changer (tout écart est un écart au préenregistrement scellé, nœud du directeur)"
+ },
+ {
+  "id": "CD5-09-limite-7",
+  "n": 1,
+  "ancien": "7. Deux contre-lectures (brouillon 3 ; delta du brouillon 4) ; les correctifs de code de la seconde (D1, D2) sont à relire avant le scellement.",
+  "nouveau": "7. Trois contre-lectures (brouillon 3 ; delta du brouillon 4 ; delta borné du brouillon 5) ; la troisième n'a relu que les correctifs de D1 et D2, les remarques R1 à R4, le plafond et le feu vert, les couples et les compléments, sans relire le reste du texte."
+ },
+ {
+  "id": "CD5-11-R3-depense",
+  "n": 1,
+  "ancien": "| exception imprévue hors d'une lecture | saisie, écrite et masquée ; code 7 ; nœud du directeur avant toute lecture de réponse (remarque R3) |",
+  "nouveau": "| exception imprévue hors d'une lecture | saisie, écrite et masquée ; code 7 ; nœud du directeur avant toute lecture de réponse (remarque R3) ; la dépense écrite au manifeste de ce lancement est alors **sous-comptée** (la réserve d'une tentative interrompue après l'appel n'est jamais réglée : essai de la contre-lecture bornée du delta du brouillon 5, 20 appels d'Argon faits et 0,38 dollar écrit) : un lancement suivant prend pour dépense déjà engagée le relevé du fournisseur, ou à défaut le coût au pire cas de toutes les tentatives du lancement interrompu |"
+ },
+ {
+  "id": "CD5-10-contre-lecture-bornee",
+  "n": 1,
+  "ancien": "**Contre-lecture du delta suivante** : à faire par un sous-agent neuf, bornée aux versions 3, au devis v4, à ce brouillon et au journal des couples.",
+  "nouveau": "**Contre-lecture bornée du delta du brouillon 5** : sous-agent neuf, Claude Opus 5.5 (`claude-opus-5-5`), 7 novembre 2026 de 23:42:44 au 8 novembre 2026 à <<HEURE_FIN>> (temps universel, `date -u`) ; brouillon relu `f66a3e9d5a64e021b20db747dd8bd02e905523a2d0c9981c2a6fa4a649af3ea7` ; rapport `docs/notes/epreuve-etiqueteur-v1/contre-lecture-delta-brouillon5-v1.md` (`<<EMPREINTE_RAPPORT>>`) ; couples `couples-contre-lecture-delta-brouillon5-v1.json` ; verdict : **scellable après couples**, aucun bloquant ; D1 levé pour le chemin constaté et pour tout argument qui nomme ou porte la clé (deux chemins résiduels peu plausibles : limite 14) ; D2 levé (lignes absentes, en double, inconnues, fichier vide : aucun verdict) ; 19 couples appliqués à l'octet, brouillon 5 et journal reproduits à l'identique ; plafond de 300 dollars et seuil du feu vert (≈ 229 à 234 dollars) cohérents entre texte, devis v4 et code ; R1 à R4 traités au code."
+ }
+]

@@ -1,0 +1,70 @@
+=== A 1 0
+ACTION: ADD
+TITLE: Per-pixel confidence that tracks accuracy as the query time moves away from the frame
+PROPOSAL: We add a confidence output to a causal anytime segmenter that takes the last RGB frame and the events up to the query time, train the confidence with a proper scoring rule on dense labels at sampled offsets, and test whether the reported confidence tracks the true accuracy at every offset in the gap, so that a planner can tell when a prediction is still trustworthy. The confidence head shares the decoder's features. The segmenter uses a frozen image backbone and a recurrent event encoder conditioned on the offset; training runs on driving and drone sequences with labels at sampled offsets.
+CONTROLS: Calibration curves are drawn against dense labels at many offsets from a high-rate camera held out from training; the confidence is compared with the softmax maximum of the same segmenter and with a reference curve of accuracy against offset fitted on training sequences; the curves are split by object speed and by pixels that gain or lose an object after the frame; and each run is repeated over seeds.
+COST: 240
+PREDICTION: Confidence should fall with offset in step with accuracy, fastest on moving objects, and stay above the softmax maximum in calibration at long offsets. If the fitted reference curve matches the learned confidence everywhere, the confidence carries only the offset itself.
+=== A 1 1
+ACTION: ADD
+TITLE: Per-pixel confidence that follows prediction stability as the query time moves away from the frame
+PROPOSAL: The segmenter uses a frozen image backbone and a recurrent event encoder conditioned on the offset; training runs on driving and drone sequences with labels at sampled offsets. We add a confidence output to this causal anytime segmenter, which takes the last RGB frame and the events up to the query time, train the confidence with a proper scoring rule on dense labels at sampled offsets, and test whether the reported confidence follows the stability of the prediction across the gap, so that a planner can tell when a map has settled.
+CONTROLS: Calibration curves are drawn against the agreement between predictions at neighbouring offsets on sequences held out from training; the confidence is compared with the softmax maximum of the same segmenter and with a reference curve of boundary sharpness against offset fitted on training sequences; the curves are split by image region and by pixels near or far from class boundaries; and each run is repeated over seeds.
+COST: 240
+PREDICTION: Confidence should fall with offset in step with agreement, fastest near boundaries, and stay above the softmax maximum in its match to stability at long offsets. If the fitted reference curve matches the learned confidence everywhere, the confidence carries only the offset itself.
+=== A 2 0
+ACTION: ADD
+TITLE: Continuous-time decoding against binned prediction at offsets never seen in training
+PROPOSAL: Training samples offsets from the whole gap, and the decoder receives the query time through a sinusoidal embedding so that one network answers at any instant, not only at a preset list of times. We compare this continuous decoder with a decoder that predicts a stack of maps at twelve evenly spaced offsets and picks the nearest, both on top of the same frozen image backbone and event encoder, trained on driving sequences with dense labels from a high-rate camera. The test asks for maps at offsets drawn between the bin centres and beyond the longest training offset, where the anytime constraint bites.
+CONTROLS: Both decoders are scored against dense labels at offsets drawn uniformly inside the gap, including points between bin centres; the binned decoder is also given linear interpolation between its two nearest maps as a stronger reference; a copy of the last frame's map is scored at the same offsets; and accuracy is reported per offset band, repeated over seeds.
+COST: 450
+PREDICTION: The continuous decoder should keep accuracy flat between bin centres while the binned one dips midway between them, and interpolation should close part of that dip. Failure looks like matching curves at every offset, which means that twelve bins already cover the gap.
+=== A 2 1
+ACTION: ADD
+TITLE: Continuous-time decoding against binned prediction at the offsets used for training
+PROPOSAL: We compare a continuous decoder with a decoder that predicts a stack of maps at twelve evenly spaced offsets and picks the nearest, both on top of the same frozen image backbone and event encoder, trained on driving sequences with dense labels from a high-rate camera. Training samples offsets from the whole gap, and the continuous decoder receives the query time through a sinusoidal embedding so that one network answers at any instant, not only at a preset list of times. The test asks for maps at the twelve bin centres and at the next frame time, where both decoders have seen labels during training, so that the comparison isolates the decoding architecture from the choice of query times.
+CONTROLS: Both decoders are scored against dense labels at the twelve bin centres, including the frame time at the end of the gap; the binned decoder is also given its map at the next bin as a stronger reference; a copy of the last frame's map is scored at the same offsets; and accuracy is reported per bin, repeated over seeds.
+COST: 450
+PREDICTION: The continuous decoder should match the binned one at every bin centre and lead it slightly at the frame time, and the next-bin map should trail both. Failure looks like a gap at the centres, which means that the sinusoidal embedding does not resolve twelve times.
+=== A 3 0
+ACTION: ADD
+TITLE: Simulated event streams with dense labels at every instant as training data for the gap
+PROPOSAL: We render driving scenes in a simulator with a physically based event generator, producing RGB frames at a low rate, events in between, and a semantic label at every simulated instant, and we train a causal anytime segmenter on this data with domain randomisation of lighting, contrast thresholds and event noise. The test asks whether a model trained on simulated gaps transfers to real recordings, scored on real dense labels inside the gap from a high-rate camera on the same rig as the event sensor. Fine-tuning on a small real set with labels at frame times only is tried as the practical middle path.
+CONTROLS: The simulated model is compared with a model trained on real sequences carrying dense in-gap labels, which fixes what real supervision gives; with a model trained on real sequences labelled at frame times only; and with the simulated model after short real fine-tuning; all are scored on the same real held-out gaps at matched offsets, and the runs are repeated over seeds.
+COST: 520
+PREDICTION: The simulated model should land between the frame-time model and the dense real model at long offsets, and fine-tuning should close most of the remaining distance. If the simulated model trails the frame-time model everywhere, the event generator's noise does not resemble the sensor's.
+=== A 3 1
+ACTION: ADD
+TITLE: Simulated event streams with dense labels at every instant compared across renderers
+PROPOSAL: The test asks whether the choice of renderer and event generator changes what a model learns, scored on simulated held-out gaps from a second renderer with its own event generator. Driving scenes are rendered in a simulator with a physically based event generator, producing RGB frames at a low rate, events in between, and a semantic label at every simulated instant, and a causal anytime segmenter is trained on this data with domain randomisation of lighting, contrast thresholds and event noise. Fine-tuning on a small set from the second renderer with labels at frame times only is tried as the practical middle path.
+CONTROLS: The simulated model is compared with a model trained on the second renderer's sequences carrying dense in-gap labels, which fixes what that renderer gives; with an image-only model trained on the first renderer's frames; and with the simulated model after short fine-tuning on the second renderer; all are scored on the same simulated held-out gaps at matched offsets, and the runs are repeated over seeds.
+COST: 520
+PREDICTION: The first model should land between the image-only model and the second-renderer model at long offsets, and fine-tuning should close most of the remaining distance. If the first model trails the image-only model everywhere, the two event generators differ in their noise more than in their geometry.
+=== A 4 0
+ACTION: ADD
+TITLE: Does the event stream add more than motion extrapolated from the last frame
+PROPOSAL: We train a causal anytime segmenter with the last RGB frame and the events up to the query time, and we set it against a model that receives the last frame plus the events of only a short slice right after it, from which a velocity field is estimated and then extrapolated to the query time. The question is whether the events arriving late in the gap carry information that extrapolation cannot supply, which is the case for objects that turn, stop or enter after the frame. Both models share the backbone, the decoder and the training recipe on driving sequences with dense labels from a high-rate camera.
+CONTROLS: The extrapolation model with an optical-flow field estimated on the last two frames in place of the event slice; the full model with its late events replaced by a constant-velocity continuation of the early slice; accuracy on pixels where an object changes course or appears after the frame against pixels that keep moving as before; and the same runs repeated over seeds.
+COST: 180
+PREDICTION: The full model should lead the extrapolation models on course-changing and appearing objects and tie with them on steady motion. If the two curves stay together everywhere, the late events are not being read and the method is extrapolation in disguise.
+=== A 4 1
+ACTION: ADD
+TITLE: Does the event stream add more than the segmentation copied from the last frame
+PROPOSAL: Both models share the backbone, the decoder and the training recipe on driving sequences with dense labels from a high-rate camera. We train a causal anytime segmenter with the last RGB frame and the events up to the query time, and we set it against a model that receives the last frame only and repeats its segmentation at every query time, with the decoder trained anew for that input. The question is whether the events arriving in the gap carry information that the frame cannot supply, which is the case for objects that move, stop or enter after the frame.
+CONTROLS: The frame-only model with a learned temporal smoothing of its map in place of the plain copy; the full model with its events replaced by an event-density image accumulated over the gap; accuracy on pixels where an object moves or appears after the frame against pixels that stay still; and the same runs repeated over seeds.
+COST: 180
+PREDICTION: The full model should lead the frame-only models on moving and appearing objects and tie with them on still regions. If the two curves stay together everywhere, the events are not being read and the method is frame copying in disguise.
+=== A 5 0
+ACTION: ADD
+TITLE: Distilling a non-causal teacher into a causal anytime student
+PROPOSAL: A teacher that sees both frames around the gap and the events, and so can interpolate, is trained first; a causal student that sees only the first frame and the events up to the query time is then trained to match the teacher's soft maps at sampled offsets alongside the labels. The claim under test is that the teacher's view of the future improves the student at long offsets, where labels are scarce, without any leak of future information into the student at run time. Backbones are shared, and the data are driving and quadruped sequences with dense labels.
+CONTROLS: The student trained on labels alone; the teacher itself, scored at the same offsets as a non-causal reference; a leak check in which the student is run with the events after the query time deleted and with them scrambled, which must leave its output unchanged; distillation from a teacher that is itself causal, to separate soft targets from the future view; and seeds repeated.
+COST: 400
+PREDICTION: The distilled student should gain most at the longest offsets and on objects that appear after the frame, while the causal-teacher variant gains less. If the leak check changes the output, the student is reading the future and the claim is void.
+=== A 5 1
+ACTION: ADD
+TITLE: Distilling a non-causal teacher into a causal anytime student across teacher widths
+PROPOSAL: Backbones are shared, and the data are driving and quadruped sequences with dense labels. A teacher that sees both frames around the gap and the events, and so can interpolate, is trained first at several widths; a causal student that sees only the first frame and the events up to the query time is then trained to match each teacher's soft maps at sampled offsets alongside the labels. The claim under test is that a wider teacher yields a better student at the offsets where the teacher's maps are sharpest, and that the softmax temperature of the soft targets sets how much of that gain survives.
+CONTROLS: The student distilled from the narrowest teacher alone; each teacher itself, scored at the same offsets as a reference for its width; a temperature check in which the soft targets are produced at a low and at a high temperature, which must change the student's sharpness; distillation with the loss weight on the soft maps halved, to separate target sharpness from weighting; and seeds repeated.
+COST: 400
+PREDICTION: The widest teacher should give the student the largest gain at short offsets and on objects visible in the frame, while the low-temperature variant gains less. If the temperature check changes little, the student is reading the labels and the claim is void.

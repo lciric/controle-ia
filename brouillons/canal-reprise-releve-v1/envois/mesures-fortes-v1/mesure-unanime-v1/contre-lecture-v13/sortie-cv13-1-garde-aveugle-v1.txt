@@ -1,0 +1,37 @@
+# CV13-1 — la garde témoin v12 est aveugle aux traces v13 de la séquence v13 (copie isolée, 2026-10-28T08:41:23Z)
+## noms que la séquence v13 emploie :
+34:TEMOIN=execution-reelle-v13.commencee
+44:    bash garde-trace-reelle-v12.sh  # exit 3 si une trace d'exécution réelle existe
+94:  $PY -I -B $SCRIPT --reel "$DONNEES" --empreinte-attendue "$EMPREINTE" --sondes-reelles "$NR" --sondes-placebo "$NP" --commit "$COMMIT" > "${PREF}sortie-ree
+## noms que la garde v12 teste (ligne 7) :
+for f in execution-reelle-v12.commencee sortie-reelle-v12.json sortie-reelle-v12.json.partiel; do
+
+## état sain (aucune trace au premier niveau de la copie) :
+sortie-reelle-v10-repetition.json
+sortie-reelle-v10-repetition.json.sha256
+code 0 — sain
+
+## traces v13 plantées une à une (celles que la séquence v13 produirait) :
+code 0 — témoin v13 posé (attendu si la garde vivait : 3)
+code 0 — sortie finale v13 (attendu si la garde vivait : 3)
+code 0 — partiel v13 (attendu si la garde vivait : 3)
+
+## traces v12 plantées (celles que la garde teste réellement) :
+code 3 — témoin v12
+code 3 — partiel v12
+
+## le test déposé test-garde-trace-v12.sh plante et vérifie des noms v12 (lignes 14 à 17) :
+rm -rf "$tmp/d"; mkdir -p "$tmp/d/repetition-v12"; : > "$tmp/d/repetition-v12/sortie-reelle-v12.json"; essai "sain + répétition"
+rm -rf "$tmp/d"; mkdir -p "$tmp/d"; : > "$tmp/d/execution-reelle-v12.commencee"; essai "témoin posé" 3
+rm -rf "$tmp/d"; mkdir -p "$tmp/d"; : > "$tmp/d/sortie-reelle-v12.json"; essai "sortie finale" 3
+rm -rf "$tmp/d"; mkdir -p "$tmp/d"; : > "$tmp/d/sortie-reelle-v12.json.partiel"; essai "partiel" 3
+
+## la copie est revenue à l'état sain :
+sortie-reelle-v10-repetition.json
+sortie-reelle-v10-repetition.json.sha256
+(aucune trace)
+
+## ce qui reste de la protection « une seule exécution » dans la séquence v13 : le témoin noclobber (ligne 46), posé APRÈS la garde et la vérification du préenregistrement ;
+   démonstration du noclobber seul (sans la séquence) :
+première pose : ok
+seconde pose : refusée (attendu)

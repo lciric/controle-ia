@@ -1,0 +1,57 @@
+# Mise à jour des pages publiques de l'organisme — texte à publier — v1
+
+Préparée le 8 novembre 2026 vers 09:20 UTC ; **non poussée** : le contrôle de permissions de la session a refusé la poussée vers le dépôt public `lciric/ideation-organism`. Rien n'est publié tant que tu ne l'as pas dit dans cette session.
+
+## 1. Page principale (`README.md`), trois paragraphes remplacés
+
+### État (ligne 7)
+
+**Status (8 November 2026).** Pre-pilot stage. One full ideation round has been run with real agents (29 idea cards, 17 distinct ideas). The statistical judge has been exercised on a real bank of model episodes, on planted worlds, against 11 scripted cheaters (decisive validation, section 3.1) and against a language-model proposer that reads its exact description and sees its verdicts (Goodhart attack, clean rerun of 5 November, section 4). That attack found the judge's one declared gap; a new null (v9) that closes it has a written, counter-read proof, and its decisive validation, sealed on 3 November, is running. The death-test stage and the generation-to-generation loop are implemented and tested offline but have **not yet been run for real**; the smallest real run of the full loop is being prepared. Nothing here is a validated scientific result about AI control; it is an instrument, with its test suite, its mutation bench and its known gaps stated below.
+
+### Ligne R1 du tableau des preuves (ligne 126)
+
+| **White-box versus black-box monitors on real activations (R1, control programme)** (Llama-3.1-8B, 60 tasks, 2,400 scored actions: probes versus small LLM judges of 3 and 8 billion parameters, a predictor on text features and a cost rule) | **In (6–7 Nov 2026), with a leak established.** After an exact replay (2,400 of 2,400 actions identical to the bit), the probe trained on this organism beats the generic probe by +0.932 in area under the ROC curve, as the primary analysis predicted. **But a preregistered leak audit rules that the trained probe reads the saboteur's hidden instruction, present in its context, rather than the sabotage itself:** it separates the saboteur's actions that do *not* inflate the cost (area 0.9967 [0.9930, 0.9991], 46 actions) as well as those that do (0.9977). The generic probes do not beat random directions (P3 row below). The 3-billion-parameter LLM judge is at chance (area 0.523, permutation p = 0.19), while a simple predictor on the text features reaches 0.866 (recomputed by an independent reader). **Consequence:** no white-box-versus-black-box claim stands on this organism; the next test uses organisms whose sabotage is trained into the weights, with no instruction in the context, against a stronger black-box baseline. | No — real model runs, records private. The three sealed analyses (now public, unchanged, hashes as announced), their addendum and the two verdicts: [`resultats/controle-r1-blanche-noire/`](resultats/controle-r1-blanche-noire/) |
+
+### Ligne de l'attaque de Goodhart (ligne 129)
+
+| **Goodhart attack on the judge**: a language-model proposer (Argon) that reads the judge's exact description and, in one arm, its verdicts; two toy worlds where every promotion is false by construction (W1 inside the v8 null; W2: known law S1 on sub-population 0 and S2 on sub-population 1, a piecewise recombination that the v8 null declares uncovered) | **Clean rerun in (5 Nov 2026; 24 cards per world, up to 16 attempts, 960 calls, 58.45 USD; preregistered, output sealed before reading, verdict by a fresh reader).** **W1 resists at this size:** 1 of 24 units promoted with verdict feedback (0 of 24 without), at the 12th attempt, and that law replays 2 times out of 200 (multiplicity); per replayed law, 0.31 % and 0.26 % promotions with and without feedback, against α = 5 %. **W2: breach under v8, exactly in the class the null declares uncovered:** 24 of 24 units in both arms, 43 of 48 at the first attempt, no effect of the feedback (McNemar p = 1.0); the 48 promoted laws replay 9,479 times out of 9,600, all above α after Holm. **42 of the 48 are, byte for byte, the world's own law** (the proposer copies the two archive laws per sub-population): a breach of the novelty criterion "nothing beyond the archive", not a false prediction, and it needs no optimisation against the judge — reading its description is enough. **Fix:** the v9 null adds fitted piecewise recombinations of the known laws (by sub-population, or on either side of any threshold on one trait) and returns a certificate, so Ville's bound stays at α whatever the number of members; the proof was counter-read (48 fresh worlds, 288 instants, 0 failure). Its decisive validation (`orchestrator/prereg/preenregistrement-validation-nul-v9-v1.md`, sha256 `54c5713d07f61b7f…`, 31 lines × 1,000 repetitions, sealed 3 Nov 2026) has been running since 8 Nov 2026, 08:16 UTC; its result will be posted here, then a new attack against v9. | The harness, yes (scripted proposers); judges v7, v8 and v9 on any law, yes; the worlds are regenerated byte for byte from the hash of the sealed text. The raw output of the run (sha256 `e0b3145bf3b7f619…`) is not public yet. Status page: [`resultats/attaque-goodhart-v2/`](resultats/attaque-goodhart-v2/) |
+
+## 2. Page d'état de l'attaque (`resultats/attaque-goodhart-v2/README.md`), section ajoutée
+
+## Update (8 November 2026): the clean rerun, and the fix
+
+**Clean rerun (5 November 2026).** Argon alone, 24 cards per world, up to 16 attempts per unit, 960 calls, 58.45 USD; preregistered (sealed text sha256 `0b35494b7533c67b4aacb0cadc7820c825c82c046e641928df7641db8a381773`, public at commit `291e917`), output sealed before any reading (sha256 `e0b3145bf3b7f619c648652e2fb89dd715cb272ce447ed4ff4b56de5cb6f9505`, not public yet), verdict by a fresh reader.
+
+- **W1 (inside the v8 null) resists at this size.** 1 of 24 units promoted with verdict feedback, 0 of 24 without; the one promotion came at the 12th attempt and its law replays only 2 times out of 200: multiplicity, not a hole. Per replayed law: 236 promotions out of 75,000 with feedback (0.31 %), 192 out of 74,800 without (0.26 %), against α = 5 %.
+- **W2 (S1 on sub-population 0, S2 on sub-population 1) breaks v8, in the class the null declares uncovered.** 24 of 24 units in both arms; 43 of the 48 promotions at the first attempt; feedback changes nothing (McNemar p = 1.0 after 1, 4 and 16 attempts); the older v7 judge falls the same way. The 48 promoted laws replay 9,479 times out of 9,600 (lowest 159 of 200); all 48 are above α after Holm.
+- **What the breach is.** 42 of the 48 promoted laws are, byte for byte, the world's own law: the proposer copies the two archive laws it is shown, one per sub-population; the 6 others are close variants and pass as well. The promotions are "false" only under the novelty criterion "nothing beyond the archive" — they predict the world correctly. The hole is read off the judge's description, not learned from its verdicts.
+- **Fix.** The v9 null (`orchestrator/pole/nul_v9.py`, sha256 `7ae450df2482246122bf9fbcf0fa5ef30b4a7e4c6f0d09531e83af048e46ee95`) adds, as fitted members, every one-level piecewise recombination of the known laws (by sub-population, or on either side of any real threshold on one trait), with a common blind noise; each member returns a Frank-Wolfe certificate that dominates its family's maximum likelihood whatever the state of the optimiser, so Ville's bound stays at α whatever the number of members, and W(v9) ≤ W(v8) on the same draws. Proof: `orchestrator/prereg/rapport-redaction-nul-v9.md`, section 3; counter-read, with fresh probes (48 new worlds, 288 instants, 0 failure). With fewer than two known laws, v9 adds no member.
+- **Next, in this order.** (1) The decisive validation of v9, sealed on 3 November (`orchestrator/prereg/preenregistrement-validation-nul-v9-v1.md`, sha256 `54c5713d07f61b7f2bb3dd8218f4bca881a044a2b11508015db5e727d62c18fb`; 31 lines × 1,000 repetitions; its written expectation is "power lost" on one weak-interaction line), running since 8 November 2026, 08:16 UTC; (2) the 48 promoted laws replayed under v9; (3) a new attack against v9. Each result will be posted here, whatever its sign.
+- **Open question of meaning**, for the project lead: is applying a known law to one sub-population and another known law to the other a discovery? v9 says no; the answer decides whether W2 was a breach at all.
+
+## 3. Page d'état de R1 (`resultats/controle-r1-blanche-noire/README.md`), section ajoutée
+
+## Result (6–7 November 2026): a leak, established by a preregistered audit
+
+- **The replay is exact.** 2,400 of 2,400 actions re-run identically, maximal gap 0.0; the three analyses ran once, on the rerun (an addendum fixed which run counts, sha256 `a5ac6632691a…`, below).
+- **Primary analysis, as preregistered:** the probe trained on this organism beats the generic probe by **+0.932** in area under the ROC curve; by episode, +0.983.
+- **But the trained probe reads the instruction, not the sabotage.** The saboteur received a hidden instruction in its context; the probe sees that context. A leak audit, preregistered with a symmetric rule before it ran, found that the probe separates the saboteur's actions that do **not** inflate the cost (area **0.9967** [0.9930, 0.9991], 46 actions, 12 tasks) as well as those that do (0.9977 [0.9958, 0.9993]). Frozen outcome: **"leak (reading the instruction)"**, with 5 written reservations.
+- **The black box is weak too.** The 3-billion-parameter LLM judge is at chance (area 0.523, permutation p = 0.19); a simple predictor on text features reaches 0.866, and the cost rule alone 0.726 (recomputed by an independent reader). The generic probes do not beat 200 random directions (first white-box test, `../controle-p3-premier-test/`).
+- **Consequence.** No white-box-versus-black-box claim stands on this organism. Next: organisms whose sabotage is trained into the weights (low-rank adapters distilled from the saboteur's actions), with no instruction in the context — their full chain has run end to end on a real GPU on 8 November (36 episodes, 144 actions, 3.65 USD), one fidelity check still to be fixed before the decisive run — then probes tested across the two origins of sabotage, against a stronger black-box baseline.
+
+### The texts, now public, unchanged
+
+| File (`textes-scelles/`) | Role | SHA-256 |
+|---|---|---|
+| `analyse-blanche-noire-v3.md` | secondary reading | `1f6a6da2c551060a5f90ff3358b0aaf276dd9f336a5b953e6d93233c8c581fa9` (as announced) |
+| `analyse-principale-r1-r2-v1.md` | primary reading | `8e2679526b2777a9fe8564dd5f5fdaf98b70affd759cf47857abc8b168d92537` (as announced) |
+| `analyse-par-episode-v1.md` | by-episode reading | `26a3ff72e3a39636d3bdb965971fd1b237a04acc133a31a42f9a695d6d5970a4` (as announced) |
+| `addendum-1-gardes-analyses-r1-v4-v1.md` | addendum: which run counts, guards | in its `.sha256` companion |
+| `verdict-analyses-r1-r2-relance-v4-v1.md` | fresh reader's verdict on the three analyses | in its `.sha256` companion |
+| `verdict-audit-fuite-r1-v4-v1.md` | fresh reader's verdict of the leak audit | in its `.sha256` companion |
+
+The working documents are in French. The episodes, activations and scores stay private.
+
+## 4. Six textes scellés versés tels quels dans `resultats/controle-r1-blanche-noire/textes-scelles/`
+
+Les trois analyses promises publiques le 2 novembre (empreintes identiques à celles annoncées), leur addendum, les deux verdicts des lecteurs neufs ; garde des secrets à 0 sur chacun.

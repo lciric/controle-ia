@@ -1,0 +1,30 @@
+# plomberie v15 remise en v14 par remplacement inverse, comparée au modèle v14
+## commandes-lecture-reelle
+4,7c4,6
+< # **Remplace la v14** : seuls les noms propres à la version passent en v14 (R12), après la contre-lecture v14 (CV14-1 à
+< # CV14-3 : texte du préenregistrement seulement) ; la garde paramétrée `garde-trace-reelle-v14.sh` est réutilisée telle quelle
+< # (noms en arguments). Aucune modification de plomberie ni de science. La v14 avait corrigé CV13-1 (garde témoin paramétrée),
+< # CV13-3 (garde par empreinte en répétition) et CV13-4 (renvoi de ligne dans le test de reprise).
+---
+> # **Remplace la v13** : correction du défaut CV13-1 (garde témoin paramétrée, noms en arguments — la garde est indépendante de
+> # la version, comme `garde-lecture-seule-v12.sh` l'est déjà), correction CV13-3 (garde par empreinte en répétition), correction
+> # CV13-4 (renvoi de ligne dans le test de reprise). Aucune modification de science.
+## test-garde-trace
+IDENTIQUE
+## test-lecture-seule
+IDENTIQUE
+## garde-trace-reelle-v14.sh citée par la séquence v15 :
+5:# CV14-3 : texte du préenregistrement seulement) ; la garde paramétrée `garde-trace-reelle-v14.sh` est réutilisée telle quelle
+16:# et son `.partiel`) par la garde paramétrée `garde-trace-reelle-v14.sh` (CV13-1 : les noms sont passés en **arguments** et la
+45:compagnons() { sha256sum -c analyse_fausses_alertes_v8.py.sha256 table_m2bis_m4_v8.py.sha256 table-m2bis-m4-v8.json.sha256 lecture_mecanique_v8.py.sha256 rediger_note_lecture_v7.py.sha256 commandes-lecture-reelle-v15.sh.sha256 garde-trace-reelle-v14.sh.sha256 test-garde-trace-v15.sh.sha256 garde-lecture-seule-v12.sh.sha256 test-lecture-seule-v15.sh.sha256; }
+51:    bash garde-trace-reelle-v14.sh "$TEMOIN" "$SORTIE" "$SORTIE.partiel"  # exit 3 si une trace d'exécution réelle existe (CV13-1 : noms en arguments)
+## occurrences de v14 dans la plomberie v15
+commandes-lecture-reelle-v15.sh:4:# **Remplace la v14** : seuls les noms propres à la version passent en v15 (R12), après la contre-lecture v14 (CV14-1 à
+commandes-lecture-reelle-v15.sh:5:# CV14-3 : texte du préenregistrement seulement) ; la garde paramétrée `garde-trace-reelle-v14.sh` est réutilisée telle quelle
+commandes-lecture-reelle-v15.sh:6:# (noms en arguments). Aucune modification de plomberie ni de science. La v14 avait corrigé CV13-1 (garde témoin paramétrée),
+commandes-lecture-reelle-v15.sh:16:# et son `.partiel`) par la garde paramétrée `garde-trace-reelle-v14.sh` (CV13-1 : les noms sont passés en **arguments** et la
+commandes-lecture-reelle-v15.sh:45:compagnons() { sha256sum -c analyse_fausses_alertes_v8.py.sha256 table_m2bis_m4_v8.py.sha256 table-m2bis-m4-v8.json.sha256 lecture_mecanique_v8.py.sha256 rediger_note_lecture_v7.py.sha256 commandes-lecture-reelle-v15.sh.sha25
+commandes-lecture-reelle-v15.sh:51:    bash garde-trace-reelle-v14.sh "$TEMOIN" "$SORTIE" "$SORTIE.partiel"  # exit 3 si une trace d'exécution réelle existe (CV13-1 : noms en arguments)
+test-garde-trace-v15.sh:2:# Test déposé (R5, CV10-1, CV13-1) de la garde `garde-trace-reelle-v14.sh` : un état **sain** (y compris avec le sous-dossier
+test-garde-trace-v15.sh:8:G="$(readlink -f garde-trace-reelle-v14.sh)"
+test-lecture-seule-v15.sh:37:         garde-trace-reelle-v14.sh test-garde-trace-v15.sh garde-lecture-seule-v12.sh test-lecture-seule-v15.sh \

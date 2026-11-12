@@ -1,0 +1,66 @@
+MANIFESTE — pages des conditions de Google Labs et du produit « Hypothesis Generation », lues le 9 novembre 2026, v1
+Décision de Lazar R-1990, points (a) et (c). Lecture par un sous-agent (Opus 5.5), sans compte Google, sans inscription :
+la page « Express interest » (http://labs.google.com/science/interested) redirige vers une page de connexion Google ;
+elle n'a pas été suivie plus loin et n'est pas gardée.
+Outil : curl, par le mandataire HTTPS du conteneur, User-Agent de navigateur, Accept-Language en-US, redirections suivies.
+Heures UTC relevées sur l'horloge du conteneur (date de modification des fichiers téléchargés).
+
+Les pages brutes, telles que reçues, sont dans pages-brutes-conditions-google-labs-2026-11-09-v1.tar.gz (tar trié, gzip -n -9).
+Le texte de chaque page est tiré du HTML par la bibliothèque standard de Python : retrait des blocs script et style, saut de
+ligne après les fins de paragraphe, de titre, d'élément de liste, de bloc et de ligne de tableau, retrait des autres balises,
+décodage des entités, blancs réduits, lignes vides retirées. Pour les pages 3 à 8 ci-dessous, chaque lien garde son adresse
+entre crochets après son texte ; pour les pages 1 et 2, les adresses des liens ne sont pas gardées.
+
+1. Page « Science » de Google Labs (point de départ demandé ; son lien « Terms » pointe vers policies.google.com/terms)
+   demandée : https://labs.google/science   reçue : https://labs.google/science/ (code 200), 09:06:36
+   brut : labs-science.html  sha256 34427b5a798757e98b033430dc5853e33c904966ff8122f63a5b986a8eaea112
+   texte : labs-google-science-page-texte-v1.txt
+
+2. Conditions d'utilisation de Google (cible du lien « Terms »), « Effective July 30, 2026 », version de pays « Unknown Region »
+   demandée : https://policies.google.com/terms?hl=en   reçue : la même (code 200), 09:07:06
+   brut : google-terms-en.html  sha256 2a230049760e1af1e2cfbba5a4efcfaa9a0a72ef538bcdad232a28c3a3b8a521
+   texte : google-conditions-utilisation-en-vigueur-2026-07-30-texte-v1.txt
+
+3. Liste des services et de leurs conditions additionnelles (entrée « Science experiments by Google Labs » : Terms of Service,
+   Generative AI Prohibited Use Policy, Intended Use Policy ; entrée « Labs.google » : Terms of Service)
+   demandée : https://policies.google.com/terms/service-specific?hl=en   reçue : la même (code 200), 09:07:40
+   brut : google-service-specific-en.html  sha256 48b7656f7b18d35e2e5a336c7b240d5b962fdd08e91f12af10b5c90b359357e6
+   texte : google-conditions-par-service-texte-v1.txt
+
+4. « Intended Use Policy for Science experiments by Google Labs », « Last modified: April 28, 2026 »
+   demandée : https://support.google.com/labs/answer/16907048?hl=en
+   reçue : https://support.google.com/hypothesis-generation/answer/17106905?hl=en&visit_id=…&rd=1 (code 200), 09:08:13
+   brut : labs-intended-use-en.html  sha256 a0a29bd5f9ab30b09400d5dc6e6f4073eeb63a5161c21ebe6f655e6c8fa372ee
+   texte : science-labs-politique-usage-prevu-2026-04-28-texte-v1.txt
+
+5. « Generative AI Prohibited Use Policy », « Last Modified: December 17, 2024 »
+   demandée : https://policies.google.com/terms/generative-ai/use-policy?hl=en   reçue : la même (code 200), 09:08:14
+   brut : genai-prohibited-use-en.html  sha256 6598508ca04e5a5a924b27fee6663983ee81316843f161be58622b7bc953b7f4
+   texte : google-politique-usages-interdits-ia-generative-2024-12-17-texte-v1.txt
+
+6. Aide « How to research with Hypothesis Generation » (accès, limites de courses, classement Elo, citation à la publication)
+   demandée : https://support.google.com/hypothesis-generation/answer/17106281?hl=en   reçue : la même (code 200), 09:08:30
+   brut : hg-17106281.html  sha256 c8e31015120c8a7d8eb614596f7e80f80d8deec742b76f86f01a3be85e956920
+   texte : hypothesis-generation-aide-comment-chercher-texte-v1.txt
+
+7. Aide « Download your Hypothesis Generation data » (export, suppression)
+   demandée : https://support.google.com/hypothesis-generation/answer/17107198?hl=en   reçue : la même (code 200), 09:08:30
+   brut : hg-17107198.html  sha256 e322205dd7a8abe02ee103a45acb89de1dc1e0ee9c27b0644ab60cb587878012
+   texte : hypothesis-generation-aide-telecharger-donnees-texte-v1.txt
+
+8. Aide « Send us feedback about Hypothesis Generation » (relecture humaine des retours et du contenu associé)
+   demandée : https://support.google.com/hypothesis-generation/answer/17105610?hl=en   reçue : la même (code 200), 09:08:31
+   brut : hg-17105610.html  sha256 a0e97ebc8da3c0a014eb347a6933f446933bc916acd45926c864c9cc29aee19f
+   texte : hypothesis-generation-aide-retours-texte-v1.txt
+
+9. robots.txt de labs.google (les conditions renvoient aux instructions lisibles par machine pour l'accès automatisé)
+   demandée : https://labs.google/robots.txt (code 200, reçu compressé par gzip), 09:14:13
+   brut : labs.google_robots.txt  sha256 7f3049e1aafc09fba89cda00936b68f6e168fe579f411c85d203eecb283f6dd4
+   texte décompressé : labs-google-robots-txt-decompresse-v1.txt
+   https://labs.google.com/robots.txt : code 404 (non gardé).
+
+Non lus : la politique de confidentialité de Google (https://policies.google.com/privacy), que les conditions disent
+« not part of these terms » ; toute page derrière la connexion (produit, formulaire d'intérêt, conditions éventuelles affichées
+à l'inscription).
+
+Version 1 ; jamais réécrite (R12).

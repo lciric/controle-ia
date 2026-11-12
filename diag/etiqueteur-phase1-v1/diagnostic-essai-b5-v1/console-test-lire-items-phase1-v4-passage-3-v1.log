@@ -1,0 +1,29 @@
+........F............................................................... [ 91%]
+.......                                                                  [100%]
+=================================== FAILURES ===================================
+__________________ test_B5_cle_refusee_arrete_tous_les_appels __________________
+
+entrees = (PosixPath('/tmp/pytest-of-root/pytest-2/entrees0'), [{'item': 'E94840', 'rang': 1, 'tache': 'T12', 'enonce': 'Task st...he': 'T07', 'version': 'placebo', ...}, {'item': 'E82444', 'rang': 6, 'tache': 'T01', 'version': 'placebo', ...}, ...])
+tmp_path = PosixPath('/tmp/pytest-of-root/pytest-2/test_B5_cle_refusee_arrete_tou0')
+monkeypatch = <_pytest.monkeypatch.MonkeyPatch object at 0x7fd4fc7877a0>
+
+    def test_B5_cle_refusee_arrete_tous_les_appels(entrees, tmp_path, monkeypatch):
+        d, _, _ = entrees
+        f = [x["item"] for x in lignes(d / "formation.jsonl")]
+        c = Compteur({("A", "format", f[0], 1): "cle_refusee"})
+        assert lancer(d, tmp_path / "k", "format", "--fils-par-lecteur", "1", compteur=c) == 5
+        m = manifeste(tmp_path / "k")
+        assert m["arret"].startswith("général")
+        # après le refus, plus aucun appel ne part (au plus ceux déjà en vol : deux fils)
+        rang_refus = c.appels.index(("A", "format", f[0]))
+>       assert len(c.appels) - rang_refus <= 2
+E       AssertionError: assert (18 - 15) <= 2
+E        +  where 18 = len([('A', 'format', 'F20'), ('B', 'format', 'F20'), ('B', 'format', 'F18'), ('A', 'format', 'F16'), ('B', 'format', 'F16'), ('A', 'format', 'F18'), ...])
+E        +    where [('A', 'format', 'F20'), ('B', 'format', 'F20'), ('B', 'format', 'F18'), ('A', 'format', 'F16'), ('B', 'format', 'F16'), ('A', 'format', 'F18'), ...] = <test_lire_items_phase1_v4.Compteur object at 0x7fd4fc77a350>.appels
+
+/tmp/claude-0/-home-user-ideation-organism/86976e6f-3fae-57b1-a905-26802f445363/scratchpad/code-64e67cbd/docs/notes/epreuve-etiqueteur-v1/test_lire_items_phase1_v4.py:221: AssertionError
+----------------------------- Captured stdout call -----------------------------
+{"code": 5, "arret": "général : lecteur A : HTTP 401 : simulé", "comptes": {"A": {"ok": 8, "illisible": 0, "non_appele": 11, "arret_lecteur": 0, "arret_general": 1}, "B": {"ok": 9, "illisible": 0, "non_appele": 11, "arret_lecteur": 0, "arret_general": 0}}, "depense_estimee_dollars": 0.914792, "feu_vert": false}
+=========================== short test summary info ============================
+FAILED ../../../tmp/claude-0/-home-user-ideation-organism/86976e6f-3fae-57b1-a905-26802f445363/scratchpad/code-64e67cbd/docs/notes/epreuve-etiqueteur-v1/test_lire_items_phase1_v4.py::test_B5_cle_refusee_arrete_tous_les_appels
+1 failed, 78 passed in 11.14s

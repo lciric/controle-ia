@@ -1,0 +1,211 @@
+TACHE 12
+=== D 1
+ACTION: ADD
+TITLE: Scale-then-frame next-scale prediction for unified image and video generation
+PROPOSAL: We extend Infinity-style bitwise next-scale prediction to video by treating each frame as a sequence of scales, ordering tokens scale-major within a frame and frame-major across time, so that an image is a one-frame video and the same model handles text-to-image, text-to-video and image-to-video by changing only the conditioning prefix. We train a 2B-parameter transformer on a mix of image-text pairs and 5-second clips at 480p, then adapt it to 720p with a short second stage.
+CONTROLS: Baselines: a diffusion transformer of matched size trained on the same clips, an Emu3-style token-by-token raster model, and a frame-major variant that predicts all scales of frame t only after completing frame t-1. Ablations: scale-major against frame-major ordering, bitwise against index prediction, and the image share of the data mix at two levels.
+COST: 2400
+PREDICTION: Scale-major ordering within a frame should reach VBench scores within a few points of the diffusion baseline at under a tenth of its latency and beat the raster model on FVD on UCF-101. If motion smoothness lags far behind the diffusion model, the within-frame scale ordering is breaking temporal coupling and the frame-major variant should then win.
+=== D 2
+ACTION: ADD
+TITLE: Obtaining a discrete video tokenizer by temporal expansion of an image tokenizer
+PROPOSAL: We take the bitwise image tokenizer of Infinity, replace each 2D convolution by a causal 3D convolution whose central temporal slice carries the image weights and whose other slices start at zero, and fine-tune only the temporal slices and the quantizer on 17-frame clips at 256p before unfreezing everything briefly at 480p. The first frame is encoded exactly as an image would be, so images and videos share one codebook and one decoder.
+CONTROLS: We compare against the same architecture trained from scratch on the same clips, against a tokenizer with the image weights copied into every temporal slice, and against the plain 2D tokenizer applied frame by frame. Reconstruction is measured by PSNR, LPIPS and rFVD on UCF-101 and on a held-out web-video set, both at equal training steps and at the step where each tokenizer stops improving.
+COST: 320
+PREDICTION: The expanded tokenizer should reach the rFVD of the from-scratch tokenizer in a small fraction of its training steps and keep image reconstruction unchanged. If the frame-by-frame 2D tokenizer matches it on rFVD, temporal compression is not what the generator needs from the tokenizer and the gain must come from the generator side.
+=== D 3
+ACTION: ADD
+TITLE: Coarse-scale history for long video generation with bounded context
+PROPOSAL: We give the generator a context made of the last four frames at every scale plus only the two coarsest scales of all earlier frames, so that the attended sequence grows slowly while global layout and identity remain visible. Training randomises the cut-off so the model learns to work with any history length, and we optimise for the generation of two-minute videos at 480p in rounds of eight seconds, each conditioned on a new instruction.
+CONTROLS: Full-history attention up to the length that fits, a pure sliding window of four frames without any coarse history, a window that keeps only the first frame as anchor, and a key-value cache compressed by token merging at equal memory. We measure subject consistency and background consistency on VBench-Long, drift of CLIP similarity to the first frame over time, and per-frame latency as the video lengthens, over three seeds.
+COST: 900
+PREDICTION: Coarse-scale history should hold subject consistency within a few points of full attention while keeping per-frame latency flat, and beat the plain sliding window by a wide gap on background consistency. Failure would show up as the model ignoring the coarse history, in which case the first-frame anchor would match it.
+=== D 4
+ACTION: ADD
+TITLE: Latency against quality at 720p for next-scale video prediction
+PROPOSAL: We train a Visual AutoRegressive (VAR) style video generator with bitwise next-scale prediction, using a sixteen-frame latent clip at 720p and a schedule of ten scales per frame, and we measure the full trade-off between visual quality and wall-clock latency on a single accelerator. Quality is read from the Fréchet Video Distance (FVD) on Kinetics-600 and from the VBench benchmark suite, and latency is the time from prompt to decoded clip, including the tokeniser decoder.
+CONTROLS: A Diffusion Transformer (DiT) baseline of matched parameter count at fifty, twenty and eight denoising steps, a next-token raster autoregressive model with key-value (KV) caching, and our model with fewer scales per frame. The Classifier-Free Guidance (CFG) scale is tuned separately for each model on a held-out prompt set so that no method is compared at a setting chosen for another.
+COST: 1500
+PREDICTION: At equal FVD the next-scale model should finish a clip several times faster than the diffusion baseline at its best step count, and at equal latency it should score higher on VBench than the eight-step diffusion model. If the gap closes at eight steps, the latency advantage is not large enough to matter at 720p.
+=== D 5
+ACTION: ADD
+TITLE: Multi-round instruction-following video extension in one discrete model
+PROPOSAL: We train the unified next-scale generator with a conversational format in which each round appends a text instruction and a continuation of forty-eight frames conditioned on the whole previous video through compressed history. Training clips are cut into segments with per-segment captions produced by a captioning model, so that the generator sees instruction changes in the middle of a video. We evaluate five-round generations in which each instruction changes the camera motion or an object action.
+CONTROLS: A single-round model asked to regenerate the whole video with the concatenated instructions, a diffusion extension baseline that continues from the last frames only, and our model with the history truncated to the current round. Metrics: per-round instruction adherence judged by a vision-language model and checked by two raters, subject consistency across rounds, and the share of rounds in which motion follows the new instruction.
+COST: 1100
+PREDICTION: Round-by-round generation should follow new instructions in most rounds while keeping subject identity across rounds, and the diffusion extension baseline should drift on identity after the third round. The likely failure is that the generator ignores late instructions and continues the previous motion, which the adherence metric would show as a drop after round two.
+=== D 6
+ACTION: ADD
+TITLE: Which temporal factorisation lets one next-scale model serve images and videos
+PROPOSAL: We compare three ways of placing time inside next-scale prediction: spatiotemporal pyramids where each scale is a coarser video cube, per-frame scale pyramids ordered frame by frame, and per-frame pyramids predicting the residual against the previous frame at each scale. All three share the tokeniser, the 1B transformer and the data mix of images and clips, and all treat an image as a single-frame video.
+CONTROLS: A text-to-image-only model of the same size as the upper reference for image quality, a video-only model as reference for FVD, and the raster next-token model as the autoregressive baseline. Ablations hold the number of scales fixed and vary only the ordering, and each configuration is run with three seeds on Kinetics-600 and on a text-to-image benchmark.
+COST: 1800
+PREDICTION: Per-frame pyramids with residual prediction should give the best motion smoothness at equal FVD, while spatiotemporal cubes should give the best image quality but the worst extrapolation. The whole comparison fails to inform if the three variants land within seed variance of one another.
+=== D 7
+ACTION: ADD
+TITLE: Bitwise vocabulary scaling for video tokens
+PROPOSAL: We ask whether the bitwise prediction that lets Infinity grow its image vocabulary carries over to video tokens, where motion adds entropy. We train tokenisers with 16, 24 and 32 bits per token and generators that predict each bit with an independent sigmoid head, and we measure reconstruction and generation at 480p on Kinetics-600 and on a web-video corpus with captions.
+CONTROLS: Index-prediction generators with a 2^16 codebook as the largest feasible softmax, a bitwise model with the same bit count but with bits predicted autoregressively within a token, and bit-flip corruption during training at three rates. We report rFVD of the tokeniser, FVD of generations and the gap between them, so that we can tell tokeniser limits from generator limits.
+COST: 700
+PREDICTION: We expect generation FVD to improve from 16 to 24 bits and to flatten at 32, with the gap to rFVD widening as bits grow. If the autoregressive-within-token variant beats independent bits by a wide gap, bit independence is the wrong assumption for motion.
+=== D 8
+ACTION: ADD
+TITLE: Image-to-video and extrapolation as prefix conditioning
+PROPOSAL: We test whether a next-scale video model trained only on text-to-video can perform image-to-video and video extrapolation by placing the tokens of the given image or clip in the context as already generated frames, with no new training, and then whether a short fine-tuning on mixed tasks closes any remaining gap. Evaluation uses the image-to-video track of VBench and an extrapolation protocol on UCF-101 where the model continues the first sixteen frames of each clip.
+CONTROLS: A dedicated image-to-video diffusion baseline, the same next-scale model with task-specific fine-tuning, a variant in which the conditioning frames pass through the tokeniser with teacher-forcing noise, and a trivial baseline that repeats the last frame. Metrics include FVD of the continuation, first-frame fidelity, and identity drift measured by a face and object re-identification model.
+COST: 450
+PREDICTION: Prefix conditioning without training should already give usable image-to-video with weaker motion than the fine-tuned variant, and extrapolation quality should fall slowly with the number of continued frames. If zero-shot extrapolation collapses after a few frames, the model has learned frames as position-bound rather than as a continuation.
+=== D 9
+ACTION: ADD
+TITLE: Spatiotemporal attention patterns that keep long contexts affordable
+PROPOSAL: We replace full attention in the video generator with structured patterns and measure quality against context length: within-frame full attention plus attention to the same spatial block in previous frames, attention to previous frames only at the coarsest scale, and a learned selection of the most relevant previous-frame tokens per query. Each model is trained from the same checkpoint on clips of sixty-four frames at 480p and evaluated on clips of twice the training length.
+CONTROLS: Full attention trained on the same data as the quality reference, a plain sliding window as the cheap reference, and the sparse patterns without the coarse-scale link to separate the effect of sparsity from the effect of the link. We report FVD, temporal flicker, and the attention operations per generated frame.
+COST: 1300
+PREDICTION: The block-local pattern with a coarse-scale link should hold FVD within a few points of full attention at a fraction of its attention operations on long clips, and the learned selection should gain at longer lengths but lose at training length. Flicker rising sharply beyond training length would mean that none of the patterns generalises temporally.
+=== D 10
+ACTION: ADD
+TITLE: Image-first curriculum for a unified discrete video generator
+PROPOSAL: We train the next-scale model in three stages, images only, then clips of up to sixteen frames mixed with images, then clips of up to sixty-four frames, and compare against joint training on all data from the start, holding total tokens constant. We track text-to-image quality throughout to see whether video training erodes it, and we measure text-to-video quality on VBench at the end of each schedule.
+CONTROLS: Joint training from the start, a curriculum without the image-only stage, and a curriculum with the image share held at half throughout. We also evaluate a model trained only on images and one trained only on clips as references. Three seeds per schedule on a 600M model before one run at 2B.
+COST: 2000
+PREDICTION: The staged curriculum should reach better text-to-video quality at equal tokens and keep image quality close to the image-only model. If joint training matches it, the curriculum is a convenience and not a necessity.
+=== A 1 0
+ACTION: ADD
+TITLE: Next-scale video generation against diffusion at 720p on the same data
+PROPOSAL: We train a 2B bitwise next-scale video transformer that orders tokens scale by scale within a frame and frame by frame in time, on a captioned clip corpus at 720p, and we test whether it reaches diffusion-level quality at a fraction of the latency. Generation produces sixteen frames per clip; latency is measured end to end, including the tokenizer decoder, on one accelerator with batch size one.
+CONTROLS: A diffusion transformer of the same parameter count trained on the same corpus and tokenizer latents, evaluated at fifty, twenty and eight steps; an Emu3-style raster model with key-value caching as the autoregressive reference; the tokenizer's own reconstruction FVD as the ceiling our generator cannot pass; the same 500 prompts for all models; three seeds per model and bootstrap intervals on FVD and VBench.
+COST: 2200
+PREDICTION: At equal FVD on UCF-101 the next-scale model should run several times faster than the fifty-step diffusion model and beat the eight-step one on VBench. The claim fails if the raster model matches it at similar latency, which would make scale ordering irrelevant.
+=== A 1 1
+ACTION: ADD
+TITLE: A 720p bitwise next-scale video transformer and its quality profile
+PROPOSAL: We train a 2B bitwise next-scale video transformer that predicts each frame coarse to fine and frames in order, on a captioned clip corpus at 720p, and we report its visual quality and generation speed. Clips of sixteen frames are generated for the VBench prompt list, scored on the sixteen VBench dimensions, and timed end to end on one accelerator so that quality and latency appear side by side in one table.
+CONTROLS: Reference numbers for CogVideoX and HunyuanVideo as published at their own resolutions and step counts; our model at two learning rates and two warm-up lengths with loss curves; the same model decoded with the tokenizer at 480p to check the decoder; a shuffled-caption placebo for prompt adherence; and three seeds for the final configuration with bootstrap intervals on VBench and on FVD computed against UCF-101 statistics.
+COST: 2200
+PREDICTION: The model should score close to the published diffusion numbers on most VBench dimensions and produce a clip in a few seconds at batch size one. The claim fails if the shuffled-caption placebo scores as well, meaning the model ignores text.
+=== A 2 0
+ACTION: ADD
+TITLE: Cheap discrete video tokenizers by causal temporal expansion of image weights
+PROPOSAL: We build a discrete video tokenizer by expanding each 2D convolution of a pretrained bitwise image tokenizer into a causal 3D one whose centre slice carries the image weights, then fine-tune on seventeen-frame clips at 256p and briefly at 480p. We ask whether this reaches the reconstruction quality of a tokenizer trained from scratch at a fraction of the training.
+CONTROLS: The identical architecture trained from scratch, compared at equal steps and again at its own convergence, with loss curves for both; a variant where the image weights fill every temporal slice; the frozen 2D image tokenizer applied frame by frame as the floor; MAGVIT-v2 as the external reference at matched compression. Metrics are PSNR, LPIPS and rFVD on UCF-101 and a held-out web set, plus FVD of a small generator trained on each tokenizer's codes.
+COST: 350
+PREDICTION: The expanded tokenizer should match the from-scratch one on rFVD after a small fraction of its steps and give equal generator FVD. If the frame-by-frame floor also matches on generator FVD, temporal compression is not what the generator needs.
+=== A 2 1
+ACTION: ADD
+TITLE: Temporal expansion of an image tokenizer for discrete video coding
+PROPOSAL: We expand each 2D convolution of a pretrained bitwise image tokenizer into a causal 3D convolution whose centre slice carries the image weights, fine-tune on seventeen-frame clips at 256p and briefly at 480p, and report reconstruction quality on clips and on single images so that the tokenizer can serve both image and video generation from one codebook.
+CONTROLS: The original image tokenizer on ImageNet images, to check that image reconstruction survives the expansion; the expanded tokenizer with sixteen-bit and twenty-four-bit codebooks; reconstruction on the training clips against reconstruction on held-out clips to measure overfitting; MAGVIT-v2 and the Cosmos tokenizer numbers as reported at their own compression ratios; and the training loss curves over three seeds. Metrics are PSNR, LPIPS and rFVD on UCF-101.
+COST: 350
+PREDICTION: Image reconstruction should stay within a small gap of the original tokenizer and video rFVD should fall steadily over fine-tuning. If held-out rFVD diverges from training rFVD, the clips are too few for the temporal slices.
+=== A 3 0
+ACTION: ADD
+TITLE: Bounded context from coarse-scale history for minute-long generation
+PROPOSAL: The generator attends to the last four frames at every scale and to only the two coarsest scales of all earlier frames, so the context grows slowly while layout and identity stay visible. We train with randomised history cut-offs and generate two-minute clips at 480p in eight-second rounds, and we report consistency and latency at each round.
+CONTROLS: Full-history attention up to the longest length that fits as the ceiling; a plain four-frame sliding window as the floor; a window with only the first frame kept as anchor; token-merging compression of the key-value cache at equal memory; and the same model with the coarse history replaced by coarse scales of shuffled earlier frames, which should hurt if the history is read. Metrics are VBench-Long subject and background consistency, CLIP drift to the first frame, and per-frame latency over time, with three seeds and bootstrap intervals over 100 prompts.
+COST: 950
+PREDICTION: Coarse history should stay within a few points of the ceiling on consistency with flat latency and beat the floor by a wide gap. The result is refuted if the shuffled-history variant performs the same, which would mean the model never reads the history.
+=== A 3 1
+ACTION: ADD
+TITLE: Coarse-scale history attention for long interactive video generation
+PROPOSAL: The generator attends to the last four frames at every scale and to only the two coarsest scales of all earlier frames, keeping the context short while global layout stays visible. We train with randomised history cut-offs and generate two-minute clips at 480p in eight-second rounds, each round driven by a fresh user instruction, and we test whether consistency improves with model size, window length and the number of coarse scales.
+CONTROLS: The scheme at 600M and 2B parameters; two and three coarse scales kept; the last-frame window at four and eight frames at full scale; a check of memory use and throughput per frame as the video grows across the eight-second rounds; the published Open-Sora-Plan and StreamingT2V consistency numbers on their own five-second and one-minute protocols; and three seeds at the larger size with bootstrap intervals on VBench-Long subject consistency and CLIP drift to the first frame.
+COST: 950
+PREDICTION: Consistency should improve from 600M to 2B and from two to three coarse scales, with latency per frame nearly flat as the history lengthens across rounds. If drift grows with the window length rather than shrinking, the window frames are being treated as noise rather than as context.
+=== A 4 0
+ACTION: ADD
+TITLE: Multi-round video generation following successive instructions
+PROPOSAL: We fine-tune the unified next-scale model on segmented clips with per-segment captions so that each round appends an instruction and forty-eight new frames conditioned on compressed history, and we test five-round generations in which every instruction changes a camera move or an object action.
+CONTROLS: A single-round model given the concatenated instructions at once; a diffusion extension baseline continued from the last frames only; our model with history cut to the current round; a placebo where round instructions are shuffled across rounds, which should lower adherence if the model reads them; and a baseline that keeps the previous motion unchanged. Adherence is judged per round by a vision-language model and checked on 200 rounds by two human raters; we also report subject consistency across rounds and the same-prompt FVD against single-round generations.
+COST: 1200
+PREDICTION: The multi-round model should follow most instructions while holding identity across rounds, and the diffusion extension should lose identity after the third round. If shuffled instructions score as high, the judge or the model is reading motion rather than text.
+=== A 4 1
+ACTION: ADD
+TITLE: Successive-instruction video generation with compressed history
+PROPOSAL: We fine-tune the unified next-scale model on segmented clips with per-segment captions so that each round appends an instruction and forty-eight new frames conditioned on compressed history, and we produce five-round generations in which each instruction changes a camera move or an object action, reporting how quality evolves from round to round.
+CONTROLS: Per-round FVD against the first round to measure decay; generations with three, five and eight rounds; the captioning model replaced by a second captioner during fine-tuning to check caption sensitivity; latency per round as history grows; the same model at 256p as a cheaper comparison; a shuffled-caption placebo during fine-tuning that should raise training loss; and a vision-language judge on 200 rounds with bootstrap intervals, compared to the single-round scores reported in the Emu3 paper.
+COST: 1200
+PREDICTION: Per-round FVD should decay slowly and the judge should rate later rounds close to the first. If caption replacement shifts scores by more than seed noise, the data pipeline matters more than the model.
+=== A 5 0
+ACTION: ADD
+TITLE: Structured attention for long clips tested beyond training length
+PROPOSAL: We train the video generator from one checkpoint with three attention patterns, block-local attention to the same spatial block in earlier frames, attention to earlier frames at the coarsest scale only, and learned selection of the most relevant earlier tokens per query, on sixty-four-frame clips at 480p, and we evaluate on clips twice as long as training to learn which pattern keeps consistency when context grows.
+CONTROLS: Full attention trained on the same data as the quality reference at training length; a plain sliding window as the floor; each sparse pattern with its coarse-scale link removed to separate sparsity from the link; random masks at matched density as placebo; evaluation at training length and at twice that length, so that generalisation is read as the difference. We report FVD, flicker and subject consistency with bootstrap intervals from three seeds.
+COST: 1400
+PREDICTION: Block-local attention with a coarse link should stay near full attention at training length and lose least beyond it; random masks should lose most. If all patterns degrade equally beyond training length, the loss comes from positional encoding, not attention.
+=== A 5 1
+ACTION: ADD
+TITLE: Sparse spatiotemporal attention patterns for discrete video generation
+PROPOSAL: We train the video generator from one checkpoint with three attention patterns, block-local attention to the same spatial block in earlier frames, attention to earlier frames at the coarsest scale only, and learned selection of the most relevant earlier tokens per query, on sixty-four-frame clips at 480p, and we rank the patterns by quality and speed at that length to choose one for the final model.
+CONTROLS: Each pattern at eight and sixteen heads; kernel microbenchmarks for each mask against the dense FlashAttention reference at matched sequence length; random masks at matched density as placebo; the ranking repeated at 256p to check that it holds across resolutions; and a shuffled-frame-order check that should hurt if temporal attention is used. We report FVD and flicker at training length with bootstrap intervals from three seeds, and the memory of the key-value cache per pattern at both head counts.
+COST: 1400
+PREDICTION: Block-local attention should rank first on FVD and the coarsest-scale pattern first on speed; the ranking should hold at 256p and across head counts. The result fails if shuffled frame order does not change FVD, meaning the model is not using earlier frames.
+=== A 6 0
+ACTION: ADD
+TITLE: Placing time inside next-scale prediction: three factorisations compared
+PROPOSAL: We compare three ways to put the temporal axis into coarse-to-fine prediction, spatiotemporal pyramids where each scale is a coarser video cube, per-frame pyramids ordered frame by frame, and per-frame pyramids that predict residuals against the previous frame, with one tokenizer, one 1B transformer and one data mix of images and clips in which an image is a single-frame video. We measure text-to-image quality, text-to-video quality and extrapolation from each factorisation.
+CONTROLS: An image-only model of equal size as the image reference, with the published Infinity numbers on GenEval as a second point; a video-only model as the FVD reference; the raster next-token model as the autoregressive baseline; and three seeds per factorisation on Kinetics-600 and on GenEval.
+COST: 1700
+PREDICTION: Per-frame residual pyramids should win on motion smoothness and extrapolation while cubes win on image quality. If the three land within seed noise, the ordering does not matter and the tokenizer dominates.
+=== A 6 1
+ACTION: ADD
+TITLE: Keyframe synthesis with next-scale images plus learned interpolation
+PROPOSAL: We generate videos by sampling keyframes every eighth frame with the Infinity image model conditioned on the text and on the previous keyframe tokens, then fill the gaps with a diffusion frame interpolator fine-tuned on Kinetics-600, so that the image model handles appearance and the interpolator handles motion. We measure text-to-video quality and extrapolation by chaining keyframes, and image quality on GenEval with the unchanged image model.
+CONTROLS: Interpolation by optical-flow warping as the floor, a video diffusion model of equal size as the FVD reference, the keyframe model with and without the previous-keyframe conditioning, and three seeds for the interpolator on Kinetics-600.
+COST: 1700
+PREDICTION: Keyframe plus interpolation should reach competitive FVD on short clips with the image quality of the unchanged image model. The result would be refuted if large motions between keyframes make the interpolator blur, which flow warping would show first.
+=== A 7 0
+ACTION: ADD
+TITLE: Discrete video tokenizers without training from scratch
+PROPOSAL: We initialise a causal 3D tokenizer from a bitwise image tokenizer by placing the image weights in the centre temporal slice and zeros elsewhere, fine-tune the temporal slices and quantizer on seventeen-frame clips at 256p, then unfreeze briefly at 480p, and we track how many steps it takes to reach a target rFVD against training from scratch.
+CONTROLS: The same architecture from scratch at equal steps and at convergence, the image weights copied into every slice, the frozen 2D tokenizer frame by frame as the floor, and MAGVIT-v2 at matched compression as an external point. We report PSNR, LPIPS and rFVD on UCF-101 and generator FVD on codes from each tokenizer, with three seeds for the small generator and bootstrap intervals.
+COST: 400
+PREDICTION: The expanded tokenizer should reach the target rFVD in a small fraction of the steps and give equal generator FVD. If equal rFVD still gives worse generator FVD, the codes differ in predictability rather than in fidelity.
+=== A 7 1
+ACTION: ADD
+TITLE: Higher-fidelity discrete video tokens through adversarial and perceptual losses
+PROPOSAL: We train a causal 3D bitwise tokenizer from scratch on seventeen-frame clips at 256p and then 480p, adding a video discriminator, a perceptual loss from a frozen video encoder and a temporal flicker penalty, and we scale the training set from UCF-101 to a web corpus of millions of clips to see how far reconstruction quality rises.
+CONTROLS: The same tokenizer trained with reconstruction loss only, the discriminator removed, the perceptual loss removed, the small and the large training sets, and MAGVIT-v2 at matched compression as an external comparison. We report PSNR, LPIPS and rFVD on UCF-101 and Kinetics-600, and generator FVD on codes from the best and the plain tokenizer, with three seeds for the small generator.
+COST: 400
+PREDICTION: The adversarial and perceptual losses should lower rFVD by a wide gap and the larger corpus should lower it further. If generator FVD does not follow rFVD, higher-fidelity codes are harder to predict.
+=== A 8 0
+ACTION: ADD
+TITLE: Compressing the spatiotemporal history that a video generator attends to
+PROPOSAL: We keep the last four frames at full scale and all earlier frames only at their two coarsest scales, then train with random history cut-offs so the model tolerates any length, and we generate minute-long clips at 480p to measure how consistency and per-frame latency change as the history grows.
+CONTROLS: Attention over the full history up to the longest length that fits, a four-frame sliding window, a first-frame anchor window as a check on identity alone, and key-value cache merging at equal memory, measured by VBench-Long consistency, FVD on UCF-101, CLIP drift to the first frame and per-frame latency, over three seeds.
+COST: 800
+PREDICTION: Coarse history should hold consistency near full attention with flat latency, and beat the sliding window by a wide gap. If the first-frame anchor does as well, the model only needs identity, not layout history.
+=== A 8 1
+ACTION: ADD
+TITLE: Speculative decoding with a small draft model for faster video token generation
+PROPOSAL: We pair the next-scale video generator with a 300M draft model that proposes the bits of each scale, verified in one pass by the large model, and we measure the speed-up and any change in quality on minute-long clips at 480p, with both models attending to the complete history of generated frames.
+CONTROLS: The large model decoding alone as the quality reference, the draft model alone as the floor, acceptance rates per scale, and two draft lengths with the acceptance threshold tuned on a held-out prompt set, measured by VBench-Long consistency, FVD on UCF-101 and per-frame latency, over three seeds.
+COST: 800
+PREDICTION: Speculative decoding should cut per-frame latency by about half at unchanged quality, with acceptance highest at coarse scales. If acceptance drops at the finest scales, the draft model is too small for texture detail and a larger draft should be tried.
+=== A 9 0
+ACTION: ADD
+TITLE: One discrete model for image, video, image-to-video and extrapolation
+PROPOSAL: We train a single next-scale transformer where an image is a one-frame video, and where the task is set only by the prefix: text alone for text-to-image and text-to-video, text plus the tokens of a given frame for image-to-video, and text plus the tokens of a given clip for extrapolation. Training samples the four prefixes from one captioned corpus, and we test each task against specialists of the same size.
+CONTROLS: Four single-task models of equal size and data as specialists, the unified model with the image share removed, zero-shot image-to-video from the text-to-video-only model, and a diffusion baseline per task with its reported numbers checked on our prompts. Metrics are GenEval for images, VBench for video, first-frame fidelity for image-to-video and FVD of continuations for extrapolation, with three seeds.
+COST: 1600
+PREDICTION: The unified model should match each specialist within a few points and beat the zero-shot variant on image-to-video by a wide gap. If the specialists win clearly on images, the mixed data hurts appearance.
+=== A 9 1
+ACTION: ADD
+TITLE: Distilling a video diffusion teacher into a next-scale discrete student
+PROPOSAL: We raise the fidelity of a text-to-video next-scale transformer by distilling from a frozen video diffusion teacher: the student trains on teacher samples for the same captions and on a feature-matching loss between the student's last-layer activations and the teacher's denoiser features at the middle timestep, with the teacher's guidance scale fixed for all samples. We test whether the student reaches teacher-level quality while keeping the student's latency unchanged.
+CONTROLS: The student trained on real clips only, the student on teacher samples without the feature loss, the teacher itself as the quality ceiling, and a raster autoregressive student distilled the same way, so that the gain is not specific to next-scale ordering. Metrics are VBench and FVD on UCF-101, plus latency per clip, with three seeds.
+COST: 1600
+PREDICTION: Distillation should close most of the gap to the teacher on VBench at unchanged latency, with the feature loss adding a few points on top of sample distillation. If the real-clip student matches it, the teacher adds nothing beyond its captions.
+=== A 10 0
+ACTION: ADD
+TITLE: Extending generation across rounds of user instructions
+PROPOSAL: We fine-tune the unified model on clips segmented into captioned parts so that each round adds an instruction and a continuation conditioned on compressed history, and we generate five-round videos where instructions change camera or object motion, then measure adherence per round and identity across rounds.
+CONTROLS: One model given all instructions at once, a diffusion extension baseline that continues from the last frames, our model with history cut to the current round, and shuffled instructions as a check that text is read. Adherence is judged by a vision-language model and verified by two raters on 200 rounds, with subject consistency and FVD per round.
+COST: 1000
+PREDICTION: Round-wise generation should follow most instructions and keep identity where the diffusion extension drifts. If adherence falls after round three, the compressed history is swamping the new text.
+=== A 10 1
+ACTION: ADD
+TITLE: Text encoders and prompt adherence for single-clip discrete video generation
+PROPOSAL: We train the next-scale video generator three times with different frozen text encoders, a T5-XXL encoder, a CLIP text encoder and the final layer of a decoder-only language model, on the same captioned corpus, and we measure how closely a single sixteen-frame clip follows prompts about camera motion and object actions, since adherence to instructions is what later rounds would build on.
+CONTROLS: The three encoders at equal token length, a model with the text dropped at training time as the floor, a shuffled-caption check for the judge, and the adherence reported for Emu3 on the same prompts. Adherence is judged by a vision-language model and verified by two raters on 200 clips, with VBench and FVD.
+COST: 1000
+PREDICTION: The decoder-only encoder should give the best adherence on motion prompts and T5 the best on object prompts. If all three tie, the bottleneck is the tokenizer, not the text side.

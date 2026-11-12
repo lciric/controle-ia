@@ -1,0 +1,30 @@
+# Pare-feu de la machine A (iptables-restore, table filter), v1 — session-depot, 30 octobre 2026 (R-808).
+# Réseau interne des conteneurs : 172.30.0.0/24 (agsci-interne-v1, internal: true) ; mandataire 172.30.0.2 (deux pattes,
+# seconde patte 172.31.0.2 sur agsci-sortie-v1 172.31.0.0/24) ; passe-relais 172.30.0.3 (seconde patte 172.31.0.3) ;
+# tunnel WireGuard wg0 10.77.0.0/30 (A = 10.77.0.2, B = 10.77.0.1).
+# Règles : seuls le mandataire (vers Internet, 80/443) et le passe-relais (vers B, 8790/tcp, par wg0) sortent ;
+# métadonnées du loueur et réseaux privés refusés ; entrée : SSH depuis l'adresse de Lazar seulement (à remplir),
+# WireGuard depuis B seulement. IPv6 : tout refusé (ip6tables -P … DROP, hors de ce fichier).
+*filter
+:INPUT DROP [0:0]
+:FORWARD DROP [0:0]
+:OUTPUT ACCEPT [0:0]
+:DOCKER-USER - [0:0]
+-A INPUT -i lo -j ACCEPT
+-A INPUT -m conntrack --ctstate ESTABLISHED,RELATED -j ACCEPT
+-A INPUT -p tcp --dport 22 -s 203.0.113.10/32 -j ACCEPT
+-A INPUT -p udp --dport 51820 -s 198.51.100.20/32 -j ACCEPT
+-A INPUT -i br-agsci-int -j DROP
+-A DOCKER-USER -m conntrack --ctstate ESTABLISHED,RELATED -j RETURN
+-A DOCKER-USER -d 169.254.0.0/16 -j DROP
+-A DOCKER-USER -d 100.64.0.0/10 -j DROP
+-A DOCKER-USER -s 172.31.0.2/32 -d 10.0.0.0/8 -j DROP
+-A DOCKER-USER -s 172.31.0.2/32 -d 192.168.0.0/16 -j DROP
+-A DOCKER-USER -s 172.31.0.2/32 -d 172.16.0.0/12 -j DROP
+-A DOCKER-USER -s 172.31.0.2/32 -p tcp -m multiport --dports 80,443 -j RETURN
+-A DOCKER-USER -s 172.31.0.2/32 -p udp --dport 53 -j RETURN
+-A DOCKER-USER -s 172.31.0.3/32 -o wg0 -d 10.77.0.1/32 -p tcp --dport 8790 -j RETURN
+-A DOCKER-USER -s 172.30.0.0/24 -j DROP
+-A DOCKER-USER -s 172.31.0.0/24 -j DROP
+-A DOCKER-USER -j RETURN
+COMMIT

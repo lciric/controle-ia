@@ -1,0 +1,170 @@
+"""Vérifications communes de la chaîne du premier test boîte blanche sur l'organisme (i-a) (P3, R-192), v1 : un seul
+texte, lu à l'identique par le scellement, par les contrôles avant dépense et par le lanceur. Décliné de
+`verifications_notations_v1.py` (notations refaites du pilote de T0.5). Bibliothèque standard seulement (lancé par
+python3 -I, hors du dépôt).
+
+  verifications_p3_v1.py go PREREG GO_MD DECISIONS_MD
+      GO de calcul et décision de Lazar : une seule ligne « - GO de calcul et décision de Lazar : `GO-…` (R-…) » dans le
+      texte ; GO de type « calcul », accordé par Lazar ; aucune ligne « révocation » qui le nomme ; une seule ligne R-…,
+      dont le texte cite « (b) P1 + P2 + P3 + pilote du papier C » et P3. Écrit « GO-… (R-…) conforme ».
+  verifications_p3_v1.py repetition CODE_RELU JOURNAL CANDIDAT_NOM CANDIDAT_SHA
+      journal de la répétition jouet : commit du code répété, candidat répété (nom de base et empreinte du candidat relu
+      épinglé), fin, trois passages à leur code, deux récupérations conformes (run complet ; arrêt pendant les épisodes,
+      synthétique) et une récupération des traces seules (code 4), sans KO dans leur bloc, artefacts refusés chacun par un
+      seul KO, au préfixe attendu, dans le seul bloc indenté qui suit sa ligne ; deux lignes « script répété » exactement,
+      bien formées, sans doublon. Écrit une ligne « <script> <sha256> » par script répété.
+  verifications_p3_v1.py preuves DOSSIER
+      journaux des bancs et de la répétition finale : les cinq journaux attendus présents dans DOSSIER, chacun à son
+      verdict conforme sur sa dernière ligne, avec ses lignes « script éprouvé : <script> <sha256> » bien formées, et sans
+      aucune ligne d'échec (« NON CONFORME », trace d'exception, jeton affiché) ; une même empreinte pour un script éprouvé
+      par plusieurs bancs ; les dix scripts attendus éprouvés, exactement. Écrit une ligne « <script> <sha256> » par
+      script éprouvé ; l'appelant les compare aux copies versées à S.
+Code 0 si conforme ; code 1 avec un message sur la dernière ligne sinon ; code 2 sur un usage faux.
+"""
+from __future__ import annotations
+
+import re
+import sys
+
+DECISION_CITEE = "(b) P1 + P2 + P3 + pilote du papier C"
+
+
+def cellules(ligne: str) -> list[str]:
+    return [x.strip() for x in ligne.strip().strip("|").split("|")]
+
+
+def go(prereg: str, go_md: str, dec_md: str) -> str:
+    texte, go_t, dec_t = (open(f, encoding="utf-8").read() for f in (prereg, go_md, dec_md))
+    m = re.findall(r"^- GO de calcul et décision de Lazar : `(GO-\d{4}-\d{2}-\d{2}-\d{2})` \((R-\d{3,4})\)", texte, re.M)
+    if len(m) != 1 or len(re.findall(r"^- GO de calcul et décision de Lazar :", texte, re.M)) != 1:
+        raise SystemExit("ligne « GO de calcul et décision de Lazar » absente, en double ou mal formée")
+    g, reg = m[0]
+    lignes = go_t.split("\n")
+    c = [cellules(x) for x in lignes if x.startswith(f"| {g} |")]
+    if len(c) != 1 or len(c[0]) != 8:
+        raise SystemExit(f"{g} absent, en double ou mal formé")
+    if c[0][2] != "calcul" or c[0][6] != "Lazar":
+        raise SystemExit(f"{g} : {c[0][2]}, {c[0][6]} : GO de type « calcul », accordé par Lazar, attendu")
+    for ligne in lignes:
+        if not ligne.startswith("| GO-"):
+            continue
+        k = cellules(ligne)
+        if (len(k) == 8 and k[2].lower() == "révocation" and (g in k[3] or g in k[7])) or \
+                (len(k) != 8 and "révocation" in ligne.lower() and g in ligne):
+            raise SystemExit(f"{g} révoqué")
+    r = [x for x in dec_t.split("\n") if x.startswith(f"| {reg} |")]
+    if len(r) != 1 or DECISION_CITEE not in r[0] or "P3" not in r[0]:
+        raise SystemExit(f"{reg} absent, en double, ou sans la décision de Lazar « {DECISION_CITEE} »")
+    return f"{g} ({reg}) conforme"
+
+
+PASSAGES = ("passage 1-sain : code 0 ", "passage 2-artefact-branche-presente : code 2 ",
+            "passage 3-manque : code 1 ")
+CONFORMES = ("récupération (passage-1-sain) : code 0 ; RÉCUPÉRATION : TOUS CONFORMES",
+             "récupération (arret-synthetique-episodes) : code 0 ; RÉCUPÉRATION : TOUS CONFORMES",
+             "récupération (passage-3-traces-seules) : code 4 ; RÉCUPÉRATION DES TRACES SEULES (AUCUN RUN) : TOUS CONFORMES")
+ARTEFACTS = {"récupération (artefact-scores-manquants) : code 1 ; RÉCUPÉRATION : 1 CONTRÔLE(S) EN ÉCHEC": "    KO  4c ",
+             "récupération (artefact-ajout-hors-perimetre) : code 1 ; RÉCUPÉRATION : 1 CONTRÔLE(S) EN ÉCHEC": "    KO  1c ",
+             "récupération (artefact-figees-apres-episodes) : code 1 ; RÉCUPÉRATION : 1 CONTRÔLE(S) EN ÉCHEC": "    KO  6 sondes figées ",
+             "récupération (artefact-scores-alteres) : code 1 ; RÉCUPÉRATION : 1 CONTRÔLE(S) EN ÉCHEC": "    KO  2b "}
+SCRIPTS = {"recuperation_p3_v1.sh", "repetition_jouet_p3_v1.sh"}
+
+
+def bloc_indente(lignes: list[str], i: int) -> list[str]:
+    """Lignes indentées (quatre espaces) qui suivent immédiatement la ligne i : le bloc de cette récupération."""
+    j = i + 1
+    while j < len(lignes) and lignes[j].startswith("    "):
+        j += 1
+    return lignes[i + 1:j]
+
+
+def repetition(code: str, journal: str, nom: str, sha: str) -> list[str]:
+    lignes = open(journal, encoding="utf-8").read().split("\n")
+    exigees = [f"commit du code répété : {code}", f"candidat répété : {nom} {sha}", "FIN DE LA RÉPÉTITION",
+               *CONFORMES, *ARTEFACTS]
+    for e in exigees:
+        if lignes.count(e) != 1:
+            raise SystemExit(f"ligne absente ou en double : {e}")
+    if sum(x.startswith("candidat répété : ") for x in lignes) != 1:
+        raise SystemExit("plusieurs lignes « candidat répété »")
+    for p in PASSAGES:
+        if sum(x.startswith(p) for x in lignes) != 1:
+            raise SystemExit(f"passage : {p.strip()}")
+    if sum("RÉCUPÉRATION : TOUS CONFORMES" in x for x in lignes) != 2 or sum("TOUS CONFORMES" in x for x in lignes) != 3:
+        raise SystemExit("deux récupérations conformes et une récupération des traces seules attendues")
+    for etiquette in CONFORMES:
+        ko = [x for x in bloc_indente(lignes, lignes.index(etiquette)) if x.startswith("    KO")]
+        if ko:
+            raise SystemExit(f"{etiquette} : KO {ko}")
+    for etiquette, prefixe in ARTEFACTS.items():
+        ko = [x for x in bloc_indente(lignes, lignes.index(etiquette)) if x.startswith("    KO")]
+        if len(ko) != 1 or not ko[0].startswith(prefixe):
+            raise SystemExit(f"{etiquette} : KO {ko}")
+    scripts = {}
+    for x in lignes:
+        if x.startswith("script répété : "):
+            m = re.fullmatch(r"script répété : ([a-z0-9_]+_v1\.(?:py|sh)) ([0-9a-f]{64})", x)
+            if not m:
+                raise SystemExit(f"ligne « script répété » mal formée : {x[:90]}")
+            if m.group(1) in scripts:
+                raise SystemExit(f"script répété en double : {m.group(1)}")
+            scripts[m.group(1)] = m.group(2)
+    if set(scripts) != SCRIPTS:
+        raise SystemExit(f"scripts répétés {sorted(scripts)} : les deux attendus exactement")
+    return [f"{s} {scripts[s]}" for s in sorted(scripts)]
+
+
+JOURNAUX = {"banc-lanceur-p3-v1.log": "FIN DU BANC DU LANCEUR DE P3 ; cas non conformes : 0",
+            "banc-surveillance-p3-v1.log": "FIN DU BANC DE LA SURVEILLANCE DE P3 ; cas non conformes : 0",
+            "banc-controles-p3-v1.log": "FIN DU BANC DES CONTRÔLES DE P3 ; cas non conformes : 0",
+            "banc-scellement-p3-v1.log": "FIN DU BANC DU SCELLEMENT DE P3 ; cas non conformes : 0",
+            "repetition-finale-p3-v1.log": "RÉPÉTITION FINALE : CONFORME"}
+EPROUVES = {"lancer_p3_v1.sh", "verifications_p3_v1.py", "controles_avant_depense_p3_v1.sh", "sceller_p3_v1.sh",
+            "surveiller_p3_v1.sh", "repetition_finale_p3_v1.sh", "essais_lanceur_p3_v1.sh", "essais_controles_p3_v1.sh",
+            "essais_scellement_p3_v1.sh", "essais_surveillance_p3_v1.sh"}
+
+
+def preuves(dossier: str) -> list[str]:
+    vus: dict[str, str] = {}
+    for nom, verdict in JOURNAUX.items():
+        try:
+            lignes = open(f"{dossier}/{nom}", encoding="utf-8").read().split("\n")
+        except OSError:
+            raise SystemExit(f"journal {nom} absent ou illisible")
+        non_vides = [x for x in lignes if x.strip()]
+        if not non_vides or non_vides[-1] != verdict:
+            raise SystemExit(f"journal {nom} : dernière ligne ≠ « {verdict} »")
+        fautes = [x for x in lignes if "NON CONFORME" in x or x.lstrip().startswith(("Traceback", "JETON AFFICHÉ"))]
+        if fautes:
+            raise SystemExit(f"journal {nom} : ligne d'échec avant le verdict : {fautes[0].strip()[:90]}")
+        propres = 0
+        for x in lignes:
+            if x.startswith("script éprouvé : "):
+                m = re.fullmatch(r"script éprouvé : ([a-z0-9_]+_v1\.(?:py|sh)) ([0-9a-f]{64})", x)
+                if not m:
+                    raise SystemExit(f"journal {nom} : ligne « script éprouvé » mal formée : {x[:90]}")
+                if vus.setdefault(m.group(1), m.group(2)) != m.group(2):
+                    raise SystemExit(f"{m.group(1)} éprouvé sous deux empreintes")
+                propres += 1
+        if not propres:
+            raise SystemExit(f"journal {nom} : aucune ligne « script éprouvé »")
+    if set(vus) != EPROUVES:
+        raise SystemExit(f"scripts éprouvés {sorted(vus)} ≠ les dix attendus (manquants {sorted(EPROUVES - set(vus))})")
+    return [f"{s} {vus[s]}" for s in sorted(vus)]
+
+
+def main(argv: list[str]) -> int:
+    if len(argv) == 5 and argv[1] == "go":
+        print(go(*argv[2:5]))
+    elif len(argv) == 6 and argv[1] == "repetition":
+        print("\n".join(repetition(*argv[2:6])))
+    elif len(argv) == 3 and argv[1] == "preuves":
+        print("\n".join(preuves(argv[2])))
+    else:
+        print("usage : go PREREG GO_MD DECISIONS_MD | repetition CODE JOURNAL NOM SHA | preuves DOSSIER", file=sys.stderr)
+        return 2
+    return 0
+
+
+if __name__ == "__main__":
+    sys.exit(main(sys.argv))

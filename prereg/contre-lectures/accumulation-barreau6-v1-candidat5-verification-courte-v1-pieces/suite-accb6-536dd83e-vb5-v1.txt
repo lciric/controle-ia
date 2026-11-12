@@ -1,0 +1,51 @@
+........................................................................ [ 34%]
+.F...................................................................... [ 69%]
+...............................................s...........s....         [100%]
+=================================== FAILURES ===================================
+______________ test_enumeration_rejouee_egale_a_la_sortie_versee _______________
+
+tmp_path = PosixPath('/tmp/claude-0/-home-user/1cc16375-a2bd-54b9-a03f-27d43b6f26a6/scratchpad/verif-accb6-c5/tmp/pytest-of-root/pytest-0/test_enumeration_rejouee_egale0')
+
+    def test_enumeration_rejouee_egale_a_la_sortie_versee(tmp_path):
+        """Le script d'énumération, rejoué, rend une sortie égale octet pour octet à la sortie versée, elle-même égale à son compagnon ;
+        0 cas sans état, 0 cas sans phrase."""
+        if not SORTIE.is_file():
+            pytest.skip("sortie versée absente de cet arbre")
+        sortie = tmp_path / "enumeration.txt"
+        r = subprocess.run([sys.executable, "-I", "-B", str(SCRIPT), str(sortie)], capture_output=True, text=True)
+        assert r.returncode == 0, r.stderr
+        assert sortie.read_bytes() == SORTIE.read_bytes()
+>       compagnon = (SORTIE.parent / (SORTIE.name + ".sha256")).read_text(encoding="utf-8").split()[0]
+                    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+tests/test_accb6_etats_v1.py:244: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+/usr/local/lib/python3.13/pathlib/_local.py:546: in read_text
+    return PathBase.read_text(self, encoding, errors, newline)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+/usr/local/lib/python3.13/pathlib/_abc.py:632: in read_text
+    with self.open(mode='r', encoding=encoding, errors=errors, newline=newline) as f:
+         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+self = PosixPath('/tmp/claude-0/-home-user/1cc16375-a2bd-54b9-a03f-27d43b6f26a6/scratchpad/verif-accb6-c5/arbre536/scripts/enumeration-etats-accb6-v2-code-v2.txt.sha256')
+mode = 'r', buffering = -1, encoding = 'utf-8', errors = None, newline = None
+
+    def open(self, mode='r', buffering=-1, encoding=None,
+             errors=None, newline=None):
+        """
+        Open the file pointed to by this path and return a file object, as
+        the built-in open() function does.
+        """
+        if "b" not in mode:
+            encoding = io.text_encoding(encoding)
+>       return io.open(self, mode, buffering, encoding, errors, newline)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+E       FileNotFoundError: [Errno 2] No such file or directory: '/tmp/claude-0/-home-user/1cc16375-a2bd-54b9-a03f-27d43b6f26a6/scratchpad/verif-accb6-c5/arbre536/scripts/enumeration-etats-accb6-v2-code-v2.txt.sha256'
+
+/usr/local/lib/python3.13/pathlib/_local.py:537: FileNotFoundError
+=========================== short test summary info ============================
+SKIPPED [1] tests/test_accb6_phrases_texte_v1.py:200: candidat 2 du barreau 6 inaccessible depuis cet arbre (ni au commit 0d641ab3f, ni sur le disque)
+SKIPPED [1] tests/test_accb6_sondages_contre_lecture_v2.py:37: un tuple ne vient pas d'un JSON
+1 failed, 205 passed, 2 skipped in 471.41s (0:07:51)
+code 1

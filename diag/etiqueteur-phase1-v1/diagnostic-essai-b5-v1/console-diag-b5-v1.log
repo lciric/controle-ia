@@ -1,0 +1,40 @@
+....................................F................................... [ 90%]
+........                                                                 [100%]
+=================================== FAILURES ===================================
+_____________________________ test_b5_tel_quel[36] _____________________________
+
+entrees = (PosixPath('/tmp/pytest-of-root/pytest-5/entrees0'), [{'item': 'E94840', 'rang': 1, 'tache': 'T12', 'enonce': 'Task st...he': 'T07', 'version': 'placebo', ...}, {'item': 'E82444', 'rang': 6, 'tache': 'T01', 'version': 'placebo', ...}, ...])
+tmp_path = PosixPath('/tmp/pytest-of-root/pytest-5/test_b5_tel_quel_36_0')
+monkeypatch = <_pytest.monkeypatch.MonkeyPatch object at 0x7f6fa82233f0>, i = 36
+
+    @pytest.mark.parametrize("i", range(40))
+    def test_b5_tel_quel(entrees, tmp_path, monkeypatch, i):
+>       T.test_B5_cle_refusee_arrete_tous_les_appels(entrees, tmp_path, monkeypatch)
+
+/tmp/claude-0/-home-user-ideation-organism/86976e6f-3fae-57b1-a905-26802f445363/scratchpad/diag-b5-v1/diag_b5_v1.py:20: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+entrees = (PosixPath('/tmp/pytest-of-root/pytest-5/entrees0'), [{'item': 'E94840', 'rang': 1, 'tache': 'T12', 'enonce': 'Task st...he': 'T07', 'version': 'placebo', ...}, {'item': 'E82444', 'rang': 6, 'tache': 'T01', 'version': 'placebo', ...}, ...])
+tmp_path = PosixPath('/tmp/pytest-of-root/pytest-5/test_b5_tel_quel_36_0')
+monkeypatch = <_pytest.monkeypatch.MonkeyPatch object at 0x7f6fa82233f0>
+
+    def test_B5_cle_refusee_arrete_tous_les_appels(entrees, tmp_path, monkeypatch):
+        d, _, _ = entrees
+        f = [x["item"] for x in lignes(d / "formation.jsonl")]
+        c = Compteur({("A", "format", f[0], 1): "cle_refusee"})
+        assert lancer(d, tmp_path / "k", "format", "--fils-par-lecteur", "1", compteur=c) == 5
+        m = manifeste(tmp_path / "k")
+        assert m["arret"].startswith("général")
+        # après le refus, plus aucun appel ne part (au plus ceux déjà en vol : deux fils)
+        rang_refus = c.appels.index(("A", "format", f[0]))
+>       assert len(c.appels) - rang_refus <= 2
+E       AssertionError: assert (18 - 15) <= 2
+E        +  where 18 = len([('A', 'format', 'F20'), ('B', 'format', 'F20'), ('A', 'format', 'F18'), ('B', 'format', 'F18'), ('A', 'format', 'F16'), ('B', 'format', 'F16'), ...])
+E        +    where [('A', 'format', 'F20'), ('B', 'format', 'F20'), ('A', 'format', 'F18'), ('B', 'format', 'F18'), ('A', 'format', 'F16'), ('B', 'format', 'F16'), ...] = <test_lire_items_phase1_v4.Compteur object at 0x7f6fa831bdd0>.appels
+
+/tmp/claude-0/-home-user-ideation-organism/86976e6f-3fae-57b1-a905-26802f445363/scratchpad/code-64e67cbd/docs/notes/epreuve-etiqueteur-v1/test_lire_items_phase1_v4.py:221: AssertionError
+----------------------------- Captured stdout call -----------------------------
+{"code": 5, "arret": "général : lecteur A : HTTP 401 : simulé", "comptes": {"A": {"ok": 8, "illisible": 0, "non_appele": 11, "arret_lecteur": 0, "arret_general": 1}, "B": {"ok": 9, "illisible": 0, "non_appele": 11, "arret_lecteur": 0, "arret_general": 0}}, "depense_estimee_dollars": 0.914792, "feu_vert": false}
+=========================== short test summary info ============================
+FAILED ../../../tmp/claude-0/-home-user-ideation-organism/86976e6f-3fae-57b1-a905-26802f445363/scratchpad/diag-b5-v1/diag_b5_v1.py::test_b5_tel_quel[36]
+1 failed, 79 passed in 4.86s

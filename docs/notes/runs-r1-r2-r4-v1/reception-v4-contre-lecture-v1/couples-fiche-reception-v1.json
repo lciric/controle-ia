@@ -1,0 +1,70 @@
+{
+ "fiche": "docs/notes/runs-r1-r2-r4-v1/reception-v4-v1/fiche-reception-r1-v4-v1.md",
+ "fiche_sha256": "50d5a895ac312b8537b12b0893a132dca75be60eba6a156a56f2bbf92e4f0b13",
+ "regle": "appliquer dans l'ordre ; chaque « ancien » doit apparaître exactement une fois au moment de son application ; le bloc d'attendus n'est pas touché",
+ "couples": [
+  {
+   "n": 1,
+   "gravite": "majeure",
+   "motif": "Q1 : l'étape 4 scellée exige la récupération « après la destruction » ; la fiche l'omet",
+   "ancien": "| la fiche scellée et son empreinte reçues et vérifiées |",
+   "nouveau": "| la fiche scellée et son empreinte reçues et vérifiées ; instance 59175807 détruite par son identifiant et consignée (`registres/arrets.md`), poussée finale de la branche source faite ou constatée impossible (étape 4 de l'addendum : « après la destruction ») |"
+  },
+  {
+   "n": 2,
+   "gravite": "majeure",
+   "motif": "E : la seule refspec de `calcul/r1-r2-reel-v1` ne porte ni la branche source (garde `octets`) ni le commit du rejeu (garde `commit-rejeu`) : le vérificateur s'arrêterait en code 2 à E",
+   "ancien": "récupération par la seule refspec `+refs/heads/calcul/r1-r2-reel-v1:refs/remotes/origin/calcul/r1-r2-reel-v1` ;",
+   "nouveau": "récupération par les seules refspecs `+refs/heads/calcul/r1-r2-reel-v1:refs/remotes/origin/calcul/r1-r2-reel-v1` et `+refs/heads/<branche source>:refs/remotes/origin/<branche source>` (objets seulement : `octets` lit la tête de la branche source, `commit-rejeu` le commit lancé du rejeu ; `traces/` n'est jamais ouvert), plus `refs/heads/prep/r1-relance-v4` si `5bd62a00` manque au dépôt ;"
+  },
+  {
+   "n": 3,
+   "gravite": "mineure",
+   "motif": "E : l'égalité au message est manuelle ; la placer sur la branche récupérée",
+   "ancien": "| code 0 et identifiant égal à celui du message |",
+   "nouveau": "| code 0, identifiant égal à celui du message, et `git merge-base --is-ancestor <C> refs/remotes/origin/calcul/r1-r2-reel-v1` vrai |"
+  },
+  {
+   "n": 4,
+   "gravite": "moyenne",
+   "motif": "Q4 : ordre B → C → D sous coupure de la session de pilotage ; code non nul autre que 2 ou 3",
+   "ancien": "Code 2 (« ARRÊT [garde] ») ou 3 (« COURSE ARRÊTÉE ») à C ou E : rien n'est versé ni lu, rien n'est corrigé à la main,\nLazar est prévenu (section 5).",
+   "nouveau": "Code 2 (« ARRÊT [garde] »), 3 (« COURSE ARRÊTÉE ») ou tout autre code non nul (trace Python comprise) à C ou E : rien n'est versé ni lu, rien n'est corrigé à la main,\nLazar est prévenu (section 5).\n\n**Session coupée en route.** Entre B et D, un commit local non poussé n'est poussé à la reprise que si C a été rejoué sur ce même identifiant et sa sortie (code 0, identifiant du commit) consignée avant D ; sinon il est abandonné et B repart de la tête distante. Poussée refusée (tête de `calcul/r1-r2-reel-v1` déplacée) : B et C refaits sur la tête nouvelle ; jamais de rebasage ni de poussée forcée. Coupure après D, sans message : conv-audit prend la tête distante, vérifie qu'elle n'ajoute que ce commit depuis A, et fait E ; rien n'est lu avant E."
+  },
+  {
+   "n": 5,
+   "gravite": "moyenne",
+   "motif": "Q2, point 4 : comparaisons muettes de couverture — écrire qu'elles sont des invariants du code scellé et qu'un arrêt de `coherence-table` n'est pas une issue « P-R5 contraire » (dont la conséquence gelée est une réserve d'instrument) ; la table v4 porte la lecture du témoin",
+   "ancien": "un message d'arrêt nomme la clé, jamais la valeur.",
+   "nouveau": "un message d'arrêt nomme la clé, jamais la valeur. Ces comparaisons (gardes `table`, `chaine-locale`, `coherence-table`, `recalcul`) sont des invariants du code scellé (`construire_table_v4`, `rejeu_activations_v4`, `chaine_table_v4_v1`) : en course conforme elles tiennent quelle que soit la couverture ; elles contrôlent l'intégrité de la chaîne et ne lisent ni P-C (couverture par condition) ni P-R5 (`part_fideles_parmi_notees`, activations au bit). Un arrêt de `coherence-table` n'est donc pas une issue « P-R5 contraire » de l'addendum : c'est un nœud, où Lazar décide (la réserve d'instrument de P-R5 lui reste ouverte). La table v4 porte la lecture du témoin (`temoin.lecture`, `resolution_graine.lecture_temoin`) : le script la charge avec la table, ne la compare ni ne l'affiche."
+  },
+  {
+   "n": 6,
+   "gravite": "mineure",
+   "motif": "Point 7 : `timeout 900` du recalcul est une garde d'opérateur, absente du texte scellé ; un dépassement ne doit pas valoir « table non reçue »",
+   "ancien": "versée (garde `recalcul`). Ni `<HORS>/…json` ni `.err` ne sont affichés : seul le script les lit.",
+   "nouveau": "versée (garde `recalcul`). Ni `<HORS>/…json` ni `.err` ne sont affichés : seul le script les lit. Code 124 (`timeout` atteint) n'est pas un recalcul non conforme : la commande est rejouée une fois, à l'identique, sous `timeout 3600`, et le fait est consigné ; un second dépassement est un nœud. Les versions de `transformers` et `tokenizers` de l'environnement du recalcul sont déclarées au message de versement."
+  },
+  {
+   "n": 7,
+   "gravite": "mineure",
+   "motif": "Point 8 : rejeu arrêté avant son manifeste ; `.npz` partiels possibles d'un rejeu arrêté",
+   "ancien": "ou rejeu absent (étape « table-v4 » ou « chaine » arrêtée : `--run-rejeu` omis)",
+   "nouveau": "ou rejeu absent (étape « table-v4 » ou « chaine » arrêtée, ou rejeu arrêté avant son manifeste — table v4 refusée au chargement, garde de configuration — : `--run-rejeu` omis)"
+  },
+  {
+   "n": 8,
+   "gravite": "mineure",
+   "motif": "Point 8 : `ajouter_donnees` du script verse les `.npz` déjà écrits d'un rejeu arrêté pendant l'écriture ; le vérificateur les admet (inclusion)",
+   "ancien": "(rejeu arrêté, aucun `donnees/J`)",
+   "nouveau": "(rejeu arrêté ; des `.npz` partiels sous `donnees/J` sont possibles, versés sans être ouverts)"
+  },
+  {
+   "n": 9,
+   "gravite": "moyenne",
+   "motif": "Q5 : ce que la fiche ne vérifie pas est dispersé entre la fiche (4.5, 6) et le rapport (points 7, 9) ; l'écrire d'avance dans la fiche",
+   "ancien": "## 9. Bloc d'attendus (sortie de",
+   "nouveau": "## 8 bis. Ce que cette fiche ne vérifie pas (écrit d'avance)\n\n- Valeurs des tableaux `.npz` : identité égale à P3, `jetons_empan` égal aux `jetons_notes` de P3 (parent, plan d'analyse), activations finies et dans l'étendue du float16 : gardes du module et lecteurs des analyses.\n- Corrections de la table revérifiées par l'empreinte de P3 : faites par le rejeu (chargement) et par le recalcul de la section 7, non par le script.\n- Sortie du recalcul : prise telle que la session l'écrit ; tokeniseur employé (empreinte de `tokenizer.json`) déclaré par la session ; conv-audit refait le recalcul à E.\n- Reprise V4-E16 : seul le nom de la branche source (`-v1` ou `-v2`) est vérifié ; sa déclaration avant la création se vérifie au registre par la session.\n- Destruction de l'instance (condition de B) : au registre (`registres/arrets.md`), non par le script.\n- Clés du résultat du rejeu hors de `CHEMINS_LUS_REJEU` (dont `fichiers_au_dessus_de_95_mo`) : non lues.\n\n## 9. Bloc d'attendus (sortie de"
+  }
+ ]
+}

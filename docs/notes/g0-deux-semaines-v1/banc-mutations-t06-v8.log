@@ -1,0 +1,66 @@
+VERT témoin lanceur v7
+VERT témoin amorce v6
+TUÉE C-V5-1 : recherche par identifiant au lieu du filtre
+TUÉE C-V5-1 : machines refusées non exclues
+TUÉE C-V5-1 : plus de limite de trois essais
+TUÉE C-V5-1 : rang suivant sans vérifier l'inventaire
+TUÉE C-V5-1 : identifiant donné à la main admis
+TUÉE C-V5-1 : recherche filtrée sans le disque demandé (--storage)
+TUÉE C-V5-2 : HF_TOKEN exigé aussi en mode jouet
+TUÉE C-V5-2 : HF_TOKEN jamais exigé
+TUÉE C-V5-3 : texte au plafond de 200
+TUÉE C-V5-1 (session) : liste dans l'ordre reçu, pas du prix croissant
+TUÉE C-V5-1 (session) : machine exclue admise
+TUÉE C-V5-1 (session) : liste vide non signalée
+TUÉE C-V5-1 (session) : prix maximal absent du filtre
+TUÉE C-V5-1 (session) : bornes de l'offre non vérifiées
+TUÉE R-1660 (session) : fiabilité absente du filtre de création
+TUÉE R-1660 (session) : seuil de fiabilité abaissé
+INAPPLICABLE R-1660 (ordres) : filtre de lecture de l'ordre d'E2 non lu dans le lanceur (0 occurrences)
+INAPPLICABLE R-1660 (ordres) : filtre d'E3 lu sans la fiabilité (0 occurrences)
+TUÉE R-1677 (amorce) : clonage complet (sans --no-checkout)
+TUÉE R-1677 (amorce) : clonage sans filtre de blobs
+TUÉE R-1677 (amorce) : extraction partielle jamais posée
+TUÉE R-1677 (amorce) : échec de l'extraction partielle (set) ignoré
+TUÉE R-1677 (amorce) : échec de l'extraction partielle (init) ignoré
+TUÉE R-1677 (amorce) : dossier des PDF de tiers dans la liste
+TUÉE R-1677 (amorce) : ligne CLONAGE absente
+TUÉE R-1677 (amorce) : attente du refus de 18 s au lieu de 180 s
+TUÉE R-1677 (amorce) : attente du refus pilotable en exploitation
+TUÉE R-1677 (amorce) : refus sans attente
+TUÉE R-1677 (amorce) : refus précoce sans attente
+TUÉE R-1683 (amorce) : message de git jeté (set)
+TUÉE R-1683 (amorce) : message de git jeté (init)
+TUÉE R-1683 (session) : liste vide lue comme une absence
+TUÉE R-1683 (session) : motifs d'introuvable vidés
+TUÉE R-1683 (session) : réponse illisible déclarée introuvable
+TUÉE R-1683 (session) : inventaire illisible déclaré absent
+TUÉE R-1683 (session) : toute instance déclarée présente
+TUÉE R-1683 (lanceur) : tail de 2000 lignes
+TUÉE R-1683 (lanceur) : un seul relevé de la liste suffit à l'arrêt
+TUÉE R-1683 (lanceur) : un seul relevé de l'instance seule suffit à l'arrêt
+TUÉE R-1683 (lanceur) : pas d'escalade après trois relevés
+TUÉE R-1683 (lanceur) : alertes d'inventaire seulement dans le fichier
+TUÉE R-1683 (lanceur) : liste vide qui donne ARRET mort sans passer par l'instance seule
+TUÉE R-1683 (lanceur) : journal brut écrit avant masquage
+TUÉE R-1683 (lanceur) : clés de plus de 7 caractères non masquées
+TUÉE R-1683 (lanceur) : inventaire écrit sans masquage
+TUÉE R-1683 (lanceur) : réponse de show instance écrite sans masquage
+TUÉE R-1683 (lanceur) : clé courte admise
+TUÉE R-1683 (lanceur) : copie du journal écrasée par un relevé sans journal
+TUÉE R-1677 (session) : inet_down absent du filtre
+TUÉE R-1677 (session) : seuil de débit abaissé
+TUÉE R-1683 (cibles) : tache_de qui recopie les cibles dans l'énoncé
+TUÉE R-1686 (session) : cuda_max_good absent du filtre
+TUÉE R-1686 (session) : seuil de CUDA abaissé
+TUÉE R-1686 (session) : garde locale de CUDA retirée
+TUÉE R-1686 (session) : clé cuda_max_good absente tolérée
+TUÉE R-1686 (amorce) : carte invisible sans refus
+TUÉE R-1686 (amorce) : carte invisible sans consigner la cause
+TUÉE R-1686 (amorce) : version du pilote non citée
+TUÉE R-1686 (amorce) : la garde de la carte vaut aussi en jouet
+FIN DU BANC DE MUTATIONS T0.6 v8 ; mutations 59 (dont 59 des corrections C-V5-1 à C-V5-3), témoins 2, survivantes ou inapplicables ou témoins rouges : 2
+--- correctif du banc après ce passage : les deux mutations INAPPLICABLES ciblaient le générateur v4 (E2 et E3) ; réécrites pour le générateur v5 (E3 seul) et rejouées seules (--filtre) :
+TUÉE R-1660 (ordres) : filtre de lecture de l ordre d E3 non lu dans le lanceur
+TUÉE R-1660 (ordres) : filtre d E3 lu sans la fiabilité
+BILAN : 59 mutations, 59 tuées (57 au premier passage + 2 rejouées), témoins lanceur v8 et amorce v6 verts

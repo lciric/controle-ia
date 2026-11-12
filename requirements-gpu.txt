@@ -5,3 +5,6 @@
 # s'installe depuis l'index de PyTorch (download.pytorch.org/whl/cu128) ; le manifeste consigne alors la
 # version exacte de torch, suffixe de construction compris.
 -r requirements-cpu.txt
+# Chaîne de données (pandoc embarqué) : trois tests de tests/test_corpus_arxiv.py l'appellent ; sans elle, la suite
+# échouait sur l'instance (relecture du lancement de la revalidation, L-1)
+-r requirements-donnees.txt

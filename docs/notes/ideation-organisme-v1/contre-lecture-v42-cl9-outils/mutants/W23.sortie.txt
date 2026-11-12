@@ -1,0 +1,41 @@
+........................../tmp/claude-0/-home-user-controle-ia-travail/75a1275d-b838-5015-909e-b2bfadb395f9/scratchpad/relecture-v42/cl9/outils-cl9/mutants/W23/essais/test_v7_ideation.py:557: ResourceWarning: unclosed file <_io.TextIOWrapper name='/tmp/claude-0/-home-user-controle-ia-travail/75a1275d-b838-5015-909e-b2bfadb395f9/scratchpad/relecture-v42/cl9/outils-cl9/mutants/W23/essais/_tmp/tmppricp5jf/petit-enfant.pid' mode='r' encoding='UTF-8'>
+  pid = int(open(pid_f).read())
+ResourceWarning: Enable tracemalloc to get the object allocation traceback
+../tmp/claude-0/-home-user-controle-ia-travail/75a1275d-b838-5015-909e-b2bfadb395f9/scratchpad/relecture-v42/cl9/outils-cl9/mutants/W23/essais/test_v7_ideation.py:649: ResourceWarning: unclosed file <_io.TextIOWrapper name='/tmp/claude-0/-home-user-controle-ia-travail/75a1275d-b838-5015-909e-b2bfadb395f9/scratchpad/relecture-v42/cl9/outils-cl9/mutants/W23/essais/_tmp/tmpo0_argf2/cx-3/proposeurs/argon/traces-passe-2/consigne.md' mode='r' encoding='utf-8'>
+  encoding="utf-8").read()
+ResourceWarning: Enable tracemalloc to get the object allocation traceback
+................................./tmp/claude-0/-home-user-controle-ia-travail/75a1275d-b838-5015-909e-b2bfadb395f9/scratchpad/relecture-v42/cl9/outils-cl9/mutants/W23/essais/test_v7_ideation.py:1254: ResourceWarning: unclosed file <_io.TextIOWrapper name='/tmp/claude-0/-home-user-controle-ia-travail/75a1275d-b838-5015-909e-b2bfadb395f9/scratchpad/relecture-v42/cl9/outils-cl9/mutants/W23/essais/_tmp/tmp5_t7__a8/pe.pid' mode='r' encoding='UTF-8'>
+  pe = int(open(pid_f).read())
+ResourceWarning: Enable tracemalloc to get the object allocation traceback
+.......................E.........
+======================================================================
+ERROR: test_cl41_04_controle_non_court_refuse_verrouille_le_bras (essais.test_v7_ideation.TestV42.test_cl41_04_controle_non_court_refuse_verrouille_le_bras)
+CL41-04 : contrôle court refusé → tentative payée, message « avant tout envoi des fiches » vrai (la commande n'a
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/tmp/claude-0/-home-user-controle-ia-travail/75a1275d-b838-5015-909e-b2bfadb395f9/scratchpad/relecture-v42/cl9/outils-cl9/mutants/W23/pole/ideation.py", line 1610, in executer_bras_differe
+    lecture_controle = appel_de_controle(adaptateur, [modele], dossier_controle, budget_controle_usd, None,
+                       ~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+                                         exiger_cout=exiger_cout_controle, supplement=None)[modele]
+                                         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/tmp/claude-0/-home-user-controle-ia-travail/75a1275d-b838-5015-909e-b2bfadb395f9/scratchpad/relecture-v42/cl9/outils-cl9/mutants/W23/pole/ideation.py", line 783, in appel_de_controle
+    raise ControleRefuse(f"appel de contrôle refusé pour {modele} : " + " ; ".join(problemes), lecture,
+                         non_lance=non_lance)
+pole.ideation.ControleRefuse: appel de contrôle refusé pour autre-lignee-x : texte '```json\n{"notes": []}\n```' ≠ OK
+
+The above exception was the direct cause of the following exception:
+
+Traceback (most recent call last):
+  File "/tmp/claude-0/-home-user-controle-ia-travail/75a1275d-b838-5015-909e-b2bfadb395f9/scratchpad/relecture-v42/cl9/outils-cl9/mutants/W23/essais/test_v7_ideation.py", line 2444, in test_cl41_04_controle_non_court_refuse_verrouille_le_bras
+    idn.executer_bras_differe(s2, attestation_lecture_humaine=att2, budgets=budgets,
+    ~~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+                              juges_externes=[("argon", "autre-lignee-x", a2)])
+                              ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/tmp/claude-0/-home-user-controle-ia-travail/75a1275d-b838-5015-909e-b2bfadb395f9/scratchpad/relecture-v42/cl9/outils-cl9/mutants/W23/pole/ideation.py", line 1722, in executer_bras_differe
+    raise CourseInterrompue(motif_t) from e
+pole.ideation.CourseInterrompue: tentative 1 du bras échouée avant tout envoi des fiches, 0.0500 USD comptés : appel de contrôle refusé pour autre-lignee-x : texte '```json\n{"notes": []}\n```' ≠ OK ; relance permise
+
+----------------------------------------------------------------------
+Ran 94 tests in 17.914s
+
+FAILED (errors=1)

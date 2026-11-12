@@ -1,0 +1,147 @@
+--- echelle-v5/scripts/lancer_echelle_v5.sh	2026-10-27 03:52:33.748712711 +0000
++++ echelle-v6/scripts/lancer_echelle_v6.sh	2026-10-27 05:29:49.895329256 +0000
+@@ -1,17 +1,22 @@
+ #!/usr/bin/env bash
+-# Lanceur de la comparaison d'échelle 8B contre 70B, v5 (préenregistrement `prereg/test-echelle-conscience-eval-v6.md`),
+-# sous le GO passé en argument ; décliné de `lancer_echelle_v4.sh` sous un nom nouveau (R12) par la lignée
+-# « session-depot » le 27 octobre 2026, après la contre-lecture n° 4 :
++# Lanceur de la comparaison d'échelle 8B contre 70B, v6 (préenregistrement `prereg/test-echelle-conscience-eval-v7.md`),
++# sous le GO passé en argument ; décliné de `lancer_echelle_v5.sh` sous un nom nouveau (R12) par la lignée
++# « session-depot » le 27 octobre 2026, après la contre-lecture n° 5 (CLV-06) :
++#   - le lanceur doit être celui du commit lancé (empreinte comparée à celle du fichier du commit) ; il écrit dans
++#     lancement.txt l'empreinte de la surveillance du commit (« surveillance attendue H »), que la surveillance relit ;
++#   - appels à vastai bornés (CLV-02) : 60 s avant la création, 120 s pour la création ; une création coupée par sa
++#     borne rend une réponse illisible, donc le code 7 (création douteuse) ;
++# Depuis la v5 (contre-lecture n° 4) :
+ #   - le texte scellé doit citer le commit lancé (CLW-04) ;
+-#   - le GO cité est relu dans `registres/go.md` par `verifier_go_v5.py` (extrait du commit, testé) : type « calcul »,
++#   - le GO cité est relu dans `registres/go.md` par `verifier_go_v6.py` (extrait du commit, testé) : type « calcul »,
+ #     accordé par Lazar, périmètre citant le préenregistrement et son empreinte, plafond ≥ PLAFOND_GO (CLW-03) ;
+ #   - version de vastai vérifiée (1.8.3, CLW-10) ;
+ #   - création douteuse (réponse illisible, statut non nul, identifiant illisible) : code 7 distinct ; l'instance n'est
+ #     ni contrôlée ni surveillée : la retrouver à la main (champs filtrés), l'arrêter par son identifiant (CLW-08).
+-# Depuis la v4 : offre et plafond de durée par `choisir_offre_v5.py` (dépense au pire au prix majoré de la tolérance
++# Depuis la v4 : offre et plafond de durée par `choisir_offre_v6.py` (dépense au pire au prix majoré de la tolérance
+ # du prix relu, 24 h de stockage après l'arrêt, remontée et 165 Go de descente comprises, débit ≥ 2 000 Mb/s) ; heure de
+ # création (CREATION_S) et plafond de durée (DUREE_MAX_S) passés à l'instance et écrits dans lancement.txt ; prix
+-# relus par `controler_prix_v5.sh`. Le reste comme v3 : préenregistrement scellé et conforme
++# relus par `controler_prix_v6.sh`. Le reste comme v3 : préenregistrement scellé et conforme
+ # (`exiger_prereg_scelle`) ; commit = tête de la branche d'outils ; branche des résultats absente ; garde de calcul
+ # rejouée avec le GO ; instances du compte : aucune, sauf celles d'autres projets nommées « rr-… » (jamais touchées) ;
+ # crédit exigé ; création avec l'amorce du commit, encodée ; jetons passés à l'instance par --env, jamais affichés.
+@@ -19,21 +24,22 @@
+ # instance arrêtée (la détruire par son identifiant après vérification) ; 6 prix relu non conforme et arrêt non relu ;
+ # 7 création douteuse (vérifier les instances à la main, champs filtrés, jamais --raw sans filtre) ; 2 tout autre arrêt
+ # avant la création.
+-# Usage : VASTAI=<chemin de vastai 1.8.3> lancer_echelle_v5.sh DOSSIER_TRACES COMMIT GO_ID
++# Usage : VASTAI=<chemin de vastai 1.8.3> lancer_echelle_v6.sh DOSSIER_TRACES COMMIT GO_ID
+ set -euo pipefail
+ trap 'echo "arrêt avant la création (ligne $LINENO)"; exit 2' ERR
+-[ $# -eq 3 ] || { echo "usage : lancer_echelle_v5.sh DOSSIER_TRACES COMMIT GO_ID"; exit 2; }
++[ $# -eq 3 ] || { echo "usage : lancer_echelle_v6.sh DOSSIER_TRACES COMMIT GO_ID"; exit 2; }
+ T=$(realpath -m "$1"); COMMIT=$2; GO=$3
++LANCEUR=$(realpath "$0")
+ [[ "$COMMIT" =~ ^[0-9a-f]{40}$ ]] || { echo "COMMIT : 40 caractères hexadécimaux attendus"; exit 2; }
+ [[ "$GO" =~ ^GO-[0-9]{4}-[0-9]{2}-[0-9]{2}-[0-9]{2}$ ]] || { echo "GO_ID illisible"; exit 2; }
+ V=${VASTAI:?VASTAI : chemin de l outil vastai 1.8.3}
+ [ "$("$V" --version 2>/dev/null | head -1)" = "1.8.3" ] || { echo "vastai : version différente de 1.8.3"; exit 2; }
+ DEPOT=/home/user/controle-ia-travail
+ DEPOT_URL=https://github.com/lciric/controle-ia-travail.git
+-BRANCHE_CODE=outils/echelle-conscience-eval-v5
+-BRANCHE=donnees/echelle-conscience-eval-v5
+-ETIQUETTE=echelle-v5
+-PREREG=prereg/test-echelle-conscience-eval-v6.md
++BRANCHE_CODE=outils/echelle-conscience-eval-v6
++BRANCHE=donnees/echelle-conscience-eval-v6
++ETIQUETTE=echelle-v6
++PREREG=prereg/test-echelle-conscience-eval-v7.md
+ PLAFOND_GO=8.00        # USD : plafond demandé à Lazar (dépense au pire, au prix majoré de la tolérance, stockage après l'arrêt compris)
+ PRIX_MAX=3.50          # USD de l'heure, toutes cartes, stockage compris
+ DESCENTE_MAX=0.005     # USD par Go descendu : ~160 Go de poids (8B + 70B)
+@@ -44,7 +50,7 @@
+ FILTRE="gpu_total_ram>=160 gpu_ram>=46 num_gpus<=4 cuda_vers>=13.0 verified=true reliability>=0.98 disk_space>=$DISQUE rentable=true inet_down>=2000"
+ [ -e "$T" ] && { echo "$T existe déjà (R12)"; exit 2; }
+ mkdir -p "$T"
+-printf 'lanceur %s ; départ %s UTC\n' "$(sha256sum "$0" | cut -d' ' -f1)" "$(date -u +%FT%TZ)" >> "$T/lancement.txt"
++printf 'lanceur %s ; départ %s UTC\n' "$(sha256sum "$LANCEUR" | cut -d' ' -f1)" "$(date -u +%FT%TZ)" >> "$T/lancement.txt"
+ # 0. préenregistrement scellé et conforme (R1, R2 ; CLH-08)
+ (cd "$DEPOT" && PYTHONPATH=src python3 -I -B -c 'import sys; sys.path.insert(0, "src"); from controle_ia.prereg import exiger_prereg_scelle; print(exiger_prereg_scelle(sys.argv[1]))' "$PREREG") \
+     | sed 's/^/préenregistrement scellé : /' | tee -a "$T/lancement.txt" | grep -q 'scellé : [0-9a-f]\{64\}' \
+@@ -64,10 +70,15 @@
+ esac
+ # 2. amorce du commit, encodée ; aller-retour vérifié
+ git -C "$DEPOT" fetch -q origin "$BRANCHE_CODE"
+-git -C "$DEPOT" show "$COMMIT:echelle-v5/scripts/amorce_echelle_v5.sh" > "$T/amorce.sh"
+-git -C "$DEPOT" show "$COMMIT:echelle-v5/scripts/choisir_offre_v5.py" > "$T/choisir_offre_v5.py"
+-git -C "$DEPOT" show "$COMMIT:echelle-v5/scripts/controler_prix_v5.sh" > "$T/controler_prix_v5.sh"
+-git -C "$DEPOT" show "$COMMIT:echelle-v5/scripts/verifier_go_v5.py" > "$T/verifier_go_v5.py"
++# 2 bis. le lanceur est celui du commit ; empreinte de la surveillance du commit, que la surveillance relit (CLV-06)
++L_COMMIT=$(git -C "$DEPOT" show "$COMMIT:echelle-v6/scripts/lancer_echelle_v6.sh" | sha256sum | cut -d' ' -f1)
++[ "$(sha256sum "$LANCEUR" | cut -d' ' -f1)" = "$L_COMMIT" ] || { echo "lanceur différent de celui du commit $COMMIT (CLV-06) : pas de création"; exit 2; }
++S_COMMIT=$(git -C "$DEPOT" show "$COMMIT:echelle-v6/scripts/surveiller_echelle_v6.sh" | sha256sum | cut -d' ' -f1)
++printf 'lanceur conforme au commit\nsurveillance attendue %s\n' "$S_COMMIT" | tee -a "$T/lancement.txt"
++git -C "$DEPOT" show "$COMMIT:echelle-v6/scripts/amorce_echelle_v6.sh" > "$T/amorce.sh"
++git -C "$DEPOT" show "$COMMIT:echelle-v6/scripts/choisir_offre_v6.py" > "$T/choisir_offre_v6.py"
++git -C "$DEPOT" show "$COMMIT:echelle-v6/scripts/controler_prix_v6.sh" > "$T/controler_prix_v6.sh"
++git -C "$DEPOT" show "$COMMIT:echelle-v6/scripts/verifier_go_v6.py" > "$T/verifier_go_v6.py"
+ E=$(sha256sum "$T/amorce.sh" | cut -d' ' -f1)
+ B64=$(base64 -w0 < "$T/amorce.sh")
+ [ "$(printf %s "$B64" | base64 -d | sha256sum | cut -d' ' -f1)" = "$E" ] || { echo "encodage de l'amorce"; exit 2; }
+@@ -79,10 +90,10 @@
+ printf '{"tool_input":{"command":"GO_ID=%s vastai create instance 0 --raw"}}' "$GO" | python3 "$DEPOT/.claude/hooks/garde_calcul.py"
+ echo "garde de calcul : $GO accepté" | tee -a "$T/lancement.txt"
+ # 4 bis. GO propre à cette expérience : périmètre, empreinte du texte scellé, plafond (CLW-03)
+-python3 -I -B "$T/verifier_go_v5.py" "$DEPOT/registres/go.md" "$GO" "$(basename "$PREREG")" "$EMPREINTE_PREREG" "$PLAFOND_GO" \
++python3 -I -B "$T/verifier_go_v6.py" "$DEPOT/registres/go.md" "$GO" "$(basename "$PREREG")" "$EMPREINTE_PREREG" "$PLAFOND_GO" \
+     | tee -a "$T/lancement.txt" | grep -q ': conforme' || { echo "GO $GO non conforme pour cette expérience : pas de création"; exit 2; }
+ # 5. instances du compte : aucune, sauf celles d'autres projets nommées « rr-… » (comptées dans le crédit, jamais touchées)
+-SOMME_AUTRES=$("$V" show instances --raw | python3 -I -B -c '
++SOMME_AUTRES=$(timeout 60 "$V" show instances --raw | python3 -I -B -c '
+ import json, sys
+ prefixe, journal = sys.argv[1], open(sys.argv[2], "a", encoding="utf-8")
+ try:
+@@ -110,9 +121,9 @@
+ print(f"{somme:.4f}")' "$PREFIXE_AUTRES" "$T/lancement.txt") \
+     || { echo "instances : une instance hors liste est sur le compte, ou réponse illisible : pas de création"; exit 2; }
+ # 6. offre : filtre, conformité relue localement, la moins chère (à prix égal, le plus petit identifiant)
+-"$V" search offers "$FILTRE" -o 'dph_total' --storage "$DISQUE" --raw > "$T/offres-brut.json"
++timeout 60 "$V" search offers "$FILTRE" -o 'dph_total' --storage "$DISQUE" --raw > "$T/offres-brut.json"
+ c=0
+-CHOIX=$(python3 -I -B "$T/choisir_offre_v5.py" "$T/offres-brut.json" "$T/offre.json" "$PRIX_MAX" "$DESCENTE_MAX" \
++CHOIX=$(python3 -I -B "$T/choisir_offre_v6.py" "$T/offres-brut.json" "$T/offre.json" "$PRIX_MAX" "$DESCENTE_MAX" \
+         "$PLAFOND_GO" "$T/lancement.txt" "$T/offres-relues.json") || c=$?
+ rm -f "$T/offres-brut.json"
+ [ "$c" = 3 ] && { echo "aucune offre conforme au plafond de $PLAFOND_GO USD : pas de création"; exit 3; }
+@@ -122,7 +133,7 @@
+ echo "offre choisie : $OFFRE ($DPH USD/h ; descente $DESC USD/Go ; plafond de durée $DUREE_MAX_S s ; dépense au pire $PIRE USD au prix majoré de la tolérance), au coût estimé le plus bas des offres conformes" | tee -a "$T/lancement.txt"
+ # 7. crédit exigé (aucune valeur relue n'est insérée dans du code)
+ c=0
+-CREDIT_LIGNE=$("$V" show user --raw 2>/dev/null | python3 -I -B -c '
++CREDIT_LIGNE=$(timeout 60 "$V" show user --raw 2>/dev/null | python3 -I -B -c '
+ import json, math, sys
+ heures, pire, autres = (float(x) for x in sys.argv[1:4])
+ try:
+@@ -146,7 +157,7 @@
+ export T_LANCEMENT="$T"
+ printf 'go %s\noffre %s\nbranche des résultats %s\netiquette %s\ncreation %s\nduree_max_s %s\nplafond de la surveillance %s (création + %s s)\ninstance : arrêtée par son identifiant à la fin (R10), détruite par son identifiant après vérification des résultats poussés\n' \
+     "$GO" "$OFFRE" "$BRANCHE" "$ETIQUETTE" "$CREATION" "$DUREE_MAX_S" "$((CREATION + DUREE_MAX_S))" "$DUREE_MAX_S" >> "$T/lancement.txt"
+-GO_ID="$GO" "$V" create instance "$OFFRE" --raw --image "$IMAGE" --disk "$DISQUE" --cancel-unavail --label "$ETIQUETTE" \
++GO_ID="$GO" timeout 120 "$V" create instance "$OFFRE" --raw --image "$IMAGE" --disk "$DISQUE" --cancel-unavail --label "$ETIQUETTE" \
+     --env "-e COMMIT=$COMMIT -e BRANCHE=$BRANCHE -e GO_ID=$GO -e DUREE_MAX_S=$DUREE_MAX_S -e CREATION_S=$CREATION -e DEPOT_URL=$DEPOT_URL -e HF_TOKEN=$HF_TOKEN -e GH_TOKEN=$CONTROLE_IA_GITHUB_TOKEN" \
+     --entrypoint bash --args -c "echo $B64 | base64 -d > /root/amorce.sh && bash /root/amorce.sh" 2>&1 | python3 -I -B -c '
+ import json, os, sys
+@@ -170,12 +181,12 @@
+ ID=$(grep -o 'identifiant [0-9]*' "$T/lancement.txt" | tail -1 | cut -d' ' -f2)
+ [[ "$ID" =~ ^[0-9]+$ ]] || { echo "création douteuse : identifiant de l'instance illisible ; retrouver l'instance (champs filtrés), l'arrêter par son identifiant"; exit 7; }
+ sleep 20
+-VASTAI="$V" bash "$T/controler_prix_v5.sh" "$ID" "$T/offre.json" "$T/lancement.txt"
++VASTAI="$V" bash "$T/controler_prix_v6.sh" "$ID" "$T/offre.json" "$T/lancement.txt"
+ c=$?
+ case $c in
+     0) ;;
+     4) echo "instance $ID arrêtée (prix non conforme) : la détruire par son identifiant après vérification" | tee -a "$T/lancement.txt"; exit 4 ;;
+     *) echo "instance $ID : arrêt non relu (code $c) : vérifier l'instance à la main, champs filtrés" | tee -a "$T/lancement.txt"; exit 6 ;;
+ esac
+-echo "surveillance : VASTAI=$V DUREE_MAX_S=$DUREE_MAX_S surveiller_echelle_v5.sh $ID $CREATION $T <dossier neuf>" | tee -a "$T/lancement.txt"
++echo "surveillance : VASTAI=$V DUREE_MAX_S=$DUREE_MAX_S surveiller_echelle_v6.sh $ID $CREATION $T <dossier neuf>" | tee -a "$T/lancement.txt"
+ exit 0

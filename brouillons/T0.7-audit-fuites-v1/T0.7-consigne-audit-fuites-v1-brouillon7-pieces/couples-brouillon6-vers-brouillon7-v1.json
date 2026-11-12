@@ -1,0 +1,31 @@
+{
+  "de": {
+    "chemin": "brouillons/T0.7-audit-fuites-v1/T0.7-consigne-audit-fuites-v1-brouillon6.md",
+    "sha256": "71118f666253c99abeb3bf60a162e5aba8fdcb5e5788c2265ae444be7a30fcac"
+  },
+  "vers": {
+    "chemin": "brouillons/T0.7-audit-fuites-v1/T0.7-consigne-audit-fuites-v1-brouillon7.md",
+    "sha256": "43102e80332cd138305604b7cffb2dc77a1584a7ad0b48584c7506ea377b3a5d"
+  },
+  "regle": "appliqués dans l'ordre, chaque « ancien » présent une fois ; défaits du dernier au premier, ils redonnent le brouillon 6 à l'octet",
+  "couples": [
+    {
+      "id": "F01",
+      "motif": "puce « Marqueurs » juste : aucun marqueur restant ; `RAPPORT_CONTRE_LECTURE_2` rempli au § 14.2 (couple prêt au journal du brouillon 6, § 4)",
+      "ancien": "; **reste à remplir avant le scellement** : `RAPPORT_CONTRE_LECTURE_2` (§ 14.2,\n  contre-lecture des écarts commandée par la mère).",
+      "nouveau": "; `RAPPORT_CONTRE_LECTURE_2` (§ 14.2) **rempli au brouillon 6**\n  (R-2355) ; **aucun marqueur ne reste**."
+    },
+    {
+      "id": "F02",
+      "motif": "titre et statut en tête : brouillon 7, prêt au scellement ; l'ancien statut devient « Brouillon 6 (historique) »",
+      "ancien": "# Consigne de l'audit des fuites de T0.7 — v1 — brouillon 6\n\n- **Statut** : **brouillon 6, prêt au scellement** par la session mère sous le nom définitif\n",
+      "nouveau": "# Consigne de l'audit des fuites de T0.7 — v1 — brouillon 7\n\n- **Statut** : **brouillon 7, prêt au scellement** par la session mère sous le nom définitif\n  `prereg/T0.7-consigne-audit-fuites-v1.md` (avec compagnon `.sha256`) ; écrit le 2026-11-11 à partir de 14:06 UTC\n  (heure relevée par `date -u`) par l'agent des brouillons 4 à 6 (Claude Opus 5.5, `claude-opus-5-5`, sous-agent de\n  la session mère `session_01VJdZpSMxSdk2SJ1ScmdfNv`), sur le message de la mère de 14:06 UTC. **Brouillon 7 = brouillon 6**\n  (`brouillons/T0.7-audit-fuites-v1/T0.7-consigne-audit-fuites-v1-brouillon6.md`,\n  `71118f666253c99abeb3bf60a162e5aba8fdcb5e5788c2265ae444be7a30fcac`, scellé, gardé intact) **+ trois couples** du fichier\n  `brouillons/T0.7-audit-fuites-v1/T0.7-consigne-audit-fuites-v1-brouillon7-pieces/couples-brouillon6-vers-brouillon7-v1.json`,\n  appliqués chacun une fois par le script `appliquer_couples_brouillon7_v1.py` du même dossier : la puce\n  « Marqueurs » mise à jour (aucun marqueur restant ; `RAPPORT_CONTRE_LECTURE_2` rempli au § 14.2), ce statut, et la\n  phrase du statut du brouillon 6 sur cette puce ; défaire les trois couples redonne le brouillon 6 à l'octet\n  (vérifié par le script). **Aucun marqueur ne reste.** Journal : `brouillons/T0.7-audit-fuites-v1/T0.7-consigne-audit-fuites-v1-brouillon7-pieces/journal-brouillon7-v1.md`.\n- **Brouillon 6** (historique) : prêt au scellement par la session mère sous le nom définitif\n"
+    },
+    {
+      "id": "F03",
+      "motif": "statut historique du brouillon 6 : sa phrase sur la puce « Marqueurs » n'est plus vraie au brouillon 7",
+      "ancien": "la puce « Marqueurs » ci-dessous garde l'état du brouillon 5.",
+      "nouveau": "la puce « Marqueurs » y gardait l'état du brouillon 5 (mise à jour au\n  brouillon 7)."
+    }
+  ]
+}

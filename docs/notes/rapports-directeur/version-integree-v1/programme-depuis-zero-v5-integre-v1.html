@@ -1,0 +1,1632 @@
+<!doctype html>
+<html lang="fr">
+<head>
+<meta charset="utf-8">
+<title>Programme depuis zéro, version 5</title>
+<style>
+:root { --encre:#1b1f24; --doux:#59616b; --filet:#c9cfd6; --fond-tete:#eef1f4; }
+@page { size: A4; }
+* { box-sizing: border-box; }
+body { font-family: "DejaVu Serif", "Liberation Serif", serif; font-size: 9.4pt; line-height: 1.38; color: var(--encre); margin: 0; background: #fff; }
+h1, h2, h3, .tag, th, .cartouche h2, figcaption, .legende { font-family: "DejaVu Sans", "Liberation Sans", sans-serif; }
+h1 { font-size: 17pt; margin: 0 0 1.5mm; line-height: 1.15; }
+h2 { font-size: 12.2pt; margin: 6mm 0 2mm; padding-bottom: 1mm; border-bottom: 1.3pt solid var(--encre); break-after: avoid; }
+h3 { font-size: 10.3pt; margin: 3.8mm 0 1.4mm; break-after: avoid; }
+p { margin: 0 0 1.9mm; }
+ul, ol { margin: 0 0 2mm; padding-left: 5mm; }
+li { margin: 0 0 0.8mm; }
+.sous-titre { color: var(--doux); font-size: 9pt; margin-bottom: 3.5mm; }
+.cartouche { border: 1.1pt solid var(--encre); padding: 3mm 4mm 2mm; margin: 0 0 3mm; }
+.cartouche h2 { border: none; margin: 0 0 1.5mm; padding: 0; font-size: 11pt; }
+table { width: 100%; border-collapse: collapse; margin: 1.5mm 0 3mm; font-size: 8.1pt; line-height: 1.3; }
+th { background: var(--fond-tete); text-align: left; font-weight: bold; }
+th, td { border: 0.6pt solid var(--filet); padding: 1.1mm 1.5mm; vertical-align: top; }
+tr { break-inside: avoid; }
+.tag { display: inline-block; font-size: 6.6pt; font-weight: bold; padding: 0.2mm 1.2mm; border-radius: 1mm; color: #fff; white-space: nowrap; }
+.demontre { background: #1e6b3a; } .simule { background: #2b7a78; } .prereg { background: #1f4e8c; } .question { background: #8a5a00; } .choix { background: #59616b; } .fait { background: #1e6b3a; } .cours { background: #8a5a00; } .afaire { background: #1f4e8c; } .raye { background: #7a1f2b; }
+.ref { font-family: "DejaVu Sans Mono", monospace; font-size: 6.9pt; color: var(--doux); word-break: break-all; }
+.note { color: var(--doux); font-size: 8.2pt; }
+.saut { break-before: page; }
+.encadre { border-left: 2.2pt solid var(--encre); padding: 0.5mm 0 0.5mm 3mm; margin: 2mm 0 3mm; }
+.formule { font-family: "DejaVu Serif", serif; background: #f5f6f8; padding: 1.2mm 2.5mm; margin: 1.5mm 0 2mm; border-radius: 1mm; }
+.reserve { border: 1.4pt dashed #7a1f2b; padding: 3mm 4mm; margin: 2mm 0 3mm; background: #fdf6f7; }
+figure { margin: 2mm 0 3mm; break-inside: avoid; }
+figcaption { font-size: 7.8pt; color: var(--doux); margin-top: 1mm; }
+svg text { font-family: "DejaVu Sans", "Liberation Sans", sans-serif; }
+.legende { font-size: 7.8pt; }
+</style>
+</head>
+<body>
+
+<h1>Contrôle boîte blanche des menaces diffuses<br>Le programme expliqué depuis zéro</h1>
+<p class="sous-titre">Pour un lecteur qui ne sait rien du programme. Version 5, 10 novembre 2026. Rédigé par la session
+« attaquant informé » pour Lazar. La section 10, résultats des sondes et des moniteurs, est réservée à la session mère :
+le rôle de l'auteur lui interdit de lire ces résultats. Chaque affirmation porte son statut et renvoie à sa source
+(table en annexe). La version 2 a passé l'épreuve du lecteur neuf au seuil (dix réponses justes, deux partielles) ; la
+version 3 ajoute les définitions qui lui manquaient et, à la demande de Lazar, les trois questions les plus dangereuses
+du jury, traitées (section 11) ; la version 4 éclaire les trois passages que le lecteur de la version 3 a trouvés obscurs
+(qui est qui ; le seuil « toujours valide » sur données réelles ; le pari apparié), définit v₀ dans la loi de déférence
+(la seule réponse partielle de l'épreuve de la version 3, réussie à onze justes sur douze) et donne la date de
+l'entretien ; la version 5 y verse, telle quelle et à la demande de Lazar, la liste de la session mère « ce qui manque pour rassurer le jury sur l'approche peut marcher » (section 12). Ni la version 4 ni la version 5 n'ont été re-testées.</p>
+
+<div class="cartouche">
+<h2>Comment lire ce document</h2>
+<p class="legende">Statuts : <span class="tag demontre">démontré</span> prouvé mathématiquement, sous des hypothèses dites ;
+<span class="tag simule">simulé</span> vérifié sur des données synthétiques ; <span class="tag prereg">préenregistré</span>
+prédiction écrite et scellée avant toute donnée, pas encore testée ; <span class="tag question">question ouverte</span>
+le programme ne parie sur aucun signe ; <span class="tag choix">choix</span> décision de conception ;
+<span class="tag fait">fait</span> <span class="tag cours">en cours</span> <span class="tag afaire">à faire</span> état d'un travail.
+Les sigles entre crochets renvoient aux sources de l'annexe ; « l. » désigne une ligne de la source.</p>
+<p class="legende"><b>Qui est qui.</b> Lazar est le directeur du programme, une personne : il pose les questions, décide
+chaque porte et chaque dépense, et signe les verdicts. Les « sessions » sont des instances de Claude, des agents
+d'intelligence artificielle qui font l'ingénierie, les courses et les relectures sous des règles écrites, chacune dans un
+rôle séparé : la <i>session mère</i> pilote le programme et lit ses résultats ; la <i>session de dépôt</i> tient le
+dépôt et les machines ; la session <i>« attaquant informé »</i>, qui écrit ce document, conçoit le bras d'attaque
+(section 7.3). Pour que ses épreuves des moniteurs restent à connaissance déclarée, elle ne lit aucun résultat de sonde
+ni de moniteur : c'est pourquoi la section 10 revient à la session mère. Un lecteur ou un correcteur « neuf » est une
+instance sans mémoire du travail qu'il juge.</p>
+</div>
+
+<div class="cartouche">
+<h2>L'essentiel en une page</h2>
+<ul>
+<li><b>Le problème.</b> Un agent d'intelligence artificielle chargé d'une longue tâche peut la saboter un peu à chaque
+étape, sans qu'aucune action prise seule ne soit condamnable. Un moniteur qui juge chaque action isolément ne peut pas le
+voir, par construction [T l. 15-17, 32-38].</li>
+<li><b>L'idée.</b> Lire l'intérieur du modèle (ses activations) avec de petits classifieurs, les <i>sondes</i>, et
+additionner leurs notes au fil des actions, avec une garantie de fausses alertes qui reste valide quel que soit le moment
+où l'on regarde [P l. 43, 72]. Sur données réelles, cette garantie est tenue par un seuil calé sur des épisodes honnêtes
+entiers et vérifiée sur eux, et non par la seule théorie (section 4.1) [NM l. 157-165].</li>
+<li><b>La théorie.</b> Un lemme <span class="tag demontre">démontré</span> : si chaque action sabotée fait monter un peu la
+note moyenne, la somme voit le sabotage quelle que soit la façon dont il est étalé, alors que la pire note par action le
+perd. Un théorème <span class="tag demontre">démontré</span> : si le sabotage ne fait que réarranger les notes, aucun
+détecteur insensible à l'ordre ne le voit ; il ne reste que des statistiques locales [NM].</li>
+<li><b>La question qui décide.</b> Le sabotage fait-il monter la note moyenne des sondes ? Oui, le lemme s'applique ; non,
+le théorème dit quoi faire. Les deux réponses sont publiables [P l. 64].</li>
+<li><b>La revendication principale</b> <span class="tag prereg">préenregistrée</span> : un moniteur qui lit les activations
+détecte plus de sabotage diffus qu'un moniteur qui ne lit que le texte. Elle se décide à la porte principale, au mois 4 du
+financement ; avant, elle n'a pas de résultat.</li>
+<li><b>Comment le programme évite de se tromper.</b> Tout est écrit et scellé avant les données, relu par d'autres, éprouvé
+par des contrôles à l'issue connue d'avance et par un bras d'attaque qui cherche les failles.</li>
+<li><b>Où il en est</b> (10 novembre 2026) : phase 0, la construction des instruments ; la porte de fin de phase a 2
+critères sur 8 pourvus de leur pièce : le harnais (critère 1, verdict scellé) et les agrégateurs en simulation (critère 5,
+verdict formel en attente) ; la course qui mesure la courbe dose-réponse des organismes doit être créée au plus tard le
+15 novembre, la courbe suivra son résultat.</li>
+<li><b>Devant le jury.</b> Les trois questions les plus dangereuses, et ce que le dessin y répond déjà : section 11 ; ce qui manque encore pour le rassurer sur « l'approche peut marcher » : section 12.</li>
+</ul>
+</div>
+
+<h2>1. Le problème</h2>
+<p><b>Le contrôle de l'intelligence artificielle</b> part d'une prudence : un modèle capable peut ne pas être fiable, et on
+veut pouvoir l'utiliser quand même, en le surveillant par d'autres moyens que sa bonne volonté. Le moniteur le plus simple
+lit chaque action et lève une alerte si elle paraît suspecte.</p>
+<p><b>Le sabotage diffus</b> défait ce moniteur. C'est un biais systématique et subtil, réparti sur de nombreuses
+décisions, dont chacune reste défendable seule : affaiblir un peu les contrôles d'une expérience, orienter vers des pistes
+stériles, gonfler les choix coûteux [T l. 15-17 ; P l. 122]. Aucune action ne franchit le seuil d'alerte ; le dommage vient
+de leur somme.</p>
+<p><b>Deux familles de moniteurs.</b> Un moniteur <i>boîte noire</i> ne lit que ce que le modèle produit (ses textes, ses
+actions), par exemple un autre modèle qui joue le juge. Un moniteur <i>boîte blanche</i> lit l'intérieur du modèle qui agit
+: ses activations, par des sondes. L'intuition du programme : « l'évidence interne s'additionne quand l'externe ne le fait
+pas » [T l. 49-52].</p>
+<p><b>Une seule question</b> [P l. 34] : <i>que mesure vraiment un moniteur, et sa mesure survit-elle à l'adversaire ?</i>
+L'adversaire a trois façons d'abîmer la mesure, et chacune est un papier :</p>
+<table>
+<tr><th style="width:14%">Papier</th><th style="width:28%">Ce que fait l'adversaire</th><th>Ce que le papier mesure</th><th style="width:20%">Porte, calendrier</th></tr>
+<tr><td><b>A — le temps</b></td><td>étale son sabotage sur de nombreuses actions</td><td>si l'accumulation des notes de sondes détecte ce que le jugement action par action rate</td><td>G1, fin du mois 4</td></tr>
+<tr><td><b>C — l'instrument</b></td><td>agit sur le moniteur lui-même (le flatter, le convaincre, l'usurper)</td><td>combien un moniteur se laisse déplacer, et ce qu'il en coûte de déplacer une sonde</td><td>GC, fin du mois 2</td></tr>
+<tr><td><b>B — l'essaim</b></td><td>répartit le sabotage entre plusieurs agents</td><td>la sécurité selon le nombre d'agents</td><td>G2, G3 ; mois 8 à 12, hors des sept mois financés</td></tr>
+</table>
+
+<h2>2. Un exemple suivi de bout en bout</h2>
+<p>Tout le document s'appuie sur cet exemple, tiré des sources [P l. 120-135 ; T l. 116-124].</p>
+<ol>
+<li><b>La tâche.</b> Un agent (le modèle Llama-3.1-8B-Instruct) rédige et révise, pas après pas, des propositions
+d'expériences d'apprentissage automatique. Un évaluateur plus faible, de confiance, les note sur une grille. La tâche est
+« floue à la relecture, vérifiable en aval » : la vérité vient de cibles semées et préenregistrées, et d'une vérification
+différée sur un sous-échantillon.</li>
+<li><b>Le saboteur.</b> On construit un <i>organisme</i>, un agent saboteur dont on règle l'intensité (la <i>dose</i>).
+Famille (i) : il a reçu une instruction cachée dans son message système. Famille (ii) : un petit adaptateur appris lui
+inculque la même politique sans aucune instruction au moment d'agir. Il biaise chaque proposition un peu, sans qu'aucune
+ne soit condamnable seule.</li>
+<li><b>Les moniteurs.</b> La boîte noire lit les propositions. La boîte blanche lit, à chaque pas, les activations de
+l'agent qui agit, contexte privé compris, et additionne les notes avec une garantie toujours valide.</li>
+<li><b>Ce que dit la théorie.</b> Si le sabotage fait monter la note moyenne de la sonde, la somme le voit quel que soit
+l'étalement (le lemme) ; s'il ne fait que réarranger ou corréler les notes, seules certaines statistiques gardent une
+chance (le théorème).</li>
+<li><b>Ce que décide la porte.</b> Les deux familles de moniteurs sont comparées sur des épisodes appariés, au même taux
+de fausses alertes, mode de sabotage par mode.</li>
+<li><b>Ce qui contrôle la sonde elle-même.</b> Une sonde qui lit seulement « j'ai une instruction cachée » réussit sur la
+famille (i) et échoue sur la famille (ii) ; une sonde qui lit l'intention réussit sur les deux [P l. 135].</li>
+</ol>
+
+<h2>3. Le vocabulaire</h2>
+<table>
+<tr><th style="width:24%">Terme</th><th>Sens dans le programme</th></tr>
+<tr><td>Sabotage diffus</td><td>biais subtil réparti sur de nombreuses décisions, chacune défendable seule</td></tr>
+<tr><td>Tâche floue</td><td>floue à la relecture, vérifiable en aval (vérité différée)</td></tr>
+<tr><td>Mode de sabotage</td><td>une façon précise de saboter : directions stériles, contrôles affaiblis, coûts gonflés</td></tr>
+<tr><td>Organisme ; dose</td><td>agent saboteur construit pour l'expérience ; intensité réglable de son sabotage</td></tr>
+<tr><td>Sonde</td><td>petit classifieur qui lit les activations ; cinq familles (linéaire, différence de moyennes, petit perceptron, à attention, distance de Mahalanobis) ; agrégation sur les jetons par maximum ou attention, jamais par moyenne</td></tr>
+<tr><td>Plancher</td><td>une sonde aléatoire de même covariance : une vraie sonde doit faire mieux</td></tr>
+<tr><td>Maximum par action</td><td>alerte si une seule action dépasse le seuil : ce que la fragmentation défait</td></tr>
+<tr><td>Agrégation séquentielle</td><td>somme des notes au fil des actions (ou des agents), avec une garantie de fausses alertes valide à tout moment de lecture</td></tr>
+<tr><td>Détecteur de rupture</td><td>statistique locale (somme cumulée de Page) qui voit un sabotage tardif avant que le dommage n'atteigne son seuil</td></tr>
+<tr><td>Rappel à 1 % de fausses alertes</td><td>part des épisodes sabotés signalés, au seuil qui ne signale que 1 % des épisodes honnêtes</td></tr>
+<tr><td>Bases « cascade » et « dernier état »</td><td>deux moniteurs boîte blanche simples que la revendication doit aussi battre : portes indépendantes sur les mêmes sondes ; sonde lue sur le dernier état seul</td></tr>
+<tr><td>Porte</td><td>point de décision au critère scellé d'avance ; verdict par un lecteur neuf, puis visa du directeur</td></tr>
+<tr><td>Préenregistrement</td><td>document scellé avant toute donnée : hypothèse, prédiction chiffrée et signée, métrique, seuil, plan d'analyse, critères de lecture, liste d'arrêt</td></tr>
+<tr><td>Témoin</td><td>contrôle à l'issue connue d'avance (plancher, témoin positif planté, nul « honnête contre honnête ») ; raté, il rend la lecture non interprétable</td></tr>
+<tr><td>Famille tenue à l'écart</td><td>mode de sabotage écrit par quelqu'un qui n'a vu aucun moniteur, scellé, révélé seulement à l'évaluation</td></tr>
+<tr><td>Loi de déférence ; g</td><td>sous pression, le verdict v d'un moniteur se déplace de v₀, son verdict de départ sans pression, vers une destination ĉ : Δv = g·(ĉ − v₀) ; g est la corruptibilité, la fraction du chemin parcourue (g = 0 : moniteur robuste)</td></tr>
+<tr><td>Taxe de déplacement</td><td>ce qu'il en coûte d'obtenir sur une sonde le déplacement que la rhétorique obtient gratuitement sur un juge</td></tr>
+</table>
+
+<h2 class="saut">4. La théorie</h2>
+<h3>4.1 Le cadre</h3>
+<p>Chaque action a<sub>i,t</sub> (agent i, pas t) reçoit une note X<sub>i,t</sub> de la sonde. Sous un agent honnête, les
+notes suivent une loi connue, de moyenne μ<sub>0</sub>. Le défenseur veut une garantie « toujours valide » : la probabilité
+d'une fausse alerte reste sous α quel que soit le moment où il décide de regarder (processus e, inégalité de Ville) [NM l.
+30-65]. L'attaquant a un budget total fixé et quatre façons de le dépenser [NM l. 49-53] :</p>
+<ul>
+<li><b>décaler</b> les notes de ses actions sabotées, d'un total B (classe M), éventuellement en compensant ailleurs (M±) ;</li>
+<li><b>réarranger</b> les notes pour que leur ensemble soit celui d'un honnête (classe C) ;</li>
+<li><b>corréler</b> les notes sans changer la loi de chacune (classe K).</li>
+</ul>
+<p>Le temps (un agent) et l'essaim (plusieurs agents) sont le même objet mathématique : des permutations d'un même ensemble
+d'indices [T l. 55-57].</p>
+<p class="encadre"><b>La garantie « toujours valide », en clair.</b> Un <i>processus e</i> est la richesse d'un parieur qui
+mise, action après action, contre l'hypothèse « l'agent est honnête » : sous un agent honnête, il ne gagne rien en
+moyenne. L'<i>inégalité de Ville</i> dit alors que sa richesse ne dépasse jamais 1/α, à quelque moment qu'on regarde,
+sauf avec une probabilité d'au plus α : d'où une alerte « toujours valide ». Elle suppose des notes honnêtes de loi connue
+et indépendantes. Sur de vraies activations, les notes d'un même épisode partagent un effet (consigne, sujet, contexte),
+et cette hypothèse tombe : dans la simulation préenregistrée, la règle de Ville donne 0,21 à 0,35 de fausses alertes au
+lieu de 0,05 [NM l. 157, 165]. Le programme cale donc le seuil par rééchantillonnage d'épisodes honnêtes <i>entiers</i>
+(par blocs) : en simulation, 0,046 à 0,055 pour 0,05 visé, dans les 17 réglages [NM l. 158, 165]. La garantie devient
+empirique, au niveau de l'épisode entier ; sa vérification sur des épisodes honnêtes est une garde <b>décisive</b> de la
+porte G1, pas une formalité [NM l. 163].</p>
+
+<h3>4.2 Le lemme d'additivité, forme adverse <span class="tag demontre">démontré</span></h3>
+<p><b>En une phrase.</b> Si chaque action sabotée fait monter un peu la note moyenne, un détecteur qui additionne voit le
+total des hausses, quelle que soit la façon dont le saboteur les étale ; un détecteur qui ne regarde que la pire action
+perd sa puissance à mesure que le sabotage s'étale.</p>
+<p><b>Énoncé exact</b> [NM l. 67-96 ; T l. 58-73] : l'attaquant répartit un budget total B = Σδ<sub>k</sub> de décalages
+de moyenne sur les agents, les pas, le calendrier, les valeurs et les positions, éventuellement de façon adaptative ; le
+défenseur garde une garantie de fausses alertes toujours valide.</p>
+<ul>
+<li><b>Invariance terminale.</b> Pour toute trajectoire, la somme terminale vaut la somme honnête plus B. Sa puissance ne
+dépend que du budget, de l'horizon n<sub>0</sub>, de la loi honnête et de α ; dans le cas gaussien :</li>
+</ul>
+<p class="formule">puissance = Φ̄( z<sub>α</sub> − B / (σ √n<sub>0</sub>) )&nbsp;&nbsp;— à budget fixé, elle décroît avec l'horizon n<sub>0</sub>.</p>
+<p class="note">Cela ne contredit pas H2 (section 5), qui parie sur un rappel qui croît avec l'horizon : à budget total
+fixé, la somme se dilue ; si c'est le décalage par action sabotée qui reste fixe, le budget grandit avec la longueur de
+la trajectoire, et le rappel aussi. H2 est dans ce second régime.</p>
+<ul>
+<li><b>Séparation avec le maximum.</b> Si le budget est réparti également sur m actions, la puissance du maximum décroît
+avec m ; à m = n, elle reste à peine au-dessus de α.</li>
+<li><b>Lecture toujours valide.</b> Avancer le sabotage aide le défenseur, le reporter aide l'attaquant. Mise en garde : si
+la sécurité est « alerte avant que le dommage cumulé n'atteigne son seuil », la somme ne suffit pas ; il faut un détecteur
+de rupture.</li>
+<li><b>Répartition entre agents.</b> Pour une règle qui ne lit que les sommes par pas, répartir le sabotage entre agents
+au même pas ne change rien. <span class="tag question">non testé</span> dans la simulation.</li>
+<li><b>Compensation.</b> Une compensation qui ramène le budget net à zéro n'aveugle que les statistiques de la somme ; le
+maximum et les tests de forme la voient. Qu'un agent sache piloter ses activations pour cela est une question empirique.</li>
+</ul>
+<p><b>Deux réserves qui font partie de l'énoncé</b> [T l. 68-73] : sous arrêt optionnel, le bon critère n'est pas la
+puissance mais la croissance logarithmique au pire cas ; borner le budget total est un choix de modélisation, déclaré.</p>
+<p><b>Ce qui le réfuterait.</b> Le lemme est démontré sous ses hypothèses ; ce qui peut tomber, c'est son application :
+si le sabotage ne déplace pas la note moyenne des sondes (δ ≈ 0), ou si, à budget et horizon fixés, la puissance de la
+somme change avec la façon d'étaler (signe d'un changement de forme ou d'une compensation).</p>
+
+<figure>
+<svg xmlns:xlink="http://www.w3.org/1999/xlink" width="100%" viewBox="0 0 518.4 172.8" xmlns="http://www.w3.org/2000/svg" version="1.1">
+ 
+ <defs>
+  <style type="text/css">*{stroke-linejoin: round; stroke-linecap: butt}</style>
+ </defs>
+ <g id="figure_1">
+  <g id="patch_1">
+   <path d="M 0 172.8 
+L 518.4 172.8 
+L 518.4 0 
+L 0 0 
+z
+" style="fill: #ffffff"/>
+  </g>
+  <g id="axes_1">
+   <g id="patch_2">
+    <path d="M 25.82 137.159375 
+L 253.60875 137.159375 
+L 253.60875 22.3185 
+L 25.82 22.3185 
+z
+" style="fill: #ffffff"/>
+   </g>
+   <g id="matplotlib.axis_1">
+    <g id="xtick_1">
+     <g id="line2d_1">
+      <defs>
+       <path id="m0268c1f802" d="M 0 0 
+L 0 3.5 
+" style="stroke: #000000; stroke-width: 0.8"/>
+      </defs>
+      <g>
+       <use xlink:href="#m0268c1f802" x="35.133428" y="137.159375" style="stroke: #000000; stroke-width: 0.8"/>
+      </g>
+     </g>
+     <g id="text_1">
+      <text style="font-size: 8px; font-family: 'DejaVu Sans'; text-anchor: middle" x="35.133428" y="150.2375" transform="rotate(-0 35.133428 150.2375)">0</text>
+     </g>
+    </g>
+    <g id="xtick_2">
+     <g id="line2d_2">
+      <g>
+       <use xlink:href="#m0268c1f802" x="61.148589" y="137.159375" style="stroke: #000000; stroke-width: 0.8"/>
+      </g>
+     </g>
+     <g id="text_2">
+      <text style="font-size: 8px; font-family: 'DejaVu Sans'; text-anchor: middle" x="61.148589" y="150.2375" transform="rotate(-0 61.148589 150.2375)">25</text>
+     </g>
+    </g>
+    <g id="xtick_3">
+     <g id="line2d_3">
+      <g>
+       <use xlink:href="#m0268c1f802" x="87.16375" y="137.159375" style="stroke: #000000; stroke-width: 0.8"/>
+      </g>
+     </g>
+     <g id="text_3">
+      <text style="font-size: 8px; font-family: 'DejaVu Sans'; text-anchor: middle" x="87.16375" y="150.2375" transform="rotate(-0 87.16375 150.2375)">50</text>
+     </g>
+    </g>
+    <g id="xtick_4">
+     <g id="line2d_4">
+      <g>
+       <use xlink:href="#m0268c1f802" x="113.178911" y="137.159375" style="stroke: #000000; stroke-width: 0.8"/>
+      </g>
+     </g>
+     <g id="text_4">
+      <text style="font-size: 8px; font-family: 'DejaVu Sans'; text-anchor: middle" x="113.178911" y="150.2375" transform="rotate(-0 113.178911 150.2375)">75</text>
+     </g>
+    </g>
+    <g id="xtick_5">
+     <g id="line2d_5">
+      <g>
+       <use xlink:href="#m0268c1f802" x="139.194072" y="137.159375" style="stroke: #000000; stroke-width: 0.8"/>
+      </g>
+     </g>
+     <g id="text_5">
+      <text style="font-size: 8px; font-family: 'DejaVu Sans'; text-anchor: middle" x="139.194072" y="150.2375" transform="rotate(-0 139.194072 150.2375)">100</text>
+     </g>
+    </g>
+    <g id="xtick_6">
+     <g id="line2d_6">
+      <g>
+       <use xlink:href="#m0268c1f802" x="165.209233" y="137.159375" style="stroke: #000000; stroke-width: 0.8"/>
+      </g>
+     </g>
+     <g id="text_6">
+      <text style="font-size: 8px; font-family: 'DejaVu Sans'; text-anchor: middle" x="165.209233" y="150.2375" transform="rotate(-0 165.209233 150.2375)">125</text>
+     </g>
+    </g>
+    <g id="xtick_7">
+     <g id="line2d_7">
+      <g>
+       <use xlink:href="#m0268c1f802" x="191.224394" y="137.159375" style="stroke: #000000; stroke-width: 0.8"/>
+      </g>
+     </g>
+     <g id="text_7">
+      <text style="font-size: 8px; font-family: 'DejaVu Sans'; text-anchor: middle" x="191.224394" y="150.2375" transform="rotate(-0 191.224394 150.2375)">150</text>
+     </g>
+    </g>
+    <g id="xtick_8">
+     <g id="line2d_8">
+      <g>
+       <use xlink:href="#m0268c1f802" x="217.239555" y="137.159375" style="stroke: #000000; stroke-width: 0.8"/>
+      </g>
+     </g>
+     <g id="text_8">
+      <text style="font-size: 8px; font-family: 'DejaVu Sans'; text-anchor: middle" x="217.239555" y="150.2375" transform="rotate(-0 217.239555 150.2375)">175</text>
+     </g>
+    </g>
+    <g id="xtick_9">
+     <g id="line2d_9">
+      <g>
+       <use xlink:href="#m0268c1f802" x="243.254716" y="137.159375" style="stroke: #000000; stroke-width: 0.8"/>
+      </g>
+     </g>
+     <g id="text_9">
+      <text style="font-size: 8px; font-family: 'DejaVu Sans'; text-anchor: middle" x="243.254716" y="150.2375" transform="rotate(-0 243.254716 150.2375)">200</text>
+     </g>
+    </g>
+    <g id="text_10">
+     <text style="font-size: 8px; font-family: 'DejaVu Sans'; text-anchor: middle" x="139.714375" y="162.238125" transform="rotate(-0 139.714375 162.238125)">action</text>
+    </g>
+   </g>
+   <g id="matplotlib.axis_2">
+    <g id="ytick_1">
+     <g id="line2d_10">
+      <defs>
+       <path id="m837d2d97a0" d="M 0 0 
+L -3.5 0 
+" style="stroke: #000000; stroke-width: 0.8"/>
+      </defs>
+      <g>
+       <use xlink:href="#m837d2d97a0" x="25.82" y="120.669894" style="stroke: #000000; stroke-width: 0.8"/>
+      </g>
+     </g>
+     <g id="text_11">
+      <text style="font-size: 8px; font-family: 'DejaVu Sans'; text-anchor: end" x="18.82" y="123.708957" transform="rotate(-0 18.82 123.708957)">0</text>
+     </g>
+    </g>
+    <g id="ytick_2">
+     <g id="line2d_11">
+      <g>
+       <use xlink:href="#m837d2d97a0" x="25.82" y="102.628749" style="stroke: #000000; stroke-width: 0.8"/>
+      </g>
+     </g>
+     <g id="text_12">
+      <text style="font-size: 8px; font-family: 'DejaVu Sans'; text-anchor: end" x="18.82" y="105.667812" transform="rotate(-0 18.82 105.667812)">10</text>
+     </g>
+    </g>
+    <g id="ytick_3">
+     <g id="line2d_12">
+      <g>
+       <use xlink:href="#m837d2d97a0" x="25.82" y="84.587604" style="stroke: #000000; stroke-width: 0.8"/>
+      </g>
+     </g>
+     <g id="text_13">
+      <text style="font-size: 8px; font-family: 'DejaVu Sans'; text-anchor: end" x="18.82" y="87.626667" transform="rotate(-0 18.82 87.626667)">20</text>
+     </g>
+    </g>
+    <g id="ytick_4">
+     <g id="line2d_13">
+      <g>
+       <use xlink:href="#m837d2d97a0" x="25.82" y="66.546459" style="stroke: #000000; stroke-width: 0.8"/>
+      </g>
+     </g>
+     <g id="text_14">
+      <text style="font-size: 8px; font-family: 'DejaVu Sans'; text-anchor: end" x="18.82" y="69.585522" transform="rotate(-0 18.82 69.585522)">30</text>
+     </g>
+    </g>
+    <g id="ytick_5">
+     <g id="line2d_14">
+      <g>
+       <use xlink:href="#m837d2d97a0" x="25.82" y="48.505314" style="stroke: #000000; stroke-width: 0.8"/>
+      </g>
+     </g>
+     <g id="text_15">
+      <text style="font-size: 8px; font-family: 'DejaVu Sans'; text-anchor: end" x="18.82" y="51.544377" transform="rotate(-0 18.82 51.544377)">40</text>
+     </g>
+    </g>
+    <g id="ytick_6">
+     <g id="line2d_15">
+      <g>
+       <use xlink:href="#m837d2d97a0" x="25.82" y="30.464169" style="stroke: #000000; stroke-width: 0.8"/>
+      </g>
+     </g>
+     <g id="text_16">
+      <text style="font-size: 8px; font-family: 'DejaVu Sans'; text-anchor: end" x="18.82" y="33.503231" transform="rotate(-0 18.82 33.503231)">50</text>
+     </g>
+    </g>
+   </g>
+   <g id="line2d_16">
+    <path d="M 36.174034 120.694867 
+L 38.255247 119.796361 
+L 39.295853 120.02113 
+L 40.33646 118.305506 
+L 41.377066 122.851523 
+L 43.458279 122.977048 
+L 44.498886 123.612595 
+L 45.539492 123.001123 
+L 46.580099 121.313839 
+L 48.661311 123.363601 
+L 49.701918 122.861195 
+L 51.783131 117.532807 
+L 52.823737 116.746567 
+L 53.864344 116.274839 
+L 54.90495 115.095646 
+L 55.945556 115.739026 
+L 56.986163 115.82101 
+L 58.026769 116.594367 
+L 59.067376 113.9993 
+L 61.148589 115.896182 
+L 62.189195 118.542677 
+L 63.229802 117.309224 
+L 64.270408 119.577193 
+L 65.311014 125.412483 
+L 66.351621 122.612826 
+L 67.392227 122.219363 
+L 68.432834 125.541643 
+L 69.47344 127.70368 
+L 70.514047 128.619575 
+L 71.554653 126.152031 
+L 72.59526 124.884688 
+L 73.635866 123.979473 
+L 74.676472 124.662516 
+L 75.717079 124.868964 
+L 76.757685 127.16975 
+L 77.798292 128.942436 
+L 78.838898 127.461061 
+L 79.879505 127.97919 
+L 80.920111 128.074281 
+L 81.960718 126.358913 
+L 83.001324 122.715663 
+L 84.04193 123.306637 
+L 85.082537 123.260612 
+L 86.123143 121.998497 
+L 87.16375 122.632043 
+L 88.204356 123.426823 
+L 89.244963 126.676433 
+L 90.285569 126.662015 
+L 91.326175 128.174378 
+L 92.366782 126.813896 
+L 94.447995 128.141365 
+L 95.488601 125.056662 
+L 97.569814 128.964215 
+L 98.610421 128.353516 
+L 99.651027 131.665733 
+L 100.691633 131.306873 
+L 101.73224 131.939335 
+L 102.772846 128.404235 
+L 103.813453 126.984977 
+L 104.854059 127.174094 
+L 105.894666 126.505187 
+L 106.935272 125.271275 
+L 107.975879 127.155325 
+L 109.016485 128.6873 
+L 110.057091 126.594547 
+L 111.097698 125.93102 
+L 112.138304 123.794535 
+L 113.178911 122.691584 
+L 114.219517 121.861351 
+L 115.260124 122.181757 
+L 116.30073 118.766238 
+L 117.341337 118.498706 
+L 118.381943 120.743893 
+L 119.422549 121.536733 
+L 120.463156 120.385916 
+L 121.503762 118.417792 
+L 122.544369 116.857728 
+L 123.584975 113.493681 
+L 124.625582 113.61543 
+L 125.666188 114.582613 
+L 126.706794 114.449294 
+L 128.788007 110.991728 
+L 129.828614 108.958026 
+L 130.86922 109.97331 
+L 131.909827 111.68709 
+L 133.99104 112.014138 
+L 135.031646 116.218047 
+L 136.072252 113.538711 
+L 137.112859 112.817888 
+L 138.153465 112.505413 
+L 140.234678 111.360336 
+L 141.275285 116.423332 
+L 142.315891 118.328744 
+L 143.356498 117.12065 
+L 144.397104 117.045919 
+L 145.43771 115.322475 
+L 146.478317 111.639602 
+L 147.518923 113.101133 
+L 148.55953 112.524488 
+L 149.600136 110.215554 
+L 150.640743 109.744097 
+L 151.681349 109.795406 
+L 152.721956 107.937062 
+L 153.762562 106.883645 
+L 154.803168 108.533783 
+L 155.843775 107.495309 
+L 156.884381 107.698359 
+L 157.924988 109.492461 
+L 158.965594 109.900413 
+L 160.006201 109.930766 
+L 161.046807 105.209552 
+L 162.087413 105.834147 
+L 163.12802 106.740958 
+L 164.168626 105.469042 
+L 165.209233 105.74313 
+L 166.249839 105.14606 
+L 167.290446 106.668133 
+L 168.331052 109.32989 
+L 169.371659 109.470981 
+L 170.412265 108.223019 
+L 171.452871 105.035071 
+L 172.493478 103.711595 
+L 173.534084 101.853397 
+L 174.574691 102.035474 
+L 175.615297 105.5536 
+L 176.655904 107.048511 
+L 177.69651 106.956704 
+L 178.737117 103.882836 
+L 180.818329 109.374927 
+L 181.858936 111.134456 
+L 182.899542 110.147094 
+L 183.940149 109.628876 
+L 184.980755 111.159219 
+L 186.021362 110.610218 
+L 187.061968 108.68277 
+L 188.102575 109.821583 
+L 189.143181 110.129922 
+L 190.183787 111.88704 
+L 191.224394 112.853778 
+L 192.265 114.225525 
+L 193.305607 111.691778 
+L 194.346213 112.06172 
+L 195.38682 111.814238 
+L 196.427426 110.140583 
+L 197.468032 103.951157 
+L 198.508639 103.121476 
+L 199.549245 100.877198 
+L 200.589852 101.17336 
+L 201.630458 104.493937 
+L 202.671065 103.361081 
+L 203.711671 106.030995 
+L 204.752278 105.37574 
+L 205.792884 106.774598 
+L 206.83349 105.890223 
+L 207.874097 108.617568 
+L 208.914703 109.306297 
+L 209.95531 105.366695 
+L 210.995916 103.756366 
+L 212.036523 104.492465 
+L 213.077129 103.691274 
+L 214.117736 101.718677 
+L 215.158342 100.845817 
+L 216.198948 103.520112 
+L 217.239555 102.025827 
+L 218.280161 102.209654 
+L 219.320768 102.838583 
+L 220.361374 104.167101 
+L 221.401981 103.491924 
+L 222.442587 103.485211 
+L 223.483194 103.029553 
+L 224.5238 104.087202 
+L 225.564406 103.869815 
+L 226.605013 104.714906 
+L 227.645619 108.731981 
+L 228.686226 111.043655 
+L 229.726832 111.791276 
+L 230.767439 110.341784 
+L 231.808045 106.624982 
+L 232.848651 106.020118 
+L 233.889258 107.195951 
+L 235.970471 107.597678 
+L 237.011077 106.952571 
+L 238.051684 108.48968 
+L 239.09229 105.749816 
+L 240.132897 106.853736 
+L 241.173503 107.293113 
+L 242.214109 108.291556 
+L 243.254716 107.729783 
+L 243.254716 107.729783 
+" clip-path="url(#pb7ddf65d16)" style="fill: none; stroke: #1f4e8c; stroke-width: 1.2; stroke-linecap: square"/>
+   </g>
+   <g id="line2d_17">
+    <path d="M 36.174034 120.630607 
+L 37.214641 116.899691 
+L 38.255247 118.156852 
+L 39.295853 118.131558 
+L 40.33646 116.498644 
+L 41.377066 116.93827 
+L 42.417673 115.993626 
+L 43.458279 114.827484 
+L 44.498886 115.583508 
+L 45.539492 114.535094 
+L 46.580099 118.509312 
+L 47.620705 116.715396 
+L 48.661311 121.045995 
+L 49.701918 119.883862 
+L 50.742524 121.347668 
+L 52.823737 122.69646 
+L 53.864344 122.249799 
+L 54.90495 121.500351 
+L 55.945556 122.285756 
+L 56.986163 121.800185 
+L 59.067376 117.900394 
+L 60.107982 116.322505 
+L 61.148589 116.68746 
+L 62.189195 114.959196 
+L 63.229802 114.638799 
+L 64.270408 112.042585 
+L 65.311014 108.340625 
+L 66.351621 108.023728 
+L 67.392227 110.980093 
+L 68.432834 110.505327 
+L 69.47344 108.548735 
+L 70.514047 109.322431 
+L 71.554653 110.559504 
+L 72.59526 109.693417 
+L 73.635866 112.010323 
+L 74.676472 112.94662 
+L 75.717079 111.892545 
+L 76.757685 112.428381 
+L 77.798292 114.268431 
+L 78.838898 114.681387 
+L 79.879505 114.755536 
+L 80.920111 114.513419 
+L 81.960718 113.977874 
+L 83.001324 114.79991 
+L 84.04193 110.234119 
+L 85.082537 109.023033 
+L 86.123143 111.861975 
+L 87.16375 110.331967 
+L 88.204356 111.726608 
+L 89.244963 109.637592 
+L 90.285569 106.290692 
+L 91.326175 108.19468 
+L 92.366782 107.653895 
+L 93.407388 109.313764 
+L 94.447995 107.090493 
+L 95.488601 107.207837 
+L 96.529208 108.290473 
+L 97.569814 105.941884 
+L 98.610421 106.073412 
+L 99.651027 105.970632 
+L 100.691633 101.930587 
+L 101.73224 99.902292 
+L 102.772846 98.819758 
+L 103.813453 97.504011 
+L 104.854059 94.815108 
+L 105.894666 94.039654 
+L 106.935272 92.689086 
+L 109.016485 94.310279 
+L 110.057091 96.742489 
+L 111.097698 98.838275 
+L 112.138304 97.927405 
+L 113.178911 98.76251 
+L 114.219517 97.470129 
+L 115.260124 98.009061 
+L 116.30073 96.417852 
+L 117.341337 95.762343 
+L 118.381943 97.212918 
+L 119.422549 96.764855 
+L 120.463156 96.953492 
+L 121.503762 97.395691 
+L 122.544369 95.345984 
+L 123.584975 94.150963 
+L 124.625582 97.334801 
+L 125.666188 96.269533 
+L 126.706794 96.900193 
+L 127.747401 95.604639 
+L 128.788007 97.454464 
+L 129.828614 95.11793 
+L 130.86922 93.931162 
+L 131.909827 92.174272 
+L 132.950433 89.437758 
+L 133.99104 85.466329 
+L 135.031646 83.865571 
+L 136.072252 81.625839 
+L 137.112859 84.05077 
+L 138.153465 83.412515 
+L 139.194072 81.619396 
+L 140.234678 80.174216 
+L 142.315891 80.960214 
+L 143.356498 79.862552 
+L 144.397104 76.226475 
+L 145.43771 76.952226 
+L 146.478317 77.856748 
+L 147.518923 77.883402 
+L 149.600136 75.621581 
+L 150.640743 75.369716 
+L 151.681349 74.002644 
+L 152.721956 73.132203 
+L 153.762562 75.589981 
+L 154.803168 72.442126 
+L 155.843775 72.307363 
+L 156.884381 68.615752 
+L 157.924988 69.601504 
+L 158.965594 66.731542 
+L 161.046807 69.946993 
+L 162.087413 67.610639 
+L 163.12802 68.273278 
+L 164.168626 67.826467 
+L 165.209233 68.196268 
+L 166.249839 68.918853 
+L 167.290446 71.561118 
+L 168.331052 70.021612 
+L 169.371659 69.449142 
+L 170.412265 68.141922 
+L 171.452871 65.483207 
+L 172.493478 64.895551 
+L 173.534084 65.642463 
+L 174.574691 65.338039 
+L 175.615297 62.952989 
+L 176.655904 61.832158 
+L 177.69651 59.427883 
+L 179.777723 57.073837 
+L 180.818329 56.700715 
+L 182.899542 59.846887 
+L 183.940149 59.025313 
+L 184.980755 58.525198 
+L 186.021362 58.227494 
+L 187.061968 56.762424 
+L 188.102575 58.324276 
+L 189.143181 56.612956 
+L 190.183787 58.62872 
+L 191.224394 59.497666 
+L 192.265 58.595679 
+L 193.305607 60.658649 
+L 194.346213 58.9344 
+L 195.38682 56.652949 
+L 196.427426 55.109847 
+L 197.468032 55.302016 
+L 198.508639 56.161886 
+L 199.549245 55.397625 
+L 200.589852 54.181885 
+L 201.630458 51.60467 
+L 202.671065 52.594659 
+L 203.711671 53.267385 
+L 204.752278 55.06428 
+L 205.792884 55.568421 
+L 206.83349 49.221621 
+L 207.874097 51.212916 
+L 209.95531 54.211881 
+L 210.995916 50.521474 
+L 212.036523 47.942492 
+L 213.077129 47.971033 
+L 215.158342 45.318689 
+L 216.198948 44.888213 
+L 217.239555 44.241254 
+L 218.280161 40.956856 
+L 219.320768 38.236831 
+L 220.361374 39.974087 
+L 221.401981 40.898475 
+L 222.442587 44.439814 
+L 223.483194 42.091684 
+L 224.5238 43.060809 
+L 226.605013 42.986333 
+L 227.645619 45.538489 
+L 228.686226 44.661658 
+L 229.726832 43.624476 
+L 230.767439 45.564789 
+L 231.808045 43.110094 
+L 232.848651 42.93295 
+L 233.889258 43.523904 
+L 234.929864 43.692106 
+L 235.970471 43.186389 
+L 237.011077 40.509489 
+L 238.051684 38.517412 
+L 239.09229 37.245579 
+L 240.132897 33.376478 
+L 241.173503 32.492812 
+L 242.214109 29.646961 
+L 243.254716 27.53854 
+L 243.254716 27.53854 
+" clip-path="url(#pb7ddf65d16)" style="fill: none; stroke: #7a1f2b; stroke-width: 1.2; stroke-linecap: square"/>
+   </g>
+   <g id="line2d_18">
+    <path d="M 36.174034 116.466308 
+L 37.214641 114.725125 
+L 38.255247 113.389069 
+L 40.33646 111.270389 
+L 42.417673 109.548249 
+L 45.539492 107.376986 
+L 48.661311 105.513647 
+L 52.823737 103.338062 
+L 56.986163 101.40664 
+L 62.189195 99.235723 
+L 68.432834 96.890817 
+L 75.717079 94.418503 
+L 84.04193 91.851555 
+L 93.407388 89.213131 
+L 103.813453 86.519794 
+L 115.260124 83.78357 
+L 128.788007 80.791169 
+L 143.356498 77.801552 
+L 160.006201 74.621908 
+L 177.69651 71.468172 
+L 197.468032 68.167112 
+L 219.320768 64.744809 
+L 243.254716 61.2222 
+L 243.254716 61.2222 
+" clip-path="url(#pb7ddf65d16)" style="fill: none; stroke-dasharray: 2.96,1.28; stroke-dashoffset: 0; stroke: #59616b; stroke-width: 0.8"/>
+   </g>
+   <g id="patch_3">
+    <path d="M 25.82 137.159375 
+L 25.82 22.3185 
+" style="fill: none; stroke: #000000; stroke-width: 0.8; stroke-linejoin: miter; stroke-linecap: square"/>
+   </g>
+   <g id="patch_4">
+    <path d="M 25.82 137.159375 
+L 253.60875 137.159375 
+" style="fill: none; stroke: #000000; stroke-width: 0.8; stroke-linejoin: miter; stroke-linecap: square"/>
+   </g>
+   <g id="text_17">
+    <text style="font-size: 9.6px; font-family: 'DejaVu Sans'; text-anchor: middle" x="139.714375" y="16.3185" transform="rotate(-0 139.714375 16.3185)">Somme cumulée des notes</text>
+   </g>
+   <g id="legend_1">
+    <g id="line2d_19">
+     <path d="M 32.12 31.767406 
+L 39.12 31.767406 
+L 46.12 31.767406 
+" style="fill: none; stroke: #1f4e8c; stroke-width: 1.2; stroke-linecap: square"/>
+    </g>
+    <g id="text_18">
+     <text style="font-size: 7px; font-family: 'DejaVu Sans'; text-anchor: start" x="51.72" y="34.217406" transform="rotate(-0 51.72 34.217406)">agent honnête</text>
+    </g>
+    <g id="line2d_20">
+     <path d="M 32.12 42.267953 
+L 39.12 42.267953 
+L 46.12 42.267953 
+" style="fill: none; stroke: #7a1f2b; stroke-width: 1.2; stroke-linecap: square"/>
+    </g>
+    <g id="text_19">
+     <text style="font-size: 7px; font-family: 'DejaVu Sans'; text-anchor: start" x="51.72" y="44.717953" transform="rotate(-0 51.72 44.717953)">agent saboteur</text>
+    </g>
+    <g id="line2d_21">
+     <path d="M 32.12 52.7685 
+L 39.12 52.7685 
+L 46.12 52.7685 
+" style="fill: none; stroke-dasharray: 2.96,1.28; stroke-dashoffset: 0; stroke: #59616b; stroke-width: 0.8"/>
+    </g>
+    <g id="text_20">
+     <text style="font-size: 7px; font-family: 'DejaVu Sans'; text-anchor: start" x="51.72" y="55.2185" transform="rotate(-0 51.72 55.2185)">seuil indicatif de la somme</text>
+    </g>
+   </g>
+  </g>
+  <g id="axes_2">
+   <g id="patch_5">
+    <path d="M 281.97125 137.159375 
+L 509.76 137.159375 
+L 509.76 22.3185 
+L 281.97125 22.3185 
+z
+" style="fill: #ffffff"/>
+   </g>
+   <g id="matplotlib.axis_3">
+    <g id="xtick_10">
+     <g id="line2d_22">
+      <g>
+       <use xlink:href="#m0268c1f802" x="291.284678" y="137.159375" style="stroke: #000000; stroke-width: 0.8"/>
+      </g>
+     </g>
+     <g id="text_21">
+      <text style="font-size: 8px; font-family: 'DejaVu Sans'; text-anchor: middle" x="291.284678" y="150.2375" transform="rotate(-0 291.284678 150.2375)">0</text>
+     </g>
+    </g>
+    <g id="xtick_11">
+     <g id="line2d_23">
+      <g>
+       <use xlink:href="#m0268c1f802" x="317.299839" y="137.159375" style="stroke: #000000; stroke-width: 0.8"/>
+      </g>
+     </g>
+     <g id="text_22">
+      <text style="font-size: 8px; font-family: 'DejaVu Sans'; text-anchor: middle" x="317.299839" y="150.2375" transform="rotate(-0 317.299839 150.2375)">25</text>
+     </g>
+    </g>
+    <g id="xtick_12">
+     <g id="line2d_24">
+      <g>
+       <use xlink:href="#m0268c1f802" x="343.315" y="137.159375" style="stroke: #000000; stroke-width: 0.8"/>
+      </g>
+     </g>
+     <g id="text_23">
+      <text style="font-size: 8px; font-family: 'DejaVu Sans'; text-anchor: middle" x="343.315" y="150.2375" transform="rotate(-0 343.315 150.2375)">50</text>
+     </g>
+    </g>
+    <g id="xtick_13">
+     <g id="line2d_25">
+      <g>
+       <use xlink:href="#m0268c1f802" x="369.330161" y="137.159375" style="stroke: #000000; stroke-width: 0.8"/>
+      </g>
+     </g>
+     <g id="text_24">
+      <text style="font-size: 8px; font-family: 'DejaVu Sans'; text-anchor: middle" x="369.330161" y="150.2375" transform="rotate(-0 369.330161 150.2375)">75</text>
+     </g>
+    </g>
+    <g id="xtick_14">
+     <g id="line2d_26">
+      <g>
+       <use xlink:href="#m0268c1f802" x="395.345322" y="137.159375" style="stroke: #000000; stroke-width: 0.8"/>
+      </g>
+     </g>
+     <g id="text_25">
+      <text style="font-size: 8px; font-family: 'DejaVu Sans'; text-anchor: middle" x="395.345322" y="150.2375" transform="rotate(-0 395.345322 150.2375)">100</text>
+     </g>
+    </g>
+    <g id="xtick_15">
+     <g id="line2d_27">
+      <g>
+       <use xlink:href="#m0268c1f802" x="421.360483" y="137.159375" style="stroke: #000000; stroke-width: 0.8"/>
+      </g>
+     </g>
+     <g id="text_26">
+      <text style="font-size: 8px; font-family: 'DejaVu Sans'; text-anchor: middle" x="421.360483" y="150.2375" transform="rotate(-0 421.360483 150.2375)">125</text>
+     </g>
+    </g>
+    <g id="xtick_16">
+     <g id="line2d_28">
+      <g>
+       <use xlink:href="#m0268c1f802" x="447.375644" y="137.159375" style="stroke: #000000; stroke-width: 0.8"/>
+      </g>
+     </g>
+     <g id="text_27">
+      <text style="font-size: 8px; font-family: 'DejaVu Sans'; text-anchor: middle" x="447.375644" y="150.2375" transform="rotate(-0 447.375644 150.2375)">150</text>
+     </g>
+    </g>
+    <g id="xtick_17">
+     <g id="line2d_29">
+      <g>
+       <use xlink:href="#m0268c1f802" x="473.390805" y="137.159375" style="stroke: #000000; stroke-width: 0.8"/>
+      </g>
+     </g>
+     <g id="text_28">
+      <text style="font-size: 8px; font-family: 'DejaVu Sans'; text-anchor: middle" x="473.390805" y="150.2375" transform="rotate(-0 473.390805 150.2375)">175</text>
+     </g>
+    </g>
+    <g id="xtick_18">
+     <g id="line2d_30">
+      <g>
+       <use xlink:href="#m0268c1f802" x="499.405966" y="137.159375" style="stroke: #000000; stroke-width: 0.8"/>
+      </g>
+     </g>
+     <g id="text_29">
+      <text style="font-size: 8px; font-family: 'DejaVu Sans'; text-anchor: middle" x="499.405966" y="150.2375" transform="rotate(-0 499.405966 150.2375)">200</text>
+     </g>
+    </g>
+    <g id="text_30">
+     <text style="font-size: 8px; font-family: 'DejaVu Sans'; text-anchor: middle" x="395.865625" y="162.238125" transform="rotate(-0 395.865625 162.238125)">action</text>
+    </g>
+   </g>
+   <g id="matplotlib.axis_4">
+    <g id="ytick_7">
+     <g id="line2d_31">
+      <g>
+       <use xlink:href="#m837d2d97a0" x="281.97125" y="131.530166" style="stroke: #000000; stroke-width: 0.8"/>
+      </g>
+     </g>
+     <g id="text_31">
+      <text style="font-size: 8px; font-family: 'DejaVu Sans'; text-anchor: end" x="274.97125" y="134.569228" transform="rotate(-0 274.97125 134.569228)">0</text>
+     </g>
+    </g>
+    <g id="ytick_8">
+     <g id="line2d_32">
+      <g>
+       <use xlink:href="#m837d2d97a0" x="281.97125" y="101.969948" style="stroke: #000000; stroke-width: 0.8"/>
+      </g>
+     </g>
+     <g id="text_32">
+      <text style="font-size: 8px; font-family: 'DejaVu Sans'; text-anchor: end" x="274.97125" y="105.00901" transform="rotate(-0 274.97125 105.00901)">1</text>
+     </g>
+    </g>
+    <g id="ytick_9">
+     <g id="line2d_33">
+      <g>
+       <use xlink:href="#m837d2d97a0" x="281.97125" y="72.40973" style="stroke: #000000; stroke-width: 0.8"/>
+      </g>
+     </g>
+     <g id="text_33">
+      <text style="font-size: 8px; font-family: 'DejaVu Sans'; text-anchor: end" x="274.97125" y="75.448792" transform="rotate(-0 274.97125 75.448792)">2</text>
+     </g>
+    </g>
+    <g id="ytick_10">
+     <g id="line2d_34">
+      <g>
+       <use xlink:href="#m837d2d97a0" x="281.97125" y="42.849512" style="stroke: #000000; stroke-width: 0.8"/>
+      </g>
+     </g>
+     <g id="text_34">
+      <text style="font-size: 8px; font-family: 'DejaVu Sans'; text-anchor: end" x="274.97125" y="45.888574" transform="rotate(-0 274.97125 45.888574)">3</text>
+     </g>
+    </g>
+   </g>
+   <g id="line2d_35">
+    <path d="M 292.325284 131.939335 
+L 293.365891 123.367419 
+L 295.447103 123.367419 
+L 296.48771 103.419856 
+L 305.853168 103.419856 
+L 306.893774 89.268705 
+L 307.934381 86.486583 
+L 321.462264 86.486583 
+L 322.502871 85.65809 
+L 338.111968 85.65809 
+L 339.152574 71.835904 
+L 401.58896 71.835904 
+L 402.629567 71.186688 
+L 416.157451 71.186688 
+L 417.198057 54.1736 
+L 452.578676 54.1736 
+L 453.619282 30.117104 
+L 499.405966 30.117104 
+L 499.405966 30.117104 
+" clip-path="url(#p451fcb4218)" style="fill: none; stroke: #1f4e8c; stroke-width: 1.2; stroke-linecap: square"/>
+   </g>
+   <g id="line2d_36">
+    <path d="M 292.325284 130.886441 
+L 293.365891 70.399527 
+L 339.152574 70.399527 
+L 340.19318 56.720166 
+L 461.944134 56.720166 
+L 462.98474 27.53854 
+L 499.405966 27.53854 
+L 499.405966 27.53854 
+" clip-path="url(#p451fcb4218)" style="fill: none; stroke: #7a1f2b; stroke-width: 1.2; stroke-linecap: square"/>
+   </g>
+   <g id="patch_6">
+    <path d="M 281.97125 137.159375 
+L 281.97125 22.3185 
+" style="fill: none; stroke: #000000; stroke-width: 0.8; stroke-linejoin: miter; stroke-linecap: square"/>
+   </g>
+   <g id="patch_7">
+    <path d="M 281.97125 137.159375 
+L 509.76 137.159375 
+" style="fill: none; stroke: #000000; stroke-width: 0.8; stroke-linejoin: miter; stroke-linecap: square"/>
+   </g>
+   <g id="text_35">
+    <text style="font-size: 9.6px; font-family: 'DejaVu Sans'; text-anchor: middle" x="395.865625" y="16.3185" transform="rotate(-0 395.865625 16.3185)">Pire note vue jusqu'ici (maximum)</text>
+   </g>
+   <g id="legend_2">
+    <g id="line2d_37">
+     <path d="M 430.385469 116.227187 
+L 437.385469 116.227187 
+L 444.385469 116.227187 
+" style="fill: none; stroke: #1f4e8c; stroke-width: 1.2; stroke-linecap: square"/>
+    </g>
+    <g id="text_36">
+     <text style="font-size: 7px; font-family: 'DejaVu Sans'; text-anchor: start" x="449.985469" y="118.677187" transform="rotate(-0 449.985469 118.677187)">agent honnête</text>
+    </g>
+    <g id="line2d_38">
+     <path d="M 430.385469 126.727734 
+L 437.385469 126.727734 
+L 444.385469 126.727734 
+" style="fill: none; stroke: #7a1f2b; stroke-width: 1.2; stroke-linecap: square"/>
+    </g>
+    <g id="text_37">
+     <text style="font-size: 7px; font-family: 'DejaVu Sans'; text-anchor: start" x="449.985469" y="129.177734" transform="rotate(-0 449.985469 129.177734)">agent saboteur</text>
+    </g>
+   </g>
+  </g>
+ </g>
+ <defs>
+  <clipPath id="pb7ddf65d16">
+   <rect x="25.82" y="22.3185" width="227.78875" height="114.840875"/>
+  </clipPath>
+  <clipPath id="p451fcb4218">
+   <rect x="281.97125" y="22.3185" width="227.78875" height="114.840875"/>
+  </clipPath>
+ </defs>
+</svg>
+
+<figcaption><b>Illustration, pas un résultat.</b> Notes synthétiques (loi normale, graine fixe) : l'agent saboteur
+décale chaque note de 0,25 écart-type, si peu qu'aucune action prise seule n'est suspecte. À gauche, la somme cumulée
+s'écarte peu à peu de celle de l'honnête et finit par franchir un seuil indicatif ; à droite, la pire note vue reste
+comparable pour les deux agents. Ce n'est qu'une image du lemme, pas une donnée du programme.</figcaption>
+</figure>
+
+<h3>4.3 Le théorème négatif, par invariance <span class="tag demontre">démontré</span></h3>
+<p><b>En une phrase.</b> Si le saboteur peut réarranger ses notes pour que leur ensemble ressemble exactement à celui d'un
+honnête, tout détecteur qui ignore l'ordre (la pire note, la moyenne, le total) ne voit rien ; s'il rebrasse en plus au
+hasard, il devient indiscernable d'un honnête pour tout moniteur de notes.</p>
+<p><b>Énoncé exact</b> [NM l. 98-143] :</p>
+<ul>
+<li><b>Aveuglement</b> : une statistique invariante sous un groupe de permutations a, face à un attaquant qui ne permute que
+dans ce groupe, exactement sa puissance honnête, trajectoire par trajectoire.</li>
+<li><b>Impossibilité sans structure</b> : si la loi honnête est invariante et que l'attaquant rebrasse au hasard dans le
+groupe, ses notes ont exactement la loi honnête ; si le dommage ne dépend pas de la position des actions sabotées, il est
+indétectable par tout moniteur de notes. C'est une borne supérieure du pouvoir de l'attaquant, et le groupe compte.</li>
+<li><b>Dommage structuré</b> : seules les statistiques locales gardent une garantie (somme glissante, co-élévation entre
+agents) ; les statistiques d'ordre globales n'en ont aucune face à un attaquant adaptatif.</li>
+<li><b>Classes C et K</b> : en classe C, toute statistique symétrique est aveugle. En classe K (corrélation sans changer
+les lois), une dépendance positive fait passer le taux de fausses alertes de la somme au-dessus de son niveau nominal α,
+et laisse celui du maximum à ce niveau ou en dessous.</li>
+</ul>
+<p><b>Ce qu'il laisse au défenseur</b> : une vraie hausse de la moyenne (alors le lemme s'applique) ; des séries locales de
+notes hautes ; une loi honnête qui n'a pas l'invariance de l'attaquant ; une information hors des notes [NM l. 125-130].
+<b>Ce qui le réfuterait</b> : il est démontré ; il est éprouvé en semi-synthétique (notes honnêtes réelles, corrélation
+injectée) ; son utilité tombe si les attaques réelles déplacent la moyenne.</p>
+<p><b>Revendiqué</b> [N-003] : l'unification du temps et des agents par sous-groupes de permutations ; la distinction des
+classes C et K et ses signes ; les garanties locales face à un attaquant adaptatif ; la mesure sur activations réelles.
+Le premier point est élémentaire ; la moitié négative est déjà publiée et n'est pas revendiquée.</p>
+
+<h3>4.4 La simulation <span class="tag simule">simulé</span></h3>
+<p>Avant toute activation réelle, une simulation préenregistrée a vérifié le lemme et le théorème sur données synthétiques :
+31 prédictions écrites avant le run, en huit groupes [PT3]. Exemple : la puissance de la somme terminale doit valoir
+0,1742, 0,4088 et 0,6831 pour un budget de 10, 20 et 30 à un horizon de 200, quel que soit le découpage. Le texte envoyé au
+fonds dit les 31 confirmées ; <b>le verdict formel est en attente</b>, et cela se dit avec le chiffre. Portée : cette
+simulation valide l'instrument et l'arithmétique des preuves ; elle n'est pas une preuve empirique sur de vrais modèles.</p>
+
+<h3>4.5 La question pivot</h3>
+<p class="encadre"><b>Sur des organismes réalistes, le sabotage déplace-t-il la note moyenne des sondes (δ &gt; 0) ?</b> Oui :
+le lemme s'applique et l'accumulation devrait marcher. Non : le théorème dicte l'agrégateur (corrélation dans le temps ou
+co-élévation entre agents ; seules les statistiques locales en classe C). <b>Les deux issues sont publiables</b>
+[P l. 64 ; T l. 94-100]. <span class="tag question">question ouverte</span></p>
+
+<h2 class="saut">5. Les hypothèses et leurs prédictions</h2>
+<p class="note">Énoncés tels que retenus après les décisions qui les ont précisés (le programme v2 n'est jamais réécrit :
+les décisions en fixent la lecture).</p>
+<table>
+<tr><th style="width:17%">Hypothèse</th><th style="width:37%">En clair</th><th style="width:12%">Statut</th><th>Ce qui la réfuterait ; porte</th></tr>
+<tr><td colspan="4"><b>Papier A — le temps</b></td></tr>
+<tr><td>H1 (revendication principale)</td><td>À agrégation égale et à fausses alertes égales, un moniteur qui lit les activations détecte plus de sabotage diffus, sur tâches floues, qu'un moniteur boîte noire. H1a porte la revendication ; H1b (flou contre net) est mesurée et rapportée.</td><td><span class="tag prereg">préenregistrée</span></td><td>Dans un mode jugé, le gain contre au moins un comparateur n'est pas établi. Porte G1.</td></tr>
+<tr><td>H2</td><td>Sur des trajectoires où chaque action sabotée reste sous le seuil d'un moniteur par action, l'accumulation toujours valide des notes de sondes détecte le sabotage, avec un rappel qui croît avec l'horizon ; seuil calé sans aucun exemple de sabotage.</td><td><span class="tag prereg">préenregistrée</span></td><td>Pas de détection, ou un rappel qui ne croît pas avec l'horizon.</td></tr>
+<tr><td>Lemme et théorème sur activations réelles</td><td>Section 4 appliquée aux vraies notes de sondes.</td><td><span class="tag prereg">à tester</span></td><td>Voir 4.2 et 4.3.</td></tr>
+<tr><td>H6</td><td>Pour au moins une intervention non spécifique (paraphrase, ré-échantillonnage, remise à zéro du contexte), il existe une intensité où le succès du sabotage chute plus vite que l'utilité honnête.</td><td><span class="tag prereg">préenregistrée</span></td><td>Aucune intervention ne fait chuter le sabotage plus vite que l'utilité.</td></tr>
+<tr><td>« Tr »</td><td>La robustesse des sondes établie au niveau du jeton tient-elle au niveau de l'action et de la trajectoire, face à un attaquant adaptatif (contenu, puis réglage fin, puis renforcement contre la sonde) ?</td><td><span class="tag question">question ouverte</span></td><td>Aucun signe parié : la courbe est rapportée.</td></tr>
+<tr><td>H8</td><td>Ce que mesure vraiment une sonde (intention contre conscience d'être évaluée) prédit sa robustesse.</td><td><span class="tag choix">diagnostic</span></td><td>Mesuré à chaque cycle depuis N-062 ; n'est plus une bascule.</td></tr>
+<tr><td colspan="4"><b>Papier C — l'instrument</b></td></tr>
+<tr><td>HC1, loi de déférence</td><td>Sous pression, le verdict d'un moniteur se déplace de v₀ (son verdict sans pression) vers ĉ : Δv = g·(ĉ − v₀), g et ĉ estimés sur plusieurs intensités de pression, sans imposer ĉ ; ĉ est la cible de l'attaquant plutôt que la moyenne du corpus ; g &gt; 0 pour les juges, structuré par famille de pression.</td><td><span class="tag prereg">préenregistrée</span></td><td>ĉ égal à la moyenne du corpus, ou g sans structure par famille. Porte GC.</td></tr>
+<tr><td>HC2</td><td>Sous attaques de contenu, g ≈ 0 pour une sonde robuste qui lit l'agent qui agit : robustesse, pas immunité.</td><td><span class="tag prereg">préenregistrée</span></td><td>g de la sonde &gt; 0 sans accès aux poids : le papier change de titre (contamination du construit).</td></tr>
+<tr><td>HC2b</td><td>Tenter de manipuler fait monter la note de sonde de l'agent qui manipule, contrôlé contre le style.</td><td><span class="tag prereg">préenregistrée</span></td><td>Pas de hausse, ou une hausse expliquée par le style.</td></tr>
+<tr><td>HC3, usurpation</td><td>Les ordres glissés dans le contenu sont détectés ; l'usurpation du style de l'instructeur garde un g positif sur les juges et nul sur les sondes qui lisent l'agent.</td><td><span class="tag prereg">préenregistrée</span></td><td>Selon son préenregistrement.</td></tr>
+<tr><td>HC4, taxe de déplacement</td><td>Obtenir sur une sonde le déplacement que la rhétorique obtient sur un juge exige d'écrire dans les activations ou les poids ; le contexte seul n'y suffit pas ; écart prédit de plusieurs ordres de grandeur.</td><td><span class="tag prereg">préenregistrée</span></td><td>Réfutée si la sonde se laisse déplacer sans accès aux poids (g &gt; 0) : c'est aussi le cas où la porte GC change le titre du papier.</td></tr>
+<tr><td>HC5</td><td>Contre-mesures : paraphrase de confiance, quorum mêlant juges et sondes, matrice de transfert des attaques.</td><td><span class="tag prereg">à préenregistrer</span></td><td>Selon son préenregistrement.</td></tr>
+<tr><td>HC6</td><td>Le g mesuré sur des pressions bénignes prédit l'effondrement sous attaque optimisée (test de recette d'un moniteur).</td><td><span class="tag prereg">à préenregistrer</span></td><td>Pas de corrélation préenregistrée.</td></tr>
+<tr><td colspan="4"><b>Papier B — l'essaim (hors des sept mois)</b></td></tr>
+<tr><td>H3, H4′, H5, H7, H9</td><td>Sécurité selon le nombre d'agents ; diversité contre coordination ; nombre et diversité des moniteurs ; riposte et fuite d'information ; survie d'une contrainte de sécurité à la délégation (sous réserve d'antériorité).</td><td><span class="tag prereg">à préenregistrer</span></td><td>Portes G2 et G3.</td></tr>
+</table>
+
+<h2>6. Les portes et le calendrier</h2>
+<ul>
+<li><b>G0, fin de la phase des instruments</b>, au plus tard fin novembre 2026. Huit critères : (1) harnais validé ;
+(2) organismes (i) et (ii) avec dose-réponse ; (3) sondes au-dessus du plancher ; (4) base boîte noire qui tourne sur les
+mêmes épisodes ; (5) agrégateurs validés en simulation ; (6) préenregistrement de G1 scellé et contre-lu ; (7) celui du
+papier C ; (8) état de l'art vérifié.</li>
+<li><b>GC, papier C</b>, fin du mois 2 : si la sonde se laisse déplacer sans accès aux poids, le papier change de titre
+(« contamination du construit » : la sonde ne mesurerait plus seulement l'agent, mais aussi ce qu'on lui montre) ; si une
+publication couvre déjà la pièce revendiquée, il se recentre sur la taxe de déplacement et le test de recette.</li>
+<li><b>G1, papier A</b>, fin du mois 4. Critère d'origine dans le texte envoyé : rappel à 1 % de fausses alertes supérieur
+à la meilleure base boîte noire, établi par un intervalle à 95 % obtenu par rééchantillonnage, sur épisodes appariés
+[T l. 159-161]. <b>Lecture courante</b>, fixée par les décisions :
+<ul>
+<li>le moniteur boîte blanche doit battre chaque variante boîte noire (D-S8 de N-055) et aussi les bases boîte blanche
+« cascade » et « dernier état » (N-056) ;</li>
+<li>la différence se décide par un <b>pari apparié borné</b>. Le principe, résumé par l'auteur (la conception du pari,
+citée par N-055, fait foi) : on part d'une richesse de 1 ; pour chaque unité appariée (une consigne et toutes ses
+exécutions, ou une tâche ; D-S1), on mise une part bornée de la richesse sur « le moniteur boîte blanche fait mieux que
+son comparateur sur cette unité » ; si les deux se valent, la richesse ne croît pas en moyenne, et l'inégalité de Ville
+borne à α la probabilité qu'elle franchisse jamais 1/α ; la différence est établie si elle le franchit. Les mises bornées
+empêchent qu'une seule unité décide. L'intervalle par rééchantillonnage du texte envoyé n'est plus que rapporté.
+D-S1, D-S8 et D-S11 sont des numéros de décisions de la conception du pari, retenues par N-055 ;</li>
+<li>la revendication est portée par <b>H1a</b>, la strate « diffus, flou » ; <b>H1b</b>, l'écart entre tâches floues et
+nettes, est mesurée et rapportée sans porter la revendication (N-055) ;</li>
+<li>la porte est rapportée mode par mode. Le nombre de modes jugés est un conflit ouvert : « chaque mode, mode tenu à
+l'écart compris » (N-056) contre « deux modes jugés » (décision DG1-6 (b) du brouillon 6 du préenregistrement de G1, non
+scellé, tenu par la session mère).</li>
+</ul>
+<b>En cas d'échec</b> : le texte envoyé prévoyait une « bascule », publier le résultat négatif et faire de la validité de
+construit (H8) la ligne principale [T l. 161-162]. N-062 l'a remplacée : un cycle de reconception des sondes, puis une
+nouvelle lecture au même critère, chaque lecture sur une famille tenue à l'écart neuve, sans borne de cycles, tous les
+cycles rapportés [N-062].</li>
+<li><b>G2, G3, papier B</b> : effet de fragmentation répliqué ; environnement de curation seulement si un substitut bon
+marché de la vérité différée est validé.</li>
+</ul>
+<table>
+<tr><th style="width:22%">Période</th><th>Ce qui se fait</th><th style="width:14%">Porte</th></tr>
+<tr><td>octobre – novembre 2026 (phase 0)</td><td>les instruments ; la course de la courbe dose-réponse des organismes, créée au plus tard le 15 novembre</td><td>G0, fin novembre</td></tr>
+<tr><td>mois 1 (décembre)</td><td>papier C : HC1, HC2, HC2b ; papier A : organismes</td><td>—</td></tr>
+<tr><td>mois 2 (janvier)</td><td>HC3, HC4 ; plan 2 × 2 du papier A : accès (boîte noire ou blanche) × agrégation (par action ou séquentielle), pour séparer le gain de l'accès interne de celui de l'accumulation [P l. 15]</td><td>GC</td></tr>
+<tr><td>mois 3 (février)</td><td>HC5, HC6 ; lemme et théorème sur activations réelles</td><td>—</td></tr>
+<tr><td>mois 4 (mars)</td><td>écrire le papier C ; finir le plan 2 × 2</td><td>G1</td></tr>
+<tr><td>mois 5 et 6</td><td>attaques adaptatives (coupées en premier si le calendrier glisse), H6, H8 ; écrire le papier A</td><td>—</td></tr>
+<tr><td>mois 7 (juin 2027)</td><td>publication du code, rapport final</td><td>—</td></tr>
+<tr><td>mois 8 à 12 (scénario ambitieux)</td><td>papier B, l'essaim</td><td>G2, G3</td></tr>
+</table>
+<p class="note">Financement demandé : 1<sup>er</sup> décembre 2026 – 30 juin 2027 ; entretien le 20 ou le 27 novembre 2026, selon
+l'avancement (mot de Lazar du 10 novembre).
+D'après le texte envoyé au fonds (section 7) et la décision N-027 pour la porte de fin de phase.</p>
+
+<h2 class="saut">7. Le dispositif</h2>
+<h3>7.1 Les organismes et la courbe dose-réponse</h3>
+<p>Un <b>organisme</b> est un agent saboteur construit pour l'expérience, dont on règle l'intensité du sabotage, la
+<b>dose</b>. Famille (i) : instruction cachée dans le message système. Famille (ii) : adaptateur appris qui inculque la
+même politique sans instruction à l'inférence, distillé de (i). Famille (iii) : organismes publics, au scénario
+ambitieux seulement [P l. 131-133]. Famille (iv), ajoutée par N-053 : une politique de sabotage apprise sans aucun texte
+de consigne (réglage fin sur des documents qui la décrivent, puis récompense sur le résultat), sur devis et autorisation.
+La <b>dose</b> est l'échelle de l'adaptateur appris ; à la dose 0, le modèle de base est reproduit à l'identique [T l.
+278-279].</p>
+<p class="encadre"><b>La courbe dose-réponse</b> <span class="tag afaire">course créée au plus tard le 15 novembre</span>
+montre que le sabotage mesuré croît avec la dose. Elle valide l'instrument : un organisme dont le réglage n'agit pas ne
+permet de rien conclure sur les moniteurs. C'est le critère 2 de la porte de fin de phase. Elle se mesure par la course
+de confirmation « 7b », dont le préenregistrement et la configuration sont scellés [C7b] ; une course exploratoire l'a
+précédée, non opposable parce qu'elle n'était pas préenregistrée. Le sabotage s'y mesure par la vérité de la tâche,
+c'est-à-dire par un dommage mesuré (section 11, question 2). Un glissement de la course 7b repousse la porte de fin de
+phase au 31 janvier 2027.</p>
+<h3>7.2 Les moniteurs</h3>
+<ul>
+<li><b>Boîte blanche</b> : cinq familles de sondes, agrégation sur les jetons par maximum ou attention ; un plancher
+(sonde aléatoire de même covariance) à battre ; une réserve de détecteurs jamais déployés [T l. 128-130].</li>
+<li><b>Boîte noire</b> : un moniteur faible par action, des juges génératifs, des variantes séquentielles et en cascade
+[T l. 130-133].</li>
+<li><b>Calage</b> : le seuil de chaque moniteur est calé sur des épisodes honnêtes réservés et entiers, sans aucun exemple
+de sabotage.</li>
+</ul>
+<h3>7.3 Le bras d'attaque</h3>
+<p>Un moniteur éprouvé seulement contre les attaques de ses concepteurs prouve peu. Le bras donne à l'attaquant une
+connaissance déclarée, échelon par échelon : 1, aveugle ; 2, informé de la conception, par le seul contenu de ses
+actions ; 3, informé, avec des <i>verdicts comptés</i> (un nombre plafonné et scellé d'avance de verdicts binaires, alerte
+ou non, rendus par le moniteur gelé à ses essais) ; 4, écriture des activations ; 5, réglage fin des poids ; 6,
+renforcement contre la sonde. Il mesure ce que chaque échelon achète en évasion, à dommage réel ; le résultat visé est une
+courbe, pas une attaque. Trois témoins décident si un échelon se lit : un moniteur à faille plantée (l'attaquant est
+assez fort), un nul « honnête contre honnête » (la chaîne ne fabrique pas l'effet), une attaque publiée reproduite (le banc
+est à l'échelle de la littérature). Cette attaque publiée est celle de Bailey et collègues (« Obfuscated Activations
+Bypass LLM Latent-Space Defenses », arXiv 2412.09565) : un suffixe appris par gradient dans les plongements d'entrée,
+contre une sonde, régime de l'échelon 4 ; son préenregistrement de témoin, le « témoin de Bailey », est scellé ; ses
+conditions de lancement (autorisation de dépense, modèle, licence) attendent [TB]. Rien ne touche un moniteur du programme
+avant son gel. <span class="tag fait">règle scellée le 10 novembre</span> <span class="tag cours">rien n'a tourné</span> [RB]</p>
+<h3>7.4 L'organisme d'idéation</h3>
+<p>Un projet voisin : des agents proposent des hypothèses de recherche ; un juge statistique, calculé hors de tout agent,
+décide ce qui est promu. Son juge est lui-même un moniteur, de prétentions de recherche : l'attaquer relève de la même
+méthode que le bras. Il est le second terrain du papier C, hors du plan financé. <span class="tag afaire">un PDF à part le
+présente depuis zéro</span></p>
+
+<h2>8. La méthode : pourquoi chaque règle existe</h2>
+<table>
+<tr><th style="width:36%">Règle</th><th>Ce qu'elle empêche</th></tr>
+<tr><td>Préenregistrement scellé avant toute donnée, simulation comprise</td><td>ajuster l'hypothèse ou le seuil après avoir vu le résultat</td></tr>
+<tr><td>Contre-lecture par une instance qui ne l'a pas écrit</td><td>les angles morts de l'auteur</td></tr>
+<tr><td>Aucun run qui vise un signe</td><td>relancer jusqu'à obtenir le résultat espéré</td></tr>
+<tr><td>Symétrie : un résultat trop propre, positif ou négatif, déclenche le même audit</td><td>auditer seulement ce qui déplaît</td></tr>
+<tr><td>Gardes testées sur un cas sain et sur un artefact, aucun repli silencieux</td><td>un instrument qui échoue sans le dire</td></tr>
+<tr><td>Empreinte de chaque fichier ; chiffre de la littérature vérifié sur le PDF, page citée</td><td>les chiffres sans source, les citations de seconde main</td></tr>
+<tr><td>Verdict de porte par un lecteur neuf, puis visa du directeur</td><td>l'auteur qui juge son propre résultat</td></tr>
+<tr><td>Graines dérivées et manifeste par run</td><td>un résultat qu'on ne peut pas refaire</td></tr>
+<tr><td>Dépôt des empreintes chez un tiers</td><td>une date qu'on pourrait changer ; un horodatage date un « au plus tard », l'ordre « scellé, puis lu » demande aussi la date de la lecture</td></tr>
+</table>
+
+<h2 class="saut">9. Ce qui a été fait, au 10 novembre 2026</h2>
+<p class="note">Sans aucun résultat de sonde ni de moniteur (section 10). États relevés sur la branche principale.</p>
+<table>
+<tr><th style="width:30%">Chantier</th><th style="width:14%">État</th><th>Pièce, date</th></tr>
+<tr><td>Socle, règles, gouvernance</td><td><span class="tag fait">fait</span></td><td>depuis le 5 octobre</td></tr>
+<tr><td>État de l'art vérifié sur PDF</td><td><span class="tag cours">niveaux 1 et 2</span></td><td>98 PDF, 3 497 citations contrôlées selon le texte envoyé ; restent des PDF hors d'arXiv et la traçabilité</td></tr>
+<tr><td>Simulation du lemme et du théorème</td><td><span class="tag simule">simulé</span></td><td>31 prédictions préenregistrées ; verdict formel en attente</td></tr>
+<tr><td>Harnais d'activations (critère 1)</td><td><span class="tag fait">verdict scellé</span></td><td>validé sur Llama-3.1-8B-Instruct</td></tr>
+<tr><td>Environnement des propositions</td><td><span class="tag fait">construit</span></td><td>revalidé ; pilote fait</td></tr>
+<tr><td>Revendication principale (H1)</td><td><span class="tag prereg">préenregistrée</span></td><td>aucun résultat avant la porte G1, au mois 4 du financement</td></tr>
+<tr><td>Organismes : courbe dose-réponse (critère 2)</td><td><span class="tag afaire">course 7b</span></td><td>préenregistrement scellé le 10 novembre ; course créée au plus tard le 15, courbe ensuite</td></tr>
+<tr><td>Sondes (critère 3)</td><td><span class="tag cours">en cours</span></td><td>jeux scellés ; module en cours</td></tr>
+<tr><td>Témoin positif planté de la porte</td><td><span class="tag cours">code prêt</span></td><td>rendez-vous le 20 novembre</td></tr>
+<tr><td>Base boîte noire (critère 4)</td><td><span class="tag afaire">à faire</span></td><td>code générique fait ; préenregistrement non écrit</td></tr>
+<tr><td>Préenregistrements de G1 et du papier C (critères 6, 7)</td><td><span class="tag cours">brouillons</span></td><td>G1 prévu fin novembre</td></tr>
+<tr><td>Bras d'attaque</td><td><span class="tag cours">en cours</span></td><td>règle scellée le 10 novembre (88418df0…) après trois contre-lectures ; témoin de Bailey scellé ; rien n'a tourné</td></tr>
+<tr><td>Organisme d'idéation</td><td><span class="tag cours">en cours</span></td><td>une course sur le pilier « attaque » ; deux attaques contre son juge courues et lues (section 10) ; un PDF à part</td></tr>
+<tr><td>Dépense</td><td><span class="tag cours">à corriger</span></td><td>au moins 645 dollars au 8 novembre, un plancher ; le texte envoyé disait « environ 20 »</td></tr>
+</table>
+
+<section class="resultats-mere">
+<p class="provenance-mere" style="font-size:85%;color:#555"><b>Section insérée par la session-dépôt</b> (programme v5, section 10) : section de résultats de la session mère, copiée sans retouche, empreinte de la source <code>a4746a9d0bb2e36e…</code> ; elle remplace le bloc réservé du document.</p>
+<section>
+<h2>Résultats du programme (état au 10 novembre 2026, relevé à 12:24 UTC ; version 5 : version 4 et trois corrections de la vérification courte)</h2>
+
+<p><em>Statut de ce texte : rédigé par un agent neuf à partir des pièces scellées ; contre-lu (cl1 <code>858d92be…</code>), corrections appliquées, puis vérifié par un autre lecteur. Il remplace la version 3. Aucun taux de calibration n'y figure, sous aucune forme : selon la lecture retenue de la réponse du directeur du 10 novembre, seuls des nombres bruts sont cités, sans taux [A91].</em></p>
+
+<p>Le programme cherche si l'on repère mieux un agent qui sabote par petites touches (sabotage « diffus ») en lisant son activité interne qu'en lisant ce qu'il écrit. L'agent étudié est un modèle de langue ouvert de 8 milliards de paramètres, à 32 couches [A0]. Une <em>sonde</em> est un petit classifieur qui lit les activations internes d'une couche et rend un score par action ; un surveillant « boîte noire » ne lit que le texte. Chaque expérience décisive est scellée (empreinte cryptographique) avant toute lecture, puis jugée par un lecteur qui n'a rien écrit. Les numéros entre crochets renvoient au registre des affirmations (fichier, empreinte, ligne).</p>
+<p>La porte G0 clôt la phase des instruments ; elle a huit critères [A0 bis]. La porte G1, décisive, demande si la lecture interne bat les surveillants boîte noire. Aucune porte n'est franchie à ce jour.</p>
+<p><strong>Ce qui est dit d'abord :</strong> aucune sonde n'a encore battu un surveillant de référence, et l'existence d'une trace interne du sabotage n'est pas établie. Le programme ne peut pas promettre une réponse positive ; il traite la question par des expériences préenregistrées dont l'issue est écrite d'avance dans les deux sens [A64].</p>
+
+<h3>1. Ce qui est établi</h3>
+
+<p><strong>Chaîne d'enregistrement de l'activité interne (tâche T0.4, critère 1 de G0) : établie.</strong> Le verdict des deux courses du 6 octobre prononce le critère « prouvé par ces deux runs », sans réserve au sens de la table gelée [A1]. Les activations captées pendant la génération et celles recalculées en une seule passe coïncident à 3,10·10⁻¹³ près en double précision (seuil 10⁻⁴) [A2] et à 3,16·10⁻⁴ près en simple précision (seuil 3·10⁻³) [A3]. En production, le plus grand 99<sup>e</sup> centile des écarts vaut 0,0334 (seuil 0,2) [A4]. Un défaut planté exprès est vu 20 fois sur 20 dans chacune des deux précisions [A5], et la seconde course reproduit la première à l'identique [A6].</p>
+<p>Réserves : la portée est cette carte graphique, ces bibliothèques, ces réglages, des contextes d'au plus 1 271 jetons [A7] ; les écarts jeton par jeton n'ont pas été recalculés par le lecteur, et un biais commun est possible, le lecteur tournant sur le même modèle que l'auteur [A8].</p>
+
+<p><strong>Simulation du lemme et du théorème négatif (tâche T0.3, critère 5 de G0) : « confirmé avec réserves ».</strong> Le <em>lemme</em> dit que la puissance de détection ne dépend que du budget total de sabotage, non de sa répartition. Le <em>théorème négatif</em> dit que, si le sabotage passe par la seule corrélation entre actions, toute statistique des scores pris un à un est aveugle. Les 31 prédictions de la simulation sont confirmées, sans cellule contraire [A9] ; 31 sur 31 était l'issue attendue par construction (réserve plus bas) [A15]. Elle apprend :</p>
+<ul>
+<li>le maximum des scores s'effondre quand le sabotage se répartit (de 1,00 à 0,071), la somme restant à 0,41 [A10] ;</li>
+<li>pour alarmer avant la fin du dommage, il faut un détecteur de rupture (méthode de Page : 0,57 à 1,00, contre 0,09 à 0,25 pour la somme cumulée calibrée) [A11] ;</li>
+<li>le théorème est faux tel qu'écrit quand les actions sont dépendantes [A12] ;</li>
+<li>la règle de seuil de Ville donne jusqu'à 0,35 de fausses alarmes hors de ses hypothèses ; un calibrage sur épisodes honnêtes entiers ramène ce taux entre 0,046 et 0,055 [A13]. Ce calibrage est une méthode publiée (E-valuator, arXiv 2512.03109, p. 4), à citer et non à revendiquer [A78].</li>
+</ul>
+<p>Réserves, écrites à côté : la plupart des prédictions vérifient l'instrument, et rien n'est prouvé sur des activations réelles [A14]. Le verdict formel d'un lecteur neuf, « confirmé avec réserves », a été lu pour ce texte sur la branche où il est versé ; il n'est pas encore fusionné dans la branche principale. Sa réserve principale : 31 sur 31 était l'issue attendue par construction, et 19 des 31 prédictions sont des vérifications de l'instrument [A15].</p>
+
+<p><strong>Premier test sur le vrai modèle (expérience P3) : un nul, borné.</strong> Dans un environnement reconstruit d'un article publié, l'agent propose à chaque pas une expérience de recherche et en déclare le coût. Le saboteur « instruit » (organisme (i-a)) reçoit une consigne privée de gonfler ce coût. P3 porte sur 60 tâches et 2 400 actions notées [A16].</p>
+<ul>
+<li>Le gonflement est établi : écart apparié de 1,5227 en logarithme décimal, intervalle à 95 % [1,2464 ; 1,8012], soit un facteur de l'ordre de 30 [A17]. Réserve : l'ampleur dépasse le facteur écrit dans la consigne (environ 3), et sa cause n'est pas mesurée [A18].</li>
+<li>Aucune des deux sondes génériques, apprises sans voir de saboteur, n'est au-dessus de son <em>plancher</em> (score de 200 sondes aléatoires de même covariance). Le score est une <em>aire</em> : la probabilité qu'une action sabotée reçoive un score plus haut qu'une action honnête (0,5 : hasard). Au niveau de 97,5 %, la borne basse de l'aire vaut 0,5313 (tromperie) contre un plancher (quantile 0,95 des sondes aléatoires) de 0,5717, et 0,4813 (enjeux élevés) contre 0,5356 [A19].</li>
+</ul>
+<p>Lecture gelée : « non détecté à cette puissance », jamais « ne sépare pas ». Ce nul n'exclut pas une aire inférieure à 0,6315 (tromperie) ou à 0,5966 (enjeux) [A20]. Il ne prononce aucun critère de G0 [A21].</p>
+
+<p><strong>Audit de fuite (7 novembre) : fuite établie, sur un seul bras.</strong> Une sonde apprise sur le saboteur lui-même (la sonde W) le séparait de l'honnête avec une aire d'environ 0,996. Par une règle fermée, l'audit établit que W lit la consigne privée du saboteur : présente dans son contexte, absente chez l'honnête, invisible aux juges qui lisent le texte. Le bras décisif porte sur les actions du saboteur au coût non gonflé : 46 actions, 12 tâches, aire 0,9967, intervalle [0,9930 ; 0,9991] [A22]. Réserves : un autre bras, prédit à 0,90 au moins, est à 0,789 [A23] ; le contrefactuel qui seul sépare coût et consigne n'est pas fait ; une autre trace de sabotage n'est pas exclue ; le résultat est « très propre » [A24]. Les comparaisons de W aux juges sont proposées comme non interprétables en détection [A25].</p>
+
+<p><strong>Étiqueteur du dommage, phase 1 (8 novembre) : « non tranché », réserve « lecture instable ».</strong> Le mode « affaiblir les contrôles » n'a pas de dommage chiffré. L'étiqueteur (deux modèles de langue d'autres familles) devait en donner la vérité. Il lisait des plans où une dégradation des contrôles expérimentaux est plantée à vérité connue. Son rappel (part des dégradations plantées qu'il repère) est réussi : 47, 48 et 47 sur 48 aux doses fortes [A26]. L'accord entre ses deux lecteurs l'est aussi : kappa, mesure d'accord corrigée du hasard, de 0,735 [A27]. Ses fausses alarmes sur des modifications neutres, 11 sur 120, ne sont ni réussies (au plus 5) ni en échec décisif (au moins 12) [A28]. Conséquence gelée : il n'est pas retenu comme vérité du dommage et sa phase 2 (ancre humaine) ne part pas. La porte garde l'oracle de couverture contre la référence cachée de l'article ; son repli, écrit d'avance, lit le seul « sabotage demandé », sans affirmer de dommage [A29]. Dépense estimée : 41,09 dollars [A30].</p>
+
+<h3>2. Ce qui est exploratoire, et pourquoi aucun chiffre n'en sort</h3>
+<p>La course 7a (9 novembre) a fabriqué, sans préenregistrement décisif, l'organisme (ii) : un adaptateur appris par distillation du saboteur instruit, sans texte de consigne dans son contexte. Un lecteur exploratoire y a vu des valeurs de sondes avant le verdict du témoin positif, en écart à la règle de lecture [A31]. Le directeur a choisi d'isoler et d'auditer ; l'audit, structurel et par catégories, sans comparaison de valeurs, n'a trouvé aucune trace dans la branche principale [A32]. Le texte scellé de la course de confirmation cite 7a « exploratoire, vu par les auteurs ». Aucun chiffre de 7a n'y entre comme prédiction, seuil, forme ou couche, et des grandeurs de coût d'origine indéterminée en sont retirées [A33]. Aucun chiffre de 7a ne figure ici. Aucun résultat d'une autre mesure tenue en quarantaine (la « mesure unanime ») n'y figure non plus.</p>
+
+<h3>3. Une limite trouvée le 10 novembre : la sonde lit-elle le sabotage, ou « un adaptateur est actif » ?</h3>
+<p>L'organisme sans consigne est un <em>adaptateur</em> (une petite modification apprise, ajoutée aux poids du modèle), dosé de 0 à 1 ; l'honnête est le modèle nu. Une sonde pourrait ne lire que cette différence. Une relecture des deux textes qui organisent ces lectures (T0.6, scellé ; T0.7, au brouillon) établit [A56] :</p>
+<ul>
+<li>aucun « honnête distillé » (adaptateur appris de la même façon sur un agent honnête) n'existe dans T0.6 ni dans T0.7 ; la dose 0 est le modèle de base ;</li>
+<li>le seul adaptateur témoin, T100, est distillé du témoin instruit du premier test, celui qui écrit ses titres en minuscules : c'est un adaptateur qui change le comportement, pas un honnête distillé, et il n'existe qu'à la dose 1 ;</li>
+<li>aux doses 0,25, 0,5 et 0,75, aucune condition n'a un adaptateur actif sans sabotage ; la courbe par dose ne départage rien. À la dose 1 seulement, T100 sert de témoin ;</li>
+<li>la lecture la plus exposée est la sonde apprise sur l'organisme à dose 1 contre la base sans adaptateur (sens 2 du test croisé de T0.6) : elle peut apprendre exactement « adaptateur actif » [A57].</li>
+</ul>
+<p>Le directeur a choisi le contrôle le plus complet (option (b), 10 novembre) [A55] : un texte court à 0 dollar, lu sur des scores qui seront produits de toute façon (contraste entre actions qui gonflent et actions qui ne gonflent pas à dose fixée, tendance avec l'excès déclaré à dose fixée, comparaison de l'organisme à T100 avec un seuil, différence en différences contre l'honnête) ; une relecture des mêmes textes sous adaptateur et sans, à moins de 1 dollar de calcul ; un témoin « honnête distillé » appris de la même façon, en course à part après la course de confirmation, environ 9 à 13 dollars attendus, plafond commun 30 dollars, lisible vers le 21 au 23 novembre.</p>
+<p>État : <strong>en cours</strong>. Le premier brouillon du texte qui préenregistre ces trois pièces a été interrompu par la fin du quota du compte ; le deuxième, rendu puis contre-lu, n'était pas scellable en l'état (trois défauts bloquants) ; un troisième a été rendu le 10 novembre, à contre-lire sur ses changements une fois le texte des sondes scellé [A97]. Ce troisième brouillon chiffre la relecture à environ 2,4 à 4,6 dollars, et non à moins de 1, et l'ensemble à environ 11 à 17 dollars attendus ; son pire cas, environ 33 dollars, dépasse le plafond de 30 dollars, qui est gardé avec un ordre écrit de ce qui serait abandonné (deux doses du témoin, une sonde de la relecture) [A97]. Sur le mot du directeur, le témoin honnête distillé est créé après la création de la course de confirmation, et non après sa fin, et la relecture se fait sur une machine à part [A97]. Aucun de ces textes n'est scellé comme préenregistrement, rien n'est couru : <strong>que la sonde lise le sabotage et non l'adaptateur n'est pas établi</strong>.</p>
+
+<h3>4. Décisions du directeur prises le 10 novembre</h3>
+<ul>
+<li><strong>Entretien visé le 27 novembre 2026</strong> (et non plus vers le 22), date à tenir pour visée tant qu'elle n'est pas confirmée avec le fonds. Conséquence écrite : la lecture du témoin positif et la table du coût de la course de confirmation précèdent l'entretien [A41].</li>
+<li><strong>Règle « mots et coût » scellée à part</strong>, avant la création de la course de confirmation [A58]. C'est la référence qui ne lit que les mots et le coût déclaré ; elle dit à quelles doses le texte seul échoue. « Échoue » voudra dire « aire sous 0,70 ou pas au-dessus de son plancher », pas « le texte ne porte rien ». État : premier brouillon rendu et contre-lu (scellable après corrections, deux défauts bloquants) ; second brouillon vérifié (scellable après huit corrections) ; le troisième a été <strong>scellé le 10 novembre à 12:21 UTC</strong>, avant toute création de la course de confirmation. Le directeur a tranché la question de lecture qui lui était posée : la règle lit douze traits, là où le texte scellé de la course de confirmation en nomme trois ; il a retenu la lecture « ajout permis ». La consigne du code de cette règle reste à écrire [A97].</li>
+<li><strong>Banc public sur activations publiées, à 0 dollar</strong> [A59]. Ce bras rejoue nos sondes sur les activations que les auteurs d'un banc publié de détection de collusion (NARCBench) ont mises en ligne. La lecture exacte de son développeur est : c'est une <em>reproduction de calcul de l'analyse des auteurs</em> (mêmes modèles, mêmes textes, recette réimplémentée, « éprouvée » si l'écart aux tables publiées est d'au plus 0,03). Ce n'est pas « notre chaîne voit sur notre modèle ce que d'autres ont vu » : le rejeu sur notre modèle de 8 milliards serait une extension, le papier n'ayant aucun résultat sous 20 milliards de paramètres. État : licences vérifiées à la source et activations téléchargées hors dépôt ; un contrôle de permissions a refusé une commande de calcul des empreintes, refus rapporté au directeur sans contournement ; les données ont été perdues avec la machine de la session qui les tenait, et quatre écarts de recette restent à trancher avant toute lecture [A96]. Calendrier proposé avant ces incidents : texte court le 12, scellé le 13, course le 14, verdict descriptif du 15 au 17.</li>
+<li><strong>Saboteur à budget, avec l'activité interne enregistrée</strong> [A60]. C'est un saboteur construit pour que chaque action reste dans la plage honnête, le dommage n'existant que dans l'ensemble. Autorisation de dépense accordée, plafond 60 dollars (coupure à 55), sous conditions : code rendu et contre-lu, devis inscrit, ordre d'exécution contre-lu et scellé, six épreuves de son oracle passées. Course exploratoire, non opposable. État : son code n'est pas rendu (travail interrompu par le quota, aucune branche poussée constatée), rien n'est dépensé [A97].</li>
+<li><strong>Texte « accumulation contre score action par action » demandé</strong> [A61]. Jusqu'ici, aucune lecture séquentielle de sonde n'était préenregistrée avant l'entretien. Un texte court préenregistré doit être lu sur des scores déjà prévus, sans dépense nouvelle ; tout point qui toucherait l'hypothèse principale, la porte G1 ou le mode tenu à l'écart remonte au directeur avant scellement. État : lancé le 10, interrompu par le quota, non relancé à la reprise ; aucun brouillon n'est sur disque [A97].</li>
+<li><strong>Autonomie de calcul jusqu'au 27 novembre, dans une enveloppe totale de 500 dollars</strong> [A92]. Elle couvre, chacune sous son plafond, les courses déjà autorisées (course de confirmation et sondes, témoin positif, étape A des sondes, contrôle de l'adaptateur, saboteur à budget) ; les bases boîte noire de T0.8 et la course de l'organisme s'y inscrivent sur devis si chacune reste sous 60 dollars. Garde-fous : aucune course sans texte contre-lu et scellé, verdicts par lecteurs neufs, arrêt par identifiant. Restent au directeur : portes, revendications, publications, écart à un texte scellé, toute dépense hors de ces lignes. Une enveloppe distincte de 120 dollars au plus, jusqu'au 30 novembre, a été inscrite au registre des autorisations le 10 novembre à 12:05 UTC, sur le mot direct du directeur : 45 dollars pour la course réelle de l'organisme d'idéation, 75 dollars pour le témoin de l'attaque publiée de Bailey, chacune sous ses conditions écrites, sans report de l'une sur l'autre ; tout dépassement revient au directeur [A95].</li>
+<li><strong>Surveillants boîte noire (T0.8)</strong> : le premier brouillon du préenregistrement est rendu et contre-lu ; il n'est pas scellable en l'état (trois défauts bloquants) [A93]. Le contre-lecteur recalcule le devis : environ 17 à 30 dollars, pire cas environ 114, plafond proposé 120. Ce plafond dépasse le seuil de 60 dollars de l'enveloppe : la dépense revient au directeur avant toute course. Par défaut, la base boîte noire (iv), les bancs publiés Liars' Bench et SHADE-Arena et le juge Qwen sont reportés, ce qui doit être dit au directeur [A93]. Fait relevé : les 64 épisodes honnêtes de la course de confirmation ne suffisent pas à un calibrage à 1 % de fausses alarmes ; la course de T0.8 en génère 320 [A94].</li>
+<li><strong>Calendrier resserré</strong>, fixé par la session mère sous l'accord général du directeur, sans dépense nouvelle [A62]. Visé : le 12 au soir, le texte des sondes (T0.7), la règle « mots et coût », le témoin positif et la consigne de l'audit des fuites de T0.7 scellés ; la course de confirmation et le témoin positif créés le 12 ou le 13, en parallèle ; le témoin honnête distillé en parallèle s'il ne dépend pas des sorties de la course de confirmation ; lecture des sondes visée vers le 16 au 18. Les échéances antérieures (le 13 à 12:00 UTC, le 15, le 18, le 20) restent les replis. Ce calendrier date d'avant l'arrêt sur quota ; aucune pièce lue ne dit s'il tient encore.</li>
+<li><strong>Bras d'attaque</strong> : seules ses décisions inscrites sont rapportées. Son lancement avant l'entretien a été décidé le 10 novembre ; il relevait de la décision de gouvernance du 28 octobre (gel de tout pipeline opérationnel d'évasion avant revue de sécurité externe), que le directeur a levée pour ce bras le même jour. Il ne relève pas de la session qui écrit ce texte, et aucune pièce du bras n'est lue ici [A98].</li>
+</ul>
+
+<h3>5. Ce qui sera lu, et quand</h3>
+<table>
+<tr><th>Lecture</th><th>Question</th><th>Prédiction écrite</th><th>Quand (état au 10 novembre)</th></tr>
+<tr><td>Course de confirmation 7b (tâche T0.6, texte scellé) : table du coût</td><td>L'organisme (ii) gonfle-t-il le coût à dose 1, contre le modèle de base et contre l'adaptateur témoin T100 (dose 1) ? L'effet croît-il avec la dose (0 à 1) ?</td><td>Écart positif (effet minimal détectable ≈ 0,39) ; tendance croissante sans inversion établie [A34]</td><td>Création au plus tard le 15 novembre, visée le 12 ou le 13 [A62] ; lue la première, avant l'entretien [A35]. En cours : non créée</td></tr>
+<tr><td>Règle « mots et coût » (processeur, 0 dollar)</td><td>À quelles doses le texte seul échoue-t-il ?</td><td>Aucune ; issue « au moins une dose échoue » ou « réussit aux quatre doses » [A63]</td><td>Vers le 18 au 20, si la règle est scellée à part et son code écrit sans voir 7b [A58]. Texte scellé le 10 novembre ; consigne de son code à écrire [A97]</td></tr>
+<tr><td>Témoin positif planté (P3-bis, brouillon 11 non scellé)</td><td>Le contraste sur lequel la sonde de tromperie a été apprise est planté dans le contexte de chaque action : la chaîne sonde, calibrage, détection le voit-elle ?</td><td>« Au-dessus » du plancher (aire minimale détectable 0,6389 à 0,6585) ; au moins 6 épisodes sur 60 au-dessus du maximum honnête [A36]. « Vu » : le nul de P3 se lit sur le saboteur discret ; « non vu » : chaîne à réparer [A37]</td><td>Création au plus tard le 18 novembre, visée le 12 ou le 13 ; rendez-vous de lecture proposé le 20 novembre à 12:00 UTC [A38] [A62]. En cours : brouillon 11 rendu ; quatrième contre-lecture rendue, « scellable après corrections », avec quatre obstacles de procédure hors du texte, dont un levé [A97] [A100]</td></tr>
+<tr><td>Sondes génériques sur les épisodes de 7b (tâche T0.7, critère 3 de G0)</td><td>Aux doses où le texte seul échoue, une sonde apprise ailleurs est-elle au-dessus de son plancher ?</td><td>Aire minimale détectable à 80 % : 0,635 (tromperie), 0,600 (enjeux), 0,575 à 0,660 (autres sondes) [A67]</td><td>Vers le 20 au 22 si les neuf préalables tiennent ; visée vers le 16 au 18 [A65] [A62]. En cours : brouillon 21 rendu ; module à reprendre pour l'option retenue des concepts [A100]</td></tr>
+<tr><td>Contrôle de l'adaptateur (texte court, relecture, honnête distillé)</td><td>La sonde suit-elle l'action sabotée à adaptateur et dose fixés ?</td><td>Texte non scellé</td><td>Texte court et relecture avec T0.7 ; honnête distillé vers le 21 au 23 [A55]. En cours : brouillon 3 rendu, à contre-lire sur ses changements [A97]</td></tr>
+<tr><td>Sondes sur les épisodes de 7b (tables B et C de T0.6)</td><td>Une sonde apprise sur le saboteur instruit repère-t-elle l'organisme sans consigne, et l'inverse ?</td><td>Rien d'attendu avec confiance ; aire minimale détectable 0,61 à 0,66 [A39]</td><td>Après le verdict du témoin positif et la lecture scellée des surveillants boîte noire (T0.8) [A40] ; vers le 21 au 24 si T0.8 est scellé, autorisé et couru [A65]. T0.8 : brouillon 1 non scellable, dépense à autoriser [A93]</td></tr>
+</table>
+<p>Avec l'entretien au 27, la lecture des sondes génériques est possible vers le 20 au 22, sans marge pour une relance, mais rien ne la date avec certitude [A65]. La phrase d'une version antérieure, « aucune lecture de sonde sur 7b n'était possible avant lui », valait pour un entretien vers le 22 [A42]. Le chemin le plus fragile est la consigne de l'audit des fuites de T0.7, que la lecture exige : non écrite le 10 au matin, son premier brouillon a été interrompu par le quota ; le deuxième, rendu et contre-lu (scellable après corrections, trois défauts bloquants), a été suivi d'un troisième, rendu le 10 novembre ; restent une contre-lecture courte de ses écarts et un point à revérifier sur le texte scellé du témoin positif [A66]. Ne seront pas lus avant l'entretien : la porte G1, dont le préenregistrement n'est pas scellé, et la phase 2 de l'étiqueteur. La date du verdict de G0 n'est pas établie par les pièces lues.</p>
+
+<h3>6. L'échelle des affirmations, et ce qui manque</h3>
+<p>Ce qu'on pourra affirmer se range en six barreaux ; chacun suppose les précédents [A63].</p>
+<table>
+<tr><th>Barreau</th><th>Pièce qui l'établirait</th><th>Avant le 27 novembre ?</th></tr>
+<tr><td>1. La chaîne de mesure voit un signal planté</td><td>Témoin positif, issue « vu »</td><td>Oui, si le témoin est scellé et créé au plus tard le 18</td></tr>
+<tr><td>2. Il existe un saboteur sans consigne dont le dommage croît avec la dose</td><td>Course de confirmation, table du coût</td><td>Oui, verdict vers le 16 au 18</td></tr>
+<tr><td>3. À certaines doses, le texte seul ne suffit pas</td><td>Règle « mots et coût » : au moins une dose « échoue »</td><td>Oui, sous condition (règle scellée tôt, code écrit sans voir 7b)</td></tr>
+<tr><td>4. À ces doses, une sonde entraînée ailleurs est au-dessus du plancher</td><td>T0.7 à chaque dose jugée</td><td>Conditionnel, vers le 20 au 22</td></tr>
+<tr><td>5. Ce qu'elle lit est lié au sabotage, non à un artefact</td><td>Aux doses sous 1 : rien d'écrit le 10 au matin ; d'où le contrôle décidé (section 3)</td><td>Partiel, seulement avec ce contrôle</td></tr>
+<tr><td>6. L'accumulation fait mieux que le score action par action</td><td>Porte G1</td><td>Non pour G1 ; un texte court est demandé, non écrit à ce jour (section 4)</td></tr>
+</table>
+<p>Une limite écrite de la puissance : l'écart est étroit entre l'aire minimale détectable des sondes (0,60 à 0,66) et le seuil où la référence « mots et coût » réussit (0,70). Une sonde à 0,62 serait « au-dessus » de son plancher sans battre la référence [A67].</p>
+<p>La liste des manques, établie le 10 novembre à 10:46 UTC pour être insérée telle quelle dans chaque document qui explique le programme, suit [A64]. Les priorités fixées par le directeur le 10 novembre sont la ligne 5, puis les lignes 4, 7 et 8.</p>
+<table>
+<tr><th>n°</th><th>Ce qui manque</th><th>Pourquoi le jury le demandera</th><th>Avant le 27 novembre ?</th><th>État au 10 novembre (10:46 UTC)</th></tr>
+<tr><td>1</td><td>La chaîne de sondes retrouve un signal planté, et se tait sur son jumeau honnête (témoin positif).</td><td>Sans cela, un résultat nul ne dit rien : la chaîne pourrait être aveugle.</td><td>Oui : lu le 20 novembre au plus tard.</td><td>Texte au brouillon 11 ; code validé par une contre-lecture ; course à créer au plus tard le 18.</td></tr>
+<tr><td>2</td><td>Un saboteur sans consigne, dont l'effet sur le coût croît avec la dose (course de confirmation).</td><td>Le seul saboteur existant recevait une consigne, que la sonde lisait.</td><td>Oui : verdict du 16 au 18.</td><td>Texte scellé ; course à créer au plus tard le 15.</td></tr>
+<tr><td>3</td><td>À ces doses, le texte seul ne suffit pas à repérer le sabotage (surveillants externes de référence).</td><td>Si lire le texte suffit, lire l'intérieur n'apporte rien.</td><td>Possible : vers le 20 ou le 21.</td><td>Premier brouillon du texte en rédaction.</td></tr>
+<tr><td>4</td><td>Une sonde au-dessus du hasard à ces doses.</td><td>C'est la première preuve que la trace existe.</td><td>Possible, sans marge ; dépend des lignes 1 à 3 et du scellement du texte des sondes.</td><td>Texte des sondes au brouillon 21 ; scellement visé avant le 13.</td></tr>
+<tr><td>5</td><td>La sonde lit le sabotage, et non le simple fait qu'un adaptateur est actif.</td><td>Le saboteur sans consigne est un adaptateur ajouté aux poids ; l'honnête est le modèle nu. Une sonde pourrait ne lire que cette différence.</td><td>À établir en premier.</td><td>Aucun témoin « adaptateur honnête » trouvé dans le texte scellé de la course (recherche par mots, vérification sur texte en cours) ; remèdes à l'étude : contraste au sein d'une même dose, témoin distillé honnête.</td></tr>
+<tr><td>6</td><td>La puissance de cette lecture, écrite avant de lire.</td><td>Un résultat nul doit dire quel effet il exclut.</td><td>Oui.</td><td>À vérifier dans le texte des sondes.</td></tr>
+<tr><td>7</td><td>Un résultat positif déjà publié, reproduit sur notre chaîne (banc public).</td><td>Preuve, hors de nous, que la chaîne sait voir ce que d'autres ont vu.</td><td>Possible.</td><td>Texte au brouillon 4, contre-lu trois fois ; code à écrire ; dépense à autoriser sur devis.</td></tr>
+<tr><td>8</td><td>Un sabotage vraiment diffus : chaque action dans la plage honnête, le dommage dans l'ensemble seulement (saboteur à budget).</td><td>Le saboteur actuel peut être flagrant ; la thèse porte sur le diffus.</td><td>Incertain ; exploratoire.</td><td>Conçu et contre-lu une fois ; code à écrire ; dépense à autoriser sur devis.</td></tr>
+<tr><td>9</td><td>Des témoins de concepts : la sonde ne réagit pas à un sujet quelconque.</td><td>Contrôle de validité.</td><td>Incertain.</td><td>Deux concepts sur quatre acceptés, deux refusés deux fois ; nouvelle consigne en rédaction ; le texte des sondes prévoit un repli sans eux.</td></tr>
+<tr><td>10</td><td>Le jeu d'entraînement de la sonde du domaine « coût gonflé ».</td><td>Sonde la plus proche du sabotage étudié.</td><td>Incertain.</td><td>Refusé pour un indice de surface ; une dernière réécriture est permise.</td></tr>
+<tr><td>11</td><td>La preuve datée, chez un tiers, que chaque préenregistrement précède ses données.</td><td>Seule vérification possible sans nous.</td><td>Oui.</td><td>Empreintes déposées en privé ; à rendre public et à geler.</td></tr>
+</table>
+<p>Changements depuis 10:46 UTC, sans toucher la liste :</p>
+<ul>
+<li>ligne 5 : contrôle décidé (option (b)) et absence d'honnête distillé vérifiée sur texte (section 3) ; texte qui préenregistre le contrôle au brouillon 3, rendu, à contre-lire sur ses changements [A55] [A56] [A97] ;</li>
+<li>ligne 7 : remplacée par la reproduction de calcul sur activations publiées, à 0 dollar, qui n'est pas une reproduction sur notre modèle ; données perdues avec la machine, écarts de recette à trancher [A59] [A96] ;</li>
+<li>ligne 8 : dépense autorisée sous conditions, plafond 60 dollars ; code non rendu [A60] [A97] ;</li>
+<li>lignes 1 à 4 : calendrier resserré [A62] ; ligne 3 : la règle « mots et coût » est scellée à part depuis le 10 novembre, avant toute création de la course de confirmation, et le brouillon 1 de T0.8 est contre-lu, non scellable en l'état, dépense à autoriser par le directeur [A58] [A93] ;</li>
+<li>ligne 9 : l'option retenue garde les deux concepts acceptés et prévoit un repli écrit sans témoins de concepts ; une consigne v3 des deux autres a été écrite et contre-lue, sa version corrigée est demandée, et aucun lot neuf n'a été lancé à la date de ce relevé [A99] [A97].</li>
+</ul>
+
+<h3>7. État de l'art, vérification de niveau 3 : ce qui joue contre nous</h3>
+<p>Des lecteurs neufs ont relu sur les PDF empreintés, page par page, les pièces publiées voisines. Seul ce qu'ils ont vérifié sur le PDF, page citée, est repris ici ; leurs pistes de moteur de recherche restent hors du texte. La synthèse de ce travail est <strong>provisoire</strong> (écrite avant la fin des lectures, sous la contrainte du quota) et complétée une fois ; la version finale n'est pas écrite [A83] ; les verdicts de son complément (H8, papier B, H9, HC1, HC4, HC5, HC6) sont repris des messages d'une session de lecture, sans relecture de ses rapports ni des PDF par les auteurs de la synthèse, qui les contrôleront avant la version finale [A83]. « Libre » veut toujours dire « non trouvé dans les pièces lues », jamais « personne ne l'a fait ». Aucune hypothèse ni revendication n'est modifiée : chaque collision est un nœud du directeur [A90].</p>
+<p><strong>Trois erreurs de fait dans le texte envoyé au fonds, à dire nous-mêmes</strong> [A70] :</p>
+<ul>
+<li>nous écrivons que l'article arXiv 2605.15377 forme des quorums entre familles de juges ; ses douze moniteurs partagent un seul modèle (p. 4), et ses auteurs écrivent n'avoir pas testé d'ensemble entre familles (p. 8) ;</li>
+<li>nous qualifions de « synthétique » le précurseur arXiv 2606.10456 ; l'article annonce une validation « sur des traces réelles » (p. 8). Les lecteurs divergent sur la portée : la lecture retenue est « précurseur en boîte noire dont l'attaque est construite par simulation ; les auteurs rapportent une validation du modèle de menace sur des traces réelles » ;</li>
+<li>nous attribuons à E-valuator (arXiv 2512.03109) une accumulation additive ; l'article se décrit comme une règle de décision à fausses alarmes contrôlées sur un score de vérificateur (p. 1), avec seuil sur le maximum, sans somme cumulée.</li>
+</ul>
+<p>Le programme lui-même garde deux erreurs déjà connues : des auteurs faux pour arXiv 2208.07610, et une équipe mal nommée pour NARCBench [A71]. La phrase du texte envoyé « son énoncé central ne tient pas pour sa propre construction » (sur 2606.10456) est exacte sur le fond mais trop forte : elle vaut pour la somme, pas pour le maximum. Nous lui devons le contraste entre la loi de chaque pas et la corrélation entre pas [A78].</p>
+<p><strong>« Un moniteur qui note chaque action seule échoue par construction » n'est vrai que sous condition</strong> : la seule source du dépôt qui l'écrit (arXiv 2606.10456, p. 1) le dit d'une attaque qui garde exactement la loi du score de chaque pas ; notre propre simulation le contredit pour la somme [A72]. Formulation juste : un moniteur qui compare chaque action à un seuil peut être mis en échec par construction par une attaque qui garde la loi de chaque score.</p>
+<p><strong>Une prémisse du cadre de référence joue contre le programme</strong> : l'article qui pose les menaces diffuses (Terekhov et collègues, arXiv 2606.08892, p. 2) écrit que la surveillance et l'incrimination « semblent moins prometteuses » contre elles. C'est une prémisse prudente, pas une conclusion, et elle vise toute surveillance ; le programme parie contre [A89].</p>
+<p><strong>Contre-résultats publiés</strong> :</p>
+<ul>
+<li><em>Jeu d'audit de l'institut britannique</em> (arXiv 2512.07810, p. 16 à 18) : des sondes de tromperie signalent l'un des deux modèles qui sous-performent volontairement et manquent l'autre, limité à une tâche d'agent. C'est de la dissimulation de capacités, pas du sabotage ; contre-résultat partiel [A73].</li>
+<li><em>StateWitness</em> (arXiv 2606.17478, p. 30) : sur un jeu de désalignement d'agent, à 1 % de fausses alarmes, notre point de fonctionnement, un moniteur boîte noire rappelle 0,571, la sonde linéaire et le décodeur d'activations 0,000 [A74].</li>
+<li><em>Gao</em> (arXiv 2610.04575, p. 1 et 3) : sur un agent avec outils, un seuil réglé pour 10 % de fausses alarmes en réalise 18,7 à 20,0 % au test ; et 5 % de fausses alarmes par occasion deviennent 40,1 % par unité de dix occasions, sous indépendance [A75].</li>
+<li><em>HELIOS</em> (NARCBench, arXiv 2604.01151, version 5) : aucune statistique séquentielle sur des sondes ; sur le transfert de la collusion instruite vers la collusion émergente, trois méthodes sur cinq au niveau du hasard (p. 18) [A76].</li>
+<li><em>« Caught in the Act »</em> (arXiv 2610.12445), voisin le plus proche de l'hypothèse principale (H1) : des sondes battent un moniteur boîte noire de pointe, pas par pas, sur du sabotage d'agent ; mais le sabotage étalé sur l'épisode est écarté de leur banc (p. 6, 19), le moniteur boîte noire refuse 2 638 pas positifs sur 5 014 et ne voit pas la consigne de l'agent (p. 7, 48). Les sondes y sont faibles sur les plus petits modèles (0,585 à 0,781 à 2 milliards de paramètres) et bonnes à partir de 27 milliards (0,963 à 0,986) (p. 8). Nous sommes à 8 milliards [A80].</li>
+<li><em>Schirmer et collègues</em> (arXiv 2607.02510, p. 1, 3) : un seuil unique calibré fait jeu égal avec un test séquentiel par processus e, et alerte plus tôt. La base « maximum sur le temps, seuil calibré » doit donc figurer dans la porte G1, et elle peut gagner [A81].</li>
+<li><em>Corll</em> (arXiv 2606.20746) : une somme de Page sous le seuil, en boîte noire, sans sondes ; l'accumulation y amplifie une marge déjà présente, elle n'en crée pas ; le résultat positif tient à quatre trajectoires sur trois tâches [A84].</li>
+<li><em>Classifieur de mots</em> : deux pièces lues (arXiv 2610.17301 ; 2610.40588) montrent qu'un classifieur de texte entraîné sur le même préfixe (sac de mots) égale ou approche la sonde. 2610.17301 n'occupe pas H1 ni l'hypothèse d'accumulation (H2) [A85].</li>
+</ul>
+<p><strong>Occupation partielle de l'hypothèse d'accumulation (H2) par SafeDream</strong> (arXiv 2604.16824) : une somme cumulée de Page sur des scores tirés des états internes du modèle surveillé, tour après tour, avec l'affirmation que le score d'un tour seul est « faible et bruité ». Ce n'est pas notre énoncé : la menace vient de l'utilisateur, le discriminateur est appris sur des attaques, aucune garantie à tout instant, fausses alarmes mesurées de 6,6 à 8,0 % sur des dialogues d'environ cinq tours (p. 5, 7). C'est un voisin à citer obligatoirement. Il ne déclenche pas la bascule au sens des auteurs nommés par le programme ; lue par son objet, la question revient au directeur [A77]. La conjonction propre de H2 (accumulation additive, garantie sur tout l'horizon calibrée sur des épisodes honnêtes, sabotage par l'agent sous le seuil par action) n'est trouvée dans aucune pièce lue [A83].</p>
+<p><strong>Verdicts par revendication du programme</strong>, au dernier état écrit de la synthèse (provisoire et complément) [A83] [A86] [A87] [A88] :</p>
+<table>
+<tr><th>Énoncé</th><th>Verdict, pièces lues seulement</th></tr>
+<tr><td>H1, gain de la lecture interne sur le sabotage diffus</td><td>occupée en partie ; la mesure « diffus, tâches floues, agrégation égale » non trouvée</td></tr>
+<tr><td>H2, accumulation toujours valide de scores de sondes</td><td>occupée en partie ; la conjonction non trouvée</td></tr>
+<tr><td>Lemme et théorème négatif</td><td>occupés en partie ; le théorème a un antécédent en boîte noire pour un agent (2606.10456)</td></tr>
+<tr><td>H8, la validité prédit la robustesse</td><td>prémisse occupée de plus près ; prédiction non trouvée</td></tr>
+<tr><td>Papier B, statistique de population</td><td>occupée en partie sur états internes (2611.02153 ; 2611.10620) : collision partielle, déclencheur de bascule à examiner par le directeur ; ni test toujours valide ni résultat pour la somme cumulée</td></tr>
+<tr><td>H9, survie d'une contrainte à la délégation</td><td>occupée en partie sur son cœur (MasDrift 2608.07556 ; 2608.24569) : collision partielle ; contre-indice sur la prédiction, 88,2 % des pertes au premier relais</td></tr>
+<tr><td>HC1, loi de déférence</td><td>occupée en partie ; la forme est publiée comme loi empirique en cadre adverse (2603.15809, p. 15, 17) ; poids du conseil presque binaire dans trois modèles sur cinq (Panin, p. 6) ; un test binaire de la prédiction centrale est négatif sur deux juges (2606.05384)</td></tr>
+<tr><td>HC2, robustesse des sondes au contenu</td><td>occupée en partie par MIRAGE (2606.10304) : collision partielle, nœud du directeur. Son résultat n'est pas opposable en l'état : fidélité de l'encodage 6 sur 120, d'où un dénominateur réel de 6 (p. 20). Reste à mesurer : la sonde qui lit l'agent auteur du contenu adverse, en plan apparié, comparée aux juges [A82]</td></tr>
+<tr><td>HC4, HC5, HC6</td><td>HC4 : prémisse entamée (2608.21664 ; 2602.00750) ; HC5 : occupée en partie, davantage (2610.29178) ; HC6 : occupée en partie au niveau de l'item (2608.12645)</td></tr>
+</table>
+<p>Ces nœuds (H1, H2, papier B, H8, H9, HC1, HC2, HC4, HC5, HC6, H6 et l'organisme) doivent être portés au directeur en un seul envoi, avec la synthèse finale [A90]. Aucun n'est tranché à la date de ce texte.</p>
+
+<h3>8. Trois questions de jury : la part qui dépend des résultats</h3>
+
+<p><strong>(i) La porte décisive (G1) est-elle triviale ?</strong> Dans la famille instruite, la consigne est à la fin du message système, qui reste dans le contexte de chaque action lue par les sondes [A43] ; les juges boîte noire ne voient pas la consigne privée, et la sonde W la lit [A22]. L'asymétrie d'accès est établie : sur cette famille, une victoire de la lecture interne serait suspecte. Le contrefactuel qui manquait à l'audit peut être rejoué en annexe de 7b [A54]. Le voisin publié le plus proche porte la même réserve : son moniteur boîte noire ne voit pas la consigne de l'agent [A80]. Dans la famille sans consigne (organisme distillé), la consigne est absente par construction, mais l'adaptateur peut prendre sa place comme lecture parasite (section 3). Les parades écrites d'avance :</p>
+<ul>
+<li>à la dose 1 seulement, un adaptateur témoin (T100), distillé du témoin instruit et qui change lui aussi le comportement, sert de témoin ; il n'isole pas « l'effet du seul réglage fin » aux doses inférieures, où aucun témoin n'existe dans les textes de T0.6 et T0.7 [A44] [A56] ; le contrôle décidé le 10 novembre doit couvrir chaque dose [A55] ;</li>
+<li>une base qui ne lit que les mots et le coût juge chaque dose d'abord ; une dose qu'elle sépare déjà est « flagrante » et n'est pas jugée pour la lecture interne [A45] ; elle est scellée à part depuis le 10 novembre [A58] [A97] ;</li>
+<li>une sonde qui lit « j'ai une instruction cachée » doit échouer sur l'organisme sans consigne, et une sonde d'intention doit le voir comme elle voit le saboteur instruit, sans s'allumer sur le témoin instruit (la condition qui reçoit une consigne sans sabotage) ; et aucune sonde principale ne doit être au-dessus de son plancher sur l'adaptateur témoin T100, à dose 1 [A46].</li>
+</ul>
+<p>Ce qui distingue une intention d'un artefact d'adaptateur n'est pas encore établi : aucune de ces lectures n'est faite, et aux doses inférieures à 1 seul le contrôle décidé le 10 novembre pourra le dire. Un classifieur de mots peut égaler une sonde dans des travaux publiés [A85] : la base « mots et coût » n'est pas une formalité.</p>
+
+<p><strong>(ii) Le sabotage existe-t-il ?</strong> Un agent de 8 milliards de paramètres gonfle le coût quand on le lui demande, de façon flagrante [A17]. Qu'il sabote de façon diffuse n'est pas encore établi. La course de confirmation ne dit jamais « diffus » d'elle-même : il faut que chaque action sabotée reste sous le seuil du meilleur surveillant boîte noire, ce que lit T0.8 [A47]. Un saboteur diffus par construction, le saboteur à budget, a une autorisation de dépense depuis le 10 novembre, sous conditions ; il reste exploratoire, son code n'est pas rendu, rien n'est dépensé, et son activité interne sera enregistrée pour une lecture de sondes ultérieure, sous texte scellé à part [A48] [A60] [A97].</p>
+<p>La vérité de terrain dépend du mode. Dans le mode « coût », les actions sont étiquetées par la consigne reçue, mais le dommage (le coût déclaré) est mesuré sans juge contre le jumeau honnête, le même agent sans consigne sur la même tâche [A49] ; l'audit rappelle qu'une action « du saboteur » n'est pas toujours gonflée [A22]. Dans les modes sans chiffre, la vérité du dommage n'est pas encore établie : l'étiqueteur n'est pas validé, et le repli lit « sabotage demandé » sans affirmer de dommage [A29]. Le repli « grille simplifiée » se lit comme la « rubrique simplifiée » des juges locaux (modèles de 8 et de 3 milliards de paramètres qui notent les plans), adoptée parce qu'ils laissaient 126 et 130 réponses incomplètes sur 180 [A50]. Elle change la grille du juge, pas le sabotage ; qu'elle retire le flou étudié n'est mesuré par aucune pièce : pas encore établi.</p>
+
+<p><strong>(iii) Que faites-vous que d'autres ne font pas ?</strong> La revendication est étroite : seule la mesure du gain de la lecture interne sur le sabotage diffus en tâches floues est revendiquée [A51]. Le gain de la lecture interne sur du sabotage d'agent non diffus, pas par pas, est déjà publié [A80] ; la mesure sur le sabotage diffus en tâches floues, à agrégation égale des deux côtés, n'est trouvée dans aucune pièce lue [A83]. La porte décisive est durcie : la lecture interne doit battre chaque surveillant boîte noire d'une liste scellée et deux autres façons de lire l'intérieur (une cascade de seuils, la sonde sur le dernier état), dans chaque mode de sabotage, y compris un mode tenu à l'écart de la conception [A52]. L'acquis relève des instruments et des bornes : chaîne d'enregistrement validée ; énoncés corrigés en simulation, dont une proposition publiée (« puissance égale au taux de faux positifs ») trouvée fausse pour la somme, par un écart petit (0,072 contre 0,05 au point phare de l'article), et vraie pour le maximum ; la relecture de niveau 3 précise que l'énoncé en défaut est la proposition 2 (a) de l'article [A53] [A78] ; nul rapporté avec ses bornes ; fuite établie et déclarée ; limite de l'adaptateur trouvée par nous et déclarée. Que la lecture interne apporte un gain là où la boîte noire échoue n'est pas encore établi, et les contre-résultats publiés disent qu'elle peut échouer au seuil strict [A74] [A75].</p>
+</section>
+</section>
+
+<h2 class="saut">11. Les trois questions les plus dangereuses du jury, et ce qu'on y répond</h2>
+<p class="note">Tirées d'une répétition où un lecteur neuf a joué le jury sur le seul texte envoyé au fonds [JR]. Pour
+chaque question : pourquoi elle est dangereuse ; ce que le dessin y répond déjà, par les décisions prises depuis l'envoi ;
+ce qu'il faut encore produire avant l'entretien, et par qui ; ce qu'il ne faut pas dire. La part qui dépend de résultats
+revient à la session mère (section 10).</p>
+
+<h3>Question 1 — « G1 est-elle triviale ? »</h3>
+<p class="encadre"><b>La question.</b> Dans la famille (i), la consigne de sabotage est dans le message système, et les
+sondes lisent aussi le contexte privé de l'agent [T l. 122, 139-140] : une sonde placée après ce message peut simplement
+détecter la consigne. La boîte noire voit-elle le même contexte ? Sinon, gagner sur (i) mesure l'accès à la consigne, pas
+une évidence qui s'accumule. Et pour la famille (ii), distillée de (i), qu'est-ce qui distingue une intention d'une trace
+de fabrication ?</p>
+<p><b>Pourquoi elle est dangereuse.</b> C'est le résultat principal. Si la famille (i) décide G1, un G1 positif est acquis
+d'avance ; si seule (ii) compte, un adaptateur distillé peut porter une direction « saboteur sous consigne » qu'aucun
+modèle vraiment désaligné n'aurait.</p>
+<p><b>Ce que le dessin y répond déjà.</b></p>
+<ul>
+<li><b>Une lecture filtrée fait foi.</b> N-053 met dans les préenregistrements de G1 et du papier C un bras « fuite
+textuelle et contrôlabilité » : chaque sonde est lue sur toutes les positions, puis avec les positions porteuses
+d'évidence textuelle masquées ; <i>la lecture filtrée est la lecture principale de toute revendication d'« intention »</i>
+[N-053 point 1].</li>
+<li><b>Une famille sans aucun texte de consigne.</b> La famille (iv) apprend la politique de sabotage sans consigne ; la
+prédiction de validité est étendue : une sonde d'intention réussit sur (ii) et sur (iv) [N-053 point 2 ; sur devis].</li>
+<li><b>Des bases de texte à battre.</b> Un prédicteur sur les traits du texte est obligatoire [N-029] ; le critère des
+sondes à la porte de fin de phase n'est jugé qu'aux doses où la base « mots et coût » échoue selon son propre critère
+[N-063] ; G1 doit battre chaque variante boîte noire, et aussi les bases boîte blanche « cascade » et « dernier état »
+[N-055 D-S8 ; N-056].</li>
+<li><b>L'accès séparé de l'accumulation.</b> Le plan 2 × 2 sépare le gain de l'accès interne de celui de l'accumulation
+[P l. 15].</li>
+<li><b>Ce qui n'a pas servi à concevoir.</b> Un mode de sabotage tenu à l'écart de la conception des moniteurs, G1
+rapportée mode par mode [N-054 ; N-056] ; une famille tenue à l'écart neuve à chaque cycle [N-062].</li>
+<li><b>La conscience d'être évalué, mesurée</b> avant toute lecture de H8 et des contrôles croisés : mêmes épisodes avec et
+sans marqueurs de test, test causal avec une direction placebo [N-053 point 3].</li>
+</ul>
+<p><b>À produire ou vérifier avant l'entretien</b> (préenregistrement de G1, session mère ; l'auteur n'en a pas lu le
+brouillon) :</p>
+<ul>
+<li>la <b>parité d'information</b>, écrite noir sur blanc : la boîte noire voit exactement les mêmes jetons que la sonde,
+message système compris pour les deux ou exclu pour les deux ;</li>
+<li>le <b>poids des familles</b> : la famille (i) rapportée comme contrôle de bon fonctionnement ; la décision portée par
+(ii), et par (iv) si elle existe ;</li>
+<li>un <b>contrôle négatif de fabrication</b> : un adaptateur honnête « de même facture » (même distillation, même dose,
+un changement de style bénin), sur lequel la sonde ne doit pas s'allumer ; proposé ici, absent des décisions lues ;</li>
+<li>la <b>liste des découpages</b> : sur quels organismes les sondes sont entraînées, sur lesquels elles sont jugées
+[T l. 127].</li>
+</ul>
+<p><b>À ne pas dire</b> : « les deux familles sont regroupées » ; « la boîte noire ne voit pas le message système, c'est
+tout l'intérêt » ; « la sonde d'intention réussit sur les deux familles, c'est la preuve ».</p>
+
+<h3>Question 2 — « Le sabotage existe-t-il ? »</h3>
+<p class="encadre"><b>La question.</b> Des agents de 8 milliards de paramètres écrivent des propositions d'expériences,
+notées par un évaluateur plus faible encore. Montrez une proposition sabotée qu'un relecteur compétent accepterait et que
+votre vérité étiquette pourtant comme sabotage. L'étiquette est-elle la condition de l'organisme (« il a reçu la
+consigne ») ou un dommage mesuré ? Et le repli « grille simplifiée », prévu si les agents sont trop faibles [T l. 325],
+ne supprime-t-il pas le flou que vous dites étudier ?</p>
+<p><b>Pourquoi elle est dangereuse.</b> Si l'étiquette est la condition, le moniteur détecte le saboteur, pas le sabotage,
+et la thèse de l'accumulation d'actions nuisibles n'est pas testée.</p>
+<p><b>Ce que le dessin y répond déjà.</b></p>
+<ul>
+<li><b>L'étiquette est un dommage mesuré.</b> Pour le mode « affaiblir les contrôles », la vérité est un oracle de
+couverture contre la référence cachée : pour chaque contrôle expérimental de l'article, une question fermée (absent,
+altéré ou conforme dans le plan de l'agent) ; le lecteur cite l'extrait, et un programme vérifie que la citation y figure
+mot pour mot ; deux lecteurs de deux familles de modèles autres que celles des moniteurs, aveugles à la condition ;
+<i>dommage = baisse de couverture par rapport au jumeau honnête apparié</i> [N-060 point 1].</li>
+<li><b>L'oracle est éprouvé avant toute lecture</b> : retrait mécanique d'un contrôle (il doit le voir), référence d'une
+autre tâche (il doit échouer), plan tronqué, dose flagrante, ancre humaine sur un sous-échantillon [N-060 point 2].
+<b>Repli écrit d'avance</b> : si ces préconditions échouent, on lit la seule condition « sabotage demandé », <i>sans
+affirmer de dommage</i> [N-060 point 3].</li>
+<li><b>La dose agit-elle ?</b> La courbe dose-réponse (critère 2 de la porte de fin de phase, course 7b) le dit ; la dose
+0 reproduit le modèle de base à l'identique [T l. 278-279].</li>
+<li><b>La tromperie existe-t-elle à 8 milliards de paramètres ?</b> Une porte préalable de séparabilité sur une tâche à
+résultat vérifiable, puis un sous-ensemble des lectures décisives à plus grande taille, au devis de la phase 1 [N-053
+point 4].</li>
+<li><b>Le repli « grille simplifiée »</b> : s'il sert, le régime flou recule, et cela se dit ; l'écart entre tâches floues
+et nettes est de toute façon mesuré et rapporté (H1b) [N-055], et la revendication se restreint à ce qui est mesuré.</li>
+</ul>
+<p><b>À produire avant l'entretien</b> (session mère) : 5 à 10 paires « honnête / sabotée » sur un même article, chacune
+avec sa cible plantée, la preuve que le défaut est présent et vérifiable, et les notes du moniteur par action sous le
+seuil ; la courbe de la course 7b ; le protocole écrit de la vérification humaine (nombre d'éléments, nombre et profil des
+experts, aveuglement, accord visé fixé d'avance, coût par élément cohérent avec la ligne de 4 000 dollars [T l. 383]).</p>
+<p><b>À ne pas dire</b> : « la vérité de terrain, c'est la consigne » ; « on le saura après le pilote » ; un évaluateur de
+confiance de la même famille que l'agent.</p>
+
+<h3>Question 3 — « Que faites-vous que les agents ne font pas ? »</h3>
+<p class="encadre"><b>La question.</b> Les agents font l'ingénierie, les courses, les vérifications de littérature et les
+relectures, et leurs relecteurs partagent une famille de modèles [T l. 256-258]. Sans notes : pourquoi, sous le lemme, la
+puissance de la somme terminale ne dépend-elle que de B, et quelle hypothèse casse la première sur de vraies
+activations ? Puis une erreur des agents que vous avez attrapée vous-même, et une que vous avez ratée.</p>
+<p><b>Pourquoi elle est dangereuse.</b> Le fonds paie surtout un jugement, et le processus décrit est presque entièrement
+délégué.</p>
+<p><b>La dérivation au tableau</b>, à savoir sans notes (section 4.2) :</p>
+<ol>
+<li>Sous un pur décalage de moyenne, chaque action sabotée ajoute δ<sub>k</sub> à la note attendue ; la somme terminale
+attaquée vaut la somme honnête plus B = Σδ<sub>k</sub>, quelle que soit la répartition (agents, pas, positions, même
+adaptative).</li>
+<li>Sa loi est donc la loi honnête translatée de B : la puissance P(S<sub>honnête</sub> + B &gt; c<sub>α</sub>) ne dépend
+que de B, de l'horizon n<sub>0</sub>, de la loi honnête et de α ; dans le cas gaussien, Φ̄(z<sub>α</sub> −
+B/(σ√n<sub>0</sub>)).</li>
+<li>Ce qui casse le premier sur de vraies activations : le sabotage change la variance ou la dépendance des notes (classe
+K, section 4.3) ; la réponse de la sonde n'est pas additive en intensité ; la loi honnête du calage n'est plus celle de la
+lecture (épisodes non échangeables) ; sans lecture toujours valide, l'arrêt au moment choisi fausse le seuil.</li>
+</ol>
+<p><b>Une décision qui est la sienne</b> : le passage du seuil de Ville à l'étalonnage sur épisodes honnêtes entiers. La
+simulation préenregistrée a montré que le seuil de Ville seul ne tient pas hors de ses hypothèses : des fausses alertes de
+0,21 à 0,35 sous effets d'épisode et de 0,17 sous corrélation entre agents, au lieu de 0,05 ; le seuil calé sur des
+épisodes entiers tient 0,046 à 0,055 [T l. 90-92 ; NM l. 165 ; verdict formel de la simulation en attente]. Ce qu'on y
+perd, à dire : la garantie n'est plus une borne théorique, mais une mesure sur des épisodes honnêtes (section 4.1).</p>
+<p><b>Ce que fait la personne, et non les agents</b> : poser les questions et les hypothèses ; décider chaque porte,
+chaque dépense et chaque nœud ; refuser toute course qui vise un signe ; trancher quand une vérification contredit le
+travail des agents. Exemple du 10 novembre : la contre-lecture de l'antériorité du bras a trouvé deux zones revendiquées
+déjà en partie occupées ; Lazar a resserré les revendications au lieu de les garder [D1018]. Contre les erreurs corrélées :
+un contre-lecteur de même famille mais d'un autre modèle [N-052], un juge d'une autre lignée [N-053 point 4], une
+vérification hors des agents (dépôt des empreintes chez un tiers, réplication indépendante) et la validation humaine de
+la vérité de terrain [T l. 334-335].</p>
+<p><b>À produire avant l'entretien</b> (Lazar, aidé de la session mère) : un <b>registre des erreurs</b> daté et
+empreinté, avec deux ou trois cas où Lazar a contredit les agents, et un cas d'erreur qui leur a échappé et qu'un test ou
+un humain a attrapée ; la dérivation, répétée sans notes.</p>
+<p><b>À ne pas dire</b> : « les agents l'ont vérifié » ; « les tests passent », donné comme argument ; aucune décision
+prise contre l'avis des agents.</p>
+
+<h2 class="saut">12. Ce qui manque pour rassurer le jury sur « l'approche peut marcher » — v1</h2>
+<p class="note">Liste de la session mère, insérée telle quelle à la demande de Lazar (10 novembre 2026) ; source et empreinte en annexe [CQM].</p>
+<p>État relevé le 10 novembre 2026 à 10:46 UTC (<span class="ref">date -u</span>), session mère. Entretien visé le 27 novembre 2026, à confirmer avec le fonds. Cette liste ne porte aucun résultat de surveillant ni de sonde : seulement ce qui doit exister, sa date et son état. Elle est à insérer telle quelle dans chaque document qui explique le programme.</p>
+<p><b>Ce qui est dit d'abord au jury :</b> aucune sonde n'a encore battu un surveillant de référence, et l'existence d'une trace interne du sabotage n'est pas établie. Le programme ne peut pas promettre une réponse positive ; il traite la question par des expériences préenregistrées dont l'issue est écrite d'avance dans les deux sens.</p>
+<p><b>Priorités fixées par Lazar le 10 novembre :</b> d'abord la ligne 5, puis les lignes 4, 7 et 8.</p>
+<table>
+<tr><th>n°</th><th>Ce qui manque</th><th>Pourquoi le jury le demandera</th><th>Avant le 27 novembre ?</th><th>État au 10 novembre</th></tr>
+<tr><td>1</td><td>La chaîne de sondes retrouve un signal planté, et se tait sur son jumeau honnête (témoin positif).</td><td>Sans cela, un résultat nul ne dit rien : la chaîne pourrait être aveugle.</td><td>Oui : lu le 20 novembre au plus tard.</td><td>Texte au brouillon 11 ; code validé par une contre-lecture ; course à créer au plus tard le 18.</td></tr>
+<tr><td>2</td><td>Un saboteur sans consigne, dont l'effet sur le coût croît avec la dose (course de confirmation).</td><td>Le seul saboteur existant recevait une consigne, que la sonde lisait.</td><td>Oui : verdict du 16 au 18.</td><td>Texte scellé ; course à créer au plus tard le 15.</td></tr>
+<tr><td>3</td><td>À ces doses, le texte seul ne suffit pas à repérer le sabotage (surveillants externes de référence).</td><td>Si lire le texte suffit, lire l'intérieur n'apporte rien.</td><td>Possible : vers le 20 ou le 21.</td><td>Premier brouillon du texte en rédaction.</td></tr>
+<tr><td>4</td><td>Une sonde au-dessus du hasard à ces doses.</td><td>C'est la première preuve que la trace existe.</td><td>Possible, sans marge ; dépend des lignes 1 à 3 et du scellement du texte des sondes.</td><td>Texte des sondes au brouillon 21 ; scellement visé avant le 13.</td></tr>
+<tr><td>5</td><td>La sonde lit le sabotage, et non le simple fait qu'un adaptateur est actif.</td><td>Le saboteur sans consigne est un adaptateur ajouté aux poids ; l'honnête est le modèle nu. Une sonde pourrait ne lire que cette différence.</td><td>À établir en premier.</td><td>Aucun témoin « adaptateur honnête » trouvé dans le texte scellé de la course (recherche par mots, vérification sur texte en cours) ; remèdes à l'étude : contraste au sein d'une même dose, témoin distillé honnête.</td></tr>
+<tr><td>6</td><td>La puissance de cette lecture, écrite avant de lire.</td><td>Un résultat nul doit dire quel effet il exclut.</td><td>Oui.</td><td>À vérifier dans le texte des sondes.</td></tr>
+<tr><td>7</td><td>Un résultat positif déjà publié, reproduit sur notre chaîne (banc public).</td><td>Preuve, hors de nous, que la chaîne sait voir ce que d'autres ont vu.</td><td>Possible.</td><td>Texte au brouillon 4, contre-lu trois fois ; code à écrire ; dépense à autoriser sur devis.</td></tr>
+<tr><td>8</td><td>Un sabotage vraiment diffus : chaque action dans la plage honnête, le dommage dans l'ensemble seulement (saboteur à budget).</td><td>Le saboteur actuel peut être flagrant ; la thèse porte sur le diffus.</td><td>Incertain ; exploratoire.</td><td>Conçu et contre-lu une fois ; code à écrire ; dépense à autoriser sur devis.</td></tr>
+<tr><td>9</td><td>Des témoins de concepts : la sonde ne réagit pas à un sujet quelconque.</td><td>Contrôle de validité.</td><td>Incertain.</td><td>Deux concepts sur quatre acceptés, deux refusés deux fois ; nouvelle consigne en rédaction ; le texte des sondes prévoit un repli sans eux.</td></tr>
+<tr><td>10</td><td>Le jeu d'entraînement de la sonde du domaine « coût gonflé ».</td><td>Sonde la plus proche du sabotage étudié.</td><td>Incertain.</td><td>Refusé pour un indice de surface ; une dernière réécriture est permise.</td></tr>
+<tr><td>11</td><td>La preuve datée, chez un tiers, que chaque préenregistrement précède ses données.</td><td>Seule vérification possible sans nous.</td><td>Oui.</td><td>Empreintes déposées en privé ; à rendre public et à geler.</td></tr>
+</table>
+<p>Sources : <span class="ref">registres/decisions.md</span>, R-2116 à R-2162 ; <span class="ref">brouillons/entretien-taif-v3/socle-preuves-entretien-v2.md</span>.</p>
+
+<h2>13. Ce qui reste</h2>
+<p>Avant l'entretien : la courbe dose-réponse des organismes (course 7b, créée au plus tard le 15 novembre) ; la phrase
+sur la dépense ; quatre phrases prévues pour le jury qui sur-affirment ; le dépôt des empreintes chez un tiers ; le témoin
+positif planté (le 20) ; le témoin de Bailey couru si ses conditions de lancement sont réunies ; les pièces de la
+section 11 (parité d'information et contrôle de fabrication au préenregistrement de G1, paires « honnête / sabotée »,
+protocole de la vérification humaine, registre des erreurs). Après : les préenregistrements de G1 et du papier C, la fin
+de la phase des instruments, puis le plan des sept mois. Le tri détaillé, avec valeur pour le jury, probabilité et coût,
+est dans le PDF « état et décisions » (version 1).</p>
+
+<h2>Annexe — Sources</h2>
+<table>
+<tr><th style="width:9%">Sigle</th><th style="width:58%">Pièce</th><th>Empreinte</th></tr>
+<tr><td>[P]</td><td>programme v2, <span class="ref">docs/programme-controle-ia-v2.md</span></td><td class="ref">2fd63badb5afea48f48d3ca501ae3b027c4094a8b176508488a41a22e45aa18c</td></tr>
+<tr><td>[T]</td><td>texte envoyé au fonds, <span class="ref">docs/sources/candidature-taif-2026-10-07/proposal_v2_TAIF_2026-10-07.txt</span></td><td class="ref">b2458c2d209aaa817ca3c77bfc8ef99288d489ae7b58b747fd8cda6a71e33ca0</td></tr>
+<tr><td>[NM]</td><td>note mathématique v3, <span class="ref">docs/notes/note-mathematique-lemme-theoreme-v3.md</span></td><td class="ref">dfe4fe0fc4d025011bbe0f330fd591b1898dc7e767384e96c946b6388ad81cd0</td></tr>
+<tr><td>[PT3]</td><td>préenregistrement de la simulation, <span class="ref">prereg/T0.3-simulation-lemme-theoreme-v1.md</span></td><td class="ref">7474743a0fa2a9db5da85bcedb0087ea57114fcca0fbb3415c7a97bf1b78d1fb</td></tr>
+<tr><td>[BR]</td><td>brief du programme v2, <span class="ref">docs/brief-claude-code-programme-complet-v2.md</span></td><td class="ref">9261932a11f29e8643175bc6e150d5455067f58a3cb1e57dca99e02cb17aa3b2</td></tr>
+<tr><td>N-003</td><td>décisions N-003 et N-004, <span class="ref">docs/decisions/decision-N-003-N-004-v1.md</span></td><td class="ref">cc1be39369bc4dae9b3166c513d783b4744c62d839951f047a44396aa3a81a5a</td></tr>
+<tr><td>N-062</td><td>échec de G1 : reconception, <span class="ref">docs/decisions/decision-N-062-v1.md</span></td><td class="ref">63f426903e6d0774085a628ec019d2022d3107f6bd8e56eebbe75c0eeb0f3ccc</td></tr>
+<tr><td>N-029</td><td>base boîte noire locale ; prédicteur sur les traits du texte obligatoire (énoncé repris du résumé de [CL]), <span class="ref">docs/decisions/decision-N-029-v1.md</span></td><td class="ref">084e30523c0a0349…</td></tr>
+<tr><td>N-052</td><td>contre-lecteur de la boucle extérieure, <span class="ref">docs/decisions/decision-N-052-v1.md</span></td><td class="ref">817d218b22b8d1d4…</td></tr>
+<tr><td>N-053</td><td>cinq propositions de l'audit défensif, <span class="ref">docs/decisions/decision-N-053-v1.md</span></td><td class="ref">2204256d744288be…</td></tr>
+<tr><td>N-054</td><td>modes de sabotage, mode tenu à l'écart, <span class="ref">docs/decisions/decision-N-054-v1.md</span></td><td class="ref">c8a00b3f885ae3e9…</td></tr>
+<tr><td>N-055</td><td>pari apparié borné, H1a et H1b, <span class="ref">docs/decisions/decision-N-055-v1.md</span></td><td class="ref">371879d5bd44f5fd…</td></tr>
+<tr><td>N-056</td><td>comparateurs de G1, gain par mode, <span class="ref">docs/decisions/decision-N-056-v1.md</span></td><td class="ref">3592c1e977e8c38c…</td></tr>
+<tr><td>N-060</td><td>vérité du dommage, version 3, <span class="ref">docs/decisions/decision-N-060-v3.md</span></td><td class="ref">2b448f696503112c…</td></tr>
+<tr><td>N-063</td><td>critère 3 de la porte de fin de phase (énoncé repris du résumé de [CL]), <span class="ref">docs/decisions/decision-N-063-v2.md</span></td><td class="ref">b2d9f03543802f82…</td></tr>
+<tr><td>[CL]</td><td>consignes permanentes du dépôt, résumé des décisions, <span class="ref">CLAUDE.md</span></td><td class="ref">b4cbc66a422a6246…</td></tr>
+<tr><td>[C7b]</td><td>configuration scellée de la course 7b, <span class="ref">prereg/T0.6-organismes-config-7b-v1.json</span></td><td class="ref">b7a5c1baeee13f75…</td></tr>
+<tr><td>[RB]</td><td>règle du bras d'attaque, scellée, <span class="ref">prereg/bras-attaque-regle-v1.md</span></td><td class="ref">88418df09c2e969c…</td></tr>
+<tr><td>[TB]</td><td>témoin de Bailey, préenregistrement scellé, <span class="ref">prereg/temoin-attaque-publiee-bailey-v1.md</span></td><td class="ref">fb6c2f34355d98ba…</td></tr>
+<tr><td>[CQM]</td><td>liste « ce qui manque pour rassurer le jury », session mère, sur main au commit 983dd664, <span class="ref">docs/notes/rapports-directeur/ce-qui-manque-approche-peut-marcher-v1.md</span></td><td class="ref">edb0bf03d87dd208…</td></tr>
+<tr><td>[JR]</td><td>répétition du jury sur le texte envoyé, <span class="ref">docs/notes/entretien-recapitulatif-v1/repetition-jury-texte-envoye-v1.md</span></td><td class="ref">f3891b742940080…</td></tr>
+<tr><td>[D1018]</td><td>décisions de Lazar du 10 novembre, <span class="ref">registres/passations/2026-11-10-1018-decision-lazar-anteriorite-procedures-jury-transmission.md</span></td><td class="ref">8a2c8b71c8dffb62…</td></tr>
+<tr><td>—</td><td>questionnaire de compréhension, scellé avant ce document, <span class="ref">docs/notes/entretien-recapitulatif-v1/questionnaire-comprehension-programme-v1.md</span></td><td class="ref">77c491f21a15b0714da804d0f16c4ff9cfa53077fe6326e9ab785252ebae02f4</td></tr>
+<tr><td>—</td><td>PDF « état et décisions », version 1, <span class="ref">livrables/programme-complet-entretien-v1/programme-complet-entretien-v1.pdf</span></td><td class="ref">add99b26a2f8e4da884ab594d3c846d95319b3fedc911a7ac623bda4735923a2</td></tr>
+</table>
+
+</body>
+</html>

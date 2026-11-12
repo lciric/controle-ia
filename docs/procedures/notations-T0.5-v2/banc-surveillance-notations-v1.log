@@ -1,0 +1,29 @@
+script éprouvé : surveiller_notations_v1.sh ab0a38b2ea3aa200c5bf4767d031e4a4624eca15877d01a43384f3484ffe7b52
+script éprouvé : essais_surveillance_notations_v1.sh e94e6ce4d4fa3fb887fa4ec89fa8f844a232be3cf6d68f06ef03e9008826b96f
+M00-fin : code 0 ; CONFORME
+    | FIN : AMORCE 2026-10-13T12:00:00Z : fin, code 0
+    relevé cumulatif : 4 lignes (début de l'amorce, deux PROGRES, fin de l'amorce), sans doublon d'un tour à l'autre : CONFORME
+M01-perdue-apres-fin-ecrit : code 0 ; CONFORME
+    | ÉTAT TERMINAL : actual_status=offline cur_state=stopped intended_status=running status_msg=essai
+    ligne « fin=écrit » gardée au relevé cumulatif et au dernier journal lisible : CONFORME
+M02-echec-d-amorce : code 0 ; CONFORME
+    | ÉCHEC D'AMORCE : AMORCE : clonage impossible (jeton GitHub ?)
+M03-redemarrage : code 0 ; CONFORME
+    | REDÉMARRAGE : l'amorce a été relancée par le conteneur
+M04-plafond : code 0 ; CONFORME
+    | PLAFOND : création + 26400 s
+M04b-avant-le-plafond : code 0 ; CONFORME
+    | FIN : AMORCE 2026-10-13T12:00:00Z : fin, code 1
+M05-outil-introuvable : code 2 ; CONFORME
+    | outil de location introuvable sur le PATH : surveillance aveugle, arrêt
+M06-dossier-existant : code 2 ; CONFORME
+    | /tmp/claude-0/-home-user/1cc16375-a2bd-54b9-a03f-27d43b6f26a6/scratchpad/c1v2/banc-surveillance/sortie-M06-dossier-existant existe déjà (R12)
+M07-jeton-masque : code 0 ; CONFORME
+    | FIN : AMORCE 2026-10-13T12:00:00Z : fin, code 0
+    jeton masqué dans les relevés : CONFORME
+M08-hors-ligne-passager : code 0 ; CONFORME
+    | FIN : AMORCE 2026-10-13T12:00:00Z : fin, code 0
+M08b-hors-ligne-alterne : code 0 ; CONFORME
+    | FIN : AMORCE 2026-10-13T12:00:00Z : fin, code 0
+M09-usage-faux : code 2 ; CONFORME
+FIN DU BANC DE LA SURVEILLANCE DES NOTATIONS ; cas non conformes : 0

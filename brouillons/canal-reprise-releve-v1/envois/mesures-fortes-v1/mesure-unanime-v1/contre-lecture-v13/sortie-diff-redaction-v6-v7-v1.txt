@@ -1,0 +1,40 @@
+# diff rediger_note_lecture_v6.py rediger_note_lecture_v7.py
+1c1
+< """Rédaction **mécanique** de la note de lecture de la mesure unanime à partir de la lecture mécanique (`lecture_mecanique_v8.py`) — version 6 (CV11-3) : --instance et --date obligatoires ; docstrings
+---
+> """Rédaction **mécanique** de la note de lecture de la mesure unanime à partir de la lecture mécanique (`lecture_mecanique_v8.py`)
+4a5
+> Version 7 (CV12-4 : docstring recollée, usage complet) ; v6 (CV11-3) : --instance et --date obligatoires, docstrings.
+6c7
+< Usage : python -I -B rediger_note_lecture_v6.py LECTURE.json SORTIE.json --prereg FICHIER --commit SHA --heure HH:MM:SS > note.md
+---
+> Usage : python -I -B rediger_note_lecture_v7.py LECTURE.json SORTIE.json --prereg FICHIER --commit SHA --heure HH:MM:SS --instance NOM --date DATE [--table FICHIER] > note.md
+code : 1
+
+# en-tête (docstring) de la v7 :
+"""Rédaction **mécanique** de la note de lecture de la mesure unanime à partir de la lecture mécanique (`lecture_mecanique_v8.py`)
+et de la sortie réelle : la note reprend la table des verdicts telle quelle, les quantités citées, les réserves du script,
+la provenance (empreintes, commit) — aucune phrase d'interprétation n'y est ajoutée par ce script ; l'auteur ajoute ensuite,
+à la main et sous le titre « Réserves de l'auteur », ce que la lecture ne dit pas. Écrit avant toute lecture réelle (R1).
+Version 7 (CV12-4 : docstring recollée, usage complet) ; v6 (CV11-3) : --instance et --date obligatoires, docstrings.
+
+Usage : python -I -B rediger_note_lecture_v7.py LECTURE.json SORTIE.json --prereg FICHIER --commit SHA --heure HH:MM:SS --instance NOM --date DATE [--table FICHIER] > note.md
+"""
+import argparse
+import hashlib
+import json
+
+
+def f3(x):
+    return "—" if x is None else f"{x:.3f}".replace(".", ",")
+
+
+# arguments déclarés (argparse) de la v7 :
+24:    a.add_argument("lecture")
+25:    a.add_argument("sortie")
+26:    a.add_argument("--prereg", required=True)
+27:    a.add_argument("--commit", required=True)
+28:    a.add_argument("--heure", required=True, help="heure UTC relevée par `date -u` dans un appel séparé")
+29:    a.add_argument("--table", default=None)
+30:    a.add_argument("--instance", required=True, help="qui écrit : lignée et modèle (CV9-4, CV10-3 ; aucun défaut en dur)")
+31:    a.add_argument("--date", required=True, help="date UTC de la lecture, en toutes lettres (CV9-4, CV11-3 ; aucun défaut)")

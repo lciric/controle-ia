@@ -486,9 +486,23 @@ def test_comparaison_voit_la_machine_et_le_chargement(depot, monkeypatch):
 
 # ---------------------------------------------------------------- contre-lecture 3
 
-def test_p4_contraire_se_lit_au_vu_du_repere(depot):
-    """M-1 : un écart de production au-dessus du seuil arrête le run après le repère, le rejeu et le stockage."""
+def test_p4_contraire_se_lit_au_vu_du_repere(depot, monkeypatch):
+    """M-1 : un écart de production au-dessus du seuil arrête le run après le repère, le rejeu et le stockage.
+    L'écart est porté au-dessus du seuil par une injection (+1e-6 sur les grandeurs mesurées de la phase), et non
+    supposé : sur un processeur où la génération par lots en bfloat16 égale la passe unique (AMD EPYC 7513, sans
+    AVX-512, instance 55292763), l'écart du modèle jouet est nul et rien ne s'arrêtait (R-132)."""
     stricte = dict(PETITE, production=dict(PETITE["production"], tolerance=1e-9))
+    reel = V.jouer_episodes
+
+    def jouer(*a, **k):
+        sorties = reel(*a, **k)
+        if a[11] == stricte["production"]["tolerance"]:          # tolérance de la phase : production seulement
+            for _, _, r in sorties:
+                for champ in ("ecarts", "ecarts_q99"):
+                    r[champ] = {cle: {c: v + 1e-6 for c, v in par_couche.items()}
+                                for cle, par_couche in r[champ].items()}
+        return sorties
+    monkeypatch.setattr(V, "jouer_episodes", jouer)
     with pytest.raises(GardeArret, match="production : .* faute"):
         V.executer(depot, "20261004-240000-repetition-jouet", entropie=11, config=stricte, verifier_import=False)
     arret = json.loads((depot / "diag" / "20261004-240000-repetition-jouet" / "arret.json").read_text())["resultat"]

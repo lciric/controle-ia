@@ -1,0 +1,202 @@
+--- src/controle_ia/sonde_hote_durable_a1_v3_v4.py (renommé v5)
++++ src/controle_ia/sonde_hote_durable_a1_v3_v5.py
+@@ -1,5 +1,13 @@
+ #!/usr/bin/env python3
+-"""Sonde de l'hôte durable d'A1-v3, **version 4** (GO-2026-11-04-09, GO de la machine, 35 USD).
++"""Sonde de l'hôte durable d'A1-v3, **version 5** (GO-2026-11-04-09, GO de la machine, 35 USD).
++
++Version 5 (R12 : `hote_durable_a1_v3.py` et les v1 à v4 inchangés) : la v4, plus **seulement** ce qu'impose le fait constaté
++par la fille le 4 novembre 2026 vers 22:31 UTC (lecture seule) : sur Vast, les offres sans carte rendent `cpu_ram` = 0 (champ
++non renseigné). (a) Vérification d'offre propre à la sonde (`verifier_offre_sonde`) : `cpu_ram` à 0 ou absent vaut « non
++renseigné » et n'est accepté que si `cpu_cores_effective` ≥ 4 ; une valeur strictement positive sous 8 000 est refusée ; tous les
++autres critères sont inchangés ; « mémoire non renseignée par Vast » est écrit au journal. (b) L'amorce relève la mémoire réelle
++de la machine (`/proc/meminfo`, MemTotal) dans `sonde-v5-memoire.txt`, versé avec la sortie ; sous 2 Go, elle s'arrête
++proprement (code 2 ; la minuterie détruit). Ce qui suit décrit la v4, reprise telle quelle :
+ 
+ Version 4 (R12 : v1, v2 et v3 inchangées) : la v3, plus **seulement** les corrections de `contre-lecture-sonde-v3.md`
+ (`92b5abfc…`) : **M-1** (délai dépassé de `vastai` rendu en `Refus` sans la ligne de commande ni l'environnement, création
+@@ -91,7 +99,47 @@
+ MOTIF_AMORCE = "CLE_ARGON|GEMINI*|ANTHROPIC*|OPENAI*|MOONSHOT*|KIMI*|RR_*API_KEY*"
+ SECRETS_PILOTE = ("GH_TOKEN", "VAST_API_KEY")
+ SECRETS_MACHINE = ("GH_TOKEN", "CONTAINER_API_KEY", "VAST_API_KEY")
+-FICHIERS_DEMARRAGE = ("sonde-v5-minuterie.txt", "sonde-v5-minuterie.log", "sonde-v5-temps.txt", "amorce-sonde-a1v3-v5.log")
++FICHIERS_DEMARRAGE = ("sonde-v5-minuterie.txt", "sonde-v5-minuterie.log", "sonde-v5-temps.txt", "amorce-sonde-a1v3-v5.log",
++                      "sonde-v5-memoire.txt")  # v5 (b) : mémoire réelle relevée par l'amorce
++MEMOIRE_MIN_KB = 2 * 1024 * 1024  # v5 (b) : sous 2 Go de MemTotal, l'amorce s'arrête (la minuterie détruit)
++
++
++def verifier_offre_sonde(offres: list[dict], offre_id: int) -> dict:
++    """v5 (a) : la garde d'offre du lanceur durable, sauf pour `cpu_ram`, que Vast ne renseigne pas pour les offres sans carte
++    (valeur 0). `cpu_ram` à 0 ou absent : « non renseigné », accepté seulement si `cpu_cores_effective` ≥ 4 ; une valeur
++    strictement positive sous 8 000 : refus ; tous les autres critères (`num_gpus` = 0, disque, fiabilité, prix) inchangés."""
++    choisies = [o for o in offres if isinstance(o, dict) and o.get("id") == offre_id]
++    if len(choisies) != 1:
++        return h.verifier_offre(offres, offre_id)  # même refus (« … dans la réponse de la recherche (une exigée) »)
++    o = dict(choisies[0])
++    ram = o.get("cpu_ram")
++    non_renseignee = ram is None or (isinstance(ram, (int, float)) and not isinstance(ram, bool) and ram == 0)
++    if non_renseignee:
++        coeurs = o.get("cpu_cores_effective")
++        if not isinstance(coeurs, (int, float)) or isinstance(coeurs, bool) or coeurs < h.OFFRE_MIN["cpu_cores_effective"]:
++            raise h.Refus(f"offre {offre_id} : mémoire non renseignée par Vast et cpu_cores_effective = {coeurs!r} < "
++                          f"{h.OFFRE_MIN['cpu_cores_effective']} : refus")
++        o["cpu_ram"] = h.OFFRE_MIN["cpu_ram"]  # pour la seule garde : tous les autres critères y passent tels quels
++    v = h.verifier_offre([o], offre_id)
++    if non_renseignee:
++        v["cpu_ram"] = None
++    v["memoire_non_renseignee"] = non_renseignee
++    return v
++
++
++def offre_la_moins_chere_sonde(offres: list[dict], offre_id: int) -> dict:
++    """L'offre choisie, conforme (`verifier_offre_sonde`) et la moins chère des offres conformes de la réponse."""
++    choisie = verifier_offre_sonde(offres, offre_id)
++    conformes = []
++    for x in offres:
++        try:
++            conformes.append(verifier_offre_sonde([x], x.get("id")))
++        except h.Refus:
++            continue
++    moins = min(c["dph_total"] for c in conformes)
++    if choisie["dph_total"] > moins + 1e-12:
++        raise h.Refus(f"offre {offre_id} à {choisie['dph_total']} USD/h : une offre conforme est moins chère ({moins})")
++    return choisie
+ 
+ 
+ def cles_de_modele(environ: dict) -> list[str]:
+@@ -325,7 +373,10 @@
+         j.ecrire(f"sonde v5 : GO {g['go']} accepté par la garde de main, {g['plafond_usd']:g} USD")
+         offres = json.loads(Path(a.offres).read_text())
+         offres = offres.get("offers", offres) if isinstance(offres, dict) else offres
+-        o = s1.offre_la_moins_chere(offres, int(a.offre))
++        o = offre_la_moins_chere_sonde(offres, int(a.offre))
++        if o["memoire_non_renseignee"]:
++            j.ecrire(f"sonde v5 : offre {o['id']} : mémoire non renseignée par Vast (cpu_ram = 0) ; "
++                     f"{o['cpu_cores_effective']} cœurs ; mémoire réelle relevée sur la machine")
+         duree = verifier_duree(a.duree_s)
+         tir = bool(getattr(a, "tir_minuterie", False))
+         marge = MARGE_TIR_S if tir else MARGE_MINUTERIE_S
+@@ -689,7 +740,7 @@
+         conformes = []
+         for x in offres:
+             try:
+-                conformes.append(h.verifier_offre([x], x.get("id")))
++                conformes.append(verifier_offre_sonde([x], x.get("id")))
+             except h.Refus:
+                 continue
+         if not conformes:
+--- scripts/amorce_sonde_hote_durable_a1_v3_v4.sh (renommé v5)
++++ scripts/amorce_sonde_hote_durable_a1_v3_v5.sh
+@@ -5,6 +5,8 @@
+ # conteneur APRÈS la minuterie de destruction : quel que soit le code de sortie de cette amorce, la minuterie détruit la machine à
+ # l'échéance (minimum de l'échéance absolue du pilote et de départ + durée + marge), et le conteneur reste en vie jusque-là.
+ # m-c : `curl` exigé (la minuterie s'en sert) ; absent, rien ne part, refus visible au journal.
++# v5 : mémoire réelle relevée (/proc/meminfo, MemTotal) dans sonde-v5-memoire.txt, versé ; sous 2 Go, rien ne part (la minuterie
++# détruit) ; essai local : SONDE_MEMINFO (chemin absolu d'un faux meminfo).
+ # Course factice, sans clé d'Argon ni relais.
+ # Variables (jamais affichées) : COMMIT_PRIVE GO_ID PRIX_H_USD DUREE_MAX_S ECHEANCE_UTC_S TIR_MINUTERIE DEPOT_URL GH_TOKEN ;
+ # posées par Vast : CONTAINER_ID CONTAINER_API_KEY. Essai local : RACINE_AMORCE (défaut /root), SAUTER_INSTALLATION=1.
+@@ -24,6 +26,12 @@
+ command -v curl >/dev/null 2>&1 || { echo "AMORCE SONDE V5 : curl absent : rien ne part (la minuterie passe par python3)"; exit 2; }
+ case "$ECHEANCE_UTC_S" in ''|*[!0-9]*) echo "AMORCE SONDE V5 : ECHEANCE_UTC_S non entière : rien ne part"; exit 2;; esac
+ case "$DUREE_MAX_S" in ''|*[!0-9]*) echo "AMORCE SONDE V5 : DUREE_MAX_S non entière : rien ne part"; exit 2;; esac
++MEMINFO="${SONDE_MEMINFO:-/proc/meminfo}"; case "$MEMINFO" in /*) ;; *) MEMINFO=/proc/meminfo;; esac
++MEM_KB=$(grep -m1 '^MemTotal:' "$MEMINFO" 2>/dev/null | tr -s ' ' | cut -d' ' -f2)
++echo "$(date -u +%FT%TZ) MemTotal ${MEM_KB:-illisible} kB" >> "$RACINE_AMORCE/sonde-v5-memoire.txt"
++case "$MEM_KB" in ''|*[!0-9]*) echo "AMORCE SONDE V5 : mémoire réelle illisible : rien ne part (la minuterie détruit)"; exit 2;; esac
++[ "$MEM_KB" -ge 2097152 ] || { echo "AMORCE SONDE V5 : mémoire réelle $MEM_KB kB < 2 Go : rien ne part (la minuterie détruit)"; exit 2; }
++echo "AMORCE SONDE V5 : mémoire réelle $MEM_KB kB (MemTotal)"
+ M="$RACINE_AMORCE/amorce-depot/src/controle_ia/sonde_hote_durable_a1_v3_v5.py"
+ for f in "$M" "$RACINE_AMORCE/amorce-depot/src/controle_ia/sonde_hote_durable_a1_v3.py" \
+          "$RACINE_AMORCE/amorce-depot/src/controle_ia/hote_durable_a1_v3.py"; do
+--- tests/test_sonde_hote_durable_a1_v3_v4.py (renommé v5)
++++ tests/test_sonde_hote_durable_a1_v3_v5.py
+@@ -1,5 +1,5 @@
+ """Essais en mode jouet de la sonde v5 de l'hôte durable d'A1-v3 (contre-lectures `contre-lecture-sonde-v1.md` à
+-`contre-lecture-sonde-v3.md` ; m7 : cas sain
++`contre-lecture-sonde-v3.md`, et mémoire non renseignée des offres sans carte ; m7 : cas sain
+ et artefact pour chaque garde, l'amorce et le script de démarrage compris). Aucune location, aucun réseau, aucune clé : `curl`
+ et `vastai` sont des outils factices, les dépôts sont locaux, Vast est un fichier.
+ """
+@@ -407,6 +407,7 @@
+         (racine / "sonde-v5-minuterie.txt").write_text(f"{int(t0)} {int(t0) + 1260 + 1500}\n")
+         (racine / "sonde-v5-temps.txt").write_text("demarrage …\nclone 0 en 3 s\n")
+         (racine / "amorce-sonde-a1v3-v5.log").write_text("AMORCE SONDE V5 : installations en 40 s\n")
++        (racine / "sonde-v5-memoire.txt").write_text("2026-11-04T22:40:00Z MemTotal 16384000 kB\n")
+         r = s.reglages({})
+         r.travail, r.clone_prive, r.periode_s, r.attente_poussee_s = racine / "sonde-a1-v3-v5", clone, 0.1, 0
+         r.jouet, r.vast_jouet, r.aujourd_hui = True, tmp_path / "vast.json", JOUR
+@@ -789,3 +790,73 @@
+     temps = (racine / "sonde-v5-temps.txt").read_text()
+     assert "amorce finie" in temps and "fin du principal" in temps
+     assert duree < 15 + 60 + 30, duree  # fin de vie (15 s) + attente de la minuterie + tolérance
++
++
++
++# --- v5 : offres sans carte à `cpu_ram` = 0 (fait constaté par la fille, 4 novembre 2026, 22:31 UTC) -----------------------
++
++SANS_RAM = dict(OFFRE, id=21, cpu_ram=0, cpu_cores_effective=12, dph_total=0.08)
++
++
++def test_offre_sans_ram_renseignee_cas_sain():
++    v = s.verifier_offre_sonde([SANS_RAM], 21)
++    assert v["memoire_non_renseignee"] is True and v["cpu_ram"] is None and v["cpu_cores_effective"] == 12
++    sans_champ = {k: x for k, x in SANS_RAM.items() if k != "cpu_ram"}
++    assert s.verifier_offre_sonde([sans_champ], 21)["memoire_non_renseignee"] is True
++    normale = s.verifier_offre_sonde([OFFRE], 11)
++    assert normale["memoire_non_renseignee"] is False and normale["cpu_ram"] == 16000
++    with pytest.raises(h.Refus, match="cpu_ram = 0 < 8000"):  # le lanceur durable, inchangé, la refusait
++        h.verifier_offre([SANS_RAM], 21)
++
++
++@pytest.mark.parametrize("modif, motif", [
++    ({"cpu_cores_effective": 2}, "mémoire non renseignée par Vast et cpu_cores_effective = 2 < 4"),
++    ({"cpu_ram": 4000}, "cpu_ram = 4000 < 8000"),
++    ({"num_gpus": 1}, "sans carte"),
++    ({"disk_space": 20}, "disk_space"), ({"reliability": 0.9}, "reliability"), ({"dph_total": 0.41}, "prix horaire"),
++    ({"cpu_ram": True}, "cpu_ram"),
++])
++def test_offre_sans_ram_artefacts(modif, motif):
++    with pytest.raises(h.Refus, match=motif):
++        s.verifier_offre_sonde([dict(SANS_RAM, **modif)], 21)
++
++
++def test_la_moins_chere_et_journal_memoire_non_renseignee(tmp_path, capsys):
++    f = tmp_path / "offres.json"
++    f.write_text(json.dumps([OFFRE, SANS_RAM, dict(SANS_RAM, id=22, cpu_cores_effective=2, dph_total=0.01)]))
++    assert s.principal(["offre", "--offres", str(f)]) == 0 and capsys.readouterr().out.strip() == "21"
++    with pytest.raises(h.Refus, match="moins chère"):
++        s.offre_la_moins_chere_sonde(json.loads(f.read_text()), 11)
++    a = args_louer(tmp_path)
++    Path(a.offres).write_text(json.dumps([OFFRE, SANS_RAM]))
++    a.offre = "21"
++    vast = h.ClientVastJouet(tmp_path / "vast.json")
++    assert s.louer(a, vast, JOUR, dict(ENV_PILOTE)) == 0
++    assert "mémoire non renseignée par Vast" in (tmp_path / "journal-sonde-v5.log").read_text()
++
++
++def meminfo(tmp_path, ko):
++    p = tmp_path / f"meminfo-{ko}"
++    p.write_text(f"MemTotal:       {ko} kB\nMemFree:        1000 kB\n" if ko is not None else "rien\n")
++    return str(p)
++
++
++@pytest.mark.parametrize("ko, code, motif", [
++    (16384000, 0, "mémoire réelle 16384000 kB"),
++    (2097152, 0, "mémoire réelle 2097152 kB"),
++    (1048576, 2, "mémoire réelle 1048576 kB < 2 Go : rien ne part"),
++    (None, 2, "mémoire réelle illisible"),
++])
++def test_amorce_memoire_reelle(tmp_path, ko, code, motif):
++    r, racine = amorce(tmp_path, SONDE_MEMINFO=meminfo(tmp_path, ko))
++    assert r.returncode == code and motif in r.stdout, r.stdout
++    assert (racine / "exec-atteint.txt").exists() == (code == 0)
++    releve = (racine / "sonde-v5-memoire.txt").read_text()
++    assert ("MemTotal illisible" in releve) if ko is None else (f"MemTotal {ko} kB" in releve)
++
++
++def test_memoire_reelle_versee_avec_la_sortie(monde):
++    r, env, nu = monde()
++    assert s.MachineSondeV5(r, env, 120).principal() == 0
++    f = versees(nu, s.BRANCHE)
++    assert b"MemTotal 16384000 kB" in f[f"{s.BRANCHE}/demarrage/sonde-v5-memoire.txt"]

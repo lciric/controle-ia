@@ -1,0 +1,58 @@
+couples-brouillon3-vers-brouillon4-v1.json : aller EGAL f9f4bd380a3066371c88d39ede0ef60bde77070311cd2cd9ca221cf8f3f194c5
+  retour EGAL 0d51099e5ef58829ce83731592eb8573aae8ce8848344488ffc672be45ac273e
+  marqueurs cible: ['<<CHEMIN_DECOUPEUR>>', '<<RAPPORT_CONTRE_LECTURE_2>>'] [1, 1]
+  marqueurs source: {'<<CHEMIN_DECOUPEUR>>': 1, '<<LIGNE_AUDIT_FUITES_T07_B22>>': 1, '<<RAPPORT_CONTRE_LECTURE_2>>': 1}
+couples-brouillon4-vers-brouillon5-v1.json : aller EGAL 7228ce724d4f2a7c146124ceb70156cf99118b2acebcdc4b3b7d9e5d977d2b67
+  retour EGAL f9f4bd380a3066371c88d39ede0ef60bde77070311cd2cd9ca221cf8f3f194c5
+  marqueurs cible: ['<<RAPPORT_CONTRE_LECTURE_2>>'] [1]
+  marqueurs source: {'<<CHEMIN_DECOUPEUR>>': 1, '<<RAPPORT_CONTRE_LECTURE_2>>': 1}
+C00 | mandat, point 5 : titre du brouillon 4 | 60 -> 60
+C01 | mandat, point 5 : statut du brouillon 4 en tête | 126 -> 1599
+C02 | cohérence (« texte scellé » au lieu de « brouillon 22 ») : état des marqueurs | 332 -> 490
+C03 | cohérence : ordre des opérations | 156 -> 325
+C04 | cohérence : ce qui gouverne (ligne du texte scellé) | 115 -> 291
+C05 | cohérence : vérification des cellules contre le texte scellé | 262 -> 374
+C06 | cohérence : § 0, Q3 (ligne corrigée, puis scellée) | 247 -> 392
+C07 | cohérence : § 1 (définition gelée du texte scellé) | 44 -> 56
+C08 | mandat, point 1 : titre du § 2.1 | 77 -> 76
+C09 | mandat, point 1 : marqueur rempli sur le texte scellé | 30 -> 9309
+C10 | mandat, point 1 : note de remplissage | 558 -> 721
+C11 | mandat, point 2 : § 2.2 comparé au texte scellé (égal) | 153 -> 402
+C12 | mandat, point 2 : § 2.3 comparé au texte scellé (égal) | 95 -> 393
+C13 | mandat, point 2 : repère du texte scellé (point 4 ter) | 34 -> 62
+C14 | mandat, point 2 : repère du texte scellé (L1b) | 34 -> 57
+C15 | mandat, point 2 : repère du texte scellé (L6) | 28 -> 51
+C16 | mandat, point 2 : repère du texte scellé (liste d'arrêt) | 30 -> 58
+C17 | mandat, point 2 : repère du texte scellé (« Non interprétable ») | 52 -> 80
+C18 | mandat, point 2 : repère du texte scellé (module, paraphrase) | 37 -> 108
+C20 | cohérence : § 6, lecture (a) | 51 -> 47
+C21 | mandat, point 4 : titre du § 14.2 (commandée) | 68 -> 81
+C22 | mandat, point 4 : objet du § 14.2 | 530 -> 923
+C23 | mandat, point 4 : annexe B (reste, pour comparaison) | 83 -> 146
+D00 | statut : titre du brouillon 5 | 60 -> 60
+D01 | statut du brouillon 5 en tête (qui, quand, d'où) ; l'ancien statut devient « Brouillon 4 (historique) » | 124 -> 1304
+D02 | état des marqueurs : `CHEMIN_DECOUPEUR` rempli | 287 -> 291
+D03 | ordre des opérations | 109 -> 133
+D04 | Q-B4-5 : calendrier visé du § 4 (R-2348) | 274 -> 464
+D05 | Q-B4-1 : `CHEMIN_DECOUPEUR` rempli ; fichiers écrits par `git show`, empreintes vérifiées avant chargement (R-2238, R-2348) | 376 -> 1536
+D06 | Q-B4-2 : objet du § 14.2 étendu au différentiel du brouillon 2 au brouillon 5 (R-2348) | 154 -> 379
+D07 | § 14.2 : contrôle du remplissage de `CHEMIN_DECOUPEUR` | 98 -> 134
+D08 | § 14.2 : fichiers à donner (brouillons 2 à 5) | 173 -> 273
+en_attente: [
+ {
+  "id": "C19-en-attente",
+  "motif": "mandat, point 3 : `CHEMIN_DECOUPEUR` (R-2238) — NON APPLIQUÉ : `git show c7484c43:donnees/decoupeur-llama-3.1-8b-instruct-0e9e39f2-v1/tokenizer.json` : code 128, fatal: path 'donnees/decoupeur-llama-3.1-8b-instruct-0e9e39f2-v1/tokenizer.json' does not exist in 'c7484c43657a2ce22d76af33efd06aaa11a6aafa'",
+  "ancien": "`<<CHEMIN_DECOUPEUR>>`",
+  "nouveau": "le dossier\n`donnees/decoupeur-llama-3.1-8b-instruct-0e9e39f2-v1/` du commit `c7484c43657a2ce22d76af33efd06aaa11a6aafa` (branche de données privée\n`donnees/decoupeur-llama-3.1-8b-instruct-0e9e39f2-v1`, orpheline, jamais fusionnée dans `main` ; R-2238), extrait par\n`git archive c7484c43657a2ce22d76af33efd06aaa11a6aafa donnees/decoupeur-llama-3.1-8b-instruct-0e9e39f2-v1/ | tar -x -C <bac à sable>` dans le bac à\nsable de l'auditeur, sur sa machine (exception écrite à la règle 4 des interdits, annexe A : cette seule commande, en\nlecture ; le commit doit être présent dans le clone local, aucun `fetch`), avec les empreintes `tokenizer.json` `79e3e522635f3171300913bb421464a87de6222182a0570b9b2ccba2a964b2b4` ; `tokenizer_config.json` `177c7b61e616fecb84c17ce0591acb92c6c4d60e9ac5ababfb940ff23bbcd424` ; `special_tokens_map.json` `6f38c73729248f6c127296386e3cdde96e254636cc58b4169d3fd32328d9a8ec` (R-2238 ; égales à la réception R1 v4,\n`docs/notes/runs-r1-r2-r4-v1/reception-v4-v1/etape-E-reception-r1-v4-v1.md` l. 70-72, `bb6652f2…` ; recalculées par `git show` au remplissage et égales aux\ncompagnons du commit)",
+  "condition": "à appliquer seulement après que `git show` sur le commit rend les trois fichiers à ces empreintes, égales aux compagnons du commit (relancer ce script, sortie sous un nom neuf)"
+ }
+]
+decoupeur: {
+ "commit": "c7484c43657a2ce22d76af33efd06aaa11a6aafa",
+ "dossier": "donnees/decoupeur-llama-3.1-8b-instruct-0e9e39f2-v1",
+ "empreintes_recalculees": {
+  "tokenizer.json": "79e3e522635f3171300913bb421464a87de6222182a0570b9b2ccba2a964b2b4",
+  "tokenizer_config.json": "177c7b61e616fecb84c17ce0591acb92c6c4d60e9ac5ababfb940ff23bbcd424",
+  "special_tokens_map.json": "6f38c73729248f6c127296386e3cdde96e254636cc58b4169d3fd32328d9a8ec"
+ }
+}

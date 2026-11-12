@@ -1,0 +1,9 @@
+# Question 7 — l'allumage comme ensemble autocatalytique de fiches — v1 (pièce ajoutée au collisionneur)
+
+Mots directs de Lazar (30 octobre 2026, 22:08 heure de Paris) : « et l'allumage et la fertilité là-dedans ? cela me fait penser à l'allumage aux origines de la vie ».
+
+## Hypothèse proposée par conv-audit (à attaquer)
+Transposition des modèles d'origine de la vie (ensembles autocatalytiques de Kauffman ; ensembles RAF de Hordijk et Steel et leur algorithme de détection — SUPPOSÉ, références de mémoire) à l'organisme de recherche automatique : les fiches sont les molécules, les fusions produites par le bisociateur sont les réactions. Un lot de fiches « s'allume » quand chaque fiche nouvelle est produite par fusion de fiches du lot et en rend d'autres possibles, génération après génération, sans apport extérieur ; le paramètre de contrôle est la dose de contact (titres du tableau minimal, fusions par génération) ; la transition est le seuil au-delà duquel un ensemble autocatalytique apparaît. La fertilité d'une paire est alors la contribution de sa fusion à la fermeture autocatalytique du lot.
+
+## Ce que le collisionneur doit dire
+(a) l'analogie tient-elle ou non, et où elle casse (les fiches ne se consomment pas ; une fusion n'est pas une réaction stœchiométrique ; le « substrat » est le corpus) ; (b) quelle définition opérationnelle de l'allumage et de la fertilité en découle, mesurable sur le journal d'une course (graphe fiches → fusions → fiches, par génération) ; (c) la prédiction chiffrée et le critère de mort pour la génération 2 (par exemple : aucun lot ne s'entretient quelle que soit la dose) ; (d) antériorités : ensembles autocatalytiques appliqués à la technologie ou aux idées (Kauffman ; Arthur ; Hordijk ; Loreto — SUPPOSÉ), et travaux sur les cascades d'idées entre générations ; (e) ce qu'il faut journaliser dès la génération 1.

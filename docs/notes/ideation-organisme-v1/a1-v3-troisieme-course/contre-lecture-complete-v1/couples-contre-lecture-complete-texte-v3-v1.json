@@ -1,0 +1,62 @@
+[
+ {
+  "ancien": "<<AUDIT_A9_SECONDE>> (chemin, commit, empreinte et conclusion de l'audit, par un auditeur neuf, sur l'état scellé `fd66feb7…` ; les cinq\npoints de la v2 : fin hors des codes 0, 2 et 3 ; cause d'infrastructure, non l'instrument, ni le proposeur, ni une règle décidée\npendant la course ; dépense appariée au registre ; rien lu ni relancé ; portée de l'écart d'enregistrement du code de sortie).\nTant que ce marqueur reste, le lanceur refuse ce texte (« marqueur(s) non rempli(s) »).",
+  "nouveau": "`docs/notes/ideation-organisme-v1/a1-v3-troisieme-course/audit-A9-a1-v3-seconde-course-v1.md` (dépôt privé ; fichier entré par le\ncommit `c0243d37519b7133bf05050033beefd9036ea7ed`, compagnon par le commit `cbaf76a9496aa90bf23a57e5926be08878fb95bd`, R-1478, qui\nporte les deux ; tous deux dans `main`), sha256 `a0577b8b0c6e0487b090d064f0872034f66024357ece95d2b14152b130e90a41` (compagnon égal) ;\nauditeur neuf, 4 novembre 2026, de 08:28:51 UTC à la remise (08:38 UTC, R-1478) ; sur l'état scellé `fd66feb7…`, noms et empreintes\nseulement (19 fichiers sur 19 conformes), aucun contenu lu. Conclusion (audit, section 6) : « cause d'infrastructure établie : fin\nhors des codes 0, 2 et 3 (manifeste présent, aucun `attaque-goodhart-v3.json`, sortie du lanceur vide), par disparition de l'hôte —\nprocessus de travail de la session fille redémarré à 03:46:39–40 UTC (garde arrêtée « worker_restart »), session sous limite\nd'usage de 5 heures depuis 03:04:53 UTC ; 620 appels, 48,49583 USD au relais (au plus un appel en vol, ≤ 1,8 USD) ; état scellé\n`fd66feb7…` non lu, rien relancé ; écart du code de sortie sans portée sur la conclusion ». Les cinq points de la v2 : (1) fin hors\ndes codes 0, 2 et 3 : établie ; (2) cause d'infrastructure, non l'instrument, ni le proposeur, ni une règle décidée pendant la\ncourse : établie ; (3) dépense : établie sur le journal du relais seulement (48,49583 USD ; ≈ 50,30 USD au plus avec un appel en\nvol), **non appariée** au registre de dépense de la sortie, dont la consigne de l'audit interdisait la lecture (réserve, R4) ; (4)\nrien lu ni relancé : établi pour la sortie ; (5) portée de l'écart d'enregistrement du code de sortie : nulle sur la conclusion.\nRéserves de l'audit (section 8) : instant de la mort borné entre 03:45:18 et ≈ 03:46:01 UTC (au plus tard 03:46:39), signal ou\ngel indéterminés ; lien entre la limite d'usage et le redémarrage de 03:46 vraisemblable, non prouvé ; aucune observation\nextérieure tenue de 03:04:53 à 05:22 UTC (limite commune au compte). La règle de la section 8 admet donc la troisième course, sur un\ntexte nouveau et un GO nouveau. Ce renvoi était un marqueur dans la v3 scellée (`c697d0df…`), qui y est resté et faisait refuser\nle texte par le lanceur (« marqueur(s) non rempli(s) ») : contre-lecture complète du texte v3, B1."
+ },
+ {
+  "ancien": "- La session de la fille a été coupée par la **limite d'usage de 5 heures** vers 03:46 UTC (selon la mère ; additif 1), puis le\n  conteneur a été repris et redémarré (démarrage 05:22:53 UTC) :",
+  "nouveau": "- La session de la fille a été bloquée par la **limite d'usage de 5 heures** du compte dès 03:04:53 UTC (refus 429 de chaque tour,\n  harnais de la session ; audit A9 de la seconde, sections 1 et 2 ; « vers 03:46 » selon la mère et l'additif 1) ; son processus de\n  travail a redémarré à 03:46:39–40 UTC (garde de session arrêtée par le harnais, « worker_restart ») ; puis le\n  conteneur a été repris et redémarré (démarrage 05:22:53 UTC) :"
+ },
+ {
+  "ancien": "Durée de la course jusqu'au dernier appel : ≈ 1 h 43.",
+  "nouveau": "Durée de la course jusqu'au dernier appel : ≈ 1 h 42 (de ≈ 02:03 à 03:45:18 UTC ; audit A9 de la seconde, réserve R7 ; « ≈ 1 h 43 »\n  au rapport de la fille)."
+ },
+ {
+  "ancien": "620 appels en ≈ 1 h 43",
+  "nouveau": "620 appels en ≈ 1 h 42"
+ },
+ {
+  "ancien": "le registre de dépense de la sortie n'a pas été lu.",
+  "nouveau": "le registre de dépense de la sortie n'a pas été lu ; au plus ≈ 50,30 USD si un appel était en vol à la mort (relais à un fil,\n  pire cas réservé ≤ 1,8 USD ; audit A9 de la seconde, réserve R4) : seule la facturation du fournisseur le dirait."
+ },
+ {
+  "ancien": "cette fois par la limite d'usage de la session\net non par son inactivité : la garde de la v2 (section 8, « Seconde course (v2) », (1)) tenait la session active, elle ne pouvait\nrien contre la coupure de la session elle-même.",
+  "nouveau": "cette fois sous la limite d'usage du compte\net non par son inactivité (lien entre la limite et le redémarrage de 03:46 : vraisemblable, non prouvé ; audit A9 de la seconde,\nréserve R3) : la garde de la v2 (section 8, « Seconde course (v2) », (1)) tenait la session active, elle ne pouvait\nrien contre le blocage de la session ni contre le redémarrage de son processus de travail, qui l'a arrêtée elle aussi."
+ },
+ {
+  "ancien": "son audit A9 ne lit que ce que l'audit A9 de la\npremière a lu (journaux, registre de dépense, manifeste de départ), aucune réponse ni carte.",
+  "nouveau": "son audit A9 (rendu, ci-dessus) n'a lu aucun fichier\nde l'état scellé (noms et empreintes seulement), aucune réponse ni carte."
+ },
+ {
+  "ancien": "4. **Marqueurs (aucun ne reste)** : v1, le commit de la v3.1, à cinq endroits (rempli au scellement de la v1) ;",
+  "nouveau": "4. **Marqueurs (aucun ne reste)** : v1, le commit de la v3.1, à cinq endroits (rempli au scellement de la v1) ; **v3, deux\n   marqueurs** (annexe B) : COMMIT_LANCEUR_DURABLE, rempli au scellement de la v3, et AUDIT_A9_SECONDE, **resté dans la v3\n   scellée**, qui la faisait refuser par le lanceur (contre-lecture complète du texte v3, B1) ; **v4** : AUDIT_A9_SECONDE rempli\n   par l'audit rendu (`a0577b8b…`, section 0.5 bis) et tout marqueur neuf rempli ; avant l'écriture du compagnon, le motif du\n   lanceur (`demonstrations/attaque_goodhart_v3.py:97`) est cherché par programme dans le fichier final, et ce fichier, sous son nom\n   scellé, avec un compagnon simulé hors du dépôt, est lu par `lire_preenregistrement` du lanceur gelé : aucun jeton et accepté,\n   sinon pas de scellement ;"
+ },
+ {
+  "ancien": "## 14. Contre-lecture (R2) — n° 1 à n° 3 faites ; n° 4 à faire (v3)",
+  "nouveau": "## 14. Contre-lecture (R2) — n° 1 à n° 4 et contre-lecture complète du texte v3 faites"
+ },
+ {
+  "ancien": "**N° 4, à faire (v3), courte, sur le delta**, par un sous-agent neuf",
+  "nouveau": "**N° 4, rendue (v3)** : `docs/notes/ideation-organisme-v1/a1-v3-troisieme-course/contre-lecture-n4-v1/contre-lecture-n4-texte-v3-v1.md`\ndu dépôt privé (sha256 `b524b41c…` ; « scellable après couples », aucun bloquant ; 9 couples, `462a8ea2…`, appliqués au brouillon 3),\nfaite sur le **brouillon 2** (`86ad379b…`) et le **lanceur durable v2** (consigne `consigne-contre-lecture-n4-texte-v3-v1.md`,\n`d1322529…`, qui ne donnait pas l'audit A9 de la seconde course) ; les 10 couples du rédacteur appliqués ensuite au brouillon 3\n(`couples-brouillon3-v3-v1.json`, `2e0f742a…` : lanceur durable v3, C1 à C3) n'ont pas été contre-lus avant le scellement de la v3 ;\nils l'ont été, avec le texte entier, par la **contre-lecture complète du texte v3**\n(`contre-lecture-complete-v1/contre-lecture-complete-texte-v3-v1.md`, lecteur neuf, 5 novembre 2026 ; « lançable après couples,\nversion v4 du texte » ; B1 : marqueur de l'audit A9 resté), le lanceur v3 par une contre-lecture complète parallèle confrontée au\ntexte (`consigne-contre-lecture-complete-lanceur-v3-v1.md`). Sa consigne prévue (rappel) : à faire, courte, sur le delta, par un\nsous-agent neuf"
+ },
+ {
+  "ancien": "le lanceur durable v3 (`src/controle_ia/hote_durable_a1_v3_v3.py`, `scripts/amorce_hote_durable_a1_v3_v3.sh` et `tests/test_hote_durable_a1_v3_v3.py` du dépôt privé, le rapport `rapport-redaction-v3-v2.md` et son additif 1, et la v1 et la sonde v10 dont il reprend le code)",
+  "nouveau": "le lanceur durable (au brouillon 2 : la v2, `src/controle_ia/hote_durable_a1_v3_v2.py`, `scripts/amorce_hote_durable_a1_v3_v2.sh` et `tests/test_hote_durable_a1_v3_v2.py` du dépôt privé, son rapport `rapport-redaction-v3-v2.md`, et la v1 et la sonde v10 dont il reprend le code ; la v3 vient après le n° 4)"
+ },
+ {
+  "ancien": "Précaution, hors de cette liste (comme « Argon seul », point (4)) : avant la location, Lazar confirme que le crédit prépayé du compte de facturation de la clé couvre au moins 400 USD (plafond de GO-2026-11-04-06) ou qu'une recharge automatique d'au moins ce montant est active, et la fille l'écrit au journal de la location.",
+  "nouveau": "Précaution, hors de cette liste (comme « Argon seul », point (4)) : avant la location, Lazar confirme que le crédit prépayé du compte de facturation de la clé couvre au moins 400 USD (plafond de GO-2026-11-04-06) ou qu'une recharge automatique d'au moins ce montant est active, et la fille l'écrit au journal de la location. Le 5 novembre (R-1543), pour aller vite, cette précaution a été abandonnée (« risque accepté », solde non relevé, montant de la recharge non dit), et l'ordre de la fille (`ordre-fille-a1-v3-troisieme-course-v1.md`) ne la porte pas : l'ordre de la course la porte, ou le mot de Lazar qui l'abandonne est écrit au journal de la location avec son prix — un solde épuisé en cours de course perd, sans résultat, tout ce qui a été dépensé avant le premier 402 (jusqu'à ≈ 131 USD à l'attendu haut du code, ≈ 190 USD au maximum du devis), plus la machine pendant l'attente (≈ 5 USD)."
+ },
+ {
+  "ancien": "plus, rapporté avec les deux premières courses ; une mort brutale perd les réponses en mémoire, comme en v2 (point (3)).",
+  "nouveau": "plus, rapporté avec les deux premières courses ; une mort brutale perd les réponses en mémoire, comme en v2 (point (3)).\n- **Disparition de la machine** (hôte de Vast perdu, instance détruite ou reprise par un tiers) : rien n'est versé — manifeste,\n  registre de dépense, journaux de l'hôte, du relais et de la garde ne vivent que sur son disque, à la différence de la v2, où le\n  disque survivait au conteneur ; la dépense d'Argon n'est alors connue que par la facturation du fournisseur (au plus 400 USD :\n  garde du registre des commandes), le coût de la machine par celle de Vast (au plus 32,57 USD) ; l'audit A9 lit la branche du signe\n  de vie, le journal de la location, l'inventaire de Vast et ces deux facturations ; c'est un arrêt d'infrastructure de plus, sans\n  lecture, rapporté avec les deux premières courses (déclaré, R4)."
+ },
+ {
+  "ancien": "poussée non vérifiée ou secret trouvé → la machine s'**arrête** sans se détruire (données gardées\n  sur son disque) et la session qui reprend décide (inventaire de la routine R14, R10) ;",
+  "nouveau": "poussée non vérifiée ou secret trouvé → la machine s'**arrête** sans se détruire (données gardées\n  sur son disque) et la session qui reprend décide (inventaire de la routine R14, R10) — aucune voie de récupération de ces données\n  n'est éprouvée (le point d'entrée du conteneur est l'amorce, sans coquille ; `vastai copy` non éprouvé, R-1549 ; le jeton GitHub ne\n  peut pas être changé sur la machine, R-1551) : la reprise de C3 ne sauve qu'une panne passagère de la poussée suivie d'une relance ;\n  une poussée qui échoue pour de bon (jeton échu ou révoqué, dépôt refusé) ou un secret trouvé peuvent perdre la sortie et la\n  dépense de la course (déclaré, R4) ;"
+ },
+ {
+  "ancien": "lanceur durable committé sur `main` du dépôt privé (`COMMIT_PRIVE`) ;",
+  "nouveau": "lanceur durable committé sur `main` du dépôt privé (`COMMIT_PRIVE`) ; échéance du jeton GitHub passé à la machine postérieure à\n   T0 + 82 h (minuterie de destruction, plus une marge), lue sans l'afficher, sinon rien n'est loué : ce jeton ne peut pas être changé\n   sur la machine (R-1545, R-1551) et un jeton échu rend le versement final impossible ;"
+ }
+]

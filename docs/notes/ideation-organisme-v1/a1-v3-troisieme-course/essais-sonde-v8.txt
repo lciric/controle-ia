@@ -1,0 +1,55 @@
+........................................................................ [ 10%]
+......................................F................................. [ 20%]
+........................................................................ [ 30%]
+........................................................................ [ 40%]
+........................................................................ [ 50%]
+........................................................................ [ 60%]
+........................................................................ [ 70%]
+........................................................................ [ 80%]
+........................................................................ [ 90%]
+................................................F..................      [100%]
+=================================== FAILURES ===================================
+____________________ test_longueurs_de_la_commande_ecrites _____________________
+
+tmp_path = PosixPath('/tmp/pytest-of-root/pytest-562/test_longueurs_de_la_commande_0')
+
+    def test_longueurs_de_la_commande_ecrites(tmp_path):
+        assert louer_avec_reponse(tmp_path, '{"success": true, "new_contract": 6}') == 0
+        j = (tmp_path / "journal-sonde-v8.log").read_text()
+        c = s.corps("a" * 40, dict(OFFRE, id=12, dph_total=0.09), 1200, JETON, 1)
+        lg = s.longueurs_de_creation(12, c)
+>       assert f"--args {lg['args_c']} caractères" in j and "commande entière" in j and lg["args_c"] == len(c["script"])
+E       assert ('--args 8251 caractères' in "2026-11-04T23:50:11Z sonde v8 : GO GO-2026-11-04-09 accepté par la garde de main, 35 USD\n2026-11-04T23:50:11Z sonde ...prend lance `sonde_hote_durable_a1_v3_v8.py controler` (étiquette contrôlée, destruction par l'identifiant avec -y).\n")
+
+tests/test_sonde_hote_durable_a1_v3_v8.py:1009: AssertionError
+----------------------------- Captured stdout call -----------------------------
+2026-11-04T23:50:11Z sonde v8 : GO GO-2026-11-04-09 accepté par la garde de main, 35 USD
+2026-11-04T23:50:11Z sonde v8 : essai 1/2 : offre 12 à 0.09 USD/h ; dépense au plus 0.1050 USD ≤ 0.5 ; longueurs : --args 8251, --env 280, commande 8677
+2026-11-04T23:50:11Z sonde v8 : réponse de création : contrat 6 (essai 1)
+2026-11-04T23:50:11Z sonde v8 créée : identifiant 6, étiquette sonde-a1-v3-v8 ; T0 2026-11-04T23:50:11Z ; signe de vie attendu avant 2026-11-05T00:20:11Z ; échéance finale 2026-11-05T00:45:11Z
+2026-11-04T23:50:11Z LIGNE POUR registres/etat.md : - Sonde v8 de l'hôte durable d'A1-v3 (GO-2026-11-04-09) : instance **6**, étiquette `sonde-a1-v3-v8`, créée 2026-11-04T23:50:11Z, échéance 2026-11-05T00:45:11Z ; contrôles à 2026-11-05T00:30:11Z et 2026-11-05T01:00:11Z ; toute session qui reprend lance `sonde_hote_durable_a1_v3_v8.py controler` (étiquette contrôlée, destruction par l'identifiant avec -y).
+_ test_artefact_go_invalide[| GO-2026-10-05-01 | 2026-11-05 | calcul | phase 0 | 150 USD | 2026-11-14 | Lazar | message |\n-hors de sa p\xe9riode] _
+
+racine = PosixPath('/tmp/pytest-of-root/pytest-562/test_artefact_go_invalide___GO1')
+contenu = '| GO-2026-10-05-01 | 2026-11-05 | calcul | phase 0 | 150 USD | 2026-11-14 | Lazar | message |\n'
+motif = 'hors de sa période'
+
+    @pytest.mark.parametrize("contenu,motif", [
+        ("", "absent de registres"),
+        (ligne(GO_OK, AUJ - timedelta(days=30), AUJ - timedelta(days=1)), "hors de sa période"),
+        (ligne(GO_OK, AUJ + timedelta(days=1), AUJ + timedelta(days=10)), "hors de sa période"),
+        (ligne(GO_OK, AUJ, AUJ + timedelta(days=1), typ="publication"), "type"),
+        (ligne(GO_OK, AUJ, AUJ + timedelta(days=1), par="Claude"), "Lazar"),
+        (f"| {GO_OK} | {AUJ} | calcul | phase 0 |\n", "mal formé"),
+        (f"| {GO_OK} | hier | calcul | p | 1 | demain | Lazar | m |\n", "dates"),
+        (ligne(GO_OK, AUJ, AUJ) * 2, "double"),
+    ])
+    def test_artefact_go_invalide(racine, contenu, motif):
+        registre(racine, contenu)
+        code, err = lancer(racine, f"GO_ID={GO_OK} vastai create instance 1")
+>       assert code == 2 and motif in err, err
+E       AssertionError: 
+E       assert (0 == 2)
+
+tests/test_garde_calcul.py:86: AssertionError
+2 failed, 713 passed in 1229.48s (0:20:29)

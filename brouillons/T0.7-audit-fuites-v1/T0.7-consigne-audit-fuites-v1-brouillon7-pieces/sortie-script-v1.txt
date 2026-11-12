@@ -1,0 +1,28 @@
+script du brouillon 4 : sha256 7539b4779e9def222791fafa5165915e00ab85a7bca12693c85101ccd41dd037 (égal à l'attendu et au compagnon)
+essai 1a cellules, `\|` échappé : sain, conforme
+essai 1b cellules, ligne mal formée : arrêt attendu obtenu (ligne de tableau mal formée : '| `K` | x | c | d')
+essai 2a clé unique : sain, conforme
+essai 2b clé absente : arrêt attendu obtenu (clé K trouvée 0 fois (une attendue))
+essai 2c clé en double : arrêt attendu obtenu (clé K trouvée 2 fois (une attendue))
+essai 3a appliquer puis défaire : sain, conforme
+essai 3b ancien absent : arrêt attendu obtenu (couple 1 : « ancien » présent 0 fois (une attendue) : 'z')
+essai 3c ancien en double : arrêt attendu obtenu (couple 1 : « ancien » présent 2 fois (une attendue) : 'b')
+essai 3d nouveau ambigu au retour : arrêt attendu obtenu (couple 1 : « nouveau » présent 2 fois au moment de le défaire : 'a')
+essai 4 couples calculés : sain, conforme
+essai 5a passage en lignes : sain, conforme
+essai 5b passage absent : arrêt attendu obtenu (passage introuvable ou multiple (0 fois) : 'zz')
+essai 5c passage double : arrêt attendu obtenu (passage introuvable ou multiple (2 fois) : 'ab')
+essai 5d passage partiel : arrêt attendu obtenu (passage présent, mais pas en lignes entières : 'ab')
+essai 6a découpeur sain : sain, conforme
+essai 6b découpeur, octet changé : arrêt attendu obtenu (découpeur c.json : e7639c15b1995c6b9204a2b1e98e0a8ea8111b2e3bb5f89f2d82bc9594d9dcb2 ≠ 4921db8186ced81a772d1db74995cbb3295044d4cacb628225722c27456b5598)
+essai 6c découpeur, compagnon faux : arrêt attendu obtenu (compagnon de t.json dans le commit : '0000000000000000000000000000000000000000000000000000000000000000 t.json' ≠ 1ce819da676e4fbff0c55a2f9cb9ffb3afb835794950250f6690c11d22b88c18  t.json)
+essai 6d découpeur, commit ou fichier absent : arrêt attendu obtenu (`git show c0:D/t.json` : absent (jouet))
+essai 7 écriture sur un fichier différent : arrêt attendu obtenu (brouillons/T0.7-audit-fuites-v1/T0.7-consigne-audit-fuites-v1-brouillon4-pieces/appliquer_couples_brouillon4_v1.py existe avec un autre contenu : rien n'est écrasé (R12))
+essais : 19 conformes, 0 en échec
+essai B7-1 couples sans marqueur : sain, conforme
+entrée brouillons/T0.7-audit-fuites-v1/T0.7-consigne-audit-fuites-v1-brouillon6.md : sha256 71118f666253c99abeb3bf60a162e5aba8fdcb5e5788c2265ae444be7a30fcac (égale à l'attendu et au compagnon)
+marqueurs au brouillon 6 : aucun
+couples : 3 appliqués, chacun une fois ; défaits du dernier au premier : brouillon 6 à l'octet
+marqueurs restants : aucun
+brouillon 7 : brouillons/T0.7-audit-fuites-v1/T0.7-consigne-audit-fuites-v1-brouillon7.md — écrit — sha256 43102e80332cd138305604b7cffb2dc77a1584a7ad0b48584c7506ea377b3a5d
+couples : brouillons/T0.7-audit-fuites-v1/T0.7-consigne-audit-fuites-v1-brouillon7-pieces/couples-brouillon6-vers-brouillon7-v1.json — écrit — sha256 b533a597f7c7b9496e553bf1cf524cbdc192a4b4ee73f242e23426626d1b3690

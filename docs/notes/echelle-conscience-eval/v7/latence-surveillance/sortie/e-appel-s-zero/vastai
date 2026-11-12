@@ -1,0 +1,6 @@
+#!/usr/bin/env bash
+case "$1 $2" in
+  "show instance") [ -s "$ARRETS_FAUX" ] || sleep "$LENTEUR_FAUSSE"; echo "{\"actual_status\": \"$(cat "$ETAT_FAUX")\", \"cur_state\": \"$(cat "$ETAT_FAUX")\", \"dph_total\": 2.4, \"status_msg\": \"\"}" ;;
+  "logs "*) [ -s "$ARRETS_FAUX" ] || sleep "$LENTEUR_FAUSSE"; cat "$JOURNAL_FAUX" ;;
+  "stop instance") date +%s.%N >> "$ARRETS_FAUX.heure"; echo "$3" >> "$ARRETS_FAUX"; [ -n "$ARRET_EFFECTIF" ] && echo stopped > "$ETAT_FAUX"; echo "arrêt demandé" ;;
+esac

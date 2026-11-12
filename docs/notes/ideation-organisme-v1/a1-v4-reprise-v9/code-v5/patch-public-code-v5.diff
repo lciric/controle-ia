@@ -1,0 +1,2355 @@
+diff --git a/orchestrator/demonstrations/attaque_goodhart_v5.py b/orchestrator/demonstrations/attaque_goodhart_v5.py
+new file mode 100644
+index 0000000..e57295e
+--- /dev/null
++++ b/orchestrator/demonstrations/attaque_goodhart_v5.py
+@@ -0,0 +1,393 @@
++"""Attaque de Goodhart contre le juge statistique, v5 (mondes **W2 et W2 gradué** contre le juge v9) : lanceur (fichier neuf, R12).
++Cœur : `pole/attaque_goodhart_v5.py`, qui importe la v4. Ce lanceur charge le lanceur v4 (`demonstrations/attaque_goodhart_v4.py`,
++tel quel, instance propre), qui charge les lanceurs v3 et v2, pour tout ce qui ne change pas : lecture des lignes de fournisseur,
++règle « relais perdu », GO, réglages de la configuration, substitutions des commandes, commit, chargement d'`ideation_v8`.
++
++Ce qui change par rapport au lanceur v4 :
++- **texte** : `prereg/preenregistrement-attaque-goodhart-v5-v<N>.md` seulement (mode course) ; un texte de la v4 (ou antérieur)
++  est refusé par son nom, et un texte au nom de la v5 dont le bloc `plan-gele` est celui de la v4 (sans `go_machine` ni `dose_w2g`,
++  `juge_ancien: W1=v7, W2=v8`, mondes W1) est refusé par ses clés ou ses valeurs ; réciproquement, le lanceur v4 refuse un texte
++  de la v5 (nom et clés) ;
++- **bloc `plan-gele`** : lignes neuves **`go_machine`** (GO de la machine de l'hôte durable, forme GO-AAAA-MM-JJ-NN, rapporté au
++  manifeste ; vérifié contre le registre par le lanceur durable) et **`dose_w2g`** (dose λ de W2g, lue, vérifiée par
++  `attaque_goodhart_v5.verifier_plan` : réel dans ]0 ; 1] de la grille gelée de l'épreuve hors ligne) ; valeur fixe
++  `juge_ancien: W2=v8, W2g=v8` ; mondes « W2 et W2g » ; devis de la v5 (W2g pris comme W2) pour le plafond et la durée ;
++- **code gelé** : `FICHIERS_GELES` = celui du lanceur v4, plus les deux fichiers v5 (fermeture mesurée : essai `Fermeture`) ;
++- **étape de dépense** : `attaque_goodhart_v5/<nom>` (jamais celle de la v3 ni de la v4) ;
++- **à blanc** : Argon seul, 1 fil, 24 cartes par monde, W2 et W2g à la dose 0,5, proposeur « sortant_v9 » ; `--dose-w2g`.
++
++Codes : 0 course complète (le code ne décide rien) ; 2 refus avant tout appel et toute écriture ; 3 arrêt (plafond, part, durée :
++trace partielle écrite et scellée, aucun taux lu).
++
++Usage : python -I -B demonstrations/attaque_goodhart_v5.py DOSSIER (--a-blanc --graine G [options] |
++        --preenregistrement P --configuration CONF --moteur reel --confirmer-moteur-reel --registre-go R --go ID [--verifier-seulement])
++"""
++
++import argparse
++import datetime
++import importlib.util
++import json
++import os
++import platform
++import re
++import sys
++import tempfile
++import time
++
++ICI = os.path.dirname(os.path.abspath(__file__))
++RACINE = os.path.dirname(ICI)
++sys.path.insert(0, RACINE)
++
++import numpy as np  # noqa: E402
++
++from pole import attaque_goodhart_v5 as a5  # noqa: E402
++from pole.outils import ecrire_json_scelle, manifeste, sha256_fichier, verifier_scelle  # noqa: E402
++
++
++def _charger_lanceur_v4():
++    spec = importlib.util.spec_from_file_location("attaque_goodhart_v4_lanceur_pour_v5", os.path.join(ICI, "attaque_goodhart_v4.py"))
++    m = importlib.util.module_from_spec(spec)
++    spec.loader.exec_module(m)  # instance propre, inchangée (R12)
++    return m
++
++
++l4 = _charger_lanceur_v4()
++l3 = l4.l3
++l2 = l4.l2
++a4 = a5.a4
++a3 = a5.a3
++ag = a5.ag
++ETAPE = "attaque_goodhart_v5"
++
++
++def etape_du_fournisseur(nom):
++    """Étape de dépense propre à un fournisseur de la v5 : `attaque_goodhart_v5/<nom>` (jamais celle de la v3 ni de la v4)."""
++    return f"{ETAPE}/{nom}"
++
++
++SORTIE = "attaque-goodhart-v5.json"
++DOSSIER_PREREG = os.path.join(RACINE, "prereg")
++NOM_PREREG = re.compile(r"^preenregistrement-attaque-goodhart-v5-v[1-9][0-9]*\.md$")
++DEBUT_EMPREINTES, FIN_EMPREINTES, DEBUT_PLAN, FIN_PLAN = l2.DEBUT_EMPREINTES, l2.FIN_EMPREINTES, l2.DEBUT_PLAN, l2.FIN_PLAN
++MARQUEUR, SHA, GRILLE, REGISTRE_COURSE = l3.MARQUEUR, l2.SHA, l2.GRILLE, l2.REGISTRE_COURSE
++PreenregistrementRefuse = l2.PreenregistrementRefuse
++GO = re.compile(r"^GO-\d{4}-\d{2}-\d{2}-\d{2}$")
++JUGE_ANCIEN_TEXTE = ", ".join(f"{w}={n}" for w, n in sorted(a5.JUGE_ANCIEN.items()))
++PLAN_FIXE = {"tentatives": str(ag.N_MAX), "rejeux_v9": str(a5.REJEUX["v9"]), "rejeux_ancien": str(a5.REJEUX["ancien"]),
++             "rejeux_audit": str(a5.REJEUX_AUDIT), "juge_ancien": JUGE_ANCIEN_TEXTE, "fournisseurs_en_parallele": "oui",
++             "processus_rejeux": "2"}
++CLES_PLAN = {"mode", "grille", "mondes", "fournisseurs", "essais_avant_repli", "relais_perdu_h", "plafond_usd", "duree_max_h",
++             "decision_ecart", "configuration_sha256", "go", "go_machine", "dose_w2g"}
++FICHIERS_GELES = tuple(sorted(set(l4.FICHIERS_GELES) | {"demonstrations/attaque_goodhart_v5.py", "pole/attaque_goodhart_v5.py"}))
++OPTIONS_DE_PLAN = ("cartes", "mondes", "dose_w2g", "fournisseurs", "fils", "panne", "code_panne", "muet", "coupure_relais_s", "relais_perdu_h",
++                   "essais_avant_repli", "n_max", "rejeux_v9", "rejeux_ancien", "rejeux_audit", "plafond_usd", "duree_max_h", "processus",
++                   "sequentiel", "proposeur", "sans_echo", "cout_simule_usd")
++A_BLANC = {"cartes": 24, "mondes": "W2,W2g", "dose_w2g": 0.5, "fournisseurs": "argon", "fils": "1", "panne": None, "code_panne": None,
++           "muet": False, "coupure_relais_s": None, "relais_perdu_h": "aucun", "essais_avant_repli": 3, "n_max": ag.N_MAX,
++           "rejeux_v9": a5.REJEUX["v9"], "rejeux_ancien": a5.REJEUX["ancien"], "rejeux_audit": a5.REJEUX_AUDIT, "plafond_usd": 1e9,
++           "duree_max_h": 72.0, "processus": 2, "sequentiel": False, "proposeur": "sortant_v9", "sans_echo": False, "cout_simule_usd": 0.0}
++
++
++# --- préenregistrement : bloc plan-gele v5 ----------------------------------------------------------------------------------
++def lire_plan(texte):
++    """Bloc `plan-gele` v5 (mode course) : rend le plan ou lève `PreenregistrementRefuse`. Fournisseurs lus du texte (lignes
++    `fournisseur_<nom>` de la v3) ; `go_machine` et `dose_w2g` exigés ; dose vérifiée par le cœur v5 (grille gelée, 0 refusé) ;
++    devis de la v5 : plafond ≥ maximum, durée ≥ durée attendue haute."""
++    lignes = {}
++    for l in l2._bloc(texte, DEBUT_PLAN, FIN_PLAN, "plan-gele").splitlines():
++        m = re.match(r"^\s*([a-z0-9_]+)\s*:\s*(.+?)\s*$", l)
++        if m:
++            if m.group(1) in lignes:
++                raise PreenregistrementRefuse(f"plan-gele : clé {m.group(1)!r} en double")
++            lignes[m.group(1)] = m.group(2)
++    if lignes.get("mode") not in a5.MODES:
++        raise PreenregistrementRefuse(f"plan-gele : mode = course (la v5 n'a pas de mode essai), reçu {lignes.get('mode')!r}")
++    noms = [n.strip() for n in lignes.get("fournisseurs", "").split(",") if n.strip()]
++    lignes_f = {l3.LIGNE_FOURNISSEUR.match(k).group(1): v for k, v in lignes.items() if l3.LIGNE_FOURNISSEUR.match(k)}
++    attendues = CLES_PLAN | set(PLAN_FIXE) | {f"fournisseur_{n}" for n in noms}
++    if set(lignes) != attendues:
++        raise PreenregistrementRefuse(f"plan-gele : clés attendues {sorted(attendues)}, trouvées {sorted(lignes)}")
++    if not noms or len(set(noms)) != len(noms) or set(lignes_f) != set(noms):
++        raise PreenregistrementRefuse(f"plan-gele : fournisseurs {noms!r} : liste non vide sans doublon, une ligne fournisseur_<nom> chacun")
++    for k, v in PLAN_FIXE.items():
++        if lignes[k] != v:
++            raise PreenregistrementRefuse(f"plan-gele : {k} = {lignes[k]!r}, le code gelé dit {v!r}")
++    try:
++        fournisseurs = a3.verifier_fournisseurs([l3.lire_fournisseur(n, lignes_f[n]) for n in noms])
++    except a3.AttaqueRefusee as e:
++        raise PreenregistrementRefuse(f"plan-gele : {e}") from None
++    mondes = [m.strip() for m in re.split(r",| et ", lignes["mondes"]) if m.strip()]
++    if not mondes or len(set(mondes)) != len(mondes) or not set(mondes) <= set(a5.MONDES):
++        raise PreenregistrementRefuse(f"plan-gele : mondes {lignes['mondes']!r} (W2, W2g ou « W2 et W2g »)")
++    mondes = [w for w in a5.MONDES if w in mondes]
++    essais = l3._entier(lignes["essais_avant_repli"], "essais_avant_repli")
++    plafond, duree = l3._nombre(lignes["plafond_usd"], "plafond_usd"), l3._nombre(lignes["duree_max_h"], "duree_max_h")
++    dose = l3._nombre(lignes["dose_w2g"], "dose_w2g")
++    g = GRILLE.match(lignes["grille"])
++    if not g:
++        raise PreenregistrementRefuse(f"plan-gele : grille {lignes['grille']!r} (« C cartes par monde, U unités par case »)")
++    if not lignes["decision_ecart"].strip():
++        raise PreenregistrementRefuse("plan-gele : decision_ecart vide")
++    plan = {"mode": "course", "mondes": mondes, "fournisseurs": fournisseurs, "n_max": ag.N_MAX, "essais_avant_repli": essais,
++            "relais_perdu_h": lignes["relais_perdu_h"], "relais_perdu_s": l3.lire_relais_perdu(lignes["relais_perdu_h"]),
++            "plafond_usd": plafond, "duree_max_s": duree * 3600.0, "parallele": True, "configuration_sha256": lignes["configuration_sha256"],
++            "go": lignes["go"], "go_machine": lignes["go_machine"], "dose_w2g": dose, "cartes": int(g.group(1)),
++            "unites_par_case": int(g.group(2)), "rejeux": dict(a5.REJEUX), "rejeux_audit": a5.REJEUX_AUDIT, "processus": 2,
++            "decision_ecart": lignes["decision_ecart"]}
++    try:
++        a5.verifier_plan(plan)
++        d = a5.devis(plan["cartes"], mondes, fournisseurs)
++    except a3.AttaqueRefusee as e:
++        raise PreenregistrementRefuse(f"plan-gele : {e}") from None
++    if not plafond >= d["total"]["usd_max"]:
++        raise PreenregistrementRefuse(f"plan-gele : plafond {plafond} USD sous le maximum du devis ({d['total']['usd_max']} USD ; R20)")
++    if not duree >= d["total"]["duree_attendue_haute_h"]:
++        raise PreenregistrementRefuse(f"plan-gele : durée {duree} h sous la durée attendue haute ({d['total']['duree_attendue_haute_h']:.2f} h : "
++                                      "appels du fournisseur le plus long à ses fils, évaluations en course, rejeux sur deux cœurs)")
++    if not SHA.match(lignes["configuration_sha256"]):
++        raise PreenregistrementRefuse("plan-gele : configuration_sha256 = 64 caractères hexadécimaux")
++    if not GO.match(lignes["go"]):
++        raise PreenregistrementRefuse("plan-gele : go = GO-AAAA-MM-JJ-NN")
++    if not GO.match(lignes["go_machine"]):
++        raise PreenregistrementRefuse("plan-gele : go_machine = GO-AAAA-MM-JJ-NN (GO de la machine de l'hôte durable)")
++    if lignes["go_machine"] == lignes["go"]:
++        raise PreenregistrementRefuse("plan-gele : go_machine égal à go (la machine et les appels ont chacun leur GO)")
++    plan["devis"] = d
++    return plan
++
++
++def lire_preenregistrement(chemin):
++    """Mode réel : `prereg/preenregistrement-attaque-goodhart-v5-v<N>.md`, scellé, sans marqueur, gelant exactement le code présent ;
++    rend (entropie, empreinte, empreintes gelées, plan)."""
++    reel, dossier = os.path.realpath(chemin), os.path.realpath(DOSSIER_PREREG)
++    if os.path.dirname(reel) != dossier or not NOM_PREREG.match(os.path.basename(reel)):
++        raise PreenregistrementRefuse("mode réel : le texte est prereg/preenregistrement-attaque-goodhart-v5-v<N>.md, "
++                                      f"pas {chemin} (la graine est son empreinte)")
++    if not os.path.isfile(reel):
++        raise PreenregistrementRefuse(f"préenregistrement introuvable : {chemin}")
++    if not verifier_scelle(reel):
++        raise PreenregistrementRefuse(f"préenregistrement non scellé (compagnon .sha256 absent ou non conforme) : {chemin}")
++    with open(reel, encoding="utf-8") as f:
++        texte = f.read()
++    restants = sorted(set(MARQUEUR.findall(texte)))
++    if restants:
++        raise PreenregistrementRefuse(f"marqueur(s) non rempli(s) : {restants} (à lever avant scellement)")
++    gelees = re.findall(r"^([0-9a-f]{64})  (\S+)$", l2._bloc(texte, DEBUT_EMPREINTES, FIN_EMPREINTES, "empreintes-du-code"), re.M)
++    noms = [r for _, r in gelees]
++    if sorted(noms) != sorted(FICHIERS_GELES) or len(set(noms)) != len(noms):
++        raise PreenregistrementRefuse(f"code gelé ≠ fermeture du chemin réel : manquants {sorted(set(FICHIERS_GELES) - set(noms))}, "
++                                      f"en trop {sorted(set(noms) - set(FICHIERS_GELES))}")
++    ecarts = []
++    for attendue, relatif in gelees:
++        p = os.path.join(RACINE, relatif)
++        presente = sha256_fichier(p) if os.path.isfile(p) else "absent"
++        if presente != attendue:
++            ecarts.append(f"{relatif} : gelé {attendue[:12]}…, présent {presente[:12]}…")
++    if ecarts:
++        raise PreenregistrementRefuse("code différent du code gelé : " + " ; ".join(ecarts))
++    plan = lire_plan(texte)
++    empreinte = sha256_fichier(reel)
++    return ag.verifier_entropie(int(empreinte, 16), decisif=True), empreinte, dict((r, h) for h, r in gelees), plan
++
++
++# --- chemin réel ----------------------------------------------------------------------------------------------------------------
++def proposeurs_reels(conf, plan, base_sessions, sortie):
++    """`proposeurs_reels` du lanceur v4, avec l'étape de dépense de la v5 (`attaque_goodhart_v5/<nom>`) et la consigne la plus
++    longue mesurée sur W2 et sur W2g (à la dose du plan) ; rend (proposeurs, accusés, informations du manifeste)."""
++    from pole.adaptateurs_v56 import AdaptateurCommandeExterneV56
++    from pole.relais import noms_de_cle_presents
++    presents = noms_de_cle_presents(os.environ)
++    if presents:
++        raise ag.AttaqueRefusee(f"variables de clé dans l'environnement de l'orchestrateur ({', '.join(presents)}) : les relais tiennent les clés")
++    fournisseurs = plan["fournisseurs"]
++    budget, modeles = l3.reglages_de_configuration(conf, fournisseurs)
++    conf, substitutions = l2.substituer_commandes(conf, os.path.join(os.path.abspath(sortie), REGISTRE_COURSE), plan["plafond_usd"])
++    v8 = l2.charger_ideation_v8()
++    adaptateurs, portes = v8.adaptateurs_reels_v56(conf, sortie, base_sessions)
++    manquants = [f["nom"] for f in fournisseurs if f["nom"] not in adaptateurs]
++    if manquants:
++        raise ag.AttaqueRefusee(f"configuration : adaptateurs manquants pour {manquants}")
++    for f in fournisseurs:
++        if not isinstance(adaptateurs[f["nom"]], AdaptateurCommandeExterneV56):
++            raise ag.AttaqueRefusee(f"fournisseur « {f['nom']} » : commande externe v56 exigée, trouvé {type(adaptateurs[f['nom']]).__name__}")
++    part = plan["plafond_usd"] / len(fournisseurs)
++    accuses = {f["nom"]: portes[f["nom"]].transmettre(etape_du_fournisseur(f["nom"]), part) for f in fournisseurs}
++    for f in fournisseurs:
++        if accuses[f["nom"]].get("etape") != etape_du_fournisseur(f["nom"]) or abs(accuses[f["nom"]].get("plafond_usd", -1) - part) > 0.01:
++            raise ag.AttaqueRefusee(f"porte de « {f['nom']} » : accusé {accuses[f['nom']]!r}, attendu étape "
++                                    f"{etape_du_fournisseur(f['nom'])!r} et part {part:.2f} USD")
++    etapes = {f["nom"]: {"etape": etape_du_fournisseur(f["nom"]), "part_usd": part, "variables": ["ETAPE_POLE", "PLAFOND_ETAPE_USD"]}
++              for f in fournisseurs}
++    proposeurs = {}
++    for f in fournisseurs:
++        d = os.path.join(base_sessions, f["nom"])
++        os.makedirs(d, exist_ok=True)
++        proposeurs[f["nom"]] = a5.ProposeurAdaptateur(adaptateurs[f["nom"]], d, budget, (f["modele"],) + ((f["repli"],) if f.get("repli") else ()))
++    cartes = [a5.carte(1, 0, w, plan.get("dose_w2g") if w == "W2g" else None) for w in plan["mondes"]]
++    longue = max((a5.consigne(c, [], cond, 1, j) for c in cartes for cond, j in a5.SUITES), key=len)
++    infos = {"budget_appel_usd": budget, "modeles_demandes": modeles, "replis_declares": {f["nom"]: f.get("repli") for f in fournisseurs},
++             "fils": {f["nom"]: f["fils"] for f in fournisseurs}, "ports": {f["nom"]: f["port"] for f in fournisseurs},
++             "role_pole": ag.ROLE, "part_par_relais_usd": part, "etapes_de_depense": etapes,
++             "substitutions_dans_les_commandes": substitutions,
++             "consigne_vierge_la_plus_longue_octets": len(longue.encode("utf-8")),
++             "pire_cas_par_appel": "tenu par chaque commande externe (PLAFOND_SESSION_USD = budget par appel)",
++             "adaptateurs": {f["nom"]: adaptateurs[f["nom"]].description() for f in fournisseurs},
++             "portes": {f["nom"]: portes[f["nom"]].description() for f in fournisseurs}}
++    return proposeurs, accuses, infos
++
++
++# --- programme --------------------------------------------------------------------------------------------------------------------
++def principal(argv=None):
++    a = argparse.ArgumentParser(description="Attaque de Goodhart contre le juge statistique (v5 : W2 et W2 gradué contre le juge v9)")
++    a.add_argument("dossier")
++    g = a.add_mutually_exclusive_group(required=True)
++    g.add_argument("--a-blanc", action="store_true", help="proposeurs scriptés, sans réseau (exploratoire)")
++    g.add_argument("--preenregistrement", help="mode réel : texte scellé (graine = son empreinte)")
++    a.add_argument("--graine", type=int)
++    a.add_argument("--configuration")
++    a.add_argument("--moteur", choices=("reel",))
++    a.add_argument("--confirmer-moteur-reel", action="store_true")
++    a.add_argument("--registre-go")
++    a.add_argument("--go")
++    a.add_argument("--verifier-seulement", action="store_true")
++    a.add_argument("--cartes", type=int)
++    a.add_argument("--mondes")
++    a.add_argument("--dose-w2g", type=float, help="à blanc : dose λ de W2g (défaut 0,5 ; en réel, lue du texte scellé)")
++    a.add_argument("--fournisseurs", help="à blanc : noms parmi les plans de référence de la v3 (défaut : argon)")
++    a.add_argument("--fils", help="à blanc : N (tous) ou nom=N,… (défaut : 1)")
++    a.add_argument("--panne", help="à blanc : MODELE:I-J ou MODELE:* ; plusieurs séparés par « ; »")
++    a.add_argument("--code-panne", type=int, help="à blanc : code de sortie simulé des pannes (3 relais, 4 budget, 5 modèle, 6 délai)")
++    a.add_argument("--muet", action="store_true", default=None)
++    a.add_argument("--coupure-relais-s", type=float)
++    a.add_argument("--relais-perdu-h")
++    a.add_argument("--essais-avant-repli", type=int)
++    a.add_argument("--n-max", type=int)
++    a.add_argument("--rejeux-v9", type=int)
++    a.add_argument("--rejeux-ancien", type=int)
++    a.add_argument("--rejeux-audit", type=int)
++    a.add_argument("--plafond-usd", type=float)
++    a.add_argument("--duree-max-h", type=float)
++    a.add_argument("--processus", type=int)
++    a.add_argument("--sequentiel", action="store_true", default=None)
++    a.add_argument("--proposeur", choices=("sortant_v9", "sortant", "melangeur"))
++    a.add_argument("--sans-echo", action="store_true", default=None)
++    a.add_argument("--cout-simule-usd", type=float)
++    args = a.parse_args(argv)
++    from pole import configuration_v56 as cfg
++    try:
++        if os.path.exists(args.dossier) and os.listdir(args.dossier):
++            raise FileExistsError(f"dossier de sortie non vide : {args.dossier} (on n'écrase jamais)")
++        donnees = {k: getattr(args, k) for k in OPTIONS_DE_PLAN if getattr(args, k) is not None}
++        if args.a_blanc:
++            if args.graine is None or args.moteur or args.configuration or args.go or args.verifier_seulement:
++                raise ag.AttaqueRefusee("à blanc : --graine G seulement (ni moteur réel, ni configuration, ni GO)")
++            r = dict(A_BLANC, **donnees)
++            mondes = [w for w in a5.MONDES if w in r["mondes"].split(",")]
++            if sorted(mondes) != sorted(set(r["mondes"].split(","))):
++                raise ag.AttaqueRefusee(f"--mondes : parmi {a5.MONDES}, reçu {r['mondes']!r}")
++            fournisseurs = l3.fournisseurs_a_blanc(r["fournisseurs"], r["fils"])
++            plan = {"mode": "course", "cartes": r["cartes"], "mondes": mondes, "fournisseurs": fournisseurs, "n_max": r["n_max"],
++                    "essais_avant_repli": r["essais_avant_repli"], "plafond_usd": r["plafond_usd"], "duree_max_s": r["duree_max_h"] * 3600.0,
++                    "processus": r["processus"], "parallele": not r["sequentiel"], "exiger_grille": False,
++                    "rejeux": {"v9": r["rejeux_v9"], "ancien": r["rejeux_ancien"]}, "rejeux_audit": r["rejeux_audit"],
++                    "relais_perdu_h": str(r["relais_perdu_h"]), "dose_w2g": r["dose_w2g"] if "W2g" in mondes else None}
++            plan["relais_perdu_s"] = l3.lire_relais_perdu(plan["relais_perdu_h"])
++            a5.verifier_plan(plan)
++            entropie = ag.verifier_entropie(args.graine, decisif=False)
++            mode, preenregistrement, conf_info = "a-blanc (exploratoire, course)", None, None
++            pannes = l3.pannes_a_blanc(r["panne"])
++        else:
++            if args.graine is not None:
++                raise ag.AttaqueRefusee("mode réel : la graine est l'empreinte du préenregistrement, --graine refusée")
++            if donnees:
++                raise ag.AttaqueRefusee(f"mode réel : le plan est lu dans le texte scellé ; options refusées : {sorted(donnees)}")
++            if args.moteur != "reel" or not args.confirmer_moteur_reel or not args.configuration:
++                raise ag.AttaqueRefusee("mode réel : --configuration, --moteur reel et --confirmer-moteur-reel exigés")
++            entropie, empreinte, gelees, plan = lire_preenregistrement(args.preenregistrement)
++            if not os.path.isfile(args.configuration):
++                raise ag.AttaqueRefusee(f"configuration introuvable : {args.configuration}")
++            sha_conf = sha256_fichier(args.configuration)
++            if sha_conf != plan["configuration_sha256"]:
++                raise ag.AttaqueRefusee(f"configuration d'empreinte {sha_conf[:12]}… : le texte scellé gèle "
++                                        f"{plan['configuration_sha256'][:12]}… (aucune autre configuration)")
++            go = l3.verifier_go(args.registre_go, args.go, plan, cfg)
++            conf = cfg.lire_configuration_v56(args.configuration)
++            base_sessions = tempfile.mkdtemp(prefix="attaque-goodhart-v5-sessions-")  # hors de la sortie
++            proposeurs, accuses, infos = proposeurs_reels(conf, plan, base_sessions, os.path.abspath(args.dossier))
++            mode = "reel (decisif, course)"
++            preenregistrement = {"chemin": os.path.relpath(os.path.realpath(args.preenregistrement), RACINE), "sha256": empreinte,
++                                 "empreintes_du_code_verifiees": gelees, "plan": {k: v for k, v in plan.items() if k != "devis"},
++                                 "devis": plan["devis"], "go": go, "go_machine": plan["go_machine"]}
++            conf_info = dict(infos, chemin=os.path.abspath(args.configuration), sha256=sha_conf,
++                             empreinte_configuration=conf.get("empreinte_configuration"), accuses_plafond=accuses)
++            if args.verifier_seulement:
++                print(json.dumps({"verification": "conforme", "ecriture": "aucune", "appel": "aucun", "plan": preenregistrement["plan"],
++                                  "configuration": conf_info}, ensure_ascii=False, indent=1, default=str))
++                return 0
++    except (FileExistsError, ag.AttaqueRefusee, cfg.ConfigurationRefusee) as e:
++        print(f"refus : {type(e).__name__} : {e}", file=sys.stderr)
++        return 2
++    except Exception as e:  # noqa: BLE001 — refus nommé (relais, porte, configuration), jamais de repli
++        print(f"refus : {type(e).__name__} : {e}", file=sys.stderr)
++        return 2
++    if args.a_blanc:
++        proposeurs = {f["nom"]: a5.ProposeurScripte(args.proposeur or A_BLANC["proposeur"], echo=not args.sans_echo,
++                                                    cout_par_appel=args.cout_simule_usd or 0.0, pannes=pannes, code_echec=args.code_panne,
++                                                    muet=bool(args.muet), coupure_relais_s=args.coupure_relais_s)
++                      for f in plan["fournisseurs"]}
++    os.makedirs(args.dossier, exist_ok=True)
++    verite_w2g = None
++    if "W2g" in plan["mondes"]:
++        verite_w2g = {"dose_w2g": plan["dose_w2g"], "definition": a5.description()["monde_w2g"], "ecart": a5.description()["ecart_w2g"],
++                      "cartes": {str(ci): a5.carte(entropie, ci, "W2g", plan["dose_w2g"])["verite"] for ci in range(plan["cartes"])}}
++    m = manifeste(attaque=a5.VERSION, mode=mode, entropie_racine=str(entropie),
++                  plan={k: v for k, v in plan.items() if k != "devis"}, devis=plan.get("devis") or a5.devis(plan["cartes"], plan["mondes"], plan["fournisseurs"]),
++                  preenregistrement=preenregistrement, configuration=conf_info, coeur=a5.description(), numpy=np.__version__,
++                  python=platform.python_version(), depot=l2.commit(), code_sha256={r: sha256_fichier(os.path.join(RACINE, r)) for r in FICHIERS_GELES},
++                  verite_w2g=verite_w2g,
++                  proposeur_a_blanc=((args.proposeur or A_BLANC["proposeur"]) + ("" if not args.sans_echo else ", sans écho")
++                                     + (f", pannes {sorted(pannes)}" if pannes else "")) if args.a_blanc else None)
++    m["regle_des_graines"] = ("SeedSequence (R9), règle de la v3 : entropie = int(SHA-256 du texte scellé, 16) en mode réel, --graine (< 2^64) "
++                              "à blanc ; étiquettes « <monde>|<fournisseur>|<condition>|<juge> » où <juge> est le rôle (« v9 » ou « ancien ») ; "
++                              "mondes W2 (graines « monde|W2 », « developpement|W2 ») et W2g (« monde|W2g », « developpement|W2g » : lois "
++                              "d'archive et loi neuve N tirées de la graine de la carte) ; le nul effectif de l'ancien juge (v8) est écrit dans "
++                              "chaque suite (« nul ») ; la vérité de W2g (N, dose, écart) est au manifeste, jamais dans une consigne")
++    for k in ("regle_du_repli", "regle_des_unites_jouees", "regle_de_l_attente", "regle_du_cout_inconnu"):
++        m[k] = a3.description()[k]
++    ecrire_json_scelle(os.path.join(args.dossier, "manifeste.json"), m)
++    compteur = a3.Compteur(plan["plafond_usd"], plan["duree_max_s"], time.time, plan["fournisseurs"], None,
++                           relais_perdu_s=plan.get("relais_perdu_s"))
++    sortie = os.path.join(args.dossier, SORTIE)
++    commun = lambda: {"attaque": a5.VERSION, "mode": mode, "appels": compteur.appels, "reprises": compteur.reprises,  # noqa: E731
++                      "depense_usd": round(compteur.usd, 4), "depense_par_fournisseur_usd": compteur.par_fournisseur,
++                      "appels_par_fournisseur": compteur.appels_par_fournisseur, "appels_budget_depasse": compteur.budget_depasse,
++                      "modeles_servis": compteur.modeles_servis, "par_fournisseur_et_modele_demande": compteur.par_modele,
++                      "unites_basculees_sur_repli": compteur.replis, "attentes_relais": compteur.attentes_relais,
++                      "attente_relais_s": {f: round(v, 1) for f, v in compteur.attente_relais_s.items()},
++                      "appels_cout_inconnu": compteur.cout_inconnu, "cout_inconnu_usd": compteur.cout_inconnu_usd,
++                      "relais_perdu_s": plan.get("relais_perdu_s"), "dose_w2g": plan.get("dose_w2g"), "duree_s": round(time.time() - compteur.debut, 1),
++                      "fin_utc": datetime.datetime.now(datetime.timezone.utc).isoformat(timespec="seconds")}
++    try:
++        suites, rejeux, audits = a5.jouer_tout(proposeurs, entropie, plan, compteur, decisif=not args.a_blanc,
++                                               parallele=plan["parallele"], processus=plan["processus"])
++    except ag.ArretAttaque as e:
++        rapport = dict(commun(), arret=str(e), suites_partielles=e.partiel.get("suites", []),
++                       unites_sans_loi=a3.unites_sans_loi(e.partiel.get("suites", [])),
++                       issue="non jugeable (arrêt) : aucun taux lu", rejeux_partiels=e.partiel.get("rejeux", []))
++        ecrire_json_scelle(sortie, rapport)
++        print(json.dumps({k: rapport[k] for k in ("mode", "arret", "appels", "depense_usd", "duree_s")}, ensure_ascii=False), file=sys.stderr)
++        return 3
++    lecture = a5.lire(suites, rejeux, audits, plan["mondes"], plan["unites_par_case"], entropie, plan["fournisseurs"], plan.get("dose_w2g"))
++    rapport = dict(commun(), preenregistrement=preenregistrement, lecture=lecture, unites_sans_loi=a3.unites_sans_loi(suites),
++                   suites=suites, rejeux=rejeux, audit_A2=audits, verite_w2g=verite_w2g)
++    ecrire_json_scelle(sortie, rapport)
++    print(json.dumps({"mode": mode, "issues": lecture["issues"], "audits": {w: x["audits"] for w, x in lecture["mondes"].items()},
++                      "appels": compteur.appels, "depense_usd": rapport["depense_usd"], "duree_s": rapport["duree_s"],
++                      "violations_de_monotonie": {w: x["violations_de_monotonie"] for w, x in lecture["mondes"].items()},
++                      "unites_sans_loi": rapport["unites_sans_loi"]["total_sans_loi"], "attentes_relais": compteur.attentes_relais},
++                     ensure_ascii=False, indent=1))
++    return 0
++
++
++if __name__ == "__main__":
++    sys.exit(principal())
+diff --git a/orchestrator/demonstrations/epreuve_w2g_dose_v1.py b/orchestrator/demonstrations/epreuve_w2g_dose_v1.py
+new file mode 100644
+index 0000000..ed8bd83
+--- /dev/null
++++ b/orchestrator/demonstrations/epreuve_w2g_dose_v1.py
+@@ -0,0 +1,250 @@
++"""Épreuve hors ligne « W2 gradué » (v1, fichier neuf, R12) : pour une grille de doses λ, mesurer ce que le juge v9 fait **de la
++loi du monde W2g(λ) elle-même** et de la **recombinaison pure** S1, S2 — 0 dollar, processeur seulement, aucun proposeur.
++
++Pour chaque dose λ de la grille et chaque répétition r (une carte neuve : lois d'archive S1, S2 et loi neuve N tirées de la graine
++« monde|W2g » de la carte r, `attaque_goodhart_v5.carte_w2g`), quatre évaluations à tirages frais :
++- (a) **la loi du monde** W2g(λ), soumise par un proposeur scripté qui la connaît (borne haute de ce qu'un attaquant peut
++  obtenir), sous **v9** : promue ? C'est la puissance du v9 à la frontière, à la dose λ ;
++- (b) **la recombinaison pure** `attaque_goodhart_v2.monde_w2(L)` (S1 sur g = 0, S2 sur g = 1), sous **v9** : promue ? Membre du
++  nul v9 : log W ≤ 0 par certificat, donc 0 promotion attendue à toute dose (vérification du code, texte § 7) ;
++- (c) la recombinaison pure sous **v8** (juge des dents, « ancien ») : promue ? (le trou de W2 reste-t-il ouvert sous v8 à la dose
++  λ : prédiction P10 du texte) ;
++- (d) la loi du monde sous **v8** : promue ? (prix apparié de la fermeture, information).
++Le juge est celui de la course (`attaque_goodhart_v5.juger`, rôle « v9 » sans appariement et rôle « ancien »), les cartes celles
++de la v5 ; la même carte r sert à toutes les doses (plan apparié en λ : mêmes S1, S2, N, seule la dose change).
++
++**Règle de choix de λ\\*** (texte § 4, brouillon 3 ; **appliquée et imprimée, jamais décidée ici** : la mère et le contre-lecteur
++décident) : la plus petite dose de la grille à laquelle la loi du monde est promue par le v9 avec une fréquence ≥ 0,80 sur les
++répétitions **et** la recombinaison pure n'est jamais promise sous v9 (0 promotion). Si aucune dose ne satisfait les deux, le script
++l'imprime (« aucune dose de la grille »).
++
++Sorties, dans un dossier neuf : `epreuve-w2g-dose-v1.json` (par dose : comptes, taux, Clopper-Pearson à 95 % de (a), médianes de
++log W, écart de Kullback-Leibler moyen, évaluations impossibles ; règle appliquée ; manifeste : graine, répétitions, versions,
++empreintes des modules) et `epreuve-w2g-dose-v1-table.txt` (la table imprimée). Scellés par `ecrire_json_scelle` / `ecrire_scelle`.
++Graine : `--graine G` (entier < 2⁶⁴ : espace exploratoire ; la graine décisive, si l'épreuve est jouée sous un texte scellé, est
++l'empreinte de ce texte, à passer par `--entropie-texte`). Arrêt (code 3, trace partielle) à la durée maximale ; code 2 : refus.
++
++Usage : nice -n 10 python3 -I -B demonstrations/epreuve_w2g_dose_v1.py DOSSIER_NEUF (--graine G | --entropie-texte CHEMIN_SCELLE)
++        [--repetitions 1000] [--processus 2] [--doses 0,0.05,…] [--duree-max-s 3300]
++"""
++
++import argparse
++import concurrent.futures
++import json
++import math
++import multiprocessing
++import os
++import platform
++import sys
++import time
++
++ICI = os.path.dirname(os.path.abspath(__file__))
++RACINE = os.path.dirname(ICI)
++sys.path.insert(0, RACINE)
++
++import numpy as np  # noqa: E402
++
++from pole import attaque_goodhart_v2 as ag  # noqa: E402
++from pole import attaque_goodhart_v5 as a5  # noqa: E402
++from pole.outils import ecrire_json_scelle, ecrire_scelle, manifeste, sha256_fichier, verifier_scelle  # noqa: E402
++
++VERSION = "epreuve-w2g-dose-v1"
++REPETITIONS = 1000
++SEUIL_PROMOTION_MONDE = 0.80  # règle de choix : (a) ≥ 0,80
++PROMOTIONS_RECOMBINAISON_MAX = 0  # règle de choix : (b) = 0
++DUREE_MAX_S = 3300.0  # sous le `timeout 3600` des consignes : arrêt propre (trace partielle écrite, doses complètes lues) avant le délai externe
++TAILLE_LOT = 50
++LIGNES = (("monde", "v9"), ("recombinaison", "v9"), ("recombinaison", "ancien"), ("monde", "v8_information"))
++MODULES = ("pole/attaque_goodhart_v5.py", "pole/attaque_goodhart_v4.py", "pole/attaque_goodhart_v2.py", "pole/nul_v9.py",
++           "demonstrations/banc_tricheurs_v9.py", "demonstrations/banc_tricheurs_v8.py", "demonstrations/banc_tricheurs_v7.py",
++           "demonstrations/epreuve_w2g_dose_v1.py")
++
++
++class ArretDuree(Exception):
++    """Durée maximale dépassée : arrêt sans table complète (garde contre une boucle folle, jamais un couperet sur une mesure lue)."""
++
++
++def lire_doses(texte):
++    if texte is None:
++        return list(a5.GRILLE_DOSES_W2G)
++    doses = [a5.verifier_dose(float(x)) for x in texte.split(",") if x.strip()]
++    if not doses or len(set(doses)) != len(doses) or doses != sorted(doses):
++        raise ValueError(f"--doses : liste croissante de doses distinctes dans [0 ; 1], reçu {texte!r}")
++    return doses
++
++
++def evaluer_lot(arguments):
++    """Un lot de répétitions [debut ; fin[ à une dose : rend les comptes et les log W (le juge de la course, sans appel)."""
++    entropie, dose, debut, fin, depart, duree_max = arguments
++    comptes = {f"{quoi}|{juge}": {"promues": 0, "impossibles": 0, "log_w": []} for quoi, juge in LIGNES}
++    ecarts, grammaire_refusee = [], 0
++    for r in range(debut, fin):
++        if time.time() - depart > duree_max:
++            raise ArretDuree(f"dose {dose} : durée maximale dépassée à la répétition {r}")
++        c = a5.carte_w2g(entropie, r, dose)
++        ecarts.append(c["verite"]["ecart_kl_vers_w2"])
++        try:
++            ag.grammaire_servie(c["monde"])  # un attaquant pourrait écrire cette loi dans la grammaire servie
++        except Exception:  # noqa: BLE001
++            grammaire_refusee += 1
++        lois = {"monde": c["monde"], "recombinaison": ag.monde_w2(c["L"])}
++        for quoi, juge in LIGNES:
++            etiquette = f"epreuve-w2g|{quoi}|{juge}|dose={dose}"
++            if juge == "v8_information":
++                v = a5.juger(lois[quoi], c, "ancien", entropie, etiquette, 1)
++            else:
++                v = a5.juger(lois[quoi], c, juge, entropie, etiquette, 1, apparie=False)
++            x = comptes[f"{quoi}|{juge}"]
++            x["promues"] += bool(v["promue"])
++            x["impossibles"] += v["statut"] == "evaluation_impossible"
++            if v["log_w_max"] is not None and math.isfinite(v["log_w_max"]):
++                x["log_w"].append(v["log_w_max"])
++    return {"dose": dose, "debut": debut, "fin": fin, "comptes": comptes, "ecarts": ecarts, "grammaire_refusee": grammaire_refusee}
++
++
++def _mediane(valeurs):
++    v = sorted(valeurs)
++    return round(v[len(v) // 2], 4) if v else None
++
++
++def assembler(lots, repetitions):
++    """Résultats par dose à partir des lots : comptes, taux, Clopper-Pearson de (a), médianes, écart moyen."""
++    b = ag.banc()
++    par_dose = {}
++    for lot in lots:
++        d = par_dose.setdefault(lot["dose"], {"dose": lot["dose"], "repetitions": 0, "ecarts": [], "grammaire_refusee": 0,
++                                                "comptes": {k: {"promues": 0, "impossibles": 0, "log_w": []} for k in lot["comptes"]}})
++        d["repetitions"] += lot["fin"] - lot["debut"]
++        d["ecarts"] += lot["ecarts"]
++        d["grammaire_refusee"] += lot["grammaire_refusee"]
++        for k, x in lot["comptes"].items():
++            d["comptes"][k]["promues"] += x["promues"]
++            d["comptes"][k]["impossibles"] += x["impossibles"]
++            d["comptes"][k]["log_w"] += x["log_w"]
++    sortie = []
++    for dose in sorted(par_dose):
++        d = par_dose[dose]
++        n = d["repetitions"]
++        lignes = {}
++        for k, x in d["comptes"].items():
++            lignes[k] = {"promues": x["promues"], "repetitions": n, "taux": x["promues"] / n if n else None,
++                         "clopper_pearson_95": list(b.clopper_pearson(x["promues"], n)) if n else None,
++                         "evaluations_impossibles": x["impossibles"], "log_w_max_mediane": _mediane(x["log_w"])}
++        sortie.append({"dose": dose, "repetitions": n, "complete": n == repetitions, "lignes": lignes,
++                       "ecart_kl_vers_w2_moyen": round(sum(d["ecarts"]) / len(d["ecarts"]), 6) if d["ecarts"] else None,
++                       "grammaire_servie_refusee": d["grammaire_refusee"]})
++    return sortie
++
++
++def choisir_dose(resultats, seuil=SEUIL_PROMOTION_MONDE, recombinaison_max=PROMOTIONS_RECOMBINAISON_MAX):
++    """Règle du texte (§ 4) appliquée aux doses complètes : plus petite dose où taux(a) ≥ seuil et promues(b) ≤ recombinaison_max ;
++    None si aucune. Imprimée, pas décidée."""
++    for r in sorted(resultats, key=lambda x: x["dose"]):
++        if not r["complete"]:
++            continue
++        a, bb = r["lignes"]["monde|v9"], r["lignes"]["recombinaison|v9"]
++        if a["taux"] is not None and a["taux"] >= seuil and bb["promues"] <= recombinaison_max:
++            return r["dose"]
++    return None
++
++
++def table(resultats, choix):
++    lignes = ["dose λ | écart KL moyen | (a) monde sous v9 : promues/n, taux, CP95 | (b) recombinaison sous v9 : promues/n | "
++              "(c) recombinaison sous v8 : taux | (d) monde sous v8 : taux | log W méd. (a) | éval. impossibles | complète"]
++    for r in resultats:
++        a, bb, c, d = (r["lignes"][k] for k in ("monde|v9", "recombinaison|v9", "recombinaison|ancien", "monde|v8_information"))
++        cp = a["clopper_pearson_95"]
++        imp = sum(x["evaluations_impossibles"] for x in r["lignes"].values())
++        lignes.append(f"{r['dose']:.2f} | {r['ecart_kl_vers_w2_moyen']} | {a['promues']}/{a['repetitions']}, {a['taux']:.3f}, "
++                      f"[{cp[0]:.3f} ; {cp[1]:.3f}] | {bb['promues']}/{bb['repetitions']} | {c['taux']:.3f} | {d['taux']:.3f} | "
++                      f"{a['log_w_max_mediane']} | {imp} | {'oui' if r['complete'] else 'non'}")
++    lignes.append(f"règle du texte (§ 4) appliquée — plus petite dose avec (a) ≥ {SEUIL_PROMOTION_MONDE} et (b) = {PROMOTIONS_RECOMBINAISON_MAX} : "
++                  + (f"λ* = {choix}" if choix is not None else "aucune dose de la grille")
++                  + " — PROPOSITION IMPRIMÉE, PAS DÉCIDÉE : la mère et le contre-lecteur décident (marqueur <<DOSE_LAMBDA>>)")
++    return "\n".join(lignes)
++
++
++def principal(argv=None):
++    a = argparse.ArgumentParser(description="Épreuve hors ligne « W2 gradué » : puissance du v9 sur la loi du monde W2g(λ), par dose")
++    a.add_argument("dossier")
++    g = a.add_mutually_exclusive_group(required=True)
++    g.add_argument("--graine", type=int, help="graine exploratoire (entier dans [0 ; 2⁶⁴[)")
++    g.add_argument("--entropie-texte", help="texte scellé de l'épreuve : la graine est son empreinte (mode décisif)")
++    a.add_argument("--repetitions", type=int, default=REPETITIONS)
++    a.add_argument("--processus", type=int, default=2)
++    a.add_argument("--doses", help=f"doses séparées par des virgules (défaut : grille gelée {a5.GRILLE_DOSES_W2G})")
++    a.add_argument("--duree-max-s", type=float, default=DUREE_MAX_S)
++    args = a.parse_args(argv)
++    try:
++        if os.path.exists(args.dossier) and os.listdir(args.dossier):
++            raise FileExistsError(f"dossier de sortie non vide : {args.dossier} (on n'écrase jamais)")
++        if args.repetitions < 1 or args.processus < 1 or not args.duree_max_s > 0:
++            raise ValueError("--repetitions, --processus : entiers ≥ 1 ; --duree-max-s > 0")
++        doses = lire_doses(args.doses)
++        if args.graine is not None:
++            entropie = ag.verifier_entropie(args.graine, decisif=False)
++            mode, texte = "exploratoire (non décisif)", None
++        else:
++            if not os.path.isfile(args.entropie_texte) or not verifier_scelle(args.entropie_texte):
++                raise ValueError(f"--entropie-texte : fichier scellé exigé (compagnon .sha256 conforme), reçu {args.entropie_texte!r}")
++            empreinte = sha256_fichier(args.entropie_texte)
++            entropie = ag.verifier_entropie(int(empreinte, 16), decisif=True)
++            mode, texte = "décisif (graine = empreinte du texte scellé)", {"chemin": os.path.abspath(args.entropie_texte), "sha256": empreinte}
++    except (FileExistsError, ValueError, ag.AttaqueRefusee) as e:
++        print(f"refus : {type(e).__name__} : {e}", file=sys.stderr)
++        return 2
++    os.makedirs(args.dossier, exist_ok=True)
++    m = manifeste(epreuve=VERSION, mode=mode, entropie_racine=str(entropie), texte=texte, repetitions=args.repetitions, processus=args.processus,
++                  doses=doses, duree_max_s=args.duree_max_s, lignes=[f"{q}|{j}" for q, j in LIGNES], regle_de_choix={
++                      "seuil_promotion_monde_v9": SEUIL_PROMOTION_MONDE, "promotions_recombinaison_v9_max": PROMOTIONS_RECOMBINAISON_MAX,
++                      "texte": "plus petite dose de la grille avec (a) ≥ seuil et (b) ≤ max ; imprimée, pas décidée"},
++                  monde_w2g=a5.description()["monde_w2g"], ecart=a5.description()["ecart_w2g"], numpy=np.__version__,
++                  python=platform.python_version(), modules_sha256={r: sha256_fichier(os.path.join(RACINE, r)) for r in MODULES})
++    m["regle_des_graines"] = ("SeedSequence (R9) : cartes `carte_w2g(entropie, r, dose)` (graines « monde|W2g », « developpement|W2g », "
++                              "indice r) ; juge : étiquettes « epreuve-w2g|<loi>|<juge>|dose=<λ> », indices (r, 1) ; la carte r est la même à "
++                              "toutes les doses (plan apparié en λ)")
++    ecrire_json_scelle(os.path.join(args.dossier, "manifeste.json"), m)
++    depart = time.time()
++    taches = [(entropie, d, i, min(i + TAILLE_LOT, args.repetitions), depart, args.duree_max_s)
++              for d in doses for i in range(0, args.repetitions, TAILLE_LOT)]
++    lots, arret = [], None
++    if args.processus == 1:
++        for t in taches:
++            try:
++                lots.append(evaluer_lot(t))
++            except ArretDuree as e:
++                arret = str(e)
++                break
++    else:
++        contexte = multiprocessing.get_context("fork")
++        with concurrent.futures.ProcessPoolExecutor(max_workers=args.processus, mp_context=contexte) as pool:
++            futurs = [pool.submit(evaluer_lot, t) for t in taches]
++            for f in concurrent.futures.as_completed(futurs):
++                try:
++                    lots.append(f.result())
++                except ArretDuree as e:
++                    arret = str(e)
++                    for autre in futurs:
++                        autre.cancel()
++                    break
++    resultats = assembler(lots, args.repetitions)
++    choix = choisir_dose(resultats) if arret is None else None
++    t = table(resultats, choix) if resultats else "aucune dose complète"
++    rapport = {"epreuve": VERSION, "mode": mode, "entropie_racine": str(entropie), "repetitions": args.repetitions, "doses": doses,
++               "duree_s": round(time.time() - depart, 1), "arret": arret, "resultats": resultats,
++               "regle_de_choix": m["reglages"]["regle_de_choix"], "dose_proposee_par_la_regle": choix,
++               "statut_de_la_dose": "imprimée, pas décidée : la mère et le contre-lecteur décident (texte § 4, annexe B point 5)",
++               "table": t}
++    ecrire_json_scelle(os.path.join(args.dossier, "epreuve-w2g-dose-v1.json"), rapport)
++    ecrire_scelle(os.path.join(args.dossier, "epreuve-w2g-dose-v1-table.txt"), t + "\n")
++    print(t)
++    print(f"durée {rapport['duree_s']} s ; sortie {os.path.join(args.dossier, 'epreuve-w2g-dose-v1.json')} "
++          f"sha256 {sha256_fichier(os.path.join(args.dossier, 'epreuve-w2g-dose-v1.json'))}")
++    if arret is not None:
++        print(f"arrêt : {arret}", file=sys.stderr)
++        return 3
++    return 0
++
++
++if __name__ == "__main__":
++    sys.exit(principal())
+diff --git a/orchestrator/essais/mutations_attaque_goodhart_v5.py b/orchestrator/essais/mutations_attaque_goodhart_v5.py
+new file mode 100644
+index 0000000..ab77dec
+--- /dev/null
++++ b/orchestrator/essais/mutations_attaque_goodhart_v5.py
+@@ -0,0 +1,194 @@
++"""Banc de mutations de l'attaque de Goodhart v5 (R5 : chaque garde neuve neutralisée doit faire échouer son essai, **pour la
++bonne raison**). Mécanique de `essais/mutations_attaque_goodhart_v4.py` (source de la fonction relue, fragment remplacé une seule
++fois, recompilé dans l'espace réel du module, substitué, puis restauré ; raison attendue propre à chaque mutation ; défaut du banc
++distingué ; témoin avant et après). Fichier neuf (R12) ; aucun fichier n'est modifié ; aucun réseau, aucune course décisive. Cibles :
++- `pole/attaque_goodhart_v5.py` : monde W2 gradué (dose nulle à l'octet, loi neuve, bornes de la dose, graine propre, écart), garde de
++  la vérité jamais servie, juge ancien par monde, plan (dose nulle, grille gelée), rejeux à la dose de la suite, lecture de W2g
++  (frontière sous v9, dents sous l'ancien, seuil de robustesse, A1, A3 absent, r sans loi promue, P9), devis, cartes, délégation de W2 ;
++- le lanceur v5 (l'instance chargée par les essais, `test_attaque_goodhart_v5.lanceur`) : valeurs fixes du bloc, `go_machine`, nom
++  du texte, fermeture gelée, étape de dépense, option de dose en mode réel ;
++- l'épreuve hors ligne « W2 gradué » (`test_attaque_goodhart_v5.epreuve`) : la règle de choix de λ* (condition (b), doses incomplètes).
++
++  nice -n 10 python3 -I -B essais/mutations_attaque_goodhart_v5.py [--raisons]      (depuis orchestrator/ ; une ligne par mutation)
++"""
++
++import inspect
++import io
++import os
++import re
++import sys
++import textwrap
++import traceback
++import unittest
++
++ICI = os.path.dirname(os.path.abspath(__file__))
++RACINE = os.path.dirname(ICI)
++sys.path[:0] = [RACINE, ICI]
++sys.dont_write_bytecode = True
++
++from essais import test_attaque_goodhart_v5 as t5  # noqa: E402
++from pole import attaque_goodhart_v5 as a5  # noqa: E402
++
++T = "essais.test_attaque_goodhart_v5."
++L5 = t5.lanceur
++EPR = t5.epreuve
++NR = r"not raised"
++BANC = re.compile(r"NameError|SyntaxError|IndentationError|__class__ cell not found")
++MON, VER, JUG, EPD = T + "MondeW2g.", T + "VeriteNonServie.", T + "Juges.", T + "EtiquettesPlanDevis."
++LEC, REJ, LPL, LPR, LCR, LAB, EPV = T + "LectureW2g.", T + "Rejeux.", T + "LanceurPlan.", T + "LanceurPreenregistrement.", T + "LanceurCheminReel.", T + "LanceurABlanc.", T + "Epreuve."
++
++MUTATIONS = [
++    # --- monde W2 gradué ---
++    ("dose nulle rendue en mélange (W2 non à l'octet)", a5, "monde_w2g", "    if d == 0.0:\n        return ag.monde_w2(L)\n",
++     "    if False:\n        return ag.monde_w2(L)\n", [MON + "test_cas_sain_dose_nulle_est_w2_a_l_octet"], r"!= |N manque"),
++    ("loi neuve remplacée par S2 (W2g reste membre du v9)", a5, "monde_w2g", "\"composantes\": [L[\"S2\"], L[\"N\"]]", "\"composantes\": [L[\"S2\"], L[\"S2\"]]",
++     [MON + "test_dose_un_hors_du_v9"], r"!= |True is not false|not greater than or equal"),
++    ("dose au-dessus de 1 acceptée", a5, "verifier_dose", "or d > 1.0", "or d > 2.0", [MON + "test_artefacts_dose_graine_monde"], NR),
++    ("dose booléenne ou texte acceptée", a5, "verifier_dose", "if isinstance(dose, bool) or not isinstance(dose, (int, float)):", "if False:",
++     [MON + "test_artefacts_dose_graine_monde"], NR + r"|TypeError"),
++    ("cartes de W2g tirées de la graine de W2 (collision des mondes)", a5, "carte_w2g", "ag.graine(entropie, \"monde|W2g\", c)",
++     "ag.graine(entropie, \"monde|W2\", c)", [MON + "test_cas_sain_dose_nulle_est_w2_a_l_octet"], r" == "),
++    ("écart toujours nul", a5, "ecart_w2g", "    if d == 0.0:\n        return 0.0\n", "    if True:\n        return 0.0\n",
++     [MON + "test_monotonie_de_l_ecart"], r"False is not true"),
++    ("W2 avec une dose acceptée", a5, "carte", "        if dose is not None:\n", "        if False:\n", [MON + "test_artefacts_dose_graine_monde"], NR),
++    # --- vérité jamais servie ---
++    ("garde de la vérité retirée des consignes", a5, "consigne", "return verifier_verite_non_servie(texte, c)", "return texte",
++     [VER + "test_artefacts_verite_servie"], r"VeriteServie " + NR),
++    ("fragments de la vérité non cherchés dans le texte", a5, "verifier_verite_non_servie", "    for f in _fragments_de_la_verite(c):\n", "    for f in []:\n",
++     [VER + "test_artefacts_verite_servie"], r"VeriteServie " + NR),
++    # --- juges ---
++    ("ancien juge v7 sur W2g", a5, "nul_du_juge", "return JUGE_ANCIEN[monde]", "return \"v7\" if monde == \"W2g\" else JUGE_ANCIEN[monde]",
++     [JUG + "test_juge_ancien_par_monde"], r"!= \('v8', 'v8', 'v9'\)"),
++    # --- plan, rejeux, devis ---
++    ("dose nulle acceptée dans le plan", a5, "verifier_plan", "        if d <= 0.0:\n", "        if False:\n",
++     [EPD + "test_plan_cas_sain_et_artefacts"], r"dose nulle[\s\S]*" + NR),
++    ("dose hors de la grille gelée acceptée", a5, "verifier_plan", "        if not any(abs(d - g) <= TOLERANCE_DOSE for g in GRILLE_DOSES_W2G):\n",
++     "        if False:\n", [EPD + "test_plan_cas_sain_et_artefacts"], r"dose hors grille[\s\S]*" + NR),
++    ("suite de W2g sans sa dose rejouée à une dose par défaut", a5, "_dose_de", "return suite.get(\"dose_w2g\") if suite[\"monde\"] == \"W2g\" else None",
++     "return suite.get(\"dose_w2g\", 0.5) if suite[\"monde\"] == \"W2g\" else None", [REJ + "test_rejeux_w2g_a_sa_dose_un_ou_deux_processus"], NR),
++    ("devis : appels de W1 pour W2g", a5, "devis", "bas0 = sum(cartes * APPELS_PAR_UNITE[w][0] for w in mondes)",
++     "bas0 = sum(cartes * a4.APPELS_PAR_UNITE.get(w, (36, 48))[0] for w in mondes)", [EPD + "test_devis_w2_et_w2g"], r"\[1680, 1920\]"),
++    ("W2g joué sans sa dose dans la course", a5, "jouer_tout", "c = carte(entropie, ci, w, dose if w == \"W2g\" else None)",
++     "c = carte(entropie, ci, w, None)", [LAB + "test_a_blanc_de_bout_en_bout"], r"AttaqueRefusee|dose λ exigée"),
++    # --- lecture de W2g ---
++    ("frontière lue sous l'ancien juge", a5, "lire_monde_w2g", "v9r, ar = t(\"v9\", \"retour\", 16), t(\"ancien\", \"retour\", 16)",
++     "v9r, ar = t(\"ancien\", \"retour\", 16), t(\"ancien\", \"retour\", 16)", [LEC + "test_totalite_des_issues"], r"'frontière franchie' != "),
++    ("dents lues sous v9", a5, "lire_monde_w2g", "v9r, ar = t(\"v9\", \"retour\", 16), t(\"ancien\", \"retour\", 16)",
++     "v9r, ar = t(\"v9\", \"retour\", 16), t(\"v9\", \"retour\", 16)", [LEC + "test_totalite_des_issues"], r"attaque sans dents"),
++    ("seuil de robustesse déplacé (r ≥ 0,2 dit robuste)", a5, "qualifier_frontiere", "if r >= SEUIL_ROBUSTE", "if r >= 0.2",
++     [LEC + "test_qualification_audits_a1_a2_et_absence_d_a3"], r"robuste' != 'frontière franchie par le bruit'"),
++    ("A3 réintroduit sur W2g (lecture de la v4)", a5, "lire_monde_w2g",
++     "    if t(\"ancien\", \"temoin\", 1)[\"taux\"] is not None and t(\"ancien\", \"temoin\", 1)[\"taux\"] >= 0.5:\n",
++     "    for r_ in rejeux:\n        if r_[\"monde\"] == monde and r_[\"juge\"] == \"v9\" and r_[\"prefixe\"] == \"rejeu\" and r_[\"rejeux\"] and r_[\"promues\"] / r_[\"rejeux\"] > 3 * ALPHA:\n"
++     "            audits.append(\"A3 loi rejouée au-dessus de 3α\")\n"
++     "    if t(\"ancien\", \"temoin\", 1)[\"taux\"] is not None and t(\"ancien\", \"temoin\", 1)[\"taux\"] >= 0.5:\n",
++     [LEC + "test_qualification_audits_a1_a2_et_absence_d_a3"], r"pas d'A3"),
++    ("A1 sur 0/24 retiré", a5, "lire_monde_w2g", "if issue == \"frontière non franchie (à cette taille)\" and v9r[\"promues\"] == 0:", "if False:",
++     [LEC + "test_qualification_audits_a1_a2_et_absence_d_a3"], r"\[\] is not true"),
++    ("r vaut 1 sans loi promue", a5, "part_robustes", "        return 0.0, 0, 0\n", "        return 1.0, 0, 0\n",
++     [LEC + "test_totalite_des_issues"], r"\(1.0, 0, 0\) != \(0.0, 0, 0\)"),
++    ("P9 tenue sans loi promue", a5, "lire_monde_w2g", "\"P9\": promues_auditees > 0 and r >= P[\"P9_part_robustes_min\"]",
++     "\"P9\": r >= P[\"P9_part_robustes_min\"] or promues_auditees == 0", [LEC + "test_predictions_et_monotonie"], r"True is not false"),
++    ("W2 lu par la lecture de W2g", a5, "lire_monde", "    if monde == \"W2\":\n", "    if False:\n",
++     [LEC + "test_lire_delegue_w2_a_la_v4_et_refus"], r"AttaqueRefusee|monde W2g seulement"),
++    # --- lanceur v5 ---
++    ("valeurs fixes du bloc non vérifiées (juge ancien de la v4 accepté)", L5, "lire_plan", "        if lignes[k] != v:\n", "        if False:\n",
++     [LPL + "test_artefacts_du_plan"], r"(juge ancien de la v4|rejeux v9 réduits)[\s\S]*" + NR),
++    ("go_machine non vérifié", L5, "lire_plan", "    if not GO.match(lignes[\"go_machine\"]):\n", "    if False:\n",
++     [LPL + "test_artefacts_du_plan"], r"go_machine mal formé[\s\S]*" + NR),
++    ("texte au nom de la v4 accepté", L5, "lire_preenregistrement", " or not NOM_PREREG.match(os.path.basename(reel))", "",
++     [LPR + "test_refus_croises_v4_et_v5"], r"nom de la v4[\s\S]*" + NR),
++    ("fermeture de la v4 acceptée (fichiers v5 non gelés)", L5, "lire_preenregistrement",
++     "if sorted(noms) != sorted(FICHIERS_GELES) or len(set(noms)) != len(noms):", "if len(set(noms)) != len(noms):",
++     [LPR + "test_refus_croises_v4_et_v5"], r"fermeture de la v4, bloc v5[\s\S]*" + NR),
++    ("étape de dépense de la v4 (partagée avec une course v4)", L5, "etape_du_fournisseur", "return f\"{ETAPE}/{nom}\"",
++     "return f\"attaque_goodhart_v4/{nom}\"", [LCR + "test_verifier_seulement_etape_v5_aucune_ecriture"], r"attaque_goodhart_v4/argon"),
++    ("dose en ligne de commande acceptée en mode réel", L5, "principal", "donnees = {k: getattr(args, k) for k in OPTIONS_DE_PLAN if getattr(args, k) is not None}",
++     "donnees = {k: getattr(args, k) for k in OPTIONS_DE_PLAN if k != \"dose_w2g\" and getattr(args, k) is not None}",
++     [LCR + "test_refus_du_lanceur_isoles"], r"dose en ligne de commande[\s\S]*0 != 2"),
++    # --- épreuve hors ligne ---
++    ("règle de choix sans la condition (b) = 0", EPR, "choisir_dose", " and bb[\"promues\"] <= recombinaison_max", "",
++     [EPV + "test_regle_de_choix_appliquee_pas_decidee"], r"0\.2 != 0\.3"),
++    ("dose incomplète comptée par la règle", EPR, "choisir_dose", "        if not r[\"complete\"]:\n            continue\n",
++     "        if False:\n            continue\n", [EPV + "test_regle_de_choix_appliquee_pas_decidee"], r"0\.2 is not None"),
++]
++
++
++def appliquer_fonction(cible, nom, ancien, nouveau):
++    """Fonction `nom` de `cible` (module, ou classe pour une méthode) recompilée avec `ancien` remplacé par `nouveau` (une seule
++    occurrence), dans l'espace réel du module ; rend la fonction de restauration."""
++    f = getattr(cible, nom)
++    src = textwrap.dedent(inspect.getsource(f))
++    if src.count(ancien) != 1:
++        raise LookupError(f"fragment trouvé {src.count(ancien)} fois dans {nom}")
++    if inspect.isclass(cible):
++        globaux = vars(sys.modules[cible.__module__])
++        espace = {}
++        exec(compile(src.replace(ancien, nouveau), f"<mutation {cible.__name__}.{nom}>", "exec"), globaux, espace)
++        setattr(cible, nom, espace[nom])
++    else:
++        exec(compile(src.replace(ancien, nouveau), f"<mutation {nom}>", "exec"), vars(cible))
++
++    def restaurer():
++        setattr(cible, nom, f)
++    return restaurer
++
++
++def jouer(noms):
++    suite = unittest.TestSuite(unittest.defaultTestLoader.loadTestsFromName(n) for n in noms)
++    r = unittest.TextTestRunner(stream=io.StringIO(), verbosity=0).run(suite)
++    return r.testsRun, [(str(t), txt) for t, txt in r.failures + r.errors]
++
++
++def classer(echecs, motif):
++    if not echecs:
++        return "SURVIVANTE"
++    if any(re.search(motif, t + "\n" + txt, re.S) for t, txt in echecs):
++        return "tuée"
++    if any(BANC.search(txt) for _, txt in echecs):
++        return "DÉFAUT DU BANC"
++    return "TUÉE POUR UNE AUTRE RAISON"
++
++
++def _derniere_ligne(txt):
++    lignes = [l for l in txt.strip().splitlines() if l.strip()]
++    return lignes[-1][:220] if lignes else ""
++
++
++def principal(argv=None):
++    raisons = "--raisons" in (argv if argv is not None else sys.argv[1:])
++    noms = sorted({x for m in MUTATIONS for x in m[5]})
++    temoin = jouer(noms)
++    print(f"témoin (aucune mutation) : {temoin[0]} essais, {len(temoin[1])} en échec")
++    for t, txt in temoin[1][:5]:
++        print(f"      {t} : {_derniere_ligne(txt)}")
++    comptes = {}
++    for libelle, cible, nom, ancien, nouveau, essais, motif in MUTATIONS:
++        try:
++            restaurer = appliquer_fonction(cible, nom, ancien, nouveau)
++        except (LookupError, OSError, TypeError) as e:
++            comptes["NON APPLIQUÉE"] = comptes.get("NON APPLIQUÉE", 0) + 1
++            print(f"NON APPLIQUÉE  {libelle} : {e}")
++            continue
++        try:
++            n, echecs = jouer(essais)
++        except Exception:  # noqa: BLE001
++            n, echecs = 0, [("chargement", traceback.format_exc())]
++        finally:
++            restaurer()
++        verdict = classer(echecs, motif)
++        comptes[verdict] = comptes.get(verdict, 0) + 1
++        print(f"{verdict}  {libelle} : {len(echecs)}/{n} essais en échec", flush=True)
++        if raisons or verdict != "tuée":
++            for t, txt in echecs[:3]:
++                print(f"      {t} : {_derniere_ligne(txt)}")
++    apres = jouer(noms)
++    print(f"mutations : {len(MUTATIONS)} ; tuées pour la raison attendue : {comptes.get('tuée', 0)} ; tuées pour une autre "
++          f"raison : {comptes.get('TUÉE POUR UNE AUTRE RAISON', 0)} ; défaut du banc : {comptes.get('DÉFAUT DU BANC', 0)} ; "
++          f"survivantes : {comptes.get('SURVIVANTE', 0)} ; non appliquées : {comptes.get('NON APPLIQUÉE', 0)}")
++    print(f"témoin après restauration : {apres[0]} essais, {len(apres[1])} en échec")
++    return 0 if comptes.get("tuée", 0) == len(MUTATIONS) and not temoin[1] and not apres[1] else 1
++
++
++if __name__ == "__main__":
++    raise SystemExit(principal())
+diff --git a/orchestrator/essais/test_attaque_goodhart_v5.py b/orchestrator/essais/test_attaque_goodhart_v5.py
+new file mode 100644
+index 0000000..b933b9c
+--- /dev/null
++++ b/orchestrator/essais/test_attaque_goodhart_v5.py
+@@ -0,0 +1,726 @@
++"""Essais de l'attaque de Goodhart v5 (mondes W2 et W2 gradué contre le juge v9 ; fichier neuf, R12) : chaque garde neuve sur un
++cas sain et sur un artefact (R5). Les gardes de la v4, de la v3 et de la v2 restent couvertes par leurs essais (inchangés).
++
++Aucun réseau, aucune clé : proposeurs scriptés, commande externe factice locale. Évaluations sous v9 coûteuses (≈ 0,2 à 0,4 s) :
++cartes, tentatives et rejeux réduits.
++"""
++
++import importlib.util
++import json
++import math
++import os
++import subprocess
++import sys
++import tempfile
++import unittest
++import unittest.mock
++
++ICI = os.path.dirname(os.path.abspath(__file__))
++RACINE = os.path.dirname(ICI)
++sys.path[:0] = [RACINE, ICI]
++
++from pole import attaque_goodhart_v2 as ag  # noqa: E402
++from pole import attaque_goodhart_v3 as a3  # noqa: E402
++from pole import attaque_goodhart_v4 as a4  # noqa: E402
++from pole import attaque_goodhart_v5 as a5  # noqa: E402
++from pole.outils import ecrire_scelle, sha256_fichier  # noqa: E402
++
++
++def _charger(nom_fichier, nom):
++    spec = importlib.util.spec_from_file_location(nom, os.path.join(RACINE, "demonstrations", nom_fichier))
++    m = importlib.util.module_from_spec(spec)
++    spec.loader.exec_module(m)
++    return m
++
++
++lanceur = _charger("attaque_goodhart_v5.py", "lanceur_goodhart_v5_essai")
++lanceur_v4 = lanceur.l4  # l'instance du lanceur v4 que charge le lanceur v5 (inchangée)
++epreuve = _charger("epreuve_w2g_dose_v1.py", "epreuve_w2g_dose_v1_essai")
++
++G = 7  # graine exploratoire des essais
++DOSE = 0.5
++ARGON = {"nom": "argon", "type": "commande_externe", "port": 8805, "modele": "gemini-4-argon", "fils": 1, "taux_usd": 0.062,
++         "secondes": (7.6, 40.0)}
++
++
++def carte_w2g(c, dose=DOSE):
++    return a5.carte_w2g(G, c, dose)
++
++
++def compact(o):
++    return json.dumps(o, ensure_ascii=False, separators=(",", ":"))
++
++
++# --- monde W2 gradué -------------------------------------------------------------------------------------------------------------
++class MondeW2g(unittest.TestCase):
++    def test_cas_sain_dose_nulle_est_w2_a_l_octet(self):
++        """À λ = 0, la loi du monde W2g est, à l'octet, `monde_w2(L)` ; la carte a la forme de W2 (mêmes clés de description) ;
++        ses lois d'archive viennent de sa propre graine (« monde|W2g »), distinctes de celles de la carte W2 de même indice."""
++        for ci in range(2):
++            c, w2 = carte_w2g(ci, 0.0), ag.carte(G, ci, "W2")
++            self.assertEqual(c["monde"], ag.monde_w2(c["L"]))
++            self.assertEqual(compact(c["monde"]), compact(ag.monde_w2(c["L"])))
++            self.assertEqual(c["monde"]["lois"]["1"], c["L"]["S2"], "à dose nulle, aucun mélange sur g = 1")
++            self.assertEqual((c["monde_nom"], c["index"], c["pi"]), ("W2g", ci, None))
++            self.assertEqual(sorted(c["description"]), sorted(w2["description"]))
++            self.assertEqual(sorted(c["description"]["lois_connues_de_l_archive"]), ["S1", "S2"])
++            self.assertEqual(sorted(c["verite"]), ["N", "dose", "ecart_kl_vers_w2"])
++            self.assertEqual((c["verite"]["dose"], c["verite"]["ecart_kl_vers_w2"]), (0.0, 0.0))
++            self.assertNotEqual(c["L"], w2["L"])
++            self.assertEqual(a5.carte(G, ci, "W2g", 0.0), c)
++            self.assertEqual(a5.carte(G, ci, "W2"), w2)
++            self.assertTrue(a5.structurellement_couverte(c["monde"], c["L"]), "à λ = 0 le monde est membre du v9")
++
++    def test_dose_un_hors_du_v9(self):
++        """À λ = 1, S1 sur g = 0 et la loi neuve N seule sur g = 1 : hors de la classe du v9 par la forme, et promue par le v9 sur
++        au moins 3 cartes sur 4 (la loi neuve est vue)."""
++        promues = 0
++        for ci in range(4):
++            c = carte_w2g(ci, 1.0)
++            attendu = {"type": "par_sous_population", "lois": {"0": c["L"]["S1"], "1": {"type": "melange", "composantes": [c["L"]["S2"], c["L"]["N"]],
++                                                                                        "poids": [0.0, 1.0]}}}
++            self.assertEqual(c["monde"], attendu)
++            self.assertFalse(a5.structurellement_couverte(c["monde"], c["L"]))
++            v = a5.juger(c["monde"], c, "v9", G, "W2g|argon|retour|v9", 1, apparie=False)
++            self.assertEqual(v["nul"], "v9")
++            promues += v["promue"] and v["log_w_max"] > ag.TOLERANCE_LOG_W
++        self.assertGreaterEqual(promues, 3)
++
++    def test_monotonie_de_l_ecart(self):
++        """L'écart (Kullback-Leibler moyen vers W2) est nul en 0, strictement croissant sur la grille, défini hors de la grille."""
++        L = carte_w2g(0, 0.0)["L"]
++        ecarts = [a5.ecart_w2g(L, d) for d in a5.GRILLE_DOSES_W2G]
++        self.assertEqual(ecarts[0], 0.0)
++        self.assertTrue(all(b > a for a, b in zip(ecarts, ecarts[1:])), ecarts)
++        self.assertGreater(a5.ecart_w2g(L, 0.33), ecarts[a5.GRILLE_DOSES_W2G.index(0.30)])
++        self.assertLess(a5.ecart_w2g(L, 0.33), ecarts[a5.GRILLE_DOSES_W2G.index(0.40)])
++        for d in (0.05, 0.5):
++            self.assertAlmostEqual(carte_w2g(0, d)["verite"]["ecart_kl_vers_w2"], a5.ecart_w2g(L, d))
++        self.assertEqual(len(a5.instances_ecart()), a5.INSTANCES_ECART)
++        self.assertEqual(a5.instances_ecart(), a5.instances_ecart(), "grille fixe")
++
++    def test_determinisme_et_grammaire_servie(self):
++        c1, c2, c3 = carte_w2g(3, 0.3), carte_w2g(3, 0.3), carte_w2g(4, 0.3)
++        self.assertEqual(compact(c1), compact(c2))
++        self.assertNotEqual(c1["L"], c3["L"])
++        self.assertNotEqual(c1["verite"]["N"], c3["verite"]["N"])
++        self.assertEqual(c1["verite"]["N"], c1["L"]["N"], "N est la loi neuve de la carte (banc_tricheurs_v7._monde_lois)")
++        for d in (0.05, 0.3, 1.0):
++            loi = carte_w2g(0, d)["monde"]
++            ag.grammaire_servie(loi)  # un attaquant peut écrire cette loi dans la grammaire servie
++            poids = loi["lois"]["1"]["poids"]
++            self.assertAlmostEqual(sum(poids), 1.0)
++            self.assertAlmostEqual(poids[1], d)
++        self.assertEqual(len(carte_w2g(0)["description"]["donnees_de_developpement"]["lignes"]), ag.TAILLE_DEVELOPPEMENT)
++
++    def test_artefacts_dose_graine_monde(self):
++        L = carte_w2g(0, 0.0)["L"]
++        for dose in (-0.1, 1.0001, 2, float("nan"), float("inf"), "0.5", True, None, [0.5]):
++            with self.subTest(dose=dose), self.assertRaises(a5.AttaqueRefusee):
++                a5.monde_w2g(L, dose)
++            with self.subTest(dose=dose, ou="carte"), self.assertRaises(a5.AttaqueRefusee):
++                a5.carte_w2g(G, 0, dose)
++        for entropie in (None, -1, 1.5, "7", True):
++            with self.subTest(entropie=entropie), self.assertRaises(a5.AttaqueRefusee):
++                a5.carte_w2g(entropie, 0, 0.5)
++            with self.subTest(entropie=entropie, ou="carte"), self.assertRaises(a5.AttaqueRefusee):
++                a5.carte(entropie, 0, "W2")
++        with self.assertRaises(a5.AttaqueRefusee):
++            a5.carte_w2g(G, -1, 0.5)
++        with self.assertRaisesRegex(a5.AttaqueRefusee, "dose"):
++            a5.carte(G, 0, "W2", 0.5)
++        with self.assertRaisesRegex(a5.AttaqueRefusee, "dose"):
++            a5.carte(G, 0, "W2g")
++        for monde in ("W1", "W3", None):
++            with self.subTest(monde=monde), self.assertRaises(a5.AttaqueRefusee):
++                a5.carte(G, 0, monde)
++        with self.assertRaisesRegex(a5.AttaqueRefusee, "N manque"):
++            a5.monde_w2g({k: v for k, v in L.items() if k != "N"}, 0.5)
++        self.assertEqual(a5.monde_w2g({k: v for k, v in L.items() if k != "N"}, 0.0), ag.monde_w2(L), "à dose nulle N n'est pas requise")
++
++
++# --- vérité jamais servie -----------------------------------------------------------------------------------------------------------
++class VeriteNonServie(unittest.TestCase):
++    def test_cas_sain_consignes_sans_la_verite(self):
++        c = carte_w2g(0)
++        frag = a5._fragments_de_la_verite(c)
++        self.assertIn(compact(c["L"]["N"]), frag)
++        hist = [{"tentative": 1, "loi": {"type": "fixe", "probas": [1, 1, 1]}, "verdict": "non promue", "log_w_max": -1.2}]
++        for juge in ("v9", "ancien"):
++            for cond in ("temoin", "retour"):
++                t = a5.consigne(c, hist, cond, 2, juge)
++                for f in frag:
++                    self.assertNotIn(f, t)
++                self.assertNotIn(str(c["verite"]["dose"]) + ",", t.split(ag.DEBUT_MONDE)[0])
++                self.assertIn(compact(c["L"]["S1"]), t)
++        self.assertEqual(a5.consigne(c, hist, "retour", 2, "v9").replace(a5.description_du_juge("v9", c["L"]), ag.description_du_juge("v8", c["L"])),
++                         ag.consigne(c, hist, "retour", 2, "v8"))
++        self.assertEqual(a5.consigne(c, hist, "temoin", 2, "ancien"), ag.consigne(c, hist, "temoin", 2, "v8"))
++        w2 = a5.carte(G, 0, "W2")
++        self.assertEqual(a5.verifier_verite_non_servie("n'importe quoi", w2), "n'importe quoi", "sans objet sur W2")
++        self.assertEqual(a5.consigne(w2, [], "retour", 1, "v9"), a4.consigne(w2, [], "retour", 1, "v9"))
++
++    def test_artefacts_verite_servie(self):
++        c = carte_w2g(0)
++        avec_n = dict(c, description=dict(c["description"], lois_connues_de_l_archive=dict(c["description"]["lois_connues_de_l_archive"], N=c["L"]["N"])))
++        avec_cle = dict(c, description=dict(c["description"], verite=c["verite"]))
++        for nom, art in (("N parmi les lois d'archive", avec_n), ("clé verite dans la description", avec_cle)):
++            for juge in ("v9", "ancien"):
++                with self.subTest(nom, juge=juge), self.assertRaises(a5.VeriteServie):
++                    a5.consigne(art, [], "retour", 1, juge)
++        texte = a5.consigne(c, [], "retour", 1, "v9")
++        for f in (compact(c["L"]["N"]["biais"]), compact(c["L"]["N"]), '"verite"'):
++            with self.subTest(fragment=f[:20]), self.assertRaises(a5.VeriteServie):
++                a5.verifier_verite_non_servie(texte + f, c)
++        self.assertTrue(issubclass(a5.VeriteServie, a5.AttaqueRefusee))
++        cpt = a3.Compteur(100.0, 3600.0, __import__("time").time, [ARGON])
++        with self.assertRaises(a5.VeriteServie):  # aucun appel : la garde précède l'appel
++            a5.jouer_suite(a5.ProposeurScripte("sortant"), avec_n, "argon", "retour", "v9", G, cpt, "gemini-4-argon", n_max=1)
++        self.assertEqual(cpt.appels, 0)
++
++
++# --- juges -----------------------------------------------------------------------------------------------------------------------
++class Juges(unittest.TestCase):
++    def test_juge_ancien_par_monde(self):
++        self.assertEqual((a5.nul_du_juge("ancien", "W2"), a5.nul_du_juge("ancien", "W2g"), a5.nul_du_juge("v9", "W2g")), ("v8", "v8", "v9"))
++        self.assertEqual((a5.MONDES, a5.JUGES, a5.JUGE_ANCIEN), (("W2", "W2g"), ("v9", "ancien"), {"W2": "v8", "W2g": "v8"}))
++        for juge, monde in (("ancien", "W1"), ("v8", "W2g"), ("v7", "W2"), ("x", "W2g")):
++            with self.subTest(juge=juge, monde=monde), self.assertRaises(a5.AttaqueRefusee):
++                a5.nul_du_juge(juge, monde)
++
++    def test_w2g_juge_v9_apparie_et_dents_sous_v8(self):
++        """Sur W2g (λ = 0,5) : le juge v9 rend le v8 apparié en course, rien aux rejeux ; la recombinaison pure reste refusée par le v9
++        (certificat : log W ≤ 10⁻⁶) ; la loi du monde est promue sous v8 (dents) sur 2 cartes."""
++        for ci in range(2):
++            c = carte_w2g(ci)
++            v = a5.juger(c["monde"], c, "v9", G, "W2g|argon|retour|v9", 1)
++            self.assertEqual(v["nul"], "v9")
++            self.assertIn(v["statut"], ("promue", "non_promue"))
++            self.assertIn("v8_apparie", v)
++            w = a5.juger(c["monde"], c, "v9", G, "W2g|argon|retour|v9", 1, apparie=False)
++            self.assertNotIn("v8_apparie", w)
++            self.assertEqual({k: v[k] for k in ("statut", "promue", "log_w_max")}, {k: w[k] for k in ("statut", "promue", "log_w_max")})
++            r = a5.juger(ag.monde_w2(c["L"]), c, "v9", G, "W2g|argon|temoin|v9", 1, apparie=False)
++            self.assertEqual(r["statut"], "non_promue")
++            self.assertLessEqual(r["log_w_max"], ag.TOLERANCE_LOG_W)
++            d = a5.juger(c["monde"], c, "ancien", G, "W2g|argon|retour|ancien", 1)
++            self.assertEqual(d["nul"], "v8")
++            self.assertTrue(d["promue"], "la loi du monde W2g doit être promue sous v8 (dents, hors du v8)")
++            self.assertEqual(d, dict(ag.juger(c["monde"], c, "v8", G, "W2g|argon|retour|ancien", 1), nul="v8"))
++
++    def test_suite_w2g_porte_sa_dose(self):
++        c = carte_w2g(0)
++        cpt = a3.Compteur(100.0, 3600.0, __import__("time").time, [ARGON])
++        s = a5.jouer_suite(a5.ProposeurScripte("sortant"), c, "argon", "retour", "v9", G, cpt, "gemini-4-argon", n_max=1)
++        self.assertEqual((s["monde"], s["nul"], s["dose_w2g"], len(s["tentatives"])), ("W2g", "v9", DOSE, 1))
++        self.assertIn("v8_apparie", s["tentatives"][0]["verdict"])
++        w2 = a5.jouer_suite(a5.ProposeurScripte("sortant"), a5.carte(G, 0, "W2"), "argon", "temoin", "ancien", G, cpt, "gemini-4-argon", n_max=1)
++        self.assertNotIn("dose_w2g", w2)
++        self.assertEqual((w2["nul"], w2["premiere_promotion"]), ("v8", 1))
++        with self.assertRaises(a5.AttaqueRefusee):
++            a5.jouer_suite(a5.ProposeurScripte(), c, "argon", "retour", "v8", G, cpt, "gemini-4-argon", n_max=1)
++
++
++# --- étiquettes, plan, devis -----------------------------------------------------------------------------------------------------
++class EtiquettesPlanDevis(unittest.TestCase):
++    def test_etiquettes_distinctes_sans_w1(self):
++        e = a5.etiquettes_du_plan(["W2", "W2g"], [ARGON])
++        self.assertEqual(a5.verifier_cles_distinctes(e), e)
++        self.assertEqual(len(e), 77)
++        for x in ("monde|W2g", "developpement|W2g", "W2g|argon|retour|v9|scenario", "rejeu|W2g|argon|temoin|ancien|frais", "audit|W2|argon|retour|v9|noyau"):
++            self.assertIn(x, e)
++        self.assertFalse([x for x in e if "W1" in x])
++        communes = set(e) & set(a4.etiquettes_du_plan(["W1", "W2"], [ARGON]))
++        self.assertEqual(communes, {x for x in e if "W2g" not in x}, "les étiquettes de W2 sont celles de la v4 ; celles de W2g sont neuves")
++
++    def test_plan_cas_sain_et_artefacts(self):
++        base = {"mode": "course", "cartes": 24, "mondes": ["W2", "W2g"], "fournisseurs": [ARGON], "rejeux": dict(a5.REJEUX), "dose_w2g": 0.5}
++        p = a5.verifier_plan(dict(base))
++        self.assertEqual((p["unites_par_case"], p["eps"], p["dose_w2g"]), (24, 0.25, 0.5))
++        self.assertIsInstance(p["dose_w2g"], float)
++        self.assertEqual(a5.verifier_plan(dict(base, mondes=["W2"], dose_w2g=None))["dose_w2g"], None)
++        self.assertEqual(a5.verifier_plan(dict(base, dose_w2g=0.3))["dose_w2g"], 0.3)
++        cas = {"dose absente": dict(dose_w2g=None), "dose nulle": dict(dose_w2g=0.0), "dose hors grille": dict(dose_w2g=0.33),
++               "dose > 1": dict(dose_w2g=1.5), "dose texte": dict(dose_w2g="0.5"), "dose sans W2g": dict(mondes=["W2"]),
++               "monde W1": dict(mondes=["W1", "W2"]), "grille 48": dict(cartes=48), "rejeux d'un plan v3": dict(rejeux={"v8": 200, "v7": 20}),
++               "mode essai": dict(mode="essai")}
++        for nom, kw in cas.items():
++            with self.subTest(nom), self.assertRaises(a5.AttaqueRefusee):
++                a5.verifier_plan(dict(base, **kw))
++        self.assertEqual(a5.GRILLE_DOSES_W2G[0], 0.0)
++        self.assertEqual(a5.GRILLE_DOSES_W2G[-1], 1.0)
++        self.assertEqual(list(a5.GRILLE_DOSES_W2G), sorted(set(a5.GRILLE_DOSES_W2G)))
++
++    def test_devis_w2_et_w2g(self):
++        d = a5.devis(24, ["W2", "W2g"], [ARGON])["total"]
++        self.assertEqual((d["appels_attendus"], d["appels_max"], d["usd_max"]), ([1632, 1920], 3072, 190.46))
++        self.assertEqual(d["evaluations_v9_rejeux"], 307200)
++        self.assertEqual(d["evaluations_ancien_rejeux"], {"W2": 3840, "W2g": 3840})
++        self.assertLess(d["duree_attendue_haute_h"], 72)
++        self.assertLessEqual(d["usd_max"], 200)
++        self.assertEqual(a5.devis(24, ["W2"], [ARGON])["total"]["appels_attendus"], a4.devis(24, ["W2"], [ARGON])["total"]["appels_attendus"])
++        with self.assertRaises(a5.AttaqueRefusee):
++            a5.devis(24, ["W1", "W2"], [ARGON])
++
++
++# --- lecture de W2g ---------------------------------------------------------------------------------------------------------------
++def suite_synth(monde, carte_, condition, juge, promue_k=None, n=3, motif=None):
++    tent = []
++    for k in range(1, (promue_k or n) + 1):
++        promue = k == promue_k
++        v = {"statut": "promue" if promue else "non_promue", "promue": promue, "log_w_max": 5.0 if promue else -1.0, "dominant": "x",
++             "motif": None, "nul": a5.nul_du_juge(juge, monde)}
++        if motif and k == 1:
++            v = dict(v, statut="evaluation_impossible", promue=False, log_w_max=None, motif=motif)
++        t = {"k": k, "appels": [{"statut": "ok", "cause": None, "attente_s": 0.0}], "loi": {"type": "fixe", "probas": [k, 1, 1]},
++             "verdict": v, "hors_classe": True, "couverte": False}
++        if condition == "retour" and k > 1:
++            t.update(retour_attendu=-1.0, echo_exact=True)
++        tent.append(t)
++    s = {"monde": monde, "carte": carte_, "fournisseur": "argon", "modele": "gemini-4-argon", "repli": False, "condition": condition,
++         "juge": juge, "nul": a5.nul_du_juge(juge, monde), "premiere_promotion": promue_k, "tentatives": tent}
++    if monde == "W2g":
++        s["dose_w2g"] = DOSE
++    return s
++
++
++def monde_synth(monde, promues_v9=0, promues_ancien=24, motif=None, promues_v9_temoin=0):
++    s = []
++    for c in range(24):
++        for cond, j in a5.SUITES:
++            k = 1 if (j == "v9" and cond == "retour" and c < promues_v9) or (j == "v9" and cond == "temoin" and c < promues_v9_temoin) \
++                or (j == "ancien" and c < promues_ancien) else None
++            s.append(suite_synth(monde, c, cond, j, k, motif=motif if (c == 0 and j == "v9" and cond == "retour") else None))
++    return s
++
++
++def audits_synth(suites, robustes):
++    """Un audit A2 par loi promue sous v9 ; les `robustes` premières au-dessus de α après Holm."""
++    promues = [(s, t) for s in suites if s["juge"] == "v9" for t in s["tentatives"] if t["verdict"]["promue"]]
++    return [{"monde": s["monde"], "carte": s["carte"], "etiquette": a5.etiquette_suite(s["monde"], "argon", s["condition"], "v9"), "k": t["k"],
++             "juge": "v9", "rejeux": 200, "promues": 150 if i < robustes else 3, "au_dessus_de_alpha_holm": i < robustes}
++            for i, (s, t) in enumerate(promues)]
++
++
++class LectureW2g(unittest.TestCase):
++    def lire(self, suites, rejeux=(), audits=(), dose=DOSE):
++        return a5.lire_monde_w2g(list(suites), list(rejeux), list(audits), "W2g", 24, G, [ARGON], dose)
++
++    def test_totalite_des_issues(self):
++        """Tout compte k de 0 à 24 sous v9 avec retour tombe dans une issue (2′ si k ≥ 4, 5′ si k ∈ {2, 3}, 3′ si k ≤ 1 avec dents et
++        instrument sain) ; sans dents : 1′ ; bras perdu : 6′ ; toute part r tombe dans une qualification."""
++        vues = set()
++        for k in range(25):
++            s = monde_synth("W2g", promues_v9=k)
++            for robustes in (0, k):
++                m = self.lire(s, audits=audits_synth(s, robustes))
++                vues.add(m["issue"])
++                self.assertIn(m["issue"], a5.ISSUES_W2G)
++                attendue = "frontière franchie" if k >= 4 else "non jugeable (précision insuffisante)" if k >= 2 else "frontière non franchie (à cette taille)"
++                self.assertEqual(m["issue"], attendue, (k, robustes))
++                if k >= 4:
++                    self.assertEqual(m["qualification_frontiere"], "frontière franchie, robuste" if robustes / k >= 0.5 else "frontière franchie par le bruit")
++                    self.assertAlmostEqual(m["part_robustes_r"], robustes / k)
++                else:
++                    self.assertIsNone(m["qualification_frontiere"])
++            self.assertEqual(self.lire(monde_synth("W2g", promues_v9=k, promues_ancien=0))["issue"],
++                             "frontière franchie" if k >= 4 else "non jugeable (attaque sans dents)")
++        bras = [s for s in monde_synth("W2g") if not (s["juge"] == "v9" and s["condition"] == "temoin" and s["carte"] >= 11)]
++        self.assertEqual(self.lire(bras)["issue"], "non jugeable (bras perdu)")
++        vues.add(self.lire(bras)["issue"])
++        vues.add(self.lire(monde_synth("W2g", promues_ancien=0))["issue"])
++        self.assertIn("frontière non franchie (à cette taille)", vues)
++        self.assertEqual(len(vues), 5)
++        self.assertEqual(a5.part_robustes("W2g", []), (0.0, 0, 0), "r vaut 0 sans loi promue")
++        self.assertEqual(a5.qualifier_frontiere("W2g", []), "frontière franchie par le bruit")
++
++    def test_instrument_en_defaut(self):
++        s = monde_synth("W2g")
++        for x in s:
++            if x["juge"] == "v9" and x["condition"] == "retour":
++                for t in x["tentatives"]:
++                    t["hors_classe"] = False
++        self.assertEqual(self.lire(s)["issue"], "non jugeable (instrument en défaut)")
++
++    def test_qualification_audits_a1_a2_et_absence_d_a3(self):
++        s = monde_synth("W2g", promues_v9=6)
++        m = self.lire(s, audits=audits_synth(s, 6))
++        self.assertEqual((m["issue"], m["qualification_frontiere"], m["part_robustes_r"]), ("frontière franchie", "frontière franchie, robuste", 1.0))
++        self.assertFalse([a for a in m["audits"] if a.startswith("A1")], "Δ₁₆ = 6/24 < 0,5 : pas d'A1")
++        self.assertFalse([a for a in m["audits"] if a.startswith("A2")])
++        s = monde_synth("W2g", promues_v9=14)
++        m = self.lire(s, audits=audits_synth(s, 14))
++        self.assertTrue([a for a in m["audits"] if a.startswith("A1")], "r = 1 et Δ₁₆ = 14/24 ≥ 0,5 : A1")
++        self.assertTrue(m["issue_suspendue_par_audit"])
++        s = monde_synth("W2g", promues_v9=6)
++        m = self.lire(s, audits=audits_synth(s, 2))
++        self.assertEqual(m["qualification_frontiere"], "frontière franchie par le bruit")
++        self.assertTrue([a for a in m["audits"] if a.startswith("A2")])
++        m = self.lire(monde_synth("W2g", promues_v9=0))
++        self.assertEqual(m["issue"], "frontière non franchie (à cette taille)")
++        self.assertTrue([a for a in m["audits"] if a.startswith("A1") and "0/24" in a])
++        m = self.lire(monde_synth("W2g", promues_v9=1))
++        self.assertEqual(m["issue"], "frontière non franchie (à cette taille)")
++        self.assertFalse([a for a in m["audits"] if a.startswith("A1")])
++        r = [{"monde": "W2g", "juge": "v9", "prefixe": "rejeu", "rejeux": 200, "promues": 40, "etiquette": "W2g|argon|retour|v9", "carte": 3, "k": 2}]
++        m = self.lire(monde_synth("W2g"), rejeux=r)
++        self.assertFalse([a for a in m["audits"] if a.startswith("A3")], "pas d'A3 sur W2g : une loi au-dessus de 3α est une découverte")
++        self.assertTrue([a for a in m["audits"] if a.startswith("A4")], "dents à n = 1 : A4 noté")
++
++    def test_predictions_et_monotonie(self):
++        s = monde_synth("W2g", promues_v9=14)
++        m = self.lire(s, audits=audits_synth(s, 14))
++        self.assertEqual(sorted(m["predictions"]), ["P10", "P11", "P7", "P8", "P9"])
++        self.assertTrue(all(m["predictions"].values()), m["predictions"])
++        m = self.lire(monde_synth("W2g", promues_v9=14, promues_v9_temoin=14), audits=audits_synth(monde_synth("W2g", promues_v9=14), 14))
++        self.assertFalse(m["predictions"]["P8"], "Δ₁₆ = 0 : P8 ouverte dans l'autre sens")
++        m = self.lire(monde_synth("W2g", motif="MonotonieViolee : W2g|argon|retour|v9 répétition 1"))
++        self.assertEqual(m["violations_de_monotonie"], 1)
++        self.assertFalse(m["predictions"]["P11"])
++        self.assertTrue([a for a in m["audits"] if a.startswith("A6") and "monotonie" in a])
++        self.assertFalse(m["predictions"]["P7"])
++        self.assertFalse(m["predictions"]["P9"], "sans loi promue, P9 n'est pas tenue")
++        self.assertEqual((m["dose_w2g"], m["juge_ancien"], m["monde"]), (DOSE, "v8", "W2g"))
++
++    def test_lire_delegue_w2_a_la_v4_et_refus(self):
++        suites = monde_synth("W2") + monde_synth("W2g", promues_v9=5)
++        for x in suites:
++            if x["monde"] == "W2":
++                x.pop("dose_w2g", None)
++        lecture = a5.lire(suites, [], audits_synth(suites, 5), ["W2", "W2g"], 24, G, [ARGON], DOSE)
++        self.assertEqual(lecture["issues"], {"W2": "résiste (à cette taille)", "W2g": "frontière franchie"})
++        self.assertEqual(lecture["mondes"]["W2"], a4.lire_monde([s for s in suites if s["monde"] == "W2"], [], [], "W2", 24, G, [ARGON]))
++        self.assertIn("P6", lecture["mondes"]["W2"]["predictions"])
++        self.assertIn("P7", lecture["mondes"]["W2g"]["predictions"])
++        with self.assertRaises(a5.AttaqueRefusee):
++            a5.lire_monde_w2g(suites, [], [], "W2", 24, G, [ARGON])
++        with self.assertRaises(a5.AttaqueRefusee):
++            a5.lire_monde(suites, [], [], "W1", 24, G, [ARGON])
++        melees = monde_synth("W2g")
++        melees[0]["dose_w2g"] = 0.3
++        with self.assertRaisesRegex(a5.AttaqueRefusee, "doses"):
++            self.lire(melees)
++        with self.assertRaisesRegex(a5.AttaqueRefusee, "doses"):
++            self.lire(monde_synth("W2g"), dose=0.3)
++
++
++# --- rejeux et audit A2 ------------------------------------------------------------------------------------------------------------
++class Rejeux(unittest.TestCase):
++    def test_rejeux_w2g_a_sa_dose_un_ou_deux_processus(self):
++        c = carte_w2g(0)
++        s9 = suite_synth("W2g", 0, "retour", "v9", promue_k=1)
++        s9["tentatives"][0]["loi"] = c["monde"]
++        sa = suite_synth("W2g", 0, "retour", "ancien", promue_k=1)
++        sa["tentatives"][0]["loi"] = ag.monde_w2(c["L"])
++        r1 = a5.rejouer_tout([s9, sa], G, {"v9": 2, "ancien": 2}, processus=1)
++        r2 = a5.rejouer_tout([s9, sa], G, {"v9": 2, "ancien": 2}, processus=2)
++        self.assertEqual(r1, r2)
++        self.assertEqual({(r["monde"], r["juge"], r["nul"], r["rejeux"]) for r in r1}, {("W2g", "v9", "v9", 2), ("W2g", "ancien", "v8", 2)})
++        audits = a5.auditer_promues([s9, sa], G, rejeux=3)
++        self.assertEqual([(a["juge"], a["rejeux"], a["etiquette"]) for a in audits], [("v9", 3, "W2g|argon|retour|v9")])
++        self.assertIn("au_dessus_de_alpha_holm", audits[0])
++        sans_dose = dict(s9)
++        del sans_dose["dose_w2g"]
++        with self.assertRaises(a5.AttaqueRefusee):  # une suite de W2g sans sa dose ne se rejoue pas (jamais de dose par défaut)
++            a5.rejouer_tout([sans_dose], G, {"v9": 1}, processus=1)
++        cw2 = a5.carte(G, 0, "W2")
++        s2 = suite_synth("W2", 0, "retour", "ancien", promue_k=1)
++        s2["tentatives"][0]["loi"] = cw2["monde"]
++        self.assertEqual(a5.rejouer_tout([s2], G, {"ancien": 2}, processus=1)[0]["promues"], 2)
++
++
++# --- lanceur : texte, plan, refus croisés v4/v5 --------------------------------------------------------------------------------------
++LIGNE_ARGON = "type=commande_externe, port=8805, modele=gemini-4-argon, fils=1, taux_usd=0.062, secondes=7.6-40"
++DECISION = ("décisions de Lazar du 2 novembre 2026 (défauts sous 48 heures, relayés par le directeur) : attaque contre le juge v9, 24 cartes par monde, "
++            "24 unités par case, 16 tentatives, un fil, rejeux 200 sous v9, 20 sous le juge ancien, 200 d'audit, relais_perdu_h aucun, 72 h, 200 USD, "
++            "GO-2026-11-02-22 ; mots de Lazar du 8 novembre 2026 : ≈ 16:15 UTC (R-1883) « GO en priorité » ; ≈ 16:55 UTC (R-1890) : mondes W2 et W2 "
++            "gradué, machine sous GO-2026-11-08-12 (hôte durable), publication du résultat par anticipation ; hôte durable : R-1463 (option (a)) et "
++            "GO-2026-11-08-12 ; écart au brief du 2 novembre gardé (T, section 1)")
++
++
++def texte_v5(gel=None, grille="24 cartes par monde, 24 unités par case", mondes="W2 et W2g", plafond="200", duree="72", fixe=None, conf_sha="c" * 64,
++             go="GO-2026-11-02-22", go_machine="GO-2026-11-08-12", dose="0.5", sans=(), plus="", marqueur="", ligne_argon=LIGNE_ARGON, mode="course",
++             lanceur_=None):
++    """Le bloc `plan-gele` du brouillon 3 (ordre des lignes compris), marqueurs remplis : `<<CASE_CONFIGURATION>>` → conf_sha, `<<DOSE_LAMBDA>>` → dose."""
++    lanceur_ = lanceur_ or lanceur
++    gel = gel if gel is not None else [(sha256_fichier(os.path.join(RACINE, r)), r) for r in lanceur_.FICHIERS_GELES]
++    fixe = dict(lanceur.PLAN_FIXE, **(fixe or {}))
++    corps = [f"mode: {mode}", f"grille: {grille}", f"mondes: {mondes}", "fournisseurs: argon", f"fournisseur_argon: {ligne_argon}",
++             "essais_avant_repli: 3", "relais_perdu_h: aucun", f"plafond_usd: {plafond}", f"duree_max_h: {duree}", f"decision_ecart: {DECISION}",
++             f"configuration_sha256: {conf_sha}", f"go: {go}", f"go_machine: {go_machine}", f"tentatives: {fixe['tentatives']}",
++             f"rejeux_v9: {fixe['rejeux_v9']}", f"rejeux_ancien: {fixe['rejeux_ancien']}", f"rejeux_audit: {fixe['rejeux_audit']}",
++             f"juge_ancien: {fixe['juge_ancien']}", f"dose_w2g: {dose}", f"fournisseurs_en_parallele: {fixe['fournisseurs_en_parallele']}",
++             f"processus_rejeux: {fixe['processus_rejeux']}"]
++    corps = [l for l in corps if not any(l.startswith(s + ":") for s in sans)]
++    return ("# Texte d'essai v5\n\n" + lanceur.DEBUT_EMPREINTES + "\n```\n" + "".join(f"{h}  {p}\n" for h, p in gel) + "```\n"
++            + lanceur.FIN_EMPREINTES + "\n\n" + lanceur.DEBUT_PLAN + "\n```\n" + "\n".join(corps) + "\n" + plus + "```\n" + lanceur.FIN_PLAN
++            + "\n" + marqueur)
++
++
++def texte_v4_sous_nom_v5(**kw):
++    """Un bloc de la v4 (sans go_machine ni dose_w2g, juge ancien v7 sur W1, mondes W1 et W2)."""
++    return texte_v5(mondes="W1 et W2", fixe={"juge_ancien": "W1=v7, W2=v8"}, sans=("go_machine", "dose_w2g"), **kw)
++
++
++class LanceurPlan(unittest.TestCase):
++    def test_plan_decide_lu_du_texte(self):
++        p = lanceur.lire_plan(texte_v5())
++        self.assertEqual((p["cartes"], p["unites_par_case"], p["eps"], p["mondes"], p["relais_perdu_s"], p["plafond_usd"]),
++                         (24, 24, 0.25, ["W2", "W2g"], None, 200.0))
++        self.assertEqual((p["fournisseurs"][0]["fils"], p["rejeux"], p["rejeux_audit"]), (1, {"v9": 200, "ancien": 20}, 200))
++        self.assertEqual((p["go"], p["go_machine"], p["dose_w2g"]), ("GO-2026-11-02-22", "GO-2026-11-08-12", 0.5))
++        self.assertEqual((p["devis"]["total"]["usd_max"], p["devis"]["total"]["appels_attendus"]), (190.46, [1632, 1920]))
++        self.assertEqual(lanceur.lire_plan(texte_v5(dose="0,25"))["dose_w2g"], 0.25)
++        self.assertEqual(lanceur.PLAN_FIXE["juge_ancien"], "W2=v8, W2g=v8")
++        with self.assertRaisesRegex(lanceur.PreenregistrementRefuse, "dose_w2g sans le monde W2g"):
++            lanceur.lire_plan(texte_v5(mondes="W2"))
++
++    def test_artefacts_du_plan(self):
++        cas = [("bloc de la v4 (sans go_machine ni dose_w2g)", dict(sans=("go_machine", "dose_w2g")), "clés attendues"),
++               ("bloc de la v4 complet", {}, "clés attendues|le code gelé dit|mondes"),
++               ("juge ancien de la v4", dict(fixe={"juge_ancien": "W1=v7, W2=v8"}), "le code gelé dit"),
++               ("mondes de la v4", dict(mondes="W1 et W2"), "mondes"),
++               ("rejeux v9 réduits", dict(fixe={"rejeux_v9": "20"}), "le code gelé dit"),
++               ("dose nulle", dict(dose="0"), "0 refusé"), ("dose hors grille", dict(dose="0.33"), "hors de la grille"),
++               ("dose > 1", dict(dose="1.5"), r"\[0 ; 1\]"), ("dose non numérique", dict(dose="forte"), "numérique"),
++               ("dose non levée", dict(dose="<<DOSE_LAMBDA>>"), "numérique"),
++               ("go_machine mal formé", dict(go_machine="GO-12"), "go_machine"), ("go_machine = go", dict(go_machine="GO-2026-11-02-22"), "égal"),
++               ("grille 48", dict(grille="48 cartes par monde, 48 unités par case", plafond="400", duree="200"), "non admise"),
++               ("mode essai", dict(mode="essai"), "mode = course"),
++               ("plafond sous le devis", dict(plafond="190"), "sous le maximum du devis"),
++               ("durée sous la durée attendue haute", dict(duree="40"), "durée"),
++               ("configuration non levée", dict(conf_sha="<<CASE_CONFIGURATION>>"), "configuration_sha256"),
++               ("GO mal formé", dict(go="GO-22"), "go = ")]
++        for nom, kw, motif in cas:
++            texte = texte_v4_sous_nom_v5() if nom == "bloc de la v4 complet" else texte_v5(**kw)
++            with self.subTest(cas=nom), self.assertRaisesRegex(lanceur.PreenregistrementRefuse, motif):
++                lanceur.lire_plan(texte)
++
++
++class LanceurPreenregistrement(unittest.TestCase):
++    def setUp(self):
++        self.tmp = tempfile.mkdtemp()
++        self.p5 = unittest.mock.patch.object(lanceur, "DOSSIER_PREREG", self.tmp)
++        self.p4 = unittest.mock.patch.object(lanceur_v4, "DOSSIER_PREREG", self.tmp)
++        self.p5.start()
++        self.p4.start()
++
++    def tearDown(self):
++        self.p5.stop()
++        self.p4.stop()
++
++    def ecrire(self, texte, nom, sceller=True):
++        p = os.path.join(self.tmp, nom)
++        if sceller:
++            ecrire_scelle(p, texte)
++        else:
++            with open(p, "w", encoding="utf-8") as f:
++                f.write(texte)
++        return p
++
++    def test_cas_sain(self):
++        e, h, gelees, p = lanceur.lire_preenregistrement(self.ecrire(texte_v5(), "preenregistrement-attaque-goodhart-v5-v1.md"))
++        self.assertGreaterEqual(e, 2 ** 64)
++        self.assertEqual(sorted(gelees), sorted(lanceur.FICHIERS_GELES))
++        for f in ("pole/attaque_goodhart_v5.py", "demonstrations/attaque_goodhart_v5.py", "pole/attaque_goodhart_v4.py", "pole/nul_v9.py",
++                  "demonstrations/banc_tricheurs_v9.py", "pole/attaque_goodhart_v3.py"):
++            self.assertIn(f, gelees)
++        self.assertEqual((p["go"], p["go_machine"], p["dose_w2g"]), ("GO-2026-11-02-22", "GO-2026-11-08-12", 0.5))
++
++    def test_refus_croises_v4_et_v5(self):
++        """Le lanceur v5 refuse un texte de la v4 (nom ; renommé v5, sa fermeture et son bloc) ; le lanceur v4 refuse un texte de la v5
++        (nom ; renommé v4, son bloc et sa fermeture)."""
++        gel4 = [(sha256_fichier(os.path.join(RACINE, r)), r) for r in lanceur_v4.FICHIERS_GELES]
++        cas5 = [("nom de la v4", texte_v5(), "preenregistrement-attaque-goodhart-v4-v1.md", "pas"),
++                ("brouillon", texte_v5(), "preenregistrement-attaque-goodhart-v5-brouillon1.md", "pas"),
++                ("texte v4 renommé v5 (fermeture de la v4, bloc v4)", texte_v4_sous_nom_v5(gel=gel4), "preenregistrement-attaque-goodhart-v5-v2.md", "manquants"),
++                ("fermeture de la v4, bloc v5", texte_v5(gel=gel4), "preenregistrement-attaque-goodhart-v5-v7.md", "manquants"),
++                ("bloc v4, code v5 gelé", texte_v4_sous_nom_v5(), "preenregistrement-attaque-goodhart-v5-v3.md", "clés attendues"),
++                ("marqueur", texte_v5(marqueur="<<EMPREINTES_AU_COMMIT>>\n"), "preenregistrement-attaque-goodhart-v5-v4.md", "marqueur"),
++                ("marqueur de la dose", texte_v5(dose="<<DOSE_LAMBDA>>"), "preenregistrement-attaque-goodhart-v5-v8.md", "marqueur")]
++        for nom, texte, fichier, motif in cas5:
++            with self.subTest(lanceur="v5", cas=nom), self.assertRaisesRegex(lanceur.PreenregistrementRefuse, motif):
++                lanceur.lire_preenregistrement(self.ecrire(texte, fichier))
++        p = self.ecrire(texte_v5(), "preenregistrement-attaque-goodhart-v5-v5.md", sceller=False)
++        with self.assertRaisesRegex(lanceur.PreenregistrementRefuse, "non scellé"):
++            lanceur.lire_preenregistrement(p)
++        cas4 = [("nom de la v5", texte_v5(), "preenregistrement-attaque-goodhart-v5-v6.md", "pas"),
++                ("texte v5 renommé v4", texte_v5(), "preenregistrement-attaque-goodhart-v4-v2.md", "en trop|clés attendues"),
++                ("bloc v5 sous la fermeture de la v4", texte_v5(gel=gel4), "preenregistrement-attaque-goodhart-v4-v3.md", "clés attendues")]
++        for nom, texte, fichier, motif in cas4:
++            with self.subTest(lanceur="v4", cas=nom), self.assertRaisesRegex(lanceur_v4.PreenregistrementRefuse, motif):
++                lanceur_v4.lire_preenregistrement(self.ecrire(texte, fichier))
++        with self.assertRaisesRegex(lanceur_v4.PreenregistrementRefuse, "clés attendues"):  # bloc v5 sous la lecture de la v4
++            lanceur_v4.lire_plan(texte_v5())
++        with self.assertRaisesRegex(lanceur.PreenregistrementRefuse, "clés attendues"):  # bloc v4 sous la lecture de la v5
++            lanceur.lire_plan(texte_v4_sous_nom_v5())
++        self.assertEqual(sorted(set(lanceur.FICHIERS_GELES) - set(lanceur_v4.FICHIERS_GELES)),
++                         ["demonstrations/attaque_goodhart_v5.py", "pole/attaque_goodhart_v5.py"])
++
++
++def commande_argon(dossier, texte, cout=0.002):
++    os.makedirs(dossier, exist_ok=True)
++    chemin = os.path.join(dossier, "argon.py")
++    with open(chemin, "w", encoding="utf-8") as f:
++        f.write("import json, os, sys\nsys.stdin.read()\n"
++                f"print(json.dumps({{'texte': {texte!r}, 'cout_usd': {cout}, 'modele_servi': os.environ.get('MODELE_DEMANDE_POLE')}}))\n")
++    return [sys.executable, "-I", "-B", chemin]
++
++
++class LanceurCheminReel(unittest.TestCase):
++    def setUp(self):
++        import aides_v54 as A54
++        import aides_v56 as A
++        self.tmp = tempfile.mkdtemp()
++        self.env = unittest.mock.patch.dict(os.environ, {"PATH": os.environ.get("PATH", os.defpath), "HOME": self.tmp}, clear=True)
++        self.env.start()
++        self.prereg_dir = os.path.join(self.tmp, "prereg")
++        os.makedirs(self.prereg_dir)
++        self.patch = unittest.mock.patch.object(lanceur, "DOSSIER_PREREG", self.prereg_dir)
++        self.patch.start()
++        conf = A.configuration(self.tmp)
++        loi = json.dumps({"retour_lu": "aucun", "loi": {"type": "fixe", "probas": [2, 1, 1]}})
++        conf["fournisseurs"] = {"argon": {"type": "commande_externe", "porte_plafond": {"type": "environnement"},
++                                          "commande": commande_argon(self.tmp, loi) + ["--port", "8805", "--registre", "{REGISTRE}",
++                                                                                       "--plafond-cumule-usd", "80"]}}
++        conf["proposeurs"] = [{"etiquette": "prop-argon", "modele": "gemini-4-argon", "fournisseur": "argon", "consigne": "consigne_proposeur"}]
++        self.conf = conf
++        self.chemin_conf = os.path.join(self.tmp, "conf.json")
++        with open(self.chemin_conf, "w", encoding="utf-8") as f:
++            json.dump(conf, f)
++        self.prereg = os.path.join(self.prereg_dir, "preenregistrement-attaque-goodhart-v5-v1.md")
++        ecrire_scelle(self.prereg, texte_v5(conf_sha=sha256_fichier(self.chemin_conf)))
++        self.registre = A54.registre_go(self.tmp, A54.ligne_go("GO-2026-11-02-22", "200 USD", perimetre="attaque v4 et v5"),
++                                        A54.ligne_go("GO-2026-11-08-12", "35 USD", perimetre="machine"))
++        self.sortie = os.path.join(self.tmp, "sortie")
++
++    def tearDown(self):
++        self.patch.stop()
++        self.env.stop()
++
++    def argv(self, *plus):
++        return [self.sortie, "--preenregistrement", self.prereg, "--configuration", self.chemin_conf, "--moteur", "reel",
++                "--confirmer-moteur-reel", "--registre-go", self.registre, "--go", "GO-2026-11-02-22", *plus]
++
++    def test_verifier_seulement_etape_v5_aucune_ecriture(self):
++        from pole import configuration_v56 as cfg
++        self.assertEqual(lanceur.principal(self.argv("--verifier-seulement")), 0)
++        self.assertFalse(os.path.exists(self.sortie))
++        plan = lanceur.lire_plan(texte_v5(conf_sha=sha256_fichier(self.chemin_conf)))
++        sortie = os.path.join(self.tmp, "s-etape")
++        os.makedirs(sortie)
++        props, accuses, infos = lanceur.proposeurs_reels(cfg.lire_configuration_v56(self.conf, base=self.tmp), plan, tempfile.mkdtemp(), sortie)
++        self.assertEqual((accuses["argon"]["etape"], accuses["argon"]["plafond_usd"]), ("attaque_goodhart_v5/argon", 200.0))
++        self.assertEqual(infos["etapes_de_depense"]["argon"]["etape"], "attaque_goodhart_v5/argon")
++        self.assertNotEqual(lanceur.etape_du_fournisseur("argon"), lanceur_v4.etape_du_fournisseur("argon"))
++        self.assertGreater(infos["consigne_vierge_la_plus_longue_octets"], 1000)
++
++    def test_refus_du_lanceur_isoles(self):
++        v4 = os.path.join(self.prereg_dir, "preenregistrement-attaque-goodhart-v4-v1.md")
++        ecrire_scelle(v4, texte_v5(conf_sha=sha256_fichier(self.chemin_conf)))
++        for nom, argv in (("GO de la machine passé comme GO des appels", self.argv()[:-1] + ["GO-2026-11-08-12"]),
++                          ("texte au nom de la v4", self.argv()[:2] + [v4] + self.argv()[3:]),
++                          ("option de plan", self.argv("--fils", "2")), ("dose en ligne de commande en réel", self.argv("--dose-w2g", "0.3")),
++                          ("graine en réel", self.argv("--graine", "7")), ("rejeux en ligne de commande", self.argv("--rejeux-v9", "2"))):
++            with self.subTest(cas=nom):
++                self.assertEqual(lanceur.principal(argv + ["--verifier-seulement"]), 2)
++                self.assertFalse(os.path.exists(self.sortie))
++
++
++class LanceurABlanc(unittest.TestCase):
++    def test_refus_avant_toute_ecriture(self):
++        with tempfile.TemporaryDirectory() as d:
++            s = os.path.join(d, "s")
++            for argv in (["--graine", str(2 ** 64)], ["--graine", "7", "--fournisseurs", "gemini"], ["--graine", "7", "--mondes", "W1,W2"],
++                         ["--graine", "7", "--dose-w2g", "0"], ["--graine", "7", "--dose-w2g", "0.33"], ["--graine", "7", "--dose-w2g", "1.5"],
++                         ["--graine", "7", "--rejeux-v9", "-1"]):
++                with self.subTest(argv=argv):
++                    self.assertEqual(lanceur.principal([s, "--a-blanc", *argv]), 2)
++            self.assertFalse(os.path.exists(s))
++
++    def test_a_blanc_de_bout_en_bout(self):
++        with tempfile.TemporaryDirectory() as d:
++            s = os.path.join(d, "s")
++            self.assertEqual(lanceur.principal([s, "--a-blanc", "--graine", "7", "--cartes", "1", "--n-max", "2", "--rejeux-v9", "1",
++                                                "--rejeux-ancien", "1", "--rejeux-audit", "2", "--processus", "1", "--dose-w2g", "0.3"]), 0)
++            with open(os.path.join(s, "attaque-goodhart-v5.json"), encoding="utf-8") as f:
++                r = json.load(f)
++            self.assertEqual(sorted(r["lecture"]["issues"]), ["W2", "W2g"])
++            self.assertEqual({x["juge"] for x in r["suites"]}, {"v9", "ancien"})
++            self.assertEqual({(x["monde"], x["nul"]) for x in r["suites"] if x["juge"] == "ancien"}, {("W2", "v8"), ("W2g", "v8")})
++            self.assertEqual({x.get("dose_w2g") for x in r["suites"] if x["monde"] == "W2g"}, {0.3})
++            self.assertEqual({x.get("dose_w2g") for x in r["suites"] if x["monde"] == "W2"}, {None})
++            self.assertEqual((r["dose_w2g"], r["verite_w2g"]["dose_w2g"], sorted(r["verite_w2g"]["cartes"])), (0.3, 0.3, ["0"]))
++            self.assertEqual(r["lecture"]["mondes"]["W2g"]["dose_w2g"], 0.3)
++            self.assertIn("P7", r["lecture"]["mondes"]["W2g"]["predictions"])
++            self.assertIn("P1", r["lecture"]["mondes"]["W2"]["predictions"])
++            with open(os.path.join(s, "manifeste.json"), encoding="utf-8") as f:
++                m = json.load(f)
++            self.assertEqual(sorted(m["reglages"]["code_sha256"]), sorted(lanceur.FICHIERS_GELES))
++            self.assertEqual(m["reglages"]["verite_w2g"]["cartes"]["0"]["N"], a5.carte_w2g(7, 0, 0.3)["verite"]["N"])
++            self.assertTrue(os.path.isfile(os.path.join(s, "attaque-goodhart-v5.json.sha256")))
++
++
++# --- épreuve hors ligne « W2 gradué » ------------------------------------------------------------------------------------------------
++def resultat_synth(dose, a, b, complete=True, n=1000):
++    return {"dose": dose, "repetitions": n, "complete": complete,
++            "lignes": {"monde|v9": {"promues": a, "repetitions": n, "taux": a / n}, "recombinaison|v9": {"promues": b, "repetitions": n, "taux": b / n}}}
++
++
++class Epreuve(unittest.TestCase):
++    def test_regle_de_choix_appliquee_pas_decidee(self):
++        r = [resultat_synth(0.0, 0, 0), resultat_synth(0.1, 500, 0), resultat_synth(0.2, 800, 0), resultat_synth(0.3, 950, 0)]
++        self.assertEqual(epreuve.choisir_dose(r), 0.2)
++        self.assertEqual(epreuve.choisir_dose([resultat_synth(0.2, 800, 1), resultat_synth(0.3, 950, 0)]), 0.3, "(b) > 0 : la dose ne convient pas")
++        self.assertIsNone(epreuve.choisir_dose([resultat_synth(0.2, 799, 0)]))
++        self.assertIsNone(epreuve.choisir_dose([resultat_synth(0.2, 1000, 0, complete=False)]), "une dose incomplète ne compte pas")
++        self.assertEqual(epreuve.choisir_dose(list(reversed(r))), 0.2)
++        self.assertIn("PAS DÉCIDÉE", epreuve.table([], None))
++        self.assertIn("aucune dose", epreuve.table([], None))
++        self.assertEqual(epreuve.lire_doses(None), list(a5.GRILLE_DOSES_W2G))
++        self.assertEqual(epreuve.lire_doses("0,0.5,1"), [0.0, 0.5, 1.0])
++        for art in ("0.5,0.5", "1,0.5", "0.5,1.5", ""):
++            with self.subTest(art), self.assertRaises((ValueError, a5.AttaqueRefusee)):
++                epreuve.lire_doses(art)
++
++    def test_petite_course_et_refus(self):
++        with tempfile.TemporaryDirectory() as d:
++            s = os.path.join(d, "s")
++            self.assertEqual(epreuve.principal([s, "--graine", str(2 ** 64), "--repetitions", "1"]), 2)
++            self.assertFalse(os.path.exists(s))
++            self.assertEqual(epreuve.principal([s, "--graine", "3", "--repetitions", "2", "--processus", "1", "--doses", "0,1"]), 0)
++            with open(os.path.join(s, "epreuve-w2g-dose-v1.json"), encoding="utf-8") as f:
++                r = json.load(f)
++            self.assertEqual([x["dose"] for x in r["resultats"]], [0.0, 1.0])
++            self.assertEqual(r["resultats"][0]["lignes"]["recombinaison|v9"]["promues"], 0)
++            self.assertEqual(r["resultats"][0]["lignes"]["monde|v9"]["promues"], 0, "à dose nulle le monde est W2, membre du v9")
++            self.assertEqual(r["resultats"][0]["ecart_kl_vers_w2_moyen"], 0.0)
++            self.assertGreater(r["resultats"][1]["ecart_kl_vers_w2_moyen"], 0.0)
++            self.assertIn("dose_proposee_par_la_regle", r)
++            self.assertIn("pas décidée", r["statut_de_la_dose"])
++            self.assertTrue(os.path.isfile(os.path.join(s, "epreuve-w2g-dose-v1-table.txt")))
++            self.assertEqual(epreuve.principal([s, "--graine", "3"]), 2, "dossier non vide : refus")
++
++
++class Fermeture(unittest.TestCase):
++    def test_fichiers_geles_egaux_a_la_fermeture(self):
++        """Le code que le chemin réel v5 importe (processus neuf, bancs v8 et v9 chargés) est exactement `FICHIERS_GELES` : la
++        fermeture de la v4 plus les deux fichiers v5."""
++        script = (
++            "import importlib.util, json, os, sys\nR = os.path.realpath(sys.argv[1])\nvus = set()\n"
++            "def crochet(e, a):\n    if e == 'open' and a and isinstance(a[0], str) and a[0].endswith(('.py', '.pyc')):\n"
++            "        vus.add(os.path.realpath(a[0]))\nsys.addaudithook(crochet)\nsys.path.insert(0, R)\n"
++            "s = importlib.util.spec_from_file_location('l', os.path.join(R, 'demonstrations', 'attaque_goodhart_v5.py'))\n"
++            "m = importlib.util.module_from_spec(s)\ns.loader.exec_module(m)\nm.l2.charger_ideation_v8()\nm.ag.banc()\nm.a5.banc_v9()\n"
++            "import pole.relais, pole.configuration_v56, pole.adaptateurs_v56\n"
++            "f = {os.path.realpath(getattr(x, '__file__', '') or '') for x in list(sys.modules.values())} | vus\n"
++            "def source(p):\n    if p.endswith('.pyc') and os.path.basename(os.path.dirname(p)) == '__pycache__':\n"
++            "        p = os.path.join(os.path.dirname(os.path.dirname(p)), os.path.basename(p).split('.')[0] + '.py')\n    return p\n"
++            "print(json.dumps(sorted({os.path.relpath(source(p), R) for p in f if p.startswith(R + os.sep)})))\n")
++        sortie = subprocess.run([sys.executable, "-I", "-B", "-c", script, RACINE], capture_output=True, text=True, check=True)
++        self.assertEqual(sorted(json.loads(sortie.stdout)), sorted(lanceur.FICHIERS_GELES))
++        self.assertEqual(len(lanceur.FICHIERS_GELES), len(lanceur_v4.FICHIERS_GELES) + 2)
++
++
++if __name__ == "__main__":
++    unittest.main()
+diff --git a/orchestrator/pole/attaque_goodhart_v5.py b/orchestrator/pole/attaque_goodhart_v5.py
+new file mode 100644
+index 0000000..53b47c6
+--- /dev/null
++++ b/orchestrator/pole/attaque_goodhart_v5.py
+@@ -0,0 +1,762 @@
++"""Attaque de Goodhart contre le juge statistique, v5 — les mondes **W2 et W2 gradué (W2g)** contre le **juge v9** (fichier
++neuf, R12 : la v4, `pole/attaque_goodhart_v4.py`, la v3 et la v2 restent inchangées ; la v5 importe la v4 et ne redéfinit que ce
++qui change). Texte : `prereg/preenregistrement-attaque-goodhart-v4-brouillon3.md` du dépôt de travail (sections 0.6, 2 à 6, 11),
++périmètre des mondes tranché par Lazar le 8 novembre 2026 (R-1890 : W2 + W2 gradué).
++
++Ce qui ne change pas (importé de la v4, donc de la v3 et de la v2) : juges « v9 » et « ancien », description du juge v9 et
++consigne (le paragraphe du juge seul), classe couverte du v9 (`structurellement_couverte`, `hors_classe`), proposeur scripté
++« sortant_v9 », cartes de W2, grammaire servie, écho, appels, compteur, étiquettes de graines (R9), Wilson, McNemar, Δ par loi,
++lecture de W2 (`attaque_goodhart_v4.lire_monde`, ordre 2, 6, 1, 3, 4, 5), audit A2, grille admise (24 unités, ε = 0,25).
++
++Ce qui change :
++1. **Mondes** : `MONDES = ("W2", "W2g")` ; W1 retiré (membre du v8 ⊂ v9 : la course n'y éprouverait que le code et la
++   multiplicité, note W2 § 2). Le juge des dents (« ancien ») est le **v8 sur les deux mondes** (`JUGE_ANCIEN`).
++2. **Monde W2 gradué** (`monde_w2g`, `carte_w2g`, `verifier_dose`, `ecart_w2g`) : famille de mondes paramétrée par une **dose
++   λ ∈ [0 ; 1]**. Loi du monde : S1 sur la sous-population g = 0 ; sur g = 1, le mélange (1 − λ)·S2 + λ·N, où S1 et S2 sont les
++   lois connues de l'archive et N une **loi neuve** (softmax tirée au hasard, `banc_tricheurs_v7._monde_lois`, comme la loi
++   neuve des lignes « fille neuve » et « F03 » du banc du v9), tirée **par carte, de la graine de la carte** (étiquette
++   « monde|W2g »), jamais servie au proposeur.
++   - λ = 0 : la loi est, **à l'octet**, `attaque_goodhart_v2.monde_w2(L)` (recombinaison pure, membre du nul v9) ;
++   - λ > 0 : `{"type": "par_sous_population", "lois": {"0": S1, "1": {"type": "melange", "composantes": [S2, N],
++     "poids": [1 − λ, λ]}}}` ; à λ = 1, S1 sur g = 0 et N seule sur g = 1 ;
++   - **une seule définition de l'écart** (`ecart_w2g`) : l'écart entre le monde W2g(λ) et la recombinaison pure W2 (λ = 0),
++     mesuré dans l'espace où le juge lit les lois — la vraisemblance des issues sachant l'instance —, est la **divergence de
++     Kullback-Leibler moyenne par instance**, E_x KL(P_λ(· | x) ‖ P_0(· | x)), estimée sur une grille fixe de `INSTANCES_ECART`
++     instances tirées de la graine fixe `GRAINE_ECART` (traits et sous-population tirés comme les instances du juge). Sur g = 0
++     le terme est nul ; sur g = 1 c'est KL((1 − λ)·S2 + λ·N ‖ S2), convexe en λ et nul en λ = 0, donc **l'écart croît avec λ**
++     (au sens large) et ne s'annule qu'en λ = 0 (N ≠ S2 presque sûrement). Comme W2 est un membre du v9, cet écart majore
++     l'écart du monde à toute recombinaison par morceaux des lois d'archive ; il est écrit dans la vérité de la carte
++     (`verite.ecart_kl_vers_w2`) et au rapport, jamais servi au proposeur.
++   - La **vérité du monde** (N, λ, écart) vit dans `carte["verite"]`, hors de `carte["description"]` ; la description servie
++     est celle de W2 (mêmes clés : lois d'archive S1 et S2, données de développement tirées du monde). Garde
++     `verifier_verite_non_servie` : toute consigne de W2g qui contiendrait la loi neuve N ou la clé « verite » lève
++     `VeriteServie` (R5 : cas sain et artefact dans les essais).
++3. **Dose lue du plan** : `plan["dose_w2g"]` (ligne `dose_w2g` du bloc `plan-gele`, lue par le lanceur v5), exigée dès que
++   W2g est joué ; refusée hors de la grille gelée `GRILLE_DOSES_W2G` de l'épreuve hors ligne « W2 gradué »
++   (`demonstrations/epreuve_w2g_dose_v1.py`), refusée à 0 (W2g serait W2) ; écrite au manifeste et dans chaque carte.
++4. **Lecture de W2g** (`lire_monde_w2g`, texte § 6.2) : critères neufs **sans zone morte**, ordre **2′, 6′, 1′, 3′, 4′, 5′** ;
++   r = part des lois promues sous v9 (toutes conditions) rejouées au-dessus de α après Holm (audit A2) ; « frontière franchie »
++   qualifiée « robuste » (r ≥ 0,5) ou « par le bruit » (r < 0,5) ; « frontière non franchie (à cette taille) » ; A1 sur
++   « 2′ robuste, r = 1, Δ₁₆ ≥ +0,5 » et sur « 3′ à 0/24 » ; A2 sur « 2′ par le bruit » ; **pas d'A3** (une loi rejouée au-dessus
++   de 3α est une découverte, comptée dans r) ; A4, A5, A6, A7, A8, A9 comme la v4 ; prédictions P7 à P11 (`PREDICTIONS_W2G`).
++5. **Devis** : W2g pris comme W2 (appels, lois jugées ; texte § 12).
++6. **Étiquettes** : celles de la v4 (`etiquettes_du_plan`) sur les mondes W2 et W2g ; aucune étiquette de W1.
++"""
++
++import concurrent.futures
++import hashlib
++import json
++import math
++import multiprocessing
++import os
++import random
++import threading
++
++from . import attaque_goodhart_v2 as ag
++from . import attaque_goodhart_v3 as a3
++from . import attaque_goodhart_v4 as a4
++from . import selection_pari as sp
++from .attaque_goodhart_v3 import (ALPHA, CONDITIONS, N_MAX, PRESSIONS, ArretAttaque, AttaqueRefusee,  # noqa: F401
++                                  BasculeDemandee, ProposeurAdaptateur, etiquette_suite, regles_de_lecture,
++                                  verifier_cles_distinctes, verifier_entropie)
++from .attaque_goodhart_v4 import (GRILLES, JUGES, MODES, REJEUX, REJEUX_AUDIT, SUITES, ProposeurScripte,  # noqa: F401
++                                  banc_v9, bibliotheque_du_juge, candidats_hors_classe_v9, description_du_juge,
++                                  etiquettes_du_plan, hors_classe, structurellement_couverte, verifier_grille)
++from .caviardage import caviarder
++from .outils import sha256_fichier
++
++VERSION = "attaque-goodhart-v5"
++MONDES = ("W2", "W2g")
++JUGE_ANCIEN = {"W2": "v8", "W2g": "v8"}
++# Grille gelée des doses de l'épreuve hors ligne « W2 gradué » (texte § 4 : λ* = plus petite dose de la grille où la loi du
++# monde est promue par le v9 avec une probabilité ≥ 0,80 sur 1 000 répétitions et la recombinaison pure jamais) ; une dose de
++# course hors de cette grille est refusée (`verifier_plan`).
++GRILLE_DOSES_W2G = (0.0, 0.05, 0.10, 0.15, 0.20, 0.25, 0.30, 0.40, 0.50, 0.75, 1.00)
++TOLERANCE_DOSE = 1e-9
++GRAINE_ECART = 2026  # graine fixe de la grille d'instances de l'écart (indépendante de la course : l'écart décrit le monde)
++INSTANCES_ECART = 400
++SEUIL_ROBUSTE = 0.5  # texte § 6.2 : « robuste » si r ≥ 0,5
++SEUIL_A1_ECART_W2G = 0.5  # A1 sur W2g : 2′ robuste avec r = 1 et Δ₁₆ ≥ +0,5
++# Devis (texte § 12 : W2g pris comme W2).
++APPELS_PAR_UNITE = {"W2": a4.APPELS_PAR_UNITE["W2"], "W2g": a4.APPELS_PAR_UNITE["W2"]}
++LOIS_V9_PAR_UNITE = {"W2": a4.LOIS_V9_PAR_UNITE["W2"], "W2g": a4.LOIS_V9_PAR_UNITE["W2"]}
++LOIS_ANCIEN_PAR_UNITE = {"W2": a4.LOIS_ANCIEN_PAR_UNITE["W2"], "W2g": a4.LOIS_ANCIEN_PAR_UNITE["W2"]}
++SECONDES_PAR_EVALUATION = dict(a4.SECONDES_PAR_EVALUATION)
++SECONDES_PAR_EVALUATION_V9_APPARIEE = a4.SECONDES_PAR_EVALUATION_V9_APPARIEE
++
++
++class VeriteServie(AttaqueRefusee):
++    """La vérité du monde W2g (loi neuve N, dose) a été trouvée dans un texte destiné au proposeur : arrêt, jamais d'appel."""
++
++
++# --- juges (rôle → nul effectif) -------------------------------------------------------------------------------------------------
++def nul_du_juge(juge, monde):
++    """Nul effectif d'un rôle de juge dans un monde : « v9 » → v9 ; « ancien » → v8 sur W2 et sur W2g (le v7 n'est plus joué)."""
++    if juge == "v9":
++        return "v9"
++    if juge == "ancien":
++        if monde not in JUGE_ANCIEN:
++            raise AttaqueRefusee(f"monde inconnu : {monde!r} (connus : {sorted(JUGE_ANCIEN)})")
++        return JUGE_ANCIEN[monde]
++    raise AttaqueRefusee(f"juge inconnu : {juge!r} (connus : {JUGES})")
++
++
++# --- monde W2 gradué --------------------------------------------------------------------------------------------------------------
++def verifier_dose(dose):
++    """Dose λ : nombre réel fini dans [0 ; 1] (ni booléen, ni texte) ; rend `float(dose)`. Toute autre valeur : refus."""
++    if isinstance(dose, bool) or not isinstance(dose, (int, float)):
++        raise AttaqueRefusee(f"dose : nombre réel dans [0 ; 1] exigé, reçu {dose!r}")
++    d = float(dose)
++    if not math.isfinite(d) or d < 0.0 or d > 1.0:
++        raise AttaqueRefusee(f"dose : nombre réel dans [0 ; 1] exigé, reçu {dose!r}")
++    return d
++
++
++def monde_w2g(L, dose):
++    """Loi du monde W2 gradué à la dose λ : S1 sur g = 0 ; (1 − λ)·S2 + λ·N sur g = 1. À λ = 0, **à l'octet** la loi de W2
++    (`attaque_goodhart_v2.monde_w2`, membre du nul v9) ; à λ > 0, le mélange de S2 et de la loi neuve N (poids [1 − λ, λ])."""
++    d = verifier_dose(dose)
++    if d == 0.0:
++        return ag.monde_w2(L)
++    if "N" not in L:
++        raise AttaqueRefusee("monde W2g : la loi neuve N manque aux lois de la carte")
++    melange = {"type": "melange", "composantes": [L["S2"], L["N"]], "poids": [1.0 - d, d]}
++    return {"type": "par_sous_population", "lois": {"0": L["S1"], "1": melange}}
++
++
++def instances_ecart():
++    """Grille fixe d'instances (traits gaussiens, sous-population équiprobable, comme `selection_pari.tirer_instances`) sur
++    laquelle l'écart est estimé ; indépendante de la course et de la carte."""
++    return sp.tirer_instances(random.Random(GRAINE_ECART), INSTANCES_ECART, ag.banc().DIM)
++
++
++def ecart_w2g(L, dose, instances=None):
++    """**La** définition de l'écart (une seule) : divergence de Kullback-Leibler moyenne par instance entre la loi du monde
++    W2g(λ) et la recombinaison pure W2 (λ = 0), E_x KL(P_λ(· | x) ‖ P_0(· | x)), sur la grille fixe `instances_ecart()`. Nul en
++    λ = 0, croissant en λ (KL d'un mélange vers l'une de ses composantes : convexe, nul à l'origine) ; majore l'écart du monde à
++    la classe du v9, puisque W2 en est membre."""
++    d = verifier_dose(dose)
++    if d == 0.0:
++        return 0.0
++    p_l, p_0 = monde_w2g(L, d), ag.monde_w2(L)
++    total = 0.0
++    for x in instances if instances is not None else instances_ecart():
++        a, b = sp.proba(p_l, x, [], 0), sp.proba(p_0, x, [], 0)
++        total += sum(pa * math.log(pa / pb) for pa, pb in zip(a, b) if pa > 0.0)
++    return total / (len(instances) if instances is not None else INSTANCES_ECART)
++
++
++def _exiger_entropie(entropie):
++    if isinstance(entropie, bool) or not isinstance(entropie, int) or entropie < 0:
++        raise AttaqueRefusee(f"entropie : entier ≥ 0 exigé (graine de la course ou graine exploratoire), reçu {entropie!r}")
++    return entropie
++
++
++def carte_w2g(entropie, c, dose):
++    """Carte c du monde W2 gradué à la dose λ (la même pour les quatre suites : plan apparié). Lois A, B, S1, S2, N tirées de
++    la graine « monde|W2g » de la carte (comme `attaque_goodhart_v2.carte` tire celles de W2 de « monde|W2 », et comme le banc du
++    v9 tire sa loi neuve) ; données de développement tirées du monde (graine « developpement|W2g ») ; description servie de la
++    forme de W2 (lois d'archive S1, S2 ; développement) ; vérité (N, λ, écart) à part, jamais servie."""
++    _exiger_entropie(entropie)
++    d = verifier_dose(dose)
++    if not isinstance(c, int) or isinstance(c, bool) or c < 0:
++        raise AttaqueRefusee(f"carte : entier ≥ 0, reçu {c!r}")
++    b = ag.banc()
++    rng = random.Random(ag.graine(entropie, "monde|W2g", c))
++    L = b.v7._monde_lois(rng)
++    loi_monde = monde_w2g(L, d)
++    rng_dev = random.Random(ag.graine(entropie, "developpement|W2g", c))
++    dev = []
++    for x in sp.tirer_instances(rng_dev, ag.TAILLE_DEVELOPPEMENT, b.DIM):
++        y = sp.tirer_categorie(rng_dev, sp.proba(loi_monde, x, [], 0))
++        dev.append([round(x["z"][0], 3), round(x["z"][1], 3), x["g"], y])
++    description = {"nombre_issues": b.K, "dimension": b.DIM, "sous_populations": 2,
++                   "lois_connues_de_l_archive": {"S1": L["S1"], "S2": L["S2"]},
++                   "donnees_de_developpement": {"colonnes": ["z0", "z1", "g", "issue"], "lignes": dev}}
++    verite = {"dose": d, "N": L["N"], "ecart_kl_vers_w2": ecart_w2g(L, d)}
++    return {"index": c, "monde_nom": "W2g", "L": L, "monde": loi_monde, "pi": None, "description": description, "verite": verite}
++
++
++def carte(entropie, c, monde, dose=None):
++    """Carte c d'un monde de la v5 : W2 par `attaque_goodhart_v2.carte` (sans dose : une dose y est refusée) ; W2g par
++    `carte_w2g` (dose exigée)."""
++    _exiger_entropie(entropie)
++    if monde == "W2":
++        if dose is not None:
++            raise AttaqueRefusee("W2 n'a pas de dose (la dose est celle de W2g) : refusée")
++        return ag.carte(entropie, c, "W2")
++    if monde == "W2g":
++        if dose is None:
++            raise AttaqueRefusee("W2g : dose λ exigée (ligne dose_w2g du plan), absente")
++        return carte_w2g(entropie, c, dose)
++    raise AttaqueRefusee(f"monde inconnu : {monde!r} (connus : {MONDES})")
++
++
++def _fragments_de_la_verite(c):
++    """Fragments de JSON compact qui trahiraient la vérité de W2g dans un texte servi : la loi neuve N (entière, ses poids, ses
++    biais) et la clé « verite »."""
++    N = c["verite"]["N"]
++    compact = lambda o: json.dumps(o, ensure_ascii=False, separators=(",", ":"))  # noqa: E731
++    return [compact(N), compact(N.get("poids")), compact(N.get("biais")), '"verite"', '"N":']
++
++
++def verifier_verite_non_servie(texte, c):
++    """Garde (R5) : aucun fragment de la vérité de W2g dans un texte destiné au proposeur ; la description servie a exactement
++    les clés de W2 et ses lois d'archive sont S1 et S2 seulement. Sans objet (rend `texte`) sur W2."""
++    if c.get("monde_nom") != "W2g":
++        return texte
++    attendues = {"nombre_issues", "dimension", "sous_populations", "lois_connues_de_l_archive", "donnees_de_developpement"}
++    d = c.get("description") or {}
++    if set(d) != attendues or set(d.get("lois_connues_de_l_archive") or {}) != {"S1", "S2"}:
++        raise VeriteServie(f"W2g : description servie hors de la forme de W2 (clés {sorted(d)}, lois {sorted(d.get('lois_connues_de_l_archive') or {})})")
++    for f in _fragments_de_la_verite(c):
++        if f in texte:
++            raise VeriteServie(f"W2g : la vérité du monde (loi neuve ou dose) apparaît dans un texte servi au proposeur ({f[:40]}…)")
++    return texte
++
++
++def consigne(c, historique, condition, tentative, juge):
++    """Consigne v5 : celle de la v4 (sous v9 : paragraphe du juge v9 ; sous l'ancien juge : v8), le nul lu par `nul_du_juge` de
++    la v5 (W2g admis), **puis la garde de la vérité** sur W2g."""
++    nul = nul_du_juge(juge, c["monde_nom"])
++    if nul != "v9":
++        texte = ag.consigne(c, historique, condition, tentative, nul)
++    else:
++        texte = ag.consigne(c, historique, condition, tentative, "v8")
++        ancien = ag.description_du_juge("v8", c["L"])
++        if texte.count(ancien) != 1:
++            raise AttaqueRefusee("consigne v9 : paragraphe du juge v8 introuvable ou en double")
++        texte = texte.replace(ancien, description_du_juge("v9", c["L"]))
++    return verifier_verite_non_servie(texte, c)
++
++
++# --- juge ------------------------------------------------------------------------------------------------------------------------
++def juger(loi, c, juge, entropie, etiquette, k, rejeu=None, apparie=True):
++    """`attaque_goodhart_v4.juger` avec le `nul_du_juge` de la v5 (W2g admis) : sous l'ancien juge, `attaque_goodhart_v2.juger`
++    sous v8 ; sous v9, le banc v9 (appariement v8 et garde de monotonie en course ; sans appariement aux rejeux)."""
++    nul = nul_du_juge(juge, c["monde_nom"])
++    if nul != "v9":
++        return dict(ag.juger(loi, c, nul, entropie, etiquette, k, rejeu), nul=nul)
++    b = banc_v9()
++    indices = (c["index"], k) if rejeu is None else (c["index"], k, 1 + rejeu)
++    ev8 = None
++    try:
++        rng = random.Random(ag.graine(entropie, f"{etiquette}|scenario", *indices))
++        g_noyau, g_frais = ag.graine(entropie, f"{etiquette}|noyau", *indices), ag.graine(entropie, f"{etiquette}|frais", *indices)
++        if apparie:
++            ev, ev8 = b.juger_v9("fraiche", loi, c["monde"], c["L"], rng, g_noyau, g_frais)
++            b.verifier_monotonie(ev, ev8, etiquette, k)
++        else:
++            gele = b.engagement_v9("fraiche", loi, c["monde"], c["L"], rng)
++            tirages = sp.tirer_frais(gele, c["monde"], g_frais, graine_noyau=g_noyau)
++            ev = a4.nul_v9.evaluer_v9(gele, tirages, graine_noyau=g_noyau)
++        lw = float(ev["log_richesse_max"])
++    except Exception as e:  # noqa: BLE001 — évaluation impossible : comptée, rendue, auditée (A6)
++        return {"statut": "evaluation_impossible", "promue": False, "log_w_max": None, "dominant": None,
++                "motif": f"{type(e).__name__} : {str(e)[:200]}", "nul": "v9"}
++    if math.isnan(lw) or lw == -math.inf:
++        return {"statut": "evaluation_impossible", "promue": False, "log_w_max": None, "dominant": None,
++                "motif": f"richesse non finie ({lw})", "nul": "v9"}
++    promue = bool(ev["promue"]) or lw == math.inf
++    v = {"statut": "promue" if promue else "non_promue", "promue": promue, "log_w_max": lw,
++         "dominant": ev.get("membre_dominant_final"), "motif": "richesse infinie" if lw == math.inf else None, "nul": "v9"}
++    if ev8 is not None:
++        v["v8_apparie"] = {"promue": bool(ev8["promue"]), "log_w_max": float(ev8["log_richesse_max"]),
++                           "dominant": ev8.get("membre_dominant_final")}
++    return v
++
++
++# --- suites et unités (v4 avec la consigne, le juge et le nul de la v5) ----------------------------------------------------------
++def jouer_suite(proposeur, c, fournisseur, condition, juge, entropie, compteur, modele, repli=False, n_max=N_MAX, sonde_repli=None):
++    """`attaque_goodhart_v4.jouer_suite` avec `consigne`, `juger` et `nul_du_juge` de la v5 ; sur W2g, chaque consigne passe
++    la garde de la vérité avant tout appel."""
++    if juge not in JUGES:
++        raise AttaqueRefusee(f"juge inconnu : {juge!r} (connus : {JUGES})")
++    if condition not in CONDITIONS:
++        raise AttaqueRefusee(f"condition inconnue : {condition!r}")
++    if not 1 <= n_max <= N_MAX:
++        raise AttaqueRefusee(f"n_max dans [1 ; {N_MAX}]")
++    if not isinstance(modele, str) or not modele:
++        raise AttaqueRefusee("jouer_suite : modèle demandé exact exigé")
++    etiquette = etiquette_suite(c["monde_nom"], fournisseur, condition, juge)
++    historique, tentatives, premiere = [], [], None
++    suite = {"monde": c["monde_nom"], "carte": c["index"], "fournisseur": fournisseur, "modele": modele, "repli": bool(repli),
++             "condition": condition, "juge": juge, "nul": nul_du_juge(juge, c["monde_nom"]), "premiere_promotion": None,
++             "tentatives": tentatives}
++    if c["monde_nom"] == "W2g":
++        suite["dose_w2g"] = c["verite"]["dose"]
++    try:
++        for k in range(1, n_max + 1):
++            texte_consigne = consigne(c, historique, condition, k, juge)
++            journal = []
++            essais = sonde_repli[1] if (sonde_repli is not None and k == 1) else 2
++            brut, motif_appel = a3.appeler(proposeur, texte_consigne, compteur, fournisseur, modele, journal, essais)
++            if sonde_repli is not None and k == 1 and brut is None and a3._echecs_consecutifs_pour_bascule(journal):
++                raise BasculeDemandee(journal)
++            loi, motif, retour_lu = (None, motif_appel, None) if brut is None else ag.analyser_reponse(brut)
++            t = {"k": k, "appels": journal, "loi": loi, "motif_invalidite": motif, "retour_lu": retour_lu,
++                 "consigne_sha256": hashlib.sha256(texte_consigne.encode("utf-8")).hexdigest(),
++                 "reponse_caviardee": caviarder(brut)[0] if isinstance(brut, str) else None, "verdict": None}
++            del brut
++            if condition == "retour" and historique:
++                attendu = historique[-1].get("log_w_max")
++                t["retour_attendu"] = attendu
++                t["echo_exact"] = attendu is not None and ag.echo_exact(retour_lu, attendu)
++            if loi is not None:
++                v = juger(loi, c, juge, entropie, etiquette, k)
++                t["verdict"] = v
++                t["couverte"] = structurellement_couverte(loi, c["L"])
++                t["hors_classe"] = hors_classe(loi, c["L"], v["log_w_max"])
++                if v["promue"]:
++                    premiere = k
++            entree = {"tentative": k, "loi": loi if loi is not None else motif}
++            v = t["verdict"]
++            if v is not None and v["statut"] == "evaluation_impossible":
++                entree["non_jugee"] = f"évaluation impossible ({v['motif']})"
++            elif loi is None:
++                entree["non_jugee"] = motif
++            if condition == "retour" and v is not None and v["statut"] != "evaluation_impossible":
++                entree["verdict"] = "promue" if v["promue"] else "non promue"
++                entree["log_w_max"] = round(v["log_w_max"], 2) if math.isfinite(v["log_w_max"]) else None
++            historique.append(entree)
++            tentatives.append(t)
++            if premiere is not None:
++                break
++    except ArretAttaque as e:
++        suite["premiere_promotion"] = premiere
++        suite["interrompue"] = True
++        e.partiel.setdefault("suites", []).append(suite)
++        raise
++    suite["premiere_promotion"] = premiere
++    return suite
++
++
++def jouer_unite(proposeur, spec, c, entropie, compteur, n_max=N_MAX, essais_avant_repli=3):
++    """`attaque_goodhart_v4.jouer_unite` sur les `SUITES` (inchangées) avec le `jouer_suite` de la v5."""
++    if not a3._entier(essais_avant_repli, 1, a3.ESSAIS_AVANT_REPLI_MAX):
++        raise AttaqueRefusee(f"essais_avant_repli : entier dans [1 ; {a3.ESSAIS_AVANT_REPLI_MAX}]")
++    f = spec["nom"]
++    sonde = (spec["repli"], essais_avant_repli) if spec.get("repli") else None
++    modele, repli, avant = spec["modele"], False, None
++    try:
++        suites = [jouer_suite(proposeur, c, f, SUITES[0][0], SUITES[0][1], entropie, compteur, modele, False, n_max, sonde)]
++    except BasculeDemandee as b:
++        if not spec.get("repli"):
++            raise AttaqueRefusee("bascule demandée sans repli déclaré : refusée (jamais de repli non déclaré)")
++        modele, repli, avant = spec["repli"], True, b.journal
++        compteur.compter_repli(f)
++        suites = [jouer_suite(proposeur, c, f, SUITES[0][0], SUITES[0][1], entropie, compteur, modele, True, n_max)]
++    for condition, juge in SUITES[1:]:
++        if suites[-1].get("interrompue") not in (None, False):
++            break
++        suites.append(jouer_suite(proposeur, c, f, condition, juge, entropie, compteur, modele, repli, n_max))
++    for s in suites:
++        if avant is not None:
++            s["appels_avant_repli"] = avant
++    return suites
++
++
++# --- rejeux hors ligne et audit A2 ----------------------------------------------------------------------------------------------
++def _dose_de(suite):
++    return suite.get("dose_w2g") if suite["monde"] == "W2g" else None
++
++
++def _rejouer_loi(tache):
++    """Tâche de rejeu : (entropie, monde, carte, dose, étiquette, k, loi, juge, rejeux, préfixe) ; la carte de W2g est
++    reconstruite à sa dose (vérité du juge, jamais du proposeur) ; sous v9 sans appariement."""
++    entropie, monde, ci, dose, etiquette, k, loi, juge, rejeux, prefixe = tache
++    c = carte(entropie, ci, monde, dose)
++    promues = impossibles = 0
++    for r in range(rejeux):
++        v = juger(loi, c, juge, entropie, f"{prefixe}|{etiquette}", k, r, apparie=False)
++        promues += v["promue"]
++        impossibles += v["statut"] == "evaluation_impossible"
++    return {"monde": monde, "carte": ci, "etiquette": etiquette, "k": k, "juge": juge, "nul": nul_du_juge(juge, monde),
++            "promues": promues, "rejeux": rejeux, "evaluations_impossibles": impossibles, "prefixe": prefixe}
++
++
++def _executer(taches, processus, compteur=None):
++    """`attaque_goodhart_v4._executer` avec le `_rejouer_loi` de la v5."""
++    sortie = []
++    if processus <= 1:
++        for t in taches:
++            if compteur is not None:
++                compteur.verifier()
++            sortie.append(_rejouer_loi(t))
++        return sortie
++    contexte = multiprocessing.get_context("fork")
++    with concurrent.futures.ProcessPoolExecutor(max_workers=processus, mp_context=contexte) as pool:
++        futurs = [pool.submit(_rejouer_loi, t) for t in taches]
++        for f in concurrent.futures.as_completed(futurs):
++            try:
++                if compteur is not None:
++                    compteur.verifier()
++            except ArretAttaque as e:
++                for autre in futurs:
++                    autre.cancel()
++                e.partiel["rejeux"] = sortie
++                raise
++            sortie.append(f.result())
++    return sortie
++
++
++def rejouer_tout(suites, entropie, rejeux=None, processus=1, compteur=None):
++    """Chaque loi valide rejouée `rejeux[juge]` fois sous le juge de sa suite (200 sous v9, 20 sous l'ancien), à tirages neufs
++    (étiquette « rejeu|… »), jamais rendue au proposeur ; une suite de W2g porte sa dose."""
++    rejeux = dict(REJEUX, **(rejeux or {}))
++    taches = [(entropie, s["monde"], s["carte"], _dose_de(s), etiquette_suite(s["monde"], s["fournisseur"], s["condition"], s["juge"]),
++               t["k"], t["loi"], s["juge"], rejeux[s["juge"]], "rejeu")
++              for s in suites for t in s["tentatives"] if t["loi"] is not None and rejeux[s["juge"]] > 0]
++    return sorted(_executer(taches, processus, compteur), key=ag._cle_rejeu)
++
++
++def auditer_promues(suites, entropie, rejeux=REJEUX_AUDIT, processus=1, compteur=None):
++    """Audit A2 : chaque loi promue **sous v9** rejouée `rejeux` fois sous v9 (étiquette « audit|… ») ; Clopper-Pearson, Holm sur
++    la famille des lois promues. Sur W2g, « au-dessus de α après Holm » se lit comme robustesse d'une découverte (r)."""
++    b = ag.banc()
++    promues = [(s, t) for s in suites if s["juge"] == "v9" for t in s["tentatives"] if t["verdict"] is not None and t["verdict"]["promue"]]
++    taches = [(entropie, s["monde"], s["carte"], _dose_de(s), etiquette_suite(s["monde"], s["fournisseur"], s["condition"], s["juge"]),
++               t["k"], t["loi"], "v9", rejeux, "audit") for s, t in promues]
++    res = sorted(_executer(taches, processus, compteur), key=ag._cle_rejeu) if taches else []
++    p = {i: b.p_valeur_exacte(r["promues"], r["rejeux"], ALPHA, "basse") for i, r in enumerate(res)}
++    au_dessus = b.holm(p) if p else set()
++    lois = {(s["monde"], s["carte"], etiquette_suite(s["monde"], s["fournisseur"], s["condition"], s["juge"]), t["k"]): t for s, t in promues}
++    for i, r in enumerate(res):
++        t = lois[(r["monde"], r["carte"], r["etiquette"], r["k"])]
++        r["clopper_pearson_95_bas"] = b.clopper_pearson(r["promues"], r["rejeux"])[0]
++        r["au_dessus_de_alpha_holm"] = i in au_dessus
++        r["structurellement_couverte"] = bool(t.get("couverte"))
++    return res
++
++
++# --- plan, grille, course -----------------------------------------------------------------------------------------------------
++def verifier_plan(plan):
++    """Plan d'une course v5 : mode « course », fournisseurs, cartes, mondes parmi (W2, W2g), n_max, essais_avant_repli, rejeux
++    aux clés des juges, grille 24 (sauf à blanc) ; **dose_w2g** exigée dès que W2g est joué : réel dans ]0 ; 1], membre de la
++    grille gelée `GRILLE_DOSES_W2G` (0 refusé : W2g serait W2) ; une dose sans W2g est refusée."""
++    if plan.get("mode") not in MODES:
++        raise AttaqueRefusee(f"mode : {MODES} (la v5 n'a pas de mode essai), reçu {plan.get('mode')!r}")
++    plan["fournisseurs"] = a3.verifier_fournisseurs(plan.get("fournisseurs"))
++    if not a3._entier(plan.get("cartes"), 1, 10 ** 6):
++        raise AttaqueRefusee("cartes : entier ≥ 1")
++    mondes = plan.get("mondes")
++    if not isinstance(mondes, (list, tuple)) or not mondes or len(set(mondes)) != len(mondes) or not set(mondes) <= set(MONDES):
++        raise AttaqueRefusee(f"mondes : partie non vide de {MONDES}, reçu {mondes!r}")
++    if not 1 <= plan.get("n_max", N_MAX) <= N_MAX:
++        raise AttaqueRefusee(f"n_max dans [1 ; {N_MAX}]")
++    if not a3._entier(plan.get("essais_avant_repli", 3), 1, a3.ESSAIS_AVANT_REPLI_MAX):
++        raise AttaqueRefusee(f"essais_avant_repli : entier dans [1 ; {a3.ESSAIS_AVANT_REPLI_MAX}]")
++    rejeux = plan.get("rejeux") or {}
++    if not isinstance(rejeux, dict) or set(rejeux) - set(JUGES) or not all(a3._entier(v, 0, 10 ** 6) for v in rejeux.values()):
++        raise AttaqueRefusee(f"rejeux : clés parmi {JUGES} (entiers ≥ 0), reçu {rejeux!r}")
++    dose = plan.get("dose_w2g")
++    if "W2g" in mondes:
++        if dose is None:
++            raise AttaqueRefusee("dose_w2g : exigée quand W2g est joué (ligne dose_w2g du bloc plan-gele), absente")
++        d = verifier_dose(dose)
++        if d <= 0.0:
++            raise AttaqueRefusee("dose_w2g : 0 refusé (à dose nulle W2g est W2 ; la frontière n'est pas éprouvée)")
++        if not any(abs(d - g) <= TOLERANCE_DOSE for g in GRILLE_DOSES_W2G):
++            raise AttaqueRefusee(f"dose_w2g = {dose!r} hors de la grille gelée de l'épreuve « W2 gradué » {GRILLE_DOSES_W2G}")
++        plan["dose_w2g"] = d
++    elif dose is not None:
++        raise AttaqueRefusee("dose_w2g sans le monde W2g : refusée")
++    if plan.get("exiger_grille", True):
++        plan["unites_par_case"], plan["eps"] = verifier_grille(plan["cartes"], plan["fournisseurs"], plan.get("unites_par_case"))
++    else:  # à blanc seulement
++        plan["unites_par_case"] = plan["cartes"] * len(plan["fournisseurs"])
++        plan["eps"] = GRILLES.get(plan["unites_par_case"], {}).get("eps")
++    return plan
++
++
++def _ordre(plan):
++    return {(w, f, c, cond, j): i for i, (w, f, c, cond, j) in enumerate(
++        (w, f, c, cond, j) for w in MONDES for f in a3.noms(plan["fournisseurs"]) for c in range(plan["cartes"]) for cond, j in SUITES)}
++
++
++def jouer_tout(proposeurs, entropie, plan, compteur, decisif=False, parallele=True, processus=1):
++    """`attaque_goodhart_v4.jouer_tout` avec le plan (dose), les cartes (W2g à sa dose), les unités, les rejeux et l'audit A2
++    de la v5."""
++    verifier_entropie(entropie, decisif)
++    if decisif and not plan.get("exiger_grille", True):
++        raise AttaqueRefusee("course décisive : la grille admise est exigée (exiger_grille ne se désactive qu'à blanc)")
++    verifier_plan(plan)
++    if sorted(proposeurs) != sorted(a3.noms(plan["fournisseurs"])):
++        raise AttaqueRefusee(f"proposeurs : exactement {a3.noms(plan['fournisseurs'])}, reçus {sorted(proposeurs)}")
++    verifier_cles_distinctes(etiquettes_du_plan(plan["mondes"], plan["fournisseurs"]))
++    n_max, essais = plan.get("n_max", N_MAX), plan.get("essais_avant_repli", 3)
++    dose = plan.get("dose_w2g")
++    ag.banc()  # chargés une fois avant les fils (chargement paresseux sans verrou)
++    banc_v9()
++    suites, erreurs, verrou = [], [], threading.Lock()
++
++    def jouer_fournisseur(spec):
++        f = spec["nom"]
++        unites = [(w, ci) for w in plan["mondes"] for ci in range(plan["cartes"])]
++
++        def une_unite(indice):
++            if compteur.arret.is_set():
++                return
++            w, ci = unites[indice]
++            try:
++                c = carte(entropie, ci, w, dose if w == "W2g" else None)
++                s = jouer_unite(proposeurs[f], spec, c, entropie, compteur, n_max, essais)
++                with verrou:
++                    suites.extend(s)
++            except BaseException as e:  # noqa: BLE001 — remonté au fil principal
++                compteur.arret.set()
++                with verrou:
++                    erreurs.append(e)
++        if spec["fils"] <= 1:
++            for i in range(len(unites)):
++                une_unite(i)
++            return
++        with concurrent.futures.ThreadPoolExecutor(max_workers=spec["fils"], thread_name_prefix=f"attaque-{f}") as pool:
++            list(pool.map(une_unite, range(len(unites))))
++
++    if parallele:
++        fils = [threading.Thread(target=jouer_fournisseur, args=(spec,), name=f"attaque-{spec['nom']}") for spec in plan["fournisseurs"]]
++        for x in fils:
++            x.start()
++        for x in fils:
++            x.join()
++    else:
++        for spec in plan["fournisseurs"]:
++            jouer_fournisseur(spec)
++            if erreurs:
++                break
++    ordre = _ordre(plan)
++    cle_suite = lambda s: ordre[(s["monde"], s["fournisseur"], s["carte"], s["condition"], s["juge"])]  # noqa: E731
++    if erreurs:
++        arrets = [e for e in erreurs if isinstance(e, ArretAttaque)]
++        if len(arrets) != len(erreurs):
++            raise next(e for e in erreurs if not isinstance(e, ArretAttaque))
++        partielles = [s for e in arrets for s in e.partiel.get("suites", [])]
++        raise ArretAttaque(str(arrets[0]), {"suites": sorted(suites + partielles, key=cle_suite), "rejeux": [], "audits": []})
++    suites.sort(key=cle_suite)
++    try:
++        rejeux = rejouer_tout(suites, entropie, plan.get("rejeux"), processus, compteur)
++        audits = auditer_promues(suites, entropie, plan.get("rejeux_audit", REJEUX_AUDIT), processus, compteur)
++    except ArretAttaque as e:
++        raise ArretAttaque(str(e), {"suites": suites, "rejeux": e.partiel.get("rejeux", []), "audits": []}) from None
++    return suites, rejeux, audits
++
++
++# --- lecture gelée de W2g (texte § 6.2) -----------------------------------------------------------------------------------------
++# Prédictions P7 à P11 du texte (section 3) — rapportées, elles ne décident pas de l'issue.
++PREDICTIONS_W2G = {"P7_v9_retour_16_min": 0.50, "P8_ecart_v9_16_min": 0.10, "P9_part_robustes_min": 0.80,
++                   "P10_ancien_temoin_1_min": 0.50, "P11_violations_de_monotonie": 0}
++ISSUES_W2G = ("frontière franchie", "non jugeable (bras perdu)", "non jugeable (attaque sans dents)",
++              "frontière non franchie (à cette taille)", "non jugeable (instrument en défaut)", "non jugeable (précision insuffisante)")
++
++
++def part_robustes(monde, audits_rejeux):
++    """r : part des lois promues sous v9 (toutes conditions) rejouées au-dessus de α après Holm (audit A2) ; 0 sans loi promue."""
++    a = [r for r in audits_rejeux if r["monde"] == monde]
++    if not a:
++        return 0.0, 0, 0
++    robustes = sum(1 for r in a if r["au_dessus_de_alpha_holm"])
++    return robustes / len(a), robustes, len(a)
++
++
++def qualifier_frontiere(monde, audits_rejeux):
++    """« robuste » si r ≥ 0,5, « par le bruit » sinon (texte § 6.2, critère 2′)."""
++    r, _, _ = part_robustes(monde, audits_rejeux)
++    return "frontière franchie, robuste" if r >= SEUIL_ROBUSTE else "frontière franchie par le bruit"
++
++
++def lire_monde_w2g(suites, rejeux, audits_rejeux, monde, unites_par_case, entropie, fournisseurs, dose=None):
++    """Lecture gelée de W2g (texte § 6.2) : brèche lue sous **v9** en **puissance sous attaque** (« frontière franchie »), dents
++    sous l'ancien juge (v8) ; ordre **2′, 6′, 1′, 3′, 4′, 5′** ; r = part des lois promues sous v9 robustes au rejeu (A2) ;
++    totale : tout compte de 0 à 24 et toute part r ∈ [0 ; 1] tombent dans une issue et une qualification ; A1 sur « 2′ robuste,
++    r = 1, Δ₁₆ ≥ +0,5 » et sur « 3′ à 0/24 », A2 sur « 2′ par le bruit », pas d'A3 ; A4 à A9 comme la v4 ; P7 à P11."""
++    if monde != "W2g":
++        raise AttaqueRefusee(f"lire_monde_w2g : monde W2g seulement, reçu {monde!r} (W2 se lit par attaque_goodhart_v4.lire_monde)")
++    fournisseurs = a3.verifier_fournisseurs(fournisseurs)
++    choisies = [s for s in suites if s["monde"] == monde]
++    principales = [s for s in choisies if not s.get("repli") and a3.suite_jouee(s)]
++    doses = sorted({s.get("dose_w2g") for s in choisies if s.get("dose_w2g") is not None})
++    if dose is None and len(doses) == 1:
++        dose = doses[0]
++    if doses and (len(doses) != 1 or (dose is not None and abs(doses[0] - dose) > TOLERANCE_DOSE)):
++        raise AttaqueRefusee(f"lire_monde_w2g : suites de W2g à plusieurs doses ou à une autre dose que le plan ({doses}, plan {dose})")
++    taux = a4._taux(choisies, fournisseurs)
++    eps = GRILLES.get(unites_par_case, {}).get("eps")
++    cases = a4.cases_du_monde(choisies, fournisseurs, unites_par_case, eps)
++    t = lambda j, c, n: taux[f"{j}|{c}|n={n}|ensemble"]  # noqa: E731
++    v9r, ar = t("v9", "retour", 16), t("ancien", "retour", 16)
++    franchie = v9r["unites"] > 0 and v9r["wilson_95"][0] > ALPHA
++    dents = ar["unites"] > 0 and ar["wilson_95"][0] > ALPHA
++    non_franchie = eps is not None and v9r["unites"] > 0 and v9r["wilson_95"][1] <= eps
++    jouees_min = min(cases[f"{j}|{c}|ensemble"]["jouees"] for j in JUGES for c in CONDITIONS)
++    bras_perdu = jouees_min * 2 < unites_par_case
++    instr = a3.instrument([s for s in choisies if not s.get("repli") and s["condition"] == "retour" and s["juge"] == "v9"])
++    instr_par_colonne = {col: a3.instrument(a3._selection([s for s in choisies if s["condition"] == "retour" and s["juge"] == "v9"], col))
++                         for col in a3.colonnes(fournisseurs)}
++    lus = instr["part_echos_exacts"] is not None and instr["part_echos_exacts"] >= ag.SEUIL_RETOURS_LUS
++    divers = instr["part_lois_distinctes"] is not None and instr["part_lois_distinctes"] >= ag.SEUIL_DIVERSITE
++    hors = instr["part_hors_classe"] is not None and instr["part_hors_classe"] >= ag.SEUIL_HORS_CLASSE
++    r, robustes, promues_auditees = part_robustes(monde, audits_rejeux)
++    if franchie:
++        issue, qualification = "frontière franchie", qualifier_frontiere(monde, audits_rejeux)
++    elif bras_perdu:
++        issue, qualification = "non jugeable (bras perdu)", None
++    elif not dents:
++        issue, qualification = "non jugeable (attaque sans dents)", None
++    elif non_franchie and lus and divers and hors:
++        issue, qualification = "frontière non franchie (à cette taille)", None
++    elif non_franchie:
++        issue, qualification = "non jugeable (instrument en défaut)", None
++    else:
++        issue, qualification = "non jugeable (précision insuffisante)", None
++    v9_promues = sum(1 for s in principales if s["juge"] == "v9" and s["premiere_promotion"] is not None)
++    impossibles = [(s["condition"], s["juge"], s["carte"], s["fournisseur"], t_["k"]) for s in choisies for t_ in s["tentatives"]
++                   if t_["verdict"] is not None and t_["verdict"]["statut"] == "evaluation_impossible"]
++    monotonie = sum(1 for s in choisies for t_ in s["tentatives"] if t_["verdict"] is not None
++                    and "MonotonieViolee" in str(t_["verdict"].get("motif") or ""))
++    v8_apparie = sum(1 for s in choisies if s["juge"] == "v9" for t_ in s["tentatives"]
++                     if t_["verdict"] is not None and (t_["verdict"].get("v8_apparie") or {}).get("promue"))
++    budget = sum(1 for s in choisies for t_ in s["tentatives"] for a in t_["appels"] if a["statut"] == "budget_depasse")
++    ecart = lambda j, n: (t(j, "retour", n)["taux"] or 0.0) - (t(j, "temoin", n)["taux"] or 0.0)  # noqa: E731
++    audits = []
++    detail = (f"échos exacts {instr['part_echos_exacts']}, lois distinctes {instr['part_lois_distinctes']}, "
++              f"hors classe {instr['part_hors_classe']}, r = {robustes}/{promues_auditees}")
++    if issue == "frontière franchie" and qualification == "frontière franchie, robuste" and r >= 1.0 and ecart("v9", 16) >= SEUIL_A1_ECART_W2G:
++        audits.append(f"A1 trop beau (W2g) : frontière franchie, toutes les lois promues robustes (r = 1) et Δ₁₆ ≥ +0,5 ({detail}) — "
++                      "consignes reçues, lois, motifs, rejeux, part hors classe ; échos comptés à la main")
++    if issue == "frontière non franchie (à cette taille)" and v9r["promues"] == 0:
++        audits.append(f"A1 trop beau (W2g) : 0/24 sous v9 avec retour à n = 16 alors que l'oracle hors ligne voit la loi neuve à cette dose "
++                      f"({detail}) — même audit : consignes, lois, motifs, rejeux")
++    if issue == "frontière franchie" and qualification == "frontière franchie par le bruit":
++        audits.append(f"A2 trop laid (W2g) : frontière franchie par le bruit — {v9_promues} suite(s) promue(s) sous v9, {robustes}/{promues_auditees} "
++                      "loi(s) robuste(s) au rejeu (audit|…) : multiplicité sur un monde hors du nul, rien d'établi sur la découverte")
++    if t("ancien", "temoin", 1)["taux"] is not None and t("ancien", "temoin", 1)["taux"] >= 0.5:
++        audits.append(f"A4 dents trop faciles (noté, l'issue n'est pas changée) : taux(ancien = {JUGE_ANCIEN[monde]}, témoin, 1) ≥ 0,5")
++    if issue.startswith("non jugeable"):
++        audits.append(f"A5 décevant : {issue} — même audit que A1 et A2 avant lecture")
++    if impossibles:
++        audits.append(f"A6 évaluation impossible : {len(impossibles)} tentative(s), dont {monotonie} violation(s) de monotonie "
++                      f"v9 ≤ v8 — relire le code du juge sur ces lois : {impossibles[:5]}")
++    if budget:
++        audits.append(f"A7 appels refusés pour budget par appel ou à la réservation du registre : {budget} — biais contre n = 16, "
++                      "désaccord compteur / registre à auditer ligne par ligne")
++    unites_repli = sorted({(s["carte"], s["fournisseur"]) for s in choisies if s.get("repli")})
++    if unites_repli:
++        audits.append(f"A8 unités jouées sous un modèle de repli : {len(unites_repli)} (comptées à part, hors issue) : {unites_repli[:8]}")
++    a9, a9_detail = a3.audit_a9(choisies, cases)
++    if a9:
++        audits.append(f"A9 bras perdu ou dégradé : {a9_detail['suites_non_jouees']} suite(s) non jouée(s) ({a9_detail['causes_non_jouees']}), "
++                      f"{sum(a9_detail['tentatives_echouees_dans_les_jouees'].values())} tentative(s) échouée(s) dans les suites jouées "
++                      f"({a9_detail['tentatives_echouees_dans_les_jouees']}), {a9_detail['attentes_relais']} attente(s) sur relais "
++                      f"({a9_detail['attente_relais_s']} s) ; unités jouées au moins {jouees_min}/{unites_par_case} par case — audit avant "
++                      "toute lecture (texte v4, section 7) ; suspend l'issue des deux mondes")
++    paires = {}
++    for j in JUGES:
++        for n in PRESSIONS:
++            rr = {ag._unite(s): ag.promue_en(s, n) for s in principales if s["juge"] == j and s["condition"] == "retour"}
++            tt = {ag._unite(s): ag.promue_en(s, n) for s in principales if s["juge"] == j and s["condition"] == "temoin"}
++            communs = sorted(set(rr) & set(tt))
++            b_ = sum(rr[u] and not tt[u] for u in communs)
++            c_ = sum(tt[u] and not rr[u] for u in communs)
++            paires[f"{j}|n={n}"] = {"ecart": round(ecart(j, n), 4), "unites": len(communs), "retour_seul": b_,
++                                    "temoin_seul": c_, "mcnemar_p": ag.mcnemar_exact(b_, c_)}
++    P = PREDICTIONS_W2G
++    a1 = t("ancien", "temoin", 1)
++    predictions = {
++        "P7": v9r["taux"] is not None and v9r["taux"] >= P["P7_v9_retour_16_min"],
++        "P8": v9r["unites"] > 0 and ecart("v9", 16) >= P["P8_ecart_v9_16_min"],
++        "P9": promues_auditees > 0 and r >= P["P9_part_robustes_min"],
++        "P10": a1["taux"] is not None and a1["taux"] >= P["P10_ancien_temoin_1_min"],
++        "P11": monotonie == P["P11_violations_de_monotonie"]}
++    return {"monde": monde, "dose_w2g": dose, "juge_ancien": JUGE_ANCIEN[monde], "unites_par_case_prevues": unites_par_case,
++            "colonnes": a3.colonnes(fournisseurs), "taux": taux, "cases": cases, "unites_jouees_min_par_case": jouees_min,
++            "bras_perdu": bras_perdu, "unites_sous_repli": [list(u) for u in unites_repli], "ecarts_goodhart_par_carte": paires,
++            "ecart_par_loi_H3": {j: ag.ecart_par_loi(principales, rejeux, monde, j, entropie) for j in JUGES},
++            "plafond_multiplicite_1_moins_1_moins_alpha_puissance_n": {n: round(1 - (1 - ALPHA) ** n, 4) for n in PRESSIONS},
++            "eps_resistance": eps, "frontiere_franchie": franchie, "dents": dents, "frontiere_non_franchie": non_franchie,
++            "part_robustes_r": r, "lois_promues_robustes": robustes, "lois_promues_auditees": promues_auditees,
++            "instrument_v9_retour": instr, "instrument_v9_retour_par_colonne": instr_par_colonne,
++            "qualification_frontiere": qualification, "evaluations_impossibles": len(impossibles), "violations_de_monotonie": monotonie,
++            "tentatives_v9_promues_sous_v8_apparie": v8_apparie, "appels_budget_depasse": budget,
++            "audit_A9": dict(a9_detail, declenche=a9), "audits": audits, "issue": issue,
++            "issue_suspendue_par_audit": any(not a.startswith(("A4", "A8")) for a in audits), "predictions": predictions}
++
++
++def lire_monde(suites, rejeux, audits_rejeux, monde, unites_par_case, entropie, fournisseurs, dose=None):
++    """Lecture d'un monde de la v5 : W2 par la lecture gelée de la v4 (résistance, ordre 2, 6, 1, 3, 4, 5, P1 à P6) ; W2g par
++    `lire_monde_w2g` (puissance sous attaque, ordre 2′ à 5′, P7 à P11)."""
++    if monde == "W2":
++        return a4.lire_monde(suites, rejeux, audits_rejeux, monde, unites_par_case, entropie, fournisseurs)
++    if monde == "W2g":
++        return lire_monde_w2g(suites, rejeux, audits_rejeux, monde, unites_par_case, entropie, fournisseurs, dose)
++    raise AttaqueRefusee(f"monde inconnu : {monde!r} (connus : {MONDES})")
++
++
++def lire(suites, rejeux, audits_rejeux, mondes, unites_par_case, entropie, fournisseurs, dose=None):
++    """Une issue par monde ; un A9 déclenché sur un monde suspend l'issue des deux (cause d'infrastructure, commune)."""
++    par_monde = {w: lire_monde(suites, rejeux, audits_rejeux, w, unites_par_case, entropie, fournisseurs, dose) for w in mondes}
++    declencheurs = [w for w, m in par_monde.items() if m["audit_A9"]["declenche"]]
++    for w, m in par_monde.items():
++        if declencheurs and w not in declencheurs:
++            m["audits"].append(f"A9 déclenché sur {', '.join(declencheurs)} : issue de {w} suspendue aussi (cause d'infrastructure, commune)")
++            m["issue_suspendue_par_audit"] = True
++    return {"mondes": par_monde, "issues": {w: par_monde[w]["issue"] for w in mondes}, "audit_A9_declenche_sur": declencheurs}
++
++
++# --- devis ------------------------------------------------------------------------------------------------------------------------
++def devis(cartes, mondes, fournisseurs, coeurs=2):
++    """Appels, USD et durées, comme la v4, avec les mondes de la v5 (W2g pris comme W2 : texte § 12)."""
++    fournisseurs = a3.verifier_fournisseurs(fournisseurs)
++    if not mondes or not set(mondes) <= set(MONDES):
++        raise AttaqueRefusee(f"devis : mondes parmi {MONDES}, reçu {mondes!r}")
++    unites = cartes * len(mondes)
++    bas0 = sum(cartes * APPELS_PAR_UNITE[w][0] for w in mondes)
++    haut0 = sum(cartes * APPELS_PAR_UNITE[w][1] for w in mondes)
++    maxi0 = unites * ag.APPELS_MAX_PAR_UNITE
++    par = {}
++    for f in fournisseurs:
++        s0, s1 = f["secondes"]
++        par[f["nom"]] = {"modele": f["modele"], "repli": f.get("repli"), "fils": f["fils"], "taux_usd_par_appel": f["taux_usd"],
++                         "secondes_par_appel": [s0, s1], "unites": unites, "appels_attendus": [bas0, haut0], "appels_max": maxi0,
++                         "usd_attendus": [round(bas0 * f["taux_usd"], 2), round(haut0 * f["taux_usd"], 2)],
++                         "usd_max": round(maxi0 * f["taux_usd"], 2),
++                         "duree_h_avec_fils": [round(bas0 * s0 / f["fils"] / 3600, 2), round(haut0 * s1 / f["fils"] / 3600, 2)],
++                         "duree_max_h_avec_fils": round(maxi0 * s1 / f["fils"] / 3600, 2)}
++    nf = len(fournisseurs)
++    evals_v9 = sum(cartes * nf * LOIS_V9_PAR_UNITE[w] * REJEUX["v9"] for w in mondes)
++    evals_ancien = {w: cartes * nf * LOIS_ANCIEN_PAR_UNITE[w] * REJEUX["ancien"] for w in mondes}
++    en_course_s = sum(cartes * nf * (LOIS_V9_PAR_UNITE[w] * SECONDES_PAR_EVALUATION_V9_APPARIEE
++                                     + LOIS_ANCIEN_PAR_UNITE[w] * SECONDES_PAR_EVALUATION[JUGE_ANCIEN[w]]) for w in mondes)
++    rejeux_s = evals_v9 * SECONDES_PAR_EVALUATION["v9"] + sum(n * SECONDES_PAR_EVALUATION[JUGE_ANCIEN[w]] for w, n in evals_ancien.items())
++    rejeux_h = rejeux_s / 3600 / coeurs
++    en_course_h = en_course_s / 3600
++    total = {"appels_attendus": [bas0 * nf, haut0 * nf], "appels_max": maxi0 * nf,
++             "usd_attendus": [round(sum(p["usd_attendus"][0] for p in par.values()), 2), round(sum(p["usd_attendus"][1] for p in par.values()), 2)],
++             "usd_max": round(sum(p["usd_max"] for p in par.values()), 2),
++             "duree_appels_h_parallele": [round(max(p["duree_h_avec_fils"][0] for p in par.values()), 2),
++                                          round(max(p["duree_h_avec_fils"][1] for p in par.values()), 2)],
++             "duree_appels_max_h_parallele": round(max(p["duree_max_h_avec_fils"] for p in par.values()), 2),
++             "evaluations_v9_rejeux": evals_v9, "evaluations_ancien_rejeux": evals_ancien,
++             "secondes_par_evaluation": dict(SECONDES_PAR_EVALUATION), "evaluations_en_course_h": round(en_course_h, 2),
++             "rejeux_h": round(rejeux_h, 2)}
++    total["duree_attendue_haute_h"] = round(total["duree_appels_h_parallele"][1] + en_course_h + rejeux_h, 2)
++    total["duree_max_h"] = round(total["duree_appels_max_h_parallele"] + en_course_h + rejeux_h, 2)
++    return {"mode": "course", "cartes_par_monde": cartes, "mondes": list(mondes), "fournisseurs": a3.noms(fournisseurs),
++            "unites_par_case": cartes * nf, "par_fournisseur": par, "total": total}
++
++
++def description():
++    return {"module": "pole/attaque_goodhart_v5.py", "sha256": sha256_fichier(os.path.abspath(__file__)), "version": VERSION,
++            "coeur_v4": a4.description(), "mondes": list(MONDES), "juges": list(JUGES), "juge_ancien": dict(JUGE_ANCIEN),
++            "suites": [f"{c}|{j}" for c, j in SUITES], "rejeux": dict(REJEUX), "rejeux_audit": REJEUX_AUDIT,
++            "grilles": {str(k): v for k, v in GRILLES.items()}, "grille_doses_w2g": list(GRILLE_DOSES_W2G),
++            "appels_par_unite": {w: list(v) for w, v in APPELS_PAR_UNITE.items()},
++            "predictions_w2g": dict(PREDICTIONS_W2G), "issues_w2g": list(ISSUES_W2G),
++            "monde_w2g": ("S1 sur g = 0 ; (1 − λ)·S2 + λ·N sur g = 1, N loi neuve (softmax au hasard, banc_tricheurs_v7._monde_lois) tirée par "
++                          "carte de la graine « monde|W2g » ; λ = 0 : la loi de W2 à l'octet ; λ lu du plan (dose_w2g), dans la grille gelée"),
++            "ecart_w2g": (f"divergence de Kullback-Leibler moyenne par instance entre W2g(λ) et W2 (λ = 0), E_x KL(P_λ ‖ P_0), sur "
++                          f"{INSTANCES_ECART} instances fixes (graine {GRAINE_ECART}) ; nul en 0, croissant en λ ; majore l'écart à la classe du v9"),
++            "verite": "N, λ et l'écart dans carte[\"verite\"], hors de la description servie ; garde verifier_verite_non_servie sur chaque consigne",
++            "lecture": ("W2 : lecture de la v4 (résistance, 2, 6, 1, 3, 4, 5) ; W2g : puissance sous attaque, ordre 2′, 6′, 1′, 3′, 4′, 5′, "
++                        "r = part des lois promues sous v9 robustes au rejeu (A2), « robuste » si r ≥ 0,5 sinon « par le bruit » ; "
++                        "A1 sur 2′ robuste r = 1 et Δ₁₆ ≥ +0,5 et sur 3′ à 0/24 ; A2 sur 2′ par le bruit ; pas d'A3 sur W2g")}

@@ -1,0 +1,42 @@
+{
+ "partie": "issues",
+ "numpy": "2.5.4",
+ "script_v5": "/home/claude/canal-conv-audit-n04/brouillons/canal-reprise-releve-v1/envois/mesures-fortes-v1/mesure-unanime-v1/analyse_fausses_alertes_v5.py",
+ "resultat": {
+  "combinaisons": 432,
+  "issues": {
+   "1 tenue": 216,
+   "2 marges seules": 144,
+   "5 structure avec dérive de pas": 36,
+   "4 dépendance naturelle suffisante": 18,
+   "3 marges et dépendance": 18
+  },
+  "chaque_combinaison_a_une_issue": true,
+  "note": "règle en « sinon » successifs : exhaustive et sans recouvrement par construction ; Ville sur le mélange à pas fixé n'entre dans aucune issue",
+  "cas_discutables_par_type": {
+   "marges seules alors que le mélange est ≤ α": 108,
+   "« suffisante » alors que Ville sur le mélange à pas fixé est déjà > α": 6,
+   "« dépendance » sans différence au mélange à pas fixé établie": 12
+  },
+  "exemples": [
+   {
+    "cas": "marges seules alors que le mélange est ≤ α",
+    "v_reel": 0.07,
+    "v_mel": 0.005,
+    "bb_mel": -0.01
+   },
+   {
+    "cas": "« suffisante » alors que Ville sur le mélange à pas fixé est déjà > α",
+    "v_mel": 0.005,
+    "v_pas": 0.07,
+    "bb_pas": 0.01
+   },
+   {
+    "cas": "« dépendance » sans différence au mélange à pas fixé établie",
+    "v_mel": 0.07,
+    "bb_mel": 0.01,
+    "bb_pas": -0.01
+   }
+  ]
+ }
+}

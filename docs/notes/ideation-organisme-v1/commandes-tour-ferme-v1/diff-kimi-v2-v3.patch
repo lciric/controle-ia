@@ -1,0 +1,111 @@
+--- commande_kimi_v2.py (sha256 644dbb39003f234db7b5fc295c6b061a0e84720e01ba08322ae1fe7936d9dcbe)
++++ commande_kimi_v3.py
+@@ -1,7 +1,24 @@
+ #!/usr/bin/env python3
+-"""Commande externe de Kimi (kimi-k3.1-pro) pour la mini-course d'idéation (GO-2026-11-01-12) — version 2.
++"""Commande externe de Kimi (kimi-k3.1-pro) pour le tour fermé, étage 1 (orchestrateur v63) — version 3.
+ 
+-Rédigée le 1er novembre 2026 (sous-agent de session-depot) ; rien n'a été lancé par le rédacteur. Version 2 =
++Version 3, rédigée le 2 novembre 2026 (sous-agent de session-depot) ; rien n'a été lancé par le rédacteur. **Version 3 =
++`commande_kimi_v2.py` (sha256 `644dbb39…`, inchangée, R12) avec quatre changements, et seulement ceux-là** (défaut TF-01 :
++la v2 refusait, code 2, les rôles de l'étage de tests de mort) :
++
++1. **Rôles** : `ROLES` étendu à `experimentateur_test` (l'expérimentateur de l'étage, joué par Kimi) et `lecteur_test` (le
++   vérificateur, témoin jamais décisif), en plus de `proposeur_ideation` et `juge_ideation` (`pole/adaptateurs.py`,
++   `ROLES_ETAGE_TESTS` ; `pole/tests_de_mort_v5.py`, `ROLE_EXPERIMENTATEUR`, `ROLE_LECTEUR`).
++2. **Sortie maximale et minimale par rôle** (`bornes_de_sortie`) : proposeur → `--max-sortie-proposeur` /
++   `--sortie-min-jetons` ; tout autre rôle → `--max-sortie-court` / `--sortie-min-jetons` ; sauf `lecteur_test` → options
++   neuves `--max-sortie-lecteur` (défaut 1 000) et `--sortie-min-jetons-lecteur` (défaut 200 : le vérificateur rend une
++   seule ligne, sous un plafond de session de 0,10 USD).
++3. **Dernière ligne** : le champ `role` est rendu sur toute sortie (aussi sur un refus de réglage, code 2, où il vaut ce
++   que portait `ROLE_POLE`) et le champ `version` vaut `commande-kimi-v3` ; le champ `envoye` est conservé tel quel.
++4. **Cet en-tête** (différences numérotées) et la ligne d'usage. Rien d'autre ne change : mêmes gardes (session, étape,
++   registre cumulé, écart de modèle), même registre `registre_depense_cumulee_v1.py` (importé depuis ce dossier), même
++   protocole vers le relais Kimi local 8804 (`relais_kimi_v3.py`, inchangé).
++
++Historique de la version 2 — rédigée le 1er novembre 2026 (sous-agent de session-depot). Version 2 =
+ `docs/notes/ideation-organisme-v1/relais-kimi-v1/commande_kimi_v1.py` (inchangée, R12 ; elle ne jouait que le juge) avec
+ quatre changements :
+ 
+@@ -34,9 +51,10 @@
+ étape ou cumulé) ou registre illisible ; 5 réponse non conforme (vide, tronquée, modèle servi différent, usage absent, JSON
+ illisible, coût au-dessus du pire cas réservé) ; 6 délai dépassé ou interruption.
+ 
+-Usage : python3 -I -B commande_kimi_v2.py --registre REGISTRE --plafond-cumule-usd 10 [--url-relais http://127.0.0.1:8804]
++Usage : python3 -I -B commande_kimi_v3.py --registre REGISTRE --plafond-cumule-usd 50 [--url-relais http://127.0.0.1:8804]
+             [--modele kimi-k3.1-pro] [--prix-entree 2] [--prix-sortie 10] [--max-sortie-proposeur 65536]
+-            [--max-sortie-court 16000] [--sortie-min-jetons 4096] [--delai-s 1750]
++            [--max-sortie-court 16000] [--sortie-min-jetons 4096] [--max-sortie-lecteur 1000]
++            [--sortie-min-jetons-lecteur 200] [--delai-s 1750]
+ """
+ 
+ import argparse
+@@ -53,8 +71,8 @@
+ sys.path.insert(0, ICI)  # -I n'ajoute pas le dossier du script : le registre partagé est chargé d'ici
+ import registre_depense_cumulee_v1 as reg  # noqa: E402
+ 
+-VERSION = "commande-kimi-v2"
+-ROLES = ("proposeur_ideation", "juge_ideation")
++VERSION = "commande-kimi-v3"
++ROLES = ("proposeur_ideation", "juge_ideation", "experimentateur_test", "lecteur_test")  # v3 (1)
+ PLANCHER = 1e-6
+ ECART_RELAIS = "ecart-signale-par-le-relais"
+ 
+@@ -75,6 +93,8 @@
+     a.add_argument("--max-sortie-proposeur", type=int, default=65536)
+     a.add_argument("--max-sortie-court", type=int, default=16000)
+     a.add_argument("--sortie-min-jetons", type=int, default=4096)
++    a.add_argument("--max-sortie-lecteur", type=int, default=1000)  # v3 (2) : lecteur_test, une seule ligne rendue
++    a.add_argument("--sortie-min-jetons-lecteur", type=int, default=200)  # v3 (2)
+     a.add_argument("--delai-s", type=float, default=1750.0)
+     a.add_argument("--registre", required=True, help="registre de dépense cumulée du run (JSON par ligne)")
+     a.add_argument("--plafond-cumule-usd", type=float, required=True)
+@@ -95,6 +115,17 @@
+     return n if n >= mini else None
+ 
+ 
++def bornes_de_sortie(role, args):
++    """v3 (2) : (sortie maximale, sortie minimale) en jetons selon le rôle : proposeur → `--max-sortie-proposeur` /
++    `--sortie-min-jetons` ; `lecteur_test` (vérificateur, une seule ligne rendue) → `--max-sortie-lecteur` /
++    `--sortie-min-jetons-lecteur` ; tout autre rôle (juge, expérimentateur) → `--max-sortie-court` / `--sortie-min-jetons`."""
++    if role == "proposeur_ideation":
++        return args.max_sortie_proposeur, args.sortie_min_jetons
++    if role == "lecteur_test":
++        return args.max_sortie_lecteur, args.sortie_min_jetons_lecteur
++    return args.max_sortie_court, args.sortie_min_jetons
++
++
+ def cout_usage(usage, pe, ps):
+     p, c = usage.get("prompt_tokens"), usage.get("completion_tokens")
+     if not all(isinstance(x, int) and not isinstance(x, bool) and x >= 0 for x in (p, c)):
+@@ -133,16 +164,17 @@
+         if not consigne.strip():
+             raise ValueError("consigne vide")
+     except (ValueError, SystemExit) as e:
+-        rendre(2, erreur=str(e)[:300], envoye=False)
+-    maxi = args.max_sortie_proposeur if role == "proposeur_ideation" else args.max_sortie_court
++        rendre(2, erreur=str(e)[:300], envoye=False, role=environ.get("ROLE_POLE"))  # v3 (3)
++    maxi, mini = bornes_de_sortie(role, args)  # v3 (2)
+     n = None
+     corps = None
+     for _ in range(3):  # le corps grandit avec le chiffre de max_tokens : point fixe en quelques tours
+         corps = json.dumps({"model": args.modele, "messages": [{"role": "user", "content": consigne}],
+                             "max_tokens": n or maxi}, ensure_ascii=False).encode("utf-8")
+-        n2 = max_tokens_permis(len(corps), plafond, args.prix_entree, args.prix_sortie, maxi, args.sortie_min_jetons)
++        n2 = max_tokens_permis(len(corps), plafond, args.prix_entree, args.prix_sortie, maxi, mini)
+         if n2 is None:
+-            rendre(4, erreur=f"pire cas au-dessus du plafond de session {plafond} USD (corps {len(corps)} octets)", envoye=False)
++            rendre(4, erreur=f"pire cas au-dessus du plafond de session {plafond} USD (corps {len(corps)} octets)", envoye=False,
++                   role=role)  # v3 (3)
+         if n2 == n:
+             break
+         n = n2
+@@ -150,7 +182,7 @@
+                        ensure_ascii=False).encode("utf-8")
+     pire = (len(corps) + 1024) * args.prix_entree / 1e6 + n * args.prix_sortie / 1e6
+     if pire > plafond + 1e-12:
+-        rendre(4, erreur="pire cas au-dessus du plafond de session après point fixe", envoye=False)
++        rendre(4, erreur="pire cas au-dessus du plafond de session après point fixe", envoye=False, role=role)  # v3 (3)
+     diag = {"max_tokens": n, "octets_corps": len(corps), "pire_cas_usd": round(pire, 6), "modele_demande": args.modele,
+             "role": role, "etape": etape}
+     try:

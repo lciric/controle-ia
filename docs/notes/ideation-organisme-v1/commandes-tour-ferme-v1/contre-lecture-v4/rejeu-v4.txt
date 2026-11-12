@@ -1,0 +1,89 @@
+2026-11-03T01:30:18Z
+Listes du LISEZMOI v2 (telles qu'écrites) :
+  kimi : ['/usr/bin/python3', '-I', '-B', '/home/user/controle-ia-travail/docs/notes/ideation-organisme-v1/commandes-tour-ferme-v1/commande_kimi_v4.py', '--url-relais', 'http://127.0.0.1:8804', '--modele', 'kimi-k3.1-pro', '--registre', '{REGISTRE}', '--plafond-cumule-usd', '50', '--max-sortie-proposeur', '65536', '--max-sortie-court', '16000', '--sortie-min-jetons', '4096', '--max-sortie-lecteur', '1000', '--sortie-min-jetons-lecteur', '200', '--delai-s', '1750']
+  argon: ['/usr/bin/python3', '-I', '-B', '/home/user/controle-ia-travail/docs/notes/ideation-organisme-v1/commandes-tour-ferme-v1/commande_argon_v56_nuit_v4.py', 'appeler', '--url-relais', 'http://127.0.0.1:8805', '--modele', 'gemini-4-argon', '--registre', '{REGISTRE}', '--plafond-cumule-usd', '50', '--max-sortie-proposeur', '32000', '--max-sortie-court', '4000', '--sortie-min-jetons', '1000', '--max-sortie-lecteur', '1000', '--sortie-min-jetons-lecteur', '200', '--delai-s', '1750']
+
+[R0] TÉMOIN v3 (Kimi v3 et Argon v3, même registre, ETAPE_POLE=tour_ferme_v64) : B1 doit se voir
+  Kimi v3 proposeur, consigne de 2 960 000 caractères : 0 {'cout_usd': 5.95, 'envoye': True, 'etape': 'tour_ferme_v64', 'modele_servi': 'kimi-k3.1-pro'}
+  OK   Kimi v3 a réglé 5,95 USD dans l'étape
+  Argon v3 lecteur_test, 0,10, part 6.00 : 4 {'cout_usd': 1e-06, 'envoye': False, 'etape': 'tour_ferme_v64', 'erreur': "garde d'étape (tour_ferme_v64) : 5.9500 réglés + 0.0000 engagés + pire cas 0.0504 > plafond dur 6.00 USD : app"}
+  OK   v3 : Argon refusé (B1 reproduit)
+  débuts au registre : [('kimi', 'tour_ferme_v64', 44.0)]
+
+[R1] v4 : Kimi a réglé 5,95 USD dans l'étape → Argon lecteur_test à PLAFOND_ETAPE_USD=6.00 accepté
+  Kimi v4 proposeur, consigne de 2 960 000 caractères : 0 {'cout_usd': 5.95, 'envoye': True, 'etape': 'tour_ferme_v64', 'etape_registre': 'tour_ferme_v64/kimi', 'modele_servi': 'kimi-k3.1-pro'} max_tokens 65536 pire 6.577596
+  OK   Kimi v4 a réglé 5,95 USD, clé tour_ferme_v64/kimi
+  Argon v4 lecteur_test, 0,10, part 6.00 : 0 {'cout_usd': 0.0004, 'envoye': True, 'etape': 'tour_ferme_v64', 'etape_registre': 'tour_ferme_v64/argon', 'modele_servi': 'gemini-4-argon'}
+  OK   Argon v4 accepté (code 0), clé tour_ferme_v64/argon, requête reçue par le relais
+  débuts au registre : [('kimi', 'tour_ferme_v64/kimi', 44.0), ('argon', 'tour_ferme_v64/argon', 6.0)]
+  OK   deux clés distinctes au registre
+
+[R2] v4 : Argon a réglé 5,95 USD dans l'étape → Argon lecteur_test refusé, code 4, garde_etape
+  Argon v4 proposeur, consigne de 1 312 500 caractères : 0 {'cout_usd': 5.95, 'envoye': True, 'etape': 'tour_ferme_v64', 'etape_registre': 'tour_ferme_v64/argon', 'modele_servi': 'gemini-4-argon'} pire 5.975
+  OK   Argon v4 a réglé 5,95 USD
+  Argon v4 lecteur_test, 0,10, part 6.00 : 4 {'cout_usd': 1e-06, 'envoye': False, 'cause_refus': 'garde_etape', 'etape': 'tour_ferme_v64', 'etape_registre': 'tour_ferme_v64/argon', 'erreur': "garde d'étape (tour_ferme_v64/argon) : 5.9500 réglés + 0.0000 engagés + pire cas 0.0504 > plafond dur 6.00 USD"}
+  OK   refusé, code 4, garde_etape, rien envoyé, coût plancher, relais n'a rien reçu
+  Kimi v4 experimentateur_test, part 1.00 (sous les 5,95 d'Argon) : 0 {'cout_usd': 0.0004, 'envoye': True, 'etape': 'tour_ferme_v64', 'etape_registre': 'tour_ferme_v64/kimi', 'modele_servi': 'kimi-k3.1-pro'}
+  OK   la dépense d'Argon n'entre pas dans la garde d'étape de Kimi
+  idempotence :
+   Argon, ETAPE_POLE=tour_ferme_v64/argon, part 6.00 : 4 {'cout_usd': 1e-06, 'envoye': False, 'cause_refus': 'garde_etape', 'etape': 'tour_ferme_v64/argon', 'etape_registre': 'tour_ferme_v64/argon', 'erreur': "garde d'étape (tour_ferme_v64/argon) : 5.9500 réglés + 0.0000 engagés + pire cas 0.0504 > plafond dur 6.00 USD"}
+  OK   même clé que tour_ferme_v64 (les 5,95 comptent), jamais tour_ferme_v64/argon/argon
+   Argon, ETAPE_POLE=tour_ferme_v64/argon, part 44.00 : 0 {'cout_usd': 0.0004, 'envoye': True, 'etape': 'tour_ferme_v64/argon', 'etape_registre': 'tour_ferme_v64/argon', 'modele_servi': 'gemini-4-argon'}
+  OK   accepté sous la même clé
+   Kimi, ETAPE_POLE=tour_ferme_v64/kimi, part 44.00 : 0 {'cout_usd': 0.0004, 'envoye': True, 'etape': 'tour_ferme_v64/kimi', 'etape_registre': 'tour_ferme_v64/kimi', 'modele_servi': 'kimi-k3.1-pro'}
+  OK   Kimi : clé inchangée
+  débuts au registre : [('argon', 'tour_ferme_v64/argon', 6.0), ('kimi', 'tour_ferme_v64/kimi', 1.0), ('argon', 'tour_ferme_v64/argon', 44.0), ('kimi', 'tour_ferme_v64/kimi', 44.0)]
+  OK   aucun suffixe doublé
+  garde cumulée commune :
+   Kimi experimentateur_test, plafond cumulé 6 (Argon a réglé 5,95), part 44.00 : 4 {'cout_usd': 1e-06, 'envoye': False, 'cause_refus': 'garde_cumulee', 'etape': 'tour_ferme_v64', 'etape_registre': 'tour_ferme_v64/kimi', 'erreur': 'garde cumulée : 5.9512 réglés + 0.0000 engagés + pire cas 0.1625 > 6 USD : appel refusé, rien envoyé'}
+  OK   Kimi refusé par la garde cumulée : la dépense d'Argon y compte
+  état du registre R2 par étape : {'tour_ferme_v64/argon': 5.9504, 'tour_ferme_v64/kimi': 0.0008} réglé total 5.9512 en cours []
+
+[V] Lecture par l'adaptateur v64 (pole/adaptateur_commande_v64.py, 63ed933) de sorties réelles des v4
+  plafond_session (Argon lecteur, 60 000 car., 0,10)         → statut 'budget_depasse', rien_envoye True, coût compté 0.0, cout_inconnu False ; 'commande externe : code 4, rien envoyé (dernière ligne : « envoye » : false ; coût déclaré 1e-06, non compté) : lu « bud'
+  OK   plafond_session (Argon lecteur, 60 000 car., 0,10) : ('budget_depasse', True)
+  garde_etape (Argon lecteur sur R2)                         → statut 'budget_depasse', rien_envoye True, coût compté 0.0, cout_inconnu False ; 'commande externe : code 4, rien envoyé (dernière ligne : « envoye » : false ; coût déclaré 1e-06, non compté) : lu « bud'
+  OK   garde_etape (Argon lecteur sur R2) : ('budget_depasse', True)
+  garde_cumulee (Kimi expérimentateur sur R2, cumulé 6)      → statut 'budget_depasse', rien_envoye True, coût compté 0.0, cout_inconnu False ; 'commande externe : code 4, rien envoyé (dernière ligne : « envoye » : false ; coût déclaré 1e-06, non compté) : lu « bud'
+  OK   garde_cumulee (Kimi expérimentateur sur R2, cumulé 6) : ('budget_depasse', True)
+  registre_illisible (ligne illisible)                       → statut 'budget_depasse', rien_envoye True, coût compté 0.0, cout_inconnu False ; 'commande externe : code 4, rien envoyé (dernière ligne : « envoye » : false ; coût déclaré 1e-06, non compté) : lu « bud'
+  OK   registre_illisible (ligne illisible) : ('budget_depasse', True)
+  relais_max_appels (Argon, 429 du relais)                   → statut 'budget_depasse', rien_envoye True, coût compté 0.0, cout_inconnu False ; 'commande externe : code 4, rien envoyé (dernière ligne : « envoye » : false ; coût déclaré 1e-06, non compté) : lu « bud'
+  OK   relais_max_appels (Argon, 429 du relais) : ('budget_depasse', True)
+  relais_plafond (Argon, 402 du relais)                      → statut 'budget_depasse', rien_envoye True, coût compté 0.0, cout_inconnu False ; 'commande externe : code 4, rien envoyé (dernière ligne : « envoye » : false ; coût déclaré 1e-06, non compté) : lu « bud'
+  OK   relais_plafond (Argon, 402 du relais) : ('budget_depasse', True)
+   (corps signé du relais Kimi, forme de relais_kimi_v3.py l. 544 : 493 octets)
+  relais_max_appels (Kimi, 429 signé relais-kimi-v3)         → statut 'budget_depasse', rien_envoye True, coût compté 0.0, cout_inconnu False ; 'commande externe : code 4, rien envoyé (dernière ligne : « envoye » : false ; coût déclaré 1e-06, non compté) : lu « bud'
+  OK   relais_max_appels (Kimi, 429 signé relais-kimi-v3) : ('budget_depasse', True)
+  relais_plafond (Kimi, 402 signé relais-kimi-v4)            → statut 'budget_depasse', rien_envoye True, coût compté 0.0, cout_inconnu False ; 'commande externe : code 4, rien envoyé (dernière ligne : « envoye » : false ; coût déclaré 1e-06, non compté) : lu « bud'
+  OK   relais_plafond (Kimi, 402 signé relais-kimi-v4) : ('budget_depasse', True)
+  Kimi, 429 de l'amont transmis (non signé) → code 3         → statut 'erreur', rien_envoye False, coût compté 1e-06, cout_inconnu False ; 'commande externe : code 3 : '
+  OK   Kimi, 429 de l'amont transmis (non signé) → code 3 : ('erreur', False)
+  code 2 (Argon, option inconnue)                            → statut 'erreur', rien_envoye False, coût compté 1e-06, cout_inconnu False ; 'commande externe : code 2 : usage: commande_argon_v56_nuit_v4.py [-h] {servir,appeler} ...\ncommande_argon_v56_nuit_v4.py'
+  OK   code 2 (Argon, option inconnue) : ('erreur', False)
+  code 2 (Kimi, option inconnue)                             → statut 'erreur', rien_envoye False, coût compté 1e-06, cout_inconnu False ; 'commande externe : code 2 : usage: commande_kimi_v4.py [-h] [--url-relais URL_RELAIS] [--modele MODELE]\n                '
+  OK   code 2 (Kimi, option inconnue) : ('erreur', False)
+  code 3 (Argon, relais absent)                              → statut 'erreur', rien_envoye False, coût compté 1e-06, cout_inconnu False ; 'commande externe : code 3 : '
+  OK   code 3 (Argon, relais absent) : ('erreur', False)
+  code 5 (Argon, modèle servi différent)                     → statut 'refus', rien_envoye False, coût compté 0.0004, cout_inconnu False ; "refus (R-764) : modèle servi 'gemini-4-autre' ≠ modèle demandé 'gemini-4-argon' : changement de modèle par la commande ("
+  OK   code 5 (Argon, modèle servi différent) : ('refus', False)
+  code 6 (Kimi, --delai-s 1, relais lent)                    → statut 'erreur', rien_envoye False, coût compté 0.16246, cout_inconnu False ; 'commande externe : code 6 : '
+  OK   code 6 (Kimi, --delai-s 1, relais lent) : ('erreur', False)
+  code 0 (Argon lecteur)                                     → statut 'ok', rien_envoye False, coût compté 0.0004, cout_inconnu False ; ''
+  OK   code 0 (Argon lecteur) : ('ok', False)
+  OK   code 0 : modele_servi recopié
+  code 0 (Kimi proposeur)                                    → statut 'ok', rien_envoye False, coût compté 0.0004, cout_inconnu False ; ''
+  OK   code 0 (Kimi proposeur) : ('ok', False)
+
+[E] Adaptateur de l'étage v64 (AdaptateurEtageV64) et compteur des parts (Compteur), 63ed933
+  garde_etape d'Argon (R2) par l'étage, dépense d'Argon vue par l'étage 0.0 → budget_depasse True
+  OK   rendu à l'étage (fin des tours de la carte), aucun arrêt : la dépense du proposeur Argon (5,95) n'est pas dans etage.depense
+  429 du relais Argon par l'étage → budget_depasse True
+  OK   429 du relais : rendu à l'étage, aucun arrêt (rien dans l'orchestrateur ne connaît --max-appels)
+  OK   part épuisée vue par l'étage → ArretTour : relais argon : « budget_depasse » hors du plafond de la fiche (coût déclaré 0.0000 USD, plafond pass
+  OK   Compteur.verifier_parts_avant_etage (pire cas avant l'étage) → ArretTour : part restante du relais argon (0.0500 USD) sous le pire cas de l'étage (0.4000 USD) : arrêt avant l'étage (C13
+  OK   Compteur : 0,50 USD restants couvrent 4 cartes × 0,1 → l'étage est joué (cas sain)
+
+ÉCHECS : 0
+code 0
+2026-11-03T01:30:23Z

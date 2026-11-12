@@ -1,0 +1,44 @@
+[
+ {
+  "id": "T1",
+  "n": 1,
+  "ancien": "— v2, scellé (R-1750)\n",
+  "nouveau": "— v3, scellé (R-1755)\n"
+ },
+ {
+  "id": "T2",
+  "n": 1,
+  "ancien": "**Scellé par la mère le 8 novembre 2026 (R-1750)**",
+  "nouveau": "**Scellé par la mère le 8 novembre 2026 (R-1750) ; v3 scellée par la mère le 8 novembre 2026 (R-1755 : configuration v3, borne de prix de l'A100 relevée à 2,10 USD/h)**"
+ },
+ {
+  "id": "C1",
+  "n": 4,
+  "ancien": "config-t06-epreuve-e3bis-v2.json",
+  "nouveau": "config-t06-epreuve-e3bis-v3.json"
+ },
+ {
+  "id": "C2",
+  "n": 1,
+  "ancien": "`plafond_usd = 5.7`, seule différence avec la v5 d'E3)",
+  "nouveau": "`plafond_usd = 5.7`, seule différence de la v2 avec la v5 d'E3 ; la v3 ne diffère de la v2 que par la borne de prix de la carte A100, 1,30 → 2,10 USD/h, décision de Lazar, R-1755)"
+ },
+ {
+  "id": "C3",
+  "n": 1,
+  "ancien": "4c2131c68b9f2521b7b1771fff08f67a12472b54",
+  "nouveau": "c01d29ea0d5c29b584f23cc63e1aac9aaefcef66"
+ },
+ {
+  "id": "P1",
+  "n": 1,
+  "ancien": "à 1,30 USD/h au plus,",
+  "nouveau": "à 2,10 USD/h au plus (1,30 dans la v2 ; relevé par Lazar, R-1755, après la lecture de la fille 6 du 8 novembre à 05:34:58Z : aucune A100 de 80 Go conforme à 1,30 USD/h, une seule conforme hors prix, à 2,069 USD/h),"
+ },
+ {
+  "id": "P2",
+  "n": 1,
+  "ancien": "La règle d'estimation de 2,5 h du lanceur s'applique au plafond de 5,70.",
+  "nouveau": "La règle d'estimation de 2,5 h du lanceur s'applique au plafond de 5,70 (comme à E3 v9, c'est toi qui l'appliques, sur les valeurs imprimées par `OFFRE CONFORME`, avant d'exécuter la ligne de création) : `dph_total` × 2,5 h + forfait de téléchargement (40 Go au prix de l'hôte) ≤ 5,70 USD, sinon la ligne de création n'est pas exécutée. À la borne de 2,10 USD/h : 2,10 × 2,5 = 5,25 USD, il reste 0,45 USD de forfait, soit un téléchargement d'au plus 0,011 USD/Go à ce prix ; l'offre relevée à 05:34:58Z (2,069 USD/h, 0,004 USD/Go) donnait 2,069 × 2,5 + 0,16 = 5,33 ≤ 5,70. La garde de dépense du lanceur arrête l'instance au plafond de 5,70."
+ }
+]

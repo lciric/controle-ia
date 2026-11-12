@@ -1,0 +1,159 @@
+{
+  "manifeste_sha256": "06ee7ed9776427b91bd892de630c9bab462d15e2d922409dabe3ae7eb9f13fbb",
+  "resultat": {
+    "bras": {
+      "defaut": {
+        "audit": {
+          "P9_zone_generee_non_nulle": true,
+          "jetons_zone_generee": {
+            "15": 36375,
+            "23": 36375,
+            "7": 36375
+          },
+          "nuls_zone_generee": {
+            "15": 0,
+            "23": 0,
+            "7": 0
+          },
+          "rho": {
+            "15": 1.4028540014994226,
+            "23": 1.5453583782842115,
+            "7": 1.1386063230078314
+          },
+          "rho_max_observe": 1.5453583782842115,
+          "sondes_conformes": true
+        },
+        "chemin": {
+          "C1": true,
+          "C1_ecart_max": 0.0003049580133312419,
+          "C2": "conforme",
+          "C2_comparables": 40,
+          "C2_vus": 40,
+          "C3": "conforme",
+          "conforme": true
+        },
+        "controle_negatif": {
+          "comparables": 160,
+          "courtes": 0,
+          "echecs": [],
+          "fraction": 1.0,
+          "lecture": "conforme",
+          "min_des_maxima": 0.883581551767862,
+          "passent": 160,
+          "positions_min": 4,
+          "statistique": "q99"
+        },
+        "duree_projetee_episodes_pilote_s": 8089.6213105190545,
+        "longueur_remplie_max": 4752,
+        "memoire_pic_gio": 24.023656845092773,
+        "mesures": {
+          "actions_comparees": 160,
+          "actions_remplies": 140,
+          "contexte_max": 4752,
+          "contexte_max_joue": 4752,
+          "ecart_max": 1.1231771982752097,
+          "q99_max": 0.13539323886582585
+        },
+        "rejeu_identique": true,
+        "repere": {
+          "15": {
+            "jetons": 9714,
+            "max": 0.7196434794026992,
+            "q50": 0.01130768528289616,
+            "q99": 0.08003349905374753
+          },
+          "23": {
+            "jetons": 9714,
+            "max": 0.7918841658257765,
+            "q50": 0.009757608030614503,
+            "q99": 0.08761284163492934
+          },
+          "7": {
+            "jetons": 9714,
+            "max": 0.13083844583238244,
+            "q50": 0.011972737928297249,
+            "q99": 0.03251490997711623
+          }
+        },
+        "zone_generee": {
+          "comparables": 160,
+          "fraction": 1.0,
+          "part_zone_generee_sous_1pc": 0.0,
+          "passent": 160,
+          "q99_generee_max": 0.16990900103602177
+        }
+      }
+    },
+    "carte": "NVIDIA A100-SXM4-80GB",
+    "domaine_enonces": {
+      "couvre_le_pilote": false,
+      "longueur_max_choisies": 5340,
+      "longueur_max_evaluation": 6786,
+      "longueur_min_choisies": 3709,
+      "longueur_q90_evaluation": 4902.8
+    },
+    "lectures": {
+      "defaut": {
+        "R1_garde_saine": true,
+        "R1_marge": true,
+        "R2_controle_negatif": "conforme",
+        "R3_seuil_fonde": true,
+        "R4_rejeu": true,
+        "R5_domaine_couvert": true,
+        "R6_chemin_defaut": true,
+        "R7_memoire": true,
+        "R8_duree": false,
+        "audit_R4_ecarts_tous_nuls": false,
+        "audit_conforme": true,
+        "aveugle_action_entiere_seulement": false,
+        "conforme": false,
+        "conforme_avec_marge": false,
+        "garde_zone_generee_conforme": true,
+        "reserve_rho": false
+      },
+      "math": {
+        "conforme": false,
+        "conforme_avec_marge": false,
+        "panne": "mémoire : CUDA out of memory. Tried to allocate 6.06 GiB. GPU 0 has a total capacity of 79.44 GiB of which 2.94 GiB is free. Process 2403864 has 76.49 GiB memory in use. Of the allocated memory 68.64 GiB is allocated by PyTorch, and 7.33 GiB is reserved by PyTorch but unallocated. If reserved but unallocated memory is large try setting PYTORCH_CUDA_ALLOC_CONF=expandable_segments:True to avoid fragmentation.  See documentation for Memory Management  (https://docs.pytorch.org/docs/stable/notes/cud"
+      }
+    },
+    "memoire_carte_gio": 79.44,
+    "noeud": true,
+    "noyau_retenu": null,
+    "proposition_au_noeud": null,
+    "reglages": {
+      "appareil": "cuda",
+      "capacite": [
+        8,
+        0
+      ],
+      "carte": "NVIDIA A100-SXM4-80GB",
+      "cublas_workspace": ":4096:8",
+      "cuda": "13.0",
+      "cudnn": 92400,
+      "deterministe": true,
+      "fils": 1,
+      "numpy": "2.4.6",
+      "pilote": "595.71.05",
+      "reduction_reduite_bf16_fp16": false,
+      "relus": {
+        "algorithmes_deterministes": true,
+        "cudnn_banc_essai": false,
+        "cudnn_deterministe": true,
+        "fils": 1,
+        "precision_produits_cuda": "ieee",
+        "precision_produits_simple": "highest",
+        "reduction_reduite_bf16": false,
+        "reduction_reduite_fp16": false,
+        "tf32_cudnn": false,
+        "tf32_produits": false
+      },
+      "tf32": false,
+      "torch": "2.14.1+cu130"
+    },
+    "reserves": [
+      "énoncés de la revalidation plus courts que le plus long énoncé du pilote (RV-5)"
+    ]
+  },
+  "run_id": "20261011-225701-t05-revalidation-reel"
+}

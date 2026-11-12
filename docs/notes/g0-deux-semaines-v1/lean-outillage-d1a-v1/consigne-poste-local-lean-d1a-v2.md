@@ -1,0 +1,72 @@
+# Consigne : session du poste local de Lazar — outillage Lean D-1a, second essai (GO-2026-11-10-13) — v2
+
+Session mère `session_01VJdZpSMxSdk2SJ1ScmdfNv` (dans le nuage), sur le mot de Lazar R-2426 (« Recommandation : (a), confiance 0,75 go »), après la contre-lecture courte du harnais v7, second tour (`contre-lecture-courte-harnais-d1a-v8.md`, `a0efdcf1…`, R-2425). Code : `prep/lean-outillage-d1a-v7`, commit `32a40613eb1ec006cbee4144e1ec94dfe84e8237` ; procédure v9 au commit `b0b8667a`. Texte final tiré du brouillon 2 (`5b1fab98…`), mandat 1 remis dans l'ordre (défaut de rédaction du brouillon 2, déclaré).
+
+**Pourquoi** : le premier essai (`rapport-poste-local-d1a-v1.md`, branche `donnees/lean-outillage-d1a-poste-local-v1`) s'est arrêté au pas `noyau` (0/18) : les fichiers compilés de Mathlib n'étaient pas lisibles par `bac`. Le harnais corrige cette cause et les incidents du rapport.
+
+**Tu es une session fille** : ton mandat est **cette consigne seule** ; tu ne reprends aucune autre tâche du programme. Tu n'écris jamais dans `main`, jamais vers `lciric/controle-ia`, jamais une ligne de `registres/go.md` ; la session mère inscrit dépenses, arrêts et décisions d'après ton rapport.
+
+**Dépense autorisée** : **GO-2026-11-10-13**, 65 USD au plus, dont 0,28 USD déjà dépensés par le premier serveur (175751342).
+- **Une seule** machine Hetzner `ccx33` (`hel1`) de plus, vie bornée par la minuterie.
+- **Aucun appel de modèle**, **aucune clé de modèle ni dépôt du programme sur la machine**. Aucune autre dépense.
+- **Déclaration (R-2426)** : c'est la **seconde machine sous cette ligne**, acceptée par Lazar. La garde « une machine par GO » du harnais est **contournée par construction** : ta branche neuve ne porte ni le fichier de rattrapage ni le journal des créations du premier essai, seules pièces que la garde lit. Le contournement ne vaut que pour cet essai : une préparation, une création.
+
+## Règles
+- **`CLAUDE.md` du dépôt** (R1 à R14, interdits) et les **interdits communs v2** (`docs/notes/g0-deux-semaines-v1/consignes-mere-2026-11-10-0500-v1/interdits-communs-v2.md`, `1ee3b370…`), **avec ces écarts écrits et eux seuls** :
+  - règle 3 levée pour l'interface de Hetzner (jeton `HCLOUD_TOKEN` lu par son nom), pour le SSH vers la seule machine que tu crées, et pour le service d'adresse de `MV7 adresses-sortie` (section 0) ;
+  - règle 4 : permis seulement `git clone`, `git fetch origin <branche>:refs/remotes/origin/<branche>` (avec refspec), `git remote set-branches --add origin <ta branche>`, la création de ta branche, `git add -- <fichiers nommés>`, `git commit`, `git push` de ta seule branche (retentatives 2, 4, 8, 16 s).
+- **La procédure fait foi pour tous les gestes de la machine** : `docs/notes/g0-deux-semaines-v1/lean-outillage-d1a-v1/procedure-poste-local-d1a-v9.md`, sur la branche du harnais `prep/lean-outillage-d1a-v7`, commit `b0b8667a`.
+  - Empreinte entière vérifiée avant lecture : `7f69fece209909cdc132a32529e6df6c795455cd380dbf9db495b45b1602b59e`.
+  - Sections 0 à 7, **en entier et dans l'ordre**, avec les précisions ci-dessous. Notation `MV7`.
+- **Poste** : sous WSL (Ubuntu), clone dans le système de fichiers Linux ; le jeton de `gh` ne passe qu'à `git` (environnement du processus), jamais écrit ni affiché.
+- **Données du poste (CLC5-07)** :
+  - identité Git neutre pour ce clone seulement (`poste-local`, `poste-local@invalid`, sans `--global`), vérifiée avant chaque commit ;
+  - avant chaque commit : `git add -- <fichiers nommés>`, puis `MV7 garde-poste --ip-poste IP_POSTE && git commit …` ;
+  - chaque sortie du pilote ou d'un processus détaché passe `MV7 garde-poste --ip-poste IP_POSTE --fichier <pièce>` avant d'être versée (la garde refuse aussi toute adresse du /24 du poste) ;
+  - jamais versés : l'adresse du poste ni aucune adresse de son /24, le dossier personnel, le chemin absolu du clone, le nom de la machine ou de l'utilisateur ; aucune sortie de `adresses-sortie` n'est versée (elle ne porte que des comptes).
+- **Mandataire** : `getproxies_environment()` vide à l'essai à blanc ; sinon arrêt.
+- **Délais des outils** : `detruire` et `inventaire` jusqu'à environ 9 minutes : délai d'outil d'au moins 10 minutes, ou arrière-plan.
+- **Refus** d'un contrôle de permissions ou d'un classifieur : arrêt sur ce point, destruction du serveur s'il existe (section 4), rapport ; ni contournement, ni reformulation.
+- **Un seul essai** : une préparation (L1, **jeton neuf** tiré par `preparer`), une création ; **aucun second essai** sans consigne neuve de la mère et accord de Lazar.
+
+## Mandat
+1. **Dépôt** :
+   - clone neuf de `https://github.com/lciric/controle-ia-travail.git` ;
+   - `git fetch origin prep/lean-outillage-d1a-v7:refs/remotes/origin/prep/lean-outillage-d1a-v7` ;
+   - **ta branche `donnees/lean-outillage-d1a-poste-local-v2`, partie du commit `32a40613eb1ec006cbee4144e1ec94dfe84e8237`**, poussée par `git push -u origin donnees/lean-outillage-d1a-poste-local-v2` ;
+   - puis la référence de suivi de la procédure (L3 : `git fetch` par refspec, `git remote set-branches --add`, `@{upstream}` résolu) ;
+   - vérifie que `V` ne contient ni `rattrapage-machine-d1a-*-v1.json` ni `journal-creations-machines-v1.jsonl` ; sinon arrêt ;
+   - lis la procédure v9 depuis `origin/prep/lean-outillage-d1a-v7` et vérifie son empreinte ;
+   - vérifie l'empreinte de cette consigne (`sha256sum -c` de son compagnon, sur `origin/main`) ;
+   - routine de `CLAUDE.md`, points 1 et 2 seulement.
+2. **Section 0 de la procédure** :
+   - prérequis ;
+   - essai à blanc hors du bac à sable, dont la **fin et reprise réelles** (hôte de la session relancé, vérifié par l'heure de démarrage du processus) ;
+   - **`MV7 adresses-sortie --ip-poste IP_POSTE`** : code 0, retenir `P` = `prefixe_conseille` (32 ou 24). **Jamais `--prefixe-poste 24` sans cette mesure** ; si elle rend 32, le signaler à Lazar avant L2. Code 1 : arrêt, compte rendu, aucune préparation ;
+   - **`stat -c %a src/controle_ia/lean_essai/verificateur_noyau_v4.lean` = `644`** (sinon `chmod 644` de ce seul fichier, sans commit) ;
+   - ordinateur sur secteur, capot ouvert.
+3. **L1, L2, L3** :
+   - `T_LIM` = heure de L1 (`date -u`) **plus 6 heures** ; `H` = `T_LIM` **plus 40 heures** ;
+   - `MV7 preparer --go GO-2026-11-10-13 …` (fichier `rattrapage-machine-d1a-<jeton12>-v1.json` au **jeton neuf**) ;
+   - **L2** avec `--prefixe-poste P` ;
+   - **L3** : pousser, référence de suivi, puis donner à Lazar, pour la mère : branche, commit, jeton, identifiants de la clé et du pare-feu, empreinte de la clé, et `P`.
+4. **Attendre le mot « armée »** de la mère, relayé par Lazar, avec l'empreinte du fichier de rattrapage ; **sans lui, aucune création**. La mère fait M1 à M6 comme en v6 : lecture, même projet, droit d'écrire, destruction à blanc, trois tâches (T1 à H, T2 à H + 30 min et T3 à H + 24 h en session neuve), ligne « en tâche jusqu'à » dans `registres/etat.md`.
+5. **L4 à L7** (`creer-et-armer --go GO-2026-11-10-13 … --deja-depense-usd 0.28`), puis **section 3** :
+   - avant le premier pilote : si l'adresse du serveur est déjà connue du poste (`ssh-keygen -F <adresse du serveur>`), `ssh-keygen -R <adresse du serveur>` ;
+   - pilote `avant` (`piloter_poste_v8.sh avant …`) : installation par `installer_chaine_v2.sh` (garde de lisibilité, code 5 si un chemin reste fermé à `bac`), sonde v2 « ouverte », puis **essai R5 « bac lit Mathlib.olean »** (sain, témoin 0644, artefact 0600). Tout échec : rien d'autre, section 5, compte rendu ;
+   - coupure : `MV7 acces-couper … --ip-poste IP_POSTE --prefixe-poste P`, puis `MV7 verifier-coupure` ;
+   - pilote `apres` : vidage du cache du résolveur, sonde v2 « fermée », harnais déposé, vérificateur épinglé, **épreuve d'isolement dont le premier pas est `noyau`** (non conforme : rien d'autre, section 5, compte rendu), épreuve, mesures (taille de Mathlib, temps d'un item jouet, mémoire à trois processus), sonde de fin ;
+   - valeurs des pièces `VERSION-LEAN`, `COMMIT-MATHLIB`, `MACHINE`, `ESSAIS-R5` (partie machine).
+6. **Fin** : section 5 (normale) ou 4 (anormale).
+   - Serveur détruit par son identifiant **dans tous les cas** ; inventaire « aucun serveur de l'essai ».
+   - Clé et pare-feu supprimés ; si `acces-supprimer` rend 422 `resource_in_use`, refaire 2 à 3 minutes plus tard.
+   - Minuterie arrêtée par son PID si elle vit.
+7. **Rapport** sur ta branche, sous `docs/notes/g0-deux-semaines-v1/lean-outillage-d1a-v1/` (noms neufs) : `rapport-poste-local-d1a-v2.md`, scellé. Il contient :
+   - vie du serveur (création, destruction, heures, coût) ;
+   - `P` retenu et la sortie de `adresses-sortie` (comptes seulement) ;
+   - sorties des étapes ;
+   - résultat de la garde de lisibilité, de l'essai « bac lit Mathlib.olean », du pas `noyau` et de l'épreuve ;
+   - valeurs des pièces, incidents, écarts ;
+   - **lignes proposées** pour `registres/depenses.md` et `registres/arrets.md`.
+
+   Pièces sous `pieces-poste-local-d1a-<jeton12>-v1/`. Lazar relaie à la mère.

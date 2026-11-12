@@ -1,0 +1,70 @@
+=== A 1 0
+ACTION: ADD
+TITLE: One reward head per annotator group so that head spread encodes disagreement
+PROPOSAL: On HelpSteer2-Preference and the multi-annotator subset of PKU-SafeRLHF we cluster annotators by their voting pattern into a handful of groups, train one Bradley-Terry head per group on a shared Llama-3.1-8B-instruct backbone, and read the spread of the heads' scores on a response as its disagreement estimate while their mean serves as the reward. The test asks whether the spread predicts, on held-out pairs with several annotators, which pairs those annotators split on, and whether the mean keeps the ranking accuracy of a single head on RewardBench.
+CONTROLS: A single head trained on all votes with Monte Carlo dropout as its spread, the usual alternative; a model with the same number of heads trained on groups assigned at random, which keeps the architecture and removes the grouping; the correlation of spread with held-out annotator split per pair; ranking accuracy of the mean against the single head; and three seeds.
+COST: 360
+PREDICTION: The grouped heads should predict held-out splits far better than dropout and than random groups, with the mean within a point of the single head. If random groups predict splits as well, the spread reflects response difficulty and not annotator structure.
+=== A 1 1
+ACTION: ADD
+TITLE: One reward head per annotator group so that head spread marks contested responses
+PROPOSAL: The test asks whether the spread marks, on held-out responses, the categories and lengths of response that are usually contested, and whether the mean keeps the ranking accuracy of a single head on RewardBench. On HelpSteer2-Preference and the multi-annotator subset of PKU-SafeRLHF we cluster annotators by their voting pattern into a handful of groups, train one Bradley-Terry head per group on a shared Llama-3.1-8B-instruct backbone, and read the spread of the heads' scores on a response as its contestedness estimate while their mean serves as the reward.
+CONTROLS: A single head trained on all votes with Monte Carlo dropout as its spread, the usual alternative; a model with the same number of heads trained on groups assigned at random, which keeps the architecture and removes the grouping; the correlation of spread with response length and with prompt category per response; ranking accuracy of the mean against the single head; and three seeds.
+COST: 360
+PREDICTION: The grouped heads should track length and category far more closely than dropout and than random groups, with the mean within a point of the single head. If random groups track them as well, the spread reflects surface features and not annotator structure.
+=== A 2 0
+ACTION: ADD
+TITLE: Bounded per-dimension probabilities combined into one reward
+PROPOSAL: We give a reward model four bounded outputs, each the probability that a response meets one dimension of a rubric, correctness, helpfulness, safety and style, and combine them through a learned weighting into the pairwise likelihood used for training on Skywork-Reward-Preference, with the per-dimension outputs anchored by the per-attribute ratings in HelpSteer2. Backbones are Qwen2.5-7B-instruct and Llama-3.1-8B-instruct. We test whether the dimensions explain the final score, whether a fixed threshold on the correctness output separates right from wrong on MATH and a code benchmark, and whether ranking accuracy on RewardBench is kept.
+CONTROLS: A single-probability head trained on the same backbone, pairs and anchoring, which isolates the dimensional structure from the rest of the recipe; the four outputs with the anchoring removed, which separates the ratings from the pairs; the correctness output against unit tests and MATH answers at one threshold; ranking accuracy against the single-probability head on RewardBench; and three seeds with bootstrap intervals over prompts.
+COST: 520
+PREDICTION: The dimensional head should keep ranking accuracy within a point of the single head, and its correctness output at one threshold should separate right from wrong on MATH with high precision. If the unanchored head separates as well, the pairwise data already identify the dimensions.
+=== A 2 1
+ACTION: ADD
+TITLE: Bounded per-dimension probabilities combined into one reward, placed against public reward models
+PROPOSAL: Backbones are Qwen2.5-7B-instruct and Llama-3.1-8B-instruct. We give a reward model four bounded outputs, each the probability that a response meets one dimension of a rubric, correctness, helpfulness, safety and style, and combine them through a learned weighting into the pairwise likelihood used for training on Skywork-Reward-Preference, with the per-dimension outputs anchored by the per-attribute ratings in HelpSteer2. We test whether the dimensions explain the final score, whether a fixed threshold on the correctness output separates right from wrong on MATH and a code benchmark, and whether ranking accuracy on RewardBench reaches the public entries of the leaderboard.
+CONTROLS: The public reward models of the leaderboard nearest in size, trained on their own pairs and anchoring, which places the dimensional structure among them; the public models with their scores standardised per domain; the correctness output against unit tests and MATH answers at one threshold; ranking accuracy against the public entries on RewardBench; and three seeds with bootstrap intervals over prompts.
+COST: 520
+PREDICTION: The dimensional head should reach ranking accuracy within a point of the nearest public entries, and its correctness output at one threshold should separate right from wrong on MATH with high precision. If the standardised public models separate as well, the leaderboard models already identify the dimensions.
+=== A 3 0
+ACTION: ADD
+TITLE: Does an absolute score hold its meaning across prompt difficulty
+PROPOSAL: A reward model that outputs the probability that a response is acceptable, trained from Qwen2.5-7B-instruct on UltraFeedback pairs and anchored with a few hundred pointwise ratings, is tested on a set of chat and mathematics prompts stratified by difficulty, where difficulty is the share of policy samples that human raters accept, and the strata are built before any model is run. We tune one acceptance threshold on the whole set and read precision and recall of the accept decision in each difficulty stratum, since a score that encodes only a ranking inside each prompt will accept the best response of a hard prompt that raters reject.
+CONTROLS: A scalar Bradley-Terry head with a threshold tuned on the same set; the probabilistic head with its anchoring removed; precision and recall per stratum from the easiest to the hardest prompts, with the hardest stratum holding prompts where raters accept below a tenth of samples; and three seeds with intervals.
+COST: 160
+PREDICTION: The anchored probabilistic head should keep precision within a few points across strata while the scalar head's precision collapses on hard prompts, where it accepts the least bad response. If the unanchored head holds precision as well, the pairwise loss already encodes absolute quality.
+=== A 3 1
+ACTION: ADD
+TITLE: Does an absolute score hold its meaning across response length
+PROPOSAL: We tune one acceptance threshold on the whole set and read precision and recall of the accept decision in each length stratum, since a score that tracks length will accept the longest response of a prompt that raters reject. A reward model that outputs the probability that a response is acceptable, trained from Qwen2.5-7B-instruct on UltraFeedback pairs and anchored with a few hundred pointwise ratings, is tested on a set of chat and mathematics prompts restricted to the easiest ones, where raters accept most policy samples, and stratified by the length of the sampled responses in tokens.
+CONTROLS: A scalar Bradley-Terry head with a threshold tuned on the same set; the probabilistic head with its anchoring removed; precision and recall per stratum from the shortest to the longest responses, with the longest stratum holding responses above four times the median length; and three seeds with intervals.
+COST: 160
+PREDICTION: The anchored probabilistic head should keep precision within a few points across strata while the scalar head's precision collapses on the longest responses, where it accepts verbose text. If the unanchored head holds precision as well, the pairwise loss already encodes absolute quality.
+=== A 4 0
+ACTION: ADD
+TITLE: A joint likelihood for pairs and ratings against fitting the scale afterwards
+PROPOSAL: We model each response's quality as a latent variable on a bounded scale, fit pairwise preferences from Skywork-Reward-Preference through the probability that one latent lies above the other and pointwise ratings from HelpSteer2 through ordinal cut points on the same latent, and train both terms together on Llama-3.1-8B-instruct, so that scarce ratings shape the scale during training instead of after it. The test varies the number of ratings from tens to the full set and asks when joint training pulls ahead of fitting cut points on a frozen pairwise head.
+CONTROLS: The two-stage model, a pairwise head followed by cut points fitted on the same ratings, at every rating count; a model trained on ratings alone, which fixes what ratings give without pairs; bin accuracy on held-out ratings and threshold precision on chat, mathematics and code at each count; ranking accuracy on RewardBench, which joint training must keep; and three seeds with bootstrap intervals over rating subsets.
+COST: 640
+PREDICTION: Joint training should pull ahead at the smallest rating counts and tie the two-stage model once hundreds of ratings are available, with ranking accuracy unchanged. If the two models tie at every count, the scale is identifiable from a frozen head and joint training adds only training time.
+=== A 4 1
+ACTION: ADD
+TITLE: A joint likelihood for pairs and ratings across optimiser and template choices
+PROPOSAL: The test varies the optimiser, the chat template and the layer the latent is read from and asks when joint training is sensitive to these choices on the complete set of ratings. We model each response's quality as a latent variable on a bounded scale, fit pairwise preferences from Skywork-Reward-Preference through the probability that one latent lies above the other and pointwise ratings from HelpSteer2 through ordinal cut points on the same latent, and train both terms together on Llama-3.1-8B-instruct, so that ratings shape the scale during training instead of after it.
+CONTROLS: The joint model with two optimisers, with and without weight decay, under every template; a model with the latent read from the last layer alone against the penultimate one, which fixes what the read-out layer gives; bin accuracy on held-out ratings and threshold precision on chat, mathematics and code for each choice; ranking accuracy on RewardBench, which every choice must keep; and three seeds with bootstrap intervals over prompts.
+COST: 640
+PREDICTION: Joint training should be insensitive to the optimiser and template and tie across read-out layers, with ranking accuracy unchanged. If the choices differ on every score, the scale is unstable and joint training adds only variance.
+=== A 5 0
+ACTION: ADD
+TITLE: Stopping Best-of-N early once a calibrated score passes a threshold
+PROPOSAL: Candidates are sampled one at a time from a policy on AlpacaEval, MATH and a code benchmark, each is scored by a reward head that outputs a calibrated probability of acceptability, anchored by a few hundred pointwise ratings on Qwen2.5-7B-instruct, and sampling stops as soon as a candidate passes a threshold or when sixteen candidates have been drawn. The question is whether calibration lets the scorer stop early without losing quality, which a ranking-only scorer cannot do because its scores say little about any single candidate on its own.
+CONTROLS: The same head without early stopping, picking the best of sixteen, which sets the quality the stopping rule has to keep; a scalar Bradley-Terry head with a threshold on its scores standardised over a held-out pool, the best a ranking-only scorer can do; quality under held-out ratings and unit tests against the average number of candidates drawn; and three seeds.
+COST: 440
+PREDICTION: Early stopping with the calibrated head should keep the quality of the best of sixteen while drawing under half as many candidates on chat and code, and the standardised scalar head should keep quality only at a far lower stopping rate. If the scalar head stops as early at the same quality, calibration adds little that standardisation does not.
+=== A 5 1
+ACTION: ADD
+TITLE: Stopping Best-of-N early once a calibrated score passes a threshold, against drawing fewer candidates
+PROPOSAL: The question is whether the stopping rule draws fewer candidates than a preset smaller pool for the same quality, which a rule that stops at a set count cannot adapt per prompt because it ignores how good any single candidate is on its own. Candidates are sampled one at a time from a policy on AlpacaEval, MATH and a code benchmark, each is scored by a reward head that outputs a calibrated probability of acceptability, anchored by a few hundred pointwise ratings on Qwen2.5-7B-instruct, and sampling stops as soon as a candidate passes a threshold or when sixteen candidates have been drawn.
+CONTROLS: The same head picking the best of four and the best of eight, which sets the quality a smaller preset pool reaches; the first candidate drawn, scored by the same head, the least a rule can do; quality under held-out ratings and unit tests against the average number of candidates drawn; and three seeds.
+COST: 440
+PREDICTION: Early stopping with the calibrated head should reach the quality of the best of eight while drawing under half as many candidates on chat and code, and the first candidate should trail at a far lower quality. If the best of four reaches the same quality, the threshold adds little that a small pool does not.

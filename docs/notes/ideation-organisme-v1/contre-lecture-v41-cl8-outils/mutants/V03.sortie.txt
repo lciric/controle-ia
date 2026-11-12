@@ -1,0 +1,57 @@
+........................../tmp/claude-0/-home-user-controle-ia-travail/75a1275d-b838-5015-909e-b2bfadb395f9/scratchpad/relecture-v41/cl8/outils-cl8/mutants/V03/essais/test_v7_ideation.py:557: ResourceWarning: unclosed file <_io.TextIOWrapper name='/tmp/claude-0/-home-user-controle-ia-travail/75a1275d-b838-5015-909e-b2bfadb395f9/scratchpad/relecture-v41/cl8/outils-cl8/mutants/V03/essais/_tmp/tmpydb2skug/petit-enfant.pid' mode='r' encoding='UTF-8'>
+  pid = int(open(pid_f).read())
+ResourceWarning: Enable tracemalloc to get the object allocation traceback
+../tmp/claude-0/-home-user-controle-ia-travail/75a1275d-b838-5015-909e-b2bfadb395f9/scratchpad/relecture-v41/cl8/outils-cl8/mutants/V03/essais/test_v7_ideation.py:649: ResourceWarning: unclosed file <_io.TextIOWrapper name='/tmp/claude-0/-home-user-controle-ia-travail/75a1275d-b838-5015-909e-b2bfadb395f9/scratchpad/relecture-v41/cl8/outils-cl8/mutants/V03/essais/_tmp/tmpwndpra6d/cx-3/proposeurs/argon/traces-passe-2/consigne.md' mode='r' encoding='utf-8'>
+  encoding="utf-8").read()
+ResourceWarning: Enable tracemalloc to get the object allocation traceback
+................................./tmp/claude-0/-home-user-controle-ia-travail/75a1275d-b838-5015-909e-b2bfadb395f9/scratchpad/relecture-v41/cl8/outils-cl8/mutants/V03/essais/test_v7_ideation.py:1254: ResourceWarning: unclosed file <_io.TextIOWrapper name='/tmp/claude-0/-home-user-controle-ia-travail/75a1275d-b838-5015-909e-b2bfadb395f9/scratchpad/relecture-v41/cl8/outils-cl8/mutants/V03/essais/_tmp/tmp79genf25/pe.pid' mode='r' encoding='UTF-8'>
+  pe = int(open(pid_f).read())
+ResourceWarning: Enable tracemalloc to get the object allocation traceback
+.........E....FF.
+======================================================================
+ERROR: test_controle_interrompu_compte_le_plafond_et_garde_les_lectures (essais.test_v7_ideation.TestV41.test_controle_interrompu_compte_le_plafond_et_garde_les_lectures)
+CL40-02 : une exception au contrôle du second modèle compte son plafond et garde la lecture (et le coût) du
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/tmp/claude-0/-home-user-controle-ia-travail/75a1275d-b838-5015-909e-b2bfadb395f9/scratchpad/relecture-v41/cl8/outils-cl8/mutants/V03/pole/ideation.py", line 681, in appel_de_controle
+    r = adaptateur.lancer(role, consigne, dossier, budget_usd, 1, modele=modele)
+  File "/tmp/claude-0/-home-user-controle-ia-travail/75a1275d-b838-5015-909e-b2bfadb395f9/scratchpad/relecture-v41/cl8/outils-cl8/mutants/V03/essais/test_v7_ideation.py", line 1369, in lancer
+    raise self.exc
+KeyboardInterrupt: signal 15
+
+The above exception was the direct cause of the following exception:
+
+Traceback (most recent call last):
+  File "/tmp/claude-0/-home-user-controle-ia-travail/75a1275d-b838-5015-909e-b2bfadb395f9/scratchpad/relecture-v41/cl8/outils-cl8/mutants/V03/essais/test_v7_ideation.py", line 1382, in test_controle_interrompu_compte_le_plafond_et_garde_les_lectures
+    idn.appel_de_controle(Panne(KeyboardInterrupt("signal 15")), modeles, sortie, 0.2)
+    ~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/tmp/claude-0/-home-user-controle-ia-travail/75a1275d-b838-5015-909e-b2bfadb395f9/scratchpad/relecture-v41/cl8/outils-cl8/mutants/V03/pole/ideation.py", line 704, in appel_de_controle
+    raise ControleRefuse(f"appel de contrôle interrompu pour {modele} : {type(e).__name__} : "
+                         + caviarder(str(e))[0][:300] + f" ; {cout:.4f} USD comptés", lecture,
+                         non_lance=avant_lancement) from e
+pole.ideation.ControleRefuse: appel de contrôle interrompu pour claude-opus-5-5 : KeyboardInterrupt : signal 15 ; 0.2000 USD comptés
+
+======================================================================
+FAIL: test_sigterm_pendant_le_controle_de_la_course (essais.test_v7_ideation.TestV41.test_sigterm_pendant_le_controle_de_la_course)
+CL40-02 (S3) : SIGTERM pendant le contrôle d'Argon dans la course → code 2, tentative scellée au plafond de la
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/tmp/claude-0/-home-user-controle-ia-travail/75a1275d-b838-5015-909e-b2bfadb395f9/scratchpad/relecture-v41/cl8/outils-cl8/mutants/V03/essais/test_v7_ideation.py", line 1440, in test_sigterm_pendant_le_controle_de_la_course
+    self.assertIn("contrôle compris", err)
+    ~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: 'contrôle compris' not found in '{"tentative_scellee": "/tmp/claude-0/-home-user-controle-ia-travail/75a1275d-b838-5015-909e-b2bfadb395f9/scratchpad/relecture-v41/cl8/outils-cl8/mutants/V03/essais/_tmp/tmp_vn6h_19/l-sig-ctrl-controle/tentative-1.json", "cout_claude_usd": 0.0, "cout_externe_usd": 2.5, "relancable": true, "motifs_relance": ["aucun : relance permise"]}\n{"arret": "ControleRefuse : appel de contrôle interrompu pour gemini-argon : KeyboardInterrupt : signal 15 ; 2.5000 USD comptés"}\n'
+
+======================================================================
+FAIL: test_sigterm_pendant_le_controle_du_bras (essais.test_v7_ideation.TestV41.test_sigterm_pendant_le_controle_du_bras)
+CL40-02 (S3b) : SIGTERM pendant le contrôle du bras → code 2, bras-tentative scellée au plafond du contrôle
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/tmp/claude-0/-home-user-controle-ia-travail/75a1275d-b838-5015-909e-b2bfadb395f9/scratchpad/relecture-v41/cl8/outils-cl8/mutants/V03/essais/test_v7_ideation.py", line 1471, in test_sigterm_pendant_le_controle_du_bras
+    self.assertIn("interruption", err)
+    ~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^
+AssertionError: 'interruption' not found in '{"arret": "CourseInterrompue : tentative 1 du bras échouée avant tout envoi des fiches, 0.2000 USD comptés : appel de contrôle interrompu pour gemini-argon : KeyboardInterrupt : signal 15 ; 0.2000 USD comptés ; relance permise"}\n'
+
+----------------------------------------------------------------------
+Ran 78 tests in 9.050s
+
+FAILED (failures=2, errors=1)

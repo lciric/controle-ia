@@ -1,0 +1,9 @@
+0. cache complet (liens symboliques) -> PASSE (poids 4)
+1. index absent, un seul morceau sur quatre présent -> PASSE (poids 1)
+2. index présent, un lien cassé (blob absent) -> refusé (GardeArret) : modèle de P3 org/nom@0e9e39f249a1 incomplet au cache local : ['model-00003-of-00004.safetensors']
+3. index présent, un morceau de taille nulle -> PASSE (poids 4)
+4. index illisible (JSON tronqué) -> exception hors garde JSONDecodeError : Unterminated string starting at: line 1 column 23 (char 22)
+5. index sans weight_map -> exception hors garde KeyError : 'weight_map'
+6. révision donnée par un nom de branche (main) -> refusé (GardeArret) : modèle de P3 : dossier du cache 0e9e39f249a1 ≠ révision main
+7. index présent, weight_map vide -> PASSE (poids 0)
+8. generation_config.json et special_tokens_map.json absents (comme 0) -> PASSE (poids 4)

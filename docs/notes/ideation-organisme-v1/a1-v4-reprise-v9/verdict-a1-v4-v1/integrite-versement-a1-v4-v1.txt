@@ -1,0 +1,63 @@
+Intégrité du versement de la course A1-v4 — lecteur neuf du verdict (R13), relevé du 2026-11-10T07:54:36Z (date -u)
+
+1. Pièces de référence
+texte scellé : d306a8faa45b3d77f1edb653406ced1facd4752b2aa00c2e77593538399a7fe6 (attendu d306a8fa…7fe6 ; égal à son compagnon : oui)
+consigne : 0e188200d71496254c86cf0eda8f48db48e2a9cd6fc8ee58d1f63ac89e37ac46 ; interdits communs v2 : 1ee3b37075aacb278864e6eeda99b72e0d1babe9d6d02bd4a0c0aff26131337f
+paquet du code : ac46f3139ed4001d7b4d6a9dfaf3ae180daf293e85d396fc9070f1a16a9ac190 (attendu ac46f313… ; égal à son compagnon)
+dépôt privé : HEAD a931ec5d1431056a86c8fd4e5e12de4b48dabd73 ; branche de sortie refs/remotes/origin/donnees/attaque-goodhart-v4-a1v4-v1 = 773319b7bcac4522a913b5fe4127b1eca62e3016
+dernier commit de la branche : 773319b7bcac4522a913b5fe4127b1eca62e3016 | hote-durable-a1-v4 | 2026-11-10T01:34:29+00:00 | A1-v4 : état scellé de l'hôte durable v5 (fin_du_lanceur), liste e72893efd664808b…, versé avant toute lecture
+
+2. Extraction (git archive origin/donnees/attaque-goodhart-v4-a1v4-v1 donnees/attaque-goodhart-v4-a1v4-v1 | tar -x, dossier neuf) et contrôle de la liste
+fichiers extraits (hors dossiers) : 26 ; lignes de la liste : 25
+empreinte de la liste EMPREINTES-sortie-a1-v4-v1.txt : e72893efd664808bdea9381165d5228a954eafb1ca78a41723b29b7966850129 (le message du commit cite « liste e72893efd664808b… »)
+fichiers extraits absents de la liste : EMPREINTES-sortie-a1-v4-v1.txt 
+sha256sum -c EMPREINTES-sortie-a1-v4-v1.txt :
+ETAT: OK
+code-sortie-lanceur.txt: OK
+configuration-mondes/configuration-mondes-variante-ii-v2.json: OK
+configuration-mondes/configuration-mondes-variante-ii-v2.json.sha256: OK
+course-stdout-a1-v4.log: OK
+demarrage/a1v4-memoire.txt: OK
+demarrage/a1v4-minuterie.log: OK
+demarrage/a1v4-minuterie.txt: OK
+demarrage/a1v4-temps.txt: OK
+demarrage/amorce-a1v4-v5.log: OK
+garde-a1-v4.jsonl: OK
+garde_calcul_main.py: OK
+journal-hote-a1-v4-v1.log: OK
+registre-go-main.md: OK
+registre-go.md: OK
+relais-argon-journal-a1-v4.jsonl: OK
+relais-argon-stdout.log: OK
+signe-de-vie.json: OK
+sortie-attaque-goodhart-v5/attaque-goodhart-v5.json: OK
+sortie-attaque-goodhart-v5/attaque-goodhart-v5.json.sha256: OK
+sortie-attaque-goodhart-v5/manifeste.json: OK
+sortie-attaque-goodhart-v5/manifeste.json.sha256: OK
+sortie-attaque-goodhart-v5/registre-depense-cumulee-v1.jsonl: OK
+sortie-attaque-goodhart-v5/registre-depense-cumulee-v1.jsonl.verrou: OK
+verifier-seulement.log: OK
+code de sortie du contrôle : 0
+
+3. Compagnons internes de la sortie
+attaque-goodhart-v5.json : cff69d8653b974ff2ca2a9c61dac1613e7ed3427feebbe76bc647297b21750bf ; compagnon : cff69d8653b974ff2ca2a9c61dac1613e7ed3427feebbe76bc647297b21750bf
+manifeste.json : 81f40feb7d38cb2241e45af80950913cc74ad24ae0ae484f50250fd1f5fedcd8 ; compagnon : 81f40feb7d38cb2241e45af80950913cc74ad24ae0ae484f50250fd1f5fedcd8
+ETAT = scellement ; code-sortie-lanceur.txt = 0
+
+4. Comptes
+suites : 192 (attendu 2 mondes × 24 cartes × 4 suites = 192) ; par monde, juge, condition : {'W2|v9|temoin': 24, 'W2|v9|retour': 24, 'W2|ancien|temoin': 24, 'W2|ancien|retour': 24, 'W2g|v9|temoin': 24, 'W2g|v9|retour': 24, 'W2g|ancien|temoin': 24, 'W2g|ancien|retour': 24}
+tentatives : 1477 ; appels au journal des suites : 1478 ; appels du rapport : 1478 ; lignes du journal du relais : 1478 ; paires début/fin du registre de dépense : 1478
+lois valides : 1441 ; rejeux : 1441 ; lignes d'audit A2 : 21 ; cartes de vérité de W2g : 24
+dépense du rapport : 114.0434 USD ; somme des coûts des appels des suites : 114.0434 ; relevé final du relais : 114.0434 ; somme du registre de dépense : 114.0434
+texte lu par le lanceur : d306a8faa45b3d77f1edb653406ced1facd4752b2aa00c2e77593538399a7fe6 ; entropie du manifeste = entier de l'empreinte du texte : True
+79 empreintes du code au manifeste égales au bloc du § 11 : True ; empreintes vérifiées par le lanceur égales au bloc : True
+dépôt au manifeste : {'arbre_modifie': False, 'commit': 'f39a7f4ab9e3da1e11629b1be329304cd5b8a1b0'}
+plan : {'mode': 'course', 'mondes': ['W2', 'W2g'], 'cartes': 24, 'unites_par_case': 24, 'n_max': 16, 'rejeux': {'ancien': 20, 'v9': 200}, 'rejeux_audit': 200, 'dose_w2g': 0.4, 'plafond_usd': 200.0, 'go': 'GO-2026-11-02-22', 'go_machine': 'GO-2026-11-08-12', 'configuration_sha256': 'e5306c47e1b21a5e55b599411dba92c97e88aa98bb6d6fa91fc5d358a2bdde30'}
+
+5. Code gelé (pour la lecture)
+Écart à la lettre de la consigne, déclaré : le paquet commit-public-code-v5-a1-v4-v2.bundle est mince (prérequis 8947bc80a5c2fee0cfee4f3cafbdaaca8ed77f3e) et ne se clone pas seul (« Repository lacks these prerequisite commits »). Sur ma question, la mère a posé un clone anonyme du dépôt public (/home/user/lciric/ideation-organism, HEAD f39a7f4a…, lecture seule) ; l'arbre en a été extrait par git archive f39a7f4ab9e3da1e11629b1be329304cd5b8a1b0 dans mon dossier temporaire ; aucun accès réseau de ma part.
+raccord du paquet : dans un clone jetable du clone ci-dessus, git fetch du paquet rend refs/heads/a1-v4-v5-texte-scelle = f39a7f4ab9e3da1e11629b1be329304cd5b8a1b0 (= f39a7f4a…, parent déclaré b8c1db3add7cdda7fee876944c1e8f692a568e98 ; le clone étant superficiel, b8c1db3a n'y est pas matérialisé : raccord tenu par l'identité du commit f39a7f4a et par les empreintes).
+texte au commit public : d306a8faa45b3d77f1edb653406ced1facd4752b2aa00c2e77593538399a7fe6 ; compagnon au commit : d306a8faa45b3d77f1edb653406ced1facd4752b2aa00c2e77593538399a7fe6
+79 empreintes du bloc « empreintes-du-code » du § 11 contre l'arbre extrait (sha256sum -c) : 79 sur 79 conformes, aucun écart
+
+Conclusion : versement intègre (25 fichiers sur 25 conformes à la liste, aucun fichier hors liste autre que la liste elle-même), comptes cohérents entre la sortie, le journal du relais, le registre de dépense et la garde ; code gelé conforme au bloc du § 11. Aucun écart d'intégrité.

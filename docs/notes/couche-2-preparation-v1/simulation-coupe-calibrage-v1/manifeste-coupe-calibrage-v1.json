@@ -1,0 +1,31 @@
+{
+ "manifeste": "coupe-calibrage-v1",
+ "date": "2026-10-29",
+ "statut": "exploratoire, processeur, non préenregistré, non opposable",
+ "graine_maitresse": 202610291500,
+ "derivation": "numpy.random.SeedSequence([graine] + étiquettes réduites par SHA-256) via A2.rng_de ; par point : une suite 'monde' (paramètres hors coupe, nombres aléatoires communs aux coupes) et une suite 'coupe' (coupe, paramètres)",
+ "repetitions": {
+  "principal": 4000,
+  "variantes_et_taille": 2000
+ },
+ "commandes": [
+  "python3 -I -B coupe-calibrage-v1.py CHEMIN_A2 > coupe-calibrage-v1-sortie.json 2> coupe-calibrage-v1-journal.txt",
+  "python3 -I -B tableaux-coupe-calibrage-v1.py coupe-calibrage-v1-sortie.json > tableaux-coupe-calibrage-v1.md"
+ ],
+ "a2_chemin": "docs/notes/couche-2-preparation-v1/simulation-controle-12-joint-v1/simulation-couche-2-executions-v1.py",
+ "a2_sha256": "20bb005c4f607d643c0eb4e6396891eb69752d6b1d5d8435da5f091e362c903e",
+ "versions": {
+  "python": "3.13.17",
+  "numpy": "2.5.3",
+  "plateforme": "Linux-6.18.44-fc-v185-x86_64-with-glibc2.39"
+ },
+ "commit": "aucun (hors dépôt, dossier de travail temporaire)",
+ "empreintes": {
+  "coupe-calibrage-v1.py": "87b2130b5eae51a608f465d7fda43847b6e4396ce25df69b9f21366856e7490d",
+  "coupe-calibrage-v1-sortie.json": "f1aadf773864aeb2f9422405542f3f105ed7973c44db438eb9a716bc007d13ef",
+  "coupe-calibrage-v1-journal.txt": "d34179dac0b02cffdb960406960009df3d745580ffe37af9be1bc43c62683e38",
+  "tableaux-coupe-calibrage-v1.py": "b9acd64764d89a02c89c2ae95b4c5fcd92e553f6c67b5ee2df33e72f2d27ec05",
+  "tableaux-coupe-calibrage-v1.md": "7d5ca67e95a0f7442b549f8618cc3ea056b02d1d983499235bf6be156bd9bbfe",
+  "rapport-coupe-calibrage-v1.md": "c66c1eed33d094208ade93331375130d063023b431aa70e432cc2b7bcb57b04a"
+ }
+}

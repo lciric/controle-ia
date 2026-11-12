@@ -1,0 +1,148 @@
+script éprouvé : controles_avant_depense_p3bis_v2.sh 67c3c28809f74808ec7fdfeeff4649f49dc9e4077e58253735b400531f3ef711
+script éprouvé : verifications_p3bis_v2.py 1524df5f6432197fde4793a4fde56d4496407a107c88f5e294a6bc9716923054
+script éprouvé : essais_controles_p3bis_v2.sh 98d03a603266ca851225f9f5c15c8aa62df832d3237756997b6f1c629370f2d2
+lignes changées dans la copie des contrôles : 18 (13 épingles, CODE_P3, clonage, trois bouchons)
+K00-sain : code 0 ; 0 KO ; CONFORME
+    | CONTRÔLES AVANT DÉPENSE : TOUS CONFORMES
+    cas sain : 43 lignes OK, dernière ligne conforme : CONFORME
+    cas sain : clone en extraction partielle, témoin docs/notes/bras-attaque/ absent du disque : CONFORME
+K01-s-ajoute-un-fichier : code 1 ; 2 KO ; CONFORME
+    | KO  1 contenu de S inattendu : A autre.txt A prereg/P3-bis-consignes-v1.md A prereg/P3-bis-consignes-v1.md.sha256 A prereg/P3-bis-temoin-positif-config-v1.json A prereg/P
+    | KO  2 arbre gelé de S modifié depuis le commit du code
+    | CONTRÔLES AVANT DÉPENSE : ÉCHEC
+K02-commit-cite-deux-fois : code 1 ; 4 KO ; CONFORME
+    | KO  2 commit du code cité illisible, cité 2 fois, ou non ancêtre de S
+    | KO  2 commit du code 2defac5865717b8afe0bfa65118ff36adcd4cbeb ≠ code relu épinglé 86968826a93b2dfeea0f7e99e77ea976153153d3
+    | KO  4 prereg/P3-bis-temoin-positif-v1.md de S ≠ candidat relu
+    | CONTRÔLES AVANT DÉPENSE : ÉCHEC
+K03-commit-cite-autre : code 1 ; 3 KO ; CONFORME
+    | KO  2 commit du code c06d5ae40fea8036b7fdb17a2c27b89a8223dfd7 ≠ code relu épinglé 86968826a93b2dfeea0f7e99e77ea976153153d3
+    | KO  2 arbre gelé de S modifié depuis le commit du code
+    | KO  4 prereg/P3-bis-temoin-positif-v1.md de S ≠ candidat relu
+    | CONTRÔLES AVANT DÉPENSE : ÉCHEC
+K04-arbre-gele-modifie : code 1 ; 1 KO ; CONFORME
+    | KO  2 arbre gelé de S modifié depuis le commit du code
+    | CONTRÔLES AVANT DÉPENSE : ÉCHEC
+K05-identite-fichier-de-p3-modifie : code 1 ; 1 KO ; CONFORME
+    | KO  3 identité avec P3 (code 0) : M src/controle_ia/gardes.py 
+    | CONTRÔLES AVANT DÉPENSE : ÉCHEC
+K06-marqueur-restant : code 1 ; 3 KO ; CONFORME
+    | KO  4 marqueurs restants dans le texte : <<CHAINE_P3BIS>> 
+    | KO  4 problemes() non vide : ['marqueurs de gabarit restants : <<CHAINE_P3BIS>>']
+    | KO  4 prereg/P3-bis-temoin-positif-v1.md de S ≠ candidat relu
+    | CONTRÔLES AVANT DÉPENSE : ÉCHEC
+K07-problemes-non-vide : code 1 ; 2 KO ; CONFORME
+    | KO  4 problemes() non vide : ['section absente : Contre-lecture']
+    | KO  4 prereg/P3-bis-temoin-positif-v1.md de S ≠ candidat relu
+    | CONTRÔLES AVANT DÉPENSE : ÉCHEC
+K08-texte-autre-que-le-relu : code 1 ; 1 KO ; CONFORME
+    | KO  4 prereg/P3-bis-temoin-positif-v1.md de S ≠ candidat relu
+    | CONTRÔLES AVANT DÉPENSE : ÉCHEC
+K09-config-autre-que-la-relue : code 1 ; 1 KO ; CONFORME
+    | KO  4 prereg/P3-bis-temoin-positif-config-v1.json de S ≠ configuration relue
+    | CONTRÔLES AVANT DÉPENSE : ÉCHEC
+K10-taches-non-citees : code 1 ; 2 KO ; CONFORME
+    | KO  4 prereg/P3-bis-temoin-positif-v1.md de S ≠ candidat relu
+    | KO  4 tâches non citées par leur empreinte
+    | CONTRÔLES AVANT DÉPENSE : ÉCHEC
+K11-go-autre : code 1 ; 2 KO ; CONFORME
+    | KO  4 prereg/P3-bis-temoin-positif-v1.md de S ≠ candidat relu
+    | KO  5 GO : GO-2026-11-08-13 : seul GO-2026-11-10-02 est accepté pour P3-bis
+    | CONTRÔLES AVANT DÉPENSE : ÉCHEC
+K12-go-revoque : code 1 ; 2 KO ; CONFORME
+    | KO  5 GO : GO-2026-11-10-02 (ou GO-2026-11-02-29, qu'il prolonge) révoqué au registre des GO (GO-2026-11-10-99)
+    | KO  5 garde de calcul sur le registre de S : GARDE (registres/go, R10) — commande bloquée : GO-2026-11-10-02 révoqué par GO-2026-11-10-99
+    | CONTRÔLES AVANT DÉPENSE : ÉCHEC
+K13-garde-de-calcul : code 1 ; 1 KO ; CONFORME
+    | KO  5 garde de calcul sur le registre de S : GARDE (registres/go, R10) — commande bloquée : registre GO mal formé ligne 12 : dates illisibles
+    | CONTRÔLES AVANT DÉPENSE : ÉCHEC
+K14-essai-verse-non-conforme : code 1 ; 1 KO ; CONFORME
+    | KO  6 essai de fermeture : sortie absente, d'une autre empreinte, non scellée, non citée ou non conforme
+    | CONTRÔLES AVANT DÉPENSE : ÉCHEC
+K15-essai-non-cite : code 1 ; 2 KO ; CONFORME
+    | KO  4 prereg/P3-bis-temoin-positif-v1.md de S ≠ candidat relu
+    | KO  6 essai de fermeture : sortie absente, d'une autre empreinte, non scellée, non citée ou non conforme
+    | CONTRÔLES AVANT DÉPENSE : ÉCHEC
+K16-essai-rejoue-non-conforme : code 1 ; 1 KO ; CONFORME
+    | KO  6 essai de fermeture rejoué au commit S : code 1, « ESSAI DIFFÉRENTIEL DE FERMETURE : non conforme (cité) » : aucune création
+    | CONTRÔLES AVANT DÉPENSE : ÉCHEC
+K17-longueurs-a-differe-de-t : code 1 ; 1 KO ; CONFORME
+    | KO  7 longueurs : t7 : indication_gabarit A 91 ≠ T 92 (jeu décisif : aucun scellement, nœud)
+    | CONTRÔLES AVANT DÉPENSE : ÉCHEC
+K18-longueurs-resume-autre : code 1 ; 1 KO ; CONFORME
+    | KO  7 longueurs : résumé des longueurs ≠ longueurs attendues épinglées : {"consigne_gabarit": {"mention": {"92": 60}, "saboteur": {"90": 20, "91": 20, "92": 20}, "t
+    | CONTRÔLES AVANT DÉPENSE : ÉCHEC
+K19-longueurs-non-citees : code 1 ; 2 KO ; CONFORME
+    | KO  4 prereg/P3-bis-temoin-positif-v1.md de S ≠ candidat relu
+    | KO  7 longueurs attendues non citées par le texte
+    | CONTRÔLES AVANT DÉPENSE : ÉCHEC
+K20-n-cite-autre : code 1 ; 2 KO ; CONFORME
+    | KO  4 prereg/P3-bis-temoin-positif-v1.md de S ≠ candidat relu
+    | KO  8 liste ciblée : « 531 passed in 1.00s » (code 0 ; 530 attendus)
+    | CONTRÔLES AVANT DÉPENSE : ÉCHEC
+K21-essai-en-echec : code 1 ; 1 KO ; CONFORME
+    | KO  8 liste ciblée : « 1 failed, 530 passed in 1.00s » (code 1 ; 531 attendus)
+    | CONTRÔLES AVANT DÉPENSE : ÉCHEC
+K22-liste-autre-empreinte : code 1 ; 2 KO ; CONFORME
+    | KO  2 arbre gelé de S modifié depuis le commit du code
+    | KO  8 liste ciblée absente ou d'empreinte autre que celle de scripts/p3bis_instance_v2.sh
+    | CONTRÔLES AVANT DÉPENSE : ÉCHEC
+K23-versions-autres : code 1 ; 2 KO ; CONFORME
+    | KO  2 arbre gelé de S modifié depuis le commit du code
+    | KO  8 environnement PY : 2 dépendances épinglées relues ; écarts : ['numpy 2.4.6 ≠ 0.0.1']
+    | CONTRÔLES AVANT DÉPENSE : ÉCHEC
+K24-config-hors-ecarts : code 1 ; 3 KO ; CONFORME
+    | KO  4 configuration relue absent(e), non scellé(e) ou d'empreinte différente
+    | KO  4 prereg/P3-bis-temoin-positif-config-v1.json de S ≠ configuration relue
+    | KO  9 configuration : écarts à celle de P3 hors des écarts du texte : ['lot']
+    | CONTRÔLES AVANT DÉPENSE : ÉCHEC
+K25-valeur-non-citee : code 1 ; 2 KO ; CONFORME
+    | KO  4 prereg/P3-bis-temoin-positif-v1.md de S ≠ candidat relu
+    | KO  10 valeur(s) non citée(s) par le texte : ["au plus 2,10 USD de l'heure"]
+    | CONTRÔLES AVANT DÉPENSE : ÉCHEC
+K26-constante-autre : code 1 ; 2 KO ; CONFORME
+    | KO  10 constantes de la chaîne différentes de celles du module commun : lancer_p3bis_v2.sh GO_CALCUL : ['GO-2026-11-08-13'] ≠ [GO-2026-11-10-02]
+    | KO  14 verifier-arbre : ÉCHEC docs/procedures/P3-bis-temoin-positif-v1/lancer_p3bis_v2.sh : docs/procedures/P3-bis-temoin-positif-v1/lancer_p3bis_v2.sh : empreinte 7a923
+    | CONTRÔLES AVANT DÉPENSE : ÉCHEC
+K27-instance-avec-timeout : code 1 ; 3 KO ; CONFORME
+    | KO  2 arbre gelé de S modifié depuis le commit du code
+    | KO  11 empreinte de scripts/p3bis_instance_v2.sh (49ad62987ff88e1673dfb36ea337c9fec736800a998466bc31269a376dc72f23) non citée
+    | KO  11 scripts/p3bis_instance_v2.sh : commande « timeout » (aucun budget de temps)
+    | CONTRÔLES AVANT DÉPENSE : ÉCHEC
+K28-instance-non-citee : code 1 ; 2 KO ; CONFORME
+    | KO  4 prereg/P3-bis-temoin-positif-v1.md de S ≠ candidat relu
+    | KO  11 empreinte de scripts/p3bis_instance_v2.sh (83820dfd8ef7205c44f89e63450d801d60b95eddecb504cd2af992fa5b1eaa5d) non citée
+    | CONTRÔLES AVANT DÉPENSE : ÉCHEC
+K29-citation-en-double : code 1 ; 3 KO ; CONFORME
+    | KO  4 prereg/P3-bis-temoin-positif-v1.md de S ≠ candidat relu
+    | KO  12 lecture précoce : citation absente, en double, ou chemin inattendu
+    | KO  12 intitulés absents ou cités plusieurs fois : « Chemin des consignes de P3 »
+    | CONTRÔLES AVANT DÉPENSE : ÉCHEC
+K30-lancement-autre-branche : code 1 ; 2 KO ; CONFORME
+    | KO  4 prereg/P3-bis-temoin-positif-v1.md de S ≠ candidat relu
+    | KO  12 ligne « Lancement » : PREREG, BRANCHE ou DEPOT_URL autres
+    | CONTRÔLES AVANT DÉPENSE : ÉCHEC
+K31-branche-presente : code 1 ; 1 KO ; CONFORME
+    | KO  13 branche calcul/p3bis-reel-v1 : code 0 (2 attendu)
+    | CONTRÔLES AVANT DÉPENSE : ÉCHEC
+K32-rapport-absent : code 1 ; 1 KO ; CONFORME
+    | KO  14 rapport brouillons/P3-bis-temoin-positif-v1/contre-lecture-4-banc-v1.md absent, non scellé ou d'empreinte différente
+    | CONTRÔLES AVANT DÉPENSE : ÉCHEC
+K33-sceau-faux-sous-docs : code 1 ; 1 KO ; CONFORME
+    | KO  14 verifier-arbre : ÉCHEC docs/procedures/P3-bis-temoin-positif-v1/surveiller_p3bis_v2.sh : docs/procedures/P3-bis-temoin-positif-v1/surveiller_p3bis_v2.sh : emprein
+    | CONTRÔLES AVANT DÉPENSE : ÉCHEC
+K33b-sceau-faux-des-taches : code 1 ; 1 KO ; CONFORME
+    | KO  4 sceaux
+    | CONTRÔLES AVANT DÉPENSE : ÉCHEC
+K36-extraction-entiere-refusee : code 2 ; CONFORME
+    | REFUS : docs/notes/bras-attaque extrait sur disque (interdits communs v2, règle 9 ; CD-05) : aucun contrôle
+K34-epingles-non-remplies : code 2 ; CONFORME
+    | épingle restée « A_EPINGLER » : candidat non épinglé, aucun contrôle
+K35-usage : code 2 ; CONFORME
+    | usage : controles_avant_depense_p3bis_v2.sh S DOSSIER_NEUF BRANCHE (trois arguments)
+K35b-branche-invalide : code 2 ; CONFORME
+    | BRANCHE : calcul/p3bis-reel-v1, -v2 ou -v3 attendue
+K35c-dossier-existant : code 2 ; CONFORME
+    | /tmp/claude-0/-home-user/1cc16375-a2bd-54b9-a03f-27d43b6f26a6/scratchpad/agents/code-p3bis-regle-a/bancs/controles/clone-k35c existe déjà
+cas joués : 42
+FIN DU BANC DES CONTRÔLES DE P3-BIS ; cas non conformes : 0

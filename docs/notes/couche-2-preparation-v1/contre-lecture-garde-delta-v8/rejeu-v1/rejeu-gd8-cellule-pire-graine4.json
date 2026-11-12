@@ -1,0 +1,247 @@
+{
+ "version": "simulation-puissance-garde-delta-v8",
+ "statut": "exploratoire, non préenregistré, non opposable ; lois synthétiques seulement",
+ "script_sha256": "4c7c93a90e0be922e839f5826488edcc0745bde17f8a5de22f3a2a41bf75f1d1",
+ "commit": "contre-lecture GD8 : script 4c7c93a9 vérifié ; commit non lu",
+ "etat_du_script": "non lu : aucune commande git (GD7-09) ; le commit est celui de --commit-declare, non vérifié",
+ "reglages": {
+  "ecarts": null,
+  "ecarts_contraste": null,
+  "effectif_attendu": null,
+  "repetitions": 2000,
+  "graine": 4,
+  "tailles": "288",
+  "tailles_garde": null,
+  "deltas": "0.05",
+  "m": "8,2",
+  "alpha": 0.05,
+  "K": "5",
+  "K_sabotes": null,
+  "K_s": "10",
+  "taux": "0.01",
+  "biais": "0.0125",
+  "comparateurs": "8",
+  "comparateurs_independants": false,
+  "effet_unite_a": 0.0,
+  "effet_unite_beta": 0.17,
+  "effet_unite_comparateurs": 0.0,
+  "correlation_comparateurs": 0.0,
+  "echelle_dispersion": "beta",
+  "rho_comparateurs": 0.17,
+  "combiner_dispersion_a_et_comparateurs": true,
+  "ecart_contraste_neuvieme": null,
+  "correlation_sujet_comparateurs": 0.0,
+  "strates": "0",
+  "amplitude_strates": "0",
+  "portee_strates": null,
+  "allocation_strates": "bloc",
+  "calibrage_par_strate": false,
+  "cibles_n80": [
+   0.8
+  ],
+  "n80_fiche": false,
+  "lien_coupe": false,
+  "ecart_contraste": 0.1,
+  "lecture_ebh": "A",
+  "m_fiches": 2,
+  "fiches_nulles": 0,
+  "sans_n80": true,
+  "sortie": "rejeu-gd8-cellule-pire-graine4.json",
+  "commit_declare": "contre-lecture GD8 : script 4c7c93a9 vérifié ; commit non lu",
+  "paires_K_h_K_s": [
+   [
+    5,
+    10
+   ]
+  ],
+  "strates_parametres": null,
+  "seuils": [
+   160.0,
+   40.0
+  ],
+  "lambdas": [
+   0.1,
+   0.3,
+   0.6,
+   0.9
+  ],
+  "lecture_des_seuils": "m/α_c : borne basse de la lecture e-BH"
+ },
+ "taille_minimale_ecarts_nuls": {
+  "delta=0.05|seuil=160.0": 144,
+  "delta=0.05|seuil=40.0": 111
+ },
+ "lois": {
+  "binomiale_Kh5_Ks10_taux0.01_betaA_rho0.17_rhoB0.17_beta_lien_coupe": {
+   "biais_essayes": [
+    0.0125
+   ],
+   "artefacts": true,
+   "decomposition_effet_unite": {
+    "biais=0.0125": {
+     "honnetes_fA": {
+      "p0_esperance_visee": 0.0225,
+      "ecart_type_ajoute_sur_p": 0.06114685192223718,
+      "correlation_intra_unite": 0.17000000000000004,
+      "variance_binomiale_par_unite": 0.00439875,
+      "variance_ajoutee_par_unite": 0.0029911500000000006,
+      "part_ajoutee_de_la_variance": 0.4047619047619048
+     },
+     "sabotes_rA": {
+      "p0_esperance_visee": 0.5,
+      "ecart_type_ajoute_sur_p": 0.20615528128088303,
+      "correlation_intra_unite": 0.17,
+      "variance_binomiale_par_unite": 0.025,
+      "variance_ajoutee_par_unite": 0.038250000000000006,
+      "part_ajoutee_de_la_variance": 0.6047430830039526
+     },
+     "comparateurs_honnetes_fB": {
+      "p0_esperance_visee": 0.01,
+      "esperance_exacte": 0.01,
+      "echelle": "beta",
+      "kappa_concentration": 4.88235294117647,
+      "parametres_beta_a_b": [
+       0.0488235294117647,
+       4.833529411764705
+      ],
+      "correlation_intra_unite": 0.17,
+      "ecart_type_ajoute_sur_p": 0.04102438299353203,
+      "variance_binomiale_par_unite": 0.00198,
+      "variance_ajoutee_par_unite": 0.0013464000000000002,
+      "part_ajoutee_de_la_variance": 0.4047619047619048,
+      "correspondance": "v8 : ρ_b donnée directement (--rho-comparateurs), κ = (1 − ρ_b)/ρ_b commune à f_B et r_B ; honnêtes et sabotés tirés à part, sans corrélation entre comparateurs"
+     },
+     "comparateurs_sabotes_rB": {
+      "p0_esperance_visee": 0.4,
+      "esperance_exacte": 0.4,
+      "echelle": "beta",
+      "kappa_concentration": 4.88235294117647,
+      "parametres_beta_a_b": [
+       1.9529411764705882,
+       2.9294117647058817
+      ],
+      "correlation_intra_unite": 0.17,
+      "ecart_type_ajoute_sur_p": 0.20199009876724155,
+      "variance_binomiale_par_unite": 0.024,
+      "variance_ajoutee_par_unite": 0.03672,
+      "part_ajoutee_de_la_variance": 0.6047430830039526,
+      "correspondance": "v8 : ρ_b donnée directement (--rho-comparateurs), κ = (1 − ρ_b)/ρ_b commune à f_B et r_B ; honnêtes et sabotés tirés à part, sans corrélation entre comparateurs"
+     },
+     "lien_garde_contraste": "effet tiré à part : lien coupé"
+    }
+   }
+  }
+ },
+ "cellules": {
+  "binomiale_Kh5_Ks10_taux0.01_betaA_rho0.17_rhoB0.17_beta_lien_coupe|delta=0.05|n=288|n_garde=288|biais=0.0125|k=8": {
+   "etiquette": "binomiale_Kh5_Ks10_taux0.01_betaA_rho0.17_rhoB0.17_beta_lien_coupe|delta=0.05|n=288|n_garde=288|biais=0.0125|k=8",
+   "graine_derivee": 14249684040684624650,
+   "160.0": {
+    "garde_seule": {
+     "part": 0.874,
+     "unites_mediane_si_atteint": 206.0
+    },
+    "k_gardes": {
+     "part": 0.7525,
+     "unites_mediane_si_atteint": 228.0
+    },
+    "k_contrastes": {
+     "part": 0.6815,
+     "unites_mediane_si_atteint": 206.0
+    },
+    "fiche_entiere": {
+     "part": 0.4905,
+     "unites_mediane_si_atteint": 245.0
+    },
+    "frontiere_part": 0.0,
+    "frontiere_borne_ville": 0.00625,
+    "tricheur_part": 0.0
+   },
+   "40.0": {
+    "garde_seule": {
+     "part": 0.975,
+     "unites_mediane_si_atteint": 159.0
+    },
+    "k_gardes": {
+     "part": 0.936,
+     "unites_mediane_si_atteint": 184.0
+    },
+    "k_contrastes": {
+     "part": 0.8615,
+     "unites_mediane_si_atteint": 177.0
+    },
+    "fiche_entiere": {
+     "part": 0.7895,
+     "unites_mediane_si_atteint": 216.0
+    },
+    "frontiere_part": 0.003,
+    "frontiere_borne_ville": 0.025,
+    "tricheur_part": 0.0
+   },
+   "moments_tires": {
+    "E_fA": 0.022441666666666665,
+    "E_fB": 0.010013585069444445,
+    "E_g": 0.01242808159722222,
+    "E_rA": 0.49947430555555555,
+    "E_rB": 0.40012161458333334,
+    "E_v": 0.09935269097222221,
+    "ecart_type_fA": 0.08603848904543956,
+    "ecart_type_rA": 0.25157090072143784,
+    "ecart_type_pA_honnetes": 0.06122901807300389,
+    "ecart_type_pA_sabotes": 0.20613682352594678,
+    "correlation_pA_honnetes_sabotes_meme_unite": 0.0032931871783767443,
+    "ecart_type_pB_honnetes": 0.04103118839610734,
+    "ecart_type_pB_sabotes": 0.2021213305371443,
+    "correlation_pB_honnetes_entre_comparateurs": -4.522050224057114e-05,
+    "correlation_pB_sabotes_entre_comparateurs": -0.00014694191377368732,
+    "correlation_g_entre_comparateurs": 0.6895823086600305,
+    "correlation_v_entre_comparateurs": 0.509840329120771
+   },
+   "ebh_graines_derivees": {
+    "modes": 3003662147739696801
+   },
+   "ebh_A": {
+    "m": 2,
+    "seuil_d_arret": 40.0,
+    "fiches_vraies": 2,
+    "fiches_nulles": 0,
+    "fiches_du_sujet": 1,
+    "premiere_atteinte_une_fiche": 0.7895,
+    "premiere_atteinte_fiches_du_sujet": 0.7895,
+    "retenue_une_fiche": 0.849,
+    "retenues_fiches_du_sujet": 0.849,
+    "retenues_toutes_vraies": 0.7245,
+    "vraies_retenues_moyenne": 1.6845,
+    "retenue_sans_atteinte_une_fiche": 0.0595
+   }
+  }
+ },
+ "lecture_ebh": {
+  "lectures": [
+   "A"
+  ],
+  "M_modes": 2,
+  "N_fiches_nulles": 0,
+  "alpha_c": 0.05,
+  "A": "une fiche par mode : minimum des k gardes et des k contrastes ; m = M + N",
+  "B": "une fiche par (mode, comparateur) : minimum d'une garde et d'un contraste ; m = M·k + N",
+  "regle": "chaque fiche est arrêtée au premier instant où son minimum atteint m/α_c (valeur arrêtée), sinon elle garde sa valeur finale ; puis e-BH à budgets α_c/m : pari_apparie.Course.ajouter_trajectoire puis ebh_pondere, une génération, valeur héritée 1",
+  "hypotheses": "modes indépendants et de même loi (mode 1 = tirage principal de la cellule) ; en (B), les k fiches d'un mode partagent le sujet ; fiches vraies : sujet honnête (biais de la cellule < δ), écart de contraste de la loi ; fiches nulles : écart de contraste 0 et biais 0, sujet propre à chaque fiche nulle, indépendantes des vraies",
+  "alpha_de_reference_des_fiches_nulles": "GD5-02 : e-BH à budgets α_c/m : FDR ≤ α_c·m₀/m, m₀ = fiches nulles, m = taille de la famille ; écrit par cellule (borne_fdr_alpha_c_m0_sur_m) ; (A) m = M + N, (B) m = M·k + N. La quantité comparable est la proportion moyenne de fausses découvertes ; « au moins une nulle retenue » n'est pas la quantité garantie. Forme de nulle essayée : contraste nul sur les k comparateurs, garde vraie (la plus facile pour (A)) ; « un seul comparateur nul » et « garde à la frontière » : non essayées ici",
+  "parts": {
+   "premiere_atteinte_une_fiche": "la fiche 1 (mode 1 ; en B, mode 1, comparateur 1) atteint m/α_c",
+   "premiere_atteinte_fiches_du_sujet": "A : la fiche du mode 1 ; B : les k fiches du mode 1 atteignent m/α_c",
+   "retenue_une_fiche": "la fiche 1 est retenue par l'e-BH",
+   "retenues_fiches_du_sujet": "A : la fiche du mode 1 ; B : les k fiches du mode 1 sont retenues",
+   "retenues_toutes_vraies": "toutes les fiches vraies de la famille sont retenues"
+  },
+  "taille_minimale_ecarts_nuls": {
+   "A|m=2|delta=0.05|seuil=40": 111
+  }
+ },
+ "environnement": {
+  "python": "3.13.17",
+  "numpy": "2.4.6",
+  "duree_s": 8.3
+ }
+}

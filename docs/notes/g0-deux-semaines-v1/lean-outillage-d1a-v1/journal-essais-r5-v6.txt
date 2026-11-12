@@ -1,0 +1,89 @@
+# Essais R5 de l'outillage Lean D-1a, v6 — commit 149babdc56f51925e9bc4e93a61041cc755bd2a3, arbre a9dfcbb1fe6f7df3b71153f7907a46b4b1c02089
+# 2026-11-11 11:22:32 UTC ; faux transport et vrais processus locaux (faux client dans l'enfant), aucun appel réseau, aucun serveur ; HCLOUD_TOKEN retiré de l'environnement des essais
+
+## 1. Essais v6 (Python 3.13, environnement du dépôt)
+tests/test_lean_essai_minuterie_v6.py::test_survie_ne_conclut_pas_sur_une_lecture_negative PASSED
+tests/test_lean_essai_minuterie_v6.py::test_survie_jamais_vue_vivante_jusqu_au_delai PASSED
+tests/test_lean_essai_minuterie_v6.py::test_survie_par_poll PASSED
+tests/test_lean_essai_minuterie_v6.py::test_delai_de_survie_par_defaut PASSED
+tests/test_lean_essai_minuterie_v6.py::test_controle_par_defaut_utilise_poll PASSED
+tests/test_lean_essai_minuterie_v6.py::test_veiller_absence_sur_deux_lectures PASSED
+tests/test_lean_essai_minuterie_v6.py::test_lecture_refusee_401_bornee_a_trois PASSED
+tests/test_lean_essai_minuterie_v6.py::test_lecture_403_n_est_pas_une_absence PASSED
+tests/test_lean_essai_minuterie_v6.py::test_seconde_preparation_refusee PASSED
+tests/test_lean_essai_minuterie_v6.py::test_creation_refusee_si_autre_rattrapage PASSED
+tests/test_lean_essai_minuterie_v6.py::test_acces_sans_adresse_du_poste PASSED
+tests/test_lean_essai_minuterie_v6.py::test_verifier_coupure_masque PASSED
+tests/test_lean_essai_minuterie_v6.py::test_sorties_sans_chemin_du_poste PASSED
+tests/test_lean_essai_minuterie_v6.py::test_garde_poste_avant_commit PASSED
+tests/test_lean_essai_minuterie_v6.py::test_couper_relit_le_nom PASSED
+tests/test_lean_essai_minuterie_v6.py::test_fichier_pousse_par_ls_remote PASSED
+tests/test_lean_essai_minuterie_v6.py::test_pilote_bornes_ssh PASSED
+tests/test_lean_essai_minuterie_v6.py::test_empreinte_mere PASSED
+tests/test_lean_essai_minuterie_v6.py::test_objets_du_fichier_d_acces PASSED
+tests/test_lean_essai_minuterie_v6.py::test_acces_non_pousse_refuse PASSED
+tests/test_lean_essai_minuterie_v6.py::test_adresse_serveur PASSED
+PASSED
+tests/test_lean_essai_minuterie_v6.py::test_taches_de_la_mere_et_ligne_d_etat PASSED
+tests/test_lean_essai_minuterie_v6.py::test_lieu_des_deux_formes_et_sans PASSED
+PASSED
+PASSED
+PASSED
+PASSED
+PASSED
+PASSED
+PASSED
+PASSED
+tests/test_lean_essai_minuterie_v6.py::test_echeance_plus_longue_refusee PASSED
+PASSED
+PASSED
+PASSED
+tests/test_lean_essai_minuterie_v6.py::test_minuterie_lecture_refusee_au_demarrage PASSED
+tests/test_lean_essai_minuterie_v6.py::test_refus_de_nom_au_demarrage PASSED
+tests/test_lean_essai_minuterie_v6.py::test_minuterie_detachee_arguments_complets PASSED
+tests/test_lean_essai_minuterie_v6.py::test_creer_passe_deja_taux_et_echeance PASSED
+tests/test_lean_essai_minuterie_v6.py::test_minuterie_morte_ou_muette_detruit[survie0] PASSED
+tests/test_lean_essai_minuterie_v6.py::test_minuterie_morte_ou_muette_detruit[survie1] PASSED
+tests/test_lean_essai_minuterie_v6.py::test_controle_par_defaut_de_la_survie PASSED
+tests/test_lean_essai_minuterie_v6.py::test_lancement_en_echec_detruit PASSED
+PASSED
+tests/test_lean_essai_minuterie_v6.py::test_verifier_minuterie_linux_et_macos PASSED
+tests/test_lean_essai_minuterie_v6.py::test_kill_0_et_ps_reels PASSED
+tests/test_lean_essai_minuterie_v6.py::test_fraicheur_des_lignes_garder PASSED
+tests/test_lean_essai_minuterie_v6.py::test_detruire_refus_durable_borne PASSED
+tests/test_lean_essai_minuterie_v6.py::test_echecs_passagers_ecrits_sans_journal PASSED
+PASSED
+PASSED
+tests/test_lean_essai_minuterie_v6.py::test_inventaire_lecture_seule PASSED
+PASSED
+PASSED
+tests/test_lean_essai_minuterie_v6.py::test_statut_500_incertain_detruit PASSED
+tests/test_lean_essai_minuterie_v6.py::test_refus_4xx_recherche_de_controle PASSED
+tests/test_lean_essai_minuterie_v6.py::test_rattrapage_fenetre_et_rien_trouve PASSED
+tests/test_lean_essai_minuterie_v6.py::test_intention_exigee_avant_l_appel PASSED
+tests/test_lean_essai_minuterie_v6.py::test_un_seul_serveur_du_nom PASSED
+tests/test_lean_essai_minuterie_v6.py::test_inventaire_de_controle_apres_detruire_pas PASSED
+tests/test_lean_essai_minuterie_v6.py::test_pagination_des_etiquettes_fixes PASSED
+tests/test_lean_essai_minuterie_v6.py::test_jeton_reutilise_refuse PASSED
+tests/test_lean_essai_minuterie_v6.py::test_preparer_refus[-1.0-40.0-d\xe9j\xe0 pass\xe9e] PASSED
+tests/test_lean_essai_minuterie_v6.py::test_preparer_refus[2.0-3.0-moins de 2 heures] PASSED
+tests/test_lean_essai_minuterie_v6.py::test_preparer_refus[2.0-48.0-plus de 47 heures] PASSED
+tests/test_lean_essai_minuterie_v6.py::test_lire_rattrapage_artefacts PASSED
+tests/test_lean_essai_minuterie_v6.py::test_heure_limite_et_poussee_avant_tout_appel PASSED
+tests/test_lean_essai_minuterie_v6.py::test_echeance_trop_proche_de_la_tache PASSED
+tests/test_lean_essai_minuterie_v6.py::test_detache PASSED
+tests/test_lean_essai_minuterie_v6.py::test_acces_creer_couper_supprimer PASSED
+tests/test_lean_essai_minuterie_v6.py::test_acces_artefacts PASSED
+tests/test_lean_essai_minuterie_v6.py::test_course_reproduite_et_sans_destruction PASSED
+tests/test_lean_essai_minuterie_v6.py::test_creation_avec_course_ne_detruit_pas PASSED
+tests/test_lean_essai_minuterie_v6.py::test_lancements_reels_en_serie lectures négatives du PID sur 25 lancements : 8 (sans conclusion « morte »)
+PASSED
+tests/test_lean_essai_minuterie_v6.py::test_minuterie_reelle_detachee PASSED
+tests/test_lean_essai_minuterie_v6.py::test_branche_macos_avec_vrai_ps PASSED
+============================== 77 passed in 9.17s ==============================
+
+## 2. Essais v6 (Python 3.11, environnement jetable)
+77 passed in 9.09s
+
+## 3. Essais v1 à v5 (hors gardes v2, dont les artefacts ne sont pas dans l'arbre réduit)
+363 passed in 4.10s

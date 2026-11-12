@@ -1,0 +1,259 @@
+{
+ "version": "simulation-puissance-garde-delta-v4",
+ "statut": "exploratoire, non préenregistré, non opposable ; lois synthétiques seulement",
+ "script_sha256": "5bf015b6df7ab8c813c26b95f11f478ff173e63c44b0862a4a3d6c32bf7b9b9a",
+ "commit": null,
+ "etat_du_script": "hors dépôt git",
+ "reglages": {
+  "ecarts": null,
+  "ecarts_contraste": null,
+  "effectif_attendu": null,
+  "repetitions": 2000,
+  "graine": 52691029,
+  "tailles": "288",
+  "tailles_garde": null,
+  "deltas": "0.05",
+  "m": "8,2,1",
+  "alpha": 0.05,
+  "K": "10,3",
+  "K_sabotes": null,
+  "taux": "0.01",
+  "biais": "0.005",
+  "comparateurs": "8",
+  "comparateurs_independants": false,
+  "effet_unite_a": 0.0,
+  "ecart_contraste": 0.1,
+  "contraste_synthetique_de_secours": false,
+  "sans_n80": false,
+  "seuils": [
+   160.0,
+   40.0,
+   20.0
+  ],
+  "lambdas": [
+   0.1,
+   0.3,
+   0.6,
+   0.9
+  ],
+  "lecture_des_seuils": "m/α_c : borne basse de la lecture e-BH ; 20 (m = 1) : borne haute, lâche (GD2-03)"
+ },
+ "taille_minimale_ecarts_nuls": {
+  "delta=0.05|seuil=160.0": 144,
+  "delta=0.05|seuil=40.0": 111,
+  "delta=0.05|seuil=20.0": 93
+ },
+ "lois": {
+  "binomiale_Kh10_Ks10_taux0.01": {
+   "biais_essayes": [
+    0.005
+   ],
+   "artefacts": true,
+   "n_pour_puissance_0_8_k_gardes": {
+    "delta=0.05|seuil=160.0|biais=0.005|k=8": {
+     "n_approx": 188,
+     "pas_de_la_dichotomie": [
+      185,
+      188
+     ],
+     "repetitions": 2000,
+     "note": "≈ ; incertitude de graine jusqu'à ≈ 6 % (GD2-07)"
+    },
+    "delta=0.05|seuil=40.0|biais=0.005|k=8": {
+     "n_approx": 148,
+     "pas_de_la_dichotomie": [
+      145,
+      148
+     ],
+     "repetitions": 2000,
+     "note": "≈ ; incertitude de graine jusqu'à ≈ 6 % (GD2-07)"
+    },
+    "delta=0.05|seuil=20.0|biais=0.005|k=8": {
+     "n_approx": 126,
+     "pas_de_la_dichotomie": [
+      125,
+      126
+     ],
+     "repetitions": 2000,
+     "note": "≈ ; incertitude de graine jusqu'à ≈ 6 % (GD2-07)"
+    }
+   }
+  },
+  "binomiale_Kh3_Ks3_taux0.01": {
+   "biais_essayes": [
+    0.005
+   ],
+   "artefacts": true,
+   "n_pour_puissance_0_8_k_gardes": {
+    "delta=0.05|seuil=160.0|biais=0.005|k=8": {
+     "n_approx": 224,
+     "pas_de_la_dichotomie": [
+      221,
+      224
+     ],
+     "repetitions": 2000,
+     "note": "≈ ; incertitude de graine jusqu'à ≈ 6 % (GD2-07)"
+    },
+    "delta=0.05|seuil=40.0|biais=0.005|k=8": {
+     "n_approx": 176,
+     "pas_de_la_dichotomie": [
+      173,
+      176
+     ],
+     "repetitions": 2000,
+     "note": "≈ ; incertitude de graine jusqu'à ≈ 6 % (GD2-07)"
+    },
+    "delta=0.05|seuil=20.0|biais=0.005|k=8": {
+     "n_approx": 152,
+     "pas_de_la_dichotomie": [
+      149,
+      152
+     ],
+     "repetitions": 2000,
+     "note": "≈ ; incertitude de graine jusqu'à ≈ 6 % (GD2-07)"
+    }
+   }
+  }
+ },
+ "cellules": {
+  "binomiale_Kh10_Ks10_taux0.01|delta=0.05|n=288|n_garde=288|biais=0.005|k=8": {
+   "etiquette": "binomiale_Kh10_Ks10_taux0.01|delta=0.05|n=288|n_garde=288|biais=0.005|k=8",
+   "graine_derivee": 11169066877309983711,
+   "160.0": {
+    "garde_seule": {
+     "part": 1.0,
+     "unites_mediane_si_atteint": 162.0
+    },
+    "k_gardes": {
+     "part": 1.0,
+     "unites_mediane_si_atteint": 175.0
+    },
+    "k_contrastes": {
+     "part": 1.0,
+     "unites_mediane_si_atteint": 120.0
+    },
+    "fiche_entiere": {
+     "part": 1.0,
+     "unites_mediane_si_atteint": 175.0
+    },
+    "frontiere_part": 0.0,
+    "frontiere_borne_ville": 0.00625,
+    "tricheur_part": 0.0
+   },
+   "40.0": {
+    "garde_seule": {
+     "part": 1.0,
+     "unites_mediane_si_atteint": 124.0
+    },
+    "k_gardes": {
+     "part": 1.0,
+     "unites_mediane_si_atteint": 134.5
+    },
+    "k_contrastes": {
+     "part": 1.0,
+     "unites_mediane_si_atteint": 95.0
+    },
+    "fiche_entiere": {
+     "part": 1.0,
+     "unites_mediane_si_atteint": 136.0
+    },
+    "frontiere_part": 0.0,
+    "frontiere_borne_ville": 0.025,
+    "tricheur_part": 0.0
+   },
+   "20.0": {
+    "garde_seule": {
+     "part": 1.0,
+     "unites_mediane_si_atteint": 105.0
+    },
+    "k_gardes": {
+     "part": 1.0,
+     "unites_mediane_si_atteint": 114.0
+    },
+    "k_contrastes": {
+     "part": 1.0,
+     "unites_mediane_si_atteint": 81.0
+    },
+    "fiche_entiere": {
+     "part": 1.0,
+     "unites_mediane_si_atteint": 116.0
+    },
+    "frontiere_part": 0.0,
+    "frontiere_borne_ville": 0.05,
+    "tricheur_part": 0.0
+   }
+  },
+  "binomiale_Kh3_Ks3_taux0.01|delta=0.05|n=288|n_garde=288|biais=0.005|k=8": {
+   "etiquette": "binomiale_Kh3_Ks3_taux0.01|delta=0.05|n=288|n_garde=288|biais=0.005|k=8",
+   "graine_derivee": 13970895895275438385,
+   "160.0": {
+    "garde_seule": {
+     "part": 0.9985,
+     "unites_mediane_si_atteint": 171.0
+    },
+    "k_gardes": {
+     "part": 0.9935,
+     "unites_mediane_si_atteint": 192.0
+    },
+    "k_contrastes": {
+     "part": 0.403,
+     "unites_mediane_si_atteint": 221.5
+    },
+    "fiche_entiere": {
+     "part": 0.392,
+     "unites_mediane_si_atteint": 234.0
+    },
+    "frontiere_part": 0.0,
+    "frontiere_borne_ville": 0.00625,
+    "tricheur_part": 0.0
+   },
+   "40.0": {
+    "garde_seule": {
+     "part": 1.0,
+     "unites_mediane_si_atteint": 130.0
+    },
+    "k_gardes": {
+     "part": 1.0,
+     "unites_mediane_si_atteint": 149.0
+    },
+    "k_contrastes": {
+     "part": 0.6125,
+     "unites_mediane_si_atteint": 200.0
+    },
+    "fiche_entiere": {
+     "part": 0.609,
+     "unites_mediane_si_atteint": 208.0
+    },
+    "frontiere_part": 0.001,
+    "frontiere_borne_ville": 0.025,
+    "tricheur_part": 0.0
+   },
+   "20.0": {
+    "garde_seule": {
+     "part": 1.0,
+     "unites_mediane_si_atteint": 110.0
+    },
+    "k_gardes": {
+     "part": 1.0,
+     "unites_mediane_si_atteint": 125.0
+    },
+    "k_contrastes": {
+     "part": 0.727,
+     "unites_mediane_si_atteint": 183.0
+    },
+    "fiche_entiere": {
+     "part": 0.7245,
+     "unites_mediane_si_atteint": 189.0
+    },
+    "frontiere_part": 0.0055,
+    "frontiere_borne_ville": 0.05,
+    "tricheur_part": 0.0
+   }
+  }
+ },
+ "environnement": {
+  "python": "3.13.17",
+  "numpy": "2.5.3",
+  "duree_s": 78.8
+ }
+}

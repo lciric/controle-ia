@@ -1,0 +1,639 @@
+{
+  "bras": "recopie_melange",
+  "cartes": [
+    {
+      "hypothese": "La loi gelée L prédit l'issue mieux que la marginale empirique de la tranche.",
+      "identifiant": "F-3854982e4e3d",
+      "loi_predictive": {
+        "biais": [
+          -0.282582,
+          -0.012768,
+          -0.391703
+        ],
+        "poids": [
+          [
+            0.190151,
+            0.21294
+          ],
+          [
+            -1.566284,
+            1.674372
+          ],
+          [
+            0.4718,
+            -3.170206
+          ]
+        ],
+        "type": "softmax"
+      },
+      "metrique": "richesse W du pari (juge) ; gain moyen de log-score (test de mort)",
+      "prediction": "gain moyen de log-score au moins 0,02 nat par épisode",
+      "signe": "+",
+      "source": "recopie_melange",
+      "test_de_mort": {
+        "donnees": [
+          "episodes.csv",
+          "evaluateur_lois_v62.py"
+        ],
+        "seuil": "au moins 0,02",
+        "statistique": {
+          "colonne": "gain",
+          "fichier": "gains.csv",
+          "statistique": "moyenne"
+        },
+        "test": "Gain moyen par épisode du log-score de la loi gelée L sur la marginale empirique de la tranche (comptes + 0,5 ; nat), calculé sur episodes.csv par l'évaluateur de référence evaluateur_lois_v62.py (même fichier pour toutes les fiches). gains.csv : colonnes episode, gain ; une ligne par épisode ; valeurs en pleine précision (repr de Python), jamais arrondies. Script attendu, tel quel : import json, runpy ; ev = runpy.run_path('tranche/evaluateur_lois_v62.py') ; ev['ecrire_gains'](json.loads(LOI), 'tranche/episodes.csv', 'gains.csv') ; où LOI est le texte JSON de L ci-dessous, recopié exactement. Loi gelée L (JSON canonique) : {\"biais\":[-0.282582,-0.012768,-0.391703],\"poids\":[[0.190151,0.21294],[-1.566284,1.674372],[0.4718,-3.170206]],\"type\":\"softmax\"}"
+      },
+      "titre": "Loi à éprouver"
+    },
+    {
+      "hypothese": "La loi gelée L prédit l'issue mieux que la marginale empirique de la tranche.",
+      "identifiant": "F-0e3371d9cd95",
+      "loi_predictive": {
+        "composantes": [
+          {
+            "biais": [
+              -0.282582,
+              -0.012768,
+              -0.391703
+            ],
+            "poids": [
+              [
+                0.190151,
+                0.21294
+              ],
+              [
+                -1.566284,
+                1.674372
+              ],
+              [
+                0.4718,
+                -3.170206
+              ]
+            ],
+            "type": "softmax"
+          },
+          {
+            "probas": [
+              0.3333333333333333,
+              0.3333333333333333,
+              0.3333333333333333
+            ],
+            "type": "fixe"
+          }
+        ],
+        "poids": [
+          0.5,
+          0.5
+        ],
+        "type": "melange"
+      },
+      "metrique": "richesse W du pari (juge) ; gain moyen de log-score (test de mort)",
+      "prediction": "gain moyen de log-score au moins 0,02 nat par épisode",
+      "signe": "+",
+      "source": "recopie_melange",
+      "test_de_mort": {
+        "donnees": [
+          "episodes.csv",
+          "evaluateur_lois_v62.py"
+        ],
+        "seuil": "au moins 0,02",
+        "statistique": {
+          "colonne": "gain",
+          "fichier": "gains.csv",
+          "statistique": "moyenne"
+        },
+        "test": "Gain moyen par épisode du log-score de la loi gelée L sur la marginale empirique de la tranche (comptes + 0,5 ; nat), calculé sur episodes.csv par l'évaluateur de référence evaluateur_lois_v62.py (même fichier pour toutes les fiches). gains.csv : colonnes episode, gain ; une ligne par épisode ; valeurs en pleine précision (repr de Python), jamais arrondies. Script attendu, tel quel : import json, runpy ; ev = runpy.run_path('tranche/evaluateur_lois_v62.py') ; ev['ecrire_gains'](json.loads(LOI), 'tranche/episodes.csv', 'gains.csv') ; où LOI est le texte JSON de L ci-dessous, recopié exactement. Loi gelée L (JSON canonique) : {\"composantes\":[{\"biais\":[-0.282582,-0.012768,-0.391703],\"poids\":[[0.190151,0.21294],[-1.566284,1.674372],[0.4718,-3.170206]],\"type\":\"softmax\"},{\"probas\":[0.3333333333333333,0.3333333333333333,0.3333333333333333],\"type\":\"fixe\"}],\"poids\":[0.5,0.5],\"type\":\"melange\"}"
+      },
+      "titre": "Loi à éprouver"
+    },
+    {
+      "hypothese": "La loi gelée L prédit l'issue mieux que la marginale empirique de la tranche.",
+      "identifiant": "F-d20a93ec0817",
+      "loi_predictive": {
+        "base": {
+          "biais": [
+            -0.282582,
+            -0.012768,
+            -0.391703
+          ],
+          "poids": [
+            [
+              0.190151,
+              0.21294
+            ],
+            [
+              -1.566284,
+              1.674372
+            ],
+            [
+              0.4718,
+              -3.170206
+            ]
+          ],
+          "type": "softmax"
+        },
+        "inclinaison": [
+          0.0,
+          -0.124471,
+          -0.335708
+        ],
+        "puissance": 0.609886,
+        "type": "transformee"
+      },
+      "metrique": "richesse W du pari (juge) ; gain moyen de log-score (test de mort)",
+      "prediction": "gain moyen de log-score au moins 0,02 nat par épisode",
+      "signe": "+",
+      "source": "recopie_melange",
+      "test_de_mort": {
+        "donnees": [
+          "episodes.csv",
+          "evaluateur_lois_v62.py"
+        ],
+        "seuil": "au moins 0,02",
+        "statistique": {
+          "colonne": "gain",
+          "fichier": "gains.csv",
+          "statistique": "moyenne"
+        },
+        "test": "Gain moyen par épisode du log-score de la loi gelée L sur la marginale empirique de la tranche (comptes + 0,5 ; nat), calculé sur episodes.csv par l'évaluateur de référence evaluateur_lois_v62.py (même fichier pour toutes les fiches). gains.csv : colonnes episode, gain ; une ligne par épisode ; valeurs en pleine précision (repr de Python), jamais arrondies. Script attendu, tel quel : import json, runpy ; ev = runpy.run_path('tranche/evaluateur_lois_v62.py') ; ev['ecrire_gains'](json.loads(LOI), 'tranche/episodes.csv', 'gains.csv') ; où LOI est le texte JSON de L ci-dessous, recopié exactement. Loi gelée L (JSON canonique) : {\"base\":{\"biais\":[-0.282582,-0.012768,-0.391703],\"poids\":[[0.190151,0.21294],[-1.566284,1.674372],[0.4718,-3.170206]],\"type\":\"softmax\"},\"inclinaison\":[0.0,-0.124471,-0.335708],\"puissance\":0.609886,\"type\":\"transformee\"}"
+      },
+      "titre": "Loi à éprouver"
+    },
+    {
+      "hypothese": "La loi gelée L prédit l'issue mieux que la marginale empirique de la tranche.",
+      "identifiant": "F-0d79ea887cf9",
+      "loi_predictive": {
+        "biais": [
+          0.291533,
+          -0.071947,
+          0.234424
+        ],
+        "poids": [
+          [
+            -1.188405,
+            -1.530944
+          ],
+          [
+            -2.333854,
+            2.943803
+          ],
+          [
+            2.256413,
+            -3.584806
+          ]
+        ],
+        "type": "softmax"
+      },
+      "metrique": "richesse W du pari (juge) ; gain moyen de log-score (test de mort)",
+      "prediction": "gain moyen de log-score au moins 0,02 nat par épisode",
+      "signe": "+",
+      "source": "recopie_melange",
+      "test_de_mort": {
+        "donnees": [
+          "episodes.csv",
+          "evaluateur_lois_v62.py"
+        ],
+        "seuil": "au moins 0,02",
+        "statistique": {
+          "colonne": "gain",
+          "fichier": "gains.csv",
+          "statistique": "moyenne"
+        },
+        "test": "Gain moyen par épisode du log-score de la loi gelée L sur la marginale empirique de la tranche (comptes + 0,5 ; nat), calculé sur episodes.csv par l'évaluateur de référence evaluateur_lois_v62.py (même fichier pour toutes les fiches). gains.csv : colonnes episode, gain ; une ligne par épisode ; valeurs en pleine précision (repr de Python), jamais arrondies. Script attendu, tel quel : import json, runpy ; ev = runpy.run_path('tranche/evaluateur_lois_v62.py') ; ev['ecrire_gains'](json.loads(LOI), 'tranche/episodes.csv', 'gains.csv') ; où LOI est le texte JSON de L ci-dessous, recopié exactement. Loi gelée L (JSON canonique) : {\"biais\":[0.291533,-0.071947,0.234424],\"poids\":[[-1.188405,-1.530944],[-2.333854,2.943803],[2.256413,-3.584806]],\"type\":\"softmax\"}"
+      },
+      "titre": "Loi à éprouver"
+    },
+    {
+      "hypothese": "La loi gelée L prédit l'issue mieux que la marginale empirique de la tranche.",
+      "identifiant": "F-18ed6e22dc30",
+      "loi_predictive": {
+        "composantes": [
+          {
+            "biais": [
+              0.291533,
+              -0.071947,
+              0.234424
+            ],
+            "poids": [
+              [
+                -1.188405,
+                -1.530944
+              ],
+              [
+                -2.333854,
+                2.943803
+              ],
+              [
+                2.256413,
+                -3.584806
+              ]
+            ],
+            "type": "softmax"
+          },
+          {
+            "probas": [
+              0.3333333333333333,
+              0.3333333333333333,
+              0.3333333333333333
+            ],
+            "type": "fixe"
+          }
+        ],
+        "poids": [
+          0.5,
+          0.5
+        ],
+        "type": "melange"
+      },
+      "metrique": "richesse W du pari (juge) ; gain moyen de log-score (test de mort)",
+      "prediction": "gain moyen de log-score au moins 0,02 nat par épisode",
+      "signe": "+",
+      "source": "recopie_melange",
+      "test_de_mort": {
+        "donnees": [
+          "episodes.csv",
+          "evaluateur_lois_v62.py"
+        ],
+        "seuil": "au moins 0,02",
+        "statistique": {
+          "colonne": "gain",
+          "fichier": "gains.csv",
+          "statistique": "moyenne"
+        },
+        "test": "Gain moyen par épisode du log-score de la loi gelée L sur la marginale empirique de la tranche (comptes + 0,5 ; nat), calculé sur episodes.csv par l'évaluateur de référence evaluateur_lois_v62.py (même fichier pour toutes les fiches). gains.csv : colonnes episode, gain ; une ligne par épisode ; valeurs en pleine précision (repr de Python), jamais arrondies. Script attendu, tel quel : import json, runpy ; ev = runpy.run_path('tranche/evaluateur_lois_v62.py') ; ev['ecrire_gains'](json.loads(LOI), 'tranche/episodes.csv', 'gains.csv') ; où LOI est le texte JSON de L ci-dessous, recopié exactement. Loi gelée L (JSON canonique) : {\"composantes\":[{\"biais\":[0.291533,-0.071947,0.234424],\"poids\":[[-1.188405,-1.530944],[-2.333854,2.943803],[2.256413,-3.584806]],\"type\":\"softmax\"},{\"probas\":[0.3333333333333333,0.3333333333333333,0.3333333333333333],\"type\":\"fixe\"}],\"poids\":[0.5,0.5],\"type\":\"melange\"}"
+      },
+      "titre": "Loi à éprouver"
+    },
+    {
+      "hypothese": "La loi gelée L prédit l'issue mieux que la marginale empirique de la tranche.",
+      "identifiant": "F-25d5bd884e47",
+      "loi_predictive": {
+        "base": {
+          "biais": [
+            0.291533,
+            -0.071947,
+            0.234424
+          ],
+          "poids": [
+            [
+              -1.188405,
+              -1.530944
+            ],
+            [
+              -2.333854,
+              2.943803
+            ],
+            [
+              2.256413,
+              -3.584806
+            ]
+          ],
+          "type": "softmax"
+        },
+        "inclinaison": [
+          0.0,
+          -0.642865,
+          0.276721
+        ],
+        "puissance": 1.187485,
+        "type": "transformee"
+      },
+      "metrique": "richesse W du pari (juge) ; gain moyen de log-score (test de mort)",
+      "prediction": "gain moyen de log-score au moins 0,02 nat par épisode",
+      "signe": "+",
+      "source": "recopie_melange",
+      "test_de_mort": {
+        "donnees": [
+          "episodes.csv",
+          "evaluateur_lois_v62.py"
+        ],
+        "seuil": "au moins 0,02",
+        "statistique": {
+          "colonne": "gain",
+          "fichier": "gains.csv",
+          "statistique": "moyenne"
+        },
+        "test": "Gain moyen par épisode du log-score de la loi gelée L sur la marginale empirique de la tranche (comptes + 0,5 ; nat), calculé sur episodes.csv par l'évaluateur de référence evaluateur_lois_v62.py (même fichier pour toutes les fiches). gains.csv : colonnes episode, gain ; une ligne par épisode ; valeurs en pleine précision (repr de Python), jamais arrondies. Script attendu, tel quel : import json, runpy ; ev = runpy.run_path('tranche/evaluateur_lois_v62.py') ; ev['ecrire_gains'](json.loads(LOI), 'tranche/episodes.csv', 'gains.csv') ; où LOI est le texte JSON de L ci-dessous, recopié exactement. Loi gelée L (JSON canonique) : {\"base\":{\"biais\":[0.291533,-0.071947,0.234424],\"poids\":[[-1.188405,-1.530944],[-2.333854,2.943803],[2.256413,-3.584806]],\"type\":\"softmax\"},\"inclinaison\":[0.0,-0.642865,0.276721],\"puissance\":1.187485,\"type\":\"transformee\"}"
+      },
+      "titre": "Loi à éprouver"
+    },
+    {
+      "hypothese": "La loi gelée L prédit l'issue mieux que la marginale empirique de la tranche.",
+      "identifiant": "F-66fa254083fb",
+      "loi_predictive": {
+        "biais": [
+          0.001407,
+          0.530889,
+          -0.33282
+        ],
+        "poids": [
+          [
+            0.521358,
+            -0.474152
+          ],
+          [
+            -0.894592,
+            3.279566
+          ],
+          [
+            0.985158,
+            -2.744106
+          ]
+        ],
+        "type": "softmax"
+      },
+      "metrique": "richesse W du pari (juge) ; gain moyen de log-score (test de mort)",
+      "prediction": "gain moyen de log-score au moins 0,02 nat par épisode",
+      "signe": "+",
+      "source": "recopie_melange",
+      "test_de_mort": {
+        "donnees": [
+          "episodes.csv",
+          "evaluateur_lois_v62.py"
+        ],
+        "seuil": "au moins 0,02",
+        "statistique": {
+          "colonne": "gain",
+          "fichier": "gains.csv",
+          "statistique": "moyenne"
+        },
+        "test": "Gain moyen par épisode du log-score de la loi gelée L sur la marginale empirique de la tranche (comptes + 0,5 ; nat), calculé sur episodes.csv par l'évaluateur de référence evaluateur_lois_v62.py (même fichier pour toutes les fiches). gains.csv : colonnes episode, gain ; une ligne par épisode ; valeurs en pleine précision (repr de Python), jamais arrondies. Script attendu, tel quel : import json, runpy ; ev = runpy.run_path('tranche/evaluateur_lois_v62.py') ; ev['ecrire_gains'](json.loads(LOI), 'tranche/episodes.csv', 'gains.csv') ; où LOI est le texte JSON de L ci-dessous, recopié exactement. Loi gelée L (JSON canonique) : {\"biais\":[0.001407,0.530889,-0.33282],\"poids\":[[0.521358,-0.474152],[-0.894592,3.279566],[0.985158,-2.744106]],\"type\":\"softmax\"}"
+      },
+      "titre": "Loi à éprouver"
+    },
+    {
+      "hypothese": "La loi gelée L prédit l'issue mieux que la marginale empirique de la tranche.",
+      "identifiant": "F-a1cc2c9e2942",
+      "loi_predictive": {
+        "composantes": [
+          {
+            "biais": [
+              0.001407,
+              0.530889,
+              -0.33282
+            ],
+            "poids": [
+              [
+                0.521358,
+                -0.474152
+              ],
+              [
+                -0.894592,
+                3.279566
+              ],
+              [
+                0.985158,
+                -2.744106
+              ]
+            ],
+            "type": "softmax"
+          },
+          {
+            "probas": [
+              0.3333333333333333,
+              0.3333333333333333,
+              0.3333333333333333
+            ],
+            "type": "fixe"
+          }
+        ],
+        "poids": [
+          0.5,
+          0.5
+        ],
+        "type": "melange"
+      },
+      "metrique": "richesse W du pari (juge) ; gain moyen de log-score (test de mort)",
+      "prediction": "gain moyen de log-score au moins 0,02 nat par épisode",
+      "signe": "+",
+      "source": "recopie_melange",
+      "test_de_mort": {
+        "donnees": [
+          "episodes.csv",
+          "evaluateur_lois_v62.py"
+        ],
+        "seuil": "au moins 0,02",
+        "statistique": {
+          "colonne": "gain",
+          "fichier": "gains.csv",
+          "statistique": "moyenne"
+        },
+        "test": "Gain moyen par épisode du log-score de la loi gelée L sur la marginale empirique de la tranche (comptes + 0,5 ; nat), calculé sur episodes.csv par l'évaluateur de référence evaluateur_lois_v62.py (même fichier pour toutes les fiches). gains.csv : colonnes episode, gain ; une ligne par épisode ; valeurs en pleine précision (repr de Python), jamais arrondies. Script attendu, tel quel : import json, runpy ; ev = runpy.run_path('tranche/evaluateur_lois_v62.py') ; ev['ecrire_gains'](json.loads(LOI), 'tranche/episodes.csv', 'gains.csv') ; où LOI est le texte JSON de L ci-dessous, recopié exactement. Loi gelée L (JSON canonique) : {\"composantes\":[{\"biais\":[0.001407,0.530889,-0.33282],\"poids\":[[0.521358,-0.474152],[-0.894592,3.279566],[0.985158,-2.744106]],\"type\":\"softmax\"},{\"probas\":[0.3333333333333333,0.3333333333333333,0.3333333333333333],\"type\":\"fixe\"}],\"poids\":[0.5,0.5],\"type\":\"melange\"}"
+      },
+      "titre": "Loi à éprouver"
+    },
+    {
+      "hypothese": "La loi gelée L prédit l'issue mieux que la marginale empirique de la tranche.",
+      "identifiant": "F-19e721997e8e",
+      "loi_predictive": {
+        "base": {
+          "biais": [
+            0.001407,
+            0.530889,
+            -0.33282
+          ],
+          "poids": [
+            [
+              0.521358,
+              -0.474152
+            ],
+            [
+              -0.894592,
+              3.279566
+            ],
+            [
+              0.985158,
+              -2.744106
+            ]
+          ],
+          "type": "softmax"
+        },
+        "inclinaison": [
+          0.0,
+          0.450788,
+          0.474763
+        ],
+        "puissance": 0.657132,
+        "type": "transformee"
+      },
+      "metrique": "richesse W du pari (juge) ; gain moyen de log-score (test de mort)",
+      "prediction": "gain moyen de log-score au moins 0,02 nat par épisode",
+      "signe": "+",
+      "source": "recopie_melange",
+      "test_de_mort": {
+        "donnees": [
+          "episodes.csv",
+          "evaluateur_lois_v62.py"
+        ],
+        "seuil": "au moins 0,02",
+        "statistique": {
+          "colonne": "gain",
+          "fichier": "gains.csv",
+          "statistique": "moyenne"
+        },
+        "test": "Gain moyen par épisode du log-score de la loi gelée L sur la marginale empirique de la tranche (comptes + 0,5 ; nat), calculé sur episodes.csv par l'évaluateur de référence evaluateur_lois_v62.py (même fichier pour toutes les fiches). gains.csv : colonnes episode, gain ; une ligne par épisode ; valeurs en pleine précision (repr de Python), jamais arrondies. Script attendu, tel quel : import json, runpy ; ev = runpy.run_path('tranche/evaluateur_lois_v62.py') ; ev['ecrire_gains'](json.loads(LOI), 'tranche/episodes.csv', 'gains.csv') ; où LOI est le texte JSON de L ci-dessous, recopié exactement. Loi gelée L (JSON canonique) : {\"base\":{\"biais\":[0.001407,0.530889,-0.33282],\"poids\":[[0.521358,-0.474152],[-0.894592,3.279566],[0.985158,-2.744106]],\"type\":\"softmax\"},\"inclinaison\":[0.0,0.450788,0.474763],\"puissance\":0.657132,\"type\":\"transformee\"}"
+      },
+      "titre": "Loi à éprouver"
+    },
+    {
+      "hypothese": "La loi gelée L prédit l'issue mieux que la marginale empirique de la tranche.",
+      "identifiant": "F-1f266a72720f",
+      "loi_predictive": {
+        "biais": [
+          0.104196,
+          0.489026,
+          -0.527475
+        ],
+        "poids": [
+          [
+            0.927044,
+            0.390796
+          ],
+          [
+            -1.268495,
+            3.405885
+          ],
+          [
+            0.972325,
+            -3.375372
+          ]
+        ],
+        "type": "softmax"
+      },
+      "metrique": "richesse W du pari (juge) ; gain moyen de log-score (test de mort)",
+      "prediction": "gain moyen de log-score au moins 0,02 nat par épisode",
+      "signe": "+",
+      "source": "recopie_melange",
+      "test_de_mort": {
+        "donnees": [
+          "episodes.csv",
+          "evaluateur_lois_v62.py"
+        ],
+        "seuil": "au moins 0,02",
+        "statistique": {
+          "colonne": "gain",
+          "fichier": "gains.csv",
+          "statistique": "moyenne"
+        },
+        "test": "Gain moyen par épisode du log-score de la loi gelée L sur la marginale empirique de la tranche (comptes + 0,5 ; nat), calculé sur episodes.csv par l'évaluateur de référence evaluateur_lois_v62.py (même fichier pour toutes les fiches). gains.csv : colonnes episode, gain ; une ligne par épisode ; valeurs en pleine précision (repr de Python), jamais arrondies. Script attendu, tel quel : import json, runpy ; ev = runpy.run_path('tranche/evaluateur_lois_v62.py') ; ev['ecrire_gains'](json.loads(LOI), 'tranche/episodes.csv', 'gains.csv') ; où LOI est le texte JSON de L ci-dessous, recopié exactement. Loi gelée L (JSON canonique) : {\"biais\":[0.104196,0.489026,-0.527475],\"poids\":[[0.927044,0.390796],[-1.268495,3.405885],[0.972325,-3.375372]],\"type\":\"softmax\"}"
+      },
+      "titre": "Loi à éprouver"
+    },
+    {
+      "hypothese": "La loi gelée L prédit l'issue mieux que la marginale empirique de la tranche.",
+      "identifiant": "F-5afc96ecdace",
+      "loi_predictive": {
+        "composantes": [
+          {
+            "biais": [
+              0.104196,
+              0.489026,
+              -0.527475
+            ],
+            "poids": [
+              [
+                0.927044,
+                0.390796
+              ],
+              [
+                -1.268495,
+                3.405885
+              ],
+              [
+                0.972325,
+                -3.375372
+              ]
+            ],
+            "type": "softmax"
+          },
+          {
+            "probas": [
+              0.3333333333333333,
+              0.3333333333333333,
+              0.3333333333333333
+            ],
+            "type": "fixe"
+          }
+        ],
+        "poids": [
+          0.5,
+          0.5
+        ],
+        "type": "melange"
+      },
+      "metrique": "richesse W du pari (juge) ; gain moyen de log-score (test de mort)",
+      "prediction": "gain moyen de log-score au moins 0,02 nat par épisode",
+      "signe": "+",
+      "source": "recopie_melange",
+      "test_de_mort": {
+        "donnees": [
+          "episodes.csv",
+          "evaluateur_lois_v62.py"
+        ],
+        "seuil": "au moins 0,02",
+        "statistique": {
+          "colonne": "gain",
+          "fichier": "gains.csv",
+          "statistique": "moyenne"
+        },
+        "test": "Gain moyen par épisode du log-score de la loi gelée L sur la marginale empirique de la tranche (comptes + 0,5 ; nat), calculé sur episodes.csv par l'évaluateur de référence evaluateur_lois_v62.py (même fichier pour toutes les fiches). gains.csv : colonnes episode, gain ; une ligne par épisode ; valeurs en pleine précision (repr de Python), jamais arrondies. Script attendu, tel quel : import json, runpy ; ev = runpy.run_path('tranche/evaluateur_lois_v62.py') ; ev['ecrire_gains'](json.loads(LOI), 'tranche/episodes.csv', 'gains.csv') ; où LOI est le texte JSON de L ci-dessous, recopié exactement. Loi gelée L (JSON canonique) : {\"composantes\":[{\"biais\":[0.104196,0.489026,-0.527475],\"poids\":[[0.927044,0.390796],[-1.268495,3.405885],[0.972325,-3.375372]],\"type\":\"softmax\"},{\"probas\":[0.3333333333333333,0.3333333333333333,0.3333333333333333],\"type\":\"fixe\"}],\"poids\":[0.5,0.5],\"type\":\"melange\"}"
+      },
+      "titre": "Loi à éprouver"
+    },
+    {
+      "hypothese": "La loi gelée L prédit l'issue mieux que la marginale empirique de la tranche.",
+      "identifiant": "F-f64b73e26c2c",
+      "loi_predictive": {
+        "base": {
+          "biais": [
+            0.104196,
+            0.489026,
+            -0.527475
+          ],
+          "poids": [
+            [
+              0.927044,
+              0.390796
+            ],
+            [
+              -1.268495,
+              3.405885
+            ],
+            [
+              0.972325,
+              -3.375372
+            ]
+          ],
+          "type": "softmax"
+        },
+        "inclinaison": [
+          0.0,
+          0.172747,
+          -0.469374
+        ],
+        "puissance": 0.884063,
+        "type": "transformee"
+      },
+      "metrique": "richesse W du pari (juge) ; gain moyen de log-score (test de mort)",
+      "prediction": "gain moyen de log-score au moins 0,02 nat par épisode",
+      "signe": "+",
+      "source": "recopie_melange",
+      "test_de_mort": {
+        "donnees": [
+          "episodes.csv",
+          "evaluateur_lois_v62.py"
+        ],
+        "seuil": "au moins 0,02",
+        "statistique": {
+          "colonne": "gain",
+          "fichier": "gains.csv",
+          "statistique": "moyenne"
+        },
+        "test": "Gain moyen par épisode du log-score de la loi gelée L sur la marginale empirique de la tranche (comptes + 0,5 ; nat), calculé sur episodes.csv par l'évaluateur de référence evaluateur_lois_v62.py (même fichier pour toutes les fiches). gains.csv : colonnes episode, gain ; une ligne par épisode ; valeurs en pleine précision (repr de Python), jamais arrondies. Script attendu, tel quel : import json, runpy ; ev = runpy.run_path('tranche/evaluateur_lois_v62.py') ; ev['ecrire_gains'](json.loads(LOI), 'tranche/episodes.csv', 'gains.csv') ; où LOI est le texte JSON de L ci-dessous, recopié exactement. Loi gelée L (JSON canonique) : {\"base\":{\"biais\":[0.104196,0.489026,-0.527475],\"poids\":[[0.927044,0.390796],[-1.268495,3.405885],[0.972325,-3.375372]],\"type\":\"softmax\"},\"inclinaison\":[0.0,0.172747,-0.469374],\"puissance\":0.884063,\"type\":\"transformee\"}"
+      },
+      "titre": "Loi à éprouver"
+    }
+  ],
+  "generation": 2,
+  "version": "boucle-fermee-v59"
+}

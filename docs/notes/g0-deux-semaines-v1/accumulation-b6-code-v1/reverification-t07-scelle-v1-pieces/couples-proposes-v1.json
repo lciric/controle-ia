@@ -1,0 +1,83 @@
+{
+ "texte": "brouillons/accumulation-barreau6-v1/accumulation-barreau6-v1-candidat3.md",
+ "texte_sha256": "d48fb8a36c960e85416dfe42b2a9d77824067333b543a9f16540766e02ff1dfb",
+ "couples": [
+  {
+   "id": "RV-01",
+   "section": "Métrique (gelée)",
+   "ecart": "E-1, E-2",
+   "ancien": "pour chacune des 200 directions de `plancher_<k>` (scores par action des directions aléatoires appariées que T0.7 a notées à l'étape A), S_Σ et S_max de chaque épisode, puis leurs aires d'épisode ; plancher = **quantile 0,95** des 200 aires (un pour S_Σ, un pour S_max) ; « au-dessus de son plancher » = borne basse de l'aire d'épisode **strictement** supérieure à ce quantile (même règle que T0.7, « Seuil »).",
+   "nouveau": "pour chacune des 800 directions de `plancher_<k>` (scores par action des directions aléatoires appariées que T0.7 a notées à l'étape A ; `n_plancher` = 800, T0.7 scellé, « Métrique » ; pour les deux sondes figées de P3 : le plancher neuf de la réextraction de l'étape A, jamais leurs 200 directions de P3, `plancher_p3_<k>`), S_Σ et S_max de chaque épisode, puis leurs aires d'épisode ; plancher = **quantile 0,95** des 800 aires (un pour S_Σ, un pour S_max) ; « au-dessus de son plancher » = borne basse de l'aire d'épisode **strictement** supérieure à ce quantile (**écart déclaré** à T0.7 scellé, « Seuil », qui lit la borne basse de la différence appariée D = aire − quantile 0,95 du plancher : la règle d'ici est celle de T0.7 brouillon 22, dont le niveau n'est pas tenu sous un plancher à signal commun ; elle n'entre dans les états A et M qu'en condition ajoutée à l'intervalle de Δ, qu'elle ne peut que restreindre ; un « au-dessus de son plancher » d'ici ne se lit pas comme celui de T0.7)."
+  },
+  {
+   "id": "RV-02",
+   "section": "Prédiction (gelée), B6-D5",
+   "ecart": "E-1",
+   "ancien": "contre la distribution des Δ des 200 directions du plancher.",
+   "nouveau": "contre la distribution des Δ des 800 directions du plancher."
+  },
+  {
+   "id": "RV-03",
+   "section": "Métrique (gelée)",
+   "ecart": "E-1",
+   "ancien": "Δ de chacune des 200 directions ; quantile 0,95 rapporté.",
+   "nouveau": "Δ de chacune des 800 directions ; quantile 0,95 rapporté."
+  },
+  {
+   "id": "RV-04",
+   "section": "Plan d'analyse (gelée), point 1, E1",
+   "ecart": "E-1",
+   "ancien": "`scores_<k>` et `plancher_<k>` (200 × actions) ; **jamais** `couple_<k>`,",
+   "nouveau": "`scores_<k>` et `plancher_<k>` (800 × actions) ; **jamais** `plancher_p3_<k>` (les 200 directions de P3 des sondes figées, que T0.7 lit en descriptif), `couple_<k>`,"
+  },
+  {
+   "id": "RV-05",
+   "section": "Liste d'arrêt (gelée)",
+   "ecart": "E-1",
+   "ancien": "nombre de directions de `plancher_<k>` ≠ 200 ;",
+   "nouveau": "nombre de directions de `plancher_<k>` ≠ 800 ;"
+  },
+  {
+   "id": "RV-06",
+   "section": "Seuil (gelée), état E",
+   "ecart": "E-4 (précision)",
+   "ancien": "sonde en « échec » à la notation (`notation-t07.json`),",
+   "nouveau": "sonde en « échec » à la notation (`notation-t07.json` ; dont, pour une sonde figée de P3, « plancher neuf de la sonde figée non établi », T0.7 scellé, « Liste d'arrêt » : aucune lecture contre ses 200 directions de P3),"
+  },
+  {
+   "id": "RV-07",
+   "section": "Plan d'analyse (gelée), point 1, E4",
+   "ecart": "renvoi",
+   "ancien": "(noms écrits par `lecture_v2.py` l. 1109-1125 au commit lu)",
+   "nouveau": "(noms écrits par `lecture_v2.py` l. 1109-1125 au commit lu ; au commit de `CODE-T07`, `b4cd9953d199dd8f220f5162e5868c5b00fd392d`, l'étape B est jouée par `lecture_v4.etape_b`, qui écrit les mêmes noms, l. 669-688)"
+  },
+  {
+   "id": "RV-08",
+   "section": "Plan d'analyse (gelée), point 4",
+   "ecart": "renvoi",
+   "ancien": "(`jetons_notes` > 0, `lecture_v2.noter`, l. 595)",
+   "nouveau": "(`jetons_notes` > 0, `lecture_v2.noter`, l. 595 ; au commit de `CODE-T07`, `lecture_v4.noter`, l. 214)"
+  },
+  {
+   "id": "RV-09",
+   "section": "Plan d'analyse (gelée), point 5",
+   "ecart": "E-3",
+   "ancien": "une réserve sans sonde visée est recopiée sans sonde).",
+   "nouveau": "une réserve sans sonde visée est recopiée sans sonde) ; les réserves du plancher neuf d'une sonde figée de P3 (palier « carte », principale rapportée : `lecture-t07.json` → `resultat.reserves`, chaînes qui commencent par « plancher neuf de <sonde> ») sont recopiées à côté de cette sonde."
+  },
+  {
+   "id": "RV-10",
+   "section": "Puissance",
+   "ecart": "E-1 (déclaration)",
+   "ancien": "400 répliques par cellule, 200 directions de plancher ;",
+   "nouveau": "400 répliques par cellule, 200 directions de plancher (la lecture en compte 800, T0.7 scellé ; non resimulé : le niveau de A et de M tient à l'intervalle de Δ, le plancher ne fait que restreindre) ;"
+  },
+  {
+   "id": "RV-11",
+   "section": "Reste avant le scellement, pas 4",
+   "ecart": "E-5",
+   "ancien": "**fusion** du paquet, au commit final, après le scellement de T0.7 (R-2231 ; le contrôle du code de T0.7 refuse un `src/controle_ia/` différent du commit de `CODE-T07`).",
+   "nouveau": "**fusion** du paquet, au commit final, **après l'étape B de T0.7** (fichier `lecture-t07.json` écrit) : le contrôle du code de T0.7, joué aux étapes A et B, refuse un `src/controle_ia/` différent du commit de `CODE-T07` (`code_t07_v1.py`, l. 101-107 ; R-2231 : le script de l'étape A exige aussi `src` et `tests` égaux à C7) ; la ligne `CODE-ACCB6` s'inscrit avant, depuis la branche (`ecrire_fichier_code` lit le commit, non l'arbre de travail)."
+  }
+ ]
+}

@@ -1,0 +1,81 @@
+{
+ "sans_appel": true,
+ "consignes": {
+  "dossier_ferme": null,
+  "moisson": null,
+  "tailles_lues": {
+   "question": 4255,
+   "pieces": 10151,
+   "materiau": 0,
+   "pieces_juge": 10151,
+   "temoins": 4
+  },
+  "consigne_passe_1": 16856,
+  "consigne_passe_2_maximale": 370997,
+  "consigne_de_controle_externe": 371472,
+  "consigne_du_juge_maximale": 2151061,
+  "fiches_au_juge_au_maximum": 52,
+  "taille_fiche_maximale_servie": 44259,
+  "controle_du_bras": 41,
+  "nombre_par_proposeur": 8,
+  "nombre_proposeurs": 3,
+  "seconde_passe": true
+ },
+ "moisson": null,
+ "prix_entree_usd_par_million_jetons": 10.0,
+ "prix_caractere_usd": 2.5e-06,
+ "garde_course": {
+  "taille_max_caracteres": 520000,
+  "origine": "defaut",
+  "detail": "défaut : plus petit plafond des sessions d'Argon qui reçoivent la plus grosse consigne — passe du proposeur externe 2.5 / prix 2.5000e-06 dollar par caractère (10 dollars par million de jetons) − provision de sortie 480000 caractères (8 fiches de 12000 au rapport 5)",
+  "provision_sortie_caracteres": 480000,
+  "consigne_de_controle": 371472,
+  "passerait": true,
+  "cout_prudent_entree_usd": 0.9287,
+  "cout_entree_controle_usd": 0.9287,
+  "cout_entree_passe_2_maximale_usd": 0.9275,
+  "proposeurs_externes": [
+   "argon"
+  ],
+  "provision_huit_fiches_maximales_non_appliquee": {
+   "provision_sortie_caracteres": 1770360,
+   "cout_usd": 4.4259,
+   "taille_max_caracteres": 0,
+   "motif": "demandée avec CL42-04 (sortie au rapport 5 de --nombre fiches à fiche_maximale()) ; non appliquée : au-dessus du plafond d'une passe, elle annule la garde"
+  }
+ },
+ "garde_bras": {},
+ "gardes_passes_externes": {
+  "argon": {
+   "passe_1": {
+    "plafond_usd": 2.5,
+    "consigne": 16856,
+    "taille_max_caracteres": 680000,
+    "provision_sortie_caracteres": 320000,
+    "origine": "plafond de cette passe 2.5 / prix 2.5000e-06 dollar par caractère − provision de sortie 320000 caractères (8 fiches de 8000 au rapport 5)",
+    "passerait": true,
+    "cout_entree_usd": 0.0421,
+    "cout_avec_provision_usd": 0.8421
+   },
+   "passe_2_fiches_de_passe_1_au_plus_provisionnees": {
+    "plafond_usd": 2.5,
+    "taille_fiche_provisionnee": 8000,
+    "taille_max_caracteres": 680000,
+    "provision_sortie_caracteres": 320000,
+    "origine": "plafond de cette passe 2.5 / prix 2.5000e-06 dollar par caractère − provision de sortie 320000 caractères (8 fiches de 8000 au rapport 5, plus grande fiche admise de la passe 1 comprise)",
+    "consigne_max_admise": 680000
+   },
+   "passe_2_maximale": {
+    "plafond_usd": 2.5,
+    "taille_fiche_provisionnee": 44259,
+    "taille_max_caracteres": 0,
+    "provision_sortie_caracteres": 1770360,
+    "origine": "plafond de cette passe 2.5 / prix 2.5000e-06 dollar par caractère − provision de sortie 1770360 caractères (8 fiches de 44259 au rapport 5, plus grande fiche admise de la passe 1 comprise)",
+    "consigne": 370997,
+    "passerait": false,
+    "cout_entree_usd": 0.9275,
+    "cout_avec_provision_usd": 5.3534
+   }
+  }
+ }
+}

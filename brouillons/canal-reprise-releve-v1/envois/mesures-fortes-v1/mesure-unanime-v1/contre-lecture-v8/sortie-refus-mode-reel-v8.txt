@@ -1,0 +1,35 @@
+effectifs_sans_empreinte | code 1 | mode réel : --empreinte-attendue est obligatoire (aussi avec --effectifs-seulement, CV4-6) 
+effectifs_empreinte_vide | code 1 | mode réel : --empreinte-attendue est obligatoire (aussi avec --effectifs-seulement, CV4-6) 
+effectifs_empreinte_fausse | code 1 | ure-mesure-unanime-v8/copie-dossier/analyse_fausses_alertes_v8.py", line 262, in charger_reel     raise RuntimeError("liste d'arrêt : empreinte des données différente de celle du préenregistrement") RuntimeError: liste d'arrêt : empreinte des do
+effectifs_tirages_5 | code 1 | mode réel : --tirages et --bootstrap sont fixes (20, 2000) — CV4-6 
+effectifs_bootstrap_300 | code 1 | mode réel : --tirages et --bootstrap sont fixes (20, 2000) — CV4-6 
+reel_sans_commit | code 1 | mode réel : --empreinte-attendue, --sondes-reelles, --sondes-placebo et --commit sont obligatoires 
+reel_commit_vide | code 1 | mode réel : --empreinte-attendue, --sondes-reelles, --sondes-placebo et --commit sont obligatoires 
+reel_sans_sondes_reelles | code 1 | mode réel : --empreinte-attendue, --sondes-reelles, --sondes-placebo et --commit sont obligatoires 
+reel_sans_sondes_placebo | code 1 | mode réel : --empreinte-attendue, --sondes-reelles, --sondes-placebo et --commit sont obligatoires 
+reel_tirages_5 | code 1 | mode réel : --tirages et --bootstrap sont fixes (20, 2000) — CV4-6 
+reel_bootstrap_300 | code 1 | mode réel : --tirages et --bootstrap sont fixes (20, 2000) — CV4-6 
+reel_sondes_reelles_fausses | code 1 | 0a-4896cc046231/scratchpad/contre-lecture-mesure-unanime-v8/copie-dossier/analyse_fausses_alertes_v8.py", line 280, in charger_reel     raise RuntimeError(f"liste d'arrêt : {len(reelles)} sondes réelles, {n_reelles_attendu} attendues") RuntimeError
+reel_sondes_placebo_fausses | code 1 | d0a-4896cc046231/scratchpad/contre-lecture-mesure-unanime-v8/copie-dossier/analyse_fausses_alertes_v8.py", line 282, in charger_reel     raise RuntimeError(f"liste d'arrêt : {len(placebos)} sondes placebo, {n_placebo_attendu} attendues") RuntimeErro
+reel_et_synthetique | code 1 | un seul de --synthetique ou --reel 
+effectifs_sain | code 0 | 7,    9,    10,    7,    6,    10,    9,    6,    8,    10,    9   ],   "empreinte_donnees": "447dc136dde083f68d1f9899344207bd5b8a6caf56c95b441d1c492dd72cb709",   "empreinte_script": "52b1760a09970526a926f2119dceeef7f20e2f280bdb6a6c2d890962556c5400",
+--- test des gardes
+{
+ "test_gardes": {
+  "sain": "passe",
+  "sain_bras_M4": "passe",
+  "sain_melange_pas_fixe": "passe (marges par pas et masque gardés)",
+  "melange_masque_artefact": "liste d'arrêt : score porté par une action invalide",
+  "chargement_sain": "passe",
+  "empreinte_fausse": "liste d'arrêt : empreinte des données différente de celle du préenregistrement",
+  "effectif_reel_faux": "liste d'arrêt : 3 sondes réelles, 4 attendues",
+  "effectif_placebo_faux": "liste d'arrêt : 2 sondes placebo, 1 attendues",
+  "E_minimal": "liste d'arrêt : 40 épisodes honnêtes gardés (< 44)",
+  "E_sain": "passe",
+  "correlation_constante": "liste d'arrêt : corrélation intraclasse indéfinie (scores constants)",
+  "correlation_saine": 0.171,
+  "score_non_fini": "liste d'arrêt : score non fini sur une action valide",
+  "scores_constants": "liste d'arrêt : scores constants, normalisation impossible",
+  "K_trop_petit": "liste d'arrêt : K = 12 trop petit pour α = 0.05 (seuil infini)"
+ }
+}

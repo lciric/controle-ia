@@ -1,0 +1,181 @@
+## verifier_coefficients(constante)
+          NaN : ACCEPTÉ → True
+         +inf : refus (ContrasteInvalide)
+         -inf : refus (ContrasteInvalide)
+         True : refus (ContrasteInvalide)
+         sain : ACCEPTÉ → True
+## contraste(constante)
+          NaN : ACCEPTÉ → 1.0
+         +inf : ACCEPTÉ → 1.0
+         -inf : ACCEPTÉ → -1.0
+         True : ACCEPTÉ → 1.0
+         sain : ACCEPTÉ → 0.19999999999999996
+## contraste(coefficient)
+          NaN : ACCEPTÉ → 1.0
+         +inf : ACCEPTÉ → 1.0
+         -inf : ACCEPTÉ → -1.0
+         True : ACCEPTÉ → 0.19999999999999996
+         sain : ACCEPTÉ → 0.19999999999999996
+## contraste(part)
+          NaN : refus (ContrasteInvalide)
+         +inf : refus (ContrasteInvalide)
+         -inf : refus (ContrasteInvalide)
+         True : ACCEPTÉ → 0.6
+         sain : ACCEPTÉ → 0.19999999999999996
+## contraste_plafonne(constante)
+          NaN : ACCEPTÉ → 0.5
+         +inf : ACCEPTÉ → 0.5
+         -inf : ACCEPTÉ → -0.5
+         True : ACCEPTÉ → 0.5
+         sain : ACCEPTÉ → 0.1
+## ebh_pondere(log_e)
+          NaN : ACCEPTÉ → {'c', 'a', 'b'}
+         +inf : ACCEPTÉ → {'b'}
+         -inf : ACCEPTÉ → set()
+         True : ACCEPTÉ → set()
+         sain : ACCEPTÉ → set()
+## ebh_pondere(alpha)
+          NaN : ACCEPTÉ → set()
+         +inf : ACCEPTÉ → set()
+         -inf : refus (ValueError)
+         True : ACCEPTÉ → set()
+         sain : ACCEPTÉ → set()
+## Course.ajouter_trajectoire
+          NaN : ACCEPTÉ → []
+         +inf : ACCEPTÉ → ['a']
+         -inf : ACCEPTÉ → []
+         True : ACCEPTÉ → []
+         sain : ACCEPTÉ → []
+## trajectoire_log_sans_remise
+          NaN : ACCEPTÉ → -1381.5046494236133
+         +inf : ACCEPTÉ → nan
+         -inf : ACCEPTÉ → -1381.5046494236133
+         True : ACCEPTÉ → 0.5013210985267316
+         sain : ACCEPTÉ → 0.15661027159759242
+## trajectoire_log_richesse (valeur)
+          NaN : refus (ContrasteInvalide)
+         +inf : refus (ContrasteInvalide)
+         -inf : refus (ContrasteInvalide)
+         True : ACCEPTÉ → 0.44099311416730985
+         sain : ACCEPTÉ → 0.1387614420415752
+## borne_basse(valeur)
+          NaN : ACCEPTÉ → 0.16
+         +inf : ACCEPTÉ → 0.16
+         -inf : refus (ValueError)
+         True : ACCEPTÉ → 0.16
+         sain : ACCEPTÉ → 0.16
+## borne_basse(alpha)
+          NaN : ACCEPTÉ → -1.0
+         +inf : refus (ValueError)
+         -inf : refus (ValueError)
+         True : ACCEPTÉ → 0.4
+         sain : ACCEPTÉ → 0.16
+## evaluer(alpha)
+          NaN : ACCEPTÉ → False
+         +inf : refus (ValueError)
+         -inf : refus (ValueError)
+         True : ACCEPTÉ → True
+         sain : ACCEPTÉ → True
+## evaluer(m)
+          NaN : ACCEPTÉ → False
+         +inf : ACCEPTÉ → False
+         -inf : refus (ValueError)
+         True : ACCEPTÉ → True
+         sain : ACCEPTÉ → True
+## evaluer(valeur de contraste)
+          NaN : refus (ContrasteInvalide)
+         +inf : refus (ContrasteInvalide)
+         -inf : refus (ContrasteInvalide)
+         True : ACCEPTÉ → True
+         sain : ACCEPTÉ → True
+## evaluer(delta)
+          NaN : refus (ValueError)
+         +inf : refus (ValueError)
+         -inf : refus (ValueError)
+         True : refus (ValueError)
+         sain : ACCEPTÉ → False
+## evaluer(écart de garde)
+          NaN : refus (ContrasteInvalide)
+         +inf : refus (ContrasteInvalide)
+         -inf : refus (ContrasteInvalide)
+         True : refus (ContrasteInvalide)
+         sain : ACCEPTÉ → False
+## Course.entrer(alpha_c)
+          NaN : refus (ValueError)
+         +inf : refus (ValueError)
+         -inf : refus (ValueError)
+         True : refus (ValueError)
+         sain : ACCEPTÉ → None
+## Course(alpha)
+          NaN : refus (ValueError)
+         +inf : refus (ValueError)
+         -inf : refus (ValueError)
+         True : refus (ValueError)
+         sain : ACCEPTÉ → 0.05
+## porte PACE : pari_apparie_binaire(delta)
+          NaN : refus (PorteInvalide)
+         +inf : refus (PorteInvalide)
+         -inf : refus (PorteInvalide)
+         True : refus (PorteInvalide)
+         sain : ACCEPTÉ → False
+## porte PACE : pari_apparie_binaire(alpha)
+          NaN : refus (NiveauInvalide)
+         +inf : refus (NiveauInvalide)
+         -inf : refus (NiveauInvalide)
+         True : refus (NiveauInvalide)
+         sain : ACCEPTÉ → True
+## porte PACE : porte_pace(lam)
+          NaN : refus (MiseInvalide)
+         +inf : refus (MiseInvalide)
+         -inf : refus (MiseInvalide)
+         True : refus (MiseInvalide)
+         sain : ACCEPTÉ → True
+## porte PACE : porte_pace(budget)
+          NaN : refus (JeuVide)
+         +inf : refus (JeuVide)
+         -inf : refus (JeuVide)
+         True : refus (JeuVide)
+         sain : ACCEPTÉ → True
+## porte PACE : comparer(gain_reel)
+          NaN : refus (ResultatInvalide)
+         +inf : refus (ResultatInvalide)
+         -inf : refus (ResultatInvalide)
+         True : refus (ResultatInvalide)
+         sain : ACCEPTÉ → 0
+## porte PACE : simuler_suite(bruit_fp)
+          NaN : refus (TypeError)
+         +inf : refus (TypeError)
+         -inf : refus (TypeError)
+         True : refus (TypeError)
+         sain : refus (TypeError)
+## verifier_reglages(budget_controle_bras_usd)
+          NaN : refus (TypeError)
+         +inf : refus (TypeError)
+         -inf : refus (TypeError)
+         True : refus (TypeError)
+         sain : refus (TypeError)
+## verifier_reglages(budget_controle_bras_usd = −5,0) avec total externe 6,0
+         −5,0 : refus (TypeError)
+   0,2 (sain) : refus (CourseInterrompue)
+## lanceur.verifier_relais(depense_usd)
+          NaN : refus (AttributeError)
+         +inf : refus (AttributeError)
+         -inf : refus (AttributeError)
+         True : refus (AttributeError)
+         sain : refus (AttributeError)
+## lanceur.verifier_relais(plafond_usd)
+          NaN : refus (AttributeError)
+         +inf : refus (AttributeError)
+         -inf : refus (AttributeError)
+         True : refus (AttributeError)
+         sain : refus (AttributeError)
+## lanceur.verifier_relais(reserve_par_appel_usd)
+          NaN : refus (AttributeError)
+         +inf : refus (AttributeError)
+         -inf : refus (AttributeError)
+         True : refus (AttributeError)
+         sain : refus (AttributeError)
+## lanceur.verifier_relais(depense « 0.4 » en texte)
+        texte : refus (AttributeError)
+## lanceur.lire_tentatives_controle (coûts NaN et −2,5, sans sceau)
+           lu : refus (AttributeError)

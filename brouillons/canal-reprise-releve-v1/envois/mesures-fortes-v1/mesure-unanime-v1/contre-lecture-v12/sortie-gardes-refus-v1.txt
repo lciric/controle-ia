@@ -1,0 +1,39 @@
+### --test-gardes (quinze entrées attendues)
+rc=0
+entrées : 15
+   sain → passe
+   sain_bras_M4 → passe
+   sain_melange_pas_fixe → passe (marges par pas et masque gardés)
+   melange_masque_artefact → liste d'arrêt : score porté par une action invalide
+   chargement_sain → passe
+   empreinte_fausse → liste d'arrêt : empreinte des données différente de celle du préenregistrement
+   effectif_reel_faux → liste d'arrêt : 3 sondes réelles, 4 attendues
+   effectif_placebo_faux → liste d'arrêt : 2 sondes placebo, 1 attendues
+   E_minimal → liste d'arrêt : 40 épisodes honnêtes gardés (< 44)
+   E_sain → passe
+   correlation_constante → liste d'arrêt : corrélation intraclasse indéfinie (scores constants)
+   correlation_saine → 0.171
+   score_non_fini → liste d'arrêt : score non fini sur une action valide
+   scores_constants → liste d'arrêt : scores constants, normalisation impossible
+   K_trop_petit → liste d'arrêt : K = 12 trop petit pour α = 0.05 (seuil infini)
+
+### refus du mode réel (attendu : code ≠ 0 et 0 octet sur la sortie standard)
+effectifs sans empreinte                             rc=1  octets_stdout=0  | mode réel : --empreinte-attendue est obligatoire (aussi avec --effectifs-seulement, CV4-6)
+effectifs, empreinte fausse                          rc=1  octets_stdout=0  | RuntimeError: liste d'arrêt : empreinte des données différente de celle du préenregistrement
+--tirages 5                                          rc=1  octets_stdout=0  | mode réel : --tirages et --bootstrap sont fixes (20, 2000) — CV4-6
+--bootstrap 300                                      rc=1  octets_stdout=0  | mode réel : --tirages et --bootstrap sont fixes (20, 2000) — CV4-6
+--tirages 5 avec --effectifs-seulement               rc=1  octets_stdout=0  | mode réel : --tirages et --bootstrap sont fixes (20, 2000) — CV4-6
+sans --commit                                        rc=1  octets_stdout=0  | mode réel : --empreinte-attendue, --sondes-reelles, --sondes-placebo et --commit sont obligatoires
+sans --sondes-placebo                                rc=1  octets_stdout=0  | mode réel : --empreinte-attendue, --sondes-reelles, --sondes-placebo et --commit sont obligatoires
+effectifs faux (4, 2)                                rc=1  octets_stdout=0  | RuntimeError: liste d'arrêt : 3 sondes réelles, 4 attendues
+effectifs faux (3, 1)                                rc=1  octets_stdout=0  | RuntimeError: liste d'arrêt : 2 sondes placebo, 1 attendues
+--reel avec --synthetique                            rc=1  octets_stdout=0  | un seul de --synthetique ou --reel
+chemin de données inexistant                        rc=1  octets_stdout=0  | FileNotFoundError: [Errno 2] No such file or directory: '/tmp/claude-0/-home-claude/c5a45195-121d-5962-9d0a-48
+
+### cas sain : --effectifs-seulement (attendu : 807 octets, identiques aux effectifs déposés)
+rc=0 octets=807
+identiques à l'octet aux effectifs déposés (c05aa6fa…)
+'E': 60
+'K_par_pli': [39, 39, 39, 39, 39, 39, 39, 39, 39, 39]
+'niveau_conforme_L': 0.05000000000000001
+aucun taux dans les effectifs ? 0 occurrence(s) de « taux » ou « mediane » (attendu 0)

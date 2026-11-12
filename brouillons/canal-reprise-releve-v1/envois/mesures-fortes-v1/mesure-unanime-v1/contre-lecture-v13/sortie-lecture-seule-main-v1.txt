@@ -1,0 +1,63 @@
+# Cas de LECTURE_SEULE rejoués à la main sur une copie isolée (/tmp/claude-0/-home-claude/c5a45195-121d-5962-9d0a-4896cc046231/scratchpad/cl13/copie-lecture-seule-wRtH), 2026-10-28T08:38:25Z ; artefact : npz synthétique 3+2, manifeste retouché
+f52de3456e95872cb100cc6b866f7ad1912cdc52d664a48b4da2eccd3070c578  preenregistrement-mesure-unanime-v13.md
+12fab479dbcc439a1f02d8dd91166909d50c549434f9c3c058dd99cd375ac8cd  sortie-reelle-v13.json
+f6e65b725c5314f0ed3132ed55941454e550816fdbabd7056eb67bbf82442563  table-en-vigueur-v13.txt
+
+## cas sain (B2) :
+code 0 ; dernière ligne : réserves : []
+lecture-mecanique-reelle-v13.json.sha256
+note-lecture-mecanique-v13.md.sha256
+
+## (B3 bis) note supprimée, lecture scellée :
+code 0
+13:OK 12fab479dbcc…  sortie-reelle-v13.json
+14:LECTURE_SEULE : aucune note scellée pour note-lecture-mecanique-v13.md ; reprise des étapes (3) et (4) possible
+17:OK a88c01b48403…  lecture-mecanique-reelle-v13.json
+18:5ceceaf0d5fa5869e2a9705f8e28c98d9c4ba17e0bab7ff4883562cf85784d37  note-lecture-mecanique-v13.md
+19:table : table-m2bis-m4-v8.json ; note : note-lecture-mecanique-v13.md ; fin 08:38:59 UTC
+lecture inchangée (a88c01b4840334d97b2383484ee5f923acda9583af3cdbc03114c7d32a4a10e1)
+note refaite et scellée
+
+## (B3 ter) note supprimée, lecture corrompue d'un octet :
+code 1
+--- journal du cas (après l'en-tête) :
+préenregistrement v13 scellé, conforme et intact : f52de3456e95872cb100cc6b866f7ad1912cdc52d664a48b4da2eccd3070c578
+OK 12fab479dbcc…  sortie-reelle-v13.json
+LECTURE_SEULE : aucune note scellée pour note-lecture-mecanique-v13.md ; reprise des étapes (3) et (4) possible
+ARRÊT : lecture-mecanique-reelle-v13.json : empreinte 14664d3efe3c… ≠ scellée a88c01b48403…
+aucune note écrite (attendu)
+aucun .partiel de lecture
+
+## journal complet du cas sain (B2), pour mémoire :
+=== 2026-10-28T08:38:59Z LECTURE_SEULE commit COMMITTEST ===
+analyse_fausses_alertes_v8.py: OK
+table_m2bis_m4_v8.py: OK
+table-m2bis-m4-v8.json: OK
+lecture_mecanique_v8.py: OK
+rediger_note_lecture_v7.py: OK
+commandes-lecture-reelle-v13.sh: OK
+garde-trace-reelle-v12.sh: OK
+test-garde-trace-v12.sh: OK
+garde-lecture-seule-v12.sh: OK
+test-lecture-seule-v13.sh: OK
+préenregistrement v13 scellé, conforme et intact : f52de3456e95872cb100cc6b866f7ad1912cdc52d664a48b4da2eccd3070c578
+OK 12fab479dbcc…  sortie-reelle-v13.json
+LECTURE_SEULE : aucune note scellée pour note-lecture-mecanique-v13.md ; reprise des étapes (3) et (4) possible
+table-m2bis-m4-v8.json: OK
+table-en-vigueur-v13.txt: OK
+a88c01b4840334d97b2383484ee5f923acda9583af3cdbc03114c7d32a4a10e1  lecture-mecanique-reelle-v13.json
+59d60a0febf46c40be6f7f1bdc5d70ecae5b650e4f12bae6f717fecf8a5eebc9  note-lecture-mecanique-v13.md
+table : table-m2bis-m4-v8.json ; note : note-lecture-mecanique-v13.md ; fin 08:38:59 UTC
+{
+ "M1": "confirmé",
+ "M1_bis": "ni l'un ni l'autre",
+ "M2_controle": "attendu",
+ "M2_bis": "conforme à la table ; signe > 0 attendu : tenu",
+ "M2_ter": "(1) Ville tenue sur P3 à τ = 0",
+ "M3": "tenu",
+ "M4": "confirmé",
+ "placebo": "mêmes médianes (aucun écart > 0,05)",
+ "cellule_a_zero": "aucune"
+}
+première ligne : la synthèse a raison (comparateur par épisode entier ; sommes sans niveau sous dépendance non vue, maximum tenu) — proposé à Lazar pour G1 et H2
+réserves : []

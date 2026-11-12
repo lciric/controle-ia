@@ -1,0 +1,113 @@
+--- commande_kimi_v5.py (sha256 5d9d662000e7b577d5410de9521f74fb7b81e1fae333c342bdb86a7e2d4b5bca)
++++ commande_kimi_v6.py
+@@ -1,7 +1,37 @@
+ #!/usr/bin/env python3
+-"""Commande externe de Kimi (kimi-k3.1-pro) pour le tour fermé, étage 1 (orchestrateur v64) — version 5.
++"""Commande externe de Kimi (kimi-k3.1-pro) pour le tour fermé, étage 1 (orchestrateur v64) — version 6.
+ 
+-Version 5, rédigée le 3 novembre 2026 (sous-agent de session-depot) ; rien n'a été lancé par le rédacteur. **Version 5 =
++Version 6, rédigée le 3 novembre 2026 (sous-agent de session-depot) ; rien n'a été lancé par le rédacteur. **Version 6 =
++`commande_kimi_v5.py` (sha256 `5d9d6620…`, scellée, inchangée, R12) avec cinq changements, et seulement ceux-là**
++(décision de conv-audit, n° 406, § 2, `conv-audit_2026-11-03_n406.md`, sha256 `01a116ed…` ; contre-lecture neuve de la
++v5, `contre-lecture-commandes-tour-ferme-v5-v1.md`, sha256 `28caa87c…` : CL5-01, CL5-02, CL5-03, CL5-04, CL5-07 ; I34 et T128
++de la contre-lecture courte du préenregistrement du tour fermé, brouillon 6, dépôt public `ideation-organism`, commit `d54b85c`) :
++
++1. **Réponse coupée de l'étage de tests en code 0 (CL5-01 ; I34, T128)** : pour `experimentateur_test` et `lecteur_test`
++   (`ROLES_COUPEE_ADMISE`), une réponse coupée par sa borne de sortie — `finish_reason` « length » — du modèle
++   demandé, à l'usage lu, sort en **code 0** avec son texte (vide compris), son coût, `modele_servi` et le champ neuf
++   `coupee: true` ; au registre, sa ligne `fin` porte le statut `coupee` (le registre gelé le permet sans changement).
++   L'étage y lit une réponse sans demande (fin des tours) ou un témoin « non concluant ».
++   Pour le proposeur et le juge, rien ne change (code 5, arrêt : A.5).
++2. **Cause sur la sortie d'erreur (CL5-07)** : toute sortie qui porte `cause_refus` (code 4 ou 3) écrit d'abord, sur la sortie
++   d'erreur, une ligne `<VERSION> : cause_refus=<cause> : <erreur bornée à 200 caractères>` (jamais de texte de consigne) ; sur un
++   code 3, la classe gelée met la sortie d'erreur au motif (`pole/adaptateurs.py` l. 752-753), que l'étage v5 porte à
++   `journal["arret"]` (`pole/tests_de_mort_v5.py` l. 411-412). Un refus du relais (402, 429), qui a réservé au registre, y écrit
++   aussi sa cause comme statut de la ligne `fin` (au lieu de `echec`) ; les quatre refus d'avant le registre n'y écrivent rien.
++3. **Registre corrompu (CL5-03)** : toute exception de `reg.reserver` (dont `UnicodeDecodeError` d'un registre aux octets non
++   UTF-8, qui sortait en code 1 sans dernière ligne) est un `registre_illisible` : code 3 au plancher, dernière ligne JSON.
++4. **`envoye` exact pour une erreur partie vers l'amont (CL5-04)** : un 400, 402, 403, 411, 413 ou 429 **non signé** par le
++   relais est une erreur de Moonshot transmise (`relais_kimi_v3.py` l. 30-31 : statut et corps relayés tels quels) : la consigne
++   est partie ; il sort désormais en code 3 avec `envoye: true` et le **pire cas réservé** compté (`cout_origine: pire_cas`),
++   comme le relais le compte (usage absent) et comme Argon compte un échec de l'interface ; seul un refus **signé** du relais
++   (`relais-kimi-…`) reste `envoye: false` au plancher. Le code ne change pas (3 : « erreur », arrêt).
++5. **Version** `commande-kimi-v6`, cet en-tête (différences numérotées, historiques gardés en dessous) et la ligne d'usage.
++   Rien d'autre ne change : code 4 réservé à `plafond_session` (v5), ligne de code 4 sans `modele_servi`, `refus` ni
++   `stop_reason`, clé d'étape propre au fournisseur, bornes de sortie par rôle, gardes, pire cas, registre
++   (`registre_depense_cumulee_v1.py`, sha256 `8ba92066…`), protocole. **Fenêtre d'entrée du modèle : toujours non contrôlée**
++   (seul le pire cas en dollars est jugé avant envoi).
++
++Historique de la version 5 — rédigée le 3 novembre 2026 (sous-agent de session-depot). **Version 5 =
+ `commande_kimi_v4.py` (sha256 `10afdab5…`, inchangée, R12) avec trois changements, et seulement ceux-là** (demande du
+ directeur, conv-audit, n° 393, § 4 ; bloquant B11 et important I33 de la contre-lecture courte du préenregistrement du tour
+ fermé, brouillon 6 : dépôt public `ideation-organism`, commit `d54b85c`,
+@@ -131,7 +161,7 @@
+ tronquée, modèle servi différent, usage absent, JSON illisible, coût au-dessus du pire cas réservé) ; 6 délai dépassé ou
+ interruption.
+ 
+-Usage : python3 -I -B commande_kimi_v5.py --registre REGISTRE --plafond-cumule-usd 50 [--url-relais http://127.0.0.1:8804]
++Usage : python3 -I -B commande_kimi_v6.py --registre REGISTRE --plafond-cumule-usd 50 [--url-relais http://127.0.0.1:8804]
+             [--modele kimi-k3.1-pro] [--prix-entree 2] [--prix-sortie 10] [--max-sortie-proposeur 65536]
+             [--max-sortie-court 16000] [--sortie-min-jetons 4096] [--max-sortie-lecteur 1000]
+             [--sortie-min-jetons-lecteur 200] [--delai-s 1750]
+@@ -151,7 +181,7 @@
+ sys.path.insert(0, ICI)  # -I n'ajoute pas le dossier du script : le registre partagé est chargé d'ici
+ import registre_depense_cumulee_v1 as reg  # noqa: E402
+ 
+-VERSION = "commande-kimi-v5"
++VERSION = "commande-kimi-v6"
+ ROLES = ("proposeur_ideation", "juge_ideation", "experimentateur_test", "lecteur_test")  # v3 (1)
+ PLANCHER = 1e-6
+ ECART_RELAIS = "ecart-signale-par-le-relais"
+@@ -159,10 +189,14 @@
+                 "relais_max_appels")  # v4 (2), v5 (1) : valeurs de `cause_refus` ; code 4 pour `plafond_session`, 3 sinon
+ CAUSES_RELAIS = {402: "relais_plafond", 429: "relais_max_appels"}  # v4 (2) : refus du relais lui-même ; v5 (1) : code 3
+ PREFIXE_GARDE_ETAPE = "garde d'étape ("  # v4 (2) : registre_depense_cumulee_v1.py l. 143 (fichier gelé, sha256 8ba92066…)
++ROLES_COUPEE_ADMISE = ("experimentateur_test", "lecteur_test")  # v6 (1) : réponse coupée rendue en code 0 (I34, T128)
+ 
+ 
+ def rendre(code, texte="", cout=PLANCHER, **diag):
+     cout = cout if (isinstance(cout, (int, float)) and math.isfinite(cout) and cout > 0) else PLANCHER
++    if "cause_refus" in diag:  # v6 (2) : la cause aussi sur la sortie d'erreur (motif de l'adaptateur, journal de l'étage)
++        print(f"{VERSION} : cause_refus={diag['cause_refus']} : {str(diag.get('erreur', ''))[:200]}", file=sys.stderr)
++        sys.stderr.flush()
+     print(json.dumps({"texte": texte, "cout_usd": round(float(cout), 6), "version": VERSION, **diag}, ensure_ascii=False))
+     sys.stdout.flush()
+     sys.exit(code)
+@@ -303,7 +337,7 @@
+     try:
+         ident = reg.reserver(args.registre, plafond_cumule_usd=args.plafond_cumule_usd, pire_cas_usd=pire, fournisseur="kimi",
+                              role=role, modele=args.modele, etape=etape_registre, plafond_etape_usd=plafond_dur)  # v4 (1)
+-    except (reg.PlafondCumule, reg.RegistreIllisible, OSError) as e:
++    except Exception as e:  # noqa: BLE001 — v6 (3) : toute exception du registre (octets non UTF-8 compris) : registre_illisible
+         rendre(3, erreur=str(e)[:300], envoye=False, cause_refus=cause_du_registre(e), **diag)  # v4 (2) ; v5 (1) : code 3
+ 
+     def fin(code, texte="", cout=PLANCHER, origine="plancher", statut="echec", **extra):
+@@ -330,15 +364,16 @@
+     except urllib.error.HTTPError as e:
+         corps_erreur = e.read()  # v4 (3) : lu en entier (refus signé par le relais ?) ; motif borné comme en v3
+         motif = corps_erreur[:300].decode("utf-8", "replace")
+-        avant_amont = e.code in (400, 402, 403, 411, 413, 429)  # refus du relais sans rien envoyer à l'amont
++        signe = refus_du_relais(corps_erreur)  # v6 (4) : refus rédigé par le relais lui-même ; sinon erreur de l'amont transmise
++        avant_amont = e.code in (400, 402, 403, 411, 413, 429) and signe  # v6 (4) : rien envoyé seulement si signé
+         extra = {}
+         if e.code == 502 and "modèle servi" in motif:
+             extra["modele_servi"] = ECART_RELAIS  # lu par l'adaptateur comme un refus R-764 (point 4 de l'en-tête)
+         code = 3 if e.code != 502 else 5
+-        if e.code in CAUSES_RELAIS and refus_du_relais(corps_erreur):  # v4 (3) : refus du relais lui-même, rien envoyé
++        if e.code in CAUSES_RELAIS and signe:  # v4 (3) : refus du relais lui-même, rien envoyé
+             extra["cause_refus"] = CAUSES_RELAIS[e.code]  # v5 (1) : code 3 (B11), cause gardée ; code 4 en v4
+         fin(code, cout=PLANCHER if avant_amont else pire, origine="plancher" if avant_amont else "pire_cas",
+-            erreur=f"HTTP {e.code} : {motif}", envoye=not avant_amont, **extra)
++            statut=extra.get("cause_refus", "echec"), erreur=f"HTTP {e.code} : {motif}", envoye=not avant_amont, **extra)  # v6 (2)
+     except urllib.error.URLError as e:
+         if isinstance(e.reason, ConnectionRefusedError):  # relais absent : rien n'est parti
+             fin(3, erreur="relais injoignable (connexion refusée)", envoye=False)
+@@ -363,6 +398,8 @@
+         fin(5, cout=cout, origine=origine, erreur=f"modèle servi {servi!r} ≠ {args.modele!r}", **extra)
+     if origine != "usage":
+         fin(5, cout=cout, origine=origine, erreur="usage absent", **extra)
++    if fin_raison == "length" and role in ROLES_COUPEE_ADMISE:  # v6 (1) : réponse coupée de l'étage de tests, code 0
++        fin(0, texte=texte, cout=cout, origine=origine, statut="coupee", coupee=True, **extra)
+     if fin_raison == "length":
+         fin(5, cout=cout, origine=origine, statut="tronque", erreur="réponse tronquée (finish_reason length)", **extra)
+     if fin_raison == "content_filter":

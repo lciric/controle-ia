@@ -1,0 +1,152 @@
+{
+ "version": "couples-variantes-cout-cle-v1",
+ "objet": "Variantes de la section « Coût » (a) et de la clé d'Argon (b) du texte v3 d'A1-v3, selon la décision de Lazar à venir ; NON appliquées. Chaque « ancien » est présent une seule fois dans le brouillon 1 (preenregistrement-attaque-goodhart-v3-v3-brouillon1.md, sha256 6e65136aa23c7aae8b64bb142a5aa07a81811720b53e96ea5a6e1c57d0f7b78e) et dans le code rendu, au moment de son application, variante seule ou (a) puis (b). Les couples « code » valent pour src/controle_ia/hote_durable_a1_v3.py (5b853fde…) et tests/test_hote_durable_a1_v3.py (b4a14bee…) ; ils demandent un essai neuf du GO de la machine (a) et de la clé lue par son nom (b) avant le commit.",
+ "ordre": "appliquer dans l'ordre de la liste ; (a) puis (b) si les deux sont retenues",
+ "variante_a_go_machine": {
+  "texte": [
+   {
+    "lieu": "section 0.7 (ligne neuve)",
+    "ancien": "\n\n## 1. Question et motivation",
+    "nouveau": "\n22. Sections 8, 12 et 13 (point 3) : « écart possible au montant du GO » → **GO à part pour la machine** (GO-2026-11-04-09, 35 USD : machine de la course et sonde d'hôte), GO-2026-11-04-06 restant à 400 USD pour les appels d'Argon seuls ; variante (a), retenue par Lazar (« GO machine », 4 novembre 2026, 08:41 UTC).\n\n## 1. Question et motivation"
+   },
+   {
+    "lieu": "section 8, « Création »",
+    "ancien": "GO-2026-11-04-06 vérifié par la garde\n  de `main` et montant exact (section 4, « GO ») ;",
+    "nouveau": "GO-2026-11-04-06 vérifié par la garde\n  de `main` et montant exact (section 4, « GO ») ; GO de la machine (GO-2026-11-04-09) vérifié de même, type calcul, montant exactement 35 USD ;"
+   },
+   {
+    "lieu": "section 12, puce « Troisième course (v3) »",
+    "ancien": "**Coût de la machine** : hors du compteur de la course (le lanceur ne\n  compte que les appels), sous le même GO ; au plus 32 USD (plafonds de la machine, section 8), ≈ 1 à 10 USD attendus (4 à 26 h à\n  0,10 à 0,40 USD/h). **Écart possible au montant du GO** : au pire, 400 USD d'appels plus 32 USD de machine dépasseraient le\n  montant de GO-2026-11-04-06 ; décision à demander à Lazar avant le scellement (section 13, point 3).",
+    "nouveau": "**Coût de la machine** : hors du compteur de la course (le lanceur ne\n  compte que les appels), **sous un GO à part, GO-2026-11-04-09** (type calcul, 35 USD : machine de la course et sonde\n  d'hôte) ; au plus 32 USD (plafonds de la machine, section 8) et 0,50 USD de sonde, ≈ 1 à 10 USD attendus.\n  GO-2026-11-04-06 reste à 400 USD pour les appels d'Argon seuls : aucun des deux montants ne peut être dépassé."
+   },
+   {
+    "lieu": "section 13, point 3",
+    "ancien": "**Troisième course (v3)** : GO-2026-11-04-06, 400 USD,\n   échéance 2026-11-18 ; coût de la machine (au plus 32 USD) sous le même GO, hors du compteur de la course : la somme peut, au\n   pire, dépasser 400 USD (section 12) — **décision de Lazar demandée avant le scellement** (extension du GO, GO à part pour la\n   machine, ou plafond de la course abaissé, qui demanderait un GO au même montant).",
+    "nouveau": "**Troisième course (v3)** : GO-2026-11-04-06, 400 USD,\n   échéance 2026-11-18, pour les appels d'Argon seuls ; coût de la machine et de la sonde sous GO-2026-11-04-09 (type calcul,\n   35 USD), vérifié par le lanceur durable comme GO-2026-11-04-06 (garde de `main`, montant exact)."
+   }
+  ],
+  "code": [
+   {
+    "fichier": "src/controle_ia/hote_durable_a1_v3.py",
+    "lieu": "constantes",
+    "ancien": "PLAFOND_COURSE_USD = 400.0  #",
+    "nouveau": "MONTANT_GO_MACHINE_USD = 35.0  # variante (a) : GO de calcul à part pour la machine et la sonde\nPLAFOND_COURSE_USD = 400.0  #"
+   },
+   {
+    "fichier": "src/controle_ia/hote_durable_a1_v3.py",
+    "lieu": "fonction neuve, avant `doublons_lecteur_du_lanceur`",
+    "ancien": "def doublons_lecteur_du_lanceur(chemin_registre: Path) -> list[str]:",
+    "nouveau": "def verifier_go_machine(chemin_registre: Path, chemin_garde: Path, go_id: str, aujourd_hui: dt.date) -> dict:\n    \"\"\"Variante (a) : le GO de la machine, même garde de `main`, montant exactement 35 USD.\"\"\"\n    if go_id == GO_ATTENDU or not re.fullmatch(r\"GO-\\d{4}-\\d{2}-\\d{2}-\\d{2}\", go_id or \"\"):\n        raise Refus(f\"GO de la machine {go_id!r} : identifiant exact, distinct de {GO_ATTENDU}, exigé\")\n    garde = charger_garde(chemin_garde, chemin_registre)\n    tampon = io.StringIO()\n    try:\n        with redirect_stderr(tampon):\n            garde.decider(f\"GO_ID={go_id} vastai create instance 0\", aujourd_hui)\n    except SystemExit as e:\n        if e.code not in (0, None):\n            raise Refus(f\"garde de main (GO de la machine) : {tampon.getvalue().strip()}\") from None\n    for cellules in lignes_du_go(chemin_registre, go_id):\n        mm = MONTANT.match(cellules[4])\n        if not mm or abs(float(mm.group(1).replace(\",\", \".\")) - MONTANT_GO_MACHINE_USD) > 1e-9:\n            raise Refus(f\"{go_id} : plafond « {cellules[4]} » au lieu de exactement {MONTANT_GO_MACHINE_USD:g} USD\")\n    return {\"go_machine\": go_id, \"plafond_usd\": MONTANT_GO_MACHINE_USD}\n\n\ndef doublons_lecteur_du_lanceur(chemin_registre: Path) -> list[str]:"
+   },
+   {
+    "fichier": "src/controle_ia/hote_durable_a1_v3.py",
+    "lieu": "`louer`",
+    "ancien": "        offres = json.loads(Path(a.offres).read_text())\n        offres = offres.get(\"offers\", offres) if isinstance(offres, dict) else offres\n        o = verifier_offre(",
+    "nouveau": "        gm = verifier_go_machine(Path(a.registre_main), Path(a.garde_main), a.go_machine, aujourd_hui)\n        j.ecrire(f\"GO de la machine {gm['go_machine']} accepté : {gm['plafond_usd']:g} USD\")\n        offres = json.loads(Path(a.offres).read_text())\n        offres = offres.get(\"offers\", offres) if isinstance(offres, dict) else offres\n        o = verifier_offre("
+   },
+   {
+    "fichier": "src/controle_ia/hote_durable_a1_v3.py",
+    "lieu": "arguments de `louer`",
+    "ancien": "    l.add_argument(\"--go\", required=True)\n",
+    "nouveau": "    l.add_argument(\"--go\", required=True)\n    l.add_argument(\"--go-machine\", required=True, help=\"variante (a) : GO de la machine, 35 USD\")\n"
+   },
+   {
+    "fichier": "tests/test_hote_durable_a1_v3.py",
+    "lieu": "constante : ligne factice du GO de la machine (identifiant factice GO-2026-11-04-90 : l'essai de révocation existant emploie déjà GO-2026-11-04-09)",
+    "ancien": "def sha(o: bytes) -> str:",
+    "nouveau": "LIGNE_MACHINE = (\"| GO-2026-11-04-90 | 2026-11-04 | calcul | machine de la troisième course d'A1-v3 et sonde | 35 USD | \"\n                 \"2026-11-18 | Lazar | mot de Lazar |\\n\")\n\n\ndef sha(o: bytes) -> str:"
+   },
+   {
+    "fichier": "tests/test_hote_durable_a1_v3.py",
+    "lieu": "aide `registre` : chaque registre factice porte le GO de la machine",
+    "ancien": "    p.write_text(\"# Registre factice\\n\\n\" + ENTETE + \"\".join(lignes), encoding=\"utf-8\")",
+    "nouveau": "    p.write_text(\"# Registre factice\\n\\n\" + ENTETE + \"\".join(lignes) + LIGNE_MACHINE, encoding=\"utf-8\")"
+   },
+   {
+    "fichier": "tests/test_hote_durable_a1_v3.py",
+    "lieu": "essai neuf du GO de la machine (cas sain et artefacts)",
+    "ancien": "def test_inventaire_filtre_l_environnement():",
+    "nouveau": "def test_go_machine_cas_sain_et_artefacts(tmp_path):\n    assert h.verifier_go_machine(registre(tmp_path, LIGNE_06), GARDE_REELLE, \"GO-2026-11-04-90\", JOUR)[\"plafond_usd\"] == 35\n    for go, reg in ((\"GO-2026-11-04-06\", registre(tmp_path, LIGNE_06)), (\"GO-2026-11-04-98\", registre(tmp_path, LIGNE_06)),\n                    (\"machine\", registre(tmp_path, LIGNE_06))):\n        with pytest.raises(h.Refus):\n            h.verifier_go_machine(reg, GARDE_REELLE, go, JOUR)\n    p = tmp_path / \"go36.md\"\n    p.write_text(\"# R\\n\\n\" + ENTETE + LIGNE_MACHINE.replace(\"35 USD\", \"36 USD\"), encoding=\"utf-8\")\n    with pytest.raises(h.Refus, match=\"exactement 35\"):\n        h.verifier_go_machine(p, GARDE_REELLE, \"GO-2026-11-04-90\", JOUR)\n\n\ndef test_inventaire_filtre_l_environnement():"
+   },
+   {
+    "fichier": "tests/test_hote_durable_a1_v3.py",
+    "lieu": "aide `args_louer` (l'essai de la location doit porter le GO de la machine)",
+    "ancien": "    a = dict(go=\"GO-2026-11-04-06\", registre_main=str(reg),",
+    "nouveau": "    a = dict(go=\"GO-2026-11-04-06\", go_machine=\"GO-2026-11-04-90\", registre_main=str(reg),"
+   }
+  ],
+  "go_machine": "GO-2026-11-04-09 (calcul, 35 USD, échéance 2026-11-18, registres/go.md de main au commit 3eacfed4) ; variante RETENUE par Lazar (4 novembre 2026, 08:41 UTC), aucun marqueur neuf"
+ },
+ "variante_b_cle_dediee": {
+  "texte": [
+   {
+    "lieu": "section 0.7 (ligne neuve ; « 22. » si la variante (a) n'est pas appliquée)",
+    "ancien": "\n\n## 1. Question et motivation",
+    "nouveau": "\n23. Section 8, « Création » et point (4) : la clé d'Argon → **clé d'Argon dédiée à cette course**, lue par le lanceur durable dans la variable de la session que nomme `--variable-cle-argon`, jamais affichée ; décision de Lazar (variante (b)).\n\n## 1. Question et motivation"
+   },
+   {
+    "lieu": "section 8, « Création » (secrets)",
+    "ancien": "secrets (la clé d'Argon, et le jeton\n  GitHub limité au dépôt privé de travail, qui sert au versement)",
+    "nouveau": "secrets (la **clé d'Argon dédiée** à cette course — clé à part, plafonnée chez Google et révoquée\n  après la course —, que le lanceur durable lit **par son nom** dans la variable de la session que nomme l'option\n  `--variable-cle-argon` (nom neuf, par exemple `GEMINI_API_KEY_A1V3`), sans que sa valeur soit jamais développée sur une\n  ligne de commande, et le jeton GitHub limité au dépôt privé de travail, qui sert au versement)"
+   },
+   {
+    "lieu": "section 8, point (4) Argon seul",
+    "ancien": "la clé est la même que celle des autres usages d'Argon (quota commun) : une utilisation pendant la course est un\n  écart déclaré, lu par l'audit A9, jamais un arrêt.",
+    "nouveau": "la clé est dédiée à cette course, aucun autre usage ne la porte ; si elle vient d'un projet à part, le quota de\n  l'interface n'est plus commun ; une utilisation d'Argon pendant la course reste un écart déclaré, lu par l'audit A9,\n  jamais un arrêt."
+   }
+  ],
+  "code": [
+   {
+    "fichier": "src/controle_ia/hote_durable_a1_v3.py",
+    "lieu": "`louer` : masquage du journal",
+    "ancien": "    j = Journal(t, {k: os.environ.get(k, \"\") for k in SECRETS + (\"VAST_API_KEY\",)})",
+    "nouveau": "    if not re.fullmatch(r\"[A-Z][A-Z0-9_]{2,63}\", a.variable_cle_argon or \"\"):\n        print(\"REFUS : --variable-cle-argon : nom de variable exact exigé\", file=sys.stderr)\n        return 2\n    j = Journal(t, {**{k: os.environ.get(k, \"\") for k in SECRETS + (\"VAST_API_KEY\",)},\n                    \"CLE_ARGON_DEDIEE\": os.environ.get(a.variable_cle_argon, \"\")})"
+   },
+   {
+    "fichier": "src/controle_ia/hote_durable_a1_v3.py",
+    "lieu": "`louer` : lecture de la clé par son nom",
+    "ancien": "        secrets = {k: os.environ.get(k, \"\") for k in (\"CLE_ARGON\", \"GH_TOKEN\")}",
+    "nouveau": "        secrets = {\"CLE_ARGON\": os.environ.get(a.variable_cle_argon, \"\"), \"GH_TOKEN\": os.environ.get(\"GH_TOKEN\", \"\")}\n        j.ecrire(f\"clé d'Argon dédiée lue dans {a.variable_cle_argon} : {'présente' if secrets['CLE_ARGON'] else 'ABSENTE'}\")"
+   },
+   {
+    "fichier": "src/controle_ia/hote_durable_a1_v3.py",
+    "lieu": "arguments de `louer`",
+    "ancien": "    l.add_argument(\"--registre-main\", required=True,",
+    "nouveau": "    l.add_argument(\"--variable-cle-argon\", required=True, help=\"variante (b) : nom de la variable de la clé dédiée\")\n    l.add_argument(\"--registre-main\", required=True,"
+   },
+   {
+    "fichier": "tests/test_hote_durable_a1_v3.py",
+    "lieu": "aide `args_louer`",
+    "ancien": "             journal_local=str(tmp_path / \"journal-location.log\"), verifier_seulement=False, jouet=None)",
+    "nouveau": "             journal_local=str(tmp_path / \"journal-location.log\"), verifier_seulement=False, jouet=None,\n             variable_cle_argon=\"CLE_ARGON\")"
+   }
+  ],
+  "statut": "REPORTÉE avec Argon (mot de Lazar du 4 novembre 2026, 08:41 UTC) ; à fixer : nom de la variable de la session qui porte la clé dédiée (par exemple GEMINI_API_KEY_A1V3)"
+ },
+ "verification": {
+  "a": {
+   "marqueurs": [
+    "<<AUDIT_A9_SECONDE>>",
+    "<<COMMIT_LANCEUR_DURABLE>>"
+   ],
+   "lignes": 2147
+  },
+  "b": {
+   "marqueurs": [
+    "<<AUDIT_A9_SECONDE>>",
+    "<<COMMIT_LANCEUR_DURABLE>>"
+   ],
+   "lignes": 2151
+  },
+  "a_puis_b": {
+   "marqueurs": [
+    "<<AUDIT_A9_SECONDE>>",
+    "<<COMMIT_LANCEUR_DURABLE>>"
+   ],
+   "lignes": 2151
+  },
+  "code_a": "appliqué et compilé",
+  "code_b": "appliqué et compilé",
+  "code_a_puis_b": "appliqué et compilé"
+ }
+}

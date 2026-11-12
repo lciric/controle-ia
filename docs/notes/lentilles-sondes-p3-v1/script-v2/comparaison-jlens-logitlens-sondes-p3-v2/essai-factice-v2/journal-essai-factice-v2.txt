@@ -1,0 +1,228 @@
+Essai factice v2 — largeur 128, vocabulaire 2000, 200 planchers, graine 20261029
+Dépôt (code extrait) : <depot>
+
+OK  run sain : code 0
+OK  sondes retenues : famille de la principale × 3 couches × 2 concepts
+OK  règle primaire : quatre verdicts (2 principales × 2 lentilles), complète, énoncé empreinté — empreinte de l'énoncé c1b21cd6f67bb4b4…
+OK  signal 1, tromperie c15 plantée sous J : jacobienne « cohérent », logits « non cohérent » — J : S=11, q99 isotropes=2, q99 planchers=2 (n=200) → cohérent ; logits : S=0, q99 isotropes=2, q99 planchers=2 (n=200) → non cohérent
+OK  signal 2, enjeux c15 plantée en sortie : logits « cohérent », jacobienne « non cohérent » — logits : S=12, q99 isotropes=3, q99 planchers=2 (n=200) → cohérent ; J : S=3, q99 isotropes=2, q99 planchers=3 (n=200) → non cohérent
+OK  signal 3, tromperie c23 (J ≈ identité), application descriptive : « cohérent » sous les deux lentilles, isotropes seules (pas de plancher à c23) — logits : S=10, q99=2; jacobienne : S=12, q99=2
+OK  directions aléatoires (couche 7, deux sondes, deux lentilles) : « non cohérent » partout — tromperie logits S=0 q99=2; tromperie jacobienne S=1 q99=2; enjeux logits S=0 q99=2; enjeux jacobienne S=0 q99=2
+OK  spécificité (diagnostic) : la tête de tromperie c15 sous J porte peu de jetons d'enjeux (≤ 2) — {'tromperie': 11, 'enjeux': 0}
+OK  la statistique S compte bien les jetons du concept dans la tête de début de mot affichée
+OK  diagnostic z, tromperie c15 sous J : p_haut ≤ 0,01 contre isotropes et contre les 200 planchers (CLJ-08) — z=2.24, p iso=0.0050, p planchers=0.0050
+OK  diagnostic z, tromperie c15 sous la lentille des logits : p bilatéral > 0,05 — z=-0.18, p=0.378
+OK  tromperie c23 (J ≈ identité) : les deux lentilles s'accordent (≥ 12/20 en tête +, cosinus > 0,9) — intersection 14, cosinus 0.945
+OK  planchers lus à la couche 15 (200), absents aux couches 7 et 23
+OK  signe : têtes « plus » et « moins » disjointes, logits de tête de signes opposés
+OK  décodage par octets : « ĠcafÃ© » relu « café » avec l'espace
+OK  concepts : seuls les jetons de début de mot comptent ; parasites et morceaux sans espace exclus ; casse libre — 25 jetons tromperie, 27 enjeux
+OK  concepts : chaque mot de la liste v2 a au moins un jeton
+OK  manifeste : commit (40 hexadécimaux), révision du modèle, empreinte de lentille-config.yaml, interpréteur complet — commit 8b0fd6e14c72…, état du script : ?? brouillons/canal-reprise-releve-v1/en
+OK  manifeste : empreintes attendues conformes (ligne propre du fichier ignorée), sortie empreintée, graines
+OK  CLJ-10 : « ajustée sur 461 textes » écrit d'après la configuration — ajustée sur 461 textes (lentille-config.yaml, clé prompts_fitted)
+OK  empreintes compagnons vérifiables par sha256sum -c — sortie-factice-v2.json: OK ; sortie-factice-v2-manifeste.json: OK
+OK  déterminisme : deuxième run, sortie identique octet pour octet
+OK  CLJ-06 : index de fragments nommé « index.json » accepté (clé weight_map), sortie identique
+OK  CLJ-07 : --un-seul-couple : une sonde, identique à celle du run complet ; règle marquée incomplète
+OK  CLJ-07 : forme courte « enjeux-lineaire,15 » résolue en enjeux-lineaire-c15
+OK  CLJ-10 : sans --lentille-config, « inconnu » ; manifeste « absente » ; empreintes « non contrôlées »
+OK  variantes « motif » et « autour », toutes les sondes linéaires : code 0
+OK  variantes : 18 sondes, trois variantes chacune ; les quatre verdicts primaires inchangés
+OK  direction aléatoire à la couche 15 (enjeux-difference_moyennes-c15), avec planchers : « non cohérent » sous les deux lentilles — logits S=0; jacobienne S=1
+OK  verifier-concepts sur la liste v2 : code 0 — tous les mots ont au moins un jeton de début de mot
+OK  refus entrée absente : code 2 et « REFUS entree-absente » — REFUS entree-absente : fichier de lentille introuvable : <depot>/brouillons/canal-reprise-releve-v1/envois/pole-scientifique-automatique-v1/couche-2-conv-audit-v1/comparaison-jlens-logitlens-sond
+OK  refus couche absente de la lentille : code 2 et « REFUS couche-absente-lentille » — REFUS couche-absente-lentille : <essai>
+OK  refus lentille .pt sans torch : code 2 et « REFUS torch-absent-pour-pt » — REFUS torch-absent-pour-pt : lentille .pt : convertir d'abord en .npz par `convertir-lentille` sur une machine qui a torch
+OK  refus lentille .pt illisible, torch présent (CLJ-05) : code 2 et « REFUS lentille-illisible » nommant « EOFError » — REFUS lentille-illisible : <essai>/entr
+OK  refus largeur discordante : code 2 et « REFUS dimension » — REFUS dimension : largeurs discordantes : {'désembedding (colonnes)': 48, 'normalisation finale': 128, 'J_7': 128, 'J_15': 128, 'J_23': 128, 'enjeux-lineaire-c7': 128, 'enjeux-lineaire-c15': 128, 'enjeux-lineaire-c23': 1
+OK  refus sortie existante : code 2 et « REFUS sortie-existe » — REFUS sortie-existe : <essai>/sortie/so
+OK  refus poids de sondes altérés : code 2 et « REFUS empreinte-sondes-npz » nommant « sondes_legeres_sha256 » — REFUS empreinte-sondes-npz : <essai>/al
+OK  refus empreinte passée par option et fausse (CLJ-06) : code 2 et « REFUS empreinte-sondes-npz » nommant « option --sha256-sondes-npz » — REFUS empreinte-sondes-npz : <essai>/en
+OK  refus sceau du JSON faux (JSON modifié, sceau ancien) : code 2 et « REFUS sceau-faux » — REFUS sceau-faux : <essai>/altere/sonde
+OK  refus mot sans jeton de début de mot (comparer) : code 2 et « REFUS mot-sans-jeton » nommant « deceiving » — REFUS mot-sans-jeton : mots sans jeton de début de mot dans le vocabulaire : {'tromperie': ['deceiving']} — retirer ces mots dans une nouvelle version de la liste, scellée avant l'exécution
+OK  refus mot sans jeton de début de mot (verifier-concepts) : code 2 et « REFUS mot-sans-jeton » nommant « deceiving » — REFUS mot-sans-jeton : mots sans jeton de début de mot : {'tromperie': ['deceiving']}
+OK  refus liste de mots sans sceau compagnon : code 2 et « REFUS sceau-absent » — REFUS sceau-absent : <essai>/altere/con
+OK  refus configuration de lentille discordante (CLJ-10) : code 2 et « REFUS lentille-config-discordante » — REFUS lentille-config-discordante : lentille n_prompts = 461 ≠ 1000 dans lentille-config.yaml : la configuration n'est pas celle de ce fichier de lentille
+OK  refus empreinte attendue fausse (CLJ-04) : code 2 et « REFUS empreinte-entree » nommant « tokenizer.json » — REFUS empreinte-entree : <essai>/entree
+OK  refus empreinte attendue absente (CLJ-04) : code 2 et « REFUS empreinte-attendue-absente » nommant « tokenizer.json » — REFUS empreinte-attendue-absente : tokenizer.json (vocabulaire) n'a pas de ligne dans empreintes-incompletes.txt
+OK  refus planchers insuffisants pour la règle primaire (20 < 100) : code 2 et « REFUS planchers-insuffisants » — REFUS planchers-insuffisants : enjeux-lineaire-c15 : 20 planchers à la couche 15 ; la règle primaire en exige au moins 100
+OK  refus --un-seul-couple, couche fausse : code 2 et « REFUS sonde-introuvable » — REFUS sonde-introuvable : --un-seul-couple : tromperie-difference_moyennes-c15 est à la couche 15, pas 23
+OK  refus --un-seul-couple, forme fausse : code 2 et « REFUS parametre » — REFUS parametre : --un-seul-couple 'tromperie-difference_moyennes-c15' : forme SONDE,COUCHE attendue
+OK  refus JSON de poids sans weight_map (CLJ-06) : code 2 et « REFUS poids-illisibles » nommant « weight_map » — REFUS poids-illisibles : <essai>/entree
+OK  aucun refus n'a laissé de sortie — []
+
+BILAN : 50/50 contrôles OK
+
+--- commandes ---
+$ python3 -I -B comparaison_jlens_logitlens_sondes_p3_v2.py comparer --sondes-json <essai>/entrees/sondes-figees.json --sondes-npz <essai>/entrees/sondes-figees-legeres.npz --lentille <essai>/entrees/lentille-factice.npz --lentille-config <essai>/entrees/lentille-config.yaml --desembedding <essai>/entrees/modele/model.safetensors.index.json:lm_head.weight --norme-finale <essai>/entrees/modele/model.safetensors.index.json:model.norm.weight --vocabulaire <essai>/entrees/modele/tokenizer.json --concepts <dossier>/concepts-sondes-p3-v2.json --empreintes-attendues <essai>/entrees/empreintes-entrees-factices.txt --revision-modele 0e9e39f249a16976918f6564b8830bc894c89659 --sortie <essai>/sortie/sortie-factice-v2.json
+  code 0
+  sortie : <essai>/sortie/sortie-factice-v2.json (6e4b35979093…) ; manifeste : <essai>/sortie/sortie-factice-v2-manifeste.json ; 6 sondes, variantes ['direction']
+$ python3 -I -B comparaison_jlens_logitlens_sondes_p3_v2.py comparer --sondes-json <essai>/entrees/sondes-figees.json --sondes-npz <essai>/entrees/sondes-figees-legeres.npz --lentille <essai>/entrees/lentille-factice.npz --lentille-config <essai>/entrees/lentille-config.yaml --desembedding <essai>/entrees/modele/model.safetensors.index.json:lm_head.weight --norme-finale <essai>/entrees/modele/model.safetensors.index.json:model.norm.weight --vocabulaire <essai>/entrees/modele/tokenizer.json --concepts <dossier>/concepts-sondes-p3-v2.json --empreintes-attendues <essai>/entrees/empreintes-entrees-factices.txt --revision-modele 0e9e39f249a16976918f6564b8830bc894c89659 --sortie <essai>/sortie/sortie-factice-v2-bis.json
+  code 0
+  sortie : <essai>/sortie/sortie-factice-v2-bis.json (6e4b35979093…) ; manifeste : <essai>/sortie/sortie-factice-v2-bis-manifeste.json ; 6 sondes, variantes ['direction']
+$ python3 -I -B comparaison_jlens_logitlens_sondes_p3_v2.py comparer --sondes-json <essai>/entrees/sondes-figees.json --sondes-npz <essai>/entrees/sondes-figees-legeres.npz --lentille <essai>/entrees/lentille-factice.npz --lentille-config <essai>/entrees/lentille-config.yaml --desembedding <essai>/entrees/modele/index.json:lm_head.weight --norme-finale <essai>/entrees/modele/index.json:model.norm.weight --vocabulaire <essai>/entrees/modele/tokenizer.json --concepts <dossier>/concepts-sondes-p3-v2.json --revision-modele 0e9e39f249a16976918f6564b8830bc894c89659 --sortie <essai>/sortie/sortie-factice-v2-index-renomme.json
+  code 0
+  sortie : <essai>/sortie/sortie-factice-v2-index-renomme.json (6e4b35979093…) ; manifeste : <essai>/sortie/sortie-factice-v2-index-renomme-manifeste.json ; 6 sondes, variantes ['direction']
+$ python3 -I -B comparaison_jlens_logitlens_sondes_p3_v2.py comparer --sondes-json <essai>/entrees/sondes-figees.json --sondes-npz <essai>/entrees/sondes-figees-legeres.npz --lentille <essai>/entrees/lentille-factice.npz --lentille-config <essai>/entrees/lentille-config.yaml --desembedding <essai>/entrees/modele/model.safetensors.index.json:lm_head.weight --norme-finale <essai>/entrees/modele/model.safetensors.index.json:model.norm.weight --vocabulaire <essai>/entrees/modele/tokenizer.json --concepts <dossier>/concepts-sondes-p3-v2.json --empreintes-attendues <essai>/entrees/empreintes-entrees-factices.txt --revision-modele 0e9e39f249a16976918f6564b8830bc894c89659 --un-seul-couple tromperie-difference_moyennes-c15,15 --sortie <essai>/sortie/sortie-factice-v2-un-couple.json
+  code 0
+  sortie : <essai>/sortie/sortie-factice-v2-un-couple.json (7e066f7538a3…) ; manifeste : <essai>/sortie/sortie-factice-v2-un-couple-manifeste.json ; 1 sondes, variantes ['direction']
+$ python3 -I -B comparaison_jlens_logitlens_sondes_p3_v2.py comparer --sondes-json <essai>/entrees/sondes-figees.json --sondes-npz <essai>/entrees/sondes-figees-legeres.npz --lentille <essai>/entrees/lentille-factice.npz --lentille-config <essai>/entrees/lentille-config.yaml --desembedding <essai>/entrees/modele/model.safetensors.index.json:lm_head.weight --norme-finale <essai>/entrees/modele/model.safetensors.index.json:model.norm.weight --vocabulaire <essai>/entrees/modele/tokenizer.json --concepts <dossier>/concepts-sondes-p3-v2.json --empreintes-attendues <essai>/entrees/empreintes-entrees-factices.txt --revision-modele 0e9e39f249a16976918f6564b8830bc894c89659 --un-seul-couple enjeux-lineaire,15 --sortie <essai>/sortie/sortie-factice-v2-un-couple-court.json
+  code 0
+  sortie : <essai>/sortie/sortie-factice-v2-un-couple-court.json (a61dff9ad25b…) ; manifeste : <essai>/sortie/sortie-factice-v2-un-couple-court-manifeste.json ; 1 sondes, variantes ['direction']
+$ python3 -I -B comparaison_jlens_logitlens_sondes_p3_v2.py comparer --sondes-json <essai>/entrees/sondes-figees.json --sondes-npz <essai>/entrees/sondes-figees-legeres.npz --lentille <essai>/entrees/lentille-factice.npz --desembedding <essai>/entrees/modele/model.safetensors.index.json:lm_head.weight --norme-finale <essai>/entrees/modele/model.safetensors.index.json:model.norm.weight --vocabulaire <essai>/entrees/modele/tokenizer.json --concepts <dossier>/concepts-sondes-p3-v2.json --revision-modele 0e9e39f249a16976918f6564b8830bc894c89659 --un-seul-couple enjeux-lineaire-c7,7 --sortie <essai>/sortie/sortie-factice-v2-sans-config.json
+  code 0
+  sortie : <essai>/sortie/sortie-factice-v2-sans-config.json (19fed58c0c92…) ; manifeste : <essai>/sortie/sortie-factice-v2-sans-config-manifeste.json ; 1 sondes, variantes ['direction']
+$ python3 -I -B comparaison_jlens_logitlens_sondes_p3_v2.py comparer --sondes-json <essai>/entrees/sondes-figees.json --sondes-npz <essai>/entrees/sondes-figees-legeres.npz --lentille <essai>/entrees/lentille-factice.npz --lentille-config <essai>/entrees/lentille-config.yaml --desembedding <essai>/entrees/modele/model.safetensors.index.json:lm_head.weight --norme-finale <essai>/entrees/modele/model.safetensors.index.json:model.norm.weight --vocabulaire <essai>/entrees/modele/tokenizer.json --concepts <dossier>/concepts-sondes-p3-v2.json --revision-modele 0e9e39f249a16976918f6564b8830bc894c89659 --covariances <essai>/entrees/variances-factices.npz --activations-moyennes <essai>/entrees/activations-moyennes-factices.npz --sondes toutes-lineaires --sortie <essai>/sortie/sortie-factice-variantes-v2.json
+  code 0
+  sortie : <essai>/sortie/sortie-factice-variantes-v2.json (e9f0f7a01b67…) ; manifeste : <essai>/sortie/sortie-factice-variantes-v2-manifeste.json ; 18 sondes, variantes ['direction', 'motif', 'autour']
+$ python3 -I -B comparaison_jlens_logitlens_sondes_p3_v2.py verifier-concepts --vocabulaire <essai>/entrees/modele/tokenizer.json --concepts <dossier>/concepts-sondes-p3-v2.json
+  code 0
+  vocabulaire tokenizer.json (b52136fbadc8…, 2000 jetons) ; liste concepts-sondes-p3-v2.json (5874ea55b177…)
+tromperie	lie	2	[' lie', ' Lie']
+tromperie	lies	1	[' lies']
+tromperie	lying	1	[' lying']
+tromperie	liar	1	[' liar']
+tromperie	lied	1	[' lied']
+tromperie	deceive	1	[' deceive']
+tromperie	deceived	1	[' deceived']
+tromperie	deception	1	[' deception']
+tromperie	deceptive	1	[' deceptive']
+tromperie	dishonest	1	[' dishonest']
+tromperie	falsely	1	[' falsely']
+tromperie	fake	1	[' fake']
+tromperie	pretend	1	[' pretend']
+tromperie	pretending	1	[' pretending']
+tromperie	untrue	1	[' untrue']
+tromperie	misleading	1	[' misleading']
+tromperie	fraud	1	[' fraud']
+tromperie	cheat	1	[' cheat']
+tromperie	cheating	1	[' cheating']
+tromperie	trick	1	[' trick']
+tromperie	fabricated	1	[' fabricated']
+tromperie	hoax	1	[' hoax']
+tromperie	manipulate	1	[' manipulate']
+tromperie	conceal	1	[' conceal']
+enjeux	danger	2	[' danger', ' Danger']
+enjeux	dangerous	1	[' dangerous']
+enjeux	risk	1	[' risk']
+enjeux	risky	1	[' risky']
+enjeux	urgent	1	[' urgent']
+enjeux	urgency	1	[' urgency']
+enjeux	emergency	1	[' emergency']
+enjeux	critical	1	[' critical']
+enjeux	crisis	1	[' crisis']
+enjeux	serious	1	[' serious']
+enjeux	severe	1	[' severe']
+enjeux	fatal	1	[' fatal']
+enjeux	death	1	[' death']
+enjeux	deadly	1	[' deadly']
+enjeux	safety	1	[' safety']
+enjeux	threat	1	[' threat']
+enjeux	harm	1	[' harm']
+enjeux	lawsuit	1	[' lawsuit']
+enjeux	catastrophic	1	[' catastrophic']
+enjeux	disaster	1	[' disaster']
+enjeux	stakes	
+$ python3 -I -B comparaison_jlens_logitlens_sondes_p3_v2.py comparer --sondes-json <essai>/entrees/sondes-figees.json --sondes-npz <essai>/entrees/sondes-figees-legeres.npz --lentille <essai>/entrees/absente.npz --lentille-config <essai>/entrees/lentille-config.yaml --desembedding <essai>/entrees/modele/model.safetensors.index.json:lm_head.weight --norme-finale <essai>/entrees/modele/model.safetensors.index.json:model.norm.weight --vocabulaire <essai>/entrees/modele/tokenizer.json --concepts <dossier>/concepts-sondes-p3-v2.json --empreintes-attendues <essai>/entrees/empreintes-entrees-factices.txt --revision-modele 0e9e39f249a16976918f6564b8830bc894c89659 --sortie <essai>/sortie/x01.json
+  code 2
+  REFUS entree-absente : fichier de lentille introuvable : <essai>/entrees/absente.npz
+$ python3 -I -B comparaison_jlens_logitlens_sondes_p3_v2.py comparer --sondes-json <essai>/entrees/sondes-figees.json --sondes-npz <essai>/entrees/sondes-figees-legeres.npz --lentille <essai>/entrees/lentille-sans-c23.npz --lentille-config <essai>/entrees/lentille-config.yaml --desembedding <essai>/entrees/modele/model.safetensors.index.json:lm_head.weight --norme-finale <essai>/entrees/modele/model.safetensors.index.json:model.norm.weight --vocabulaire <essai>/entrees/modele/tokenizer.json --concepts <dossier>/concepts-sondes-p3-v2.json --revision-modele 0e9e39f249a16976918f6564b8830bc894c89659 --sortie <essai>/sortie/x02.json
+  code 2
+  REFUS couche-absente-lentille : <essai>/entrees/lentille-sans-c23.npz : pas de clé J_23 (clés : ['J_15', 'J_7', 'd_model', 'n_prompts']…)
+$ python3 -I -B comparaison_jlens_logitlens_sondes_p3_v2.py comparer --sondes-json <essai>/entrees/sondes-figees.json --sondes-npz <essai>/entrees/sondes-figees-legeres.npz --lentille <essai>/entrees/lentille-vide.pt --lentille-config <essai>/entrees/lentille-config.yaml --desembedding <essai>/entrees/modele/model.safetensors.index.json:lm_head.weight --norme-finale <essai>/entrees/modele/model.safetensors.index.json:model.norm.weight --vocabulaire <essai>/entrees/modele/tokenizer.json --concepts <dossier>/concepts-sondes-p3-v2.json --empreintes-attendues <essai>/entrees/empreintes-entrees-factices.txt --revision-modele 0e9e39f249a16976918f6564b8830bc894c89659 --sortie <essai>/sortie/x03.json
+  code 2
+  REFUS torch-absent-pour-pt : lentille .pt : convertir d'abord en .npz par `convertir-lentille` sur une machine qui a torch
+$ python3 -I -B <amorce torch factice> comparaison_jlens_logitlens_sondes_p3_v2.py comparer --sondes-json <essai>/entrees/sondes-figees.json --sondes-npz <essai>/entrees/sondes-figees-legeres.npz --lentille <essai>/entrees/lentille-vide.pt --lentille-config <essai>/entrees/lentille-config.yaml --desembedding <essai>/entrees/modele/model.safetensors.index.json:lm_head.weight --norme-finale <essai>/entrees/modele/model.safetensors.index.json:model.norm.weight --vocabulaire <essai>/entrees/modele/tokenizer.json --concepts <dossier>/concepts-sondes-p3-v2.json --empreintes-attendues <essai>/entrees/empreintes-entrees-factices.txt --revision-modele 0e9e39f249a16976918f6564b8830bc894c89659 --sortie <essai>/sortie/x04.json
+  code 2
+  REFUS lentille-illisible : <essai>/entrees/lentille-vide.pt : torch.load a échoué (EOFError: Ran out of input)
+$ python3 -I -B comparaison_jlens_logitlens_sondes_p3_v2.py comparer --sondes-json <essai>/entrees/sondes-figees.json --sondes-npz <essai>/entrees/sondes-figees-legeres.npz --lentille <essai>/entrees/lentille-factice.npz --lentille-config <essai>/entrees/lentille-config.yaml --desembedding <essai>/entrees/desembedding-largeur-fausse.npy --norme-finale <essai>/entrees/modele/model.safetensors.index.json:model.norm.weight --vocabulaire <essai>/entrees/modele/tokenizer.json --concepts <dossier>/concepts-sondes-p3-v2.json --revision-modele 0e9e39f249a16976918f6564b8830bc894c89659 --sortie <essai>/sortie/x05.json
+  code 2
+  REFUS dimension : largeurs discordantes : {'désembedding (colonnes)': 48, 'normalisation finale': 128, 'J_7': 128, 'J_15': 128, 'J_23': 128, 'enjeux-lineaire-c7': 128, 'enjeux-lineaire-c15': 128, 'enjeux-lineaire-c23': 128, 'tromperie-difference_moyennes-c7': 128, 'tromperie-difference_moyennes-c15': 128, 'tromperie-difference_moyennes-c23': 128}
+$ python3 -I -B comparaison_jlens_logitlens_sondes_p3_v2.py comparer --sondes-json <essai>/entrees/sondes-figees.json --sondes-npz <essai>/entrees/sondes-figees-legeres.npz --lentille <essai>/entrees/lentille-factice.npz --lentille-config <essai>/entrees/lentille-config.yaml --desembedding <essai>/entrees/modele/model.safetensors.index.json:lm_head.weight --norme-finale <essai>/entrees/modele/model.safetensors.index.json:model.norm.weight --vocabulaire <essai>/entrees/modele/tokenizer.json --concepts <dossier>/concepts-sondes-p3-v2.json --empreintes-attendues <essai>/entrees/empreintes-entrees-factices.txt --revision-modele 0e9e39f249a16976918f6564b8830bc894c89659 --sortie <essai>/sortie/sortie-factice-v2.json
+  code 2
+  REFUS sortie-existe : <essai>/sortie/sortie-factice-v2.json existe déjà (R12)
+$ python3 -I -B comparaison_jlens_logitlens_sondes_p3_v2.py comparer --sondes-json <essai>/entrees/sondes-figees.json --sondes-npz <essai>/altere/sondes-figees-legeres.npz --lentille <essai>/entrees/lentille-factice.npz --lentille-config <essai>/entrees/lentille-config.yaml --desembedding <essai>/entrees/modele/model.safetensors.index.json:lm_head.weight --norme-finale <essai>/entrees/modele/model.safetensors.index.json:model.norm.weight --vocabulaire <essai>/entrees/modele/tokenizer.json --concepts <dossier>/concepts-sondes-p3-v2.json --empreintes-attendues <essai>/entrees/empreintes-entrees-factices.txt --revision-modele 0e9e39f249a16976918f6564b8830bc894c89659 --sortie <essai>/sortie/x06.json
+  code 2
+  REFUS empreinte-sondes-npz : <essai>/altere/sondes-figees-legeres.npz : a90c977dcfa3… ≠ attendue d2b2770ae493… (sondes_legeres_sha256 de sondes-figees.json)
+$ python3 -I -B comparaison_jlens_logitlens_sondes_p3_v2.py comparer --sondes-json <essai>/entrees/sondes-figees.json --sondes-npz <essai>/entrees/sondes-figees-legeres.npz --lentille <essai>/entrees/lentille-factice.npz --lentille-config <essai>/entrees/lentille-config.yaml --desembedding <essai>/entrees/modele/model.safetensors.index.json:lm_head.weight --norme-finale <essai>/entrees/modele/model.safetensors.index.json:model.norm.weight --vocabulaire <essai>/entrees/modele/tokenizer.json --concepts <dossier>/concepts-sondes-p3-v2.json --empreintes-attendues <essai>/entrees/empreintes-entrees-factices.txt --revision-modele 0e9e39f249a16976918f6564b8830bc894c89659 --sha256-sondes-npz ffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffff --sortie <essai>/sortie/x07.json
+  code 2
+  REFUS empreinte-sondes-npz : <essai>/entrees/sondes-figees-legeres.npz : d2b2770ae493… ≠ attendue ffffffffffff… (option --sha256-sondes-npz)
+$ python3 -I -B comparaison_jlens_logitlens_sondes_p3_v2.py comparer --sondes-json <essai>/altere/sondes-figees.json --sondes-npz <essai>/entrees/sondes-figees-legeres.npz --lentille <essai>/entrees/lentille-factice.npz --lentille-config <essai>/entrees/lentille-config.yaml --desembedding <essai>/entrees/modele/model.safetensors.index.json:lm_head.weight --norme-finale <essai>/entrees/modele/model.safetensors.index.json:model.norm.weight --vocabulaire <essai>/entrees/modele/tokenizer.json --concepts <dossier>/concepts-sondes-p3-v2.json --empreintes-attendues <essai>/entrees/empreintes-entrees-factices.txt --revision-modele 0e9e39f249a16976918f6564b8830bc894c89659 --sortie <essai>/sortie/x08.json
+  code 2
+  REFUS sceau-faux : <essai>/altere/sondes-figees.json : empreinte 147c27054b1d… ≠ sceau 384c19330ae3…
+$ python3 -I -B comparaison_jlens_logitlens_sondes_p3_v2.py comparer --sondes-json <essai>/entrees/sondes-figees.json --sondes-npz <essai>/entrees/sondes-figees-legeres.npz --lentille <essai>/entrees/lentille-factice.npz --lentille-config <essai>/entrees/lentille-config.yaml --desembedding <essai>/entrees/modele/model.safetensors.index.json:lm_head.weight --norme-finale <essai>/entrees/modele/model.safetensors.index.json:model.norm.weight --vocabulaire <essai>/entrees/modele/tokenizer.json --concepts <essai>/altere/concepts-mot-sans-jeton.json --empreintes-attendues <essai>/entrees/empreintes-entrees-factices.txt --revision-modele 0e9e39f249a16976918f6564b8830bc894c89659 --sortie <essai>/sortie/x09.json
+  code 2
+  REFUS mot-sans-jeton : mots sans jeton de début de mot dans le vocabulaire : {'tromperie': ['deceiving']} — retirer ces mots dans une nouvelle version de la liste, scellée avant l'exécution
+$ python3 -I -B comparaison_jlens_logitlens_sondes_p3_v2.py verifier-concepts --vocabulaire <essai>/entrees/modele/tokenizer.json --concepts <essai>/altere/concepts-mot-sans-jeton.json
+  code 2
+  vocabulaire tokenizer.json (b52136fbadc8…, 2000 jetons) ; liste concepts-mot-sans-jeton.json (6593bc735572…)
+tromperie	lie	2	[' lie', ' Lie']
+tromperie	lies	1	[' lies']
+tromperie	lying	1	[' lying']
+tromperie	liar	1	[' liar']
+tromperie	lied	1	[' lied']
+tromperie	deceive	1	[' deceive']
+tromperie	deceived	1	[' deceived']
+tromperie	deception	1	[' deception']
+tromperie	deceptive	1	[' deceptive']
+tromperie	dishonest	1	[' dishonest']
+tromperie	falsely	1	[' falsely']
+tromperie	fake	1	[' fake']
+tromperie	pretend	1	[' pretend']
+tromperie	pretending	1	[' pretending']
+tromperie	untrue	1	[' untrue']
+tromperie	misleading	1	[' misleading']
+tromperie	fraud	1	[' fraud']
+tromperie	cheat	1	[' cheat']
+tromperie	cheating	1	[' cheating']
+tromperie	trick	1	[' trick']
+tromperie	fabricated	1	[' fabricated']
+tromperie	hoax	1	[' hoax']
+tromperie	manipulate	1	[' manipulate']
+tromperie	conceal	1	[' conceal']
+tromperie	deceiving	0	[]
+enjeux	danger	2	[' danger', ' Danger']
+enjeux	dangerous	1	[' dangerous']
+enjeux	risk	1	[' risk']
+enjeux	risky	1	[' risky']
+enjeux	urgent	1	[' urgent']
+enjeux	urgency	1	[' urgency']
+enjeux	emergency	1	[' emergency']
+enjeux	critical	1	[' critical']
+enjeux	crisis	1	[' crisis']
+enjeux	serious	1	[' serious']
+enjeux	severe	1	[' severe']
+enjeux	fatal	1	[' fatal']
+enjeux	death	1	[' death']
+enjeux	deadly	1	[' deadly']
+enjeux	safety	1	[' safety']
+enjeux	threat	1	[' threat']
+enjeux	harm	1	[' harm']
+enjeux	lawsuit	1	[' lawsuit']
+enjeux	catastrophic	1	[' catastrophic']
+enjeux	disaster	1	[
+$ python3 -I -B comparaison_jlens_logitlens_sondes_p3_v2.py comparer --sondes-json <essai>/entrees/sondes-figees.json --sondes-npz <essai>/entrees/sondes-figees-legeres.npz --lentille <essai>/entrees/lentille-factice.npz --lentille-config <essai>/entrees/lentille-config.yaml --desembedding <essai>/entrees/modele/model.safetensors.index.json:lm_head.weight --norme-finale <essai>/entrees/modele/model.safetensors.index.json:model.norm.weight --vocabulaire <essai>/entrees/modele/tokenizer.json --concepts <essai>/altere/concepts-sans-sceau.json --empreintes-attendues <essai>/entrees/empreintes-entrees-factices.txt --revision-modele 0e9e39f249a16976918f6564b8830bc894c89659 --sortie <essai>/sortie/x10.json
+  code 2
+  REFUS sceau-absent : <essai>/altere/concepts-sans-sceau.json.sha256 absent
+$ python3 -I -B comparaison_jlens_logitlens_sondes_p3_v2.py comparer --sondes-json <essai>/entrees/sondes-figees.json --sondes-npz <essai>/entrees/sondes-figees-legeres.npz --lentille <essai>/entrees/lentille-factice.npz --lentille-config <essai>/entrees/lentille-config-discordante.yaml --desembedding <essai>/entrees/modele/model.safetensors.index.json:lm_head.weight --norme-finale <essai>/entrees/modele/model.safetensors.index.json:model.norm.weight --vocabulaire <essai>/entrees/modele/tokenizer.json --concepts <dossier>/concepts-sondes-p3-v2.json --revision-modele 0e9e39f249a16976918f6564b8830bc894c89659 --sortie <essai>/sortie/x11.json
+  code 2
+  REFUS lentille-config-discordante : lentille n_prompts = 461 ≠ 1000 dans lentille-config.yaml : la configuration n'est pas celle de ce fichier de lentille
+$ python3 -I -B comparaison_jlens_logitlens_sondes_p3_v2.py comparer --sondes-json <essai>/entrees/sondes-figees.json --sondes-npz <essai>/entrees/sondes-figees-legeres.npz --lentille <essai>/entrees/lentille-factice.npz --lentille-config <essai>/entrees/lentille-config.yaml --desembedding <essai>/entrees/modele/model.safetensors.index.json:lm_head.weight --norme-finale <essai>/entrees/modele/model.safetensors.index.json:model.norm.weight --vocabulaire <essai>/entrees/modele/tokenizer.json --concepts <dossier>/concepts-sondes-p3-v2.json --empreintes-attendues <essai>/altere/empreintes-fausses.txt --revision-modele 0e9e39f249a16976918f6564b8830bc894c89659 --sortie <essai>/sortie/x12.json
+  code 2
+  REFUS empreinte-entree : <essai>/entrees/modele/tokenizer.json : b52136fbadc8… ≠ attendue aaaaaaaaaaaa… (empreintes-fausses.txt)
+$ python3 -I -B comparaison_jlens_logitlens_sondes_p3_v2.py comparer --sondes-json <essai>/entrees/sondes-figees.json --sondes-npz <essai>/entrees/sondes-figees-legeres.npz --lentille <essai>/entrees/lentille-factice.npz --lentille-config <essai>/entrees/lentille-config.yaml --desembedding <essai>/entrees/modele/model.safetensors.index.json:lm_head.weight --norme-finale <essai>/entrees/modele/model.safetensors.index.json:model.norm.weight --vocabulaire <essai>/entrees/modele/tokenizer.json --concepts <dossier>/concepts-sondes-p3-v2.json --empreintes-attendues <essai>/altere/empreintes-incompletes.txt --revision-modele 0e9e39f249a16976918f6564b8830bc894c89659 --sortie <essai>/sortie/x13.json
+  code 2
+  REFUS empreinte-attendue-absente : tokenizer.json (vocabulaire) n'a pas de ligne dans empreintes-incompletes.txt
+$ python3 -I -B comparaison_jlens_logitlens_sondes_p3_v2.py comparer --sondes-json <essai>/entrees/peu-de-planchers/sondes-figees.json --sondes-npz <essai>/entrees/peu-de-planchers/sondes-figees-legeres.npz --lentille <essai>/entrees/lentille-factice.npz --lentille-config <essai>/entrees/lentille-config.yaml --desembedding <essai>/entrees/modele/model.safetensors.index.json:lm_head.weight --norme-finale <essai>/entrees/modele/model.safetensors.index.json:model.norm.weight --vocabulaire <essai>/entrees/modele/tokenizer.json --concepts <dossier>/concepts-sondes-p3-v2.json --empreintes-attendues <essai>/entrees/empreintes-entrees-factices.txt --revision-modele 0e9e39f249a16976918f6564b8830bc894c89659 --sortie <essai>/sortie/x14.json
+  code 2
+  REFUS planchers-insuffisants : enjeux-lineaire-c15 : 20 planchers à la couche 15 ; la règle primaire en exige au moins 100
+$ python3 -I -B comparaison_jlens_logitlens_sondes_p3_v2.py comparer --sondes-json <essai>/entrees/sondes-figees.json --sondes-npz <essai>/entrees/sondes-figees-legeres.npz --lentille <essai>/entrees/lentille-factice.npz --lentille-config <essai>/entrees/lentille-config.yaml --desembedding <essai>/entrees/modele/model.safetensors.index.json:lm_head.weight --norme-finale <essai>/entrees/modele/model.safetensors.index.json:model.norm.weight --vocabulaire <essai>/entrees/modele/tokenizer.json --concepts <dossier>/concepts-sondes-p3-v2.json --empreintes-attendues <essai>/entrees/empreintes-entrees-factices.txt --revision-modele 0e9e39f249a16976918f6564b8830bc894c89659 --un-seul-couple tromperie-difference_moyennes-c15,23 --sortie <essai>/sortie/x15.json
+  code 2
+  REFUS sonde-introuvable : --un-seul-couple : tromperie-difference_moyennes-c15 est à la couche 15, pas 23
+$ python3 -I -B comparaison_jlens_logitlens_sondes_p3_v2.py comparer --sondes-json <essai>/entrees/sondes-figees.json --sondes-npz <essai>/entrees/sondes-figees-legeres.npz --lentille <essai>/entrees/lentille-factice.npz --lentille-config <essai>/entrees/lentille-config.yaml --desembedding <essai>/entrees/modele/model.safetensors.index.json:lm_head.weight --norme-finale <essai>/entrees/modele/model.safetensors.index.json:model.norm.weight --vocabulaire <essai>/entrees/modele/tokenizer.json --concepts <dossier>/concepts-sondes-p3-v2.json --empreintes-attendues <essai>/entrees/empreintes-entrees-factices.txt --revision-modele 0e9e39f249a16976918f6564b8830bc894c89659 --un-seul-couple tromperie-difference_moyennes-c15 --sortie <essai>/sortie/x16.json
+  code 2
+  REFUS parametre : --un-seul-couple 'tromperie-difference_moyennes-c15' : forme SONDE,COUCHE attendue
+$ python3 -I -B comparaison_jlens_logitlens_sondes_p3_v2.py comparer --sondes-json <essai>/entrees/sondes-figees.json --sondes-npz <essai>/entrees/sondes-figees-legeres.npz --lentille <essai>/entrees/lentille-factice.npz --lentille-config <essai>/entrees/lentille-config.yaml --desembedding <essai>/entrees/modele/tokenizer.json:lm_head.weight --norme-finale <essai>/entrees/modele/model.safetensors.index.json:model.norm.weight --vocabulaire <essai>/entrees/modele/tokenizer.json --concepts <dossier>/concepts-sondes-p3-v2.json --revision-modele 0e9e39f249a16976918f6564b8830bc894c89659 --sortie <essai>/sortie/x17.json
+  code 2
+  REFUS poids-illisibles : <essai>/entrees/modele/tokenizer.json : JSON sans clé « weight_map » ; formats acceptés : chemin.npy, chemin.npz:cle, chemin.safetensors:nom, ou un index JSON qui porte une clé « weight_map » (quel que soit son nom, par exemple model.safetensors.index.json:nom)

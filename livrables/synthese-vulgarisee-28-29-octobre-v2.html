@@ -1,0 +1,396 @@
+<!doctype html>
+<html lang="fr">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Regarder sous le capot</title>
+<style>
+:root{
+  --encre:#1d232b; --doux:#4a5563; --pale:#6b7684;
+  --fond:#fbfaf7; --carte:#ffffff; --trait:#d9d4ca;
+  --accent:#1f5f7a; --accent-pale:#e6f0f4;
+  --chaud:#a8562a; --chaud-pale:#f8ece4;
+  --vert:#2f6b45; --vert-pale:#e8f2ea;
+  --gris-pale:#f1efea;
+}
+*{box-sizing:border-box}
+html{-webkit-print-color-adjust:exact;print-color-adjust:exact}
+body{margin:0;background:var(--fond);color:var(--encre);
+  font-family:Georgia,"Charter","Bitstream Charter","DejaVu Serif","Times New Roman",serif;
+  font-size:16.5px;line-height:1.62}
+main{max-width:46rem;margin:0 auto;padding:2.5rem 16px 3rem}
+h1,h2,h3,.sans{font-family:"Helvetica Neue",Helvetica,Arial,"DejaVu Sans",sans-serif}
+h1{font-size:2.05rem;line-height:1.18;margin:.2rem 0 .6rem;letter-spacing:-.01em}
+h2{font-size:1.42rem;line-height:1.25;margin:2.6rem 0 .8rem;padding-top:.6rem;border-top:3px solid var(--accent);color:var(--accent)}
+h2 .num{display:inline-block;min-width:1.6em;color:var(--encre)}
+h3{font-size:1.08rem;margin:1.7rem 0 .45rem;color:var(--encre)}
+p{margin:.55rem 0}
+.sur-titre{font-size:.82rem;letter-spacing:.08em;text-transform:uppercase;color:var(--chaud);font-weight:700}
+.chapeau{font-size:1.08rem;color:var(--doux);margin-top:.3rem}
+.meta{font-size:.82rem;color:var(--pale);margin-top:1rem;border-top:1px solid var(--trait);padding-top:.6rem}
+.encadre{border-radius:8px;padding:.85rem 1.1rem .9rem;margin:1.1rem 0;break-inside:avoid}
+.encadre .etiquette{display:block;font-size:.74rem;letter-spacing:.09em;text-transform:uppercase;font-weight:700;margin-bottom:.25rem}
+.en-clair{background:var(--accent-pale);border-left:5px solid var(--accent)}
+.en-clair .etiquette{color:var(--accent)}
+.prudence{background:var(--chaud-pale);border-left:5px solid var(--chaud)}
+.prudence .etiquette{color:var(--chaud)}
+.acquis{background:var(--vert-pale);border-left:5px solid var(--vert)}
+.acquis .etiquette{color:var(--vert)}
+.essentiel{background:var(--carte);border:1px solid var(--trait);border-radius:10px;padding:1rem 1.25rem;margin:1.4rem 0;break-inside:avoid}
+.essentiel h3{margin-top:.1rem;color:var(--accent)}
+.essentiel ol{margin:.3rem 0 0 1.1rem;padding:0}
+.essentiel li{margin:.3rem 0}
+ul,ol{padding-left:1.3rem}
+li{margin:.25rem 0}
+.bloc{background:var(--carte);border:1px solid var(--trait);border-radius:10px;padding:.95rem 1.2rem 1rem;margin:1.2rem 0}
+.bloc h3{margin-top:.1rem;display:flex;gap:.6rem;align-items:baseline}
+.bloc h3 .pastille{flex:none;font-size:.78rem;background:var(--accent);color:#fff;border-radius:999px;padding:.1rem .55rem}
+.bloc .etat{font-family:"Helvetica Neue",Helvetica,Arial,sans-serif;font-size:.8rem;color:var(--doux);margin-top:.5rem;border-top:1px dashed var(--trait);padding-top:.4rem}
+.etat b{color:var(--encre)}
+figure{margin:1.3rem 0;break-inside:avoid;background:var(--carte);border:1px solid var(--trait);border-radius:10px;padding:.8rem .8rem .6rem}
+figure svg{display:block;width:100%;height:auto}
+figcaption{font-size:.86rem;color:var(--doux);margin-top:.45rem;line-height:1.45}
+table{width:100%;border-collapse:collapse;font-size:.93rem;margin:.8rem 0;break-inside:avoid}
+th,td{text-align:left;vertical-align:top;padding:.45rem .55rem;border-bottom:1px solid var(--trait)}
+th{font-family:"Helvetica Neue",Helvetica,Arial,sans-serif;font-size:.8rem;text-transform:uppercase;letter-spacing:.05em;color:var(--doux);background:var(--gris-pale)}
+td.montant{text-align:right;white-space:nowrap;font-variant-numeric:tabular-nums}
+tr.total td{font-weight:700;border-top:2px solid var(--encre)}
+.trois{display:grid;grid-template-columns:repeat(3,1fr);gap:.8rem;margin:1rem 0}
+.trois > div{border-radius:8px;padding:.75rem .9rem;font-size:.92rem;break-inside:avoid}
+.trois h4{font-family:"Helvetica Neue",Helvetica,Arial,sans-serif;font-size:.86rem;margin:0 0 .35rem;text-transform:uppercase;letter-spacing:.05em}
+.trois ul{margin:.2rem 0 0;padding-left:1.05rem}
+.col-vert{background:var(--vert-pale)} .col-vert h4{color:var(--vert)}
+.col-chaud{background:var(--chaud-pale)} .col-chaud h4{color:var(--chaud)}
+.col-bleu{background:var(--accent-pale)} .col-bleu h4{color:var(--accent)}
+dl.glossaire{margin:.6rem 0}
+dl.glossaire dt{font-family:"Helvetica Neue",Helvetica,Arial,sans-serif;font-weight:700;margin-top:.7rem;color:var(--accent)}
+dl.glossaire dd{margin:.1rem 0 0 0}
+.pied{font-size:.8rem;color:var(--pale);border-top:1px solid var(--trait);margin-top:2.5rem;padding-top:.7rem}
+.chiffre{font-family:"Helvetica Neue",Helvetica,Arial,sans-serif;font-weight:700;color:var(--accent)}
+@media (max-width:640px){
+  body{font-size:16px}
+  h1{font-size:1.6rem}
+  .trois{grid-template-columns:1fr}
+}
+@page{size:A4;margin:14mm 14mm 16mm}
+@media print{
+  body{background:#fff;font-size:10.6pt;line-height:1.48}
+  main{max-width:none;padding:0}
+  h2{margin-top:1.4rem;break-after:avoid}
+  h3{break-after:avoid}
+  figure,.encadre,.essentiel,table,.trois > div{break-inside:avoid}
+  .bloc{break-inside:auto;padding:.7rem 1rem .75rem;margin:.8rem 0}
+  .bloc h3{break-after:avoid}
+  dl.glossaire{columns:2;column-gap:1.6rem}
+  dl.glossaire dt{break-after:avoid;margin-top:.5rem}
+  dl.glossaire dd{break-inside:avoid}
+}
+</style>
+</head>
+<body>
+<main>
+
+<header>
+  <div class="sur-titre sans">Synthèse vulgarisée · 28 et 29 octobre 2026</div>
+  <h1>Regarder sous le capot&nbsp;: surveiller ce qu’une intelligence artificielle pense, pas seulement ce qu’elle écrit</h1>
+  <p class="chapeau">Ce que cherche le programme, ce qui a avancé en deux jours, ce que cela change pour l’entretien de financement auprès du Transformative AI Fund, et ce que cela a coûté.</p>
+  <p class="chapeau"><b>L’entretien est fixé au vendredi 30 octobre 2026.</b></p>
+  <p class="meta sans">Version 2 (ajout de la date de l’entretien, demandée par Lazar), écrite le 29 octobre 2026 pour un lecteur non spécialiste. Elle vulgarise la synthèse experte des mêmes deux jours (fichier <i>synthese-28-29-octobre-v2</i>), qui fait foi pour chaque chiffre. Les ordres de grandeur sont arrondis&nbsp;; rien ici n’ajoute de résultat.</p>
+</header>
+
+<section class="essentiel">
+  <h3>L’essentiel en cinq phrases</h3>
+  <ol>
+    <li>Le programme veut prouver qu’on attrape mieux une intelligence artificielle qui sabote en <b>lisant son activité interne</b> qu’en lisant seulement ce qu’elle écrit, surtout quand le sabotage est éparpillé en petits gestes anodins.</li>
+    <li>En deux jours, il n’y a pas eu de grande découverte&nbsp;: il y a eu des <b>fondations rendues solides</b> — des détecteurs refaits à l’identique, des juges automatiques mesurés avant d’être utilisés, une définition claire de ce qu’est un vrai dommage.</li>
+    <li>Plusieurs de ces vérifications ont donné des <b>réponses décevantes</b>, et c’est précisément leur intérêt&nbsp;: on a découvert les faiblesses avant de bâtir dessus.</li>
+    <li>Pour l’entretien, on peut montrer une méthode rigoureuse et peu coûteuse&nbsp;; on doit encore dire avec prudence que la grande expérience <b>n’a pas commencé</b>.</li>
+    <li>Les deux jours ont coûté environ <b>82 dollars</b>, surtout en conversations entre intelligences artificielles&nbsp;; chaque dépense a reçu l’accord écrit du directeur, Lazar, avant d’être engagée.</li>
+  </ol>
+</section>
+
+<!-- ============================================================ -->
+<h2><span class="num">1</span>La question du programme, en une page</h2>
+
+<h3>Des assistants qui travaillent seuls, et qu’il faut surveiller</h3>
+<p>Les intelligences artificielles ne se contentent plus de répondre à une question&nbsp;: on leur confie des tâches longues — écrire du code, préparer une expérience scientifique, rédiger un plan de travail. On les appelle des <b>agents</b>. Plus on leur délègue, plus une question devient pressante&nbsp;: si l’un d’eux, pour une raison quelconque, se mettait à travailler contre nous, s’en apercevrait-on&nbsp;?</p>
+<p>La réponse habituelle consiste à placer à côté de l’agent un <b>moniteur</b>&nbsp;: un surveillant, souvent une autre intelligence artificielle, qui relit ce que l’agent produit et lève une alerte quand quelque chose cloche.</p>
+
+<h3>Le cas difficile&nbsp;: la menace diffuse</h3>
+<p>Un sabotage grossier se repère. Le cas qui inquiète est celui que nous appelons la <b>menace diffuse</b>&nbsp;: un mauvais comportement découpé en dizaines de petits gestes, dont aucun n’est alarmant pris seul. Pensez à un comptable qui détournerait quelques centimes sur des milliers d’opérations&nbsp;: chaque ligne, vérifiée isolément, paraît juste&nbsp;; c’est l’addition qui est fausse. Un surveillant qui juge chaque action une par une est, par construction, mal placé pour voir ce genre de chose.</p>
+
+<h3>Boîte noire, boîte blanche</h3>
+<p>Un moniteur qui ne lit que le texte produit par l’agent travaille en <b>boîte noire</b>&nbsp;: il voit ce qui sort, pas ce qui se passe dedans. Or, pendant qu’il travaille, un modèle d’intelligence artificielle calcule&nbsp;: des milliers de nombres s’allument et s’éteignent à chaque mot. Les chercheurs ont montré que certaines de ces activités internes reflètent des choses comme «&nbsp;le modèle sait qu’il trompe&nbsp;» ou «&nbsp;le modèle perçoit un enjeu&nbsp;». Surveiller ces activités, c’est travailler en <b>boîte blanche</b>.</p>
+<p>L’outil de base s’appelle une <b>sonde</b>&nbsp;: un petit détecteur, entraîné à reconnaître une certaine configuration d’activité interne, qui renvoie un score à chaque étape. Le pari du programme tient en une idée&nbsp;: même si chaque geste du sabotage est innocent <i>à l’extérieur</i>, il pourrait laisser une petite trace <i>à l’intérieur</i> — et ces petites traces, contrairement aux textes anodins, <b>s’additionnent</b>.</p>
+
+<figure>
+<svg viewBox="0 0 720 300" role="img" aria-label="Schéma : une suite d'actions anodines, lues de l'extérieur et de l'intérieur ; le cumul des traces internes franchit un seuil d'alerte.">
+  <rect x="0" y="0" width="720" height="300" fill="#ffffff"/>
+  <text x="18" y="26" font-family="Helvetica,Arial,sans-serif" font-size="14" font-weight="700" fill="#1d232b">Douze petits gestes d’un agent, chacun anodin</text>
+  <!-- actions -->
+  <g font-family="Helvetica,Arial,sans-serif" font-size="11" fill="#4a5563">
+    <g fill="#e6f0f4" stroke="#1f5f7a" stroke-width="1.2">
+      <rect x="150" y="44" width="38" height="26" rx="5"/><rect x="196" y="44" width="38" height="26" rx="5"/><rect x="242" y="44" width="38" height="26" rx="5"/><rect x="288" y="44" width="38" height="26" rx="5"/><rect x="334" y="44" width="38" height="26" rx="5"/><rect x="380" y="44" width="38" height="26" rx="5"/><rect x="426" y="44" width="38" height="26" rx="5"/><rect x="472" y="44" width="38" height="26" rx="5"/><rect x="518" y="44" width="38" height="26" rx="5"/><rect x="564" y="44" width="38" height="26" rx="5"/><rect x="610" y="44" width="38" height="26" rx="5"/><rect x="656" y="44" width="38" height="26" rx="5"/>
+    </g>
+  </g>
+  <!-- outside lane -->
+  <text x="18" y="108" font-family="Helvetica,Arial,sans-serif" font-size="12.5" font-weight="700" fill="#1d232b">Lu de l’extérieur</text>
+  <text x="18" y="124" font-family="Helvetica,Arial,sans-serif" font-size="11" fill="#6b7684">(le texte produit)</text>
+  <g fill="#2f6b45" font-family="Helvetica,Arial,sans-serif" font-size="15" text-anchor="middle">
+    <text x="169" y="117">✓</text><text x="215" y="117">✓</text><text x="261" y="117">✓</text><text x="307" y="117">✓</text><text x="353" y="117">✓</text><text x="399" y="117">✓</text><text x="445" y="117">✓</text><text x="491" y="117">✓</text><text x="537" y="117">✓</text><text x="583" y="117">✓</text><text x="629" y="117">✓</text><text x="675" y="117">✓</text>
+  </g>
+  <text x="422" y="138" text-anchor="middle" font-family="Helvetica,Arial,sans-serif" font-size="11" fill="#6b7684">chaque action, jugée seule, paraît normale</text>
+  <!-- inside lane -->
+  <text x="18" y="182" font-family="Helvetica,Arial,sans-serif" font-size="12.5" font-weight="700" fill="#1d232b">Lu de l’intérieur</text>
+  <text x="18" y="198" font-family="Helvetica,Arial,sans-serif" font-size="11" fill="#6b7684">(la sonde, puis le cumul)</text>
+  <line x1="150" y1="280" x2="700" y2="280" stroke="#d9d4ca" stroke-width="1"/>
+  <!-- small bars -->
+  <g fill="#a8562a" opacity="0.55">
+    <rect x="161" y="270" width="16" height="10"/><rect x="207" y="268" width="16" height="12"/><rect x="253" y="271" width="16" height="9"/><rect x="299" y="267" width="16" height="13"/><rect x="345" y="269" width="16" height="11"/><rect x="391" y="268" width="16" height="12"/><rect x="437" y="270" width="16" height="10"/><rect x="483" y="267" width="16" height="13"/><rect x="529" y="269" width="16" height="11"/><rect x="575" y="268" width="16" height="12"/><rect x="621" y="270" width="16" height="10"/><rect x="667" y="268" width="16" height="12"/>
+  </g>
+  <!-- threshold -->
+  <line x1="150" y1="176" x2="700" y2="176" stroke="#1d232b" stroke-dasharray="5 4" stroke-width="1.2"/>
+  <text x="152" y="170" font-family="Helvetica,Arial,sans-serif" font-size="11" fill="#1d232b">seuil d’alerte</text>
+  <!-- cumulative line -->
+  <polyline fill="none" stroke="#1f5f7a" stroke-width="3" stroke-linejoin="round"
+    points="169,270 215,258 261,249 307,236 353,225 399,213 445,203 491,190 537,179 583,167 629,157 675,146"/>
+  <circle cx="560" cy="173" r="7" fill="none" stroke="#a8562a" stroke-width="2.4"/>
+  <text x="596" y="200" font-family="Helvetica,Arial,sans-serif" font-size="11.5" font-weight="700" fill="#a8562a">alerte</text>
+  <text x="430" y="296" text-anchor="middle" font-family="Helvetica,Arial,sans-serif" font-size="10.5" fill="#6b7684">barres&nbsp;: petite trace interne à chaque geste · courbe&nbsp;: les traces additionnées</text>
+</svg>
+<figcaption><b>L’idée centrale, en image.</b> Vu de l’extérieur, chaque geste passe le contrôle. Vu de l’intérieur, chaque geste laisse une trace trop faible pour alerter seule — mais leur somme finit par franchir le seuil. Le programme cherche à savoir si cette image est vraie sur de vrais modèles, et à quelles conditions.</figcaption>
+</figure>
+
+<h3>Ce qu’on veut prouver</h3>
+<p>La revendication centrale est simple à énoncer et dure à gagner&nbsp;: <b>en regardant à l’intérieur et en cumulant dans le temps, on attrape davantage de sabotages diffus qu’en lisant le texte</b>, à nombre égal de fausses alertes. Pour que ce soit convaincant, les règles du jeu sont sévères et ont été fixées d’avance&nbsp;: il faut battre la meilleure méthode «&nbsp;boîte noire&nbsp;», mais aussi des méthodes «&nbsp;boîte blanche&nbsp;» plus simples&nbsp;; il faut gagner <b>dans chaque type de sabotage séparément</b>, sans cacher un échec dans une moyenne&nbsp;; et l’un de ces types est conçu par une équipe à part, gardé sous scellés, et révélé seulement le jour de l’examen — pour qu’on ne puisse pas ajuster les détecteurs dessus.</p>
+<p>Le programme vise plus large encore&nbsp;: une sorte de <b>notice des angles morts</b>. Pour chaque type de moniteur, on veut pouvoir dire d’avance, preuve à l’appui, ce qu’il est structurellement incapable de voir.</p>
+
+<h3>Comment on évite de se tromper soi-même</h3>
+<p>Le danger principal d’une recherche, ce n’est pas l’adversaire&nbsp;: c’est l’envie d’avoir raison. Tout le dispositif est construit contre elle.</p>
+
+<figure>
+<svg viewBox="0 0 720 150" role="img" aria-label="Schéma : cinq étapes qui protègent contre l'auto-persuasion.">
+  <rect width="720" height="150" fill="#ffffff"/>
+  <defs><marker id="fl" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto"><path d="M0,0 L10,5 L0,10 z" fill="#1f5f7a"/></marker></defs>
+  <g font-family="Helvetica,Arial,sans-serif" text-anchor="middle">
+    <g fill="#e6f0f4" stroke="#1f5f7a" stroke-width="1.3">
+      <rect x="6" y="22" width="126" height="78" rx="8"/>
+      <rect x="152" y="22" width="126" height="78" rx="8"/>
+      <rect x="298" y="22" width="126" height="78" rx="8"/>
+      <rect x="444" y="22" width="126" height="78" rx="8"/>
+      <rect x="590" y="22" width="124" height="78" rx="8"/>
+    </g>
+    <g font-size="12.5" font-weight="700" fill="#1d232b">
+      <text x="69" y="48">1. Écrire</text><text x="215" y="48">2. Sceller</text><text x="361" y="48">3. Faire relire</text><text x="507" y="48">4. Expérimenter</text><text x="652" y="48">5. Lire une fois</text>
+    </g>
+    <g font-size="10.5" fill="#4a5563">
+      <text x="69" y="67">la prédiction et</text><text x="69" y="81">les règles de lecture</text>
+      <text x="215" y="67">une empreinte</text><text x="215" y="81">numérique fige le texte</text>
+      <text x="361" y="67">par un relecteur neuf,</text><text x="361" y="81">qui n’a rien écrit</text>
+      <text x="507" y="67">seulement</text><text x="507" y="81">maintenant</text>
+      <text x="652" y="67">selon les règles</text><text x="652" y="81">déjà scellées</text>
+    </g>
+    <g stroke="#1f5f7a" stroke-width="1.8" marker-end="url(#fl)"><line x1="133" y1="61" x2="150" y2="61"/><line x1="279" y1="61" x2="296" y2="61"/><line x1="425" y1="61" x2="442" y2="61"/><line x1="571" y1="61" x2="588" y2="61"/></g>
+    <text x="360" y="130" font-size="11.5" fill="#a8562a" font-weight="700">Et toujours&nbsp;: un résultat trop beau reçoit le même audit qu’un résultat décevant.</text>
+  </g>
+</svg>
+<figcaption><b>La chaîne des garde-fous.</b> Une «&nbsp;empreinte&nbsp;» est une sorte de code-barres calculé sur un fichier&nbsp;: si un seul caractère change, le code-barres change. On ne peut donc pas réécrire en douce une règle après avoir vu les résultats.</figcaption>
+</figure>
+
+<div class="encadre en-clair">
+  <span class="etiquette sans">En clair — un premier test qui n’a rien trouvé</span>
+  Le premier vrai test boîte blanche du programme, scellé avant d’être lu, est revenu <b>négatif</b>&nbsp;: aucune sonde générique n’a dépassé le niveau plancher fixé d’avance. On ne l’a pas enterré. On a calculé sa <b>sensibilité</b>, comme on vérifierait qu’un détecteur de métaux silencieux était bien allumé&nbsp;: le test aurait probablement vu un effet net, mais il ne pouvait pas exclure un effet faible. Nous le disons ainsi, ni plus ni moins. Ce résultat nul, audité, est aujourd’hui l’une de nos meilleures preuves de sérieux.
+</div>
+
+<!-- ============================================================ -->
+<h2 class="saut"><span class="num">2</span>Ce qui a avancé en deux jours</h2>
+<p>Le programme est dans sa <b>phase 0, celle des instruments</b>&nbsp;: avant de mesurer, on vérifie la balance. Une «&nbsp;porte&nbsp;», c’est-à-dire un examen de passage aux critères gelés, clôt cette phase au plus tard fin novembre&nbsp;; deux critères sur huit sont remplis. Les deux jours ont servi presque entièrement à tester et à consolider les outils. Voici les huit chantiers, chacun avec son état.</p>
+
+<div class="bloc">
+  <h3><span class="pastille sans">1</span>Refaire les détecteurs à l’identique, au bit près</h3>
+  <p>Les sondes de notre premier test avaient été construites il y a quelques semaines, et le gros fichier qui les contenait n’était plus entre nos mains. Nous les avons <b>reconstruites de zéro</b>, sur une carte de calcul louée pour l’occasion, en suivant exactement la même recette. Résultat&nbsp;: les <b>424 détecteurs sur 424</b> sont identiques à l’original, au dernier chiffre près&nbsp;; l’empreinte numérique du fichier refait est exactement celle qui avait été scellée à l’époque.</p>
+  <p><b>Pourquoi c’est important.</b> En science, un résultat que personne ne peut refaire ne vaut pas grand-chose. Obtenir une copie parfaite — pas «&nbsp;à peu près pareille&nbsp;», parfaite — prouve que notre chaîne de fabrication est maîtrisée de bout en bout. C’est aussi ce qui nous rend ces détecteurs pour les étapes suivantes.</p>
+  <div class="etat"><b>État&nbsp;:</b> terminé, pour 1,76 dollar. <b>Nuance&nbsp;:</b> on a refait les détecteurs, pas réinterprété le test&nbsp;; on dit «&nbsp;reproduit à l’identique&nbsp;», pas «&nbsp;confirmé&nbsp;».</div>
+</div>
+
+<div class="bloc">
+  <h3><span class="pastille sans">2</span>Des juges qui ne notent pas toutes les copies</h3>
+  <p>Pour savoir si un agent a bien ou mal travaillé, nous utilisons des <b>juges automatiques</b>&nbsp;: de petits modèles d’intelligence artificielle qui lisent un travail et lui donnent une note selon une grille. La grande expérience exigera que le juge rende une note utilisable <b>presque à chaque fois</b> — 99 copies sur 100. Avant de bâtir quoi que ce soit dessus, nous avons fait passer aux juges un examen blanc de 180 copies.</p>
+  <p>Verdict&nbsp;: aucun n’a atteint le seuil. Le meilleur rendait une note exploitable <b>87 fois sur 100</b>&nbsp;; les autres fois, la réponse était hors grille ou inexploitable. Un examen de contrôle a aussi montré qu’un des juges arrondissait systématiquement les demi-points vers le bas.</p>
+  <div class="encadre en-clair" style="margin:.7rem 0 .2rem">
+    <span class="etiquette sans">En clair</span>
+    C’est comme découvrir, avant le concours, qu’un correcteur sur huit rend des copies sans note. Mieux vaut le savoir avant&nbsp;: nous avons réécrit la consigne (le verdict d’abord, une grille écrite pour chaque critère, seules les valeurs prévues acceptées), et ce nouveau juge repassera l’examen blanc avant toute utilisation.
+  </div>
+  <div class="etat"><b>État&nbsp;:</b> premier examen lu, pour 1,92 dollar&nbsp;; la nouvelle consigne est en relecture, son examen est autorisé pour au plus 4 dollars.</div>
+</div>
+
+<div class="bloc">
+  <h3><span class="pastille sans">3</span>Des simulations pour savoir combien d’exemples il faut</h3>
+  <p>Une expérience trop petite ne permet de rien conclure&nbsp;: c’est comme juger un dé truqué sur trois lancers. Avant de dépenser pour de vrai, nous simulons donc l’expérience des milliers de fois sur un ordinateur ordinaire, avec des données imaginaires dont on connaît la vérité, pour vérifier deux choses&nbsp;: nos règles de décision ne crient pas «&nbsp;victoire&nbsp;» à tort plus de 5 fois sur 100, et elles ont de bonnes chances de voir un effet s’il existe — c’est ce qu’on appelle la <b>puissance</b>.</p>
+  <p>Ces simulations ont déjà changé des décisions. L’une a montré qu’une façon naturelle de couper les données en deux (une moitié pour régler le détecteur, l’autre pour le tester) aurait échoué <b>plus d’une fois sur deux</b>&nbsp;; la façon retenue n’échoue qu’environ 3 fois sur 100. Une autre a révélé que les cas d’égalité parfaite entre deux méthodes pouvaient fausser le verdict&nbsp;: une règle pour les départager est désormais appliquée d’office, écrite d’avance.</p>
+  <div class="etat"><b>État&nbsp;:</b> deux simulations versées, sans dépense de calcul&nbsp;; une troisième, sur la marge de sécurité exigée de la méthode gagnante, est en cours de relecture. <b>Nuance&nbsp;:</b> ce sont des décisions bien informées, pas encore des résultats.</div>
+</div>
+
+<div class="bloc">
+  <h3><span class="pastille sans">4</span>La «&nbsp;vérité du dommage&nbsp;»&nbsp;: savoir qu’un sabotage a vraiment fait du tort</h3>
+  <p>Dans notre banc d’essai, l’agent rédige des <b>propositions d’expériences scientifiques</b> — des plans en texte, pas des programmes que l’on peut exécuter. Pour noter un détecteur, il faut savoir, pour chaque plan, s’il a vraiment été abîmé. Et cette vérité ne doit pas venir des moniteurs eux-mêmes, sinon on note l’élève avec son propre corrigé.</p>
+  <p>La solution retenue&nbsp;: pour chaque tâche, on garde une <b>référence cachée</b> — la liste des vérifications que la vraie étude publiée contenait. Deux lecteurs automatiques, choisis dans d’autres familles de modèles que les moniteurs, relisent chaque plan et disent, pour chaque vérification, si elle est absente, altérée ou conforme&nbsp;; ils doivent citer le passage exact, et un programme vérifie que la citation existe bien. Enfin, on compare au même plan écrit honnêtement, son <b>jumeau honnête</b>. Le dommage, c’est l’écart entre les deux.</p>
+  <div class="encadre prudence" style="margin:.7rem 0 .2rem">
+    <span class="etiquette sans">Une erreur corrigée</span>
+    Une première version supposait des tâches que l’on peut exécuter et vérifier automatiquement. Or notre banc ne produit que du texte. La décision avait été prise sur cette base trop optimiste&nbsp;; elle a été revue et remplacée. Nous le consignons tel quel.
+  </div>
+  <div class="etat"><b>État&nbsp;:</b> décidé, à construire&nbsp;; deux variantes attendent l’avis de Lazar.</div>
+</div>
+
+<div class="bloc">
+  <h3><span class="pastille sans">5</span>Le «&nbsp;collisionneur&nbsp;»&nbsp;: trois intelligences artificielles qui débattent</h3>
+  <p>Pour les questions de méthode difficiles, nous avons construit un outil que nous appelons le <b>collisionneur</b>. Trois modèles d’intelligence artificielle différents — de plusieurs entreprises — reçoivent la même question. Chacune répond seule, puis lit les réponses des autres et les critique, puis une synthèse rassemble les accords et les désaccords — <b>sans forcer de consensus</b>. Un humain tranche ensuite.</p>
+  <figure style="margin:.8rem 0 .4rem">
+  <svg viewBox="0 0 720 190" role="img" aria-label="Schéma du collisionneur : trois modèles proposent, se critiquent, une synthèse est faite, Lazar décide.">
+    <rect width="720" height="190" fill="#ffffff"/>
+    <defs><marker id="f2" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto"><path d="M0,0 L10,5 L0,10 z" fill="#4a5563"/></marker></defs>
+    <g font-family="Helvetica,Arial,sans-serif" text-anchor="middle">
+      <rect x="10" y="70" width="110" height="50" rx="8" fill="#f1efea" stroke="#4a5563"/>
+      <text x="65" y="92" font-size="12" font-weight="700" fill="#1d232b">Une question</text><text x="65" y="108" font-size="10.5" fill="#4a5563">de méthode</text>
+      <g fill="#e6f0f4" stroke="#1f5f7a" stroke-width="1.3">
+        <circle cx="230" cy="40" r="26"/><circle cx="230" cy="95" r="26"/><circle cx="230" cy="150" r="26"/>
+      </g>
+      <g font-size="11" font-weight="700" fill="#1f5f7a"><text x="230" y="44">A</text><text x="230" y="99">B</text><text x="230" y="154">C</text></g>
+      <text x="230" y="186" font-size="10" fill="#6b7684">1. chacun répond seul</text>
+      <g stroke="#4a5563" stroke-width="1.4" marker-end="url(#f2)" fill="none">
+        <line x1="121" y1="88" x2="202" y2="45"/><line x1="121" y1="95" x2="202" y2="95"/><line x1="121" y1="102" x2="202" y2="145"/>
+      </g>
+      <!-- critique arcs -->
+      <g stroke="#a8562a" stroke-width="1.6" fill="none" stroke-dasharray="4 3">
+        <path d="M258,40 C330,40 330,95 258,95"/><path d="M258,95 C330,95 330,150 258,150"/><path d="M258,150 C370,150 370,40 258,40"/>
+      </g>
+      <text x="390" y="99" font-size="10.5" fill="#a8562a" text-anchor="start">2. chacun</text>
+      <text x="390" y="113" font-size="10.5" fill="#a8562a" text-anchor="start">critique les autres</text>
+      <rect x="490" y="70" width="104" height="50" rx="8" fill="#e6f0f4" stroke="#1f5f7a" stroke-width="1.3"/>
+      <text x="542" y="92" font-size="12" font-weight="700" fill="#1d232b">3. Synthèse</text><text x="542" y="108" font-size="10" fill="#4a5563">accords, désaccords</text>
+      <rect x="620" y="70" width="92" height="50" rx="8" fill="#a8562a"/>
+      <text x="666" y="92" font-size="12" font-weight="700" fill="#ffffff">4. Lazar</text><text x="666" y="108" font-size="10.5" fill="#ffffff">tranche</text>
+      <g stroke="#4a5563" stroke-width="1.4" marker-end="url(#f2)"><line x1="470" y1="95" x2="488" y2="95"/><line x1="595" y1="95" x2="618" y2="95"/></g>
+    </g>
+  </svg>
+  </figure>
+  <p>Six séances de débat ont eu lieu en deux jours. Le plus utile a trouvé le point le plus fragile du futur pilote&nbsp;: l’absence d’une vérité du dommage indépendante du texte — d’où le chantier 4. Mais le collisionneur se trompe aussi&nbsp;: un débat a annoncé une sensibilité de 65 à 80&nbsp;% là où le calcul vérifié donnait 33&nbsp;%. Ses conclusions sont donc des <b>pistes à vérifier</b>, jamais des résultats.</p>
+  <p>Un dernier point compte beaucoup pour un fonds de sécurité&nbsp;: il est arrivé qu’un des modèles <b>refuse</b> une question. La règle est stricte — on consigne le refus tel quel, on ne reformule jamais la même question pour le contourner, et le débat continue sans ce modèle seulement sur décision écrite de Lazar. Toutes les questions concernées étaient d’ailleurs défensives (mesure, dimensionnement).</p>
+  <div class="etat"><b>État&nbsp;:</b> six séances, environ 75 dollars au total&nbsp;; la synthèse du dernier est en cours.</div>
+</div>
+
+<div class="bloc">
+  <h3><span class="pastille sans">6</span>L’organisme qui cherche lui-même des idées de détecteurs</h3>
+  <p>À terme, une partie de la recherche sera confiée à un <b>«&nbsp;organisme&nbsp;»</b>&nbsp;: un ensemble d’intelligences artificielles qui proposent des idées de détecteurs, les mettent à l’épreuve et gardent les meilleures, génération après génération — un peu comme un laboratoire automatique. Sa première tâche, l’<b>idéation</b>, consiste à inventer de nouvelles idées de moniteurs.</p>
+  <p>Avant de le lancer, son programme de pilotage a été relu <b>neuf fois</b> par des relecteurs neufs en deux jours, et amendé à chaque fois. Les verdicts ont alterné entre «&nbsp;lançable après corrections&nbsp;» et «&nbsp;pas lançable&nbsp;» — par exemple quand un plafond de dépense d’un sous-poste dépassait celui qui avait été autorisé. C’est lent, et c’est voulu&nbsp;: on lance une machine qui dépense de l’argent et produit des conclusions, on veut qu’elle respecte ses limites avant de tourner.</p>
+  <div class="etat"><b>État&nbsp;:</b> pas encore lancé&nbsp;; dixième relecture en cours&nbsp;; plafond de la course 52,80 dollars dans une enveloppe autorisée de 60. On dit «&nbsp;gouverné et prêt à lancer&nbsp;», pas «&nbsp;produit des idées&nbsp;».</div>
+</div>
+
+<div class="bloc">
+  <h3><span class="pastille sans">7</span>Le devis du pilote</h3>
+  <p>La prochaine étape réelle est un <b>pilote</b>&nbsp;: une version réduite de la grande expérience, avec des agents dont on contrôle le comportement et des moniteurs qui les surveillent. Nous en avons écrit le devis deux fois. La première version reposait aux trois quarts sur des prix supposés&nbsp;; la seconde s’appuie sur les vitesses réellement mesurées pendant l’examen blanc des juges.</p>
+  <p>Estimation centrale&nbsp;: <b>environ 234 dollars</b>, dans une fourchette de 90 à 550. Plus de la moitié du coût vient de la «&nbsp;vérité du dommage&nbsp;» (les deux lecteurs indépendants). Une première tranche de mesure, à 13 dollars, est autorisée, mais elle attend que plusieurs préalables gratuits soient levés.</p>
+  <div class="etat"><b>État&nbsp;:</b> devis écrit&nbsp;; le reste du pilote attendra un accord séparé, après cette première tranche.</div>
+</div>
+
+<div class="bloc">
+  <h3><span class="pastille sans">8</span>Les «&nbsp;lentilles&nbsp;»&nbsp;: traduire une direction interne en mots</h3>
+  <p>Une sonde, au fond, est une <b>direction</b> dans l’espace des activités internes du modèle — une flèche dans un espace à des milliers de dimensions. Elle fonctionne, mais elle est muette&nbsp;: on ne sait pas ce qu’elle «&nbsp;regarde&nbsp;». Une <b>lentille</b> est un outil qui pose la question inverse&nbsp;: si le modèle était poussé dans cette direction, vers quels mots pencherait-il&nbsp;? C’est une façon de faire parler le détecteur.</p>
+  <p>Nous allons comparer deux lentilles sur les détecteurs refaits au chantier 1. Si la direction «&nbsp;tromperie&nbsp;» fait surtout ressortir des mots de mise en scène, d’examen ou de consigne plutôt que des mots liés au mensonge, cela nous dira que la sonde mesure peut-être autre chose que ce que son nom promet.</p>
+  <div class="etat"><b>État&nbsp;:</b> accord donné&nbsp;; script en relecture&nbsp;; calcul sur un ordinateur ordinaire, sans dépense. Aucun détecteur n’est modifié.</div>
+</div>
+
+<!-- ============================================================ -->
+<h2 class="saut"><span class="num">3</span>Ce que cela change pour l’entretien de financement</h2>
+<p>Le programme a été présenté au <b>Transformative AI Fund</b>&nbsp;; <b>l’entretien est fixé au vendredi 30 octobre 2026</b>, c’est-à-dire demain. Le texte préparé pour cet entretien n’a pas changé ces deux jours. Ce qui a changé, ce sont les <b>preuves</b> qu’on peut poser derrière ses affirmations.</p>
+
+<div class="trois">
+  <div class="col-vert">
+    <h4>Ce qu’on peut montrer</h4>
+    <ul>
+      <li>Des détecteurs refaits à l’identique.</li>
+      <li>Les juges mesurés avant usage — et le résultat décevant, payé 2 dollars plutôt que découvert trop tard.</li>
+      <li>Une décision corrigée sur constat&nbsp;: la gouvernance revient sur ses propres erreurs.</li>
+      <li>Le registre des refus de modèle et la façon dont ils ont été traités.</li>
+      <li>Les simulations et le devis chiffré du pilote.</li>
+    </ul>
+  </div>
+  <div class="col-chaud">
+    <h4>À dire avec prudence</h4>
+    <ul>
+      <li>«&nbsp;Reproduit&nbsp;», pas «&nbsp;confirmé&nbsp;».</li>
+      <li>L’organisme n’a encore produit aucune idée.</li>
+      <li>Aucun agent saboteur n’existe encore&nbsp;; aucune sonde n’a encore battu une méthode concurrente.</li>
+      <li>Les études voisines rassemblées ne sont pas encore lues page par page&nbsp;: aucun de leurs chiffres n’est cité.</li>
+      <li>Les synthèses du collisionneur sont des pistes, pas des résultats.</li>
+      <li>Le coût&nbsp;: «&nbsp;quelques centaines de dollars&nbsp;», sans chiffre précis.</li>
+    </ul>
+  </div>
+  <div class="col-bleu">
+    <h4>Ce qui reste à faire</h4>
+    <ul>
+      <li>Fixer la date de l’appel.</li>
+      <li>Confirmer le montant demandé (palier à trancher par Lazar).</li>
+      <li>Mettre à jour le texte de l’entretien pour dater ce qui a changé (une version 9 est écrite et en relecture, avant l’entretien du vendredi 30 octobre).</li>
+      <li>Trancher une question de voisinage avec une étude récente très proche.</li>
+      <li>Franchir la porte de fin novembre&nbsp;: six critères sur huit restent à remplir.</li>
+    </ul>
+  </div>
+</div>
+
+<h3>Trois questions qu’un évaluateur pourrait poser</h3>
+<p><b>«&nbsp;Vos juges automatiques donnent-ils seulement des notes utilisables&nbsp;?&nbsp;»</b> — Pas assez souvent, et nous l’avons mesuré avant de bâtir&nbsp;: au mieux 87 fois sur 100, contre 99 exigées. La consigne a été réécrite et repassera l’examen avant tout usage.</p>
+<p><b>«&nbsp;Quand l’agent ne produit qu’un plan en texte, comment savez-vous qu’un sabotage a fait du tort&nbsp;?&nbsp;»</b> — Par une vérité indépendante des moniteurs&nbsp;: la référence cachée, deux lecteurs d’autres familles, des citations vérifiées par programme, et la comparaison avec le jumeau honnête. Notre premier dessin supposait des tâches exécutables, et nous l’avons corrigé.</p>
+<p><b>«&nbsp;Un modèle a refusé votre outil. L’avez-vous contourné&nbsp;?&nbsp;»</b> — Non. Le refus est consigné, la question n’est jamais reformulée pour passer, et le travail continue sans ce modèle uniquement sur décision écrite du directeur.</p>
+
+<div class="encadre en-clair">
+  <span class="etiquette sans">En clair — ce que l’on demande au fonds</span>
+  Le gros de la demande finance du <b>temps de recherche</b>, pas du calcul&nbsp;: la théorie se fait sur un ordinateur ordinaire, et plusieurs mesures réutilisent des données déjà payées. La candidature envoyée demande environ 59&nbsp;000 dollars sur sept mois&nbsp;; une version plus ambitieuse, sur douze mois et avec une revue de sécurité extérieure, monterait à environ 177&nbsp;000 dollars. Le palier présenté reste à confirmer par Lazar.
+</div>
+
+<!-- ============================================================ -->
+<h2><span class="num">4</span>Combien cela a coûté, et qui décide</h2>
+<p>Ce programme dépense peu, et presque tout part dans deux postes&nbsp;: des <b>appels à des modèles d’intelligence artificielle</b> (on paie chaque question posée à un modèle commercial, au volume de texte lu et écrit) et la <b>location de cartes de calcul</b> (des processeurs spécialisés, loués à l’heure dans un centre de données, et rendus dès que le travail est fini).</p>
+
+<table>
+  <thead><tr><th>Poste des 28 et 29 octobre</th><th>Ce que c’est</th><th style="text-align:right">Dollars</th></tr></thead>
+  <tbody>
+    <tr><td>Le collisionneur</td><td>six séances de débat entre trois modèles</td><td class="montant">≈ 75</td></tr>
+    <tr><td>Relectures par un modèle d’une autre maison</td><td>contre-lectures de documents de conception</td><td class="montant">≈ 3</td></tr>
+    <tr><td>Cartes de calcul</td><td>détecteurs refaits (1,76) et examen blanc des juges (1,92)</td><td class="montant">≈ 4</td></tr>
+    <tr class="total"><td>Total des deux jours</td><td></td><td class="montant">≈ 82</td></tr>
+  </tbody>
+</table>
+
+<p>Depuis le début du programme, le total se compte en <b>quelques centaines de dollars</b> — une estimation interne le situe vers 530, pas encore rapprochée des factures — dont moins d’une centaine pour les cartes de calcul. C’est pourquoi, devant le fonds, on dit «&nbsp;quelques centaines de dollars&nbsp;» et non un chiffre précis.</p>
+
+<div class="encadre acquis">
+  <span class="etiquette sans">Pourquoi chaque dépense passe par Lazar</span>
+  Toute dépense commence par un <b>devis</b>&nbsp;; Lazar donne ou refuse un accord écrit, avec un <b>plafond</b>. Un garde-fou automatique empêche de louer une carte de calcul sans citer un accord valide, et chaque machine louée est arrêtée par son identifiant dès qu’elle n’a plus de travail. L’enjeu n’est pas seulement l’argent&nbsp;: un programme qui teste des agents capables de mal se conduire doit lui-même être un exemple de <b>contrôle humain</b> sur les machines. Si une dépense dépasse son plafond, elle s’arrête — c’est arrivé une fois ces deux jours, et le débat a repris seulement après que Lazar a relevé le plafond.
+</div>
+
+<div class="encadre prudence">
+  <span class="etiquette sans">Nos erreurs, aussi</span>
+  La synthèse experte en liste une dizaine, sans les adoucir. Les plus parlantes&nbsp;: une décision prise sur une hypothèse trop optimiste puis corrigée (chantier 4)&nbsp;; une dépense de 20 dollars qui manque encore à la comptabilité interne&nbsp;; quelques heures écrites de mémoire au lieu d’être relevées sur l’horloge. Aucune ne change un résultat&nbsp;; toutes sont consignées.
+</div>
+
+<!-- ============================================================ -->
+<h2><span class="num">5</span>Petit glossaire</h2>
+<dl class="glossaire">
+  <dt>Agent</dt><dd>Une intelligence artificielle à qui l’on confie une tâche longue, qu’elle mène seule en plusieurs étapes.</dd>
+  <dt>Moniteur</dt><dd>Un surveillant automatique qui observe un agent et lève une alerte s’il soupçonne un mauvais comportement.</dd>
+  <dt>Boîte noire, boîte blanche</dt><dd>Surveiller seulement ce que l’agent écrit (boîte noire), ou aussi ce qui se passe à l’intérieur de son calcul (boîte blanche).</dd>
+  <dt>Menace diffuse</dt><dd>Un mauvais comportement réparti en nombreux petits gestes, dont aucun n’est alarmant pris seul.</dd>
+  <dt>Sonde</dt><dd>Un petit détecteur qui lit l’activité interne d’un modèle et renvoie un score à chaque étape.</dd>
+  <dt>Juge automatique</dt><dd>Un modèle qui lit un travail et lui attribue une note selon une grille fixée d’avance.</dd>
+  <dt>Préenregistrement scellé</dt><dd>Le document, figé par une empreinte numérique avant l’expérience, qui fixe la prédiction et la façon de lire les résultats.</dd>
+  <dt>Puissance</dt><dd>La probabilité qu’une expérience détecte un effet s’il existe vraiment&nbsp;; une expérience peu puissante ne prouve rien quand elle ne trouve rien.</dd>
+  <dt>Collisionneur</dt><dd>Notre outil où trois intelligences artificielles différentes répondent à une question de méthode puis se critiquent, avant qu’un humain tranche.</dd>
+  <dt>Organisme</dt><dd>Un ensemble d’intelligences artificielles qui proposent, testent et sélectionnent des idées comme un petit laboratoire automatique, sous des règles et des plafonds fixés.</dd>
+</dl>
+
+<p class="pied sans">Source unique des chiffres&nbsp;: la synthèse experte <i>livrables/synthese-28-29-octobre-v2.html</i> (29 octobre 2026), qui renvoie elle-même aux registres du dépôt. Contexte&nbsp;: le programme de recherche (version 2) et le programme préparé pour l’entretien (version 8). Ce document ne décrit aucune méthode d’attaque ni de contournement des moniteurs&nbsp;; il dit seulement que les moniteurs seront éprouvés contre des comportements de sabotage. Document interne, non envoyé.</p>
+
+</main>
+</body>
+</html>

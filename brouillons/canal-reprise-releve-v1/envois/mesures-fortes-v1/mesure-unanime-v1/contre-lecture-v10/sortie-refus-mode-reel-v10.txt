@@ -1,0 +1,16 @@
+effectifs_sans_empreinte : code 1 ; octets sortie 0 ; mode réel : --empreinte-attendue est obligatoire (aussi avec --effectifs-seulement, CV4-6)
+effectifs_empreinte_vide : code 1 ; octets sortie 0 ; mode réel : --empreinte-attendue est obligatoire (aussi avec --effectifs-seulement, CV4-6)
+effectifs_empreinte_fausse : code 1 ; octets sortie 0 ; RuntimeError: liste d'arrêt : empreinte des données différente de celle du préenregistrement
+effectifs_tirages_5 : code 1 ; octets sortie 0 ; mode réel : --tirages et --bootstrap sont fixes (20, 2000) — CV4-6
+effectifs_bootstrap_300 : code 1 ; octets sortie 0 ; mode réel : --tirages et --bootstrap sont fixes (20, 2000) — CV4-6
+tirages_5 : code 1 ; octets sortie 0 ; mode réel : --tirages et --bootstrap sont fixes (20, 2000) — CV4-6
+bootstrap_300 : code 1 ; octets sortie 0 ; mode réel : --tirages et --bootstrap sont fixes (20, 2000) — CV4-6
+sans_commit : code 1 ; octets sortie 0 ; mode réel : --empreinte-attendue, --sondes-reelles, --sondes-placebo et --commit sont obligatoires
+commit_vide : code 1 ; octets sortie 0 ; mode réel : --empreinte-attendue, --sondes-reelles, --sondes-placebo et --commit sont obligatoires
+sans_sondes_reelles : code 1 ; octets sortie 0 ; mode réel : --empreinte-attendue, --sondes-reelles, --sondes-placebo et --commit sont obligatoires
+sans_sondes_placebo : code 1 ; octets sortie 0 ; mode réel : --empreinte-attendue, --sondes-reelles, --sondes-placebo et --commit sont obligatoires
+effectif_reel_faux : code 1 ; octets sortie 0 ; RuntimeError: liste d'arrêt : 3 sondes réelles, 30 attendues
+effectif_placebo_faux : code 1 ; octets sortie 0 ; RuntimeError: liste d'arrêt : 2 sondes placebo, 400 attendues
+reel_et_synthetique : code 1 ; octets sortie 0 ; un seul de --synthetique ou --reel
+effectifs_sain : code 0 ; octets sortie 807 ; 
+effectifs_sain : identique à l'octet aux effectifs déposés (v10)

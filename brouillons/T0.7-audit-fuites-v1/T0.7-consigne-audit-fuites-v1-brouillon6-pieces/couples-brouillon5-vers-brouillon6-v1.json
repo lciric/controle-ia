@@ -1,0 +1,146 @@
+{
+  "de": {
+    "chemin": "brouillons/T0.7-audit-fuites-v1/T0.7-consigne-audit-fuites-v1-brouillon5.md",
+    "sha256": "7228ce724d4f2a7c146124ceb70156cf99118b2acebcdc4b3b7d9e5d977d2b67"
+  },
+  "vers": {
+    "chemin": "brouillons/T0.7-audit-fuites-v1/T0.7-consigne-audit-fuites-v1-brouillon6.md",
+    "sha256": "71118f666253c99abeb3bf60a162e5aba8fdcb5e5788c2265ae444be7a30fcac"
+  },
+  "repere_contre_lecture": {
+    "apres_les_14_couples": "142d0a9e9c0451bcef7468556e38370c1f997628d08d27328d85e942aae1b5e8",
+    "source": {
+      "chemin": "prereg/contre-lectures/T0.7-consigne-audit-fuites-v1-brouillon5-cl2-pieces/couples-cl2-v1.json",
+      "sha256": "47af739fd47873b12227ccced3f55a818891079713aea2520730b93cae9ae387"
+    }
+  },
+  "regle": "appliqués dans l'ordre (14 de la contre-lecture, tels quels, puis 2 du rédacteur), chaque « ancien » présent une fois au moment de son remplacement ; défaits du dernier au premier, ils redonnent le brouillon 5 à l'octet",
+  "couples": [
+    {
+      "id": "K01",
+      "origine": "contre-lecture 2",
+      "statut": "exigé",
+      "motif": "CL2-06 : la ligne CODE-T07 cite un fichier, pas un commit ; ce fichier entre dans la liste fermée",
+      "ancien": "lues comme dit au § 4 (« Lecture du registre »).",
+      "nouveau": "lues comme dit au § 4 (« Lecture du registre ») ; si la ligne `CODE-T07` est présente, le fichier qu'elle cite\n   (`registres/code-t07/CODE-T07-v2.json` le 11 novembre 2026), ouvert par son chemin exact après contrôle de son\n   empreinte contre la ligne, dont seuls le champ `commit` et l'entrée `fichiers` de\n   `src/controle_ia/t07/criteres_v1.py` sont lus."
+    },
+    {
+      "id": "K02",
+      "origine": "contre-lecture 2",
+      "statut": "exigé",
+      "motif": "CL2-06 : d'où vient le commit du validateur",
+      "ancien": "le commit cité par la ligne `CODE-T07` si elle existe, sinon `8ae9fc44`",
+      "nouveau": "le commit écrit au champ `commit` du fichier que cite la ligne `CODE-T07` si elle existe (la ligne porte un chemin et\n   une empreinte, pas un commit : point 2 ; l'empreinte de `criteres_v1.py` doit aussi égaler l'entrée `fichiers` de ce\n   fichier, sinon arrêt), sinon `8ae9fc44`"
+    },
+    {
+      "id": "K03",
+      "origine": "contre-lecture 2",
+      "statut": "exigé",
+      "motif": "CL2-07 (Q-B5-3) : écritures hors du dépôt, dans le bac à sable",
+      "ancien": "Aucun autre chemin n'est écrit.",
+      "nouveau": "Aucun autre chemin du dépôt n'est écrit ; hors du dépôt, seuls\nle bac à sable de l'auditeur (`TMPDIR`, § 7 ; les trois fichiers du découpeur, § 6.1) et celui du contre-lecteur du\nfichier (fichiers de rejeu, § 3) sont écrits, et chacun cite le chemin du sien dans son rapport."
+    },
+    {
+      "id": "K14",
+      "origine": "contre-lecture 2",
+      "statut": "exigé",
+      "motif": "CL2-05 : numéros de ligne de la réception R1 v4 (les trois empreintes sont aux l. 71-73)",
+      "ancien": "etape-E-reception-r1-v4-v1.md` l. 70-72,",
+      "nouveau": "etape-E-reception-r1-v4-v1.md` l. 71-73,"
+    },
+    {
+      "id": "K04",
+      "origine": "contre-lecture 2",
+      "statut": "facultatif",
+      "motif": "CL2-08 : le point 8 de la liste fermée dit encore « chemin donné par la mère »",
+      "ancien": "8. Le découpeur du modèle de 7b, au chemin donné par la mère (`CHEMIN_DECOUPEUR`, § 6.1), et rien d'autre de ce dossier.",
+      "nouveau": "8. Le découpeur du modèle de 7b : les trois fichiers nommés au § 6.1, lus par `git show` au commit et au dossier écrits\n   là, puis leurs copies dans le bac à sable ; rien d'autre de ce dossier ni de cette branche."
+    },
+    {
+      "id": "K05",
+      "origine": "contre-lecture 2",
+      "statut": "facultatif",
+      "motif": "CL2-09 : chemin et empreinte du texte scellé dans la liste fermée",
+      "ancien": "7. T0.7 : les seules lignes recopiées au § 2,",
+      "nouveau": "7. T0.7 scellé (`prereg/T0.7-sondes-v0-v1.md`, `d7d180eccbbce8ff2e370f82957543c28f1e564c872f981c7ada403949baade5`, égal à\n   son compagnon, sinon arrêt) : les seules lignes recopiées au § 2,"
+    },
+    {
+      "id": "K06",
+      "origine": "contre-lecture 2",
+      "statut": "facultatif",
+      "motif": "CL2-09 : « en vigueur » → texte scellé (§ 7)",
+      "ancien": "cellules du § 2 égales au texte de T0.7 en vigueur",
+      "nouveau": "cellules du § 2 égales au texte scellé de T0.7"
+    },
+    {
+      "id": "K07",
+      "origine": "contre-lecture 2",
+      "statut": "facultatif",
+      "motif": "CL2-09 : « en vigueur » → texte scellé (§ 10)",
+      "ancien": "Cellules du § 2 différentes au texte de T0.7 en vigueur",
+      "nouveau": "Cellules du § 2 différentes au texte scellé de T0.7"
+    },
+    {
+      "id": "K08",
+      "origine": "contre-lecture 2",
+      "statut": "facultatif",
+      "motif": "CL2-10 : renvoi aux lignes du brouillon 21, repère du texte scellé",
+      "ancien": "(même contrôle que le module, T0.7 l. 2078)",
+      "nouveau": "(même contrôle que le module, T0.7 l. 2078 au brouillon 21, l. 2199 au texte scellé)"
+    },
+    {
+      "id": "K09",
+      "origine": "contre-lecture 2",
+      "statut": "facultatif",
+      "motif": "CL2-10 : idem",
+      "ancien": "A, T0.7 l. 2046). Ligne",
+      "nouveau": "A, T0.7 l. 2046 au brouillon 21, l. 2166 au texte scellé ; les renvois de ce § 4 à T0.7 sont en lignes du\n  brouillon 21). Ligne"
+    },
+    {
+      "id": "K10",
+      "origine": "contre-lecture 2",
+      "statut": "facultatif",
+      "motif": "CL2-10 : idem",
+      "ancien": "l'étape A (T0.7 l. 2046), elle-même",
+      "nouveau": "l'étape A (T0.7 l. 2046 ; texte scellé l. 2166), elle-même"
+    },
+    {
+      "id": "K11",
+      "origine": "contre-lecture 2",
+      "statut": "facultatif",
+      "motif": "CL2-10 : idem",
+      "ancien": "(garde d'ordre, l. 2047-2050)",
+      "nouveau": "(garde d'ordre, l. 2047-2050 ; texte scellé l. 2167-2170)"
+    },
+    {
+      "id": "K12",
+      "origine": "contre-lecture 2",
+      "statut": "facultatif",
+      "motif": "CL2-10 : idem",
+      "ancien": "(étape A, l. 1385-1390)",
+      "nouveau": "(étape A, l. 1385-1390 ; texte scellé l. 1527-1532)"
+    },
+    {
+      "id": "K13",
+      "origine": "contre-lecture 2",
+      "statut": "facultatif",
+      "motif": "CL2-11 : R5, fichier du découpeur absent ou vide",
+      "ancien": "empreinte du découpeur fausse → arrêt ;",
+      "nouveau": "empreinte du découpeur fausse, ou fichier du découpeur absent ou vide (`git show` en échec) → arrêt ;"
+    },
+    {
+      "id": "E01",
+      "origine": "rédacteur",
+      "motif": "remplissage de `RAPPORT_CONTRE_LECTURE_2` (§ 14.2) : chemin et empreinte complète du rapport, contre-lecteur, verdict, R-2355",
+      "ancien": "`<<RAPPORT_CONTRE_LECTURE_2>>` (chemin et sha256 ;",
+      "nouveau": "**Rapport** : `prereg/contre-lectures/T0.7-consigne-audit-fuites-v1-brouillon5-cl2.md`\n(`c9035156f36d0a394a7548c1771c02a222d28f9fedd7ae4cb9f4ee44c66f0415`, égal à son compagnon) ; contre-lecteur :\nsous-agent neuf, **Claude Fable 5.2** (`claude-fable-5-2`), autre modèle que l'auteur des brouillons 2 à 6 (Claude Opus\n5.5) ; consigne `docs/notes/g0-deux-semaines-v1/consignes-mere-2026-11-10-1136-v1/consigne-contre-lecture-2-audit-fuites-b5-v1.md`\n(`ac451ef0…`) ; texte relu : brouillon 5 (`7228ce72…`) ; verdict : **« scellable après corrections »**, quatre couples\nexigés (K01, K02, K03, K14) et dix facultatifs (K04 à K13), **tous retenus par la mère (R-2355)** et appliqués tels\nquels au brouillon 6 (texte obtenu égal au repère du contre-lecteur, `142d0a9e…`) ; pièces scellées :\n`prereg/contre-lectures/T0.7-consigne-audit-fuites-v1-brouillon5-cl2-pieces/` (couples\n`47af739f…`) ; pas de troisième contre-lecture (avis du lecteur, R-2355). Ce qui était commandé\n(texte du brouillon 5, où « ce brouillon » désigne le brouillon 5) : (chemin et sha256 ;"
+    },
+    {
+      "id": "E02",
+      "origine": "rédacteur",
+      "motif": "titre et statut en tête : brouillon 6, prêt au scellement par la session mère sous `prereg/T0.7-consigne-audit-fuites-v1.md` ; l'ancien statut devient « Brouillon 5 (historique) »",
+      "ancien": "# Consigne de l'audit des fuites de T0.7 — v1 — brouillon 5\n\n- **Statut** : **brouillon 5**, non scellé sous son nom définitif, écrit le 2026-11-11 à partir de 13:47 UTC (heure relevée\n",
+      "nouveau": "# Consigne de l'audit des fuites de T0.7 — v1 — brouillon 6\n\n- **Statut** : **brouillon 6, prêt au scellement** par la session mère sous le nom définitif\n  `prereg/T0.7-consigne-audit-fuites-v1.md` (avec compagnon `.sha256`) ; écrit le 2026-11-11 à partir de 14:03 UTC\n  (heure relevée par `date -u`) par l'agent des brouillons 4 et 5 (Claude Opus 5.5, `claude-opus-5-5`, sous-agent de\n  la session mère `session_01VJdZpSMxSdk2SJ1ScmdfNv`), sur décision de la mère (R-2355). **Brouillon 6 = brouillon 5**\n  (`brouillons/T0.7-audit-fuites-v1/T0.7-consigne-audit-fuites-v1-brouillon5.md`,\n  `7228ce724d4f2a7c146124ceb70156cf99118b2acebcdc4b3b7d9e5d977d2b67`, scellé, gardé intact) **+ les quatorze couples de la\n  contre-lecture 2** (`prereg/contre-lectures/T0.7-consigne-audit-fuites-v1-brouillon5-cl2-pieces/couples-cl2-v1.json`,\n  `47af739fd47873b12227ccced3f55a818891079713aea2520730b93cae9ae387` ; K01, K02, K03, K14 exigés, K04 à K13\n  facultatifs), appliqués tels quels dans leur ordre (texte obtenu égal au repère du contre-lecteur,\n  `142d0a9e9c0451bcef7468556e38370c1f997628d08d27328d85e942aae1b5e8`) **+ deux couples du rédacteur** (remplissage de\n  `RAPPORT_CONTRE_LECTURE_2` au § 14.2 ; ce statut) ; les seize couples sont au fichier\n  `brouillons/T0.7-audit-fuites-v1/T0.7-consigne-audit-fuites-v1-brouillon6-pieces/couples-brouillon5-vers-brouillon6-v1.json`,\n  appliqués chacun une fois par le script `appliquer_couples_brouillon6_v1.py` du même dossier ; défaire les seize\n  couples redonne le brouillon 5 à l'octet (vérifié par le script). **Plus aucun marqueur** : le dernier,\n  `RAPPORT_CONTRE_LECTURE_2`, est rempli au § 14.2 ; la puce « Marqueurs » ci-dessous garde l'état du brouillon 5.\n  Journal : `brouillons/T0.7-audit-fuites-v1/T0.7-consigne-audit-fuites-v1-brouillon6-pieces/journal-brouillon6-v1.md`.\n- **Brouillon 5** (historique) : écrit le 2026-11-11 à partir de 13:47 UTC (heure relevée\n"
+    }
+  ]
+}

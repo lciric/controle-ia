@@ -1,0 +1,14 @@
+[
+ {
+  "ancien": "le lanceur refuse une échéance à moins de 600 s",
+  "nouveau": "l'ordre E2 v4 exige une échéance d'au moins 600 s après maintenant (le lanceur v9 n'exige qu'une échéance future et au plus la fin du GO)"
+ },
+ {
+  "ancien": "Estimation : (prix de la carte + du stockage) × 15 minutes + forfait de téléchargement (1 Go) doit rester **< 0,10 USD** (≈ 0,09 à 0,36 USD/h) ; sinon n'exécute pas la ligne de création.",
+  "nouveau": "Estimation : (prix de la carte + du stockage) × 15 minutes + forfait de téléchargement (1 Go) doit rester **< 0,10 USD** (≈ 0,09 à 0,36 USD/h) ; sinon n'exécute pas la ligne de création. **De plus, `DEPENSE_EPUISEE_UTC_S` imprimé dans la ligne de création doit dépasser l'échéance d'au moins 120 s** : sinon la minuterie prendrait la branche « dépense épuisée » (consignation puis arrêt « stopped ») avant l'échéance, et E2-6 ne serait pas exercé ; dans ce cas, n'exécute pas la ligne, message à la mère."
+ },
+ {
+  "ancien": "`surveillance` imprime `ARRET mort` (code 3) — **attendu ici**, vérifie par `show instance <ID> --raw` que la réponse dit « introuvable » (recopie le texte exact) ; si elle répond, détruis par l'identifiant.",
+  "nouveau": "`surveillance` imprime `ARRET mort` (code 3) **ou**, si Vast rend pour une instance détruite un texte que la v9 ne reconnaît pas comme « introuvable » (texte encore inconnu), `ARRET inventaire` après trois relevés — **les deux sont attendus ici** ; dans les deux cas, vérifie par `show instance <ID> --raw` et par `vastai show instances --raw` (liste NON vide sans l'identifiant) : recopie le texte exact de `show instance` au compte rendu (il fixera les motifs de la version suivante) ; si l'instance répond avec son identifiant, détruis-la par l'identifiant."
+ }
+]

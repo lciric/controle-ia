@@ -1,0 +1,45 @@
+# diff test-lecture-seule-v12.sh test-lecture-seule-v13.sh, après normalisation des noms v12→vNN / v13→vNN et v6→vNN / v7→vNN (ce qui reste = vrai changement)
+8c8,10
+< #       second appel → 7 (note déjà scellée, rien réécrit) ; sortie finale absente → 6.
+---
+> #       second appel → 7 (note déjà scellée, rien réécrit) ; note supprimée, lecture scellée → 0 (note refaite,
+> #       lecture inchangée) (CV12-3) ; note supprimée, lecture corrompue → ≠ 0 (aucune note) (CV12-3) ;
+> #       sortie finale absente → 6.
+64a67,84
+> # (B3 bis) note supprimée, lecture scellée → note refaite et scellée, lecture inchangée (CV12-3)
+> rm -f note-lecture-mecanique-vNN.md note-lecture-mecanique-vNN.md.sha256
+> emp_lec=$(sha256sum lecture-mecanique-reelle-vNN.json | cut -d' ' -f1)
+> set +e; MESURE_INSTANCE="test R5" bash commandes-lecture-reelle-vNN.sh LECTURE_SEULE COMMITTEST >/dev/null 2>&1; rc=$?; set -e
+> [ "$rc" = 0 ] || echec "(B3 bis) note supprimée, lecture scellée : attendu 0, obtenu $rc"
+> [ -e note-lecture-mecanique-vNN.md.sha256 ] || echec "(B3 bis) la note n'est pas scellée"
+> emp_lec2=$(sha256sum lecture-mecanique-reelle-vNN.json | cut -d' ' -f1)
+> [ "$emp_lec" = "$emp_lec2" ] || echec "(B3 bis) la lecture scellée a été réécrite"
+> # (B3 ter) note supprimée, lecture corrompue → refus, aucune note (CV12-3)
+> cp lecture-mecanique-reelle-vNN.json lecture-mecanique-reelle-vNN.json.sauve
+> cp lecture-mecanique-reelle-vNN.json.sha256 lecture-mecanique-reelle-vNN.json.sha256.sauve
+> rm -f note-lecture-mecanique-vNN.md note-lecture-mecanique-vNN.md.sha256
+> printf ' ' >> lecture-mecanique-reelle-vNN.json
+> set +e; MESURE_INSTANCE="test R5" bash commandes-lecture-reelle-vNN.sh LECTURE_SEULE COMMITTEST >/dev/null 2>&1; rc=$?; set -e
+> [ "$rc" != 0 ] || echec "(B3 ter) lecture corrompue : attendu ≠ 0, obtenu $rc"
+> [ ! -e note-lecture-mecanique-vNN.md ] || echec "(B3 ter) une note a été écrite malgré la lecture corrompue"
+> mv lecture-mecanique-reelle-vNN.json.sauve lecture-mecanique-reelle-vNN.json
+> mv lecture-mecanique-reelle-vNN.json.sha256.sauve lecture-mecanique-reelle-vNN.json.sha256
+71c91
+< echo "test-lecture-seule : (A) garde isolée 0/7 ; (B) mode LECTURE_SEULE 8 (commit), 0 (sain, note refaite), 7 (déjà scellée), 6 (sans sortie) — conformes"
+---
+> echo "test-lecture-seule : (A) garde isolée 0/7 ; (B) mode LECTURE_SEULE 8 (commit), 0 (sain, note refaite), 7 (déjà scellée), 0 (note supprimée, lecture scellée), ≠0 (lecture corrompue), 6 (sans sortie) — conformes"
+code : 1
+
+# occurrences de v12 restantes dans le test v13 :
+6:#   (A) la garde isolée garde-lecture-seule-v12.sh en direct : note absente → 0 (cas sain), note scellée → 7 (artefact) ;
+27:set +e; bash "$SRC/garde-lecture-seule-v12.sh" "$TMPG/note.md" >/dev/null 2>&1; rc=$?; set -e
+30:set +e; bash "$SRC/garde-lecture-seule-v12.sh" "$TMPG/note.md" >/dev/null 2>&1; rc=$?; set -e
+37:         garde-trace-reelle-v12.sh test-garde-trace-v12.sh garde-lecture-seule-v12.sh test-lecture-seule-v13.sh \
+
+# ligne de la comparaison du commit dans la séquence v13 et v12 (g2) :
+commandes-lecture-reelle-v13.sh:71:  [ "$($PY -I -B -c "import json;print(json.load(open('sortie-reelle-v13.json'))['manifeste']['commit'])")" = "$COMMIT" ] || { echo "commit ≠ manifeste de la sortie" >&2; exit 8; }
+commandes-lecture-reelle-v12.sh:71:  [ "$($PY -I -B -c "import json;print(json.load(open('sortie-reelle-v12.json'))['manifeste']['commit'])")" = "$COMMIT" ] || { echo "commit ≠ manifeste de la sortie" >&2; exit 8; }
+commandes-lecture-reelle-v11.sh:68:  [ "$($PY -I -B -c "import json;print(json.load(open('sortie-reelle-v11.json'))['manifeste']['commit'])")" = "$COMMIT" ] || { echo "commit ≠ manifeste de la sortie" >&2; exit 8; }
+# renvoi « ligne 68 » dans les tests :
+test-lecture-seule-v12.sh:51:# (B1) commit ≠ manifeste → 8 (note pas encore écrite ; la garde isolée laisse passer, puis le commit est comparé, ligne 68)
+test-lecture-seule-v13.sh:53:# (B1) commit ≠ manifeste → 8 (note pas encore écrite ; la garde isolée laisse passer, puis le commit est comparé, ligne 68)

@@ -1,0 +1,116 @@
+--- commande_argon_v56_nuit_v4.py (sha256 5c6d5149586cbb20061f555de80f2a8043904f4fc685aeedd8dc477b6e494081)
++++ commande_argon_v56_nuit_v5.py
+@@ -1,7 +1,49 @@
+ #!/usr/bin/env python3
+-"""Commande externe d'Argon (gemini-4-argon) pour le tour fermé, étage 1 (orchestrateur v63) — v4.
++"""Commande externe d'Argon (gemini-4-argon) pour le tour fermé, étage 1 (orchestrateur v64) — v5.
+ 
+-Version 4, rédigée le 3 novembre 2026 (sous-agent de session-depot) ; rien n'a été lancé par le rédacteur. **Version 4 =
++Version 5, rédigée le 3 novembre 2026 (sous-agent de session-depot) ; rien n'a été lancé par le rédacteur. **Version 5 =
++`commande_argon_v56_nuit_v4.py` (sha256 `5c6d5149…`, inchangée, R12) avec trois changements dans la seule sous-commande
++`appeler`, et seulement ceux-là** (demande du directeur, conv-audit, n° 393, § 4 ; bloquant B11 et important I33 de la
++contre-lecture courte du préenregistrement du tour fermé, brouillon 6 : dépôt public `ideation-organism`, commit `d54b85c`,
++`orchestrator/prereg/contre-lecture-courte-preenregistrement-tour-ferme-v6.md`) :
++
++1. **Le code 4 « rien envoyé » est réservé au refus que la session porte en elle-même (B11)** : la cause `plafond_session`
++   seule, quand le pire cas de l'appel, à la sortie minimale du rôle, passe `PLAFOND_SESSION_USD` (ses deux contrôles,
++   inchangés). **Tout autre refus sort en code 3 au plancher, rien parti** (`envoye: false`, coût 1e-6), `cause_refus`
++   gardée sur la ligne pour le registre et l'audit : les refus du registre partagé (`garde_etape`, `garde_cumulee`,
++   `registre_illisible`, code 4 en v4) et les refus 402 et 429 du relais Argon (`relais_plafond`, `relais_max_appels`,
++   code 4 de la v2 à la v4). Le relais Argon (`servir`) ne transmet jamais un statut de l'interface (une erreur de Gemini
++   lui revient en réponse 200 portant `echec`, code 3 de la commande, inchangé) : tout 402 ou 429 reçu est un refus du
++   relais lui-même. Lecture par l'adaptateur v64 (`pole/adaptateur_commande_v64.py` l. 119-129, dépôt public, commit
++   `eaa74ca`) : un code 4 dont la dernière ligne porte le booléen `envoye: false` est lu « budget_depasse » (fin des tours
++   de la carte) ; tout autre code non nul est lu « erreur » (arrêt de la course). `cause_refus` est présente sur les six
++   causes de `CAUSES_REFUS` (code 4 ou 3), et sur elles seules.
++2. **La dernière ligne d'un code 4 ne porte ni `modele_servi`, ni `refus`, ni `stop_reason` (I33).** Raison, lue dans
++   `pole/adaptateurs.py` (gelé, sha256 `a1a8ede8…`) : sur un code non nul, `AdaptateurCommandeExterne.lancer` (l. 750-760)
++   appelle `controle_modele(objet, modele, seulement_si_dit=True)` dès que la ligne est conforme (texte, coût fini > 0 : le
++   plancher l'est), avant que la v64 ne voie le code ; un `refus` vrai, un `stop_reason` « refusal », une clé
++   `modele_servi` nulle, vide ou différente du modèle demandé (l. 686-699) y font un refus R-764, statut « refus », que la
++   v64 ne lit pas « budget_depasse » (elle ne change que le statut « erreur », l. 123) : arrêt. Les deux seules sorties en
++   code 4 de `appeler` (les deux contrôles du plafond de session) ne portent que `texte`, `cout_usd`, `version`, `erreur`,
++   `envoye`, `role` et `cause_refus`, comme en v4 ; la v5 le dit ici, et ses essais le contrôlent sur toute ligne de
++   code 4. **Fenêtre d'entrée du modèle : la commande ne la contrôle pas** (ni en v4 ni en v5 : seul le pire cas en dollars
++   est jugé avant envoi ; le relais borne seulement le corps, `MAX_OCTETS_CORPS`, 413, code 3) ; ce contrôle n'est pas
++   ajouté.
++3. **Version** `commande-argon-v56-nuit-v5`, cet en-tête (différences numérotées, historiques gardés en dessous) et les
++   lignes d'usage. Rien d'autre ne change : clé d'étape propre au fournisseur, bornes de sortie par rôle, ligne JSON sur un
++   refus d'argparse, mêmes gardes, même pire cas, même registre (`registre_depense_cumulee_v1.py`, sha256 `8ba92066…`),
++   même protocole vers le relais local 8805, mêmes codes hors le point 1.
++
++**Sous-commande `servir` (le relais Argon local, port 8805) : identique à la v4 (donc à la v3 et à la v2) au comportement
++près, et octet pour octet hors la constante `VERSION`.** Le bloc compris entre la ligne-marqueur du relais (« relais
++(sous-commande `servir`) ») et celle de la commande est identique octet pour octet à celui de la v4 ; les constantes et
++fonctions qu'il lit (`HOTE`, `COLLISIONNEUR_DEFAUT`, `SHA_COLLISIONNEUR`, `PRIX`, `MAX_OCTETS_CORPS`, `pire_cas`,
++`maintenant`) sont inchangées ; la fonction `principal` (sous-analyseur `servir`, aiguillage, refus d'argparse de `servir`
++relevé tel quel) est identique octet pour octet à celle de la v4. Seule `VERSION`, partagée par les deux sous-commandes,
++change (champ `version` de `GET /relais/etat`, en-tête `Server`). Le relais 8805 est un instrument gelé d'A1-v3 : il est
++et restera servi depuis `commande_argon_v56_nuit_v2.py` ; cette version ne sert qu'en `appeler`.
++
++Historique de la version 4 — rédigée le 3 novembre 2026 (sous-agent de session-depot). **Version 4 =
+ `commande_argon_v56_nuit_v3.py` (sha256 `95fa4064…`, inchangée, R12) avec quatre changements dans la seule sous-commande
+ `appeler`, et seulement ceux-là** (contre-lecture neuve de la v3,
+ `contre-lecture-v3/contre-lecture-commandes-tour-ferme-v3-v1.md`, sha256 `6b4eac8b…` : bloquant B1 et mineur 1 ; cause
+@@ -111,8 +153,10 @@
+ `candidatesTokenCount` + `thoughtsTokenCount` à la sortie, fonction `cout` du collisionneur) ; échec ou usage absent (entrée
+ nulle) → pire cas ; rien envoyé → plancher 1e-6.
+ 
+-Codes (`appeler`) : 0 conforme ; 2 réglage ou entrée refusés ; 3 relais ou interface (HTTP, connexion) ; 4 pire cas
+-au-dessus d'un plafond (session, étape, cumulé, relais) ou registre illisible — rien envoyé, champ `cause_refus` (v4) ;
++Codes (`appeler`, v5) : 0 conforme ; 2 réglage ou entrée refusés ; 3 relais ou interface (HTTP, connexion), et tout refus
++sans envoi qui tient à l'état du relais ou de la commande — garde d'étape, garde cumulée, registre illisible, 402 et 429
++du relais — au plancher, `envoye: false` ; 4 pire cas au-dessus du plafond de session, seul refus que la session porte en
++elle-même — rien envoyé ; champ `cause_refus` sur les six causes de `CAUSES_REFUS` (code 4 ou 3) et sur elles seules ;
+ 5 réponse non conforme (vide, tronquée, refus du modèle, anomalie, modèle servi différent, coût au-dessus du pire cas
+ réservé) ; 6 délai dépassé ou interruption.
+ Codes (`servir`) : 2 réglage refusé (clé absente, collisionneur à empreinte différente, modèle non permis) ; sinon sert
+@@ -122,7 +166,7 @@
+   env -i PATH=/usr/bin:/bin LANG=C.UTF-8 GEMINI_API_KEY="$GEMINI_API_KEY_2" HTTPS_PROXY=… SSL_CERT_FILE=… \\
+       python3 -I -B commande_argon_v56_nuit_v2.py servir --port 8805 --plafond-usd 10 --max-appels 50 --journal J.jsonl
+                                      (relais 8805 : servi depuis la v2, instrument gelé d'A1-v3 ; `servir` d'ici est identique)
+-  python3 -I -B commande_argon_v56_nuit_v4.py appeler --url-relais http://127.0.0.1:8805 --registre R.jsonl \\
++  python3 -I -B commande_argon_v56_nuit_v5.py appeler --url-relais http://127.0.0.1:8805 --registre R.jsonl \\
+       --plafond-cumule-usd 50 [--max-sortie-proposeur 32000] [--max-sortie-court 4000] [--sortie-min-jetons 1000] \\
+       [--max-sortie-lecteur 1000] [--sortie-min-jetons-lecteur 200] [--delai-s 1750]
+                                      (consigne sur l'entrée standard ; environnement fourni par l'orchestrateur)
+@@ -149,7 +193,7 @@
+ sys.path.insert(0, ICI)  # -I n'ajoute pas le dossier du script : le registre partagé est chargé d'ici
+ import registre_depense_cumulee_v1 as reg  # noqa: E402
+ 
+-VERSION = "commande-argon-v56-nuit-v4"
++VERSION = "commande-argon-v56-nuit-v5"
+ ROLES = ("proposeur_ideation", "juge_ideation", "experimentateur_test", "lecteur_test")  # v3 (1)
+ PLANCHER = 1e-6
+ HOTE = "127.0.0.1"
+@@ -331,8 +375,8 @@
+ # --- commande (sous-commande `appeler`) ------------------------------------------------------------------------------------
+ 
+ CAUSES_REFUS = ("plafond_session", "garde_etape", "garde_cumulee", "registre_illisible", "relais_plafond",
+-                "relais_max_appels")  # v4 (2) : valeurs de `cause_refus`, présent sur toute sortie en code 4 et sur elle seule
+-CAUSES_RELAIS = {402: "relais_plafond", 429: "relais_max_appels"}  # v4 (2) : refus du relais lui-même, rien envoyé
++                "relais_max_appels")  # v4 (2), v5 (1) : valeurs de `cause_refus` ; code 4 pour `plafond_session`, 3 sinon
++CAUSES_RELAIS = {402: "relais_plafond", 429: "relais_max_appels"}  # v4 (2) : refus du relais lui-même ; v5 (1) : code 3
+ PREFIXE_GARDE_ETAPE = "garde d'étape ("  # v4 (2) : registre_depense_cumulee_v1.py l. 143 (fichier gelé, sha256 8ba92066…)
+ 
+ 
+@@ -426,7 +470,7 @@
+         ident = reg.reserver(args.registre, plafond_cumule_usd=args.plafond_cumule_usd, pire_cas_usd=pire, fournisseur="argon",
+                              role=role, modele=args.modele, etape=etape_registre, plafond_etape_usd=plafond_dur)  # v4 (1)
+     except (reg.PlafondCumule, reg.RegistreIllisible, OSError) as e:
+-        rendre(4, erreur=str(e)[:300], envoye=False, cause_refus=cause_du_registre(e), **diag)  # v4 (2)
++        rendre(3, erreur=str(e)[:300], envoye=False, cause_refus=cause_du_registre(e), **diag)  # v4 (2) ; v5 (1) : code 3
+ 
+     def fin(code, texte="", cout=PLANCHER, origine="plancher", statut="echec", **extra):
+         envoye = extra.pop("envoye", True)
+@@ -454,8 +498,8 @@
+     except urllib.error.HTTPError as e:
+         motif = e.read()[:300].decode("utf-8", "replace")
+         avant = e.code in (400, 402, 403, 411, 413, 429)  # refus du relais : rien n'est parti vers l'interface
+-        extra = {"cause_refus": CAUSES_RELAIS[e.code]} if e.code in CAUSES_RELAIS else {}  # v4 (2) : 402 et 429, code 4
+-        fin(4 if e.code in (402, 429) else 3, cout=PLANCHER if avant else pire, origine="plancher" if avant else "pire_cas",
++        extra = {"cause_refus": CAUSES_RELAIS[e.code]} if e.code in CAUSES_RELAIS else {}  # v4 (2) : 402 et 429
++        fin(3, cout=PLANCHER if avant else pire, origine="plancher" if avant else "pire_cas",  # v5 (1) : code 3 ; 4 en v4
+             erreur=f"HTTP {e.code} : {motif}", envoye=not avant, **extra)
+     except urllib.error.URLError as e:
+         if isinstance(e.reason, ConnectionRefusedError):

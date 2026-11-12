@@ -1,0 +1,399 @@
+<!doctype html>
+<html lang="fr">
+<head>
+<meta charset="utf-8">
+<title>Programme, bras d'attaque et organismes : ce qu'il faut produire pour l'entretien</title>
+<style>
+  @page { size: A4; margin: 18mm 17mm 20mm 17mm; }
+  :root {
+    --encre: #1d2330;
+    --doux: #5a6272;
+    --filet: #d6dae2;
+    --fond: #f4f6f9;
+    --accent: #1f4e8c;
+    --fait: #1e6b45;   --fait-fond: #e3f2ea;
+    --cours: #8a5a00;  --cours-fond: #fbf0d9;
+    --faire: #3b4a63;  --faire-fond: #e8ecf3;
+    --bloque: #9b1c1c; --bloque-fond: #fbe4e4;
+    --decide: #4b2a86; --decide-fond: #ece5f8;
+  }
+  * { box-sizing: border-box; }
+  html { -webkit-print-color-adjust: exact; print-color-adjust: exact; }
+  body { margin: 0; color: var(--encre); background: #fff;
+         font-family: "Bitstream Charter", "Caladea", "DejaVu Serif", serif; font-size: 10.2pt; line-height: 1.42; }
+  h1, h2, h3, .chip, table, .cartouche, .titre, .sous, .meta, .encadre .etiquette { font-family: "Inter", "DejaVu Sans", sans-serif; }
+  .titre { font-size: 21pt; font-weight: 700; line-height: 1.15; letter-spacing: -0.01em; margin: 0 0 6pt; color: var(--encre); }
+  .sous { font-size: 12pt; font-weight: 500; color: var(--accent); margin: 0 0 10pt; }
+  .meta { font-size: 8.6pt; color: var(--doux); margin: 0 0 12pt; }
+  .cartouche { border-left: 3pt solid var(--accent); background: var(--fond); padding: 7pt 10pt; font-size: 8.8pt; color: var(--doux); margin: 0 0 14pt; }
+  h2 { font-size: 13.5pt; font-weight: 700; color: var(--accent); margin: 18pt 0 6pt; padding-bottom: 3pt; border-bottom: 1pt solid var(--filet); break-after: avoid; }
+  h3 { font-size: 10.6pt; font-weight: 600; margin: 11pt 0 4pt; break-after: avoid; }
+  p { margin: 0 0 6pt; }
+  ul, ol { margin: 0 0 7pt; padding-left: 15pt; }
+  li { margin: 0 0 2.5pt; }
+  table { width: 100%; border-collapse: collapse; font-size: 8.3pt; line-height: 1.32; margin: 4pt 0 9pt; break-inside: auto; }
+  thead { display: table-header-group; }
+  tr { break-inside: avoid; }
+  th { text-align: left; font-weight: 600; background: var(--fond); color: var(--encre); padding: 4pt 5pt; border-bottom: 1pt solid var(--filet); vertical-align: bottom; }
+  td { padding: 4pt 5pt; border-bottom: 0.6pt solid var(--filet); vertical-align: top; }
+  .chip { display: inline-block; font-size: 7.2pt; font-weight: 600; padding: 1pt 5pt; border-radius: 6pt; white-space: nowrap; }
+  .fait { color: var(--fait); background: var(--fait-fond); }
+  .cours { color: var(--cours); background: var(--cours-fond); }
+  .faire { color: var(--faire); background: var(--faire-fond); }
+  .bloque { color: var(--bloque); background: var(--bloque-fond); }
+  .decide { color: var(--decide); background: var(--decide-fond); }
+  .encadre { border: 1pt solid var(--filet); border-radius: 4pt; padding: 8pt 10pt; margin: 6pt 0 10pt; break-inside: avoid; }
+  .encadre .etiquette { font-size: 8pt; font-weight: 700; text-transform: uppercase; letter-spacing: 0.06em; color: var(--accent); margin-bottom: 3pt; }
+  .src { font-family: "JetBrains Mono", "DejaVu Sans Mono", monospace; font-size: 7.3pt; color: var(--doux); }
+  code { font-family: "JetBrains Mono", "DejaVu Sans Mono", monospace; font-size: 7.6pt; }
+  .saut { break-before: page; }
+  .petit { font-size: 8.6pt; color: var(--doux); }
+  .flux { font-family: "Inter", "DejaVu Sans", sans-serif; font-size: 8.4pt; display: flex; flex-wrap: wrap; gap: 3pt; align-items: center; margin: 4pt 0 8pt; }
+  .flux span.b { border: 1pt solid var(--filet); background: var(--fond); padding: 3pt 6pt; border-radius: 3pt; }
+  .flux span.f { color: var(--doux); }
+</style>
+</head>
+<body>
+
+<div class="titre">Programme de contrôle boîte blanche des menaces diffuses</div>
+<div class="sous">Ce qu'il faut produire pour l'entretien — bras d'attaque et organismes intégrés, en revenant aux premiers principes</div>
+<div class="meta">10 novembre 2026 · version 2 · session-dépôt · la version 1 (<code>95f6dcc8…</code> en PDF) plus la liste « ce qui manque » et un encadré d'état daté de 11 h UTC ; ajouts à contre-lire</div>
+<div class="cartouche">Chaque affirmation renvoie à une pièce du dépôt (section 9). L'état du travail de la session mère est repris de <code>registres/etat.md</code> (10 novembre, 04:58 UTC) et du programme d'entretien v18 (9 novembre) ; il a pu bouger depuis. Rien du coffre n'est cité. Aucun chiffre des courses exploratoires n'est repris.</div>
+
+<h2>0. En une page</h2>
+
+<div class="encadre">
+  <div class="etiquette">Premier principe</div>
+  <p>Un jury de bourse ne paie pas un résultat : il paie un <b>pari</b>. Il vérifie trois choses : le problème compte ; le pari est bien posé, c'est-à-dire que ses deux issues apprennent quelque chose ; l'équipe exécute avec intégrité. Un résultat « positif et rigoureux » est donc ici une <b>prédiction écrite avant les données, datée par un tiers, qui pouvait échouer, qui s'est vérifiée, et que d'autres peuvent refaire</b>.</p>
+</div>
+
+<p><b>Ce qui portera l'entretien : une chaîne de quatre prédictions</b>, chacune pouvant casser — c'est ce qui rend l'ensemble fort — plus cinq trous d'intégrité fermés avant que le jury ne les trouve.</p>
+
+<table>
+  <thead><tr><th style="width:24%">Maillon</th><th style="width:44%">Ce qu'il montre au jury</th><th style="width:32%">État au 10 novembre</th></tr></thead>
+  <tbody>
+    <tr><td><b>1. Théorie → simulation</b></td><td>Les 31 prédictions de la simulation du lemme et du théorème se sont vérifiées (342 cellules statistiques et 544 de trajectoire, aucune contraire).</td><td><span class="chip fait">Fait, scellé</span> verdict formel par un lecteur neuf <span class="chip cours">en cours</span> — jamais prononcé jusqu'ici</td></tr>
+    <tr><td><b>2. Simulation → activations réelles</b> (« mesure unanime »)</td><td>Sur les scores réels de 30 sondes, une dépendance que le calibrage n'a pas vue fait perdre leur garantie de fausses alertes aux statistiques de somme, pas au maximum : le signe que prédit le théorème négatif. Promis au fonds (texte envoyé, l. 146).</td><td><span class="chip cours">Version 15 en cours</span> contre-lue par un autre modèle : trois phrases de texte à corriger, ni plomberie ni science ; puis scellement, gel chez un tiers, une seule course sur processeur, sans dépense</td></tr>
+    <tr><td><b>3. Harnais → littérature</b></td><td>L'attaque publiée de Bailey et collègues, rejouée sur notre harnais, retrouve l'effet publié.</td><td><span class="chip decide">Choisie, feu vert</span> <span class="chip bloque">Bloquée</span> le code publié n'a aucune licence</td></tr>
+    <tr><td><b>4. Juge statistique sous attaque</b></td><td>Le juge réparé de l'organisme d'idéation tient, ou non, face à une attaque de Goodhart (course A1-v4).</td><td><span class="chip cours">En course</span> verdict vers le 12 novembre</td></tr>
+  </tbody>
+</table>
+
+<p><b>Les cinq trous d'intégrité à fermer d'abord</b> (les moins chers, les plus dangereux s'ils restent ouverts) : la revue de sécurité externe (« pas encore commandée » dans le brouillon d'entretien, « faite » au registre) ; le « mode caché », dont les candidats sont nommés en clair dans deux lignes du registre ; la phrase sur la séparation du bras d'attaque, qui l'affirme trop tant que personne n'est désigné pour jouer l'attaquant informé ; le dépôt chez le tiers, privé et non figé ; la dépense, d'au moins 645,42 dollars au 8 novembre et non « environ 20 ».</p>
+
+<p><b>Date :</b> le 20 ou le 27 novembre selon l'avancement (mot de Lazar du 10 novembre). On vise le 20 ; le 27 si un maillon n'est pas prêt.</p>
+
+<div class="encadre">
+  <div class="etiquette">État au 10 novembre, 11 h UTC — prime sur les cellules plus anciennes de ce document</div>
+  <ol class="petit">
+    <li><b>Simulation du lemme et du théorème</b> : le verdict formel du lecteur neuf est prononcé, « T0.3 : confirmé avec réserves » <span class="src">verdict T0.3 v1, l. 10</span>. Les mentions « verdict formel en cours » ou « non prononcé » (sections 0, 2 et 5) sont dépassées.</li>
+    <li><b>Mesure unanime</b> : la version 15 est scellée (<code>3a1651f4…</code>) et datée chez le tiers à 09:44:58 UTC <span class="src">passation 10 nov. 09:46, l. 19</span>. Elle a couru une seule fois, de 10:01:43 à 10:33:16 UTC, avec le code de sortie 0 <span class="src">passation 10 nov. 10:36, l. 6</span>. Son verdict est prononcé par un lecteur neuf et scellé en quarantaine (<code>7d19704d…</code>) <span class="src">passation 10 nov. 10:46, l. 11-12</span>. L'issue est tenue à l'écart jusqu'aux scellements de T0.7 et de P3-bis ; aucun résultat n'entre dans ce document.</li>
+    <li><b>Dépôt chez le tiers</b> : 164 fichiers à 09:44:58, puis 167 à 10:32:17 UTC, dont la règle scellée du bras d'attaque. Le projet reste privé et non figé <span class="src">passation 10 nov. 09:46, l. 10, 19 ; passation 10 nov. 10:33, l. 12-19</span>.</li>
+    <li><b>Bras d'attaque</b> : la session « attaquant informé » existe et a scellé la règle du bras (<code>88418df0…</code>) <span class="src">index du bras v3, l. 14-23</span>. Pour la licence de Bailey, le courriel aux auteurs est prêt ; l'envoyer est ton geste <span class="src">note 1050 de la session du bras, branche claude/compassionate-meitner-d4ryyk, commit a1bd02c9</span>.</li>
+    <li><b>Calibration de nos prédictions</b> : la table automatique (0,783) porte des issues mal attribuées, relevées par une contre-lecture <span class="src">contre-lecture du registre des prédictions, l. 13-17</span>. Ne pas citer ce taux tel quel ; un recompte relu contre les verdicts est en cours.</li>
+  </ol>
+</div>
+
+<h2 class="saut">Ce qui manque pour rassurer le jury sur « l'approche peut marcher » — v1</h2>
+<p>État relevé le 10 novembre 2026 à 10:46 UTC (<code>date -u</code>), session mère. Entretien visé le 27 novembre 2026, à confirmer avec le fonds. Cette liste ne porte aucun résultat de surveillant ni de sonde : seulement ce qui doit exister, sa date et son état. Elle est à insérer telle quelle dans chaque document qui explique le programme.</p>
+<p><b>Ce qui est dit d'abord au jury :</b> aucune sonde n'a encore battu un surveillant de référence, et l'existence d'une trace interne du sabotage n'est pas établie. Le programme ne peut pas promettre une réponse positive ; il traite la question par des expériences préenregistrées dont l'issue est écrite d'avance dans les deux sens.</p>
+<p><b>Priorités fixées par Lazar le 10 novembre :</b> d'abord la ligne 5, puis les lignes 4, 7 et 8.</p>
+<table>
+  <tr><th>n°</th><th>Ce qui manque</th><th>Pourquoi le jury le demandera</th><th>Avant le 27 novembre ?</th><th>État au 10 novembre</th></tr>
+  <tr><td>1</td><td>La chaîne de sondes retrouve un signal planté, et se tait sur son jumeau honnête (témoin positif).</td><td>Sans cela, un résultat nul ne dit rien : la chaîne pourrait être aveugle.</td><td>Oui : lu le 20 novembre au plus tard.</td><td>Texte au brouillon 11 ; code validé par une contre-lecture ; course à créer au plus tard le 18.</td></tr>
+  <tr><td>2</td><td>Un saboteur sans consigne, dont l'effet sur le coût croît avec la dose (course de confirmation).</td><td>Le seul saboteur existant recevait une consigne, que la sonde lisait.</td><td>Oui : verdict du 16 au 18.</td><td>Texte scellé ; course à créer au plus tard le 15.</td></tr>
+  <tr><td>3</td><td>À ces doses, le texte seul ne suffit pas à repérer le sabotage (surveillants externes de référence).</td><td>Si lire le texte suffit, lire l'intérieur n'apporte rien.</td><td>Possible : vers le 20 ou le 21.</td><td>Premier brouillon du texte en rédaction.</td></tr>
+  <tr><td>4</td><td>Une sonde au-dessus du hasard à ces doses.</td><td>C'est la première preuve que la trace existe.</td><td>Possible, sans marge ; dépend des lignes 1 à 3 et du scellement du texte des sondes.</td><td>Texte des sondes au brouillon 21 ; scellement visé avant le 13.</td></tr>
+  <tr><td>5</td><td>La sonde lit le sabotage, et non le simple fait qu'un adaptateur est actif.</td><td>Le saboteur sans consigne est un adaptateur ajouté aux poids ; l'honnête est le modèle nu. Une sonde pourrait ne lire que cette différence.</td><td>À établir en premier.</td><td>Aucun témoin « adaptateur honnête » trouvé dans le texte scellé de la course (recherche par mots, vérification sur texte en cours) ; remèdes à l'étude : contraste au sein d'une même dose, témoin distillé honnête.</td></tr>
+  <tr><td>6</td><td>La puissance de cette lecture, écrite avant de lire.</td><td>Un résultat nul doit dire quel effet il exclut.</td><td>Oui.</td><td>À vérifier dans le texte des sondes.</td></tr>
+  <tr><td>7</td><td>Un résultat positif déjà publié, reproduit sur notre chaîne (banc public).</td><td>Preuve, hors de nous, que la chaîne sait voir ce que d'autres ont vu.</td><td>Possible.</td><td>Texte au brouillon 4, contre-lu trois fois ; code à écrire ; dépense à autoriser sur devis.</td></tr>
+  <tr><td>8</td><td>Un sabotage vraiment diffus : chaque action dans la plage honnête, le dommage dans l'ensemble seulement (saboteur à budget).</td><td>Le saboteur actuel peut être flagrant ; la thèse porte sur le diffus.</td><td>Incertain ; exploratoire.</td><td>Conçu et contre-lu une fois ; code à écrire ; dépense à autoriser sur devis.</td></tr>
+  <tr><td>9</td><td>Des témoins de concepts : la sonde ne réagit pas à un sujet quelconque.</td><td>Contrôle de validité.</td><td>Incertain.</td><td>Deux concepts sur quatre acceptés, deux refusés deux fois ; nouvelle consigne en rédaction ; le texte des sondes prévoit un repli sans eux.</td></tr>
+  <tr><td>10</td><td>Le jeu d'entraînement de la sonde du domaine « coût gonflé ».</td><td>Sonde la plus proche du sabotage étudié.</td><td>Incertain.</td><td>Refusé pour un indice de surface ; une dernière réécriture est permise.</td></tr>
+  <tr><td>11</td><td>La preuve datée, chez un tiers, que chaque préenregistrement précède ses données.</td><td>Seule vérification possible sans nous.</td><td>Oui.</td><td>Empreintes déposées en privé ; à rendre public et à geler.</td></tr>
+</table>
+<p>Sources : <code>registres/decisions.md</code>, R-2116 à R-2162 ; <code>brouillons/entretien-taif-v3/socle-preuves-entretien-v2.md</code>.</p>
+
+<p class="petit">Liste insérée telle quelle : session mère, <span class="src">docs/notes/rapports-directeur/ce-qui-manque-approche-peut-marcher-v1.md</span> (<code>edb0bf03…</code>, main 983dd664).</p>
+
+<h2>1. Les premiers principes</h2>
+
+<h3>1.1 Le problème</h3>
+<p>Des agents d'intelligence artificielle font déjà du travail autonome ; ici, écrire et réviser des propositions d'expériences d'apprentissage automatique. Un <b>sabotage diffus</b> est un biais systématique réparti sur beaucoup d'actions, chacune innocente prise seule : directions stériles, contrôles affaiblis, choix coûteux gonflés (texte envoyé, section 4). Un moniteur qui juge action par action ne peut pas le voir, par construction.</p>
+
+<h3>1.2 Le pari</h3>
+<p>Deux idées jointes : <b>lire l'intérieur du modèle</b> (ses activations) plutôt que son seul texte, et <b>accumuler la preuve dans le temps</b>, avec une garantie de fausses alertes valable à tout instant. La question pivot : chez un organisme réaliste, le sabotage déplace-t-il la loi des scores des sondes ? Si oui, le lemme d'additivité s'applique et l'accumulation doit marcher. Si non, le théorème négatif dit quel agrégateur il faut, et quand une surveillance fondée sur les seules lois des scores doit échouer. Le texte envoyé le dit : « both outcomes are publishable » (l. 100).</p>
+
+<h3>1.3 Ce que le jury achète, et ce qui y répond</h3>
+<table>
+  <thead><tr><th style="width:30%">Question du jury</th><th>Ce qui y répond</th></tr></thead>
+  <tbody>
+    <tr><td>Le problème compte-t-il ?</td><td>La menace diffuse est celle qui échappe aux moniteurs actuels, action par action ; le programme la rend mesurable.</td></tr>
+    <tr><td>Le pari est-il bien posé ?</td><td>Les deux issues de la question pivot sont publiables ; le théorème dit d'avance ce qui doit échouer ; la chaîne des quatre prédictions le montre sur pièces.</td></tr>
+    <tr><td>L'équipe exécute-t-elle avec intégrité ?</td><td>Préenregistrements scellés et contre-lus, dates posées par un tiers, résultats négatifs rapportés, bras d'attaque aux rôles séparés, trous d'intégrité fermés avant d'être trouvés.</td></tr>
+  </tbody>
+</table>
+
+<h3>1.4 Ce qu'on ne dit jamais</h3>
+<ul>
+  <li>« Nos sondes détectent le sabotage » : aucune sonde n'a encore battu une base ; la trace interne n'est pas établie (v18, l. 96-97).</li>
+  <li>« Red-teamed » au passé, un contenu ou une recette d'attaque, un nombre de refus de classifieur (consigne v19, l. 55-56).</li>
+  <li>Un chiffre des courses exploratoires (course 7a, épreuve v2 de l'étiqueteur, synthèses du collisionneur, fiches de l'organisme d'idéation).</li>
+</ul>
+
+<h2 class="saut">2. Le programme tel qu'envoyé au fonds (7 octobre 2026)</h2>
+
+<h3>2.1 La théorie</h3>
+<p><b>Lemme d'additivité, forme adverse.</b> L'attaquant répartit un budget total de déplacement sur les agents, les pas, le calendrier et les positions, éventuellement de façon adaptative. La somme terminale se déplace exactement du budget, quelle que soit la répartition ; le maximum par action s'effondre quand le budget se fragmente. Une borne qui ne dépend que du budget et de l'horizon vaut pour tout calendrier. « Alerter avant le dommage » demande un détecteur de changement, pas seulement un cumul (texte envoyé, l. 58-67).</p>
+<p><b>Théorème négatif, par invariance.</b> Une attaque qui préserve le multiset des scores à une permutation près rend aveugle toute statistique invariante (maximum, moyenne, somme, compte au-dessus d'un seuil). Sous échangeabilité des scores honnêtes, un réarrangement suivi d'un brassage uniforme rend l'attaque exactement honnête en loi. Les statistiques locales gardent une garantie. Deux classes : préserver le multiset (C) ; préserver les lois marginales en changeant la dépendance (K), où, sous dépendance positive, les sommes montent au-dessus de leur taux de fausses alertes et le maximum non (l. 74-83). Ce qui est revendiqué : l'unification du temps et des agents par sous-groupes de permutations, la distinction C/K et ses conséquences de signe, les garanties locales contre un attaquant adaptatif, et « avant tout, la mesure sur activations réelles » (l. 84-87).</p>
+
+<h3>2.2 Trois papiers</h3>
+<table>
+  <thead><tr><th style="width:15%"></th><th>Papier A — le temps</th><th>Papier C — l'instrument</th><th>Papier B — l'essaim</th></tr></thead>
+  <tbody>
+    <tr><td><b>Question</b></td><td>La preuve interne s'accumule-t-elle quand chaque action est innocente ?</td><td>Le moniteur peut-il être déplacé plutôt qu'évité, et à quel coût ?</td><td>L'accès boîte blanche rend-il l'avantage contre des attaques réparties entre agents ?</td></tr>
+    <tr><td><b>Plan</b></td><td>2 × 2 : accès (boîte noire ou blanche) × agrégation (par action ou séquentielle)</td><td>Loi de déférence sous pression graduée, juges contre sondes</td><td>Statistique spatio-temporelle ; sécurité en fonction du nombre d'agents</td></tr>
+    <tr><td><b>Mois</b></td><td>1 à 7</td><td>1 à 4</td><td>8 à 12, scénario ambitieux seul</td></tr>
+    <tr><td><b>Porte</b></td><td>porte principale, fin du mois 4 (G1)</td><td>fin du mois 2 (GC)</td><td>G2, G3</td></tr>
+  </tbody>
+</table>
+<p><b>Organismes saboteurs</b> (texte envoyé, section 4) : famille (i), une consigne cachée dans l'invite système ; famille (ii), un adaptateur de bas rang qui installe la même politique sans aucune consigne, distillé de (i) ; famille (iii), organismes publics de sous-performance volontaire de 70 milliards de paramètres, scénario ambitieux seul. <b>Moniteurs</b> : cinq familles de sondes, chacune devant battre une sonde aléatoire de même covariance ; une réserve de détecteurs jamais déployés ; des bases boîte noire et quatre bases qui isolent chacune un ingrédient.</p>
+
+<h3>2.3 Calendrier, sept mois à partir du 1<sup>er</sup> décembre 2026</h3>
+<table>
+  <thead><tr><th style="width:13%">Mois</th><th>Travail</th><th style="width:22%">Portes, sorties</th></tr></thead>
+  <tbody>
+    <tr><td>1 — décembre</td><td>Clôture de la phase 0. Papier C : déférence des juges sous cinq familles d'attaque ; sondes sous les mêmes attaques. Papier A : organismes et dose-réponse.</td><td>phase 0 (G0)</td></tr>
+    <tr><td>2 — janvier</td><td>Papier C : imitation, taxe de déplacement. Papier A : plan 2 × 2.</td><td>GC</td></tr>
+    <tr><td>3 — février</td><td>Papier C : contre-mesures, test d'acceptation. Papier A : lemme et théorème sur activations réelles.</td><td>—</td></tr>
+    <tr><td>4 — mars</td><td>Rédaction du papier C. Papier A : fin du plan 2 × 2.</td><td>papier C publié ; G1</td></tr>
+    <tr><td>5-6 — avril, mai</td><td>Papier A : attaques adaptatives (contenu, puis réglage fin et apprentissage par renforcement contre la sonde), interventions, validité et robustesse.</td><td>papier A publié, soumission</td></tr>
+    <tr><td>7 — juin</td><td>Publication du code, des organismes, des sondes et des préenregistrements ; rapport final.</td><td>rapport final</td></tr>
+  </tbody>
+</table>
+<p class="petit">Scénario minimal : arrêt après le mois 4, papier C publié. Si le calendrier glisse, les attaques adaptatives du papier A sont coupées en premier (texte envoyé, l. 338-339).</p>
+
+<h3>2.4 La porte de phase 0 : huit critères (état au 9 novembre, 17:45 UTC)</h3>
+<table>
+  <thead><tr><th style="width:27%">Critère</th><th style="width:16%">État</th><th>Prochain pas</th></tr></thead>
+  <tbody>
+    <tr><td>1. Harnais d'activations</td><td><span class="chip fait">Prouvé, scellé</span></td><td>—</td></tr>
+    <tr><td>2. Organismes à dose-réponse</td><td><span class="chip cours">Ouvert</span></td><td>course 7a faite (exploratoire, aucun chiffre opposable) ; course 7b à créer au plus tard les 14-15 novembre ; verdict vers les 16-18</td></tr>
+    <tr><td>3. Sondes au-dessus du plancher aléatoire</td><td><span class="chip cours">Ouvert</span></td><td>pour l'organisme sans consigne, jugé aux seules doses où la base « mots et coût » échoue ; « sans objet » s'il n'y en a aucune</td></tr>
+    <tr><td>4. Base boîte noire</td><td><span class="chip faire">Ouvert</span></td><td>préenregistrement non écrit ; course sur les épisodes de 7b ; verdict vers les 19-22 au mieux</td></tr>
+    <tr><td>5. Agrégateurs en simulation</td><td><span class="chip fait">Prouvé, scellé</span></td><td>verdict formel rétroactif des 31 prédictions : en cours</td></tr>
+    <tr><td>6. Préenregistrement de la porte principale</td><td><span class="chip cours">Ouvert</span></td><td>brouillon 6 hors de la branche principale ; scellement visé les 28-29 novembre</td></tr>
+    <tr><td>7. Préenregistrement du papier C</td><td><span class="chip cours">Ouvert</span></td><td>brouillon 5 ; un article de référence attendu de Lazar ; contre-lecture, scellement</td></tr>
+    <tr><td>8. État de l'art vérifié</td><td><span class="chip cours">Ouvert</span></td><td>niveaux 1 et 2 faits (3 497 citations contrôlées, aucun échec) ; hors-arXiv et traçabilité à faire</td></tr>
+  </tbody>
+</table>
+<p class="petit">Verdict au plus tard le 30 novembre, 23:59 UTC ; sinon un seul report, verdict final au plus tard le 31 janvier 2027 (v18, section 2.2).</p>
+
+<h2 class="saut">3. Le bras d'attaque, intégré</h2>
+
+<h3>3.1 Pourquoi un bras d'attaque</h3>
+<p>Un moniteur ne vaut que ce qu'il tient face à un adversaire qui le connaît. Sans attaquant, « le moniteur a tenu » peut seulement vouloir dire « l'attaquant était faible » : le texte envoyé écrit lui-même ce risque d'élicitation trop faible (l. 326). Le bras d'attaque <b>n'ajoute aucune revendication</b> : il est l'instrument de six passages que le texte contient déjà — le lemme et le théorème en forme adverse, le passage des jetons aux actions sous attaquant adaptatif, la porte principale, la taxe de déplacement, les contre-mesures et le test d'acceptation du papier C, la riposte de l'essaim (règle du jeu scellée, section 0).</p>
+
+<h3>3.2 L'échelle des accès</h3>
+<table>
+  <thead><tr><th style="width:5%">#</th><th style="width:30%">Ce que l'attaquant connaît ou fait</th><th>À quoi il sert</th><th style="width:20%">Porteur</th></tr></thead>
+  <tbody>
+    <tr><td>0</td><td>pression déclarée, écrite en clair</td><td>déférence des juges et des sondes (papier C)</td><td>pas le bras</td></tr>
+    <tr><td>1</td><td>aveugle : la tâche, aucun moniteur</td><td>la porte principale, mode par mode</td><td>bras aveugle</td></tr>
+    <tr><td>2</td><td>informé : conceptions des moniteurs gelés et protocole, sans retour</td><td>passage jetons → actions ; taxe de déplacement « contexte seul » ; transfert entre juges et sondes</td><td>bras informé</td></tr>
+    <tr><td>3</td><td>informé, avec les verdicts de ses propres essais, en nombre compté</td><td>axe « requêtes » de la taxe ; attaque optimisée du test d'acceptation</td><td><span class="chip decide">Décidé le 10 nov.</span></td></tr>
+    <tr><td>4</td><td>écrit les activations</td><td>taxe de déplacement</td><td>attaque publiée d'abord</td></tr>
+    <tr><td>5-6</td><td>écrit les poids : réglage fin ; renforcement contre la sonde</td><td>attaques adaptatives des mois 5-6, coupées en premier si le calendrier glisse</td><td>bras déclaré, sur autorisation</td></tr>
+  </tbody>
+</table>
+
+<h3>3.3 L'ordre du jeu</h3>
+<p><b>Trois scellements avant toute ouverture du coffre</b> : la règle (préenregistrement du bras) ; la famille aveugle (modes de sabotage écrits par une instance qui n'a vu aucun moniteur) ; les moniteurs (sondes, agrégateurs, seuils, règle de décision). Puis l'attaquant informé écrit contre les conceptions gelées ; <b>les témoins d'abord</b> — un moniteur à faille plantée (l'attaque doit le casser), un nul « honnête contre honnête » (la chaîne ne doit rien fabriquer), l'attaque publiée rejouée (le banc est à l'échelle de la littérature) ; une ouverture unique ; le juge, seul lecteur des recettes ; le retour aux concepteurs se fait par la <b>classe de la faille et l'hypothèse violée</b>, jamais par le texte.</p>
+<table>
+  <thead><tr><th style="width:24%">Rôle</th><th>Lit</th><th>Ne lit jamais</th></tr></thead>
+  <tbody>
+    <tr><td>Concepteur aveugle</td><td>la tâche, l'environnement</td><td>aucun moniteur</td></tr>
+    <tr><td>Attaquant informé</td><td>conceptions gelées, protocole ; au bras « avec retour », les verdicts de ses propres essais, en nombre compté</td><td>épisodes d'épreuve, notes, seuils calibrés</td></tr>
+    <tr><td>Concepteurs de moniteurs</td><td>après lecture : la classe de la faille, l'hypothèse violée</td><td>le coffre</td></tr>
+    <tr><td>Juge</td><td>les recettes</td><td>— ; il ne conçoit aucun moniteur</td></tr>
+    <tr><td>Gardien (session-dépôt)</td><td>des comptes, des commits, des empreintes</td><td>noms de fichiers et contenus du coffre</td></tr>
+    <tr><td>Lecteur neuf du verdict</td><td>la sortie scellée, les critères gelés</td><td>—</td></tr>
+  </tbody>
+</table>
+<p><b>Le coffre</b> (décision N-057) : les cellules d'attaque sont conservées pour colmater et pour tester, tout reste scellé, jamais reproduit en clair, jamais cité dans un papier, un entretien ou la copie publique ; deux usages seulement : donner la classe de la faille aux concepteurs, construire des épisodes d'épreuve.</p>
+
+<h3>3.4 Décidé le 10 novembre, et état</h3>
+<ul>
+  <li><span class="chip decide">Décidé</span> Le bras peut lire les verdicts des moniteurs gelés en nombre compté, à deux conditions : procédure d'optimisation déjà publiée et citée ; plafond de requêtes scellé avant toute requête.</li>
+  <li><span class="chip decide">Décidé</span> Une session neuve « attaquant informé » est montée au mandat réduit : jusqu'au gel des moniteurs, elle ne fait que rejouer l'attaque publiée ; elle ne reçoit aucune conception de moniteur.</li>
+  <li><span class="chip decide">Décidé</span> L'attaque publiée rejouée est celle de Bailey et collègues ; feu vert donné. <span class="chip bloque">Bloquée</span> le dépôt public du code n'a aucune licence (ni fichier, ni mention), et la décision N-061 exige des licences vérifiées.</li>
+  <li><span class="chip fait">Scellé</span> La règle du jeu, après quatre contre-lectures.</li>
+  <li><b>État</b> : monté, rien n'a tourné (consigne v19, l. 45).</li>
+</ul>
+
+<h3>3.5 Nœuds encore ouverts</h3>
+<table>
+  <thead><tr><th style="width:5%">#</th><th>Nœud</th><th style="width:38%">Recommandation</th></tr></thead>
+  <tbody>
+    <tr><td>1</td><td>Qui joue l'attaquant informé après le gel des moniteurs</td><td>personne avant le gel ; ensuite une lignée qui n'a conçu aucun moniteur (0,6)</td></tr>
+    <tr><td>3</td><td>Revue de sécurité externe : verser une pièce écrite, ou la tenir pour non faite</td><td>pièce scellée, sinon non faite ; corriger la phrase d'entretien (0,8)</td></tr>
+    <tr><td>4</td><td>Statut d'un épisode d'épreuve dérivé du coffre</td><td>mesure sur texte seul maintenant ; organisme agissant après la pièce du nœud 3 (0,6)</td></tr>
+    <tr><td>5</td><td>Route d'écriture des valeurs du protocole</td><td>couper en deux : critères lisibles par tous ; valeurs d'attaque au coffre, reportées (0,6)</td></tr>
+    <tr><td>6</td><td>Le « mode caché » ; le mode tenu à l'écart décide-t-il la porte principale</td><td>familles neuves écrites hors des concepteurs (0,7) ; conflit déjà ouvert à trancher</td></tr>
+    <tr><td>7</td><td>Geler le dépôt d'empreintes chez le tiers</td><td>gel avant l'entretien, puis à chaque scellement (0,7)</td></tr>
+    <tr><td>8</td><td>La « pince » (sonde interne et moniteur externe trompés ensemble) : mesure jointe ou hypothèse nouvelle</td><td>mesure jointe, sans revendication neuve (0,7)</td></tr>
+    <tr><td>9</td><td>Ligne de budget récurrente : une famille tenue à l'écart neuve par cycle de reconception</td><td>chiffrer le coût d'une famille par un devis sans dépense (0,6)</td></tr>
+  </tbody>
+</table>
+
+<h2 class="saut">4. Les organismes, intégrés</h2>
+
+<h3>4.1 Les organismes saboteurs : ce que l'on surveille</h3>
+<table>
+  <thead><tr><th style="width:28%">Organisme</th><th>Ce qu'il est</th><th style="width:30%">État</th></tr></thead>
+  <tbody>
+    <tr><td>Famille (i), consigne cachée</td><td>Le saboteur instruit du premier test boîte blanche.</td><td><span class="chip fait">Existe</span> flagrant : il gonfle son coût d'un facteur 33 environ ; aucune sonde générique au-dessus du plancher à cette puissance</td></tr>
+    <tr><td>Famille (ii), sans consigne</td><td>Adaptateur distillé de (i) : même politique, aucune consigne à l'inférence. C'est l'organisme décisif : une sonde d'intention doit le voir, une sonde qui lit la consigne ne le peut pas.</td><td><span class="chip cours">En cours</span> course 7a exploratoire faite ; course 7b à créer ; critère des sondes jugé seulement là où la base « mots et coût » échoue</td></tr>
+    <tr><td>Saboteur non flagrant</td><td>Mode « affaiblir les contrôles », non chiffré (décision N-054).</td><td><span class="chip faire">À faire</span> n'existe pas encore</td></tr>
+    <tr><td>Famille aveugle (mode tenu à l'écart)</td><td>Modes écrits par une instance qui n'a vu aucun moniteur, scellés avant la porte principale ; une famille neuve à chaque cycle (N-062).</td><td><span class="chip faire">À faire</span> aucune famille scellée ; nœud 6</td></tr>
+    <tr><td>Famille (iii)</td><td>Organismes publics de 70 milliards de paramètres.</td><td>scénario ambitieux seul</td></tr>
+  </tbody>
+</table>
+
+<h3>4.2 L'organisme d'idéation</h3>
+<p>Un générateur d'idées de recherche à plusieurs modèles, jugé par un juge statistique. Ses rôles (décision N-065) : <b>second terrain du papier C</b> — les juges de la recherche automatisée sous attaque — et <b>atelier d'idées</b> du programme ; un troisième rôle, comme famille de menaces diffuses, reste à trancher. Sa revendication est resserrée (décision N-064) : statistique calculée par l'orchestrateur sur engagement scellé, nul des lois connues, multiplicité contrôlée ; banc de tricheurs et attaque de Goodhart revendiqués dans leur forme seulement ; citations obligatoires.</p>
+<ul>
+  <li><span class="chip fait">Scellé</span> Attaque de Goodhart A1-v3 contre son juge : dans le monde que son nul couvre, le juge résiste à cette taille ; dans l'autre, brèche, par une classe que le nul déclarait non couverte.</li>
+  <li><span class="chip cours">En course</span> A1-v4, contre le nul réparé, sur des mondes gradués ; verdict vers le 12 novembre.</li>
+  <li>Le « pilier attaque » de l'organisme suit la règle du coffre : recettes scellées, jamais consultées (registre, R-1782).</li>
+</ul>
+
+<h3>4.3 Comment tout s'emboîte</h3>
+<div class="flux">
+  <span class="b">organismes saboteurs</span><span class="f">→ épisodes →</span>
+  <span class="b">sondes et juges</span><span class="f">→</span>
+  <span class="b">vérité du dommage</span><span class="f">→</span>
+  <span class="b">moniteurs gelés</span><span class="f">→</span>
+  <span class="b">bras d'attaque (témoins d'abord)</span><span class="f">→</span>
+  <span class="b">porte principale, mode par mode</span>
+</div>
+<p>En parallèle, l'organisme d'idéation éprouve les juges de la recherche automatisée (papier C) et fournit des idées. La théorie relie tout : le lemme dit quand l'accumulation marche, le théorème dit quel agrégateur il faut quand elle ne marche pas, et la mesure unanime dit comment calibrer.</p>
+
+<h2>5. Ce qui est fait</h2>
+<h3>5.1 Résultats scellés, avec leurs réserves</h3>
+<table>
+  <thead><tr><th style="width:28%">Résultat</th><th>Ce qu'il dit, et ce qu'il ne dit pas</th></tr></thead>
+  <tbody>
+    <tr><td>Harnais d'activations, Llama-3.1-8B-Instruct</td><td>Critère 1 de la phase 0, dans un domaine déclaré ; valide l'instrument, pas une détection.</td></tr>
+    <tr><td>Simulation du lemme et du théorème</td><td>31 prédictions sur 31 ; vérifie surtout les instruments ; la règle de Ville seule ne tient pas hors de ses hypothèses (fausses alertes de 0,21 à 0,35 sous effets d'épisode au lieu de 0,05) ; verdict formel non prononcé.</td></tr>
+    <tr><td>Premier test boîte blanche, saboteur instruit</td><td>Saboteur flagrant (coût multiplié par 33 environ) ; aucune sonde générique au-dessus du plancher ; aire minimale détectable à 80 % : 0,63 et 0,60 — un effet plus petit n'est pas exclu.</td></tr>
+    <tr><td>Audit de fuite d'une sonde entraînée</td><td>Elle lit la consigne privée du saboteur : fuite, cinq réserves.</td></tr>
+    <tr><td>Rejeu préenregistré des juges</td><td>Complétude du juge de 8 milliards : 0,928, sous le seuil de 0,99 : cellule à redéfinir.</td></tr>
+    <tr><td>Étiqueteur du sabotage flou</td><td>« Non tranché », lecture instable.</td></tr>
+    <tr><td>Attaque de Goodhart A1-v3</td><td>Le juge résiste dans le monde couvert, brèche dans l'autre.</td></tr>
+    <tr><td>Calibration de nos prédictions</td><td>60 tranchées sur 235 : 47 confirmées, 5 réfutées, 8 non concluantes.</td></tr>
+    <tr><td>Dépôt d'empreintes chez un tiers</td><td>118 fichiers, projet privé et non figé, le 5 novembre.</td></tr>
+  </tbody>
+</table>
+
+<h3>5.2 Pièces du 10 novembre (session-dépôt)</h3>
+<ul>
+  <li><span class="chip fait">Scellé</span> Règle du jeu du bras d'attaque, brouillon 5, après quatre contre-lectures.</li>
+  <li><span class="chip fait">Scellé</span> Brief de la session « attaquant informé » et sa consigne d'envoi au mandat réduit.</li>
+  <li><span class="chip fait">Scellé</span> Choix de l'attaque publiée (Bailey), après trois contre-lectures ; le brouillon 1 inversait la comparaison de modèle et a été corrigé.</li>
+  <li><span class="chip cours">Version 15 en cours</span> Mesure unanime : dossier versé (270 empreintes conformes), défaut bloquant de la v13 déjà corrigé, science identique au bit près, environnement reconstruit, répétition sur données synthétiques identique au bit près à celle d'octobre. Contre-lecture de la v14 par un autre modèle : trois phrases de texte fausses ou imprécises (dont l'entrée du fichier de données dans la branche principale, mal datée à cause d'un clone superficiel), aucune plomberie, aucune science.</li>
+  <li><span class="chip faire">Brouillon</span> Plan du dépôt horodaté chez le tiers ; note des lectures possibles de la mesure unanime, écrite avant la course.</li>
+  <li><span class="chip decide">Consigné</span> Cinq décisions de Lazar, chacune dans une note scellée.</li>
+</ul>
+
+<h2 class="saut">6. Ce qu'il reste à faire</h2>
+
+<h3>6.1 Avant l'entretien (20 ou 27 novembre)</h3>
+<table>
+  <thead><tr><th style="width:27%">Pièce</th><th>Ce qu'elle montre</th><th style="width:18%">Qui, quand</th><th style="width:20%">Geste de Lazar</th></tr></thead>
+  <tbody>
+    <tr><td>Verdict formel de la simulation</td><td>la théorie prédit juste en simulation</td><td>session-dépôt, lecteur neuf ; en cours</td><td>aucun</td></tr>
+    <tr><td>Mesure unanime</td><td>maillon « activations réelles » de la chaîne</td><td>session-dépôt ; 3 à 4 jours</td><td>geler chez le tiers avant la course</td></tr>
+    <tr><td>Attaque publiée de Bailey</td><td>maillon « littérature »</td><td>session « attaquant informé »</td><td>lever la licence ; puis devis à 80 Go</td></tr>
+    <tr><td>Verdict A1-v4</td><td>le juge réparé tient, ou non</td><td>déjà en course ; vers le 12</td><td>aucun</td></tr>
+    <tr><td>Dépôt public et figé chez le tiers</td><td>rend la chaîne vérifiable de l'extérieur</td><td>plan prêt ; audit des chemins d'abord</td><td>rendre public, geler</td></tr>
+    <tr><td>Registre des prédictions, une page</td><td>la chaîne entière, chaque maillon avec date et empreinte</td><td>session-dépôt, après les résultats</td><td>relire</td></tr>
+    <tr><td>Programme d'entretien v19</td><td>section « bras d'attaque », pince, parade au saboteur flagrant</td><td>session mère et session-dépôt</td><td>relire</td></tr>
+  </tbody>
+</table>
+
+<h3>6.2 Les cinq trous d'intégrité, et leur fermeture</h3>
+<table>
+  <thead><tr><th style="width:30%">Trou</th><th>Fermeture</th></tr></thead>
+  <tbody>
+    <tr><td>Revue de sécurité externe : « pas encore commandée » contre « faite »</td><td>une pièce écrite de Lazar, scellée ; sinon tenue pour non faite, et la phrase d'entretien corrigée</td></tr>
+    <tr><td>« Mode caché » nommé en clair au registre</td><td>familles neuves écrites hors des concepteurs et scellées, ou abandon du mot « caché »</td></tr>
+    <tr><td>Séparation du bras d'attaque affirmée trop tôt</td><td>dire : « l'attaquant informé sera une instance séparée des concepteurs, lancée après le gel ; avant, nous nous étalonnons sur des attaques publiées »</td></tr>
+    <tr><td>Dépôt chez le tiers privé et non figé</td><td>registration sous embargo maintenant (date fixée), publique après l'audit des chemins</td></tr>
+    <tr><td>Dépense « about $20 » dans le texte envoyé</td><td>dire « au moins 645,42 dollars au 8 novembre, un plancher »</td></tr>
+  </tbody>
+</table>
+
+<h3>6.3 L'objection la plus forte, et sa réponse</h3>
+<p>Dans HELIOS (vérifié sur PDF le 28 octobre), un juge textuel à quelques exemples bat les sondes, 20 sur 20 sans fausse alerte, sur des modèles plus gros que le nôtre ; notre modèle de 8 milliards est sous leur plus petite échelle. Réponse préparée : notre pari porte sur l'accumulation dans le temps, que ce travail ne teste pas (il lit en un coup et la nomme comme sa prochaine étape) ; et le théorème dit d'avance quand les sondes doivent échouer. À refaire avant l'entretien : la recherche d'antériorité pour novembre, nos vérifications datent d'octobre.</p>
+
+<h3>6.4 D'ici la fin de novembre : la porte de phase 0</h3>
+<p>Créer la course 7b et lire la dose-réponse (critère 2) ; juger les sondes au-dessus du plancher (critère 3) ; écrire et lancer la base boîte noire (critère 4) ; sceller le préenregistrement de la porte principale les 28-29 (critère 6) et celui du papier C (critère 7) ; finir l'état de l'art (critère 8). Verdict au plus tard le 30 novembre, sinon report unique au 31 janvier 2027. C'est le chemin critique de la session mère.</p>
+
+<h2>7. Ce qui revient à Lazar</h2>
+<ol>
+  <li><b>Licence du code de Bailey.</b> Recommandation : écrire à l'auteur pour une permission écrite ou l'ajout d'une licence (brouillon de message fourni), et présenter ce maillon comme « permission demandée » s'il n'est pas levé à temps. Confiance 0,7.</li>
+  <li><b>Gel chez le tiers</b> de la mesure unanime, dès son scellement : une registration sous embargo, puis publique après l'audit des chemins.</li>
+  <li><b>Revue de sécurité externe</b> : la pièce écrite, ou « tenue pour non faite ».</li>
+  <li><b>« Mode caché »</b> : familles neuves, ou abandon du mot.</li>
+  <li><b>Qui joue l'attaquant informé</b> après le gel des moniteurs (nœud 1) ; peut attendre fin novembre.</li>
+  <li><b>Chemin critique de la session mère</b> : deux mots sur la tâche des organismes à dose-réponse, le calendrier de la course 7b, deux changements de la règle « mots et coût » (registre, R-2073 et R-2074).</li>
+  <li><b>Date ferme</b> de l'entretien, le 20 ou le 27.</li>
+</ol>
+
+<h2>8. Risques pour l'entretien</h2>
+<table>
+  <thead><tr><th style="width:36%">Risque</th><th>Parade</th></tr></thead>
+  <tbody>
+    <tr><td>La mesure unanime est « non lisible » : dépendance naturelle des scores déjà forte</td><td>la lecture sur la dépendance naturelle, sans injection, porte alors le résultat ; phrase écrite d'avance</td></tr>
+    <tr><td>Une garde de la mesure suspend la lecture</td><td>« les contrôles de la mesure l'ont arrêtée avant toute lecture ; nous publions l'audit »</td></tr>
+    <tr><td>Licence de Bailey non levée à temps</td><td>maillon « littérature » présenté comme en cours ; la chaîne tient sur trois maillons</td></tr>
+    <tr><td>Porte de phase 0 non atteinte au 30 novembre</td><td>report unique au 31 janvier 2027, prévu et déjà dit</td></tr>
+    <tr><td>Le jury trouve un trou d'intégrité</td><td>les fermer d'abord (section 6.2)</td></tr>
+  </tbody>
+</table>
+
+<h2 class="saut">9. Sources</h2>
+<table>
+  <thead><tr><th>Pièce</th><th style="width:44%">Chemin</th><th style="width:14%">Empreinte</th></tr></thead>
+  <tbody>
+    <tr><td>Liste « ce qui manque » (session mère, sur main 983dd664)</td><td class="src">docs/notes/rapports-directeur/ce-qui-manque-approche-peut-marcher-v1.md</td><td class="src">edb0bf03</td></tr>
+    <tr><td>Verdict de la simulation T0.3</td><td class="src">docs/verdicts/verdict-T0.3-simulation-lemme-theoreme-v1.md</td><td class="src">bc53b746</td></tr>
+    <tr><td>Passation 10 nov. 09:46 (dépôt v2 chez le tiers)</td><td class="src">registres/passations/2026-11-10-0946-depot-tiers-manifeste-v2-mesure-unanime.md</td><td class="src">2e46fe8d</td></tr>
+    <tr><td>Passation 10 nov. 10:33 (dépôt v3 chez le tiers)</td><td class="src">registres/passations/2026-11-10-1033-depot-tiers-manifeste-v3-regle-bras.md</td><td class="src">54ab71dc</td></tr>
+    <tr><td>Passation 10 nov. 10:36 (fin de la course)</td><td class="src">registres/passations/2026-11-10-1036-fin-course-mesure-unanime-quarantaine.md</td><td class="src">efa31c80</td></tr>
+    <tr><td>Passation 10 nov. 10:46 (verdict scellé en quarantaine)</td><td class="src">registres/passations/2026-11-10-1046-verdict-mesure-unanime-scelle-quarantaine.md</td><td class="src">07ed03b9</td></tr>
+    <tr><td>Index du bras d'attaque v3</td><td class="src">registres/index-bras-attaque-v3.md</td><td class="src">fbf0a440</td></tr>
+    <tr><td>Contre-lecture du registre des prédictions</td><td class="src">docs/notes/entretien-resultats-v1/contre-lecture-registre-predictions-une-page-v1.md</td><td class="src">aeb45c39</td></tr>
+    <tr><td>Texte envoyé au fonds</td><td class="src">docs/sources/candidature-taif-2026-10-07/proposal_v2_TAIF_2026-10-07.txt</td><td class="src">b2458c2d</td></tr>
+    <tr><td>Programme v2</td><td class="src">docs/programme-controle-ia-v2.md</td><td class="src">2fd63bad</td></tr>
+    <tr><td>Programme d'entretien v18</td><td class="src">brouillons/entretien-taif-v3/programme-entretien-taif-v18.md</td><td class="src">e58ccfed</td></tr>
+    <tr><td>Consigne de la v19</td><td class="src">brouillons/entretien-taif-v3/consigne-v19-pince-bras-attaque-sabotage-diffus-v1.md</td><td class="src">5609fc65</td></tr>
+    <tr><td>Règle du jeu, scellée</td><td class="src">docs/notes/integration-bras-attaque-v1/regle-du-jeu-et-integration-v1-brouillon5.md</td><td class="src">527a3e7e</td></tr>
+    <tr><td>Brief de l'attaquant informé</td><td class="src">docs/procedures/brief-session-attaquant-informe-v1.md</td><td class="src">55108eb8</td></tr>
+    <tr><td>Choix de l'attaque publiée</td><td class="src">docs/notes/reproduction-attaque-publiee-v1/choix-et-anteriorite-v1-brouillon3.md</td><td class="src">e5bab8c3</td></tr>
+    <tr><td>Préenregistrement de la mesure unanime v14 (non scellé ; v15 en cours)</td><td class="src">brouillons/canal-reprise-releve-v1/envois/mesures-fortes-v1/mesure-unanime-v1/preenregistrement-mesure-unanime-v14.md</td><td class="src">ebc4bf7e</td></tr>
+    <tr><td>Contre-lecture de la v14 (autre modèle)</td><td class="src">…/mesure-unanime-v1/contre-lecture-v14/rapport-contre-lecture-mesure-unanime-v14.md</td><td class="src">11bc81ab</td></tr>
+    <tr><td>Lectures possibles (brouillon)</td><td class="src">docs/notes/entretien-resultats-v1/lectures-possibles-mesure-unanime-v1.md</td><td class="src">—</td></tr>
+    <tr><td>Plan du dépôt chez le tiers (brouillon)</td><td class="src">docs/notes/integration-bras-attaque-v1/plan-depot-tiers-horodate-v1.md</td><td class="src">—</td></tr>
+    <tr><td>Manifeste d'empreintes v1</td><td class="src">livrables/osf-manifeste-v1/manifeste-v1.json</td><td class="src">dd87b23e</td></tr>
+    <tr><td>Inventaire du coffre (comptes seuls)</td><td class="src">docs/notes/integration-bras-attaque-v1/inventaire-coffre-v1.md</td><td class="src">94acf963</td></tr>
+    <tr><td>Décisions N-053, N-054, N-056, N-057, N-062</td><td class="src">docs/decisions/decision-N-0xx-v1.md</td><td class="src">2204256d, c8a00b3f, 3592c1e9, 42180088, 63f42690</td></tr>
+    <tr><td>Décisions N-064, N-065</td><td class="src">docs/decisions/</td><td class="src">387c9d4e, f820e90d</td></tr>
+    <tr><td>Décisions de Lazar du 10 novembre</td><td class="src">registres/passations/2026-11-10-0704, -0725, -0802, -0846, -0919</td><td class="src">bba97a1a, 081cb8e3, 06e8f102, 609e48f6, d5739189</td></tr>
+    <tr><td>État de la session mère</td><td class="src">registres/etat.md (10 novembre, 04:58 UTC)</td><td class="src">sans compagnon</td></tr>
+  </tbody>
+</table>
+
+</body>
+</html>

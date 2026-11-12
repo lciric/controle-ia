@@ -1,0 +1,41 @@
+{
+  "code": 0,
+  "commande": [
+    "/home/user/controle-ia-travail/.venv/bin/python",
+    "-I",
+    "-B",
+    "-c",
+    "\nimport builtins, io, os, socket, sys, runpy\n_racine = os.path.realpath(os.getcwd())\ndef _dans_travail(chemin):\n    try:\n        p = os.path.realpath(os.fspath(chemin))\n    except Exception:\n        return False\n    return p == _racine or p.startswith(_racine + os.sep)\ndef _refuser_reseau(*a, **k):\n    raise OSError(101, \"Network is unreachable (exécuteur factice : réseau isolé)\")\nsocket.socket.connect = _refuser_reseau\nsocket.socket.connect_ex = _refuser_reseau\nsocket.create_connection = _refuser_reseau\n_ouvrir_vrai = builtins.open\ndef _ouvrir(fichier, mode=\"r\", *a, **k):\n    if isinstance(fichier, (str, bytes, os.PathLike)) and any(c in mode for c in \"wax+\") and not _dans_travail(fichier):\n        raise PermissionError(30, \"Read-only file system (exécuteur factice)\", fichier)\n    return _ouvrir_vrai(fichier, mode, *a, **k)\nbuiltins.open = _ouvrir\nio.open = _ouvrir\nscript = sys.argv[1]\nsys.argv = [script]\nrunpy.run_path(script, run_name=\"__main__\")\n",
+    "/tmp/claude-0/-home-user/4a4722d4-e39d-57bd-bde3-e6a99e2eecdf/scratchpad/tmp-essai/etage-travail-oj8g0s7t/F-d41a8e901249-execution-01/script.py"
+  ],
+  "delai_depasse": false,
+  "duree_s": 0.068,
+  "entrees_non_copiees": [],
+  "fichiers_produits": [
+    {
+      "chemin": "gains.csv",
+      "copie": "produits/gains.csv.copie",
+      "copie_scellee": true,
+      "sha256": "856ca06b4c162a711398fc775784a9f6598e895d63f20e904147dc6c4a2ca3d0"
+    }
+  ],
+  "lignes_calcul": [],
+  "lignes_resultat": [
+    "RESULTAT: -0.09063800951241592"
+  ],
+  "limites_depassees": [],
+  "numero": 1,
+  "script_sha256": "992f2cdc1524178881b00992a90382da8f4de28752f1c039190267a2580cbfb8",
+  "signaux_du_script": [],
+  "statut": "réussie",
+  "stderr": "",
+  "stderr_octets": 0,
+  "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+  "stderr_tronque": false,
+  "stdout": "RESULTAT: -0.09063800951241592\n",
+  "stdout_octets": 31,
+  "stdout_sha256": "eed5ff9cab465f1a7985653bb1f8ea73d2125ad1156260614b126000b4ade60f",
+  "stdout_tronque": false,
+  "tour": 1,
+  "travail_retire": true
+}

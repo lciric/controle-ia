@@ -1,0 +1,14 @@
+Journal des essais — corrections du plancher v3 de T0.7 (R-2305, R-2306), développeur, 2026-11-11, heures UTC (date -u)
+Arbre : /tmp/claude-0/-home-user/1cc16375-a2bd-54b9-a03f-27d43b6f26a6/scratchpad/plancher-v3/arbre2 (branche prep/t07-plancher-v3-v1, depuis 0d0c5da4 ; extraction réduite : src, tests, scripts, racine, données génériques de P3, invites, pièces des brouillons 14, 17, 19 et du candidat 1)
+Interpréteur : /home/user/controle-ia-travail/.venv/bin/python ; OPENBLAS_NUM_THREADS=1 pour les essais.
+
+03:24-03:29  calibrage v3 (calibrage_gardes_v3.py) : écarts égaux à ceux des v1 et v2 ; v8 : toutes les fautes calibrées arrêtées par le témoin ; bruit de 1e-3 par jeton : palier « carte » (passe).
+03:27        essais de lecture (config v8, n34, note 05, passe à blanc CLP3-03) : 20 passés, 1 sauté.
+03:28        essais de la réextraction (seuils v8, n25c, fautes hors garde, contrôle avant l'ouverture, cache factice) : 32 passés.
+03:29        trois fichiers : 72 passés, 1 sauté. Commit 84da23aa, poussé.
+03:33        essai des couches du run jouet de P3 (entropies 20261017 à 20261019, couches 1 et 2) : 20261017 retenue (principales linéaires, couche 2).
+03:34        script v3 et répétition v3 : commit 68882c2d, poussé.
+03:34-03:53  répétition jouet v3 : 17 verdicts sur 17 conformes (repetition-jouet-v3-resume.json).
+03:36        essais renforcés (réserve, témoin absent) : commit 7e23a554, poussé.
+03:37-03:48  banc v4 (17 mutations des corrections) : 17 tuées, imports de la copie.
+03:39-04:02  suite T0.7 de l'arbre au commit 7e23a554 : 530 passés, 23 sautés (extraction réduite), 3 xfail, aucun échec, 1421,7 s (machine partagée avec la répétition et le banc), code 0 (suite-t07-v5.txt).

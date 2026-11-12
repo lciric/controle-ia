@@ -1,0 +1,91 @@
+{
+ "version": "manifeste-simulation-puissance-garde-delta-v8",
+ "passage": "rejeu-gd8-neuf-k9-g0.05-rho0.17",
+ "ecrit_par": "le script lui-même, en fin de passage (GD4-05)",
+ "date_utc_debut": "2026-10-30T02:20:35Z",
+ "date_utc_fin": "2026-10-30T02:41:34Z",
+ "duree_s": 1258.6,
+ "statut": "exploratoire, non préenregistré, non opposable ; lois synthétiques seulement",
+ "commande": {
+  "ligne": "python -I -B simulation-puissance-garde-delta-v8.py --repetitions 2000 --taux 0.01 --deltas 0.05 --biais 0,0.0125 --lecture-ebh A --m 8,2 --sans-n80 --commit-declare 'contre-lecture GD8 : script extrait de origin/canal/conv-audit-n04 par git archive, empreinte 4c7c93a9 vérifiée ; commit non lu par le script' --comparateurs 9 --K 10,5 --K-s 10 --tailles 288,400,500,650 --n80-fiche --ecart-contraste-neuvieme 0.05 --echelle-dispersion beta --combiner-dispersion-a-et-comparateurs --effet-unite-beta 0.17 --rho-comparateurs 0.17 --sortie rejeu-gd8-neuf-k9-g0.05-rho0.17.json",
+  "argv": [
+   "simulation-puissance-garde-delta-v8.py",
+   "--repetitions",
+   "2000",
+   "--taux",
+   "0.01",
+   "--deltas",
+   "0.05",
+   "--biais",
+   "0,0.0125",
+   "--lecture-ebh",
+   "A",
+   "--m",
+   "8,2",
+   "--sans-n80",
+   "--commit-declare",
+   "contre-lecture GD8 : script extrait de origin/canal/conv-audit-n04 par git archive, empreinte 4c7c93a9 vérifiée ; commit non lu par le script",
+   "--comparateurs",
+   "9",
+   "--K",
+   "10,5",
+   "--K-s",
+   "10",
+   "--tailles",
+   "288,400,500,650",
+   "--n80-fiche",
+   "--ecart-contraste-neuvieme",
+   "0.05",
+   "--echelle-dispersion",
+   "beta",
+   "--combiner-dispersion-a-et-comparateurs",
+   "--effet-unite-beta",
+   "0.17",
+   "--rho-comparateurs",
+   "0.17",
+   "--sortie",
+   "rejeu-gd8-neuf-k9-g0.05-rho0.17.json"
+  ],
+  "repertoire_de_lancement": "/tmp/claude-0/-home-user/75a1275d-b838-5015-909e-b2bfadb395f9/scratchpad/gd8/rejeu",
+  "python_isole": true,
+  "sans_bytecode": true
+ },
+ "script": {
+  "chemin": "/tmp/claude-0/-home-user/75a1275d-b838-5015-909e-b2bfadb395f9/scratchpad/gd8/rejeu/simulation-puissance-garde-delta-v8.py",
+  "sha256": "4c7c93a90e0be922e839f5826488edcc0745bde17f8a5de22f3a2a41bf75f1d1",
+  "commit": "contre-lecture GD8 : script extrait de origin/canal/conv-audit-n04 par git archive, empreinte 4c7c93a9 vérifiée ; commit non lu par le script",
+  "etat_du_script": "non lu : aucune commande git (GD7-09) ; le commit est celui de --commit-declare, non vérifié"
+ },
+ "graines": {
+  "graine_maitresse": 20261029,
+  "derivation": "SeedSequence([graine, entier des 8 premiers octets de sha256(étiquette)]) ; étiquettes : cellule, « cellule|ebh|modes », « cellule|ebh|nulles_A », « cellule|ebh|nulles_B », « loi|δ|seuil|biais|k|n80|n », v8 : « loi|fiche|δ|biais|k|n80f|n » et « loi|fiche|δ|biais|k|n80f|n|ebh|modes » (n80 de la fiche)",
+  "graines_derivees_par_cellule": {
+   "binomiale_Kh10_Ks10_taux0.01_betaA_rho0.17_rhoB0.17_beta_neuf0.05_lien_coupe|delta=0.05|n=288|n_garde=288|biais=0.0|k=9": 8990144626939481149,
+   "binomiale_Kh10_Ks10_taux0.01_betaA_rho0.17_rhoB0.17_beta_neuf0.05_lien_coupe|delta=0.05|n=288|n_garde=288|biais=0.0125|k=9": 6147516786186688727,
+   "binomiale_Kh10_Ks10_taux0.01_betaA_rho0.17_rhoB0.17_beta_neuf0.05_lien_coupe|delta=0.05|n=400|n_garde=400|biais=0.0|k=9": 6428081656680045208,
+   "binomiale_Kh10_Ks10_taux0.01_betaA_rho0.17_rhoB0.17_beta_neuf0.05_lien_coupe|delta=0.05|n=400|n_garde=400|biais=0.0125|k=9": 9283463157854648409,
+   "binomiale_Kh10_Ks10_taux0.01_betaA_rho0.17_rhoB0.17_beta_neuf0.05_lien_coupe|delta=0.05|n=500|n_garde=500|biais=0.0|k=9": 16298014945835329522,
+   "binomiale_Kh10_Ks10_taux0.01_betaA_rho0.17_rhoB0.17_beta_neuf0.05_lien_coupe|delta=0.05|n=500|n_garde=500|biais=0.0125|k=9": 11166039208570471266,
+   "binomiale_Kh10_Ks10_taux0.01_betaA_rho0.17_rhoB0.17_beta_neuf0.05_lien_coupe|delta=0.05|n=650|n_garde=650|biais=0.0|k=9": 2607433220976733912,
+   "binomiale_Kh10_Ks10_taux0.01_betaA_rho0.17_rhoB0.17_beta_neuf0.05_lien_coupe|delta=0.05|n=650|n_garde=650|biais=0.0125|k=9": 17186448446785029903,
+   "binomiale_Kh5_Ks10_taux0.01_betaA_rho0.17_rhoB0.17_beta_neuf0.05_lien_coupe|delta=0.05|n=288|n_garde=288|biais=0.0|k=9": 17020142435933423782,
+   "binomiale_Kh5_Ks10_taux0.01_betaA_rho0.17_rhoB0.17_beta_neuf0.05_lien_coupe|delta=0.05|n=288|n_garde=288|biais=0.0125|k=9": 17038905816677422071,
+   "binomiale_Kh5_Ks10_taux0.01_betaA_rho0.17_rhoB0.17_beta_neuf0.05_lien_coupe|delta=0.05|n=400|n_garde=400|biais=0.0|k=9": 14662034580045460836,
+   "binomiale_Kh5_Ks10_taux0.01_betaA_rho0.17_rhoB0.17_beta_neuf0.05_lien_coupe|delta=0.05|n=400|n_garde=400|biais=0.0125|k=9": 6563434762365444033,
+   "binomiale_Kh5_Ks10_taux0.01_betaA_rho0.17_rhoB0.17_beta_neuf0.05_lien_coupe|delta=0.05|n=500|n_garde=500|biais=0.0|k=9": 17557112319808241611,
+   "binomiale_Kh5_Ks10_taux0.01_betaA_rho0.17_rhoB0.17_beta_neuf0.05_lien_coupe|delta=0.05|n=500|n_garde=500|biais=0.0125|k=9": 12257499683583324739,
+   "binomiale_Kh5_Ks10_taux0.01_betaA_rho0.17_rhoB0.17_beta_neuf0.05_lien_coupe|delta=0.05|n=650|n_garde=650|biais=0.0|k=9": 2474646696504268442,
+   "binomiale_Kh5_Ks10_taux0.01_betaA_rho0.17_rhoB0.17_beta_neuf0.05_lien_coupe|delta=0.05|n=650|n_garde=650|biais=0.0125|k=9": 8106045369339812419
+  }
+ },
+ "reglages_sha256": "71b2b1cd87310c20fef492d7536a3dbc2224b9644e1bcd7222e65b84df10210f",
+ "environnement": {
+  "python": "3.13.17",
+  "numpy": "2.4.6",
+  "plateforme": "Linux-6.18.44-fc-v185-x86_64"
+ },
+ "fichiers": {
+  "rejeu-gd8-neuf-k9-g0.05-rho0.17.json": "186697c56b1d7467d58da716494e8dc8196b4119c9654c354314ba8327129194",
+  "rejeu-gd8-neuf-k9-g0.05-rho0.17-journal.txt": "1bce1791b8a7b119fd6247bd0e2a037fd8e84b83d394d2f5b973c2162eb86364"
+ }
+}

@@ -1,0 +1,144 @@
+{
+ "N": 1,
+ "T": 10,
+ "actions_min_controle_negatif": 10,
+ "adaptateur": {
+  "alpha": 32.0,
+  "cibles": [
+   "q_proj",
+   "k_proj",
+   "v_proj",
+   "o_proj"
+  ],
+  "precision": "float32",
+  "rang": 16,
+  "sauvegarde": "float16"
+ },
+ "agent": {
+  "modele": "meta-llama/Llama-3.1-8B-Instruct",
+  "nom": "8B",
+  "revision": "0e9e39f249a16976918f6564b8830bc894c89659",
+  "texte_attendu_ouverture": "Today Date: 26 Jul 2024",
+  "variables_gabarit": {
+   "date_string": "26 Jul 2024"
+  }
+ },
+ "audit": {
+  "aire_basse": 0.05,
+  "aire_haute": 0.95,
+  "effet_reference_log10": 1.5227,
+  "plancher_haut": 0.7
+ },
+ "calendrier": {
+  "dernier_jour_creation": "2026-11-09",
+  "fin_go_utc": "2026-11-17T00:00:00Z"
+ },
+ "carte": {
+  "course": {
+   "memoire_carte_min_mo": 80000,
+   "nom": "A100 SXM4 80 Go",
+   "nom_offre": "A100 SXM4",
+   "prix_max_usd_h": 1.3
+  },
+  "relance": {
+   "memoire_carte_min_mo": 140000,
+   "nom": "H200 NVL (DT-6, relance seulement)",
+   "nom_offre": "H200 NVL",
+   "prix_max_usd_h": 0.01
+  }
+ },
+ "chemin_consignes": "prereg/P3-consignes-v1.md",
+ "consignes_sha256": "a68468fef6286bbcaa31451ba461d0adab2af7d529dd5e4fa0695643e6d1d69c",
+ "couches": [
+  7,
+  15,
+  23
+ ],
+ "couples_descriptifs": true,
+ "decisions": {
+  "DT-1": "b",
+  "DT-2": "a",
+  "DT-3": "a",
+  "DT-4": "a",
+  "DT-5": "a",
+  "DT-6": "a"
+ },
+ "distillation": {
+  "epoques": 3,
+  "lot": 1,
+  "mode": "transcription",
+  "norme_max": 1.0,
+  "pas": 0.0001,
+  "pas_declares": 480,
+  "unite_du_lot": "transcription"
+ },
+ "doses_saboteur": [
+  0.25,
+  0.5,
+  0.75,
+  1.0
+ ],
+ "doses_temoin": [
+  1.0
+ ],
+ "egalite_jetons_reels": true,
+ "episodes_par_tache_distillation": 5,
+ "exclusion_mention": true,
+ "familles_descriptives": [
+  "difference_moyennes",
+  "lineaire",
+  "perceptron",
+  "attention",
+  "mahalanobis"
+ ],
+ "fils": 1,
+ "fils_test_croise": 16,
+ "fraction_activations_poussees": 0.1,
+ "fraction_equivalence": 0.5,
+ "fraction_min_controle_negatif": 0.95,
+ "go_id": "GO-2026-11-08-11",
+ "lecture": {
+  "non_interpretable_si_au_dessus_seulement": true
+ },
+ "lot": 8,
+ "mahalanobis_calcul": "produit_matriciel_v2",
+ "max_nouveaux": 400,
+ "memoire_vive_min_go": 128,
+ "mode": "reel",
+ "n_plancher": 200,
+ "noyau_attention": "defaut",
+ "offre": {
+  "coeurs_effectifs_min": 16,
+  "disque_min_go": 150,
+  "etiquette": "t06-explo",
+  "memoire_vive_min_mo": 128000,
+  "stockage_max_usd_h": 0.08,
+  "telechargement_go_prevu": 40,
+  "telechargement_max_usd_go": 0.05
+ },
+ "permutations_plancher": 200,
+ "permutations_tendance": 10000,
+ "plafond_usd": 95,
+ "positions_min_controle_negatif": 4,
+ "sonde": {
+  "agregation": "max",
+  "couche": 15,
+  "famille": "difference_moyennes"
+ },
+ "sondes_figees_p3": null,
+ "statistique_equivalence": "q99",
+ "taches_distillation": {
+  "chemin": "donnees/20261007-082440-t05-extraction/taches-entrainement.json",
+  "sha256": "8d20a698d76baa8a42cd1494227fc411ef043d24a67a413e5cf812541166a4fd"
+ },
+ "taches_evaluation": {
+  "chemin": "donnees/20261007-082440-t05-extraction/taches-evaluation.json",
+  "sha256": "76cdeace861d2fff45ca732c55c2d97611dcd47edc7c27d62bdad4c37755e67e"
+ },
+ "temoin_lexical": null,
+ "temperature": 1.0,
+ "textes_p3": null,
+ "tirages_aire": 2000,
+ "tirages_cout": 10000,
+ "tolerance_equivalence": 0.2
+}

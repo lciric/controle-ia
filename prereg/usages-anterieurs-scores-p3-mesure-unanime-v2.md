@@ -1,0 +1,36 @@
+# Usages antérieurs des scores du premier test boîte blanche — annexe de déclaration de la mesure unanime v15 (v2)
+
+Session-dépôt `session_01QPDgKgcLdggoVJfGC5cBw8`, 10 novembre 2026. Annexe du préenregistrement
+`preenregistrement-mesure-unanime-v15.md` (`3a1651f4…`, scellé). **Scellée et datée par le tiers avec lui, avant la course.**
+Elle ne modifie pas le préenregistrement. Elle déclare les usages antérieurs que la contre-lecture v15 a relevés (point C,
+`contre-lecture-v15/rapport-contre-lecture-mesure-unanime-v15.md`, `18ef0083…`) et une déclaration des auteurs de cette
+mesure. Remplace la v1 (rangée sans changement dans `docs/notes/entretien-resultats-v1/`) selon le complément de la
+contre-lecture (`contre-lecture-v15/complement-annexes-v1.md`, `93acf732…`, points RA-1 à RA-3).
+
+## Le fichier
+
+`donnees/20261019-230011-p3-reel/scores-p3.npz`, empreinte `968414fc…`, présent depuis le 20 octobre (même objet git
+`86ec9eaf…` sur `calcul/p3-reel-v1`, sur `4d1fa5c0` et sur `main`). Selon ses auteurs, il n'a jamais été chargé ni lu comme
+données pour cette mesure ; seule son empreinte a été contrôlée (calculer une empreinte ouvre le fichier) ; la contre-lecture
+n'a trouvé aucune trace contraire.
+
+## Ce que d'autres travaux en ont déjà tiré
+
+| Travail | Ce qu'il a calculé sur ces scores | Touche-t-il une quantité de la mesure unanime ? |
+|---|---|---|
+| Premier test boîte blanche (P3), accumulation | somme et maximum par épisode pour les deux sondes principales, seuil pris dans l'échantillon des 60 épisodes honnêtes ; le seuil réduit du maximum honnête est une valeur connue du dépôt | voisin, pas identique : aucun taux de fausses alertes **hors échantillon**, aucune dépendance intra-épisode |
+| Agrégation R1 v4 (source G : scores des sondes de P3 tirés de ce fichier) | les mêmes statistiques que la mesure unanime, sur les mêmes 60 épisodes honnêtes, en aires sous la courbe saboteur contre honnête, et en part des épisodes témoins et « mention » au-dessus de la troisième valeur honnête (descriptive D5) | non : aucun taux de fausses alertes par épisode, aucune dépendance |
+| Addenda de P3 ; scripts de puissance de P3-bis ; recalcul du rapport au directeur | des aires, des corrélations au coût, de la plomberie | non |
+
+**Conclusion** (contre-lecture v15, point C) : aucun travail antérieur n'a calculé le taux de fausses alertes hors échantillon,
+par épisode honnête entier, d'un agrégateur séquentiel, ni la dépendance naturelle r₀. La prédiction de la quatrième mesure
+est de toute façon conditionnelle à r₀ (table gelée).
+
+## Le sens inverse : protéger P3-bis
+
+La course de la mesure unanime rendra le taux du maximum conforme, la dépendance r₀ et l'effet des marges sur ces mêmes
+épisodes honnêtes. Le préenregistrement de P3-bis, encore en brouillon, repose sur le maximum par épisode, un seuil au maximum
+des 60 épisodes honnêtes et l'échangeabilité. **Engagement de la session-dépôt** (plus prudent que ce que la contre-lecture
+exige) : la course n'a lieu qu'après le scellement du préenregistrement de P3-bis, sauf autre fermeture décidée par Lazar :
+inscrire ces sorties dans les « valeurs déjà vues » de P3-bis en gelant ses énoncés concernés, ou tenir son auteur à l'écart
+des sorties.

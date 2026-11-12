@@ -1,0 +1,418 @@
+[
+ {
+  "id": "B18-01",
+  "section": "titre",
+  "section_gelee": false,
+  "raison": "numéro du brouillon",
+  "ancien": "# Préenregistrement — T0.7 sondes v0 (critère 3 de G0), mode « coût » — v1 — brouillon 17",
+  "nouveau": "# Préenregistrement — T0.7 sondes v0 (critère 3 de G0), mode « coût » — v1 — brouillon 18"
+ },
+ {
+  "id": "B18-02",
+  "section": "statut",
+  "section_gelee": false,
+  "raison": "statut du brouillon 18 ; lu ; pièces ; statut du brouillon 17 gardé pour mémoire",
+  "ancien": "- Statut : **brouillon 17**, écrit le 2026-11-09 à partir de 17:52 UTC (heure relevée par `date -u`) par le **rédacteur des",
+  "nouveau": "- Statut : **brouillon 18**, écrit le 2026-11-10 à partir de 01:20 UTC (heure relevée par `date -u` ; travail repris après un\n  redémarrage du conteneur vers 01:24 UTC, aucun fichier perdu) par un **rédacteur neuf** (Claude Opus 5.5, `claude-opus-5-5`,\n  sous-agent de la session mère `session_01QPDgKgACWyCkCN8HjqwNXy`), qui n'a écrit ni les brouillons 1 à 17 de ce texte, ni\n  leurs contre-lectures, ni le module `src/controle_ia/t07/`, ni T0.6, ni P3-bis, ni (ii-b), et n'est pas le lecteur\n  exploratoire de 7a ; consigne scellée\n  `docs/notes/g0-deux-semaines-v1/consignes-mere-2026-11-09-2200-v1/consigne-redaction-t07-brouillon18-v1.md`\n  (`f4fd33fc9568ecbb4b282eaa4ba26bc2b55b52052b86bf6c3a2dd8913e754c52`, vérifiée avant tout). **Brouillon 18 = brouillon 17**\n  (`brouillons/T0.7-sondes-v0-v1-brouillon17.md`, `65efe32f933d35bfc2c1415e382264327d6797912a1c02d8e753f6465d7c9275`,\n  égale à son compagnon, gardé tel quel, R12) **+ les couples B18-01 et suivants**, appliqués dans l'ordre par script,\n  chacun avec un « ancien » présent exactement une fois au moment de son application (couples\n  `brouillons/T0.7-sondes-v0-v1-brouillon18-couples-v1.json` ; script `brouillons/T0.7-sondes-v0-v1-brouillon18-appliquer-v1.py` ;\n  journal `brouillons/T0.7-sondes-v0-v1-brouillon18-journal-v1.md`), et rien d'autre : (1) **écart DT-4 de 7a déclaré**\n  (R-2041, R-2048) à la place de l'affirmation qui pouvait se lire « 7a jamais lue par une sonde » ; (2) **sept marqueurs\n  remplis**, chacun avec sa source (`COMMIT_CODE_T06`, `EMPREINTES_CODE_T06`, `LECTURES_7A_T07`, `CONTROLE_AIRE_T06`,\n  `CLES_REGISTRE_PARTAGE`, `COMMIT_CODE_T07`, `EMPREINTES_CODE_T07`), **sept laissés** (`EMPREINTE_PREREG_T06`,\n  `MOT_LAZAR_P064`, `MOT_LAZAR_P065`, `GO_ETAPE_A_T07`, `ENTROPIE_T07`, par la consigne ; `NIVEAU_BASE_T06`, que le\n  candidat 12 r5 de T0.6 ne chiffre pas, avec une proposition ; `EMPREINTE_CONFIG_T07`, aucune configuration de T0.7\n  n'existant) ; (3) des constats relevés au passage, écrits sans changer aucune règle (table « du 17 au 18 » ; « Reste »,\n  1 quater). Non scellé ; rien n'est lancé, rien n'est dépensé, rien n'est committé ; les compagnons `.sha256` des sorties\n  du brouillon 18 sont écrits par ce rédacteur. **Aucune hypothèse, aucune prédiction, aucun seuil, aucune ligne L, aucune\n  entrée de la grille ni aucune règle de garde ne change** ; les sections (a), (b), (c) et (d) de « Écrits exigés par\n  P3-bis » sont gardées octet pour octet (vérifié par le script) ; dans l'empan « Hypothèse » à « Liste d'arrêt », une\n  seule section est touchée, « Règle « mots et coût » de T0.6 », par la seule substitution du marqueur `CONTROLE_AIRE_T06`\n  (journal, « Sections gelées »).\n- **Lu pour le brouillon 18** (empreintes recalculées par `sha256sum`, égales à leurs compagnons) : le brouillon 17 entier ;\n  ses deux contre-lectures (`prereg/contre-lectures/T0.7-sondes-v0-v1-brouillon15-cl1.md`, `29203bbc…` ;\n  `…-brouillon16-cl2.md`, `fc728c18…`) ; `registres/decisions.md` R-2001 à R-2068, plus R-1902, R-1927 et R-1934 ;\n  N-063 v2 (`b2d9f035…`) et N-066 (`21e83ed5…`) ; P-064 et P-065 n'ont pas de fichier sous `docs/decisions/` : leur texte\n  est celui de R-1902 et de la section « Décisions » ; T0.6 candidat 12 r5 (`brouillons/T0.6-organismes-v0-v1-candidat12-r5.md`,\n  `8fde62dbd7e44ebdfd163bbf0624c9e91c5aba5a7a50fc1a4fa41e2414d9f9d1` : en-tête, « Ce que les auteurs savaient »,\n  « Hypothèse » à « Liste d'arrêt ») ; l'audit de l'écart DT-4 (`4882fe4d…`) et son complément (`cae6ab64…`) ; le module\n  `src/controle_ia/t07/` (empreintes, clés de configuration, marqueurs internes, règle du registre partagé) et son fichier\n  d'essais, rejoué (138 passés, 1 sauté) ; au commit `1609a4bf`, par `git show`, les huit fichiers de code du point 15 de\n  T0.6 r5, `src/controle_ia/t06/cout.py` et la validation de configuration (`configuration_v2.py`, `configuration_v3.py`,\n  `configuration_v6.py`) ; `scripts/controle_lecture_t06_v1.py` au commit `061ac380` (branche `origin/prep/t06-candidat2-v1`) ;\n  les noms de clés de registre prévus par P3-bis brouillon 9 (`eb65773f…`) et par NARCBench brouillon 4 (`96995d60…`) ;\n  `ls` de `registres/`. **Non ouvert** : aucun `diag/` ni `runs/` de 7a, ni la branche `essai/t06-explo-v3`, ni\n  `lecture-sondes-t06.json`, ni la lecture B ou sa branche, ni la lecture A elle-même, ni\n  `scripts/extraire_mesures_epreuve_t06_v1.py` (jamais lu ni exécuté), ni rien sous `donnees/bras-attaque*`,\n  `donnees/mode-tenu-a-l-ecart*`, `docs/notes/bras-attaque/`, ni aucune pièce de l'étiqueteur ; aucune valeur de sonde de\n  7a vue.\n- **Pièces du brouillon 18** : le script d'application `brouillons/T0.7-sondes-v0-v1-brouillon18-appliquer-v1.py` applique\n  les couples et vérifie : empreinte du brouillon 17 ; unicité de chaque « ancien » ; sections (a) à (d) égales octet pour\n  octet à celles du brouillon 17 ; sections touchées ; marqueurs restants ; `controle_ia.prereg.problemes` réduit à la ligne\n  des marqueurs laissés, et liste vide à valeurs factices (sortie dans le journal). La grille de lecture n'est pas rejouée :\n  aucun couple ne touche une ligne L, une entrée de la grille ni une garde ; `grille_l_t07_brouillon17.py` (`2a0eac56…`,\n  sortie `36d3ec0c…`) et `verifier_brouillon17.py` restent les pièces du texte.\n- **Ce que le brouillon 17 faisait** (statut gardé pour mémoire) : **brouillon 17**, écrit le 2026-11-09 à partir de 17:52 UTC (heure relevée par `date -u`) par le **rédacteur des"
+ },
+ {
+  "id": "B18-03",
+  "section": "table « du 17 au 18 »",
+  "section_gelee": false,
+  "raison": "table des changements du brouillon 18",
+  "ancien": "## Table « ce qui change du 16 au 17 »\n",
+  "nouveau": "## Table « ce qui change du 17 au 18 »\n\n| # | sujet | brouillon 17 | brouillon 18 | raison |\n|---|---|---|---|---|\n| 1 | **écart DT-4 de 7a** | en-tête : « Au 8 novembre 2026, 16:15 UTC, 7a n'est pas créée » ; « aucune sonde de ce texte ni aucune sonde figée de P3 n'est passée sur les activations de 7a » ; Concordance : « 7a … n'est lue par aucune sonde de ce texte » (phrases qui pouvaient se lire « 7a jamais lue par une sonde ») | **déclaration exacte** (en-tête, « Ce que les auteurs ont vu » ; Concordance, « Course ») : la chaîne de 7a a calculé les sondes de T0.6 sur l'instance ; le lecteur exploratoire de 7a en a vu des valeurs par accident ; il est exclu de T0.6, T0.7, P3-bis et G0 ; sa lecture B est en quarantaine ; audit et complément : « aucune trace trouvée » ; l'extracteur `extraire_mesures_epreuve_t06_v1.py` ouvre le fichier des sondes et reste interdit jusqu'au verdict de P3-bis ; aucune lecture de T0.7 ne porte sur les sondes de 7a ; les phrases restreintes des sections gelées (plan, point 5 ; entrée G et ligne R12 ; liste d'arrêt), vraies, sont gardées et dites telles | R-2041, R-2048 ; consigne, point 2 |\n| 2 | `LECTURES_7A_T07` | marqueur | **rempli** : R-2039, R-2040 (lecture A, exploratoire, non opposable), R-2041 (lecture B interrompue, en quarantaine), R-2046, R-2056, R-2057, R-2067 ; ce que T0.7 en lit : rien | consigne, point 3 |\n| 3 | `COMMIT_CODE_T06`, `EMPREINTES_CODE_T06` | marqueurs | **remplis** d'après T0.6 candidat 12 r5 : commit `1609a4bf` (voie B) ; huit empreintes du point 15 recalculées au commit, égales ; **constat** : `scripts/controle_lecture_t06_v1.py` (`ba2ba5cf…`), son `.sh` et ses essais sont absents de `1609a4bf` et de `main` ; présents à l'octet au commit `061ac380` (`origin/prep/t06-candidat2-v1`), comportement vérifié (l. 66-68, 71-72, 101) ; `1ae198b4` absent du clone | consigne, point 3 |\n| 4 | `CONTROLE_AIRE_T06` | marqueur | **rempli : « égalité »** (r5 définit l'aire de la base décisive comme l'aire moyenne de celle des deux bases qui l'a la plus haute) ; réserve : r5 ne nomme ni le fichier, ni ses champs, ni leur arrondi | consigne, point 3 |\n| 5 | `NIVEAU_BASE_T06` | marqueur | **laissé** : r5 ne le chiffre pas (« comme pour les sondes ») ; **proposition** : 0,95, à écrire dans T0.6 avant son scellement | consigne, point 3 |\n| 6 | `CLES_REGISTRE_PARTAGE` | marqueur ; exemple `T06`, `T08`, `P3BIS` | **rempli** : `T06`, `T08`, `P3BIS`, `NARC` ; registre non encore créé, aucune clé présente ; aucune clé prévue d'une autre tâche ne porte la marque `T07` dans ce registre ni n'a la forme `SCELLEMENT-JEUX-<marque>-JD|JC|JA` | consigne, point 3 ; P3-bis b9 ; NARCBench b4 |\n| 7 | `COMMIT_CODE_T07`, `EMPREINTES_CODE_T07` ; `EMPREINTE_CONFIG_T07` | marqueurs | **remplis, valeurs provisoires** : commit `51a1874c` (R-1934) et sept empreintes, égaux à `main` `9583ce8f` ; module réaligné sur le brouillon 14 seulement, sans les points (x) à (xv), non contre-lu, sans configuration ; **`EMPREINTE_CONFIG_T07` laissé** : aucune configuration de T0.7 dans le dépôt | consigne, point 3 |\n| 8 | extracteur des mesures | — | « Module », entrées : jamais `scripts/extraire_mesures_epreuve_t06_v1.py` | R-2057 |\n| 9 | ligne `GARDE-ADAPTEE-T07-P3BIS` | — | **vérifiée, inchangée** : inscrite par la session mère au scellement de ce texte, dans `registres/prealables-p3bis-v1.md` (jamais `scellements-v1.md`), avant toute décision « ouvrir », avec le chemin du texte scellé et l'empreinte de `SCELLEMENT-T07` ; vérifiée par G2 (iii) | consigne, point 4 |\n| 10 | phrase exigée de T0.6 et fichier « mots et coût » | exigés du « candidat 12 r3 » | **constat** : le candidat 12 r5 ne porte ni la phrase, ni le fichier `ISSUE-MOTS-ET-COUT-T06` et ses champs, ni le chemin du registre, ni de règle d'ex aequo ; écrit à la Concordance et au « Reste », 1 quater | lecture de T0.6 r5 |\n| 11 | module | « n'existe sur aucune branche visible » | état de `main` écrit (R-1934) | consigne, point 3 |\n| 12 | marqueurs | 14 | **7** restants (compte par programme) ; dans les tables historiques et de constats, les marqueurs remplis sont écrits sans chevrons | consigne, point 5 |\n\n## Table « ce qui change du 16 au 17 »\n"
+ },
+ {
+  "id": "B18-04",
+  "section": "En-tête",
+  "section_gelee": false,
+  "raison": "COMMIT_CODE_T07 rempli par l'état de main (provisoire)",
+  "ancien": "- Commit du code d'analyse : `<<COMMIT_CODE_T07>>` (paquet gelé",
+  "nouveau": "- Commit du code d'analyse : `51a1874c273d6d3c2d27e35a8036117b577904ab` (**brouillon 18, valeur provisoire**, marqueur\n  `COMMIT_CODE_T07` : commit R-1934 du module de lecture de T0.7, réaligné sur le brouillon 14 ; son module\n  `src/controle_ia/t07/` et ses essais sont égaux à ceux de `main` au 10 novembre 2026, `9583ce8f` (`git diff --quiet`) ; ce\n  module **ne porte pas** les changements (x) à (xv) des brouillons 15 à 17, n'a pas de configuration et n'est pas contre-lu\n  (R2) : la valeur est à refaire après son réalignement, sa contre-lecture et la répétition jouet, ou à remplacer par la\n  ligne `CODE-T07` si DS-3 bis est accordée ; section « Marqueurs ») (paquet gelé"
+ },
+ {
+  "id": "B18-05",
+  "section": "En-tête",
+  "section_gelee": false,
+  "raison": "EMPREINTES_CODE_T07 remplies par l'état de main (provisoires)",
+  "ancien": "aucun module gelé touché, R12) : `<<EMPREINTES_CODE_T07>>` ;",
+  "nouveau": "aucun module gelé touché, R12) : empreintes au commit ci-dessus (**brouillon 18, provisoires**, marqueur\n  `EMPREINTES_CODE_T07` ; `sha256sum` le 10 novembre 2026, égales à celles de R-1934) : `src/controle_ia/t07/__init__.py`\n  `553bd9d29b56f0923859da2d3a63fadf9891c4274b9bb23fc367496e77e5a61e`, `criteres_v1.py`\n  `12b999fecce093372a29fb70d8c11eb7fe965f34c8746a31b399baaecc5ae8c5`, `lecture_v1.py`\n  `62b34790346123924c275c4e2021ea31db26837c5b7840e9e047d272a54c9678`, `mahalanobis_v1.py`\n  `b28163062aa8d39cf3894b327a7446f63d50d4f1394eac894b16b4da8ff962f9`, `plancher_v1.py`\n  `ac6e8263293ed30c807ef91f8eab0adbcbf8e1b91d5e4c56e73dbffa1a7099dc`, `registre_v1.py`\n  `914b8f374ce8f8bc6550d03c34c5f6c2a97ac93b8ce44da24fd88229185ffca0` ; essais `tests/test_t07_lecture_v1.py`\n  `ae82fe0d606fa22223fa86f846788145b7c436d12fe65c2ddb3359a907329722` (rejoués le 10 novembre 2026 : 138 passés, 1 sauté,\n  l'essai d'égalité à `controle_lecture_t06_v1.py`, qui lit la branche `origin/prep/t06-candidat8-v1`, absente de ce\n  clone) ;"
+ },
+ {
+  "id": "B18-06",
+  "section": "En-tête",
+  "section_gelee": false,
+  "raison": "COMMIT_CODE_T06 et EMPREINTES_CODE_T06 remplis d'après T0.6 r5, vérifiés au commit ; script de contrôle localisé",
+  "ancien": "exactement une ligne de chacune, l. 71-72 ; journal `OUVERTURE-SONDES-T06`, l. 101 ; à vérifier au candidat)\n  (`<<COMMIT_CODE_T06>>`, `<<EMPREINTES_CODE_T06>>`, relevés dans le texte scellé de T0.6, y compris pour ce script).",
+  "nouveau": "exactement une ligne de chacune, l. 71-72 ; journal `OUVERTURE-SONDES-T06`, l. 101 ; vérifié au brouillon 18,\n  ci-dessous) (**brouillon 18**, marqueurs `COMMIT_CODE_T06` et `EMPREINTES_CODE_T06` remplis d'après le texte de T0.6 en\n  vigueur, candidat 12 r5, `8fde62db…`, ligne « Commit du code d'analyse » et point 15, l. 244-245 : **commit\n  `1609a4bf2c1572f72bb8542d81d963ac6a8481c4`** (voie B, R-2062, R-2064 : le commit de scellement S de T0.6 descend de\n  `1609a4bf` sans rien changer à l'arbre gelé, puis est fusionné dans `main` ; c'est le code joué par 7a) ; **empreintes**,\n  recalculées le 10 novembre 2026 par `git show 1609a4bf:<chemin> | sha256sum`, égales à celles de r5 :\n  `scripts/lancer_t06_v13.sh` `6940a337d5e0c9a736aa7087275c5f6328133b67ed4df1c94535ba06a1965416`,\n  `scripts/amorce_instance_t06_v11.sh` `43d856596f4ff934ae6faa445faed0d00aaaa264b23b0bda344b6888dcd5e859`,\n  `scripts/tests-cibles-t06-v3.txt` `e76d5e6b7c32140b549de20f061a2e562df9201c5daab4060fd1ca54a05f42e2`,\n  `scripts/tests-exclus-t06-v3.txt` `ab70a1ed4b59bdb5f488e453055029806cde30c36552684f686097fbea8ed81c`,\n  `src/controle_ia/t06/session_v12.py` `5b4ad5e9fa39c4a803050ed118157d005bcb30551a54a6822f38a15ca0ddd90e`,\n  `src/controle_ia/t06/lanceur_v6.py` `e329493b5d54fe52f6eb278b1314a78f905ca082a51ee1a0c5c3a77bd400ac80`,\n  `src/controle_ia/t06/configuration_v6.py` `7899622515588284d1045c72aee95d109ff755f525d3c4bcd70df14caf6fad8e`,\n  `src/controle_ia/audit_fuite_r1_v4/bras_b_v4.py` `317a7ea551abace1b3b78acde543688ab33bfda57cd15d8e6072f0826ce6fa17` ;\n  `src/controle_ia/t06/cout.py` `bcfe5683…` au même commit, égale à celle du commit `8cb539f9` citée plus haut ; **script\n  de contrôle d'ouverture** : `scripts/controle_lecture_t06_v1.py`\n  (`ba2ba5cfe7484e7e30bb74e44420b46c9939dd5613bbb961b9725c3d46343c07`), `scripts/controle_lecture_t06_v1.sh`\n  (`c671c9f442d309a5eafc43b436a2a04e30ba64bd76cf23621d247015d8c138e6`) et ses essais `tests/test_t06_controle_lecture.py`\n  (`e6763f8b93211df123f0815636e34db45906f6c1dd896a0c723b889cb96019e2`), que r5 cite par empreinte seulement (l. 360),\n  sont **absents de l'arbre de `1609a4bf` et de `main`** ; ils sont, à l'octet, au commit `061ac380` (7 novembre 2026,\n  « contrôle d'ouverture de la lecture des sondes (R-1654) ») de la branche `origin/prep/t06-candidat2-v1` ; le commit\n  `1ae198b4` cité jusqu'au brouillon 17 n'est pas dans ce clone ; comportement vérifié sur ce fichier : `lire_registre`\n  ignore toute clé autre que `SCELLEMENT-T07` et `SCELLEMENT-P3BIS` (l. 66-68), exige exactement une ligne de chacune\n  (l. 71-72) et journalise `OUVERTURE-SONDES-T06` (l. 101) ; d'où T0.6 prend ce script au moment d'ouvrir ses états de\n  sondes reste à écrire par T0.6 : « Reste », 1 quater)."
+ },
+ {
+  "id": "B18-07",
+  "section": "En-tête",
+  "section_gelee": false,
+  "raison": "état de 7a ; LECTURES_7A_T07 rempli ; écart DT-4 déclaré (R-2048)",
+  "ancien": "Au 8 novembre 2026, 16:15 UTC, 7a **n'est pas créée** (R-1862, l. 1820 ; chemin critique\n  v3 `docs/notes/g0-deux-semaines-v1/chemin-critique-G1-v3-brouillon1.md`, `b2b702ba464dd9cfddc686458e12220af660c2119292d4757a4e48b03a37673d`,\n  pas 7a) : **aucune lecture de 7a par les auteurs de ce brouillon** (état du 8 novembre, 16:15 UTC, à mettre à jour au\n  candidat). **Lectures de 7a au scellement** : `<<LECTURES_7A_T07>>` (liste des lectures de 7a consignées dans\n  `registres/decisions.md`, identifiants R-, avec qui, quand, quoi ; ou « aucune » ; CLT7B-08). Les **comptes de la garde de 7a** (lecture\n  A de l'ordre) et ses **courbes exploratoires** (lecture B) sont **non opposables** : aucun seuil, aucune prédiction, aucun\n  choix de sonde, de couche ni de jeu de ce texte n'en est tiré (R3) ; **aucune sonde de ce texte ni aucune sonde figée de\n  P3 n'est passée sur les activations de 7a**. Une lecture de 7a par une sonde de ce texte ou par une sonde figée de P3\n  rend T7-P1 et T7-P2 non opposables (nœud).",
+  "nouveau": "**État de 7a** (brouillon 18 ; aux brouillons 7 à 17, état du\n  8 novembre 2026 à 16:15 UTC : 7a n'était pas créée, R-1862) : 7a a été jouée le 9 novembre 2026 sur le code du commit\n  `1609a4bf` (ordre joué : brouillon 3, `docs/notes/g0-deux-semaines-v1/e3-ter-v1/ordre-course-dose-reponse-exploratoire-v1-brouillon3.md`,\n  `4c6c70d4e496bf2fd009cc25133a319151af600ec64065eb33903963fbda17a0`, R-2038), et son instance est détruite (R-2039).\n  **Lectures de 7a au 10 novembre 2026** (marqueur `LECTURES_7A_T07`, rempli au brouillon 18 ; liste des lectures de 7a\n  consignées dans `registres/decisions.md`, avec qui, quand, quoi ; à mettre à jour au candidat ; CLT7B-08) :\n  (1) **R-2039** (9 novembre, 20:13 UTC ; fille clés 2, exécutante de 7a) : fin de la course, rapatriement par refspec de\n  la branche `essai/t06-explo-v3` (run `20261109-070232-t06-reel`), compagnons et traces vérifiés, instance détruite :\n  comptes de fin de course, aucune lecture de résultat ; (2) **R-2040** (20:23 UTC ; lecteur neuf, sous-agent de la session\n  mère sortante) : **lecture A**, exploratoire, non opposable (R-522),\n  `docs/notes/g0-deux-semaines-v1/e3-ter-v1/lecture-7a-v1/lecture-A-exploratoire-non-opposable-v1.md`\n  (`3c84c419acbdcbe605a7b1e92225d3d19caf7c4de2fbd10f5dcdf2c447156738`) et sortie de l'extracteur de garde\n  (`24ea608fe821f71d5137868ba8157d3b495fd8ca6672eb9f557a481424cf6ee1`, `scripts/extraire_garde_equivalence_t06_v1.py`, qui\n  ne lit jamais le fichier des sondes : audit DT-4, constat 7) : comptes de la garde d'équivalence, heures et mémoire ;\n  **aucune sonde** ; (3) **R-2041** (20:24 UTC ; même lecteur) : **lecture B**, interrompue sur l'écart DT-4 (ci-dessous),\n  versée en quarantaine ; (4) **R-2046** : le rédacteur de T0.6 r3 a reçu la lecture A et des grandeurs de coût de 7a\n  d'origine indéterminée (retirées de T0.6 à la révision 4, option (b)) et a lu le champ `graines[*].entropie` du\n  manifeste de 7a ; (5) **R-2056** : la session mère a comparé la configuration jouée par 7a à celle du brouillon 5 de\n  T0.6 (six champs ; une configuration, non une sortie) ; (6) **R-2057** et **R-2067** : audit de l'écart DT-4 et son\n  complément, structurels, sans ouvrir le fichier des sondes ni la lecture B. **Ce que T0.7 en lit : rien** : aucune\n  lecture de ce texte ne porte sur les épisodes de 7a ni sur ses sondes, et aucun nombre de 7a n'entre dans ce texte.\n  Rédacteurs et contre-lecteurs de T0.7 : les brouillons 1 à 17 et leurs contre-lectures sont antérieurs à la fin de 7a\n  (brouillon 17 : 9 novembre, de 17:52 à 18:03 UTC, R-2030 ; fin de la course : 20:00 UTC, R-2039) ; le rédacteur du\n  brouillon 18 a lu R-2039 à R-2068, T0.6 candidat 12 r5 et les deux rapports d'audit, qui décrivent la lecture A par ses\n  comptes de garde, ses heures et sa mémoire ; il n'a ouvert ni la lecture A, ni aucun `diag/` ni `runs/` de 7a, ni la\n  branche `essai/t06-explo-v3`, ni le fichier des sondes, ni la lecture B, et n'a vu aucune valeur de sonde de 7a.\n  **Écart DT-4 de 7a, déclaré** (R-2041 ; décision de Lazar, option (b), R-2048 ; remplace la phrase des brouillons 7\n  à 17 « aucune sonde de ce texte ni aucune sonde figée de P3 n'est passée sur les activations de 7a », écrite quand 7a\n  n'était pas créée, et qui pouvait se lire « 7a n'a été lue par aucune sonde ») : (i) **la chaîne de 7a a calculé des\n  sondes sur l'instance** : le test croisé et les couples descriptifs de T0.6 sur les épisodes de 7a, écrits dans\n  `diag/20261109-070232-t06-reel/lecture-sondes-t06.json`, scellé, fermé par DT-4 jusqu'au verdict scellé de P3-bis\n  (T0.6 candidat 12 r5, « Ce que les auteurs savaient ») ; (ii) **le lecteur exploratoire de 7a en a vu des valeurs par\n  accident** (R-2041), avant d'y lire la mention DT-4 ; (iii) ce lecteur est **exclu de T0.6, T0.7, P3-bis et G0** ;\n  (iv) **sa lecture B est en quarantaine**, hors de `main` (branche `donnees/lecture-b-7a-quarantaine-v1`, jamais ouverte\n  pour ce texte) ; (v) **audit et complément : « aucune trace trouvée »** (audit\n  `docs/notes/g0-deux-semaines-v1/e3-ter-v1/audit-ecart-dt4-7a-v1.md`,\n  `4882fe4dc97aab724da24d12e0e3e2f8f7dce2a07d8ffbd170b26d70f7367d13`, R-2057 ; complément\n  `docs/notes/g0-deux-semaines-v1/e3-ter-v1/audit-ecart-dt4-7a-complement-v1.md`,\n  `cae6ab643536293672d9b996b82bec04a692229ff517d28d6a362f840fc9d354`, R-2067 ; structurels et par catégories, sans\n  comparaison de valeurs, limite déclarée par l'auditeur ; réserve sur l'origine des grandeurs de coût de 7a, sans objet\n  pour ce texte, qui n'en porte aucune) ; (vi) **l'extracteur `scripts/extraire_mesures_epreuve_t06_v1.py`**\n  (`9a67b7b994188e47cad966ffec20af266677c78afb2c401beb07903174435796`, au commit `1609a4bf`) **ouvre le fichier des\n  sondes** et en imprime des éléments (audit, constat 7) : il **reste interdit** sur les arbres de 7a et de 7b **jusqu'au\n  verdict scellé de P3-bis** (R-2057) ; aucune lecture de ce texte ne l'emploie ; (vii) **aucune lecture de T0.7 ne porte\n  sur les sondes de 7a**. **Ce qui reste vrai, et que les sections gelées écrivent telles quelles** (plan, point 5 ;\n  critères, entrée G et ligne R12 ; liste d'arrêt) : aucune sonde de ce texte n'a été apprise ni passée sur 7a (aucune\n  étape de ce texte n'a été jouée), et aucune sonde figée de P3 non plus (la chaîne de 7a exige `sondes_figees_p3` nul :\n  `src/controle_ia/t06/configuration_v2.py` l. 61-63 au commit `1609a4bf`, appelée par `configuration_v6.py` l. 52 par\n  `configuration_v3.py` l. 31 ; la sonde du test croisé de T0.6 est le même couple famille × couche que la sonde figée de\n  tromperie de P3, apprise sur les organismes de 7a, non la sonde figée) ; ces phrases ne disent pas que 7a n'a été lue\n  par aucune sonde. Les **comptes de la garde de 7a** (lecture A) et tout ce que 7a a donné sont **non opposables** :\n  aucun seuil, aucune prédiction, aucun choix de sonde, de couche ni de jeu de ce texte n'en est tiré (R3). Une lecture de\n  7a par une sonde de ce texte ou par une sonde figée de P3 rend T7-P1 et T7-P2 non opposables (nœud)."
+ },
+ {
+  "id": "B18-08",
+  "section": "Décisions (DS-3 bis)",
+  "section_gelee": false,
+  "raison": "marqueurs du code de T0.7 remplis provisoirement : la phrase est ajustée",
+  "ancien": "`src/controle_ia/t07/` n'est pas contre-lu et répété en jouet avant le scellement, `<<COMMIT_CODE_T07>>` et\n  `<<EMPREINTES_CODE_T07>>` ne peuvent pas être remplis ;",
+  "nouveau": "`src/controle_ia/t07/` n'est pas contre-lu et répété en jouet avant le scellement, `COMMIT_CODE_T07` et\n  `EMPREINTES_CODE_T07` ne peuvent pas être remplis de façon définitive (brouillon 18 : remplis par l'état de `main`,\n  valeurs provisoires, section « Marqueurs ») ;"
+ },
+ {
+  "id": "B18-09",
+  "section": "Règle « mots et coût » de T0.6",
+  "section_gelee": true,
+  "raison": "substitution du marqueur CONTROLE_AIRE_T06, prévue par le texte (« fixé au candidat »)",
+  "ancien": "telle dose, **ou `aire` en écart** sur une telle dose (brouillon 13, M-3 ; contrôle fixé au candidat,\n   `<<CONTROLE_AIRE_T06>>`) : **« égalité »**",
+  "nouveau": "telle dose, **ou `aire` en écart** sur une telle dose (brouillon 13, M-3 ; contrôle fixé au brouillon 18 : « égalité »,\n   marqueur `CONTROLE_AIRE_T06`, section « Lignes de registre ») : **« égalité »**"
+ },
+ {
+  "id": "B18-10",
+  "section": "Lignes de registre",
+  "section_gelee": false,
+  "raison": "CLES_REGISTRE_PARTAGE rempli : liste fixée des marques des autres tâches",
+  "ancien": "**marques des autres tâches : liste fixée par ce texte au\n  candidat, `<<CLES_REGISTRE_PARTAGE>>`** (par exemple `T06`, `T08`, `P3BIS` ; la liste écrite fait foi, jamais une\n  marque devinée).",
+  "nouveau": "**marques des autres tâches : liste fixée par ce texte (brouillon 18,\n  marqueur `CLES_REGISTRE_PARTAGE`) : `T06`, `T08`, `P3BIS`, `NARC`** (la liste écrite fait foi, jamais une marque\n  devinée ; `T06` : T0.6 ; `T08` : T0.8, dont le texte n'est pas écrit ; `P3BIS` : P3-bis, qui n'écrit dans ce registre que\n  `SCELLEMENT-P3BIS` et `VERDICT-P3BIS`, brouillon 9, `eb65773fa6b0099d5f3fdd43e1602852d527cdc5759f780d09c8a88ac241bca8`,\n  l. 277 ; `NARC` : NARCBench sur le 8B, bras descriptif de T0.7, dont le brouillon 4\n  (`prereg/brouillon-narcbench-8b-descriptif-v1-brouillon4.md`,\n  `96995d60c757a45b39e5c721ce0f40b53870ed8e0589d7e51f989482c960efe8`, l. 357-360) prévoit `SCELLEMENT-NARC-8B`,\n  `GO-NARC-8B`, `SCORES-NARC-8B`, `SONDES-NARC-8B` et `EXTERNE-NARC` dans un registre encore en marqueur : si c'est\n  celui-ci, ces clés portent la marque `NARC` et sont ignorées ; aucune, marque retirée, n'égale `SCELLEMENT-JEUX-JD`,\n  `SCELLEMENT-JEUX-JC` ni `SCELLEMENT-JEUX-JA`)."
+ },
+ {
+  "id": "B18-11",
+  "section": "Lignes de registre",
+  "section_gelee": false,
+  "raison": "confirmation de la règle (3) restreinte au brouillon 18",
+  "ancien": "la Concordance demande à T0.8 de ne pas l'employer, et\n  `<<CLES_REGISTRE_PARTAGE>>` le confirme au candidat (si une telle clé existe ou est prévue, la règle est réécrite au\n  candidat, déclarée).",
+  "nouveau": "la Concordance demande à T0.8 de ne pas l'employer, et\n  la liste fixée au brouillon 18 le confirme (aucune clé de cette forme n'est prévue par T0.6 r5, P3-bis b9 ni\n  NARCBench b4 ; si une telle clé existe ou est prévue au candidat, la règle est réécrite, déclarée)."
+ },
+ {
+  "id": "B18-12",
+  "section": "Lignes de registre",
+  "section_gelee": false,
+  "raison": "état du registre partagé au 10 novembre 2026 ; clés présentes ; confirmation",
+  "ancien": "aucun commit sur ce chemin) : la règle est écrite sans en connaître les clés ; `<<CLES_REGISTRE_PARTAGE>>` reçoit au\n  candidat la **liste des marques des autres tâches**, la liste des clés présentes, et la confirmation qu'aucune clé d'une\n  autre tâche ne porte la marque `T07` ni ne tombe sous la règle (3) restreinte (brouillon 14).",
+  "nouveau": "aucun commit sur ce chemin) ; **au 10 novembre 2026 (brouillon 18), il n'existe toujours pas** (`ls registres/`,\n  `git ls-files registres` sur `main` `9583ce8f` : registre non encore créé ; de même `registres/prealables-p3bis-v1.md`\n  et `registres/ouvertures-p3bis-v1.md`) : **clés présentes : aucune** ; **liste des marques des autres tâches** :\n  ci-dessus ; **confirmation** : aucune clé qu'une autre tâche prévoit d'écrire dans ce registre ne porte la marque `T07`\n  ni ne tombe sous la règle (3) restreinte ; la seule clé d'une autre tâche qui porte le segment `T07`,\n  `GARDE-ADAPTEE-T07-P3BIS`, va dans `registres/prealables-p3bis-v1.md`, jamais dans ce registre (P3-bis b9, l. 242 et\n  635-636 ; section « Écrits », (d)) ; écrite ici par erreur, elle ferait refuser l'étape (le module classe une clé qui\n  porte aussi la marque `T07` comme une clé de T0.7 inconnue : `registre_v1.py`, `classer_cle_inconnue`). Liste, clés\n  présentes et confirmation sont refaites à la date du candidat (brouillon 14)."
+ },
+ {
+  "id": "B18-13",
+  "section": "Lignes de registre (ISSUE-MOTS-ET-COUT-T06)",
+  "section_gelee": false,
+  "raison": "CONTROLE_AIRE_T06 rempli : « égalité », source T0.6 r5",
+  "ancien": "choix fixé au candidat par `<<CONTROLE_AIRE_T06>>`, écrit dans la configuration, clé `controle_aire`",
+  "nouveau": "choix fixé au brouillon 18 : **« égalité »** (marqueur `CONTROLE_AIRE_T06` ; source : T0.6 candidat 12 r5, section « Critères de lecture gelés », règle « mots et coût », point 1, l. 575 : « Base décisive de la dose = celle des deux dont l'aire moyenne est la plus haute (son intervalle et son plancher sont ceux qui servent) », et point 2, l. 576 : la base décisive « réussit » si sa borne basse est strictement au-dessus du quantile 0,95 de son plancher et si son aire moyenne est au moins 0,70 ; l'aire de la base décisive est donc, par définition, l'aire moyenne de cette base, le même nombre que `aire_n029` ou `aire_mots_et_cout` selon `base_decisive` ; **réserve** : r5 ne nomme ni ce fichier, ni ses champs, ni leur arrondi, et ne stocke pas les scores par action de ses bases ; l'égalité exacte des nombres écrits fait foi, un écart est un écart interne, L7c), écrit dans la configuration, clé `controle_aire`"
+ },
+ {
+  "id": "B18-14",
+  "section": "Module",
+  "section_gelee": false,
+  "raison": "état du module sur main",
+  "ancien": "Le module **n'existe sur aucune branche visible** au 8 novembre 2026 (contre-lecture cl1, CLT7-03).",
+  "nouveau": "Le module **n'existait sur aucune branche visible** à la contre-lecture cl1 (8 novembre 2026, CLT7-03) ; **au brouillon 18**,\nil est sur `main`, réaligné sur le brouillon 14 (R-1934, commit `51a1874c`), sans les changements (x) à (xv) ci-dessous,\navec trois questions internes ouvertes (marqueurs du code 9, 10 et 11 : format des scores de la base de T0.6, noms des\nclés `niveau_base_t06` et `scores_base_t06`, arrêt de T0.6 sans `lecture-cout-t06.json`) et sans configuration\n(en-tête ; « Marqueurs »)."
+ },
+ {
+  "id": "B18-15",
+  "section": "Module (entrées)",
+  "section_gelee": false,
+  "raison": "extracteur des mesures interdit (R-2057)",
+  "ancien": "**jamais**\n  `diag/<run>/lecture-sondes-t06.json` ;",
+  "nouveau": "**jamais**\n  `diag/<run>/lecture-sondes-t06.json`, ni `scripts/extraire_mesures_epreuve_t06_v1.py`, qui l'ouvre en entier (audit\n  DT-4, constat 7 ; interdit sur les arbres de 7a et de 7b jusqu'au verdict scellé de P3-bis, R-2057 ; brouillon 18) ;"
+ },
+ {
+  "id": "B18-16",
+  "section": "Module (entrées)",
+  "section_gelee": false,
+  "raison": "CONTROLE_AIRE_T06 rempli : fichier des scores sans objet sous « égalité »",
+  "ancien": "(chemin et empreinte écrits\n  au candidat, `<<CONTROLE_AIRE_T06>>` ; brouillon 13, M-3) ;",
+  "nouveau": "(chemin et empreinte écrits\n  au candidat ; sans objet sous « égalité », valeur fixée au brouillon 18, marqueur `CONTROLE_AIRE_T06` ; brouillon 13,\n  M-3) ;"
+ },
+ {
+  "id": "B18-17",
+  "section": "Module (configuration)",
+  "section_gelee": false,
+  "raison": "CONTROLE_AIRE_T06 rempli",
+  "ancien": "**`controle_aire`** (« egalite » ou « recalcul », fixé au candidat, `<<CONTROLE_AIRE_T06>>`)",
+  "nouveau": "**`controle_aire`** (« egalite » ou « recalcul » ; « egalite » fixé au brouillon 18, marqueur `CONTROLE_AIRE_T06`)"
+ },
+ {
+  "id": "B18-18",
+  "section": "Module (configuration)",
+  "section_gelee": false,
+  "raison": "CLES_REGISTRE_PARTAGE rempli",
+  "ancien": "**`marques_autres_taches`** (liste fixée au candidat, `<<CLES_REGISTRE_PARTAGE>>` ;\n  brouillon 13, M-2)",
+  "nouveau": "**`marques_autres_taches`** (`[\"T06\", \"T08\", \"P3BIS\", \"NARC\"]`, liste fixée au brouillon 18, section « Lignes de\n  registre », marqueur `CLES_REGISTRE_PARTAGE` ; brouillon 13, M-2)"
+ },
+ {
+  "id": "B18-19",
+  "section": "Module (ordre d'exécution)",
+  "section_gelee": false,
+  "raison": "COMMIT_CODE_T07 rempli (provisoire)",
+  "ancien": "branche et commit du module (`<<COMMIT_CODE_T07>>` ou ligne `CODE-T07`)",
+  "nouveau": "branche et commit du module (commit de l'en-tête, marqueur `COMMIT_CODE_T07`, valeur provisoire au brouillon 18, ou\nligne `CODE-T07`)"
+ },
+ {
+  "id": "B18-20",
+  "section": "Concordance (Course)",
+  "section_gelee": false,
+  "raison": "écart DT-4 déclaré (R-2048)",
+  "ancien": "; la course exploratoire\n  7a (GO-2026-11-08-11) n'est lue par aucune sonde de ce texte (CLT7-01).",
+  "nouveau": "; la course exploratoire\n  7a (GO-2026-11-08-11) n'est lue par aucune sonde de ce texte (CLT7-01) ; **écart DT-4 de 7a, déclaré** (R-2041,\n  R-2048 ; brouillon 18 ; en-tête, « Ce que les auteurs ont vu ») : la chaîne de 7a a calculé les sondes de T0.6 sur\n  l'instance et le lecteur exploratoire de 7a en a vu des valeurs par accident ; il est exclu de T0.6, T0.7, P3-bis et G0,\n  sa lecture B est en quarantaine, l'audit et son complément n'ont trouvé aucune trace, et l'extracteur des mesures reste\n  interdit jusqu'au verdict de P3-bis ; aucune lecture de ce texte ne porte sur les sondes de 7a ; T0.6 candidat 12 r5\n  déclare le même écart (« Ce que les auteurs savaient »)."
+ },
+ {
+  "id": "B18-21",
+  "section": "Concordance (phrase exigée)",
+  "section_gelee": false,
+  "raison": "constat : T0.6 r5 ne porte pas la phrase exigée ni le fichier « mots et coût »",
+  "ancien": "sans la phrase, les deux textes divergent et\n  ce texte rend L7c.",
+  "nouveau": "sans la phrase, les deux textes divergent et\n  ce texte rend L7c. **Brouillon 18** : le candidat 12 r5 (`8fde62db…`, section « Critères de lecture gelés », règle\n  « mots et coût », l. 573-583) **ne porte pas encore** cette phrase : sa règle porte toujours « à chaque dose (0, 0,25,\n  0,5, 0,75, 1 selon le plan retenu) » et « échoue » y couvre « toute autre situation » ; il ne nomme ni le fichier cité\n  par `ISSUE-MOTS-ET-COUT-T06`, ni ses champs par dose, ni le registre `registres/scellements-v1.md`, ni de règle d'ex aequo\n  de la base décisive (le repli de ce texte s'applique) ; à transmettre au rédacteur de T0.6 avant son scellement\n  (« Reste », 1 quater)."
+ },
+ {
+  "id": "B18-22",
+  "section": "Concordance (niveau de la base)",
+  "section_gelee": false,
+  "raison": "NIVEAU_BASE_T06 laissé : r5 ne le chiffre pas ; proposition 0,95",
+  "ancien": "et à **chiffrer le niveau de l'intervalle de la base** (`<<NIVEAU_BASE_T06>>` ; brouillon 12).",
+  "nouveau": "et à **chiffrer le niveau de l'intervalle de la base** (`<<NIVEAU_BASE_T06>>` ; brouillon 12 ; **brouillon 18** : le\n  candidat 12 r5 ne le chiffre pas, il écrit « intervalle et plancher par permutation des étiquettes dans chaque tâche,\n  comme pour les sondes », règle « mots et coût », point 1, l. 575, et ses sondes sont lues à 95 %, section « Seuil » ;\n  **proposition** : 0,95, écrit dans le texte de T0.6 avant son scellement par un couple d'une ligne, puis ce marqueur\n  rempli par cette valeur ; sans chiffre au texte scellé de T0.6 : nœud, comme au brouillon 12)."
+ },
+ {
+  "id": "B18-23",
+  "section": "Concordance (aire)",
+  "section_gelee": false,
+  "raison": "CONTROLE_AIRE_T06 rempli",
+  "ancien": "ni l'un ni l'autre → nœud avant le\n  scellement de ce texte (`<<CONTROLE_AIRE_T06>>`).",
+  "nouveau": "ni l'un ni l'autre → nœud avant le\n  scellement de ce texte (marqueur `CONTROLE_AIRE_T06`, rempli au brouillon 18 : « égalité », d'après la définition de la\n  base décisive du candidat 12 r5, section « Lignes de registre » ; la définition du champ `aire` du fichier reste à\n  écrire par T0.6)."
+ },
+ {
+  "id": "B18-24",
+  "section": "Concordance (registre partagé)",
+  "section_gelee": false,
+  "raison": "CLES_REGISTRE_PARTAGE rempli",
+  "ancien": "(3) leurs clés portent une marque de la liste fixée\n  (`<<CLES_REGISTRE_PARTAGE>>`) ;",
+  "nouveau": "(3) leurs clés portent une marque de la liste fixée\n  (`T06`, `T08`, `P3BIS`, `NARC` ; section « Lignes de registre », brouillon 18) ;"
+ },
+ {
+  "id": "B18-25",
+  "section": "Concordance (registre partagé)",
+  "section_gelee": false,
+  "raison": "comportement du script de T0.6 vérifié ; confirmation faite au brouillon 18",
+  "ancien": "comportement vérifié au candidat,\n  ligne `<<COMMIT_CODE_T06>>`, `<<EMPREINTES_CODE_T06>>` des marqueurs) : **la demande ne vise que T0.8**. La confirmation est faite à la date du candidat (`<<CLES_REGISTRE_PARTAGE>>`) ;",
+  "nouveau": "comportement vérifié au brouillon 18\n  sur `git show 061ac380:scripts/controle_lecture_t06_v1.py`, l. 66-68, 71-72 et 101 ; en-tête) : **la demande ne vise que\n  T0.8**. La confirmation est faite au brouillon 18 (section « Lignes de registre » : registre non encore créé, aucune\n  clé présente) et refaite à la date du candidat ;"
+ },
+ {
+  "id": "B18-26",
+  "section": "Reste (1 quater, ajouté)",
+  "section_gelee": false,
+  "raison": "constats du brouillon 18 à régler avant le candidat",
+  "ancien": "2. **Module `src/controle_ia/t07/`** : développeur neuf",
+  "nouveau": "1 quater. **Constats du brouillon 18, à régler avant le candidat** (aucun ne change une règle de ce texte) : (i) **T0.6\n   candidat 12 r5** ne porte pas la phrase exigée par la Concordance (doses `S25` à `S100` seules, « non calculable »\n   distinct de « échoue », `doses_qualifiees`, champs `null`), ne nomme ni le fichier cité par `ISSUE-MOTS-ET-COUT-T06`\n   ni ses champs par dose, ni le registre `registres/scellements-v1.md`, ni de règle d'ex aequo de la base décisive (le\n   repli de ce texte s'applique), et ne chiffre pas le niveau de l'intervalle de la base (`<<NIVEAU_BASE_T06>>`,\n   proposition 0,95) : à transmettre au rédacteur de T0.6 **avant le scellement de T0.6**, sinon L7c probable à\n   l'étape B (écart = nœud) ; (ii) **script de contrôle d'ouverture de T0.6** (`scripts/controle_lecture_t06_v1.py`,\n   `ba2ba5cf…`) : absent de `1609a4bf` et de `main`, présent au commit `061ac380` (`origin/prep/t06-candidat2-v1`) ;\n   T0.6 doit dire d'où il est pris quand il ouvre ses états de sondes ; l'essai d'égalité du module\n   (`test_lire_registre_t07_egale_controle_lecture_t06`) lit `origin/prep/t06-candidat8-v1`, absente de ce clone, et se\n   saute : à pointer sur `061ac380` ; (iii) **module** : à réaligner sur les brouillons 15 à 18 (points (x) à (xv)), à\n   contre-lire (R2) et à répéter en jouet, puis `COMMIT_CODE_T07` et `EMPREINTES_CODE_T07` refaits ; (iv)\n   **configuration de T0.7** à écrire (clés de la section « Module », dont `garde_adaptee` = `vrai`, `portee_regle_4` =\n   « restreinte », `controle_aire` = « egalite », `marques_autres_taches`), copiée sous `prereg/` et scellée, puis\n   `<<EMPREINTE_CONFIG_T07>>` ; (v) **demande de GO de l'étape A** (`<<GO_ETAPE_A_T07>>`) : due au plus tard le\n   10 novembre (point 1).\n2. **Module `src/controle_ia/t07/`** : développeur neuf"
+ },
+ {
+  "id": "B18-27",
+  "section": "Reste (2)",
+  "section_gelee": false,
+  "raison": "marqueurs du code de T0.7 remplis provisoirement",
+  "ancien": "répétition jouet ; `<<COMMIT_CODE_T07>>`, `<<EMPREINTES_CODE_T07>>` ; ou ligne `CODE-T07` si DS-3 bis\n   l'accorde.",
+  "nouveau": "répétition jouet ; `COMMIT_CODE_T07`, `EMPREINTES_CODE_T07` (**brouillon 18** : remplis par l'état de `main`, commit\n   `51a1874c`, R-1934 ; module réaligné sur le brouillon 14 seulement, sans les points (x) à (xv), non contre-lu, sans\n   configuration ; **valeurs provisoires, à refaire** avant le candidat) ; ou ligne `CODE-T07` si DS-3 bis\n   l'accorde."
+ },
+ {
+  "id": "B18-28",
+  "section": "Reste (3)",
+  "section_gelee": false,
+  "raison": "marqueurs du code de T0.6 remplis d'après r5",
+  "ancien": "3. **Texte scellé de T0.6** (candidat 12 r3 ou suivant) : `<<EMPREINTE_PREREG_T06>>`, `<<COMMIT_CODE_T06>>`,\n   `<<EMPREINTES_CODE_T06>>` (y compris `scripts/controle_lecture_t06_v1.py`, commit `1ae198b4`, empreinte et comportement\n   vérifiés ; brouillon 14, R-1924 (4)) ;",
+  "nouveau": "3. **Texte scellé de T0.6** (candidat 12 r3 ou suivant ; au brouillon 18, candidat 12 r5, `8fde62db…`, non scellé) :\n   `<<EMPREINTE_PREREG_T06>>` (reste) ; `COMMIT_CODE_T06`, `EMPREINTES_CODE_T06` **remplis au brouillon 18** d'après le\n   candidat 12 r5 (commit `1609a4bf`, huit empreintes égales au commit ; `scripts/controle_lecture_t06_v1.py` vérifié à\n   l'octet et dans son comportement au commit `061ac380`, absent de `1609a4bf` et de `main` ; brouillon 14, R-1924 (4)),\n   à confirmer contre le texte scellé ;"
+ },
+ {
+  "id": "B18-29",
+  "section": "Reste (5)",
+  "section_gelee": false,
+  "raison": "LECTURES_7A_T07 rempli ; configuration de T0.7 absente",
+  "ancien": "**`<<LECTURES_7A_T07>>`** rempli (liste des lectures de 7a au registre, ou « aucune » ; état de 7a mis à\n   jour).",
+  "nouveau": "**`LECTURES_7A_T07`** rempli au brouillon 18 (en-tête : lectures R-2039 à R-2067, écart DT-4 déclaré ; à mettre à\n   jour au candidat) ; **au 10 novembre 2026, aucune configuration de T0.7 n'existe dans le dépôt** (aucun fichier JSON de\n   T0.7 sous `prereg/` ni ailleurs ; les clés attendues sont celles de `CLES_CONFIG`, `lecture_v1.py` l. 76-80, sans\n   `garde_adaptee` ni `portee_regle_4`) : `<<EMPREINTE_CONFIG_T07>>` reste."
+ },
+ {
+  "id": "B18-30",
+  "section": "Reste (ce qui conditionne le candidat)",
+  "section_gelee": false,
+  "raison": "CONTROLE_AIRE_T06 et CLES_REGISTRE_PARTAGE remplis",
+  "ancien": "**Conditionnent le candidat** (brouillon 13) : le choix\n`controle_aire` (`<<CONTROLE_AIRE_T06>>`, lu au texte scellé de T0.6) et la liste des marques des autres tâches\n(`<<CLES_REGISTRE_PARTAGE>>`).",
+  "nouveau": "**Conditionnent le candidat** (brouillon 13) : le choix\n`controle_aire` (marqueur `CONTROLE_AIRE_T06`, rempli au brouillon 18 d'après le candidat 12 r5, à relire au texte scellé\nde T0.6) et la liste des marques des autres tâches (marqueur `CLES_REGISTRE_PARTAGE`, rempli au brouillon 18, à\nreconfirmer à la date du candidat)."
+ },
+ {
+  "id": "B18-31",
+  "section": "Contre-lecture",
+  "section_gelee": false,
+  "raison": "passages neufs du brouillon 18 à relire ; vérification mécanique faite",
+  "ancien": "- **Vérification mécanique finale, à faire** (cl2 : pas de troisième contre-lecture complète)",
+  "nouveau": "- **Passages neufs du brouillon 18, à relire** (R2 ; N-052) : écrits par Opus 5.5 (rédacteur neuf) ; relecture courte de\n  l'écart 17 → 18 par un sous-agent neuf d'un autre modèle (Fable), qui n'a écrit ni ce texte ni ses contre-lectures ;\n  fichiers à lui donner : ce brouillon 18, le brouillon 17 (`65efe32f…`), les couples, le script et le journal du\n  brouillon 18, `registres/decisions.md` R-2039 à R-2068, T0.6 candidat 12 r5 (`8fde62db…`), l'audit DT-4 (`4882fe4d…`)\n  et son complément (`cae6ab64…`) ; interdits : ceux de `interdits-communs-v1.md` (`851028fc…`) ; points à viser : la\n  déclaration de l'écart DT-4 et les phrases restreintes gardées dans les sections gelées ; les sept marqueurs remplis et\n  leurs sources ; le choix « égalité » ; `NIVEAU_BASE_T06` laissé ; la marque `NARC` ; les valeurs provisoires du code de\n  T0.7 ; les constats du « Reste », 1 quater. **Vérification mécanique du brouillon 18**, faite par le script\n  d'application (journal, « Sortie du script ») : couples tous à une occurrence ; sections (a) à (d) égales octet pour\n  octet au brouillon 17 ; sept marqueurs restants ; `controle_ia.prereg.problemes` réduit à la ligne des marqueurs\n  laissés ; à valeurs factices, liste vide.\n- **Vérification mécanique finale, à faire** (cl2 : pas de troisième contre-lecture complète)"
+ },
+ {
+  "id": "B18-32",
+  "section": "Marqueurs (introduction)",
+  "section_gelee": false,
+  "raison": "bilan des marqueurs au brouillon 18",
+  "ancien": "## Marqueurs à remplir avant le scellement\n\nVérification : `grep -o",
+  "nouveau": "## Marqueurs à remplir avant le scellement\n\n**Brouillon 18** (compte par programme, motif de `controle_ia.prereg`) : **sept marqueurs remplis** — `COMMIT_CODE_T06` et\n`EMPREINTES_CODE_T06` (T0.6 candidat 12 r5, vérifiés au commit `1609a4bf` ; script de contrôle au commit `061ac380`),\n`LECTURES_7A_T07` (registre, R-2039 à R-2067 ; écart DT-4 déclaré), `CONTROLE_AIRE_T06` (« égalité », candidat 12 r5),\n`CLES_REGISTRE_PARTAGE` (`T06`, `T08`, `P3BIS`, `NARC` ; registre non encore créé), `COMMIT_CODE_T07` et\n`EMPREINTES_CODE_T07` (état de `main`, **provisoires**) — et **sept laissés** : `<<EMPREINTE_PREREG_T06>>` (au scellement\nde T0.6), `<<MOT_LAZAR_P064>>` et `<<MOT_LAZAR_P065>>` (mot de Lazar ou défaut, au plus tôt le 10 novembre 2026 vers\n17:13 UTC), `<<GO_ETAPE_A_T07>>` (ligne de GO de l'étape A, à demander à Lazar sur le devis de la section « Calcul et\ndépense »), `<<ENTROPIE_T07>>` (tirée au scellement par la session mère, R9), `<<NIVEAU_BASE_T06>>` (le candidat 12 r5 ne\nle chiffre pas ; proposition 0,95, Concordance) et `<<EMPREINTE_CONFIG_T07>>` (aucune configuration de T0.7 n'existe).\nDans les tables historiques et les tables de constats, les marqueurs remplis sont écrits sans chevrons, pour qu'aucun\nmotif ne reste ; leurs valeurs sont aux lignes qui les emploient (en-tête, « Lignes de registre », « Module ») et dans la\ntable ci-dessous. **Ce que disaient les brouillons 16 et 17** : Vérification : `grep -o"
+ },
+ {
+  "id": "B18-33",
+  "section": "Marqueurs (table)",
+  "section_gelee": false,
+  "raison": "LECTURES_7A_T07 rempli",
+  "ancien": "| `<<LECTURES_7A_T07>>` | liste des lectures de 7a consignées dans `registres/decisions.md` (identifiants R-, qui, quand, quoi), ou « aucune » ; état de 7a à la date du candidat | au candidat | session mère |",
+  "nouveau": "| `LECTURES_7A_T07` (**rempli au brouillon 18**) | liste des lectures de 7a consignées dans `registres/decisions.md` (R-2039, R-2040 : lecture A ; R-2041 : lecture B interrompue, en quarantaine ; R-2046 ; R-2056 ; R-2057 et R-2067 : audits), écart DT-4 déclaré ; ce que T0.7 en lit : rien (en-tête) | au brouillon 18 ; état à mettre à jour au candidat | rédacteur du brouillon 18 ; session mère |"
+ },
+ {
+  "id": "B18-34",
+  "section": "Marqueurs (table)",
+  "section_gelee": false,
+  "raison": "EMPREINTE_CONFIG_T07 laissé : configuration absente",
+  "ancien": "| `<<EMPREINTE_CONFIG_T07>>` | empreinte canonique de la configuration JSON de T0.7 copiée sous `prereg/` et scellée (`manifeste.config_canonique`) | au candidat | rédacteur du candidat |",
+  "nouveau": "| `<<EMPREINTE_CONFIG_T07>>` | empreinte canonique de la configuration JSON de T0.7 copiée sous `prereg/` et scellée (`manifeste.config_canonique`) ; **brouillon 18** : aucune configuration de T0.7 dans le dépôt au 10 novembre 2026 (« Reste », 1 quater (iv)) | au candidat | rédacteur du candidat |"
+ },
+ {
+  "id": "B18-35",
+  "section": "Marqueurs (table)",
+  "section_gelee": false,
+  "raison": "COMMIT_CODE_T07 rempli (provisoire)",
+  "ancien": "| `<<COMMIT_CODE_T07>>` | commit du module neuf de lecture de T0.7, après contre-lecture du code et répétition jouet ; **si DS-3 bis est accordée, le marqueur est remplacé par la phrase « ligne de registre `CODE-T07` (DS-3 bis) »** (CLT7B-09) | au candidat | session mère |",
+  "nouveau": "| `COMMIT_CODE_T07` (**rempli au brouillon 18, provisoire**) | `51a1874c273d6d3c2d27e35a8036117b577904ab` (R-1934 ; module et essais égaux à `main` `9583ce8f`) ; module réaligné sur le brouillon 14 seulement : à refaire après le réalignement sur les brouillons 15 à 18, la contre-lecture du code et la répétition jouet ; **si DS-3 bis est accordée, remplacé par la phrase « ligne de registre `CODE-T07` (DS-3 bis) »** (CLT7B-09) | au brouillon 18 ; à refaire avant le candidat | session mère |"
+ },
+ {
+  "id": "B18-36",
+  "section": "Marqueurs (table)",
+  "section_gelee": false,
+  "raison": "EMPREINTES_CODE_T07 remplies (provisoires)",
+  "ancien": "| `<<EMPREINTES_CODE_T07>>` | sha256 des modules `src/controle_ia/t07/` et des essais ; même remplacement que `COMMIT_CODE_T07` si DS-3 bis est accordée | au candidat | rédacteur du candidat |",
+  "nouveau": "| `EMPREINTES_CODE_T07` (**rempli au brouillon 18, provisoire**) | sha256 des six modules de `src/controle_ia/t07/` et de `tests/test_t07_lecture_v1.py` au commit `51a1874c` (en-tête), égales à `main` `9583ce8f` et à R-1934 ; même remplacement que `COMMIT_CODE_T07` si DS-3 bis est accordée | au brouillon 18 ; à refaire avant le candidat | rédacteur du brouillon 18 ; rédacteur du candidat |"
+ },
+ {
+  "id": "B18-37",
+  "section": "Marqueurs (table)",
+  "section_gelee": false,
+  "raison": "COMMIT_CODE_T06 et EMPREINTES_CODE_T06 remplis",
+  "ancien": "| `<<COMMIT_CODE_T06>>`, `<<EMPREINTES_CODE_T06>>` | ceux du texte scellé de T0.6 (en-tête du candidat 12 r3 ou suivant), **y compris `scripts/controle_lecture_t06_v1.py` (`ba2ba5cf…`)**, cité **au commit** du texte scellé de T0.6, absent de `main` au 8 novembre (branche `prep/t06-candidat8-v1`, commit `1ae198b4`) ; **à vérifier au candidat** : empreinte égale, `lire_registre` ignore toute clé autre que ses deux (l. 66-67) et exige exactement une ligne de chacune (l. 71-72), journal `OUVERTURE-SONDES-T06` (l. 101) ; écart = nœud (brouillon 14, R-1924 (4)) | au scellement de T0.6 ; vérification au candidat | session mère |",
+  "nouveau": "| `COMMIT_CODE_T06`, `EMPREINTES_CODE_T06` (**remplis au brouillon 18**) | `1609a4bf2c1572f72bb8542d81d963ac6a8481c4` et les huit empreintes du point 15 du candidat 12 r5 de T0.6, recalculées au commit, égales ; `cout.py` égal ; `scripts/controle_lecture_t06_v1.py` (`ba2ba5cf…`, et son `.sh` et ses essais) : absent de `1609a4bf` et de `main`, vérifié à l'octet et dans son comportement (l. 66-68, 71-72, 101) au commit `061ac380` (`origin/prep/t06-candidat2-v1`) ; `1ae198b4` absent du clone (en-tête) | au brouillon 18 ; à confirmer au texte scellé de T0.6 | rédacteur du brouillon 18 ; session mère |"
+ },
+ {
+  "id": "B18-38",
+  "section": "Marqueurs (table)",
+  "section_gelee": false,
+  "raison": "NIVEAU_BASE_T06 laissé : r5 ne le chiffre pas ; proposition",
+  "ancien": "| `<<NIVEAU_BASE_T06>>` | niveau de l'intervalle de la base décisive tel que le chiffre le texte scellé de T0.6 (valeur attendue du champ `niveau` ; le candidat 12 r2, l. 538, ne le chiffre pas) ; s'il n'est pas chiffré, nœud | au scellement de T0.6 | session mère |",
+  "nouveau": "| `<<NIVEAU_BASE_T06>>` | niveau de l'intervalle de la base décisive tel que le chiffre le texte scellé de T0.6 (valeur attendue du champ `niveau` ; le candidat 12 r2, l. 538, ne le chiffre pas) ; s'il n'est pas chiffré, nœud ; **brouillon 18** : le candidat 12 r5 ne le chiffre pas (« comme pour les sondes », l. 575) ; proposition : 0,95, à écrire dans T0.6 avant son scellement | au scellement de T0.6 | session mère |"
+ },
+ {
+  "id": "B18-39",
+  "section": "Marqueurs (table)",
+  "section_gelee": false,
+  "raison": "CLES_REGISTRE_PARTAGE rempli",
+  "ancien": "| `<<CLES_REGISTRE_PARTAGE>>` | **liste fixée des marques des autres tâches** (par exemple `T06`, `T08`, `P3BIS` ; écrite aussi dans la configuration, `marques_autres_taches` ; brouillon 13, M-2) ; liste des clés présentes dans `registres/scellements-v1.md` à la date du candidat ; confirmation qu'aucune clé d'une autre tâche ne porte la marque `T07` ni ne tombe sous la règle (3) restreinte (forme `SCELLEMENT-JEUX-<marque>-JD`, `-JC` ou `-JA` ; brouillon 14, R-1924 (1)) (sinon, la règle des clés de T0.7 est réécrite, déclarée) ; « registre non encore créé » si c'est le cas | au candidat | session mère |",
+  "nouveau": "| `CLES_REGISTRE_PARTAGE` (**rempli au brouillon 18**) | marques des autres tâches : `T06`, `T08`, `P3BIS`, `NARC` (configuration : `marques_autres_taches`) ; `registres/scellements-v1.md` non encore créé au 10 novembre 2026 : aucune clé présente ; aucune clé prévue d'une autre tâche ne porte la marque `T07` dans ce registre ni n'a la forme `SCELLEMENT-JEUX-<marque>-JD`, `-JC` ou `-JA` (section « Lignes de registre ») | au brouillon 18 ; à reconfirmer au candidat | rédacteur du brouillon 18 ; session mère |"
+ },
+ {
+  "id": "B18-40",
+  "section": "Marqueurs (table)",
+  "section_gelee": false,
+  "raison": "CONTROLE_AIRE_T06 rempli",
+  "ancien": "| `<<CONTROLE_AIRE_T06>>` | « egalite » si le texte scellé de T0.6 définit `aire` comme le même nombre que l'aire moyenne de la base décisive écrite ; sinon « recalcul », avec le chemin et l'empreinte du fichier où T0.6 stocke les scores par action de ses bases ; ni définition ni scores stockés → nœud (brouillon 13, M-3) ; écrit aussi dans la configuration, `controle_aire` | au candidat, après le scellement de T0.6 | session mère |",
+  "nouveau": "| `CONTROLE_AIRE_T06` (**rempli au brouillon 18**) | « egalite » : le candidat 12 r5 définit l'aire de la base décisive comme l'aire moyenne de celle des deux bases qui l'a la plus haute (règle « mots et coût », points 1 et 2, l. 575-576) ; fichier, champs et arrondi non nommés par r5 (réserve) ; configuration : `controle_aire` = « egalite », `scores_base_t06` nul | au brouillon 18 ; à relire au texte scellé de T0.6 | rédacteur du brouillon 18 ; session mère |"
+ },
+ {
+  "id": "B18-41",
+  "section": "Table « du 13 au 14 » (historique)",
+  "section_gelee": false,
+  "raison": "marqueur rempli au brouillon 18 : nom écrit sans chevrons dans une mention historique",
+  "ancien": "| 7 | script de lecture de T0.6 absent de `main` | cité par empreinte et branche | ligne de marqueur `<<COMMIT_CODE_T06>>`, `<<EMPREINTES_CODE_T06>>` **étendue** à `scripts/controle_lecture_t06_v1.py` (commit `1ae198b4`, empreinte `ba2ba5cf…`, comportement à vérifier au candidat) ; **aucun marqueur neuf** | R-1924 (4) |",
+  "nouveau": "| 7 | script de lecture de T0.6 absent de `main` | cité par empreinte et branche | ligne de marqueur `COMMIT_CODE_T06`, `EMPREINTES_CODE_T06` **étendue** à `scripts/controle_lecture_t06_v1.py` (commit `1ae198b4`, empreinte `ba2ba5cf…`, comportement à vérifier au candidat) ; **aucun marqueur neuf** | R-1924 (4) |"
+ },
+ {
+  "id": "B18-42",
+  "section": "Table « du 12 au 13 » (historique)",
+  "section_gelee": false,
+  "raison": "marqueur rempli au brouillon 18 : nom écrit sans chevrons dans une mention historique",
+  "ancien": "| 3 | clés du registre partagé | refus des seules clés à marque `-T07` ; toute autre clé ignorée | **ignorées seulement** les clés portant la **marque d'une autre tâche** d'une liste fixée (`<<CLES_REGISTRE_PARTAGE>>`) ; **toute autre clé ni exigée ni permise → refus** ; une clé ignorée qui, marque retirée, égale une clé de T0.7 marque retirée → **refus** ; liste des clés ignorées écrite aussi dans `sondes-t07.json` ; essais R5 (cas sain et artefacts) ; **règle (3) restreinte au brouillon 14 (R-1924 (1))** | M-2, m-07, m-10 |",
+  "nouveau": "| 3 | clés du registre partagé | refus des seules clés à marque `-T07` ; toute autre clé ignorée | **ignorées seulement** les clés portant la **marque d'une autre tâche** d'une liste fixée (`CLES_REGISTRE_PARTAGE`) ; **toute autre clé ni exigée ni permise → refus** ; une clé ignorée qui, marque retirée, égale une clé de T0.7 marque retirée → **refus** ; liste des clés ignorées écrite aussi dans `sondes-t07.json` ; essais R5 (cas sain et artefacts) ; **règle (3) restreinte au brouillon 14 (R-1924 (1))** | M-2, m-07, m-10 |"
+ },
+ {
+  "id": "B18-43",
+  "section": "Table « du 12 au 13 » (historique)",
+  "section_gelee": false,
+  "raison": "marqueur rempli au brouillon 18 : nom écrit sans chevrons dans une mention historique",
+  "ancien": "| 4 | contrôle du champ `aire` | égalité exacte à l'aire de la base décisive écrite | **définition exacte de `aire` demandée au texte scellé de T0.6** ; à défaut, **recalcul de l'aire depuis les scores stockés de la base**, tolérance **5 × 10⁻⁴** en valeur absolue, déclarée ; au-delà → L7c ; choix fixé au candidat (`<<CONTROLE_AIRE_T06>>`) | M-3 |",
+  "nouveau": "| 4 | contrôle du champ `aire` | égalité exacte à l'aire de la base décisive écrite | **définition exacte de `aire` demandée au texte scellé de T0.6** ; à défaut, **recalcul de l'aire depuis les scores stockés de la base**, tolérance **5 × 10⁻⁴** en valeur absolue, déclarée ; au-delà → L7c ; choix fixé au candidat (`CONTROLE_AIRE_T06`) | M-3 |"
+ },
+ {
+  "id": "B18-44",
+  "section": "Table « du 12 au 13 » (historique)",
+  "section_gelee": false,
+  "raison": "marqueur rempli au brouillon 18 : nom écrit sans chevrons dans une mention historique",
+  "ancien": "| 7 | marqueurs | 13 | **14** (`<<CONTROLE_AIRE_T06>>` ajouté ; `<<CLES_REGISTRE_PARTAGE>>` porte aussi la liste des marques des autres tâches) | — |",
+  "nouveau": "| 7 | marqueurs | 13 | **14** (`CONTROLE_AIRE_T06` ajouté ; `CLES_REGISTRE_PARTAGE` porte aussi la liste des marques des autres tâches) | — |"
+ },
+ {
+  "id": "B18-45",
+  "section": "Table « du 11 au 12 » (historique)",
+  "section_gelee": false,
+  "raison": "marqueur rempli au brouillon 18 : nom écrit sans chevrons dans une mention historique",
+  "ancien": "| 7 | marqueurs | 11 | **13** (`<<NIVEAU_BASE_T06>>` : niveau de l'intervalle de la base, que le candidat 12 r2 ne chiffre pas ; `<<CLES_REGISTRE_PARTAGE>>` : `registres/scellements-v1.md` n'existe pas encore, la règle des clés est écrite sans en connaître le contenu) | — |",
+  "nouveau": "| 7 | marqueurs | 11 | **13** (`<<NIVEAU_BASE_T06>>` : niveau de l'intervalle de la base, que le candidat 12 r2 ne chiffre pas ; `CLES_REGISTRE_PARTAGE` : `registres/scellements-v1.md` n'existe pas encore, la règle des clés est écrite sans en connaître le contenu) | — |"
+ },
+ {
+  "id": "B18-46",
+  "section": "Constats de la contre-lecture 2 (historique)",
+  "section_gelee": false,
+  "raison": "marqueur rempli au brouillon 18 : nom écrit sans chevrons dans une mention historique",
+  "ancien": "| CLT7B-08 champs sans marqueur | mineur | **appliqué** : `<<LECTURES_7A_T07>>`, `<<EMPREINTE_CONFIG_T07>>` ; état de 7a daté, à mettre à jour au candidat | En-tête ; Module ; Reste |",
+  "nouveau": "| CLT7B-08 champs sans marqueur | mineur | **appliqué** : `LECTURES_7A_T07`, `<<EMPREINTE_CONFIG_T07>>` ; état de 7a daté, à mettre à jour au candidat | En-tête ; Module ; Reste |"
+ },
+ {
+  "id": "B18-47",
+  "section": "Constats de la contre-lecture du brouillon 12 (historique)",
+  "section_gelee": false,
+  "raison": "marqueur rempli au brouillon 18 : nom écrit sans chevrons dans une mention historique",
+  "ancien": "| M-2 faute de frappe dans la marque | majeur | **appliqué, options (a) et (b) cumulées** : ignorées seulement les clés à marque d'une autre tâche d'une liste fixée (`<<CLES_REGISTRE_PARTAGE>>`) ; toute autre clé ni exigée ni permise → refus ; clé ignorée égale à une clé de T0.7, marques retirées → refus ; (c) liste des clés ignorées aussi dans `sondes-t07.json` ; essais R5 ; conséquence déclarée (clés de même patron chez T0.6 ou T0.8) ; **règle (3) restreinte au brouillon 14 (R-1924 (1))**, conséquence déclarée remplacée | Lignes ; Arrêt ; Module ; Concordance |",
+  "nouveau": "| M-2 faute de frappe dans la marque | majeur | **appliqué, options (a) et (b) cumulées** : ignorées seulement les clés à marque d'une autre tâche d'une liste fixée (`CLES_REGISTRE_PARTAGE`) ; toute autre clé ni exigée ni permise → refus ; clé ignorée égale à une clé de T0.7, marques retirées → refus ; (c) liste des clés ignorées aussi dans `sondes-t07.json` ; essais R5 ; conséquence déclarée (clés de même patron chez T0.6 ou T0.8) ; **règle (3) restreinte au brouillon 14 (R-1924 (1))**, conséquence déclarée remplacée | Lignes ; Arrêt ; Module ; Concordance |"
+ },
+ {
+  "id": "B18-48",
+  "section": "Constats de la contre-lecture du brouillon 12 (historique)",
+  "section_gelee": false,
+  "raison": "marqueur rempli au brouillon 18 : nom écrit sans chevrons dans une mention historique",
+  "ancien": "| M-3 égalité exacte du champ `aire` | majeur | **appliqué** : définition exacte demandée au texte scellé de T0.6 ; à défaut, recalcul depuis les scores stockés de la base, tolérance 5 × 10⁻⁴ (choix déclaré de ce rédacteur) ; au-delà, L7c ; ni l'un ni l'autre → nœud avant scellement ; marqueur `<<CONTROLE_AIRE_T06>>` | Règle ; Lignes ; Module ; Concordance ; Marqueurs |",
+  "nouveau": "| M-3 égalité exacte du champ `aire` | majeur | **appliqué** : définition exacte demandée au texte scellé de T0.6 ; à défaut, recalcul depuis les scores stockés de la base, tolérance 5 × 10⁻⁴ (choix déclaré de ce rédacteur) ; au-delà, L7c ; ni l'un ni l'autre → nœud avant scellement ; marqueur `CONTROLE_AIRE_T06` | Règle ; Lignes ; Module ; Concordance ; Marqueurs |"
+ },
+ {
+  "id": "B18-49",
+  "section": "Constats de la contre-lecture du brouillon 13 (historique)",
+  "section_gelee": false,
+  "raison": "marqueur rempli au brouillon 18 : nom écrit sans chevrons dans une mention historique",
+  "ancien": "| Décisions R-1924 (1) à (4) | — | **appliquées** aux lignes données par la contre-lecture : (1) règle (3) restreinte à `SCELLEMENT-JEUX-JD`, `-JC`, `-JA`, conséquence retirée, cas sains ; (2) L1 par fichier illisible, L7b, L7c issues finales, version neuve ; (3) garde d'ordre de l'étape A, énumération (0 bis) ; (4) ligne `<<COMMIT_CODE_T06>>`, `<<EMPREINTES_CODE_T06>>` étendue au script de lecture de T0.6, aucun marqueur neuf | table « du 13 au 14 », lignes 4 à 7 |",
+  "nouveau": "| Décisions R-1924 (1) à (4) | — | **appliquées** aux lignes données par la contre-lecture : (1) règle (3) restreinte à `SCELLEMENT-JEUX-JD`, `-JC`, `-JA`, conséquence retirée, cas sains ; (2) L1 par fichier illisible, L7b, L7c issues finales, version neuve ; (3) garde d'ordre de l'étape A, énumération (0 bis) ; (4) ligne `COMMIT_CODE_T06`, `EMPREINTES_CODE_T06` étendue au script de lecture de T0.6, aucun marqueur neuf | table « du 13 au 14 », lignes 4 à 7 |"
+ },
+ {
+  "id": "B18-50",
+  "section": "Table « du 8 au 9 » (historique, brouillon 8)",
+  "section_gelee": false,
+  "raison": "marqueur rempli au brouillon 18 : nom écrit sans chevrons dans une mention historique",
+  "ancien": "  `<<GO_ETAPE_A_T07>>`, fonction de plancher sur scores, marqueurs `<<LECTURES_7A_T07>>` et `<<EMPREINTE_CONFIG_T07>>`).",
+  "nouveau": "  `<<GO_ETAPE_A_T07>>`, fonction de plancher sur scores, marqueurs `LECTURES_7A_T07` et `<<EMPREINTE_CONFIG_T07>>`)."
+ },
+ {
+  "id": "B18-51",
+  "section": "Table « du 7 au 8 » (historique)",
+  "section_gelee": false,
+  "raison": "marqueur rempli au brouillon 18 : nom écrit sans chevrons dans une mention historique",
+  "ancien": "| 8 | champs sans marqueur | lectures de 7a ; empreinte de la configuration | `<<LECTURES_7A_T07>>`, `<<EMPREINTE_CONFIG_T07>>` | CLT7B-08 |",
+  "nouveau": "| 8 | champs sans marqueur | lectures de 7a ; empreinte de la configuration | `LECTURES_7A_T07`, `<<EMPREINTE_CONFIG_T07>>` | CLT7B-08 |"
+ },
+ {
+  "id": "B18-52",
+  "section": "Marqueurs (ce que disait le brouillon 14, historique)",
+  "section_gelee": false,
+  "raison": "marqueurs remplis au brouillon 18 : noms écrits sans chevrons dans le paragraphe historique",
+  "ancien": "distincts** (onze au brouillon 11, plus `<<NIVEAU_BASE_T06>>` et `<<CLES_REGISTRE_PARTAGE>>`, brouillon 12, plus\n`<<CONTROLE_AIRE_T06>>`, brouillon 13 ; aucun au brouillon 14 : R-1924 (4) étend la ligne `<<COMMIT_CODE_T06>>`,\n`<<EMPREINTES_CODE_T06>>`), **tous remplis au plus tard au candidat** (quatre, `COMMIT_CODE_T06`,\n`EMPREINTES_CODE_T06`, `EMPREINTE_PREREG_T06`, `NIVEAU_BASE_T06`, le sont au scellement de T0.6, qui précède, et\n`CONTROLE_AIRE_T06` se lit au texte scellé de T0.6 ; `MOT_LAZAR_P064` et `MOT_LAZAR_P065` au plus tôt le\n10 novembre 2026 vers 17:13 UTC par le défaut, section « Reste » ; CLT7D-07) : `<<MOT_LAZAR_P064>>`, `<<MOT_LAZAR_P065>>`, `<<GO_ETAPE_A_T07>>`, `<<LECTURES_7A_T07>>`,\n`<<EMPREINTE_CONFIG_T07>>`, `<<ENTROPIE_T07>>`, `<<COMMIT_CODE_T07>>`, `<<EMPREINTES_CODE_T07>>`, `<<COMMIT_CODE_T06>>`,\n`<<EMPREINTES_CODE_T06>>`, `<<EMPREINTE_PREREG_T06>>`, `<<NIVEAU_BASE_T06>>`, `<<CLES_REGISTRE_PARTAGE>>`,\n`<<CONTROLE_AIRE_T06>>`. Le marqueur `MOT_LAZAR_DS3` du brouillon 8 est **rempli** par le",
+  "nouveau": "distincts** (onze au brouillon 11, plus `<<NIVEAU_BASE_T06>>` et `CLES_REGISTRE_PARTAGE`, brouillon 12, plus\n`CONTROLE_AIRE_T06`, brouillon 13 ; aucun au brouillon 14 : R-1924 (4) étend la ligne `COMMIT_CODE_T06`,\n`EMPREINTES_CODE_T06`), **tous remplis au plus tard au candidat** (quatre, `COMMIT_CODE_T06`,\n`EMPREINTES_CODE_T06`, `EMPREINTE_PREREG_T06`, `NIVEAU_BASE_T06`, le sont au scellement de T0.6, qui précède, et\n`CONTROLE_AIRE_T06` se lit au texte scellé de T0.6 ; `MOT_LAZAR_P064` et `MOT_LAZAR_P065` au plus tôt le\n10 novembre 2026 vers 17:13 UTC par le défaut, section « Reste » ; CLT7D-07) : `<<MOT_LAZAR_P064>>`, `<<MOT_LAZAR_P065>>`, `<<GO_ETAPE_A_T07>>`, `LECTURES_7A_T07`,\n`<<EMPREINTE_CONFIG_T07>>`, `<<ENTROPIE_T07>>`, `COMMIT_CODE_T07`, `EMPREINTES_CODE_T07`, `COMMIT_CODE_T06`,\n`EMPREINTES_CODE_T06`, `<<EMPREINTE_PREREG_T06>>`, `<<NIVEAU_BASE_T06>>`, `CLES_REGISTRE_PARTAGE`,\n`CONTROLE_AIRE_T06`. Le marqueur `MOT_LAZAR_DS3` du brouillon 8 est **rempli** par le"
+ }
+]

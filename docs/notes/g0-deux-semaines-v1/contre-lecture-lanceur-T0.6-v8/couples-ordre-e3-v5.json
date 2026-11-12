@@ -1,0 +1,14 @@
+[
+ {
+  "ancien": "Les préalables 1 à 4 de l'ordre d'E2 scellé (`docs/procedures/ordre-fille-6-t06-e2-v3.md`)",
+  "nouveau": "Les préalables 1 à 4 de l'ordre d'E2 scellé en vigueur (`docs/procedures/ordre-fille-6-t06-e2-v4.md`, R-1685)"
+ },
+ {
+  "ancien": "`dépense réelle d'E2 (tentative du 7 novembre, instance 59555071, comprise) + 3,5 ≤ 4,9`",
+  "nouveau": "`dépense réelle et finale d'E2 (toutes ses tentatives comprises : instances 59555071 et 59589344 du 7 novembre, puis chaque instance de la reprise d'E2 ; facture de Vast, sinon relevé écrit par instance) + 3,5 ≤ 4,9`, E2 étant **terminée** (aucune instance d'étiquette `t06-e2` à l'inventaire, compte rendu d'E2 reçu par la mère)"
+ },
+ {
+  "ancien": "si l'appel échoue sans dire « introuvable », message à la mère avant toute autre création ;",
+  "nouveau": "si l'appel échoue sans dire « introuvable », message à la mère avant toute autre création ; **une réponse JSON sans champ `id` (par exemple `{\"success\": false, \"error\": …}`) ou un texte d'erreur qui ne dit pas « not found » n'est pas « introuvable »** (le lanceur v8 les lit à tort comme tels, `session_v7.instance_seule`) : l'instance est alors réputée vivante et sans surveillance ; refais la vérification toutes les 2 minutes, au plus 20 minutes, et détruis-la par son identifiant dès qu'elle répond (aucune absence établie au bout de 20 minutes : message à la mère) ;"
+ }
+]

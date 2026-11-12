@@ -1,0 +1,757 @@
+{
+ "script": "/tmp/claude-0/-home-user-controle-ia-travail/75a1275d-b838-5015-909e-b2bfadb395f9/scratchpad/relecture-garde-delta-v2/cl/outils/copie_script/sim_garde_v2.py",
+ "commande_commune": [
+  "--repetitions",
+  "100",
+  "--tailles",
+  "5",
+  "--deltas",
+  "0.1",
+  "--m",
+  "1",
+  "--K",
+  "3",
+  "--taux",
+  "0.1",
+  "--biais",
+  "0",
+  "--comparateurs",
+  "1",
+  "--sans-n80"
+ ],
+ "garde": {
+  "ok_point.csv": {
+   "code": 0,
+   "erreur_derniere_ligne": "",
+   "ecarts_observes": {
+    "chemin": "/tmp/claude-0/-home-user-controle-ia-travail/75a1275d-b838-5015-909e-b2bfadb395f9/scratchpad/relecture-garde-delta-v2/cl/outils/../sorties/essais_entrees/entrees/ok_point.csv",
+    "sha256": "058f862eb19522974d2d149d109de92cc264622dd7d07a56ada61b7cbddd6ad0",
+    "forme": "csv ecart",
+    "n_observes": 4,
+    "moyenne_brute": 0.075,
+    "ecart_type": 0.20615528128088303,
+    "quantiles_0_25_50_75_100": [
+     -0.2,
+     0.024999999999999994,
+     0.1,
+     0.15,
+     0.3
+    ],
+    "part_nuls": 0.0
+   },
+   "ecarts_contraste_observes": null,
+   "avertissements_stderr": "",
+   "lois_garde": [
+    "reelle_recentree",
+    "reelle_brute",
+    "binomiale_K3_taux0.1"
+   ]
+  },
+  "ok_crlf.csv": {
+   "code": 0,
+   "erreur_derniere_ligne": "",
+   "ecarts_observes": {
+    "chemin": "/tmp/claude-0/-home-user-controle-ia-travail/75a1275d-b838-5015-909e-b2bfadb395f9/scratchpad/relecture-garde-delta-v2/cl/outils/../sorties/essais_entrees/entrees/ok_crlf.csv",
+    "sha256": "55c707d3c50d815e5e497511749674ac1c1fc743fb3aa983fc229233a38b8754",
+    "forme": "csv ecart",
+    "n_observes": 3,
+    "moyenne_brute": 0.06666666666666667,
+    "ecart_type": 0.2516611478423583,
+    "quantiles_0_25_50_75_100": [
+     -0.2,
+     -0.05000000000000002,
+     0.1,
+     0.2,
+     0.3
+    ],
+    "part_nuls": 0.0
+   },
+   "ecarts_contraste_observes": null,
+   "avertissements_stderr": "",
+   "lois_garde": [
+    "reelle_recentree",
+    "reelle_brute",
+    "binomiale_K3_taux0.1"
+   ]
+  },
+  "ok_fafb.csv": {
+   "code": 0,
+   "erreur_derniere_ligne": "",
+   "ecarts_observes": {
+    "chemin": "/tmp/claude-0/-home-user-controle-ia-travail/75a1275d-b838-5015-909e-b2bfadb395f9/scratchpad/relecture-garde-delta-v2/cl/outils/../sorties/essais_entrees/entrees/ok_fafb.csv",
+    "sha256": "3d8e65886b8bf36f0c2d540d437d8fa547c9da15b2db4377069a9f3e52da01ab",
+    "forme": "csv fA-fB",
+    "n_observes": 3,
+    "moyenne_brute": 9.25185853854297e-18,
+    "ecart_type": 0.09999999999999999,
+    "quantiles_0_25_50_75_100": [
+     -0.09999999999999998,
+     -0.04999999999999999,
+     0.0,
+     0.05,
+     0.1
+    ],
+    "part_nuls": 0.3333333333333333
+   },
+   "ecarts_contraste_observes": null,
+   "avertissements_stderr": "",
+   "lois_garde": [
+    "reelle_recentree",
+    "reelle_brute",
+    "binomiale_K3_taux0.1"
+   ]
+  },
+  "ok_unite_ecart.csv": {
+   "code": 0,
+   "erreur_derniere_ligne": "",
+   "ecarts_observes": {
+    "chemin": "/tmp/claude-0/-home-user-controle-ia-travail/75a1275d-b838-5015-909e-b2bfadb395f9/scratchpad/relecture-garde-delta-v2/cl/outils/../sorties/essais_entrees/entrees/ok_unite_ecart.csv",
+    "sha256": "c9757db4608b80de54959ee9a5131c8519c14609156a35f02bf12294ce25d7b6",
+    "forme": "csv ecart",
+    "n_observes": 3,
+    "moyenne_brute": -0.03333333333333333,
+    "ecart_type": 0.15275252316519466,
+    "quantiles_0_25_50_75_100": [
+     -0.2,
+     -0.1,
+     0.0,
+     0.05,
+     0.1
+    ],
+    "part_nuls": 0.3333333333333333
+   },
+   "ecarts_contraste_observes": null,
+   "avertissements_stderr": "",
+   "lois_garde": [
+    "reelle_recentree",
+    "reelle_brute",
+    "binomiale_K3_taux0.1"
+   ]
+  },
+  "virgule_decimale.csv": {
+   "code": 1,
+   "erreur_derniere_ligne": "ValueError: CSV ligne 2 : 2 champs pour 1 en tête (ligne vide, virgule décimale ou séparateur inattendu) : refusé (GD-05)"
+  },
+  "virgule_decimale_fafb.csv": {
+   "code": 1,
+   "erreur_derniere_ligne": "ValueError: CSV ligne 2 : 4 champs pour 2 en tête (ligne vide, virgule décimale ou séparateur inattendu) : refusé (GD-05)"
+  },
+  "point_virgule_virgule_decimale.csv": {
+   "code": 1,
+   "erreur_derniere_ligne": "ValueError: CSV sans colonnes attendues ([['ecart'], ['fA', 'fB']])"
+  },
+  "virgule_decimale_guillemets.csv": {
+   "code": 1,
+   "erreur_derniere_ligne": "ValueError: CSV ligne 2 : could not convert string to float: '0,1'"
+  },
+  "virgule_decimale_colonne_en_trop_vide.csv": {
+   "code": 0,
+   "erreur_derniere_ligne": "",
+   "ecarts_observes": {
+    "chemin": "/tmp/claude-0/-home-user-controle-ia-travail/75a1275d-b838-5015-909e-b2bfadb395f9/scratchpad/relecture-garde-delta-v2/cl/outils/../sorties/essais_entrees/entrees/virgule_decimale_colonne_en_trop_vide.csv",
+    "sha256": "a61c7bdbfa524146a1fa6bcfeffb743a262f05ab0b07a74a0a9066ea381a064c",
+    "forme": "csv ecart",
+    "n_observes": 3,
+    "moyenne_brute": 0.0,
+    "ecart_type": 0.0,
+    "quantiles_0_25_50_75_100": [
+     0.0,
+     0.0,
+     0.0,
+     0.0,
+     0.0
+    ],
+    "part_nuls": 1.0
+   },
+   "ecarts_contraste_observes": null,
+   "avertissements_stderr": "",
+   "lois_garde": [
+    "reelle_recentree",
+    "reelle_brute",
+    "binomiale_K3_taux0.1"
+   ]
+  },
+  "virgule_decimale_unite_note.csv": {
+   "code": 0,
+   "erreur_derniere_ligne": "",
+   "ecarts_observes": {
+    "chemin": "/tmp/claude-0/-home-user-controle-ia-travail/75a1275d-b838-5015-909e-b2bfadb395f9/scratchpad/relecture-garde-delta-v2/cl/outils/../sorties/essais_entrees/entrees/virgule_decimale_unite_note.csv",
+    "sha256": "c2e9efcc4b5bbac653b73a141ebe6df9e3b989a22ca04b698583656c9828d41b",
+    "forme": "csv ecart",
+    "n_observes": 2,
+    "moyenne_brute": 0.0,
+    "ecart_type": 0.0,
+    "quantiles_0_25_50_75_100": [
+     0.0,
+     0.0,
+     0.0,
+     0.0,
+     0.0
+    ],
+    "part_nuls": 1.0
+   },
+   "ecarts_contraste_observes": null,
+   "avertissements_stderr": "",
+   "lois_garde": [
+    "reelle_recentree",
+    "reelle_brute",
+    "binomiale_K3_taux0.1"
+   ]
+  },
+  "ligne_vide_milieu.csv": {
+   "code": 1,
+   "erreur_derniere_ligne": "ValueError: CSV ligne 3 : 0 champs pour 1 en tête (ligne vide, virgule décimale ou séparateur inattendu) : refusé (GD-05)"
+  },
+  "ligne_vide_fin_double.csv": {
+   "code": 1,
+   "erreur_derniere_ligne": "ValueError: CSV ligne 4 : 0 champs pour 1 en tête (ligne vide, virgule décimale ou séparateur inattendu) : refusé (GD-05)"
+  },
+  "lignes_blanches_espaces.csv": {
+   "code": 1,
+   "erreur_derniere_ligne": "ValueError: CSV ligne 3 : could not convert string to float: '   '"
+  },
+  "booleens.csv": {
+   "code": 1,
+   "erreur_derniere_ligne": "ValueError: CSV ligne 2 : could not convert string to float: 'True'"
+  },
+  "nan.csv": {
+   "code": 1,
+   "erreur_derniere_ligne": "ValueError: écart non fini : refusé"
+  },
+  "inf.csv": {
+   "code": 1,
+   "erreur_derniere_ligne": "ValueError: écart non fini : refusé"
+  },
+  "texte_na.csv": {
+   "code": 1,
+   "erreur_derniere_ligne": "ValueError: CSV ligne 2 : could not convert string to float: 'NA'"
+  },
+  "champ_vide.csv": {
+   "code": 1,
+   "erreur_derniere_ligne": "ValueError: CSV ligne 2 : could not convert string to float: ''"
+  },
+  "bom.csv": {
+   "code": 1,
+   "erreur_derniere_ligne": "ValueError: CSV sans colonnes attendues ([['ecart'], ['fA', 'fB']])"
+  },
+  "entete_seul.csv": {
+   "code": 1,
+   "erreur_derniere_ligne": "ValueError: au moins deux lignes de données sont requises"
+  },
+  "une_ligne.csv": {
+   "code": 1,
+   "erreur_derniere_ligne": "ValueError: au moins deux lignes de données sont requises"
+  },
+  "hors_bornes.csv": {
+   "code": 1,
+   "erreur_derniere_ligne": "ValueError: un écart dépasse 1 en valeur absolue"
+  },
+  "fafb_hors_01.csv": {
+   "code": 1,
+   "erreur_derniere_ligne": "ValueError: fA ou fB hors de [0 ; 1] (GD-10)"
+  },
+  "espaces.csv": {
+   "code": 0,
+   "erreur_derniere_ligne": "",
+   "ecarts_observes": {
+    "chemin": "/tmp/claude-0/-home-user-controle-ia-travail/75a1275d-b838-5015-909e-b2bfadb395f9/scratchpad/relecture-garde-delta-v2/cl/outils/../sorties/essais_entrees/entrees/espaces.csv",
+    "sha256": "328cb679b574e7a79ec2efa6d2ca6d25fd3c8838436fcd0bc1b4768d7d356e8f",
+    "forme": "csv ecart",
+    "n_observes": 2,
+    "moyenne_brute": -0.05,
+    "ecart_type": 0.21213203435596428,
+    "quantiles_0_25_50_75_100": [
+     -0.2,
+     -0.125,
+     -0.05000000000000002,
+     0.024999999999999994,
+     0.1
+    ],
+    "part_nuls": 0.0
+   },
+   "ecarts_contraste_observes": null,
+   "avertissements_stderr": "",
+   "lois_garde": [
+    "reelle_recentree",
+    "reelle_brute",
+    "binomiale_K3_taux0.1"
+   ]
+  },
+  "entete_ecart_et_fafb.csv": {
+   "code": 0,
+   "erreur_derniere_ligne": "",
+   "ecarts_observes": {
+    "chemin": "/tmp/claude-0/-home-user-controle-ia-travail/75a1275d-b838-5015-909e-b2bfadb395f9/scratchpad/relecture-garde-delta-v2/cl/outils/../sorties/essais_entrees/entrees/entete_ecart_et_fafb.csv",
+    "sha256": "7af1a8da218e5eefe8708c9c8370bdb99d0f0373b011ee962033ef36449a8b0c",
+    "forme": "csv ecart",
+    "n_observes": 2,
+    "moyenne_brute": 0.5,
+    "ecart_type": 0.0,
+    "quantiles_0_25_50_75_100": [
+     0.5,
+     0.5,
+     0.5,
+     0.5,
+     0.5
+    ],
+    "part_nuls": 0.0
+   },
+   "ecarts_contraste_observes": null,
+   "avertissements_stderr": "",
+   "lois_garde": [
+    "reelle_recentree",
+    "reelle_brute",
+    "binomiale_K3_taux0.1"
+   ]
+  },
+  "pourcentages.csv": {
+   "code": 1,
+   "erreur_derniere_ligne": "ValueError: un écart dépasse 1 en valeur absolue"
+  },
+  "ok.json": {
+   "code": 0,
+   "erreur_derniere_ligne": "",
+   "ecarts_observes": {
+    "chemin": "/tmp/claude-0/-home-user-controle-ia-travail/75a1275d-b838-5015-909e-b2bfadb395f9/scratchpad/relecture-garde-delta-v2/cl/outils/../sorties/essais_entrees/entrees/ok.json",
+    "sha256": "a904cb9a475c5cb2bbc5ac35aa3069273323d8db6f2432b685ba9e6cbdffd879",
+    "forme": "ecarts",
+    "n_observes": 4,
+    "moyenne_brute": 0.049999999999999996,
+    "ecart_type": 0.20816659994661327,
+    "quantiles_0_25_50_75_100": [
+     -0.2,
+     -0.05,
+     0.05,
+     0.15,
+     0.3
+    ],
+    "part_nuls": 0.25
+   },
+   "ecarts_contraste_observes": null,
+   "avertissements_stderr": "",
+   "lois_garde": [
+    "reelle_recentree",
+    "reelle_brute",
+    "binomiale_K3_taux0.1"
+   ]
+  },
+  "ok_fafb.json": {
+   "code": 0,
+   "erreur_derniere_ligne": "",
+   "ecarts_observes": {
+    "chemin": "/tmp/claude-0/-home-user-controle-ia-travail/75a1275d-b838-5015-909e-b2bfadb395f9/scratchpad/relecture-garde-delta-v2/cl/outils/../sorties/essais_entrees/entrees/ok_fafb.json",
+    "sha256": "3679c967d4269e0f53a146dcc76aff3fa74a0fb05b7b0093df415b04b39c8364",
+    "forme": "fA-fB",
+    "n_observes": 3,
+    "moyenne_brute": 9.25185853854297e-18,
+    "ecart_type": 0.09999999999999999,
+    "quantiles_0_25_50_75_100": [
+     -0.09999999999999998,
+     -0.04999999999999999,
+     0.0,
+     0.05,
+     0.1
+    ],
+    "part_nuls": 0.3333333333333333
+   },
+   "ecarts_contraste_observes": null,
+   "avertissements_stderr": "",
+   "lois_garde": [
+    "reelle_recentree",
+    "reelle_brute",
+    "binomiale_K3_taux0.1"
+   ]
+  },
+  "booleens.json": {
+   "code": 1,
+   "erreur_derniere_ligne": "ValueError: « ecarts » : valeur non numérique, booléenne ou non finie : True"
+  },
+  "chaines.json": {
+   "code": 1,
+   "erreur_derniere_ligne": "ValueError: « ecarts » : valeur non numérique, booléenne ou non finie : '0.1'"
+  },
+  "nan.json": {
+   "code": 1,
+   "erreur_derniere_ligne": "ValueError: « ecarts » : valeur non numérique, booléenne ou non finie : nan"
+  },
+  "infini.json": {
+   "code": 1,
+   "erreur_derniere_ligne": "ValueError: « ecarts » : valeur non numérique, booléenne ou non finie : inf"
+  },
+  "null.json": {
+   "code": 1,
+   "erreur_derniere_ligne": "ValueError: « ecarts » : valeur non numérique, booléenne ou non finie : None"
+  },
+  "les_deux.json": {
+   "code": 1,
+   "erreur_derniere_ligne": "ValueError: JSON : donner « ecarts » seul, ou « fA » et « fB » seuls (GD-10)"
+  },
+  "fA_seul.json": {
+   "code": 1,
+   "erreur_derniere_ligne": "ValueError: « fB » : liste d'au moins deux nombres attendue"
+  },
+  "fafb_hors_01.json": {
+   "code": 1,
+   "erreur_derniere_ligne": "ValueError: fA ou fB hors de [0 ; 1] (GD-10)"
+  },
+  "fafb_longueurs.json": {
+   "code": 1,
+   "erreur_derniere_ligne": "ValueError: fA et fB de longueurs différentes"
+  },
+  "liste_racine.json": {
+   "code": 1,
+   "erreur_derniere_ligne": "ValueError: JSON : objet attendu"
+  },
+  "imbrique.json": {
+   "code": 1,
+   "erreur_derniere_ligne": "ValueError: « ecarts » : valeur non numérique, booléenne ou non finie : [0.1]"
+  },
+  "grand_entier.json": {
+   "code": 1,
+   "erreur_derniere_ligne": "OverflowError: int too large to convert to float"
+  },
+  "vide.json": {
+   "code": 1,
+   "erreur_derniere_ligne": "ValueError: « ecarts » : liste d'au moins deux nombres attendue"
+  },
+  "cle_inconnue.json": {
+   "code": 1,
+   "erreur_derniere_ligne": "ValueError: JSON : donner « ecarts » seul, ou « fA » et « fB » seuls (GD-10)"
+  },
+  "cles_en_trop.json": {
+   "code": 0,
+   "erreur_derniere_ligne": "",
+   "ecarts_observes": {
+    "chemin": "/tmp/claude-0/-home-user-controle-ia-travail/75a1275d-b838-5015-909e-b2bfadb395f9/scratchpad/relecture-garde-delta-v2/cl/outils/../sorties/essais_entrees/entrees/cles_en_trop.json",
+    "sha256": "9a62cf3a91908042d4aa0d76da6a4e0e4f1af6a204e6be56898df8a53d28da07",
+    "forme": "ecarts",
+    "n_observes": 2,
+    "moyenne_brute": 0.15000000000000002,
+    "ecart_type": 0.07071067811865477,
+    "quantiles_0_25_50_75_100": [
+     0.1,
+     0.125,
+     0.15000000000000002,
+     0.17500000000000002,
+     0.2
+    ],
+    "part_nuls": 0.0
+   },
+   "ecarts_contraste_observes": null,
+   "avertissements_stderr": "",
+   "lois_garde": [
+    "reelle_recentree",
+    "reelle_brute",
+    "binomiale_K3_taux0.1"
+   ]
+  },
+  "json_sous_extension_txt.txt": {
+   "code": 1,
+   "erreur_derniere_ligne": "ValueError: CSV sans colonnes attendues ([['ecart'], ['fA', 'fB']])"
+  },
+  "absent": {
+   "code": 1,
+   "erreur_derniere_ligne": "FileNotFoundError: [Errno 2] No such file or directory: '/tmp/claude-0/-home-user-controle-ia-travail/75a1275d-b838-5015-909e-b2bfadb395f9/scratchpad/relecture-garde-delta-v2/cl/outils/../sorties/essais_entrees/entrees/nexiste_pas.csv'"
+  }
+ },
+ "contraste": {
+  "ok_fafb.csv": {
+   "code": 0,
+   "erreur_derniere_ligne": "",
+   "ecarts_observes": null,
+   "ecarts_contraste_observes": {
+    "chemin": "/tmp/claude-0/-home-user-controle-ia-travail/75a1275d-b838-5015-909e-b2bfadb395f9/scratchpad/relecture-garde-delta-v2/cl/outils/../sorties/essais_entrees/entrees/ok_fafb.csv",
+    "sha256": "3d8e65886b8bf36f0c2d540d437d8fa547c9da15b2db4377069a9f3e52da01ab",
+    "forme": "csv fA-fB",
+    "n_observes": 3,
+    "moyenne_brute": 9.25185853854297e-18,
+    "ecart_type": 0.09999999999999999,
+    "quantiles_0_25_50_75_100": [
+     -0.09999999999999998,
+     -0.04999999999999999,
+     0.0,
+     0.05,
+     0.1
+    ],
+    "part_nuls": 0.3333333333333333
+   },
+   "avertissements_stderr": "",
+   "lois_garde": [
+    "binomiale_K3_taux0.1"
+   ]
+  },
+  "fafb_hors_01.csv": {
+   "code": 0,
+   "erreur_derniere_ligne": "",
+   "ecarts_observes": null,
+   "ecarts_contraste_observes": {
+    "chemin": "/tmp/claude-0/-home-user-controle-ia-travail/75a1275d-b838-5015-909e-b2bfadb395f9/scratchpad/relecture-garde-delta-v2/cl/outils/../sorties/essais_entrees/entrees/fafb_hors_01.csv",
+    "sha256": "a1c93ce757bc7a4a9cb1cecb5a3a665c6e37fb779705806e8ab6a2c9ce02a586",
+    "forme": "csv fA-fB",
+    "n_observes": 2,
+    "moyenne_brute": 0.3,
+    "ecart_type": 0.282842712474619,
+    "quantiles_0_25_50_75_100": [
+     0.1,
+     0.2,
+     0.3,
+     0.4,
+     0.5
+    ],
+    "part_nuls": 0.0
+   },
+   "avertissements_stderr": "",
+   "lois_garde": [
+    "binomiale_K3_taux0.1"
+   ]
+  },
+  "fafb_hors_01.json": {
+   "code": 0,
+   "erreur_derniere_ligne": "",
+   "ecarts_observes": null,
+   "ecarts_contraste_observes": {
+    "chemin": "/tmp/claude-0/-home-user-controle-ia-travail/75a1275d-b838-5015-909e-b2bfadb395f9/scratchpad/relecture-garde-delta-v2/cl/outils/../sorties/essais_entrees/entrees/fafb_hors_01.json",
+    "sha256": "2c2ddb67e18c2192550884db4de0e6d07fe99364d75a30c8cd371f3007ac794d",
+    "forme": "fA-fB",
+    "n_observes": 2,
+    "moyenne_brute": 0.3,
+    "ecart_type": 0.282842712474619,
+    "quantiles_0_25_50_75_100": [
+     0.1,
+     0.2,
+     0.3,
+     0.4,
+     0.5
+    ],
+    "part_nuls": 0.0
+   },
+   "avertissements_stderr": "",
+   "lois_garde": [
+    "binomiale_K3_taux0.1"
+   ]
+  },
+  "virgule_decimale.csv": {
+   "code": 1,
+   "erreur_derniere_ligne": "ValueError: CSV ligne 2 : 2 champs pour 1 en tête (ligne vide, virgule décimale ou séparateur inattendu) : refusé (GD-05)"
+  },
+  "nan.json": {
+   "code": 1,
+   "erreur_derniere_ligne": "ValueError: « ecarts » : valeur non numérique, booléenne ou non finie : nan"
+  },
+  "ok.json": {
+   "code": 0,
+   "erreur_derniere_ligne": "",
+   "ecarts_observes": null,
+   "ecarts_contraste_observes": {
+    "chemin": "/tmp/claude-0/-home-user-controle-ia-travail/75a1275d-b838-5015-909e-b2bfadb395f9/scratchpad/relecture-garde-delta-v2/cl/outils/../sorties/essais_entrees/entrees/ok.json",
+    "sha256": "a904cb9a475c5cb2bbc5ac35aa3069273323d8db6f2432b685ba9e6cbdffd879",
+    "forme": "ecarts",
+    "n_observes": 4,
+    "moyenne_brute": 0.049999999999999996,
+    "ecart_type": 0.20816659994661327,
+    "quantiles_0_25_50_75_100": [
+     -0.2,
+     -0.05,
+     0.05,
+     0.15,
+     0.3
+    ],
+    "part_nuls": 0.25
+   },
+   "avertissements_stderr": "",
+   "lois_garde": [
+    "binomiale_K3_taux0.1"
+   ]
+  }
+ },
+ "reglages": {
+  "delta_0.5_taux_0.1": {
+   "code": 0,
+   "erreur_derniere_ligne": "",
+   "exemple_cellule": {
+    "graine_derivee": 10083801661710184153,
+    "20.0": {
+     "garde_seule": {
+      "part": 0.0,
+      "unites_mediane_si_atteint": null
+     },
+     "k_gardes": {
+      "part": 0.0,
+      "unites_mediane_si_atteint": null
+     },
+     "k_contrastes": {
+      "part": 0.0,
+      "unites_mediane_si_atteint": null
+     },
+     "fiche_entiere": {
+      "part": 0.0,
+      "unites_mediane_si_atteint": null
+     },
+     "frontiere_part": 0.0,
+     "frontiere_borne_ville": 0.05,
+     "tricheur_part": 0.0
+    }
+   },
+   "reglages_lus": {
+    "deltas": "0.5",
+    "taux": "0.1",
+    "biais": "0",
+    "seuils": [
+     20.0
+    ]
+   }
+  },
+  "delta_0.6": {
+   "code": 1,
+   "erreur_derniere_ligne": "réglages hors domaine (répétitions ≥ 100 ; tailles ≥ 1 ; 0 < δ ≤ 0,5 ; m, K, k ≥ 1 ; 0 ≤ τ ≤ 1 ; 0 ≤ biais < 0,5 ; 0 < écart de contraste < 0,6)"
+  },
+  "taux_0.95_delta_0.1": {
+   "code": 0,
+   "erreur_derniere_ligne": "",
+   "exemple_cellule": {
+    "graine_derivee": 3736977155325106520,
+    "20.0": {
+     "garde_seule": {
+      "part": 0.0,
+      "unites_mediane_si_atteint": null
+     },
+     "k_gardes": {
+      "part": 0.0,
+      "unites_mediane_si_atteint": null
+     },
+     "k_contrastes": {
+      "part": 0.0,
+      "unites_mediane_si_atteint": null
+     },
+     "fiche_entiere": {
+      "part": 0.0,
+      "unites_mediane_si_atteint": null
+     },
+     "frontiere_part": 0.0,
+     "frontiere_borne_ville": 0.05,
+     "tricheur_part": 0.0
+    }
+   },
+   "reglages_lus": {
+    "deltas": "0.1",
+    "taux": "0.95",
+    "biais": "0",
+    "seuils": [
+     20.0
+    ]
+   }
+  },
+  "taux_1": {
+   "code": 0,
+   "erreur_derniere_ligne": "",
+   "exemple_cellule": {
+    "graine_derivee": 5163618602533910287,
+    "20.0": {
+     "garde_seule": {
+      "part": 0.0,
+      "unites_mediane_si_atteint": null
+     },
+     "k_gardes": {
+      "part": 0.0,
+      "unites_mediane_si_atteint": null
+     },
+     "k_contrastes": {
+      "part": 0.0,
+      "unites_mediane_si_atteint": null
+     },
+     "fiche_entiere": {
+      "part": 0.0,
+      "unites_mediane_si_atteint": null
+     },
+     "frontiere_part": 0.0,
+     "frontiere_borne_ville": 0.05,
+     "tricheur_part": 0.0
+    }
+   },
+   "reglages_lus": {
+    "deltas": "0.1",
+    "taux": "1",
+    "biais": "0",
+    "seuils": [
+     20.0
+    ]
+   }
+  },
+  "taux_0.45_biais_0.025_delta_0.3": {
+   "code": 0,
+   "erreur_derniere_ligne": "",
+   "exemple_cellule": {
+    "graine_derivee": 5460497537484371207,
+    "20.0": {
+     "garde_seule": {
+      "part": 0.0,
+      "unites_mediane_si_atteint": null
+     },
+     "k_gardes": {
+      "part": 0.0,
+      "unites_mediane_si_atteint": null
+     },
+     "k_contrastes": {
+      "part": 0.0,
+      "unites_mediane_si_atteint": null
+     },
+     "fiche_entiere": {
+      "part": 0.0,
+      "unites_mediane_si_atteint": null
+     },
+     "frontiere_part": 0.0,
+     "frontiere_borne_ville": 0.05,
+     "tricheur_part": 0.0
+    }
+   },
+   "reglages_lus": {
+    "deltas": "0.3",
+    "taux": "0.45",
+    "biais": "0.025",
+    "seuils": [
+     20.0
+    ]
+   }
+  },
+  "K_0": {
+   "code": 1,
+   "erreur_derniere_ligne": "réglages hors domaine (répétitions ≥ 100 ; tailles ≥ 1 ; 0 < δ ≤ 0,5 ; m, K, k ≥ 1 ; 0 ≤ τ ≤ 1 ; 0 ≤ biais < 0,5 ; 0 < écart de contraste < 0,6)"
+  },
+  "m_0": {
+   "code": 1,
+   "erreur_derniere_ligne": "réglages hors domaine (répétitions ≥ 100 ; tailles ≥ 1 ; 0 < δ ≤ 0,5 ; m, K, k ≥ 1 ; 0 ≤ τ ≤ 1 ; 0 ≤ biais < 0,5 ; 0 < écart de contraste < 0,6)"
+  },
+  "graine_negative": {
+   "code": 1,
+   "erreur_derniere_ligne": "ValueError: expected non-negative integer"
+  },
+  "tailles_vide": {
+   "code": 1,
+   "erreur_derniere_ligne": "ValueError: invalid literal for int() with base 10: ''"
+  },
+  "tailles_virgule_fin": {
+   "code": 1,
+   "erreur_derniere_ligne": "ValueError: invalid literal for int() with base 10: ''"
+  },
+  "biais_negatif": {
+   "code": 1,
+   "erreur_derniere_ligne": "réglages hors domaine (répétitions ≥ 100 ; tailles ≥ 1 ; 0 < δ ≤ 0,5 ; m, K, k ≥ 1 ; 0 ≤ τ ≤ 1 ; 0 ≤ biais < 0,5 ; 0 < écart de contraste < 0,6)"
+  },
+  "ecart_contraste_0.6": {
+   "code": 1,
+   "erreur_derniere_ligne": "réglages hors domaine (répétitions ≥ 100 ; tailles ≥ 1 ; 0 < δ ≤ 0,5 ; m, K, k ≥ 1 ; 0 ≤ τ ≤ 1 ; 0 ≤ biais < 0,5 ; 0 < écart de contraste < 0,6)"
+  },
+  "deltas_nan": {
+   "code": 1,
+   "erreur_derniere_ligne": "réglages hors domaine (répétitions ≥ 100 ; tailles ≥ 1 ; 0 < δ ≤ 0,5 ; m, K, k ≥ 1 ; 0 ≤ τ ≤ 1 ; 0 ≤ biais < 0,5 ; 0 < écart de contraste < 0,6)"
+  },
+  "taux_nan": {
+   "code": 1,
+   "erreur_derniere_ligne": "réglages hors domaine (répétitions ≥ 100 ; tailles ≥ 1 ; 0 < δ ≤ 0,5 ; m, K, k ≥ 1 ; 0 ≤ τ ≤ 1 ; 0 ≤ biais < 0,5 ; 0 < écart de contraste < 0,6)"
+  },
+  "biais_nan": {
+   "code": 1,
+   "erreur_derniere_ligne": "réglages hors domaine (répétitions ≥ 100 ; tailles ≥ 1 ; 0 < δ ≤ 0,5 ; m, K, k ≥ 1 ; 0 ≤ τ ≤ 1 ; 0 ≤ biais < 0,5 ; 0 < écart de contraste < 0,6)"
+  }
+ }
+}

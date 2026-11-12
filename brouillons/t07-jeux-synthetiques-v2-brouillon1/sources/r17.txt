@@ -1,0 +1,211 @@
+TACHE 17
+=== D 1
+ACTION: ADD
+TITLE: Compact latent visual states for interleaved multi-modal chains
+PROPOSAL: We fine-tune Bagel, a unified model that both understands and generates images, to emit at each reasoning step a visual state of sixty-four learned latent tokens produced by a small compressor from the model's own image generator, instead of a full image re-encoded into thousands of tokens. The compressor and a decoder that maps the latent tokens back to pixels are trained jointly with the reasoning chain on synthetic maze navigation, jigsaw solving and geometry problems with ground-truth intermediate images, and the decoder is used at inference only to inspect the chain. We measure accuracy on held-out mazes, jigsaw puzzles and GeoQA, GenEval and WISE scores for text-to-image prompts that require reasoning, and the sequence length and throughput per chain.
+CONTROLS: The same model with text-only chains, with direct answers and no chain, with full-image interleaving at the same number of training examples, with random latent tokens in place of the compressor output, and a pipeline that calls an external image generator per step.
+COST: 900
+PREDICTION: Latent states should match full-image interleaving on accuracy at a fraction of the sequence length and beat text-only chains on navigation and jigsaw. If random latent tokens do as well, the visual state carries no information and the gain comes from extra computation.
+=== D 2
+ACTION: ADD
+TITLE: Encoding only what changed between successive visual states
+PROPOSAL: We train Show-o to represent each intermediate visual state not as a full image but as the set of discrete image tokens that differ from the previous state, with their positions, so that a move in a maze or a swap in a jigsaw costs a handful of tokens while a complete redraw remains possible. A learned change detector decides which token positions to emit, and the model reconstructs the current state by applying the changes to the previous one in a small state cache outside the attention context. Training data come from simulated maze navigation, jigsaw solving and contour-to-landscape generation with rendered intermediate states. We report accuracy on held-out tasks, the average number of visual tokens per step, and the fidelity of the reconstructed states to the rendered ones.
+CONTROLS: Full-image interleaving at equal training data, text-only chains, direct answers, a fixed random subset of token positions of the same size as the detector's choice, and the model with the state cache disabled so that changes must be inferred from context alone.
+COST: 700
+PREDICTION: Change encoding should cut visual tokens per step by an order of magnitude on navigation and jigsaw with no loss of accuracy, and lose some fidelity on landscape generation where most of the image changes. If the random-subset variant matches it, position selection is not what matters.
+=== D 3
+ACTION: ADD
+TITLE: Keeping only the latest visual states inside the attention window
+PROPOSAL: We modify the attention mask of a unified model, Janus-Pro extended with image generation of intermediate states, so that every token attends to the whole textual history but only to the visual tokens of the two most recent visual states, earlier visual states being evicted from the key-value cache. Text thus carries long-range logic and images carry the current state, which bounds the quadratic term of the chain. We fine-tune on synthetic maze navigation, jigsaw solving and geometry with rendered intermediate images, and on an instruction-based editing set where each edit step is a visual state. We report accuracy on held-out tasks, editing scores on ImgEdit, and wall-clock throughput per chain against chain length.
+CONTROLS: Full attention over all visual states, a window of one and of four states, random eviction of the same number of visual tokens, text-only chains, and a pipeline with an external editor called per step.
+COST: 800
+PREDICTION: The two-state window should match full attention on navigation and jigsaw, where only the current state matters, and fall behind on long editing chains that refer back to early states. If random eviction does as well, recency is not what the model relies on.
+=== D 4
+ACTION: ADD
+TITLE: A staged curriculum for stable training of long interleaved chains
+PROPOSAL: We train Bagel on interleaved reasoning in three stages: text-only chains on the target tasks, chains with a single visual state at the end, then chains with up to twelve visual states, moving to the next stage when validation loss on the current one plateaus. Within each stage the text and image losses are reweighted every few hundred steps so that their gradient norms stay within a fixed ratio, and the image loss uses a shorter denoising schedule for intermediate states than for final images. Data are synthetic maze navigation, jigsaw solving and contour-to-landscape chains with rendered intermediates. We track divergence events, gradient norm per modality, validation loss and held-out accuracy at every stage.
+CONTROLS: Direct training on full chains at the same total number of examples, the curriculum with the stages in reverse order, the curriculum with fixed loss weights, and five seeds per configuration to count divergences.
+COST: 1200
+PREDICTION: The staged curriculum should reach lower validation loss with fewer divergences than direct training, and reverse ordering should be the worst. If fixed weights do as well as adaptive ones, the stabilising effect comes from ordering alone.
+=== D 5
+ACTION: ADD
+TITLE: A simulator-grounded corpus of interleaved visual reasoning chains
+PROPOSAL: We generate a training corpus in which each example pairs a problem with a chain alternating textual steps and rendered visual states produced by a simulator: grid mazes with the agent's path drawn step by step, jigsaw puzzles with pieces placed one at a time, topographic contour maps progressively turned into landscape layouts, and geometry constructions with auxiliary lines added. Each chain is verified by the simulator, so every intermediate image is correct by construction. We fine-tune Show-o and Bagel on the corpus and evaluate on held-out instances of each task, on GeoQA and MathVista for understanding, and on WISE for generation from reasoning prompts, reporting accuracy and chain length.
+CONTROLS: The same models fine-tuned on text-only versions of the chains in which each visual state is replaced by a textual description of equal content, on final-answer supervision only, on chains with the visual states shuffled across steps, and training on half the corpus.
+COST: 1000
+PREDICTION: Interleaved supervision should beat text-described chains on navigation and jigsaw and by less on geometry. If shuffled visual states train as well, the models are ignoring the images and the corpus is working as extra text.
+=== D 6
+ACTION: ADD
+TITLE: Reinforcement learning with verifiable rewards on interleaved chains
+PROPOSAL: We fine-tune Bagel with group-relative policy optimisation on maze navigation, jigsaw solving and geometry tasks where a simulator checks the final answer, and we extend the reward with a term that checks each intermediate visual state against the simulator's own state after the described step. The model samples eight chains per problem with compact latent visual states, and the policy update uses the verified rewards and a reference-model penalty. We start from a checkpoint that we first fine-tune on a small interleaved corpus, and we measure held-out accuracy, the fraction of chains whose intermediate states pass verification, and chain length over training.
+CONTROLS: Supervised fine-tuning alone at the same number of examples, reinforcement learning with the final-answer reward only, the same training on text-only chains, a random reward of equal variance, and the sampling count at four and sixteen.
+COST: 1500
+PREDICTION: Intermediate verification should raise accuracy over final-answer reward on navigation and jigsaw, where wrong states compound. If the random reward reaches the same accuracy, the gain comes from sampling and selection rather than from the reward.
+=== D 7
+ACTION: ADD
+TITLE: Few-step diffusion for intermediate visual states inside one model
+PROPOSAL: We build on Transfusion-style training, in which one transformer predicts text tokens and denoises image patches, and we give intermediate visual states a denoising schedule of four steps with a coarse patch size, reserving the full schedule and fine patches for the final image only. The intermediate states are kept in the context as their denoised latent patches rather than being re-encoded, so that the visual part of the chain stays short. We train on synthetic maze navigation and jigsaw chains and on reasoning-driven text-to-image prompts with a planning sketch as intermediate state, and we evaluate task accuracy, GenEval and WISE scores, and tokens per chain.
+CONTROLS: The full denoising schedule for every state, a single-step schedule, the model with intermediate states re-encoded by the understanding encoder, text-only chains, and a two-model pipeline with an external diffusion generator.
+COST: 1100
+PREDICTION: Four-step intermediates should keep accuracy within a few points of the full schedule at a fraction of the compute per state, and the sketch state should raise WISE over text-only planning. If the single-step schedule does as well, the intermediate state needs no visual quality at all.
+=== D 8
+ACTION: ADD
+TITLE: Summarising past visual states into a few learned cache tokens
+PROPOSAL: Train Bagel so that, after each visual reasoning step, the thousands of tokens of that visual state are replaced in the key-value cache by thirty-two learned summary tokens produced by a cross-attention module reading the state, while the text tokens stay untouched. Later steps attend to the summaries of all earlier states and to the full tokens of the current state only, which keeps the context nearly linear in the number of steps. Fine-tune the summary module and the model jointly on synthetic maze navigation, jigsaw solving and multi-step instruction-based editing with rendered intermediates, and evaluate held-out accuracy, editing scores on ImgEdit, and throughput against chain length.
+CONTROLS: Full tokens kept for every state, summaries of eight and of one hundred twenty-eight tokens, summaries produced by mean pooling without learning, earlier states dropped entirely, and text-only chains.
+COST: 850
+PREDICTION: Learned summaries should match full retention on tasks that refer back to earlier states, such as editing, and dropping earlier states should hurt there but not on navigation. If mean pooling is as good, the cross-attention module is not needed.
+=== D 9
+ACTION: ADD
+TITLE: How accuracy trades against visual tokens per reasoning step
+PROPOSAL: We measure, on one unified model, how the number of visual tokens spent per intermediate state governs both accuracy and chain cost. Starting from Bagel with intermediate states produced by its generator, we vary the tokens per state over sixteen, sixty-four, two hundred fifty-six and one thousand twenty-four by changing the generator's latent resolution, fine-tune each setting on synthetic maze navigation, jigsaw solving and contour-to-landscape chains, and record held-out accuracy, the longest chain length that trains without divergence, and the sequence length and throughput at inference. We fit the resulting curves to find the smallest token count per state at which accuracy saturates for each task family.
+CONTROLS: Text-only chains and direct answers as reference points, a setting in which the visual state is produced but masked out of attention, and the same sweep on a second model, Show-o.
+COST: 1300
+PREDICTION: Accuracy should saturate well below one thousand tokens per state on navigation and jigsaw and later on landscape generation. If the masked-state setting matches the others, the model is not reading its visual states and the curve measures nothing about visual reasoning.
+=== D 10
+ACTION: ADD
+TITLE: Visual planning states for editing and contour-to-landscape generation
+PROPOSAL: We test whether interleaved visual states help the generative side of reasoning: for instruction-based editing with several dependent instructions and for landscape generation from topographic contour maps, we train Bagel to produce first a coarse layout state, a low-resolution rendering of regions and their labels, then a textual check of the layout against the instruction or the contour lines, then the final image. The layout state is compact and is kept in context while the final image is not. We fine-tune on rendered pairs of contour maps and terrain, on ImgEdit multi-step edits, and evaluate editing accuracy judged by a separate vision-language model, terrain consistency with the contours measured by slope agreement, and generation throughput.
+CONTROLS: Direct generation without the layout state, a text-only plan in place of the layout, the layout state produced but not checked, and generation by a diffusion model conditioned on the contour map without any reasoning.
+COST: 950
+PREDICTION: The layout state should raise slope agreement and multi-step editing accuracy over direct generation, with the text-only plan in between. If the unchecked layout does as well, the gain comes from the layout itself and not from the verification step.
+=== A 1 0
+ACTION: ADD
+TITLE: Latent visual states that keep interleaved chains short
+PROPOSAL: We fine-tune Bagel to emit, at each step of a chain, a visual state of sixty-four latent tokens produced by a compressor from its own generator, with a decoder to pixels used only for inspection. Training uses synthetic maze navigation, jigsaw and geometry chains with rendered intermediates, each chain verified by its simulator, and we measure held-out accuracy, GenEval and WISE on reasoning prompts, and sequence length and throughput per chain.
+CONTROLS: Text-only chains and direct answers on the same checkpoint, Qwen2.5-VL with text-only chains as an understanding-only baseline, full-image interleaving at matched training examples as the ceiling on information, random latent tokens in place of the compressor output as a placebo, a two-model pipeline calling an external generator per step, the latent size at three settings, and a bootstrap interval over held-out instances across three seeds.
+COST: 900
+PREDICTION: Latent states should match full interleaving on accuracy at a fraction of the sequence length and beat text-only chains on navigation and jigsaw, with a smaller gap on geometry. If the placebo does as well, the visual state carries nothing and the claim fails.
+=== A 1 1
+ACTION: ADD
+TITLE: Compressed intermediate images for one-model multi-modal reasoning
+PROPOSAL: We adapt Bagel so that each reasoning step produces a compact visual state, sixty-four latent tokens drawn from the generator's latent space through a trained compressor, in place of a full image re-encoded for understanding. A pixel decoder is trained alongside for visualisation. The model is fine-tuned on synthetic maze navigation, jigsaw and geometry chains with rendered intermediate states, and we report held-out accuracy per task, GenEval and WISE on reasoning-driven prompts, and the average number of tokens per chain together with throughput.
+CONTROLS: The decoder at two architectures, the compressor trained with and without a perceptual loss, sampling temperature at three settings, accuracy on MMLU and GSM8K to check that text ability is retained, the published numbers of Qwen2.5-VL and of Janus-Pro on GeoQA as the ceiling, and training loss curves across three seeds.
+COST: 900
+PREDICTION: Accuracy should rise over the published numbers of understanding-only models on GeoQA and text benchmarks should stay flat. If text benchmarks drop, the compressor training is interfering with the language side and would need rebalancing.
+=== A 2 0
+ACTION: ADD
+TITLE: Bounding attention to recent visual states in a unified model
+PROPOSAL: We change the attention mask of Janus-Pro extended with intermediate image generation so that each token attends to the whole text history but only to the visual tokens of the two latest states, earlier ones being evicted from the cache. We fine-tune on synthetic navigation, jigsaw and multi-step editing chains with rendered intermediates and report held-out accuracy, ImgEdit scores and throughput against chain length.
+CONTROLS: Full attention over every visual state as the ceiling, windows of one and of four states, random eviction of the same number of visual tokens, chains without images, direct answers, the learning rate at two values, and chains longer than any seen in training to test the bound, over three seeds.
+COST: 800
+PREDICTION: The two-state window should equal full attention on navigation and jigsaw and lose ground on long editing chains that refer back to early states. If random eviction loses nothing either, recency is not what the model uses and the window is not the mechanism at work.
+=== A 2 1
+ACTION: ADD
+TITLE: A sliding visual window for long interleaved reasoning
+PROPOSAL: We restrict, in Janus-Pro extended to generate intermediate images, the attention of every token to the full textual history and to the visual tokens of the latest two states only, dropping older visual states from the key-value cache so that the visual part of the context stays constant in size. We fine-tune on synthetic navigation, jigsaw and multi-step editing chains with rendered intermediates and report held-out accuracy, ImgEdit scores and memory use and throughput as chains grow.
+CONTROLS: Rotary position scaling at two scales, the window applied also to text tokens, single-step editing and single-image question answering on MathVista where no window is needed, final image quality measured by FID against the reference renders at matched resolution, and the loss curves of the windowed model over training across three seeds.
+COST: 800
+PREDICTION: Throughput should stay flat with chain length and single-step tasks should be unaffected. If FID worsens with the window, visual quality is tied to the evicted states and the chain would need to keep more of them.
+=== A 3 0
+ACTION: ADD
+TITLE: Staged training to keep long interleaved chains from diverging
+PROPOSAL: We train Bagel in three stages, text-only chains, chains ending with one visual state, then chains with up to twelve states, advancing when validation loss plateaus, and we rebalance the text and image losses every few hundred steps to hold their gradient norms within a fixed ratio. Data are synthetic maze, jigsaw and contour-to-landscape chains with rendered intermediates. We track divergences, per-modality gradient norms, validation loss curves, held-out accuracy, accuracy on GSM8K to check that text ability is kept, and peak memory at each stage.
+CONTROLS: Direct training on full chains at the same total examples, the stages in reverse order, fixed loss weights in place of rebalancing, a model trained on text chains alone at the same examples as the floor, and five seeds per configuration so that divergence rates can be compared.
+COST: 1200
+PREDICTION: Staged training should reach lower validation loss with fewer divergences than direct training and reverse ordering should be worst. If fixed weights match adaptive ones, ordering alone is doing the stabilising and the rebalancing can be dropped.
+=== A 3 1
+ACTION: ADD
+TITLE: Curriculum and loss rebalancing for interleaved image-text training
+PROPOSAL: We fine-tune Bagel on interleaved chains through a curriculum that starts with text-only reasoning, adds a single final visual state, and ends with chains holding up to twelve visual states, each stage running until validation loss flattens. Throughout, the weights of the text and image losses are adjusted on a schedule so that neither modality's gradient dominates. Training data are synthetic maze, jigsaw and contour-to-landscape chains with rendered intermediates, and we track validation loss, divergence events, gradient norms per modality and held-out accuracy after the last stage.
+CONTROLS: Warmup length at three settings, two optimiser choices, the learning rate at three values, the model's accuracy on MathVista before and after the curriculum, and the final stage trained twice as long to check that the result is not limited by steps, over five seeds.
+COST: 1200
+PREDICTION: Divergences should be rare and validation loss should decrease smoothly across stages. If the longer final stage keeps improving, the curriculum is under-trained and its benefit cannot be read from these runs.
+=== A 4 0
+ACTION: ADD
+TITLE: Verified intermediate states as rewards for interleaved reasoning
+PROPOSAL: We apply group-relative policy optimisation to Bagel on maze, jigsaw and geometry tasks checked by a simulator, adding to the final-answer reward a term that verifies each intermediate visual state against the simulator's state after the described step, with compact latent states and eight samples per problem. We start from a checkpoint fine-tuned on a small interleaved corpus and measure held-out accuracy, the fraction of verified intermediates and chain length over training.
+CONTROLS: The supervised checkpoint alone, reinforcement learning with the final reward only, the same training on text-only chains, Qwen2.5-VL trained the same way on text-only chains, a random reward of equal variance, the sample count at four and sixteen, and held-out puzzle sizes larger than any in training, over three seeds.
+COST: 1500
+PREDICTION: Intermediate verification should beat the final-only reward on navigation and jigsaw where wrong states compound, and generalise to larger sizes. If the random reward reaches the same accuracy, selection among samples is doing the work and the reward design has nothing to it.
+=== A 4 1
+ACTION: ADD
+TITLE: Policy optimisation with simulator-checked rewards on visual chains
+PROPOSAL: We fine-tune Bagel with group-relative policy optimisation on maze navigation, jigsaw solving and geometry problems whose final answers a simulator can check, and we add a reward term that compares every intermediate visual state with the simulator's state after the corresponding step, using compact latent states and eight sampled chains per problem. The starting point is a checkpoint fine-tuned on a small interleaved corpus, and we report held-out accuracy, the share of intermediate states that pass the check, and the mean chain length as training proceeds.
+CONTROLS: The reference-model penalty coefficient at three values, the relative weight of the intermediate term at three levels, the sampling temperature at two values, the reward computed with a second simulator implementation to check agreement, accuracy on MathVista before and after training, and the learning curves over three seeds.
+COST: 1500
+PREDICTION: Accuracy should rise steadily over training and the share of verified states should rise with it. If the two simulators disagree on more than a few percent of states, the reward is noisy and the comparison of weights is not interpretable.
+=== A 5 0
+ACTION: ADD
+TITLE: Simulator-verified corpora of interleaved reasoning chains
+PROPOSAL: We generate chains alternating textual steps with rendered visual states from simulators of grid mazes, jigsaw puzzles, contour-to-landscape layouts and geometry constructions, every intermediate verified by construction, and fine-tune Show-o and Bagel on them. Each chain records the simulator state after every step, and the renderer draws the agent's path, the placed pieces or the added construction lines on top of the previous state. Evaluation covers held-out instances, GeoQA and MathVista for understanding, and WISE for generation, with accuracy and chain length reported.
+CONTROLS: Fine-tuning on text-only versions of the same chains with each visual state replaced by an equally informative description as the matched reference, final-answer supervision only, chains with visual states shuffled across steps as a placebo, a pipeline with an external generator per step, held-out puzzle sizes beyond the training range, and half the corpus, over three seeds.
+COST: 1000
+PREDICTION: Interleaved supervision should beat described chains on navigation and jigsaw and by less on geometry. If shuffled states train as well, the images are ignored and the corpus works as extra text; the claim would then be refuted.
+=== A 5 1
+ACTION: ADD
+TITLE: Building and training on a rendered corpus of visual reasoning steps
+PROPOSAL: We construct a corpus where each problem comes with a chain of textual steps and rendered visual states produced by simulators for grid mazes, jigsaw puzzles, contour-to-landscape layouts and geometry constructions, each chain checked by the simulator so that intermediate images are correct. We fine-tune Show-o and Bagel on the corpus and evaluate on held-out instances of each task, on GeoQA and MathVista for understanding, and on WISE for generation from reasoning prompts, reporting accuracy, chain length and the share of chains that terminate.
+CONTROLS: Corpus sizes at four scales, rendering resolution at two levels, the mix of the four task families at three proportions, the fine-tuned models against the published numbers of Janus-Pro and Emu3 on GeoQA and MathVista, accuracy on text-only arithmetic word problems, held-out instances drawn from the same size range as training, and training loss across three seeds.
+COST: 1000
+PREDICTION: Accuracy should grow with corpus size on every task and the mix should matter most for geometry. If the fine-tuned models fall below published numbers on MathVista, the corpus is narrowing the models and more general data would be needed.
+=== A 6 0
+ACTION: ADD
+TITLE: Emitting only the changed image tokens at each reasoning step
+PROPOSAL: We train Show-o to represent each intermediate visual state by the discrete image tokens that differ from the previous state together with their positions, a learned detector choosing the positions, while a small state cache outside the attention context holds the full current state for reconstruction. A maze move or a jigsaw swap then costs a few tokens and a full redraw stays possible when the detector marks every position. Training uses simulated navigation, jigsaw and contour-to-landscape chains, and we report held-out accuracy, visual tokens per step and reconstruction fidelity.
+CONTROLS: Full-image interleaving at equal data, text-only chains, direct answers, a random subset of positions of the same size as the detector's choice, the cache disabled so that changes must be inferred from context, and the detector threshold at two values, over three seeds.
+COST: 700
+PREDICTION: Change encoding should cut visual tokens per step by an order of magnitude on navigation and jigsaw at equal accuracy and lose fidelity on landscape chains where most pixels change. If the random subset matches it, position selection is not the ingredient that matters.
+=== A 6 1
+ACTION: ADD
+TITLE: Reinforcement learning on verbalised state descriptions for visual tasks
+PROPOSAL: We strengthen the textual reasoning of Qwen2.5-VL on maze navigation, jigsaw solving and geometry by group-relative policy optimisation with simulator-checked final answers, where every chain must describe the visual state after each step in a fixed textual schema, grid coordinates for mazes, piece placements for jigsaws and point coordinates for geometry, so that transitions are tracked in words without producing any image. Eight chains are sampled per problem and the schema is enforced by a format reward. We report held-out accuracy, the share of chains whose described states match the simulator, and chain length.
+CONTROLS: Supervised fine-tuning on schema-formatted chains at the same number of examples, the same training without the format reward, free-form chains as the floor, the final-answer reward only, and a pipeline that renders the described states with an external generator for visualisation only, over three seeds.
+COST: 700
+PREDICTION: Schema-formatted chains should beat free-form ones on navigation and jigsaw and the state-match share should rise over training. On geometry the schema may be too coarse and the gain may vanish there.
+=== A 7 0
+ACTION: ADD
+TITLE: Coarse few-step denoising for intermediate visual states
+PROPOSAL: We train one transformer that predicts text tokens and denoises image patches, in the Transfusion style, giving intermediate visual states a four-step denoising schedule with coarse patches and the final image the full schedule with fine patches, and keeping intermediates in context as denoised latents without re-encoding. The patch size for intermediates is twice that of the final image. Training data are synthetic navigation and jigsaw chains plus reasoning-driven text-to-image prompts with a planning sketch as intermediate. We report task accuracy, GenEval and WISE, FID of final images against reference renders, and tokens per chain.
+CONTROLS: The full schedule for every state, a single-step schedule, intermediates re-encoded by the understanding encoder, chains of text alone, and a written plan in place of the sketch, over three seeds.
+COST: 1100
+PREDICTION: Four-step intermediates should stay within a few points of the full schedule on accuracy at a fraction of the compute per state, and the sketch should lift WISE over planning in words. If one step suffices, visual quality of intermediates is irrelevant.
+=== A 7 1
+ACTION: ADD
+TITLE: Pairing an understanding model with a video generator for state transitions
+PROPOSAL: We connect Qwen2.5-VL, which plans each reasoning step in text, to an open video generation model conditioned on the current image and the planned step, which renders the next visual state as a short clip whose last frame is fed back to the understanding model. The generator is fine-tuned on rendered transitions from synthetic navigation and jigsaw simulators, with a learned gate deciding when a visual update is worth requesting. We evaluate held-out accuracy on navigation, jigsaw and geometry, GenEval and WISE for generation prompts, and latency per chain of the two-model pipeline.
+CONTROLS: The planner alone with text-only chains, the planner with a still-image generator instead of video, the gate always open, the gate always closed, the gate replaced by a random coin as placebo, the clip length at two values, and the generator without fine-tuning on transitions, over three seeds.
+COST: 1100
+PREDICTION: Video-rendered transitions should help on navigation where motion is natural and little on geometry. If the still-image generator does as well, temporal rendering adds nothing beyond the state itself.
+=== A 8 0
+ACTION: ADD
+TITLE: Replacing each finished visual state by learned summary tokens
+PROPOSAL: We train Bagel so that once a visual reasoning step is complete, its thousands of state tokens are swapped in the key-value cache for thirty-two summary tokens produced by a cross-attention reader, text tokens staying as they are, so that later steps see full tokens for the current state only and summaries for the rest. We fine-tune the reader and model jointly on synthetic navigation, jigsaw and multi-step editing chains with rendered intermediates and report held-out accuracy, ImgEdit scores and throughput against chain length.
+CONTROLS: Full tokens kept for every state, summaries of eight and of one hundred twenty-eight tokens, mean-pooled summaries without learning, earlier states dropped entirely, text-only chains, a pipeline with an external editor per step, and Bagel's published ImgEdit score as a sanity check, over three seeds.
+COST: 850
+PREDICTION: Learned summaries should equal full retention on editing, which refers back to earlier states, while dropping states should hurt there and not on navigation. If mean pooling is as good, the learned reader is not needed and the result is a plain compression story.
+=== A 8 1
+ACTION: ADD
+TITLE: Tool-augmented visual reasoning with cropping, drawing and plotting operations
+PROPOSAL: We equip Janus-Pro with a set of callable image operations, crop and zoom, draw a line or marker, overlay a grid, plot a function, and fine-tune it on chains where each step either reasons in text or calls one operation whose output image is appended to the context. Each operation returns an image at the input resolution. Training chains come from synthetic navigation, jigsaw and geometry problems annotated with the operation sequence a solver would use. We report held-out accuracy, the number of calls per chain and the fraction of calls whose output is referred to in later text.
+CONTROLS: The same model with text-only chains, calls allowed but outputs withheld from the context, each operation removed in turn, and a random operation inserted at each call, over three seeds.
+COST: 850
+PREDICTION: Operations should help most on geometry, where auxiliary lines matter, and least on jigsaw, where pieces must move globally. If withholding outputs costs nothing, the model is not reading the images it requests and the claim fails.
+=== A 9 0
+ACTION: ADD
+TITLE: Compact layout states for reasoning-driven generation and editing
+PROPOSAL: We train Bagel to produce, for multi-step instruction editing and for landscape generation from contour maps, a coarse layout state first, a low-resolution map of regions and labels, then a textual check of that layout against the instruction or the contours, then the final image, keeping only the layout in context. Fine-tuning uses rendered contour-terrain pairs and ImgEdit multi-step edits, and we evaluate editing accuracy judged by a separate vision-language model, Qwen2.5-VL, slope agreement between terrain and contours, and generation throughput.
+CONTROLS: Direct generation without the layout, a text-only plan in place of the layout, the layout produced but never checked, a diffusion model conditioned on the contour map without reasoning, and the layout at two resolutions, over three seeds.
+COST: 950
+PREDICTION: The layout state should raise slope agreement and multi-step editing accuracy over direct generation with the text plan in between. If the unchecked layout does as well, the check adds nothing and the gain is the layout alone.
+=== A 9 1
+ACTION: ADD
+TITLE: Reward-model reranking of generated images for reasoning prompts
+PROPOSAL: We train a reward model on human preference pairs for reasoning-driven generation prompts, images judged on whether they satisfy the implicit constraints of the prompt, and use it to rerank sixteen samples from Bagel for each prompt, then fine-tune Bagel by direct preference optimisation on the reward model's rankings. The same reward model scores edits on ImgEdit by comparing the edited image with the instruction. We report WISE and GenEval, the reward model's agreement with held-out human judgements, and editing accuracy.
+CONTROLS: Bagel without reranking, reranking with an off-the-shelf aesthetic scorer, the preference optimisation without the reranking pipeline, a reward model trained on shuffled labels as placebo, and the reward model trained on half the pairs, over three seeds.
+COST: 950
+PREDICTION: Reranking should raise WISE by a few points and preference optimisation should keep most of that gain without sampling. If the aesthetic scorer gives the same lift, the reward model is not capturing reasoning constraints.
+=== A 10 0
+ACTION: ADD
+TITLE: A persistent latent canvas edited in place across reasoning steps
+PROPOSAL: We give Show-o a latent canvas of two hundred fifty-six tokens that stands for the current visual state and is rewritten in place at each step by edit tokens the model generates, so that the context holds the text and one canvas rather than a growing stack of images. A decoder renders the canvas for inspection and for the final image. We fine-tune on simulated navigation, jigsaw and contour-to-landscape chains and report held-out accuracy, tokens per chain and the fidelity of the rendered canvas to the simulator state.
+CONTROLS: Full-image interleaving at equal data, chains without visual states, the canvas reset at each step instead of edited, random edit tokens, sampling temperature at two values, and a pipeline with an external generator, over three seeds.
+COST: 750
+PREDICTION: The canvas should hold accuracy at constant context size on navigation and jigsaw and fall behind on landscape chains that rewrite most of the canvas. If resetting matches editing, persistence is not what helps.
+=== A 10 1
+ACTION: ADD
+TITLE: High-resolution tiled perception with textual reasoning for visual problems
+PROPOSAL: We replace the vision encoder of Qwen2.5-VL with a dynamic tiling scheme that splits each input image into up to sixteen tiles encoded at native resolution plus a global thumbnail, and fine-tune the model on text-only chains for maze navigation, jigsaw solving and geometry whose steps describe the visual content in words. The chains come from the same simulators with the intermediate states rendered as text, and we report held-out accuracy, accuracy as a function of input image size, and the model's localisation error on a probing task that asks for coordinates of maze cells and puzzle pieces.
+CONTROLS: The original encoder at fixed resolution, tiling without the thumbnail, the number of tiles at three values, direct answers without chains, and the probing task on images downsampled by half, over three seeds.
+COST: 750
+PREDICTION: Tiled perception should cut localisation error and lift accuracy on large mazes and fine geometry. If the gain vanishes on small images, perception rather than reasoning was the bottleneck and the claim of a reasoning gain is refuted for those tasks.

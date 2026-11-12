@@ -1,0 +1,79 @@
+{
+ "angle": "fuites",
+ "modele": "claude-opus-5-5 (sous-agent neuf, outil Workflow, wf_38107792-44a)",
+ "verdict": "conforme avec réserves",
+ "fichiers_lus": [
+  "LISEZMOI.md",
+  "brief-affinage-equipe-rouge-fable-v2.md",
+  "passation-affinage-equipe-rouge-fable-v1.md",
+  "integration-proposeurs-ia-v1.md",
+  "conception-pole-scientifique-v1.md",
+  "*.sha256 (5 compagnons, sha256sum -c : tous OK ; l'empreinte a4f94148… citée dans integration-proposeurs-ia-v1.md ligne 8 correspond bien à conception-pole-scientifique-v1.md)"
+ ],
+ "constats": [
+  {
+   "fichier": "integration-proposeurs-ia-v1.md",
+   "ligne": 10,
+   "categorie": "renvoi vers des fichiers absents (4) et structure du dépôt",
+   "extrait_court": "la synthèse du collisionneur du 26 octobre sur `main`",
+   "pourquoi": "Le paragraphe « S'appuie sur » (lignes 8 à 12) donne un chemin interne du dépôt de travail et sa branche (docs/notes/pole-scientifique-automatique/…), plus trois documents absents du lot (question-collisionneur-proposeur-enfichable-v2.md, programme de conception v6/v7, démonstration couche 1). C'est présenté comme une dépendance du cadre. Cela contredit le LISEZMOI (« tout ce qu'il te faut ») et pousse le lecteur à réclamer ces fichiers ou l'accès au dépôt. Recommandation : retirer ce paragraphe ou le réduire à « cadre interne, non nécessaire ».",
+   "gravite": "majeur"
+  },
+  {
+   "fichier": "integration-proposeurs-ia-v1.md",
+   "ligne": 143,
+   "categorie": "renvoi vers des fichiers absents (4)",
+   "extrait_court": "toutes déjà au programme (v7, section 3)",
+   "pourquoi": "Les voies d'attaque sont étiquetées par lettres et renvoient au programme v7 (sections 3 et 7, voir aussi la ligne 82). La numérotation a des trous : la voie (c) manque et la voie d est citée à part. Le lecteur comprend que le document complet du programme existe et lui serait utile. Or c'est le document qui porte les portes et le dispositif des moniteurs. Mieux vaut décrire les voies sans renvoyer au programme.",
+   "gravite": "mineur"
+  },
+  {
+   "fichier": "integration-proposeurs-ia-v1.md",
+   "ligne": 180,
+   "categorie": "détail sur des éléments réservés (2)(3)",
+   "extrait_court": "banque scellée v6, famille tenue à l'écart",
+   "pourquoi": "Le texte va au-delà de la simple existence : il dit quelle banque scellée et quelle version portent la famille d'universalité tenue à l'écart. Aux lignes 187 et 188, il décrit aussi la construction de la banque sœur v3-bis (« même générateur, tâches neuves »). Cela renseigne sur la provenance des données d'évaluation scellées. Il suffirait d'écrire « une famille d'instances jamais vue » et « un vivier de tâches neuves ».",
+   "gravite": "mineur"
+  },
+  {
+   "fichier": "conception-pole-scientifique-v1.md",
+   "ligne": 55,
+   "categorie": "localisation des clés (1)",
+   "extrait_court": "une instance avec Docker et des clés (chez session-depot)",
+   "pourquoi": "Aucune valeur de clé n'apparaît. Mais le texte nomme la session interne qui détient les clés et l'instance de calcul. integration-proposeurs-ia-v1.md ligne 194 le répète, avec le numéro de GO et le plafond de dépense. Pour une équipe rouge, cela désigne une cible et un détail de gouvernance dont elle n'a pas besoin. Mieux vaut l'anonymiser (« dans l'environnement contrôlé »).",
+   "gravite": "mineur"
+  },
+  {
+   "fichier": "conception-pole-scientifique-v1.md",
+   "ligne": 30,
+   "categorie": "renvoi vers des fichiers absents (4)",
+   "extrait_court": "forme corrigée, relecture `9a791017…`, brique 2",
+   "pourquoi": "Le texte renvoie à une relecture désignée par son empreinte et au rapport de méta-conception de Gemini (lignes 31 et 66), découpé en « briques 1 à 4 ». Aucun des deux n'est dans le lot. La « forme corrigée » n'est compréhensible qu'avec ces documents, ce qui invite le lecteur à les demander.",
+   "gravite": "mineur"
+  },
+  {
+   "fichier": "brief-affinage-equipe-rouge-fable-v2.md",
+   "ligne": 110,
+   "categorie": "renvoi vers un contenu absent (4)",
+   "extrait_court": "Le détail est dans la passation",
+   "pourquoi": "La passation v1 ne contient pas l'attaque ajoutée en v2 : aucune occurrence de « gabarit » ni de « coïncide ». Seule la ligne 152 mentionne des témoins plantés promus. Le lecteur cherchera ce détail ailleurs : brief v1 (45ae29d9ae06…), démonstration couche 1, dépôt. Il faut corriger le renvoi ou compléter la passation sans y mettre de chiffre de mesure.",
+   "gravite": "mineur"
+  },
+  {
+   "fichier": "passation-affinage-equipe-rouge-fable-v1.md",
+   "ligne": 295,
+   "categorie": "renvoi vers un contenu absent (4)",
+   "extrait_court": "voir le message de passation qui accompagne ce fichier",
+   "pourquoi": "Le texte renvoie à un message qui n'est pas dans le lot. Le contenu est inoffensif (une heure), mais il contredit le caractère autoportant annoncé.",
+   "gravite": "mineur"
+  },
+  {
+   "fichier": "integration-proposeurs-ia-v1.md",
+   "ligne": 223,
+   "categorie": "cohérence du rôle (hors angle fuites)",
+   "extrait_court": "recommandation : lignée Opus pour l'auteur, Fable 5.1 réservée à la contre-lecture",
+   "pourquoi": "Cette recommandation interne contredit la décision de 12:24 (lignes 29 à 33), le brief et la passation, pour qui Fable est l'auteur et Opus le contre-lecteur. La ligne 165 dit aussi « Fable 5.1 contre-lecteur ». Le lecteur reçoit une délibération interne et des rôles contradictoires sur sa propre mission.",
+   "gravite": "mineur"
+  }
+ ]
+}

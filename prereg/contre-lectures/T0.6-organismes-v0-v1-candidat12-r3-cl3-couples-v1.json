@@ -1,0 +1,62 @@
+[
+ {
+  "id": "Y1 (majeur R1) ce que la chaîne exige du commit cité : même arbre gelé que le commit de scellement",
+  "ancien": "(révision 3 : commit de la course de confirmation 7b, dont les fichiers de la chaîne v13\n  sont égaux à l'octet à ceux du code joué par 7a, `1609a4bf`, point 15 en tête, tout écart : nœud ; révisions antérieures : branche",
+  "nouveau": "(révision 3 : commit de la course de confirmation 7b, dont les fichiers de la chaîne v13\n  sont égaux à l'octet à ceux du code joué par 7a, `1609a4bf`, point 15 en tête, tout écart : nœud ; **ce que la chaîne exige de ce commit** (contre-lecture 3) : sur l'instance, `exiger_code_cite` (`src/controle_ia/harnais/validation_reelle.py`, appelé par `lanceur_v6.executer` dès qu'un préenregistrement est donné) compare par `git diff --quiet` le commit cité au commit cloné, qui est le commit de scellement S, sur tout l'arbre hors `prereg`, `brouillons`, `registres`, `docs`, `diag`, `runs`, `donnees`, `livrables`, `papiers`, `traces` et `CLAUDE.md` ; le commit cité a donc **le même arbre gelé que S** (code, essais, scripts, `.claude`, dépendances : tout l'arbre, pas la seule chaîne v13), et S est un ancêtre d'`origin/main` qui contient l'amorce v11 (`controles`) ; `1609a4bf` lui-même ne convient pas tant que l'arbre de `main` en diffère (le 9 novembre 2026, `main` ne porte ni `src/controle_ia/t06/` ni les scripts de la chaîne) : la valeur écrite ici est le commit d'intégration de la chaîne dans `main`, S n'ajoutant après lui que des fichiers sous `prereg/` et `registres/` ; cette garde n'a été jouée sur aucune instance (toute épreuve exige `PREREG_ABSENT=1`, 7a comprise) : elle est jouée à blanc avant la création (plan de la confirmation, pas 3) ; révisions antérieures : branche"
+ },
+ {
+  "id": "Y2 (majeur) le compte des essais vaut pour l'arbre entier, à relever sur l'arbre du commit d'intégration",
+  "ancien": "Réserve : le compte vaut pour les fichiers d'essais de `1609a4bf` ; si le commit de 7b change un fichier de la liste v3, le compte est relevé à nouveau avant le scellement (sinon l'amorce s'arrête avant le run : garde voulue, sans donnée fausse).",
+  "nouveau": "Réserve (précisée par la contre-lecture 3) : le compte vaut pour **l'arbre entier** de `1609a4bf`, non pour ses seuls fichiers d'essais : les essais de la liste v3 lisent le code, `.claude/hooks/garde_calcul.py`, `registres/go.md`, `prereg/` et des documents, et deux fichiers de la liste font l'inventaire des constructeurs d'invite de tout `src/`. L'arbre du commit de scellement n'est pas celui de `1609a4bf` : la chaîne y est intégrée dans `main`, qui a divergé (le 9 novembre 2026, 45 des 84 fichiers de la liste seulement sont sur `main`, la garde de calcul y est modifiée, du code de T0.7 et de P3-bis y est ajouté). Le nombre écrit ici est donc **relevé sur l'arbre du commit d'intégration, ce texte et la configuration en place, avant le scellement** : liste v3 rejouée en entier, dernière ligne consignée au registre avec le commit ; s'il diffère de 2022, la valeur relevée remplace 2022 ici et l'écart est déclaré ; sans ce relevé, pas de scellement (sinon l'amorce s'arrête avant le run, après environ 35 minutes de carte : garde voulue, sans donnée fausse, mais une tentative et des heures de calendrier perdues)."
+ },
+ {
+  "id": "Y3 (majeur R6) grandeurs de coût de 7a : origine et statut de vérification",
+  "ancien": "et les seules grandeurs de coût suivantes, reçues de la session mère :",
+  "nouveau": "et les seules grandeurs de coût suivantes, reçues de la session mère par message (R-2041, R-2046) ; leur pièce d'origine n'est pas sur `main` et elles ne figurent pas dans la lecture A ; la contre-lecture 3, qui n'ouvre aucun `diag/` de 7a, ne les a pas vérifiées ; aucune prédiction, aucun seuil ni aucune règle de ce texte n'en dépend :"
+ },
+ {
+  "id": "Y4 (majeur) ce que le rédacteur a lu de 7a : le champ des graines du manifeste",
+  "ancien": "Il n'a vu ni la valeur ni le signe d'aucun effet de 7a.",
+  "nouveau": "Il a lu aussi le seul champ `graines[*].entropie` du manifeste de 7a (`runs/20261109-070232-t06-reel/manifeste.json`, branche `essai/t06-explo-v3`), pour vérifier que les graines de 7b sont neuves (journal de la révision 3 ; R-2046) ; la valeur qu'il en cite au point 15 n'est pas vérifiée par la contre-lecture 3. Il n'a vu ni la valeur ni le signe d'aucun effet de 7a."
+ },
+ {
+  "id": "Y5 (majeur) écart DT-4 : nœud tranché, et sondes calculées par la chaîne de 7a",
+  "ancien": "(écart DT-4, R-2041 ; nœud de Lazar en cours). La lecture B est versée hors de `main` ; la session mère n'en a vu aucune valeur (R-2041).",
+  "nouveau": "(écart DT-4, R-2041 ; nœud tranché par Lazar le 9 novembre 2026, option (b), R-2048). La lecture B est versée hors de `main` ; la session mère n'en a vu aucune valeur (R-2041). La chaîne de 7a a elle-même calculé et écrit sur l'instance le test croisé et les couples descriptifs sur les épisodes de 7a (fichier `lecture-sondes-t06.json` du run, scellé, fermé par DT-4 ; lecture A, en-tête et § 4) : des sondes ont donc été passées sur 7a par la machine, et ce lecteur en a vu des valeurs ; ce texte n'écrit nulle part que 7a n'a été lue par aucune sonde, et T0.7 déclare l'écart (R-2048)."
+ },
+ {
+  "id": "Y6 (mineur) dernière puce : aucune sonde commandée ni lue par ce texte sur 7a",
+  "ancien": "aucune ligne de lecture ne porte sur les épisodes de 7a, et aucune sonde n'y est passée par ce texte.",
+  "nouveau": "aucune ligne de lecture de ce texte ne porte sur les épisodes de 7a, et ce texte n'y commande ni n'y lit aucune sonde (celles que la chaîne de 7a a calculées restent fermées : puce « Un lecteur exploratoire » ci-dessus)."
+ },
+ {
+  "id": "Y7 (mineur) compteur jetons_generes : cause lue dans le code",
+  "ancien": "aucun devis ni aucune lecture de ce texte ne s'appuie sur lui (cause non lue ; à examiner par la contre-lecture 3 si elle le juge utile).",
+  "nouveau": "aucun devis ni aucune lecture de ce texte ne s'appuie sur lui (cause lue dans le code au commit `1609a4bf` par la contre-lecture 3, sans aucune donnée de 7a : `lanceur_v6.py` crée un seul dictionnaire `chrono` (l. 216), le passe à la génération des données de distillation (l. 228) puis aux épisodes d'évaluation (l. 278) et l'écrit dans les descriptifs des épisodes (l. 279) ; `harnais/episode.py` (l. 241) y ajoute la longueur de chaque action générée ; le compteur additionne donc les 3 200 actions de la distillation aux 5 760 de l'évaluation, soit un rapport d'environ 1,56 à longueurs égales : compteur descriptif cumulé depuis le début du run, comme les durées relevées par la lecture A, § 4, et non un défaut de mesure du coût ; le rapport 1,59 lui-même n'est pas vérifié)."
+ },
+ {
+  "id": "Y8 (mineur) devis : marge de relance, carte de repli, bras B, disque après la fin du GO",
+  "ancien": "une création plus tardive ce jour-là est un nœud de Lazar (« Liste d'arrêt », L11).",
+  "nouveau": "une création plus tardive ce jour-là est un nœud de Lazar (« Liste d'arrêt », L11). **Marge de relance** (contre-lecture 3) : le calendrier de la configuration refuse toute création le 16 novembre (`session_v2 calendrier` joué hors ligne au commit `1609a4bf` : « dernier jour de création (2026-11-15) dépassé le 2026-11-16 »), et l'amorce rejoue ce contrôle au jour de l'instance (amorce v11, l. 398) : une création le 15 ne laisse place à **aucune relance** (arrêt aux essais vers 0,6 h, erreur de mémoire à la distillation vers 5 h, relance sur H200). Pour garder une relance complète, la première création se fait au plus tard le 14 novembre vers 17:00Z (premier essai au débit moitié, 27,2 h, relance créée avant 20:48Z le 15), et plus tôt si les scellements le permettent. **Carte de repli** (GO-2026-11-07-02 : H200 NVL d'emblée après trois heures sans A100 conforme) : aux durées de 7a, 13,59 h × 4,70 = 63,9 USD de calcul, ≈ 72 USD au plus avec le disque et le téléchargement ; au débit moitié, ≈ 136 USD ; sous le plafond. Le bras B (annexe, GO-2026-11-07-04), que 7a n'a pas joué (épreuve à blanc), ajoute environ 20 minutes de carte après la poussée finale. Le disque d'une instance arrêtée n'est couvert que jusqu'à la fin du GO (« Liste d'arrêt ») : les 72 h du poste « disque » sont une borne, non un droit au-delà du 16 novembre."
+ },
+ {
+  "id": "Y9 (majeur) plan de la confirmation, pas 3 : intégration dans main, relevé des essais, gardes jouées à blanc",
+  "ancien": "3. commit de 7b sur une branche `prep/…` : chaîne v13 égale à `1609a4bf` (point 15), configuration copiée sous `prereg/` avec son compagnon `.sha256` ; marqueurs remplis ;",
+  "nouveau": "3. commit d'intégration de 7b : chaîne v13 égale à `1609a4bf` (point 15) **portée dans `main`** (le commit de scellement est un ancêtre d'`origin/main` qui contient l'amorce v11, et le commit cité a le même arbre gelé que lui : en-tête, ligne « Commit du code d'analyse ») ; liste v3 rejouée en entier sur cet arbre et compte consigné (en-tête, « Tests attendus ») ; avant toute création et sans dépense, dans un clone fait comme celui de l'amorce (clonage partiel, extraction réduite) : `git diff --quiet` du commit cité au commit de scellement sur l'arbre gelé, `exiger_citations_t06` et `exiger_prereg_scelle` joués à blanc, branche de sortie `T06_BRANCHE` absente du dépôt distant (l'amorce refuse une branche déjà présente) ; configuration copiée sous `prereg/` avec son compagnon `.sha256` ; marqueurs remplis ;"
+ },
+ {
+  "id": "Y10 (mineur) contre-lecture 1 : réserve de lignée ; empreinte du candidat 4 non vérifiée par la contre-lecture 3",
+  "ancien": "fille 9 (sous-agent neuf, lignée Opus 5.5), R-1665. Brouillon relu : candidat 4, `a81cd47ef58941e91db8e12a98353293451085828f6c18fd6d3ee34186a79a53` (empreinte citée par l'en-tête, « Statut antérieur : candidat 5 »).",
+  "nouveau": "fille 9 (sous-agent neuf, lignée Opus 5.5, la même lignée que l'autrice : réserve déclarée à R-1665), R-1665. Brouillon relu : candidat 4, `a81cd47ef58941e91db8e12a98353293451085828f6c18fd6d3ee34186a79a53` (empreinte citée par l'en-tête, « Statut antérieur : candidat 5 », et vérifiée par la mère le 7 novembre 2026, R-1668 ; **non vérifiée par la contre-lecture 3** : le fichier n'est ni sur `main`, ni aux commits `8cb539f9`, `fe240b24` et `1609a4bf`, ni sur les trois branches `prep/` de son clone ; il est à récupérer sur la branche du candidat 5, `prep/t06-candidat2-v1`, R-1668)."
+ },
+ {
+  "id": "Y11 (mineur) statut : contre-lu",
+  "ancien": "**Non scellé, non contre-lu** : la contre-lecture 3 (R2, section « Contre-lecture ») le couvrira.",
+  "nouveau": "**Non scellé** ; contre-lu par la contre-lecture 3 (R2, section « Contre-lecture »), dont les couples Y1 à Y12 sont appliqués par script après ceux du rédacteur."
+ },
+ {
+  "id": "Y12 (mineur) entrée de la contre-lecture 3 : faite",
+  "ancien": "- **Contre-lecture 3 (R2) — candidat 12, révision 3** : à faire, avant le scellement, par un sous-agent neuf d'un autre modèle que le rédacteur de la révision 3 (Claude Opus 5.5 ; N-052), qui n'est pas le lecteur exploratoire de 7a (R-2041). Fichiers à lui donner explicitement, en plus de la consigne ci-dessus :",
+  "nouveau": "- **Contre-lecture 3 (R2) — candidat 12, révision 3** : faite le 9 novembre 2026 par un sous-agent neuf de la session mère `session_01QPDgKgACWyCkCN8HjqwNXy`, Claude Fable 5.2 d'après ce qu'il sait de lui (autre modèle que le rédacteur de la révision 3, Claude Opus 5.5 ; N-052 nomme Fable 5.1 : écart de version déclaré), qui n'a écrit aucune des pièces lues et n'est pas le lecteur exploratoire de 7a (R-2041) ; consigne scellée `docs/notes/g0-deux-semaines-v1/consignes-mere-2026-11-09-2200-v1/consigne-contre-lecture-3-t06-candidat12-r3-v1.md`, `79c279e89f7f906fd63bc6b278ff2a3399c3c63a055ed5b3a2e161cdfa786d06`. Verdict : « scellable après couples », le scellement n'ayant lieu qu'une fois le commit d'intégration éprouvé (en-tête, lignes « Commit du code d'analyse » et « Tests attendus »). Couples : `prereg/contre-lectures/T0.6-organismes-v0-v1-candidat12-r3-cl3-couples-v1.json` (empreinte : son compagnon `.sha256`), Y1 à Y12, appliqués tels quels, dans l'ordre, par script. Non vérifié par elle : les grandeurs de coût de 7a et l'entropie du manifeste de 7a (aucun `diag/` ni `runs/` de 7a ouvert), l'empreinte du candidat 4, l'écart de six champs entre la configuration du brouillon 5 et celle de 7a (comparaison arrêtée par un refus de classifieur, rapporté tel quel), l'état du dépôt distant. Fichiers donnés, en plus de la consigne ci-dessus :"
+ }
+]

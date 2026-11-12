@@ -1,0 +1,10048 @@
+{
+ "script": "coupe-calibrage-v1.py",
+ "statut": "exploratoire, processeur, non préenregistré, non opposable",
+ "graine_maitresse": 202610291500,
+ "graines": "A2.rng_de(graine, 'monde', paramètres hors coupe) pour les scores ; A2.rng_de(graine, 'coupe', coupe, paramètres) pour le tirage de la coupe : SeedSequence([graine] + étiquettes réduites par SHA-256), une suite par point",
+ "a2_sha256": "20bb005c4f607d643c0eb4e6396891eb69752d6b1d5d8435da5f091e362c903e",
+ "script_sha256": "87b2130b5eae51a608f465d7fda43847b6e4396ce25df69b9f21366856e7490d",
+ "versions": {
+  "python": "3.13.17",
+  "numpy": "2.5.3",
+  "plateforme": "Linux-6.18.44-fc-v185-x86_64-with-glibc2.39"
+ },
+ "base": {
+  "N": 9600,
+  "taches": 64,
+  "a": 0.3,
+  "h": 0.3,
+  "rho": 0.0,
+  "coupe": "dans_temporelle",
+  "derive": 0.0,
+  "derive_cellules": null,
+  "derive_taches": 0.0,
+  "grille": null,
+  "G1": true,
+  "ecart_G1": 0.1,
+  "modes": 2
+ },
+ "seuils_diagnostic": [
+  20.0,
+  30.0,
+  40.0,
+  60.0
+ ],
+ "unites_epreuve": 64,
+ "K": 10,
+ "tau": 0.01,
+ "points": [
+  {
+   "etiquette": "principal|a=0.1|derive=0.0|dans_temporelle",
+   "parametres": {
+    "N": 9600,
+    "taches": 64,
+    "a": 0.1,
+    "h": 0.3,
+    "rho": 0.0,
+    "coupe": "dans_temporelle",
+    "derive": 0.0,
+    "derive_cellules": null,
+    "derive_taches": 0.0,
+    "grille": null,
+    "G1": true,
+    "ecart_G1": 0.1,
+    "modes": 2
+   },
+   "repetitions": 4000,
+   "controles": 16,
+   "taille_lot": 28,
+   "duree_s": 16.5,
+   "ecart_type_s1_moins_s2_cellule_1_sigma": 0.0762,
+   "moyenne_s1_moins_s2_cellule_1_sigma": 0.0018,
+   "seuil=20": {
+    "unilateral": 0.063,
+    "unilateral_wilson95": [
+     0.0559,
+     0.071
+    ],
+    "bilateral": 0.1207,
+    "bilateral_wilson95": [
+     0.111,
+     0.1312
+    ]
+   },
+   "seuil=30": {
+    "unilateral": 0.0312,
+    "unilateral_wilson95": [
+     0.0263,
+     0.0371
+    ],
+    "bilateral": 0.0592,
+    "bilateral_wilson95": [
+     0.0523,
+     0.067
+    ]
+   },
+   "seuil=40": {
+    "unilateral": 0.0163,
+    "unilateral_wilson95": [
+     0.0128,
+     0.0207
+    ],
+    "bilateral": 0.0323,
+    "bilateral_wilson95": [
+     0.0272,
+     0.0382
+    ]
+   },
+   "seuil=60": {
+    "unilateral": 0.0057,
+    "unilateral_wilson95": [
+     0.0038,
+     0.0086
+    ],
+    "bilateral": 0.013,
+    "bilateral_wilson95": [
+     0.0099,
+     0.017
+    ]
+   },
+   "G1": {
+    "par_mode": 0.224,
+    "par_mode_wilson95": [
+     0.215,
+     0.2333
+    ],
+    "deux_modes": 0.082,
+    "deux_modes_wilson95": [
+     0.0739,
+     0.0909
+    ],
+    "deux_modes_et_controle_12_propre_bilateral_40": 0.0793,
+    "deux_modes_et_controle_12_propre_bilateral_40_wilson95": [
+     0.0713,
+     0.088
+    ]
+   }
+  },
+  {
+   "etiquette": "principal|a=0.1|derive=0.0|dans_graine",
+   "parametres": {
+    "N": 9600,
+    "taches": 64,
+    "a": 0.1,
+    "h": 0.3,
+    "rho": 0.0,
+    "coupe": "dans_graine",
+    "derive": 0.0,
+    "derive_cellules": null,
+    "derive_taches": 0.0,
+    "grille": null,
+    "G1": true,
+    "ecart_G1": 0.1,
+    "modes": 2
+   },
+   "repetitions": 4000,
+   "controles": 16,
+   "taille_lot": 28,
+   "duree_s": 20.7,
+   "ecart_type_s1_moins_s2_cellule_1_sigma": 0.0751,
+   "moyenne_s1_moins_s2_cellule_1_sigma": -0.0001,
+   "seuil=20": {
+    "unilateral": 0.0655,
+    "unilateral_wilson95": [
+     0.0582,
+     0.0736
+    ],
+    "bilateral": 0.1187,
+    "bilateral_wilson95": [
+     0.1091,
+     0.1291
+    ]
+   },
+   "seuil=30": {
+    "unilateral": 0.029,
+    "unilateral_wilson95": [
+     0.0242,
+     0.0347
+    ],
+    "bilateral": 0.0545,
+    "bilateral_wilson95": [
+     0.0479,
+     0.062
+    ]
+   },
+   "seuil=40": {
+    "unilateral": 0.0138,
+    "unilateral_wilson95": [
+     0.0106,
+     0.0179
+    ],
+    "bilateral": 0.027,
+    "bilateral_wilson95": [
+     0.0224,
+     0.0325
+    ]
+   },
+   "seuil=60": {
+    "unilateral": 0.0057,
+    "unilateral_wilson95": [
+     0.0038,
+     0.0086
+    ],
+    "bilateral": 0.011,
+    "bilateral_wilson95": [
+     0.0082,
+     0.0147
+    ]
+   },
+   "G1": {
+    "par_mode": 0.224,
+    "par_mode_wilson95": [
+     0.215,
+     0.2333
+    ],
+    "deux_modes": 0.082,
+    "deux_modes_wilson95": [
+     0.0739,
+     0.0909
+    ],
+    "deux_modes_et_controle_12_propre_bilateral_40": 0.0795,
+    "deux_modes_et_controle_12_propre_bilateral_40_wilson95": [
+     0.0715,
+     0.0883
+    ]
+   }
+  },
+  {
+   "etiquette": "principal|a=0.1|derive=0.0|entre",
+   "parametres": {
+    "N": 9600,
+    "taches": 64,
+    "a": 0.1,
+    "h": 0.3,
+    "rho": 0.0,
+    "coupe": "entre",
+    "derive": 0.0,
+    "derive_cellules": null,
+    "derive_taches": 0.0,
+    "grille": null,
+    "G1": true,
+    "ecart_G1": 0.1,
+    "modes": 2
+   },
+   "repetitions": 4000,
+   "controles": 16,
+   "taille_lot": 28,
+   "duree_s": 18.9,
+   "ecart_type_s1_moins_s2_cellule_1_sigma": 0.1175,
+   "moyenne_s1_moins_s2_cellule_1_sigma": -0.0009,
+   "seuil=20": {
+    "unilateral": 0.227,
+    "unilateral_wilson95": [
+     0.2143,
+     0.2402
+    ],
+    "bilateral": 0.4402,
+    "bilateral_wilson95": [
+     0.4249,
+     0.4557
+    ]
+   },
+   "seuil=30": {
+    "unilateral": 0.1668,
+    "unilateral_wilson95": [
+     0.1555,
+     0.1786
+    ],
+    "bilateral": 0.327,
+    "bilateral_wilson95": [
+     0.3126,
+     0.3417
+    ]
+   },
+   "seuil=40": {
+    "unilateral": 0.1335,
+    "unilateral_wilson95": [
+     0.1233,
+     0.1444
+    ],
+    "bilateral": 0.264,
+    "bilateral_wilson95": [
+     0.2506,
+     0.2779
+    ]
+   },
+   "seuil=60": {
+    "unilateral": 0.0935,
+    "unilateral_wilson95": [
+     0.0849,
+     0.1029
+    ],
+    "bilateral": 0.182,
+    "bilateral_wilson95": [
+     0.1703,
+     0.1943
+    ]
+   },
+   "G1": {
+    "par_mode": 0.224,
+    "par_mode_wilson95": [
+     0.215,
+     0.2333
+    ],
+    "deux_modes": 0.082,
+    "deux_modes_wilson95": [
+     0.0739,
+     0.0909
+    ],
+    "deux_modes_et_controle_12_propre_bilateral_40": 0.0625,
+    "deux_modes_et_controle_12_propre_bilateral_40_wilson95": [
+     0.0554,
+     0.0704
+    ]
+   }
+  },
+  {
+   "etiquette": "principal|a=0.1|derive=0.05|dans_temporelle",
+   "parametres": {
+    "N": 9600,
+    "taches": 64,
+    "a": 0.1,
+    "h": 0.3,
+    "rho": 0.0,
+    "coupe": "dans_temporelle",
+    "derive": 0.05,
+    "derive_cellules": null,
+    "derive_taches": 0.0,
+    "grille": null,
+    "G1": true,
+    "ecart_G1": 0.1,
+    "modes": 2
+   },
+   "repetitions": 4000,
+   "controles": 16,
+   "taille_lot": 28,
+   "duree_s": 16.5,
+   "ecart_type_s1_moins_s2_cellule_1_sigma": 0.0771,
+   "moyenne_s1_moins_s2_cellule_1_sigma": -0.0497,
+   "seuil=20": {
+    "unilateral": 0.272,
+    "unilateral_wilson95": [
+     0.2584,
+     0.286
+    ],
+    "bilateral": 0.279,
+    "bilateral_wilson95": [
+     0.2653,
+     0.2931
+    ]
+   },
+   "seuil=30": {
+    "unilateral": 0.1492,
+    "unilateral_wilson95": [
+     0.1385,
+     0.1606
+    ],
+    "bilateral": 0.1522,
+    "bilateral_wilson95": [
+     0.1415,
+     0.1637
+    ]
+   },
+   "seuil=40": {
+    "unilateral": 0.0927,
+    "unilateral_wilson95": [
+     0.0841,
+     0.1021
+    ],
+    "bilateral": 0.0945,
+    "bilateral_wilson95": [
+     0.0858,
+     0.104
+    ]
+   },
+   "seuil=60": {
+    "unilateral": 0.0442,
+    "unilateral_wilson95": [
+     0.0383,
+     0.0511
+    ],
+    "bilateral": 0.045,
+    "bilateral_wilson95": [
+     0.039,
+     0.0519
+    ]
+   },
+   "G1": {
+    "par_mode": 0.2139,
+    "par_mode_wilson95": [
+     0.205,
+     0.223
+    ],
+    "deux_modes": 0.0735,
+    "deux_modes_wilson95": [
+     0.0658,
+     0.082
+    ],
+    "deux_modes_et_controle_12_propre_bilateral_40": 0.0685,
+    "deux_modes_et_controle_12_propre_bilateral_40_wilson95": [
+     0.0611,
+     0.0767
+    ]
+   }
+  },
+  {
+   "etiquette": "principal|a=0.1|derive=0.05|dans_graine",
+   "parametres": {
+    "N": 9600,
+    "taches": 64,
+    "a": 0.1,
+    "h": 0.3,
+    "rho": 0.0,
+    "coupe": "dans_graine",
+    "derive": 0.05,
+    "derive_cellules": null,
+    "derive_taches": 0.0,
+    "grille": null,
+    "G1": true,
+    "ecart_G1": 0.1,
+    "modes": 2
+   },
+   "repetitions": 4000,
+   "controles": 16,
+   "taille_lot": 28,
+   "duree_s": 20.2,
+   "ecart_type_s1_moins_s2_cellule_1_sigma": 0.0765,
+   "moyenne_s1_moins_s2_cellule_1_sigma": -0.0007,
+   "seuil=20": {
+    "unilateral": 0.0568,
+    "unilateral_wilson95": [
+     0.05,
+     0.0644
+    ],
+    "bilateral": 0.113,
+    "bilateral_wilson95": [
+     0.1036,
+     0.1232
+    ]
+   },
+   "seuil=30": {
+    "unilateral": 0.0288,
+    "unilateral_wilson95": [
+     0.024,
+     0.0344
+    ],
+    "bilateral": 0.0542,
+    "bilateral_wilson95": [
+     0.0476,
+     0.0617
+    ]
+   },
+   "seuil=40": {
+    "unilateral": 0.0175,
+    "unilateral_wilson95": [
+     0.0139,
+     0.0221
+    ],
+    "bilateral": 0.0295,
+    "bilateral_wilson95": [
+     0.0247,
+     0.0352
+    ]
+   },
+   "seuil=60": {
+    "unilateral": 0.007,
+    "unilateral_wilson95": [
+     0.0048,
+     0.0101
+    ],
+    "bilateral": 0.0127,
+    "bilateral_wilson95": [
+     0.0097,
+     0.0167
+    ]
+   },
+   "G1": {
+    "par_mode": 0.2139,
+    "par_mode_wilson95": [
+     0.205,
+     0.223
+    ],
+    "deux_modes": 0.0735,
+    "deux_modes_wilson95": [
+     0.0658,
+     0.082
+    ],
+    "deux_modes_et_controle_12_propre_bilateral_40": 0.0727,
+    "deux_modes_et_controle_12_propre_bilateral_40_wilson95": [
+     0.0651,
+     0.0812
+    ]
+   }
+  },
+  {
+   "etiquette": "principal|a=0.1|derive=0.05|entre",
+   "parametres": {
+    "N": 9600,
+    "taches": 64,
+    "a": 0.1,
+    "h": 0.3,
+    "rho": 0.0,
+    "coupe": "entre",
+    "derive": 0.05,
+    "derive_cellules": null,
+    "derive_taches": 0.0,
+    "grille": null,
+    "G1": true,
+    "ecart_G1": 0.1,
+    "modes": 2
+   },
+   "repetitions": 4000,
+   "controles": 16,
+   "taille_lot": 28,
+   "duree_s": 17.9,
+   "ecart_type_s1_moins_s2_cellule_1_sigma": 0.1179,
+   "moyenne_s1_moins_s2_cellule_1_sigma": 0.0007,
+   "seuil=20": {
+    "unilateral": 0.2213,
+    "unilateral_wilson95": [
+     0.2087,
+     0.2344
+    ],
+    "bilateral": 0.4455,
+    "bilateral_wilson95": [
+     0.4302,
+     0.4609
+    ]
+   },
+   "seuil=30": {
+    "unilateral": 0.158,
+    "unilateral_wilson95": [
+     0.147,
+     0.1696
+    ],
+    "bilateral": 0.3267,
+    "bilateral_wilson95": [
+     0.3124,
+     0.3414
+    ]
+   },
+   "seuil=40": {
+    "unilateral": 0.1253,
+    "unilateral_wilson95": [
+     0.1154,
+     0.1359
+    ],
+    "bilateral": 0.2592,
+    "bilateral_wilson95": [
+     0.2459,
+     0.2731
+    ]
+   },
+   "seuil=60": {
+    "unilateral": 0.0907,
+    "unilateral_wilson95": [
+     0.0822,
+     0.1
+    ],
+    "bilateral": 0.183,
+    "bilateral_wilson95": [
+     0.1713,
+     0.1953
+    ]
+   },
+   "G1": {
+    "par_mode": 0.2139,
+    "par_mode_wilson95": [
+     0.205,
+     0.223
+    ],
+    "deux_modes": 0.0735,
+    "deux_modes_wilson95": [
+     0.0658,
+     0.082
+    ],
+    "deux_modes_et_controle_12_propre_bilateral_40": 0.056,
+    "deux_modes_et_controle_12_propre_bilateral_40_wilson95": [
+     0.0493,
+     0.0636
+    ]
+   }
+  },
+  {
+   "etiquette": "principal|a=0.1|derive=0.1|dans_temporelle",
+   "parametres": {
+    "N": 9600,
+    "taches": 64,
+    "a": 0.1,
+    "h": 0.3,
+    "rho": 0.0,
+    "coupe": "dans_temporelle",
+    "derive": 0.1,
+    "derive_cellules": null,
+    "derive_taches": 0.0,
+    "grille": null,
+    "G1": true,
+    "ecart_G1": 0.1,
+    "modes": 2
+   },
+   "repetitions": 4000,
+   "controles": 16,
+   "taille_lot": 28,
+   "duree_s": 16.6,
+   "ecart_type_s1_moins_s2_cellule_1_sigma": 0.0764,
+   "moyenne_s1_moins_s2_cellule_1_sigma": -0.1007,
+   "seuil=20": {
+    "unilateral": 0.662,
+    "unilateral_wilson95": [
+     0.6472,
+     0.6765
+    ],
+    "bilateral": 0.662,
+    "bilateral_wilson95": [
+     0.6472,
+     0.6765
+    ]
+   },
+   "seuil=30": {
+    "unilateral": 0.481,
+    "unilateral_wilson95": [
+     0.4655,
+     0.4965
+    ],
+    "bilateral": 0.481,
+    "bilateral_wilson95": [
+     0.4655,
+     0.4965
+    ]
+   },
+   "seuil=40": {
+    "unilateral": 0.3563,
+    "unilateral_wilson95": [
+     0.3416,
+     0.3712
+    ],
+    "bilateral": 0.3563,
+    "bilateral_wilson95": [
+     0.3416,
+     0.3712
+    ]
+   },
+   "seuil=60": {
+    "unilateral": 0.2205,
+    "unilateral_wilson95": [
+     0.2079,
+     0.2336
+    ],
+    "bilateral": 0.2205,
+    "bilateral_wilson95": [
+     0.2079,
+     0.2336
+    ]
+   },
+   "G1": {
+    "par_mode": 0.2261,
+    "par_mode_wilson95": [
+     0.2171,
+     0.2354
+    ],
+    "deux_modes": 0.0815,
+    "deux_modes_wilson95": [
+     0.0734,
+     0.0904
+    ],
+    "deux_modes_et_controle_12_propre_bilateral_40": 0.0505,
+    "deux_modes_et_controle_12_propre_bilateral_40_wilson95": [
+     0.0441,
+     0.0577
+    ]
+   }
+  },
+  {
+   "etiquette": "principal|a=0.1|derive=0.1|dans_graine",
+   "parametres": {
+    "N": 9600,
+    "taches": 64,
+    "a": 0.1,
+    "h": 0.3,
+    "rho": 0.0,
+    "coupe": "dans_graine",
+    "derive": 0.1,
+    "derive_cellules": null,
+    "derive_taches": 0.0,
+    "grille": null,
+    "G1": true,
+    "ecart_G1": 0.1,
+    "modes": 2
+   },
+   "repetitions": 4000,
+   "controles": 16,
+   "taille_lot": 28,
+   "duree_s": 19.9,
+   "ecart_type_s1_moins_s2_cellule_1_sigma": 0.0769,
+   "moyenne_s1_moins_s2_cellule_1_sigma": 0.0016,
+   "seuil=20": {
+    "unilateral": 0.0698,
+    "unilateral_wilson95": [
+     0.0623,
+     0.0781
+    ],
+    "bilateral": 0.126,
+    "bilateral_wilson95": [
+     0.1161,
+     0.1366
+    ]
+   },
+   "seuil=30": {
+    "unilateral": 0.0355,
+    "unilateral_wilson95": [
+     0.0302,
+     0.0417
+    ],
+    "bilateral": 0.063,
+    "bilateral_wilson95": [
+     0.0559,
+     0.071
+    ]
+   },
+   "seuil=40": {
+    "unilateral": 0.0217,
+    "unilateral_wilson95": [
+     0.0177,
+     0.0268
+    ],
+    "bilateral": 0.0362,
+    "bilateral_wilson95": [
+     0.0309,
+     0.0425
+    ]
+   },
+   "seuil=60": {
+    "unilateral": 0.0092,
+    "unilateral_wilson95": [
+     0.0067,
+     0.0127
+    ],
+    "bilateral": 0.0168,
+    "bilateral_wilson95": [
+     0.0132,
+     0.0212
+    ]
+   },
+   "G1": {
+    "par_mode": 0.2261,
+    "par_mode_wilson95": [
+     0.2171,
+     0.2354
+    ],
+    "deux_modes": 0.0815,
+    "deux_modes_wilson95": [
+     0.0734,
+     0.0904
+    ],
+    "deux_modes_et_controle_12_propre_bilateral_40": 0.079,
+    "deux_modes_et_controle_12_propre_bilateral_40_wilson95": [
+     0.071,
+     0.0878
+    ]
+   }
+  },
+  {
+   "etiquette": "principal|a=0.1|derive=0.1|entre",
+   "parametres": {
+    "N": 9600,
+    "taches": 64,
+    "a": 0.1,
+    "h": 0.3,
+    "rho": 0.0,
+    "coupe": "entre",
+    "derive": 0.1,
+    "derive_cellules": null,
+    "derive_taches": 0.0,
+    "grille": null,
+    "G1": true,
+    "ecart_G1": 0.1,
+    "modes": 2
+   },
+   "repetitions": 4000,
+   "controles": 16,
+   "taille_lot": 28,
+   "duree_s": 17.8,
+   "ecart_type_s1_moins_s2_cellule_1_sigma": 0.1183,
+   "moyenne_s1_moins_s2_cellule_1_sigma": -0.0004,
+   "seuil=20": {
+    "unilateral": 0.227,
+    "unilateral_wilson95": [
+     0.2143,
+     0.2402
+    ],
+    "bilateral": 0.4515,
+    "bilateral_wilson95": [
+     0.4361,
+     0.467
+    ]
+   },
+   "seuil=30": {
+    "unilateral": 0.1685,
+    "unilateral_wilson95": [
+     0.1572,
+     0.1804
+    ],
+    "bilateral": 0.3377,
+    "bilateral_wilson95": [
+     0.3233,
+     0.3526
+    ]
+   },
+   "seuil=40": {
+    "unilateral": 0.134,
+    "unilateral_wilson95": [
+     0.1238,
+     0.1449
+    ],
+    "bilateral": 0.272,
+    "bilateral_wilson95": [
+     0.2584,
+     0.286
+    ]
+   },
+   "seuil=60": {
+    "unilateral": 0.0938,
+    "unilateral_wilson95": [
+     0.0851,
+     0.1032
+    ],
+    "bilateral": 0.1842,
+    "bilateral_wilson95": [
+     0.1725,
+     0.1966
+    ]
+   },
+   "G1": {
+    "par_mode": 0.2261,
+    "par_mode_wilson95": [
+     0.2171,
+     0.2354
+    ],
+    "deux_modes": 0.0815,
+    "deux_modes_wilson95": [
+     0.0734,
+     0.0904
+    ],
+    "deux_modes_et_controle_12_propre_bilateral_40": 0.0563,
+    "deux_modes_et_controle_12_propre_bilateral_40_wilson95": [
+     0.0495,
+     0.0638
+    ]
+   }
+  },
+  {
+   "etiquette": "principal|a=0.1|derive=0.2|dans_temporelle",
+   "parametres": {
+    "N": 9600,
+    "taches": 64,
+    "a": 0.1,
+    "h": 0.3,
+    "rho": 0.0,
+    "coupe": "dans_temporelle",
+    "derive": 0.2,
+    "derive_cellules": null,
+    "derive_taches": 0.0,
+    "grille": null,
+    "G1": true,
+    "ecart_G1": 0.1,
+    "modes": 2
+   },
+   "repetitions": 4000,
+   "controles": 16,
+   "taille_lot": 28,
+   "duree_s": 16.2,
+   "ecart_type_s1_moins_s2_cellule_1_sigma": 0.0778,
+   "moyenne_s1_moins_s2_cellule_1_sigma": -0.2001,
+   "seuil=20": {
+    "unilateral": 0.9988,
+    "unilateral_wilson95": [
+     0.9971,
+     0.9995
+    ],
+    "bilateral": 0.9988,
+    "bilateral_wilson95": [
+     0.9971,
+     0.9995
+    ]
+   },
+   "seuil=30": {
+    "unilateral": 0.9895,
+    "unilateral_wilson95": [
+     0.9858,
+     0.9922
+    ],
+    "bilateral": 0.9895,
+    "bilateral_wilson95": [
+     0.9858,
+     0.9922
+    ]
+   },
+   "seuil=40": {
+    "unilateral": 0.9692,
+    "unilateral_wilson95": [
+     0.9634,
+     0.9742
+    ],
+    "bilateral": 0.9692,
+    "bilateral_wilson95": [
+     0.9634,
+     0.9742
+    ]
+   },
+   "seuil=60": {
+    "unilateral": 0.9055,
+    "unilateral_wilson95": [
+     0.896,
+     0.9142
+    ],
+    "bilateral": 0.9055,
+    "bilateral_wilson95": [
+     0.896,
+     0.9142
+    ]
+   },
+   "G1": {
+    "par_mode": 0.2205,
+    "par_mode_wilson95": [
+     0.2116,
+     0.2297
+    ],
+    "deux_modes": 0.0795,
+    "deux_modes_wilson95": [
+     0.0715,
+     0.0883
+    ],
+    "deux_modes_et_controle_12_propre_bilateral_40": 0.003,
+    "deux_modes_et_controle_12_propre_bilateral_40_wilson95": [
+     0.0017,
+     0.0052
+    ]
+   }
+  },
+  {
+   "etiquette": "principal|a=0.1|derive=0.2|dans_graine",
+   "parametres": {
+    "N": 9600,
+    "taches": 64,
+    "a": 0.1,
+    "h": 0.3,
+    "rho": 0.0,
+    "coupe": "dans_graine",
+    "derive": 0.2,
+    "derive_cellules": null,
+    "derive_taches": 0.0,
+    "grille": null,
+    "G1": true,
+    "ecart_G1": 0.1,
+    "modes": 2
+   },
+   "repetitions": 4000,
+   "controles": 16,
+   "taille_lot": 28,
+   "duree_s": 20.8,
+   "ecart_type_s1_moins_s2_cellule_1_sigma": 0.0759,
+   "moyenne_s1_moins_s2_cellule_1_sigma": -0.0003,
+   "seuil=20": {
+    "unilateral": 0.0635,
+    "unilateral_wilson95": [
+     0.0564,
+     0.0715
+    ],
+    "bilateral": 0.125,
+    "bilateral_wilson95": [
+     0.1151,
+     0.1356
+    ]
+   },
+   "seuil=30": {
+    "unilateral": 0.0335,
+    "unilateral_wilson95": [
+     0.0284,
+     0.0395
+    ],
+    "bilateral": 0.0622,
+    "bilateral_wilson95": [
+     0.0552,
+     0.0702
+    ]
+   },
+   "seuil=40": {
+    "unilateral": 0.0175,
+    "unilateral_wilson95": [
+     0.0139,
+     0.0221
+    ],
+    "bilateral": 0.0367,
+    "bilateral_wilson95": [
+     0.0313,
+     0.043
+    ]
+   },
+   "seuil=60": {
+    "unilateral": 0.0065,
+    "unilateral_wilson95": [
+     0.0044,
+     0.0095
+    ],
+    "bilateral": 0.0165,
+    "bilateral_wilson95": [
+     0.013,
+     0.0209
+    ]
+   },
+   "G1": {
+    "par_mode": 0.2205,
+    "par_mode_wilson95": [
+     0.2116,
+     0.2297
+    ],
+    "deux_modes": 0.0795,
+    "deux_modes_wilson95": [
+     0.0715,
+     0.0883
+    ],
+    "deux_modes_et_controle_12_propre_bilateral_40": 0.076,
+    "deux_modes_et_controle_12_propre_bilateral_40_wilson95": [
+     0.0682,
+     0.0846
+    ]
+   }
+  },
+  {
+   "etiquette": "principal|a=0.1|derive=0.2|entre",
+   "parametres": {
+    "N": 9600,
+    "taches": 64,
+    "a": 0.1,
+    "h": 0.3,
+    "rho": 0.0,
+    "coupe": "entre",
+    "derive": 0.2,
+    "derive_cellules": null,
+    "derive_taches": 0.0,
+    "grille": null,
+    "G1": true,
+    "ecart_G1": 0.1,
+    "modes": 2
+   },
+   "repetitions": 4000,
+   "controles": 16,
+   "taille_lot": 28,
+   "duree_s": 17.8,
+   "ecart_type_s1_moins_s2_cellule_1_sigma": 0.1147,
+   "moyenne_s1_moins_s2_cellule_1_sigma": 0.0004,
+   "seuil=20": {
+    "unilateral": 0.218,
+    "unilateral_wilson95": [
+     0.2055,
+     0.2311
+    ],
+    "bilateral": 0.4285,
+    "bilateral_wilson95": [
+     0.4132,
+     0.4439
+    ]
+   },
+   "seuil=30": {
+    "unilateral": 0.1598,
+    "unilateral_wilson95": [
+     0.1487,
+     0.1714
+    ],
+    "bilateral": 0.3177,
+    "bilateral_wilson95": [
+     0.3035,
+     0.3323
+    ]
+   },
+   "seuil=40": {
+    "unilateral": 0.121,
+    "unilateral_wilson95": [
+     0.1113,
+     0.1315
+    ],
+    "bilateral": 0.2497,
+    "bilateral_wilson95": [
+     0.2366,
+     0.2634
+    ]
+   },
+   "seuil=60": {
+    "unilateral": 0.0828,
+    "unilateral_wilson95": [
+     0.0746,
+     0.0917
+    ],
+    "bilateral": 0.1722,
+    "bilateral_wilson95": [
+     0.1609,
+     0.1843
+    ]
+   },
+   "G1": {
+    "par_mode": 0.2205,
+    "par_mode_wilson95": [
+     0.2116,
+     0.2297
+    ],
+    "deux_modes": 0.0795,
+    "deux_modes_wilson95": [
+     0.0715,
+     0.0883
+    ],
+    "deux_modes_et_controle_12_propre_bilateral_40": 0.0612,
+    "deux_modes_et_controle_12_propre_bilateral_40_wilson95": [
+     0.0542,
+     0.0691
+    ]
+   }
+  },
+  {
+   "etiquette": "principal|a=0.3|derive=0.0|dans_temporelle",
+   "parametres": {
+    "N": 9600,
+    "taches": 64,
+    "a": 0.3,
+    "h": 0.3,
+    "rho": 0.0,
+    "coupe": "dans_temporelle",
+    "derive": 0.0,
+    "derive_cellules": null,
+    "derive_taches": 0.0,
+    "grille": null,
+    "G1": true,
+    "ecart_G1": 0.1,
+    "modes": 2
+   },
+   "repetitions": 4000,
+   "controles": 16,
+   "taille_lot": 28,
+   "duree_s": 16.4,
+   "ecart_type_s1_moins_s2_cellule_1_sigma": 0.0755,
+   "moyenne_s1_moins_s2_cellule_1_sigma": 0.0008,
+   "seuil=20": {
+    "unilateral": 0.0553,
+    "unilateral_wilson95": [
+     0.0486,
+     0.0628
+    ],
+    "bilateral": 0.1032,
+    "bilateral_wilson95": [
+     0.0942,
+     0.1131
+    ]
+   },
+   "seuil=30": {
+    "unilateral": 0.0293,
+    "unilateral_wilson95": [
+     0.0245,
+     0.0349
+    ],
+    "bilateral": 0.0525,
+    "bilateral_wilson95": [
+     0.046,
+     0.0599
+    ]
+   },
+   "seuil=40": {
+    "unilateral": 0.0163,
+    "unilateral_wilson95": [
+     0.0128,
+     0.0207
+    ],
+    "bilateral": 0.029,
+    "bilateral_wilson95": [
+     0.0242,
+     0.0347
+    ]
+   },
+   "seuil=60": {
+    "unilateral": 0.008,
+    "unilateral_wilson95": [
+     0.0057,
+     0.0113
+    ],
+    "bilateral": 0.0123,
+    "bilateral_wilson95": [
+     0.0093,
+     0.0162
+    ]
+   },
+   "G1": {
+    "par_mode": 0.2612,
+    "par_mode_wilson95": [
+     0.2517,
+     0.271
+    ],
+    "deux_modes": 0.104,
+    "deux_modes_wilson95": [
+     0.0949,
+     0.1138
+    ],
+    "deux_modes_et_controle_12_propre_bilateral_40": 0.1003,
+    "deux_modes_et_controle_12_propre_bilateral_40_wilson95": [
+     0.0913,
+     0.1099
+    ]
+   }
+  },
+  {
+   "etiquette": "principal|a=0.3|derive=0.0|dans_graine",
+   "parametres": {
+    "N": 9600,
+    "taches": 64,
+    "a": 0.3,
+    "h": 0.3,
+    "rho": 0.0,
+    "coupe": "dans_graine",
+    "derive": 0.0,
+    "derive_cellules": null,
+    "derive_taches": 0.0,
+    "grille": null,
+    "G1": true,
+    "ecart_G1": 0.1,
+    "modes": 2
+   },
+   "repetitions": 4000,
+   "controles": 16,
+   "taille_lot": 28,
+   "duree_s": 20.3,
+   "ecart_type_s1_moins_s2_cellule_1_sigma": 0.0736,
+   "moyenne_s1_moins_s2_cellule_1_sigma": -0.0015,
+   "seuil=20": {
+    "unilateral": 0.0527,
+    "unilateral_wilson95": [
+     0.0462,
+     0.0601
+    ],
+    "bilateral": 0.1027,
+    "bilateral_wilson95": [
+     0.0937,
+     0.1125
+    ]
+   },
+   "seuil=30": {
+    "unilateral": 0.0222,
+    "unilateral_wilson95": [
+     0.0181,
+     0.0273
+    ],
+    "bilateral": 0.046,
+    "bilateral_wilson95": [
+     0.0399,
+     0.0529
+    ]
+   },
+   "seuil=40": {
+    "unilateral": 0.012,
+    "unilateral_wilson95": [
+     0.0091,
+     0.0159
+    ],
+    "bilateral": 0.0248,
+    "bilateral_wilson95": [
+     0.0204,
+     0.03
+    ]
+   },
+   "seuil=60": {
+    "unilateral": 0.0047,
+    "unilateral_wilson95": [
+     0.003,
+     0.0074
+    ],
+    "bilateral": 0.0088,
+    "bilateral_wilson95": [
+     0.0063,
+     0.0121
+    ]
+   },
+   "G1": {
+    "par_mode": 0.2612,
+    "par_mode_wilson95": [
+     0.2517,
+     0.271
+    ],
+    "deux_modes": 0.104,
+    "deux_modes_wilson95": [
+     0.0949,
+     0.1138
+    ],
+    "deux_modes_et_controle_12_propre_bilateral_40": 0.1025,
+    "deux_modes_et_controle_12_propre_bilateral_40_wilson95": [
+     0.0935,
+     0.1123
+    ]
+   }
+  },
+  {
+   "etiquette": "principal|a=0.3|derive=0.0|entre",
+   "parametres": {
+    "N": 9600,
+    "taches": 64,
+    "a": 0.3,
+    "h": 0.3,
+    "rho": 0.0,
+    "coupe": "entre",
+    "derive": 0.0,
+    "derive_cellules": null,
+    "derive_taches": 0.0,
+    "grille": null,
+    "G1": true,
+    "ecart_G1": 0.1,
+    "modes": 2
+   },
+   "repetitions": 4000,
+   "controles": 16,
+   "taille_lot": 28,
+   "duree_s": 17.9,
+   "ecart_type_s1_moins_s2_cellule_1_sigma": 0.2093,
+   "moyenne_s1_moins_s2_cellule_1_sigma": -0.0039,
+   "seuil=20": {
+    "unilateral": 0.343,
+    "unilateral_wilson95": [
+     0.3284,
+     0.3579
+    ],
+    "bilateral": 0.676,
+    "bilateral_wilson95": [
+     0.6613,
+     0.6903
+    ]
+   },
+   "seuil=30": {
+    "unilateral": 0.3035,
+    "unilateral_wilson95": [
+     0.2894,
+     0.3179
+    ],
+    "bilateral": 0.5982,
+    "bilateral_wilson95": [
+     0.583,
+     0.6133
+    ]
+   },
+   "seuil=40": {
+    "unilateral": 0.2767,
+    "unilateral_wilson95": [
+     0.2631,
+     0.2908
+    ],
+    "bilateral": 0.5423,
+    "bilateral_wilson95": [
+     0.5268,
+     0.5576
+    ]
+   },
+   "seuil=60": {
+    "unilateral": 0.2442,
+    "unilateral_wilson95": [
+     0.2312,
+     0.2578
+    ],
+    "bilateral": 0.479,
+    "bilateral_wilson95": [
+     0.4635,
+     0.4945
+    ]
+   },
+   "G1": {
+    "par_mode": 0.2612,
+    "par_mode_wilson95": [
+     0.2517,
+     0.271
+    ],
+    "deux_modes": 0.104,
+    "deux_modes_wilson95": [
+     0.0949,
+     0.1138
+    ],
+    "deux_modes_et_controle_12_propre_bilateral_40": 0.0473,
+    "deux_modes_et_controle_12_propre_bilateral_40_wilson95": [
+     0.0411,
+     0.0543
+    ]
+   }
+  },
+  {
+   "etiquette": "principal|a=0.3|derive=0.05|dans_temporelle",
+   "parametres": {
+    "N": 9600,
+    "taches": 64,
+    "a": 0.3,
+    "h": 0.3,
+    "rho": 0.0,
+    "coupe": "dans_temporelle",
+    "derive": 0.05,
+    "derive_cellules": null,
+    "derive_taches": 0.0,
+    "grille": null,
+    "G1": true,
+    "ecart_G1": 0.1,
+    "modes": 2
+   },
+   "repetitions": 4000,
+   "controles": 16,
+   "taille_lot": 28,
+   "duree_s": 16.2,
+   "ecart_type_s1_moins_s2_cellule_1_sigma": 0.0745,
+   "moyenne_s1_moins_s2_cellule_1_sigma": -0.0483,
+   "seuil=20": {
+    "unilateral": 0.2432,
+    "unilateral_wilson95": [
+     0.2302,
+     0.2568
+    ],
+    "bilateral": 0.2487,
+    "bilateral_wilson95": [
+     0.2356,
+     0.2624
+    ]
+   },
+   "seuil=30": {
+    "unilateral": 0.1235,
+    "unilateral_wilson95": [
+     0.1137,
+     0.1341
+    ],
+    "bilateral": 0.1258,
+    "bilateral_wilson95": [
+     0.1158,
+     0.1364
+    ]
+   },
+   "seuil=40": {
+    "unilateral": 0.0798,
+    "unilateral_wilson95": [
+     0.0718,
+     0.0886
+    ],
+    "bilateral": 0.0815,
+    "bilateral_wilson95": [
+     0.0734,
+     0.0904
+    ]
+   },
+   "seuil=60": {
+    "unilateral": 0.039,
+    "unilateral_wilson95": [
+     0.0334,
+     0.0455
+    ],
+    "bilateral": 0.0398,
+    "bilateral_wilson95": [
+     0.0341,
+     0.0463
+    ]
+   },
+   "G1": {
+    "par_mode": 0.2546,
+    "par_mode_wilson95": [
+     0.2452,
+     0.2643
+    ],
+    "deux_modes": 0.1057,
+    "deux_modes_wilson95": [
+     0.0966,
+     0.1157
+    ],
+    "deux_modes_et_controle_12_propre_bilateral_40": 0.097,
+    "deux_modes_et_controle_12_propre_bilateral_40_wilson95": [
+     0.0882,
+     0.1066
+    ]
+   }
+  },
+  {
+   "etiquette": "principal|a=0.3|derive=0.05|dans_graine",
+   "parametres": {
+    "N": 9600,
+    "taches": 64,
+    "a": 0.3,
+    "h": 0.3,
+    "rho": 0.0,
+    "coupe": "dans_graine",
+    "derive": 0.05,
+    "derive_cellules": null,
+    "derive_taches": 0.0,
+    "grille": null,
+    "G1": true,
+    "ecart_G1": 0.1,
+    "modes": 2
+   },
+   "repetitions": 4000,
+   "controles": 16,
+   "taille_lot": 28,
+   "duree_s": 21.0,
+   "ecart_type_s1_moins_s2_cellule_1_sigma": 0.0748,
+   "moyenne_s1_moins_s2_cellule_1_sigma": 0.0024,
+   "seuil=20": {
+    "unilateral": 0.0522,
+    "unilateral_wilson95": [
+     0.0458,
+     0.0596
+    ],
+    "bilateral": 0.1037,
+    "bilateral_wilson95": [
+     0.0947,
+     0.1136
+    ]
+   },
+   "seuil=30": {
+    "unilateral": 0.0253,
+    "unilateral_wilson95": [
+     0.0208,
+     0.0306
+    ],
+    "bilateral": 0.0495,
+    "bilateral_wilson95": [
+     0.0432,
+     0.0567
+    ]
+   },
+   "seuil=40": {
+    "unilateral": 0.0152,
+    "unilateral_wilson95": [
+     0.0119,
+     0.0195
+    ],
+    "bilateral": 0.0272,
+    "bilateral_wilson95": [
+     0.0226,
+     0.0328
+    ]
+   },
+   "seuil=60": {
+    "unilateral": 0.006,
+    "unilateral_wilson95": [
+     0.004,
+     0.0089
+    ],
+    "bilateral": 0.0105,
+    "bilateral_wilson95": [
+     0.0078,
+     0.0142
+    ]
+   },
+   "G1": {
+    "par_mode": 0.2546,
+    "par_mode_wilson95": [
+     0.2452,
+     0.2643
+    ],
+    "deux_modes": 0.1057,
+    "deux_modes_wilson95": [
+     0.0966,
+     0.1157
+    ],
+    "deux_modes_et_controle_12_propre_bilateral_40": 0.1013,
+    "deux_modes_et_controle_12_propre_bilateral_40_wilson95": [
+     0.0923,
+     0.111
+    ]
+   }
+  },
+  {
+   "etiquette": "principal|a=0.3|derive=0.05|entre",
+   "parametres": {
+    "N": 9600,
+    "taches": 64,
+    "a": 0.3,
+    "h": 0.3,
+    "rho": 0.0,
+    "coupe": "entre",
+    "derive": 0.05,
+    "derive_cellules": null,
+    "derive_taches": 0.0,
+    "grille": null,
+    "G1": true,
+    "ecart_G1": 0.1,
+    "modes": 2
+   },
+   "repetitions": 4000,
+   "controles": 16,
+   "taille_lot": 28,
+   "duree_s": 17.9,
+   "ecart_type_s1_moins_s2_cellule_1_sigma": 0.2109,
+   "moyenne_s1_moins_s2_cellule_1_sigma": -0.0046,
+   "seuil=20": {
+    "unilateral": 0.342,
+    "unilateral_wilson95": [
+     0.3275,
+     0.3568
+    ],
+    "bilateral": 0.6765,
+    "bilateral_wilson95": [
+     0.6618,
+     0.6908
+    ]
+   },
+   "seuil=30": {
+    "unilateral": 0.3045,
+    "unilateral_wilson95": [
+     0.2904,
+     0.3189
+    ],
+    "bilateral": 0.5982,
+    "bilateral_wilson95": [
+     0.583,
+     0.6133
+    ]
+   },
+   "seuil=40": {
+    "unilateral": 0.2775,
+    "unilateral_wilson95": [
+     0.2638,
+     0.2916
+    ],
+    "bilateral": 0.549,
+    "bilateral_wilson95": [
+     0.5335,
+     0.5644
+    ]
+   },
+   "seuil=60": {
+    "unilateral": 0.2415,
+    "unilateral_wilson95": [
+     0.2285,
+     0.255
+    ],
+    "bilateral": 0.48,
+    "bilateral_wilson95": [
+     0.4645,
+     0.4955
+    ]
+   },
+   "G1": {
+    "par_mode": 0.2546,
+    "par_mode_wilson95": [
+     0.2452,
+     0.2643
+    ],
+    "deux_modes": 0.1057,
+    "deux_modes_wilson95": [
+     0.0966,
+     0.1157
+    ],
+    "deux_modes_et_controle_12_propre_bilateral_40": 0.0483,
+    "deux_modes_et_controle_12_propre_bilateral_40_wilson95": [
+     0.042,
+     0.0553
+    ]
+   }
+  },
+  {
+   "etiquette": "principal|a=0.3|derive=0.1|dans_temporelle",
+   "parametres": {
+    "N": 9600,
+    "taches": 64,
+    "a": 0.3,
+    "h": 0.3,
+    "rho": 0.0,
+    "coupe": "dans_temporelle",
+    "derive": 0.1,
+    "derive_cellules": null,
+    "derive_taches": 0.0,
+    "grille": null,
+    "G1": true,
+    "ecart_G1": 0.1,
+    "modes": 2
+   },
+   "repetitions": 4000,
+   "controles": 16,
+   "taille_lot": 28,
+   "duree_s": 16.3,
+   "ecart_type_s1_moins_s2_cellule_1_sigma": 0.0742,
+   "moyenne_s1_moins_s2_cellule_1_sigma": -0.0999,
+   "seuil=20": {
+    "unilateral": 0.6448,
+    "unilateral_wilson95": [
+     0.6298,
+     0.6594
+    ],
+    "bilateral": 0.645,
+    "bilateral_wilson95": [
+     0.63,
+     0.6597
+    ]
+   },
+   "seuil=30": {
+    "unilateral": 0.4517,
+    "unilateral_wilson95": [
+     0.4364,
+     0.4672
+    ],
+    "bilateral": 0.4517,
+    "bilateral_wilson95": [
+     0.4364,
+     0.4672
+    ]
+   },
+   "seuil=40": {
+    "unilateral": 0.3157,
+    "unilateral_wilson95": [
+     0.3015,
+     0.3303
+    ],
+    "bilateral": 0.3157,
+    "bilateral_wilson95": [
+     0.3015,
+     0.3303
+    ]
+   },
+   "seuil=60": {
+    "unilateral": 0.176,
+    "unilateral_wilson95": [
+     0.1645,
+     0.1881
+    ],
+    "bilateral": 0.176,
+    "bilateral_wilson95": [
+     0.1645,
+     0.1881
+    ]
+   },
+   "G1": {
+    "par_mode": 0.2526,
+    "par_mode_wilson95": [
+     0.2432,
+     0.2623
+    ],
+    "deux_modes": 0.103,
+    "deux_modes_wilson95": [
+     0.094,
+     0.1128
+    ],
+    "deux_modes_et_controle_12_propre_bilateral_40": 0.0722,
+    "deux_modes_et_controle_12_propre_bilateral_40_wilson95": [
+     0.0646,
+     0.0807
+    ]
+   }
+  },
+  {
+   "etiquette": "principal|a=0.3|derive=0.1|dans_graine",
+   "parametres": {
+    "N": 9600,
+    "taches": 64,
+    "a": 0.3,
+    "h": 0.3,
+    "rho": 0.0,
+    "coupe": "dans_graine",
+    "derive": 0.1,
+    "derive_cellules": null,
+    "derive_taches": 0.0,
+    "grille": null,
+    "G1": true,
+    "ecart_G1": 0.1,
+    "modes": 2
+   },
+   "repetitions": 4000,
+   "controles": 16,
+   "taille_lot": 28,
+   "duree_s": 20.4,
+   "ecart_type_s1_moins_s2_cellule_1_sigma": 0.0738,
+   "moyenne_s1_moins_s2_cellule_1_sigma": -0.0007,
+   "seuil=20": {
+    "unilateral": 0.0537,
+    "unilateral_wilson95": [
+     0.0472,
+     0.0612
+    ],
+    "bilateral": 0.1055,
+    "bilateral_wilson95": [
+     0.0964,
+     0.1154
+    ]
+   },
+   "seuil=30": {
+    "unilateral": 0.022,
+    "unilateral_wilson95": [
+     0.0179,
+     0.027
+    ],
+    "bilateral": 0.0428,
+    "bilateral_wilson95": [
+     0.0369,
+     0.0495
+    ]
+   },
+   "seuil=40": {
+    "unilateral": 0.0132,
+    "unilateral_wilson95": [
+     0.0101,
+     0.0173
+    ],
+    "bilateral": 0.0245,
+    "bilateral_wilson95": [
+     0.0201,
+     0.0298
+    ]
+   },
+   "seuil=60": {
+    "unilateral": 0.005,
+    "unilateral_wilson95": [
+     0.0032,
+     0.0077
+    ],
+    "bilateral": 0.0112,
+    "bilateral_wilson95": [
+     0.0084,
+     0.015
+    ]
+   },
+   "G1": {
+    "par_mode": 0.2526,
+    "par_mode_wilson95": [
+     0.2432,
+     0.2623
+    ],
+    "deux_modes": 0.103,
+    "deux_modes_wilson95": [
+     0.094,
+     0.1128
+    ],
+    "deux_modes_et_controle_12_propre_bilateral_40": 0.1008,
+    "deux_modes_et_controle_12_propre_bilateral_40_wilson95": [
+     0.0918,
+     0.1105
+    ]
+   }
+  },
+  {
+   "etiquette": "principal|a=0.3|derive=0.1|entre",
+   "parametres": {
+    "N": 9600,
+    "taches": 64,
+    "a": 0.3,
+    "h": 0.3,
+    "rho": 0.0,
+    "coupe": "entre",
+    "derive": 0.1,
+    "derive_cellules": null,
+    "derive_taches": 0.0,
+    "grille": null,
+    "G1": true,
+    "ecart_G1": 0.1,
+    "modes": 2
+   },
+   "repetitions": 4000,
+   "controles": 16,
+   "taille_lot": 28,
+   "duree_s": 17.8,
+   "ecart_type_s1_moins_s2_cellule_1_sigma": 0.2114,
+   "moyenne_s1_moins_s2_cellule_1_sigma": -0.0041,
+   "seuil=20": {
+    "unilateral": 0.346,
+    "unilateral_wilson95": [
+     0.3314,
+     0.3609
+    ],
+    "bilateral": 0.679,
+    "bilateral_wilson95": [
+     0.6644,
+     0.6933
+    ]
+   },
+   "seuil=30": {
+    "unilateral": 0.3043,
+    "unilateral_wilson95": [
+     0.2902,
+     0.3187
+    ],
+    "bilateral": 0.6008,
+    "bilateral_wilson95": [
+     0.5855,
+     0.6158
+    ]
+   },
+   "seuil=40": {
+    "unilateral": 0.2762,
+    "unilateral_wilson95": [
+     0.2626,
+     0.2903
+    ],
+    "bilateral": 0.544,
+    "bilateral_wilson95": [
+     0.5285,
+     0.5594
+    ]
+   },
+   "seuil=60": {
+    "unilateral": 0.242,
+    "unilateral_wilson95": [
+     0.229,
+     0.2555
+    ],
+    "bilateral": 0.4755,
+    "bilateral_wilson95": [
+     0.4601,
+     0.491
+    ]
+   },
+   "G1": {
+    "par_mode": 0.2526,
+    "par_mode_wilson95": [
+     0.2432,
+     0.2623
+    ],
+    "deux_modes": 0.103,
+    "deux_modes_wilson95": [
+     0.094,
+     0.1128
+    ],
+    "deux_modes_et_controle_12_propre_bilateral_40": 0.053,
+    "deux_modes_et_controle_12_propre_bilateral_40_wilson95": [
+     0.0465,
+     0.0604
+    ]
+   }
+  },
+  {
+   "etiquette": "principal|a=0.3|derive=0.2|dans_temporelle",
+   "parametres": {
+    "N": 9600,
+    "taches": 64,
+    "a": 0.3,
+    "h": 0.3,
+    "rho": 0.0,
+    "coupe": "dans_temporelle",
+    "derive": 0.2,
+    "derive_cellules": null,
+    "derive_taches": 0.0,
+    "grille": null,
+    "G1": true,
+    "ecart_G1": 0.1,
+    "modes": 2
+   },
+   "repetitions": 4000,
+   "controles": 16,
+   "taille_lot": 28,
+   "duree_s": 16.4,
+   "ecart_type_s1_moins_s2_cellule_1_sigma": 0.0738,
+   "moyenne_s1_moins_s2_cellule_1_sigma": -0.1994,
+   "seuil=20": {
+    "unilateral": 0.9988,
+    "unilateral_wilson95": [
+     0.9971,
+     0.9995
+    ],
+    "bilateral": 0.9988,
+    "bilateral_wilson95": [
+     0.9971,
+     0.9995
+    ]
+   },
+   "seuil=30": {
+    "unilateral": 0.9852,
+    "unilateral_wilson95": [
+     0.981,
+     0.9885
+    ],
+    "bilateral": 0.9852,
+    "bilateral_wilson95": [
+     0.981,
+     0.9885
+    ]
+   },
+   "seuil=40": {
+    "unilateral": 0.9647,
+    "unilateral_wilson95": [
+     0.9586,
+     0.97
+    ],
+    "bilateral": 0.9647,
+    "bilateral_wilson95": [
+     0.9586,
+     0.97
+    ]
+   },
+   "seuil=60": {
+    "unilateral": 0.8968,
+    "unilateral_wilson95": [
+     0.8869,
+     0.9058
+    ],
+    "bilateral": 0.8968,
+    "bilateral_wilson95": [
+     0.8869,
+     0.9058
+    ]
+   },
+   "G1": {
+    "par_mode": 0.2515,
+    "par_mode_wilson95": [
+     0.2421,
+     0.2611
+    ],
+    "deux_modes": 0.1045,
+    "deux_modes_wilson95": [
+     0.0954,
+     0.1144
+    ],
+    "deux_modes_et_controle_12_propre_bilateral_40": 0.005,
+    "deux_modes_et_controle_12_propre_bilateral_40_wilson95": [
+     0.0032,
+     0.0077
+    ]
+   }
+  },
+  {
+   "etiquette": "principal|a=0.3|derive=0.2|dans_graine",
+   "parametres": {
+    "N": 9600,
+    "taches": 64,
+    "a": 0.3,
+    "h": 0.3,
+    "rho": 0.0,
+    "coupe": "dans_graine",
+    "derive": 0.2,
+    "derive_cellules": null,
+    "derive_taches": 0.0,
+    "grille": null,
+    "G1": true,
+    "ecart_G1": 0.1,
+    "modes": 2
+   },
+   "repetitions": 4000,
+   "controles": 16,
+   "taille_lot": 28,
+   "duree_s": 20.0,
+   "ecart_type_s1_moins_s2_cellule_1_sigma": 0.0757,
+   "moyenne_s1_moins_s2_cellule_1_sigma": -0.001,
+   "seuil=20": {
+    "unilateral": 0.058,
+    "unilateral_wilson95": [
+     0.0512,
+     0.0657
+    ],
+    "bilateral": 0.0985,
+    "bilateral_wilson95": [
+     0.0896,
+     0.1081
+    ]
+   },
+   "seuil=30": {
+    "unilateral": 0.0275,
+    "unilateral_wilson95": [
+     0.0229,
+     0.033
+    ],
+    "bilateral": 0.045,
+    "bilateral_wilson95": [
+     0.039,
+     0.0519
+    ]
+   },
+   "seuil=40": {
+    "unilateral": 0.0152,
+    "unilateral_wilson95": [
+     0.0119,
+     0.0195
+    ],
+    "bilateral": 0.0235,
+    "bilateral_wilson95": [
+     0.0192,
+     0.0287
+    ]
+   },
+   "seuil=60": {
+    "unilateral": 0.0053,
+    "unilateral_wilson95": [
+     0.0034,
+     0.008
+    ],
+    "bilateral": 0.0088,
+    "bilateral_wilson95": [
+     0.0063,
+     0.0121
+    ]
+   },
+   "G1": {
+    "par_mode": 0.2515,
+    "par_mode_wilson95": [
+     0.2421,
+     0.2611
+    ],
+    "deux_modes": 0.1045,
+    "deux_modes_wilson95": [
+     0.0954,
+     0.1144
+    ],
+    "deux_modes_et_controle_12_propre_bilateral_40": 0.1022,
+    "deux_modes_et_controle_12_propre_bilateral_40_wilson95": [
+     0.0932,
+     0.112
+    ]
+   }
+  },
+  {
+   "etiquette": "principal|a=0.3|derive=0.2|entre",
+   "parametres": {
+    "N": 9600,
+    "taches": 64,
+    "a": 0.3,
+    "h": 0.3,
+    "rho": 0.0,
+    "coupe": "entre",
+    "derive": 0.2,
+    "derive_cellules": null,
+    "derive_taches": 0.0,
+    "grille": null,
+    "G1": true,
+    "ecart_G1": 0.1,
+    "modes": 2
+   },
+   "repetitions": 4000,
+   "controles": 16,
+   "taille_lot": 28,
+   "duree_s": 17.9,
+   "ecart_type_s1_moins_s2_cellule_1_sigma": 0.2105,
+   "moyenne_s1_moins_s2_cellule_1_sigma": 0.0093,
+   "seuil=20": {
+    "unilateral": 0.3192,
+    "unilateral_wilson95": [
+     0.305,
+     0.3339
+    ],
+    "bilateral": 0.6673,
+    "bilateral_wilson95": [
+     0.6525,
+     0.6817
+    ]
+   },
+   "seuil=30": {
+    "unilateral": 0.2805,
+    "unilateral_wilson95": [
+     0.2668,
+     0.2946
+    ],
+    "bilateral": 0.59,
+    "bilateral_wilson95": [
+     0.5747,
+     0.6051
+    ]
+   },
+   "seuil=40": {
+    "unilateral": 0.252,
+    "unilateral_wilson95": [
+     0.2388,
+     0.2657
+    ],
+    "bilateral": 0.536,
+    "bilateral_wilson95": [
+     0.5205,
+     0.5514
+    ]
+   },
+   "seuil=60": {
+    "unilateral": 0.218,
+    "unilateral_wilson95": [
+     0.2055,
+     0.2311
+    ],
+    "bilateral": 0.4672,
+    "bilateral_wilson95": [
+     0.4518,
+     0.4827
+    ]
+   },
+   "G1": {
+    "par_mode": 0.2515,
+    "par_mode_wilson95": [
+     0.2421,
+     0.2611
+    ],
+    "deux_modes": 0.1045,
+    "deux_modes_wilson95": [
+     0.0954,
+     0.1144
+    ],
+    "deux_modes_et_controle_12_propre_bilateral_40": 0.0457,
+    "deux_modes_et_controle_12_propre_bilateral_40_wilson95": [
+     0.0397,
+     0.0527
+    ]
+   }
+  },
+  {
+   "etiquette": "principal|a=0.5|derive=0.0|dans_temporelle",
+   "parametres": {
+    "N": 9600,
+    "taches": 64,
+    "a": 0.5,
+    "h": 0.3,
+    "rho": 0.0,
+    "coupe": "dans_temporelle",
+    "derive": 0.0,
+    "derive_cellules": null,
+    "derive_taches": 0.0,
+    "grille": null,
+    "G1": true,
+    "ecart_G1": 0.1,
+    "modes": 2
+   },
+   "repetitions": 4000,
+   "controles": 16,
+   "taille_lot": 28,
+   "duree_s": 15.9,
+   "ecart_type_s1_moins_s2_cellule_1_sigma": 0.0707,
+   "moyenne_s1_moins_s2_cellule_1_sigma": 0.0012,
+   "seuil=20": {
+    "unilateral": 0.0352,
+    "unilateral_wilson95": [
+     0.03,
+     0.0414
+    ],
+    "bilateral": 0.075,
+    "bilateral_wilson95": [
+     0.0672,
+     0.0836
+    ]
+   },
+   "seuil=30": {
+    "unilateral": 0.014,
+    "unilateral_wilson95": [
+     0.0108,
+     0.0181
+    ],
+    "bilateral": 0.0345,
+    "bilateral_wilson95": [
+     0.0293,
+     0.0406
+    ]
+   },
+   "seuil=40": {
+    "unilateral": 0.0085,
+    "unilateral_wilson95": [
+     0.0061,
+     0.0119
+    ],
+    "bilateral": 0.0192,
+    "bilateral_wilson95": [
+     0.0154,
+     0.024
+    ]
+   },
+   "seuil=60": {
+    "unilateral": 0.0027,
+    "unilateral_wilson95": [
+     0.0015,
+     0.0049
+    ],
+    "bilateral": 0.007,
+    "bilateral_wilson95": [
+     0.0048,
+     0.0101
+    ]
+   },
+   "G1": {
+    "par_mode": 0.2859,
+    "par_mode_wilson95": [
+     0.2761,
+     0.2959
+    ],
+    "deux_modes": 0.1295,
+    "deux_modes_wilson95": [
+     0.1194,
+     0.1403
+    ],
+    "deux_modes_et_controle_12_propre_bilateral_40": 0.1242,
+    "deux_modes_et_controle_12_propre_bilateral_40_wilson95": [
+     0.1144,
+     0.1348
+    ]
+   }
+  },
+  {
+   "etiquette": "principal|a=0.5|derive=0.0|dans_graine",
+   "parametres": {
+    "N": 9600,
+    "taches": 64,
+    "a": 0.5,
+    "h": 0.3,
+    "rho": 0.0,
+    "coupe": "dans_graine",
+    "derive": 0.0,
+    "derive_cellules": null,
+    "derive_taches": 0.0,
+    "grille": null,
+    "G1": true,
+    "ecart_G1": 0.1,
+    "modes": 2
+   },
+   "repetitions": 4000,
+   "controles": 16,
+   "taille_lot": 28,
+   "duree_s": 19.6,
+   "ecart_type_s1_moins_s2_cellule_1_sigma": 0.0709,
+   "moyenne_s1_moins_s2_cellule_1_sigma": 0.0007,
+   "seuil=20": {
+    "unilateral": 0.0377,
+    "unilateral_wilson95": [
+     0.0323,
+     0.0441
+    ],
+    "bilateral": 0.0783,
+    "bilateral_wilson95": [
+     0.0703,
+     0.087
+    ]
+   },
+   "seuil=30": {
+    "unilateral": 0.0152,
+    "unilateral_wilson95": [
+     0.0119,
+     0.0195
+    ],
+    "bilateral": 0.0338,
+    "bilateral_wilson95": [
+     0.0286,
+     0.0398
+    ]
+   },
+   "seuil=40": {
+    "unilateral": 0.0077,
+    "unilateral_wilson95": [
+     0.0055,
+     0.011
+    ],
+    "bilateral": 0.017,
+    "bilateral_wilson95": [
+     0.0134,
+     0.0215
+    ]
+   },
+   "seuil=60": {
+    "unilateral": 0.0037,
+    "unilateral_wilson95": [
+     0.0023,
+     0.0062
+    ],
+    "bilateral": 0.0075,
+    "bilateral_wilson95": [
+     0.0053,
+     0.0107
+    ]
+   },
+   "G1": {
+    "par_mode": 0.2859,
+    "par_mode_wilson95": [
+     0.2761,
+     0.2959
+    ],
+    "deux_modes": 0.1295,
+    "deux_modes_wilson95": [
+     0.1194,
+     0.1403
+    ],
+    "deux_modes_et_controle_12_propre_bilateral_40": 0.1275,
+    "deux_modes_et_controle_12_propre_bilateral_40_wilson95": [
+     0.1175,
+     0.1382
+    ]
+   }
+  },
+  {
+   "etiquette": "principal|a=0.5|derive=0.0|entre",
+   "parametres": {
+    "N": 9600,
+    "taches": 64,
+    "a": 0.5,
+    "h": 0.3,
+    "rho": 0.0,
+    "coupe": "entre",
+    "derive": 0.0,
+    "derive_cellules": null,
+    "derive_taches": 0.0,
+    "grille": null,
+    "G1": true,
+    "ecart_G1": 0.1,
+    "modes": 2
+   },
+   "repetitions": 4000,
+   "controles": 16,
+   "taille_lot": 28,
+   "duree_s": 17.6,
+   "ecart_type_s1_moins_s2_cellule_1_sigma": 0.3191,
+   "moyenne_s1_moins_s2_cellule_1_sigma": -0.0013,
+   "seuil=20": {
+    "unilateral": 0.3855,
+    "unilateral_wilson95": [
+     0.3705,
+     0.4007
+    ],
+    "bilateral": 0.7798,
+    "bilateral_wilson95": [
+     0.7666,
+     0.7923
+    ]
+   },
+   "seuil=30": {
+    "unilateral": 0.3548,
+    "unilateral_wilson95": [
+     0.3401,
+     0.3697
+    ],
+    "bilateral": 0.7185,
+    "bilateral_wilson95": [
+     0.7044,
+     0.7322
+    ]
+   },
+   "seuil=40": {
+    "unilateral": 0.3377,
+    "unilateral_wilson95": [
+     0.3233,
+     0.3526
+    ],
+    "bilateral": 0.6815,
+    "bilateral_wilson95": [
+     0.6669,
+     0.6958
+    ]
+   },
+   "seuil=60": {
+    "unilateral": 0.3113,
+    "unilateral_wilson95": [
+     0.2971,
+     0.3258
+    ],
+    "bilateral": 0.623,
+    "bilateral_wilson95": [
+     0.6079,
+     0.6379
+    ]
+   },
+   "G1": {
+    "par_mode": 0.2859,
+    "par_mode_wilson95": [
+     0.2761,
+     0.2959
+    ],
+    "deux_modes": 0.1295,
+    "deux_modes_wilson95": [
+     0.1194,
+     0.1403
+    ],
+    "deux_modes_et_controle_12_propre_bilateral_40": 0.04,
+    "deux_modes_et_controle_12_propre_bilateral_40_wilson95": [
+     0.0344,
+     0.0465
+    ]
+   }
+  },
+  {
+   "etiquette": "principal|a=0.5|derive=0.05|dans_temporelle",
+   "parametres": {
+    "N": 9600,
+    "taches": 64,
+    "a": 0.5,
+    "h": 0.3,
+    "rho": 0.0,
+    "coupe": "dans_temporelle",
+    "derive": 0.05,
+    "derive_cellules": null,
+    "derive_taches": 0.0,
+    "grille": null,
+    "G1": true,
+    "ecart_G1": 0.1,
+    "modes": 2
+   },
+   "repetitions": 4000,
+   "controles": 16,
+   "taille_lot": 28,
+   "duree_s": 15.9,
+   "ecart_type_s1_moins_s2_cellule_1_sigma": 0.0704,
+   "moyenne_s1_moins_s2_cellule_1_sigma": -0.0501,
+   "seuil=20": {
+    "unilateral": 0.2047,
+    "unilateral_wilson95": [
+     0.1925,
+     0.2175
+    ],
+    "bilateral": 0.2082,
+    "bilateral_wilson95": [
+     0.1959,
+     0.2211
+    ]
+   },
+   "seuil=30": {
+    "unilateral": 0.102,
+    "unilateral_wilson95": [
+     0.093,
+     0.1118
+    ],
+    "bilateral": 0.1045,
+    "bilateral_wilson95": [
+     0.0954,
+     0.1144
+    ]
+   },
+   "seuil=40": {
+    "unilateral": 0.0653,
+    "unilateral_wilson95": [
+     0.058,
+     0.0733
+    ],
+    "bilateral": 0.067,
+    "bilateral_wilson95": [
+     0.0597,
+     0.0752
+    ]
+   },
+   "seuil=60": {
+    "unilateral": 0.0283,
+    "unilateral_wilson95": [
+     0.0236,
+     0.0339
+    ],
+    "bilateral": 0.0293,
+    "bilateral_wilson95": [
+     0.0245,
+     0.0349
+    ]
+   },
+   "G1": {
+    "par_mode": 0.2946,
+    "par_mode_wilson95": [
+     0.2847,
+     0.3047
+    ],
+    "deux_modes": 0.1313,
+    "deux_modes_wilson95": [
+     0.1211,
+     0.1421
+    ],
+    "deux_modes_et_controle_12_propre_bilateral_40": 0.121,
+    "deux_modes_et_controle_12_propre_bilateral_40_wilson95": [
+     0.1113,
+     0.1315
+    ]
+   }
+  },
+  {
+   "etiquette": "principal|a=0.5|derive=0.05|dans_graine",
+   "parametres": {
+    "N": 9600,
+    "taches": 64,
+    "a": 0.5,
+    "h": 0.3,
+    "rho": 0.0,
+    "coupe": "dans_graine",
+    "derive": 0.05,
+    "derive_cellules": null,
+    "derive_taches": 0.0,
+    "grille": null,
+    "G1": true,
+    "ecart_G1": 0.1,
+    "modes": 2
+   },
+   "repetitions": 4000,
+   "controles": 16,
+   "taille_lot": 28,
+   "duree_s": 20.2,
+   "ecart_type_s1_moins_s2_cellule_1_sigma": 0.0696,
+   "moyenne_s1_moins_s2_cellule_1_sigma": 0.0004,
+   "seuil=20": {
+    "unilateral": 0.0387,
+    "unilateral_wilson95": [
+     0.0332,
+     0.0452
+    ],
+    "bilateral": 0.0745,
+    "bilateral_wilson95": [
+     0.0668,
+     0.0831
+    ]
+   },
+   "seuil=30": {
+    "unilateral": 0.0175,
+    "unilateral_wilson95": [
+     0.0139,
+     0.0221
+    ],
+    "bilateral": 0.0355,
+    "bilateral_wilson95": [
+     0.0302,
+     0.0417
+    ]
+   },
+   "seuil=40": {
+    "unilateral": 0.01,
+    "unilateral_wilson95": [
+     0.0074,
+     0.0136
+    ],
+    "bilateral": 0.0208,
+    "bilateral_wilson95": [
+     0.0168,
+     0.0256
+    ]
+   },
+   "seuil=60": {
+    "unilateral": 0.0043,
+    "unilateral_wilson95": [
+     0.0027,
+     0.0068
+    ],
+    "bilateral": 0.009,
+    "bilateral_wilson95": [
+     0.0065,
+     0.0124
+    ]
+   },
+   "G1": {
+    "par_mode": 0.2946,
+    "par_mode_wilson95": [
+     0.2847,
+     0.3047
+    ],
+    "deux_modes": 0.1313,
+    "deux_modes_wilson95": [
+     0.1211,
+     0.1421
+    ],
+    "deux_modes_et_controle_12_propre_bilateral_40": 0.1293,
+    "deux_modes_et_controle_12_propre_bilateral_40_wilson95": [
+     0.1192,
+     0.14
+    ]
+   }
+  },
+  {
+   "etiquette": "principal|a=0.5|derive=0.05|entre",
+   "parametres": {
+    "N": 9600,
+    "taches": 64,
+    "a": 0.5,
+    "h": 0.3,
+    "rho": 0.0,
+    "coupe": "entre",
+    "derive": 0.05,
+    "derive_cellules": null,
+    "derive_taches": 0.0,
+    "grille": null,
+    "G1": true,
+    "ecart_G1": 0.1,
+    "modes": 2
+   },
+   "repetitions": 4000,
+   "controles": 16,
+   "taille_lot": 28,
+   "duree_s": 17.9,
+   "ecart_type_s1_moins_s2_cellule_1_sigma": 0.3167,
+   "moyenne_s1_moins_s2_cellule_1_sigma": -0.0011,
+   "seuil=20": {
+    "unilateral": 0.384,
+    "unilateral_wilson95": [
+     0.369,
+     0.3992
+    ],
+    "bilateral": 0.761,
+    "bilateral_wilson95": [
+     0.7475,
+     0.774
+    ]
+   },
+   "seuil=30": {
+    "unilateral": 0.3548,
+    "unilateral_wilson95": [
+     0.3401,
+     0.3697
+    ],
+    "bilateral": 0.7027,
+    "bilateral_wilson95": [
+     0.6884,
+     0.7167
+    ]
+   },
+   "seuil=40": {
+    "unilateral": 0.3382,
+    "unilateral_wilson95": [
+     0.3237,
+     0.3531
+    ],
+    "bilateral": 0.6633,
+    "bilateral_wilson95": [
+     0.6485,
+     0.6777
+    ]
+   },
+   "seuil=60": {
+    "unilateral": 0.3115,
+    "unilateral_wilson95": [
+     0.2973,
+     0.326
+    ],
+    "bilateral": 0.6082,
+    "bilateral_wilson95": [
+     0.593,
+     0.6233
+    ]
+   },
+   "G1": {
+    "par_mode": 0.2946,
+    "par_mode_wilson95": [
+     0.2847,
+     0.3047
+    ],
+    "deux_modes": 0.1313,
+    "deux_modes_wilson95": [
+     0.1211,
+     0.1421
+    ],
+    "deux_modes_et_controle_12_propre_bilateral_40": 0.047,
+    "deux_modes_et_controle_12_propre_bilateral_40_wilson95": [
+     0.0409,
+     0.054
+    ]
+   }
+  },
+  {
+   "etiquette": "principal|a=0.5|derive=0.1|dans_temporelle",
+   "parametres": {
+    "N": 9600,
+    "taches": 64,
+    "a": 0.5,
+    "h": 0.3,
+    "rho": 0.0,
+    "coupe": "dans_temporelle",
+    "derive": 0.1,
+    "derive_cellules": null,
+    "derive_taches": 0.0,
+    "grille": null,
+    "G1": true,
+    "ecart_G1": 0.1,
+    "modes": 2
+   },
+   "repetitions": 4000,
+   "controles": 16,
+   "taille_lot": 28,
+   "duree_s": 16.5,
+   "ecart_type_s1_moins_s2_cellule_1_sigma": 0.0716,
+   "moyenne_s1_moins_s2_cellule_1_sigma": -0.0996,
+   "seuil=20": {
+    "unilateral": 0.589,
+    "unilateral_wilson95": [
+     0.5737,
+     0.6042
+    ],
+    "bilateral": 0.5893,
+    "bilateral_wilson95": [
+     0.5739,
+     0.6044
+    ]
+   },
+   "seuil=30": {
+    "unilateral": 0.3862,
+    "unilateral_wilson95": [
+     0.3713,
+     0.4014
+    ],
+    "bilateral": 0.3865,
+    "bilateral_wilson95": [
+     0.3715,
+     0.4017
+    ]
+   },
+   "seuil=40": {
+    "unilateral": 0.2762,
+    "unilateral_wilson95": [
+     0.2626,
+     0.2903
+    ],
+    "bilateral": 0.2762,
+    "bilateral_wilson95": [
+     0.2626,
+     0.2903
+    ]
+   },
+   "seuil=60": {
+    "unilateral": 0.1512,
+    "unilateral_wilson95": [
+     0.1405,
+     0.1627
+    ],
+    "bilateral": 0.1512,
+    "bilateral_wilson95": [
+     0.1405,
+     0.1627
+    ]
+   },
+   "G1": {
+    "par_mode": 0.3003,
+    "par_mode_wilson95": [
+     0.2903,
+     0.3104
+    ],
+    "deux_modes": 0.144,
+    "deux_modes_wilson95": [
+     0.1335,
+     0.1552
+    ],
+    "deux_modes_et_controle_12_propre_bilateral_40": 0.1015,
+    "deux_modes_et_controle_12_propre_bilateral_40_wilson95": [
+     0.0925,
+     0.1112
+    ]
+   }
+  },
+  {
+   "etiquette": "principal|a=0.5|derive=0.1|dans_graine",
+   "parametres": {
+    "N": 9600,
+    "taches": 64,
+    "a": 0.5,
+    "h": 0.3,
+    "rho": 0.0,
+    "coupe": "dans_graine",
+    "derive": 0.1,
+    "derive_cellules": null,
+    "derive_taches": 0.0,
+    "grille": null,
+    "G1": true,
+    "ecart_G1": 0.1,
+    "modes": 2
+   },
+   "repetitions": 4000,
+   "controles": 16,
+   "taille_lot": 28,
+   "duree_s": 20.3,
+   "ecart_type_s1_moins_s2_cellule_1_sigma": 0.0718,
+   "moyenne_s1_moins_s2_cellule_1_sigma": 0.0003,
+   "seuil=20": {
+    "unilateral": 0.0428,
+    "unilateral_wilson95": [
+     0.0369,
+     0.0495
+    ],
+    "bilateral": 0.0825,
+    "bilateral_wilson95": [
+     0.0744,
+     0.0914
+    ]
+   },
+   "seuil=30": {
+    "unilateral": 0.0185,
+    "unilateral_wilson95": [
+     0.0148,
+     0.0232
+    ],
+    "bilateral": 0.037,
+    "bilateral_wilson95": [
+     0.0316,
+     0.0433
+    ]
+   },
+   "seuil=40": {
+    "unilateral": 0.0085,
+    "unilateral_wilson95": [
+     0.0061,
+     0.0119
+    ],
+    "bilateral": 0.0208,
+    "bilateral_wilson95": [
+     0.0168,
+     0.0256
+    ]
+   },
+   "seuil=60": {
+    "unilateral": 0.0022,
+    "unilateral_wilson95": [
+     0.0012,
+     0.0043
+    ],
+    "bilateral": 0.0065,
+    "bilateral_wilson95": [
+     0.0044,
+     0.0095
+    ]
+   },
+   "G1": {
+    "par_mode": 0.3003,
+    "par_mode_wilson95": [
+     0.2903,
+     0.3104
+    ],
+    "deux_modes": 0.144,
+    "deux_modes_wilson95": [
+     0.1335,
+     0.1552
+    ],
+    "deux_modes_et_controle_12_propre_bilateral_40": 0.1412,
+    "deux_modes_et_controle_12_propre_bilateral_40_wilson95": [
+     0.1308,
+     0.1524
+    ]
+   }
+  },
+  {
+   "etiquette": "principal|a=0.5|derive=0.1|entre",
+   "parametres": {
+    "N": 9600,
+    "taches": 64,
+    "a": 0.5,
+    "h": 0.3,
+    "rho": 0.0,
+    "coupe": "entre",
+    "derive": 0.1,
+    "derive_cellules": null,
+    "derive_taches": 0.0,
+    "grille": null,
+    "G1": true,
+    "ecart_G1": 0.1,
+    "modes": 2
+   },
+   "repetitions": 4000,
+   "controles": 16,
+   "taille_lot": 28,
+   "duree_s": 17.9,
+   "ecart_type_s1_moins_s2_cellule_1_sigma": 0.3167,
+   "moyenne_s1_moins_s2_cellule_1_sigma": 0.0013,
+   "seuil=20": {
+    "unilateral": 0.386,
+    "unilateral_wilson95": [
+     0.371,
+     0.4012
+    ],
+    "bilateral": 0.7768,
+    "bilateral_wilson95": [
+     0.7636,
+     0.7894
+    ]
+   },
+   "seuil=30": {
+    "unilateral": 0.3535,
+    "unilateral_wilson95": [
+     0.3388,
+     0.3684
+    ],
+    "bilateral": 0.7167,
+    "bilateral_wilson95": [
+     0.7026,
+     0.7305
+    ]
+   },
+   "seuil=40": {
+    "unilateral": 0.3365,
+    "unilateral_wilson95": [
+     0.322,
+     0.3513
+    ],
+    "bilateral": 0.678,
+    "bilateral_wilson95": [
+     0.6634,
+     0.6923
+    ]
+   },
+   "seuil=60": {
+    "unilateral": 0.3088,
+    "unilateral_wilson95": [
+     0.2946,
+     0.3232
+    ],
+    "bilateral": 0.627,
+    "bilateral_wilson95": [
+     0.6119,
+     0.6419
+    ]
+   },
+   "G1": {
+    "par_mode": 0.3003,
+    "par_mode_wilson95": [
+     0.2903,
+     0.3104
+    ],
+    "deux_modes": 0.144,
+    "deux_modes_wilson95": [
+     0.1335,
+     0.1552
+    ],
+    "deux_modes_et_controle_12_propre_bilateral_40": 0.0505,
+    "deux_modes_et_controle_12_propre_bilateral_40_wilson95": [
+     0.0441,
+     0.0577
+    ]
+   }
+  },
+  {
+   "etiquette": "principal|a=0.5|derive=0.2|dans_temporelle",
+   "parametres": {
+    "N": 9600,
+    "taches": 64,
+    "a": 0.5,
+    "h": 0.3,
+    "rho": 0.0,
+    "coupe": "dans_temporelle",
+    "derive": 0.2,
+    "derive_cellules": null,
+    "derive_taches": 0.0,
+    "grille": null,
+    "G1": true,
+    "ecart_G1": 0.1,
+    "modes": 2
+   },
+   "repetitions": 4000,
+   "controles": 16,
+   "taille_lot": 28,
+   "duree_s": 16.1,
+   "ecart_type_s1_moins_s2_cellule_1_sigma": 0.0707,
+   "moyenne_s1_moins_s2_cellule_1_sigma": -0.199,
+   "seuil=20": {
+    "unilateral": 0.996,
+    "unilateral_wilson95": [
+     0.9935,
+     0.9975
+    ],
+    "bilateral": 0.996,
+    "bilateral_wilson95": [
+     0.9935,
+     0.9975
+    ]
+   },
+   "seuil=30": {
+    "unilateral": 0.9778,
+    "unilateral_wilson95": [
+     0.9727,
+     0.9819
+    ],
+    "bilateral": 0.9778,
+    "bilateral_wilson95": [
+     0.9727,
+     0.9819
+    ]
+   },
+   "seuil=40": {
+    "unilateral": 0.9473,
+    "unilateral_wilson95": [
+     0.9399,
+     0.9538
+    ],
+    "bilateral": 0.9473,
+    "bilateral_wilson95": [
+     0.9399,
+     0.9538
+    ]
+   },
+   "seuil=60": {
+    "unilateral": 0.8555,
+    "unilateral_wilson95": [
+     0.8443,
+     0.8661
+    ],
+    "bilateral": 0.8555,
+    "bilateral_wilson95": [
+     0.8443,
+     0.8661
+    ]
+   },
+   "G1": {
+    "par_mode": 0.289,
+    "par_mode_wilson95": [
+     0.2792,
+     0.299
+    ],
+    "deux_modes": 0.1323,
+    "deux_modes_wilson95": [
+     0.1221,
+     0.1431
+    ],
+    "deux_modes_et_controle_12_propre_bilateral_40": 0.0047,
+    "deux_modes_et_controle_12_propre_bilateral_40_wilson95": [
+     0.003,
+     0.0074
+    ]
+   }
+  },
+  {
+   "etiquette": "principal|a=0.5|derive=0.2|dans_graine",
+   "parametres": {
+    "N": 9600,
+    "taches": 64,
+    "a": 0.5,
+    "h": 0.3,
+    "rho": 0.0,
+    "coupe": "dans_graine",
+    "derive": 0.2,
+    "derive_cellules": null,
+    "derive_taches": 0.0,
+    "grille": null,
+    "G1": true,
+    "ecart_G1": 0.1,
+    "modes": 2
+   },
+   "repetitions": 4000,
+   "controles": 16,
+   "taille_lot": 28,
+   "duree_s": 20.4,
+   "ecart_type_s1_moins_s2_cellule_1_sigma": 0.0707,
+   "moyenne_s1_moins_s2_cellule_1_sigma": 0.0004,
+   "seuil=20": {
+    "unilateral": 0.0408,
+    "unilateral_wilson95": [
+     0.0351,
+     0.0473
+    ],
+    "bilateral": 0.079,
+    "bilateral_wilson95": [
+     0.071,
+     0.0878
+    ]
+   },
+   "seuil=30": {
+    "unilateral": 0.0185,
+    "unilateral_wilson95": [
+     0.0148,
+     0.0232
+    ],
+    "bilateral": 0.0362,
+    "bilateral_wilson95": [
+     0.0309,
+     0.0425
+    ]
+   },
+   "seuil=40": {
+    "unilateral": 0.0092,
+    "unilateral_wilson95": [
+     0.0067,
+     0.0127
+    ],
+    "bilateral": 0.0187,
+    "bilateral_wilson95": [
+     0.015,
+     0.0234
+    ]
+   },
+   "seuil=60": {
+    "unilateral": 0.0035,
+    "unilateral_wilson95": [
+     0.0021,
+     0.0059
+    ],
+    "bilateral": 0.0065,
+    "bilateral_wilson95": [
+     0.0044,
+     0.0095
+    ]
+   },
+   "G1": {
+    "par_mode": 0.289,
+    "par_mode_wilson95": [
+     0.2792,
+     0.299
+    ],
+    "deux_modes": 0.1323,
+    "deux_modes_wilson95": [
+     0.1221,
+     0.1431
+    ],
+    "deux_modes_et_controle_12_propre_bilateral_40": 0.13,
+    "deux_modes_et_controle_12_propre_bilateral_40_wilson95": [
+     0.1199,
+     0.1408
+    ]
+   }
+  },
+  {
+   "etiquette": "principal|a=0.5|derive=0.2|entre",
+   "parametres": {
+    "N": 9600,
+    "taches": 64,
+    "a": 0.5,
+    "h": 0.3,
+    "rho": 0.0,
+    "coupe": "entre",
+    "derive": 0.2,
+    "derive_cellules": null,
+    "derive_taches": 0.0,
+    "grille": null,
+    "G1": true,
+    "ecart_G1": 0.1,
+    "modes": 2
+   },
+   "repetitions": 4000,
+   "controles": 16,
+   "taille_lot": 28,
+   "duree_s": 18.3,
+   "ecart_type_s1_moins_s2_cellule_1_sigma": 0.3127,
+   "moyenne_s1_moins_s2_cellule_1_sigma": -0.0013,
+   "seuil=20": {
+    "unilateral": 0.383,
+    "unilateral_wilson95": [
+     0.3681,
+     0.3982
+    ],
+    "bilateral": 0.7688,
+    "bilateral_wilson95": [
+     0.7554,
+     0.7816
+    ]
+   },
+   "seuil=30": {
+    "unilateral": 0.3558,
+    "unilateral_wilson95": [
+     0.3411,
+     0.3707
+    ],
+    "bilateral": 0.7155,
+    "bilateral_wilson95": [
+     0.7013,
+     0.7293
+    ]
+   },
+   "seuil=40": {
+    "unilateral": 0.3385,
+    "unilateral_wilson95": [
+     0.324,
+     0.3533
+    ],
+    "bilateral": 0.681,
+    "bilateral_wilson95": [
+     0.6664,
+     0.6953
+    ]
+   },
+   "seuil=60": {
+    "unilateral": 0.3098,
+    "unilateral_wilson95": [
+     0.2956,
+     0.3243
+    ],
+    "bilateral": 0.6215,
+    "bilateral_wilson95": [
+     0.6064,
+     0.6364
+    ]
+   },
+   "G1": {
+    "par_mode": 0.289,
+    "par_mode_wilson95": [
+     0.2792,
+     0.299
+    ],
+    "deux_modes": 0.1323,
+    "deux_modes_wilson95": [
+     0.1221,
+     0.1431
+    ],
+    "deux_modes_et_controle_12_propre_bilateral_40": 0.0403,
+    "deux_modes_et_controle_12_propre_bilateral_40_wilson95": [
+     0.0346,
+     0.0468
+    ]
+   }
+  },
+  {
+   "etiquette": "rho08|derive=0.0|dans_temporelle",
+   "parametres": {
+    "N": 9600,
+    "taches": 64,
+    "a": 0.3,
+    "h": 0.3,
+    "rho": 0.8,
+    "coupe": "dans_temporelle",
+    "derive": 0.0,
+    "derive_cellules": null,
+    "derive_taches": 0.0,
+    "grille": null,
+    "G1": true,
+    "ecart_G1": 0.1,
+    "modes": 2
+   },
+   "repetitions": 2000,
+   "controles": 16,
+   "taille_lot": 28,
+   "duree_s": 8.1,
+   "ecart_type_s1_moins_s2_cellule_1_sigma": 0.075,
+   "moyenne_s1_moins_s2_cellule_1_sigma": -0.0005,
+   "seuil=20": {
+    "unilateral": 0.043,
+    "unilateral_wilson95": [
+     0.035,
+     0.0528
+    ],
+    "bilateral": 0.0835,
+    "bilateral_wilson95": [
+     0.0722,
+     0.0964
+    ]
+   },
+   "seuil=30": {
+    "unilateral": 0.0245,
+    "unilateral_wilson95": [
+     0.0186,
+     0.0322
+    ],
+    "bilateral": 0.0435,
+    "bilateral_wilson95": [
+     0.0354,
+     0.0533
+    ]
+   },
+   "seuil=40": {
+    "unilateral": 0.0145,
+    "unilateral_wilson95": [
+     0.0101,
+     0.0207
+    ],
+    "bilateral": 0.027,
+    "bilateral_wilson95": [
+     0.0208,
+     0.0351
+    ]
+   },
+   "seuil=60": {
+    "unilateral": 0.0085,
+    "unilateral_wilson95": [
+     0.0053,
+     0.0136
+    ],
+    "bilateral": 0.015,
+    "bilateral_wilson95": [
+     0.0105,
+     0.0213
+    ]
+   },
+   "G1": {
+    "par_mode": 0.481,
+    "par_mode_wilson95": [
+     0.4655,
+     0.4965
+    ],
+    "deux_modes": 0.2975,
+    "deux_modes_wilson95": [
+     0.2779,
+     0.3179
+    ],
+    "deux_modes_et_controle_12_propre_bilateral_40": 0.288,
+    "deux_modes_et_controle_12_propre_bilateral_40_wilson95": [
+     0.2686,
+     0.3082
+    ]
+   }
+  },
+  {
+   "etiquette": "h0|derive=0.0|dans_temporelle",
+   "parametres": {
+    "N": 9600,
+    "taches": 64,
+    "a": 0.3,
+    "h": 0.0,
+    "rho": 0.0,
+    "coupe": "dans_temporelle",
+    "derive": 0.0,
+    "derive_cellules": null,
+    "derive_taches": 0.0,
+    "grille": null,
+    "G1": true,
+    "ecart_G1": 0.1,
+    "modes": 2
+   },
+   "repetitions": 2000,
+   "controles": 16,
+   "taille_lot": 28,
+   "duree_s": 8.4,
+   "ecart_type_s1_moins_s2_cellule_1_sigma": 0.0779,
+   "moyenne_s1_moins_s2_cellule_1_sigma": -0.0008,
+   "seuil=20": {
+    "unilateral": 0.079,
+    "unilateral_wilson95": [
+     0.068,
+     0.0916
+    ],
+    "bilateral": 0.1425,
+    "bilateral_wilson95": [
+     0.1279,
+     0.1585
+    ]
+   },
+   "seuil=30": {
+    "unilateral": 0.0415,
+    "unilateral_wilson95": [
+     0.0336,
+     0.0512
+    ],
+    "bilateral": 0.074,
+    "bilateral_wilson95": [
+     0.0633,
+     0.0863
+    ]
+   },
+   "seuil=40": {
+    "unilateral": 0.0215,
+    "unilateral_wilson95": [
+     0.016,
+     0.0288
+    ],
+    "bilateral": 0.042,
+    "bilateral_wilson95": [
+     0.0341,
+     0.0517
+    ]
+   },
+   "seuil=60": {
+    "unilateral": 0.008,
+    "unilateral_wilson95": [
+     0.0049,
+     0.013
+    ],
+    "bilateral": 0.015,
+    "bilateral_wilson95": [
+     0.0105,
+     0.0213
+    ]
+   },
+   "G1": {
+    "par_mode": 0.2375,
+    "par_mode_wilson95": [
+     0.2246,
+     0.2509
+    ],
+    "deux_modes": 0.0975,
+    "deux_modes_wilson95": [
+     0.0853,
+     0.1113
+    ],
+    "deux_modes_et_controle_12_propre_bilateral_40": 0.095,
+    "deux_modes_et_controle_12_propre_bilateral_40_wilson95": [
+     0.0829,
+     0.1086
+    ]
+   }
+  },
+  {
+   "etiquette": "grille025_bris|derive=0.0|dans_temporelle",
+   "parametres": {
+    "N": 9600,
+    "taches": 64,
+    "a": 0.3,
+    "h": 0.3,
+    "rho": 0.0,
+    "coupe": "dans_temporelle",
+    "derive": 0.0,
+    "derive_cellules": null,
+    "derive_taches": 0.0,
+    "grille": 0.25,
+    "G1": true,
+    "ecart_G1": 0.1,
+    "modes": 2
+   },
+   "repetitions": 2000,
+   "controles": 16,
+   "taille_lot": 28,
+   "duree_s": 10.2,
+   "ecart_type_s1_moins_s2_cellule_1_sigma": 0.0753,
+   "moyenne_s1_moins_s2_cellule_1_sigma": -0.0023,
+   "seuil=20": {
+    "unilateral": 0.0515,
+    "unilateral_wilson95": [
+     0.0426,
+     0.0621
+    ],
+    "bilateral": 0.099,
+    "bilateral_wilson95": [
+     0.0867,
+     0.1129
+    ]
+   },
+   "seuil=30": {
+    "unilateral": 0.0225,
+    "unilateral_wilson95": [
+     0.0169,
+     0.03
+    ],
+    "bilateral": 0.045,
+    "bilateral_wilson95": [
+     0.0368,
+     0.055
+    ]
+   },
+   "seuil=40": {
+    "unilateral": 0.0105,
+    "unilateral_wilson95": [
+     0.0069,
+     0.016
+    ],
+    "bilateral": 0.0195,
+    "bilateral_wilson95": [
+     0.0143,
+     0.0265
+    ]
+   },
+   "seuil=60": {
+    "unilateral": 0.0055,
+    "unilateral_wilson95": [
+     0.0031,
+     0.0098
+    ],
+    "bilateral": 0.0105,
+    "bilateral_wilson95": [
+     0.0069,
+     0.016
+    ]
+   },
+   "G1": {
+    "par_mode": 0.2313,
+    "par_mode_wilson95": [
+     0.2184,
+     0.2446
+    ],
+    "deux_modes": 0.0865,
+    "deux_modes_wilson95": [
+     0.075,
+     0.0996
+    ],
+    "deux_modes_et_controle_12_propre_bilateral_40": 0.0835,
+    "deux_modes_et_controle_12_propre_bilateral_40_wilson95": [
+     0.0722,
+     0.0964
+    ]
+   }
+  },
+  {
+   "etiquette": "rho08|derive=0.0|dans_graine",
+   "parametres": {
+    "N": 9600,
+    "taches": 64,
+    "a": 0.3,
+    "h": 0.3,
+    "rho": 0.8,
+    "coupe": "dans_graine",
+    "derive": 0.0,
+    "derive_cellules": null,
+    "derive_taches": 0.0,
+    "grille": null,
+    "G1": true,
+    "ecart_G1": 0.1,
+    "modes": 2
+   },
+   "repetitions": 2000,
+   "controles": 16,
+   "taille_lot": 28,
+   "duree_s": 10.6,
+   "ecart_type_s1_moins_s2_cellule_1_sigma": 0.0731,
+   "moyenne_s1_moins_s2_cellule_1_sigma": 0.0002,
+   "seuil=20": {
+    "unilateral": 0.0475,
+    "unilateral_wilson95": [
+     0.039,
+     0.0577
+    ],
+    "bilateral": 0.0865,
+    "bilateral_wilson95": [
+     0.075,
+     0.0996
+    ]
+   },
+   "seuil=30": {
+    "unilateral": 0.0245,
+    "unilateral_wilson95": [
+     0.0186,
+     0.0322
+    ],
+    "bilateral": 0.046,
+    "bilateral_wilson95": [
+     0.0377,
+     0.0561
+    ]
+   },
+   "seuil=40": {
+    "unilateral": 0.014,
+    "unilateral_wilson95": [
+     0.0097,
+     0.0202
+    ],
+    "bilateral": 0.028,
+    "bilateral_wilson95": [
+     0.0216,
+     0.0362
+    ]
+   },
+   "seuil=60": {
+    "unilateral": 0.0045,
+    "unilateral_wilson95": [
+     0.0024,
+     0.0085
+    ],
+    "bilateral": 0.013,
+    "bilateral_wilson95": [
+     0.0089,
+     0.019
+    ]
+   },
+   "G1": {
+    "par_mode": 0.481,
+    "par_mode_wilson95": [
+     0.4655,
+     0.4965
+    ],
+    "deux_modes": 0.2975,
+    "deux_modes_wilson95": [
+     0.2779,
+     0.3179
+    ],
+    "deux_modes_et_controle_12_propre_bilateral_40": 0.2875,
+    "deux_modes_et_controle_12_propre_bilateral_40_wilson95": [
+     0.2681,
+     0.3077
+    ]
+   }
+  },
+  {
+   "etiquette": "h0|derive=0.0|dans_graine",
+   "parametres": {
+    "N": 9600,
+    "taches": 64,
+    "a": 0.3,
+    "h": 0.0,
+    "rho": 0.0,
+    "coupe": "dans_graine",
+    "derive": 0.0,
+    "derive_cellules": null,
+    "derive_taches": 0.0,
+    "grille": null,
+    "G1": true,
+    "ecart_G1": 0.1,
+    "modes": 2
+   },
+   "repetitions": 2000,
+   "controles": 16,
+   "taille_lot": 28,
+   "duree_s": 10.2,
+   "ecart_type_s1_moins_s2_cellule_1_sigma": 0.0717,
+   "moyenne_s1_moins_s2_cellule_1_sigma": 0.0013,
+   "seuil=20": {
+    "unilateral": 0.072,
+    "unilateral_wilson95": [
+     0.0615,
+     0.0842
+    ],
+    "bilateral": 0.13,
+    "bilateral_wilson95": [
+     0.116,
+     0.1455
+    ]
+   },
+   "seuil=30": {
+    "unilateral": 0.0345,
+    "unilateral_wilson95": [
+     0.0274,
+     0.0434
+    ],
+    "bilateral": 0.057,
+    "bilateral_wilson95": [
+     0.0477,
+     0.068
+    ]
+   },
+   "seuil=40": {
+    "unilateral": 0.019,
+    "unilateral_wilson95": [
+     0.0139,
+     0.026
+    ],
+    "bilateral": 0.0345,
+    "bilateral_wilson95": [
+     0.0274,
+     0.0434
+    ]
+   },
+   "seuil=60": {
+    "unilateral": 0.009,
+    "unilateral_wilson95": [
+     0.0057,
+     0.0142
+    ],
+    "bilateral": 0.016,
+    "bilateral_wilson95": [
+     0.0114,
+     0.0225
+    ]
+   },
+   "G1": {
+    "par_mode": 0.2375,
+    "par_mode_wilson95": [
+     0.2246,
+     0.2509
+    ],
+    "deux_modes": 0.0975,
+    "deux_modes_wilson95": [
+     0.0853,
+     0.1113
+    ],
+    "deux_modes_et_controle_12_propre_bilateral_40": 0.094,
+    "deux_modes_et_controle_12_propre_bilateral_40_wilson95": [
+     0.082,
+     0.1076
+    ]
+   }
+  },
+  {
+   "etiquette": "grille025_bris|derive=0.0|dans_graine",
+   "parametres": {
+    "N": 9600,
+    "taches": 64,
+    "a": 0.3,
+    "h": 0.3,
+    "rho": 0.0,
+    "coupe": "dans_graine",
+    "derive": 0.0,
+    "derive_cellules": null,
+    "derive_taches": 0.0,
+    "grille": 0.25,
+    "G1": true,
+    "ecart_G1": 0.1,
+    "modes": 2
+   },
+   "repetitions": 2000,
+   "controles": 16,
+   "taille_lot": 28,
+   "duree_s": 12.4,
+   "ecart_type_s1_moins_s2_cellule_1_sigma": 0.0749,
+   "moyenne_s1_moins_s2_cellule_1_sigma": -0.0006,
+   "seuil=20": {
+    "unilateral": 0.057,
+    "unilateral_wilson95": [
+     0.0477,
+     0.068
+    ],
+    "bilateral": 0.1,
+    "bilateral_wilson95": [
+     0.0876,
+     0.1139
+    ]
+   },
+   "seuil=30": {
+    "unilateral": 0.0255,
+    "unilateral_wilson95": [
+     0.0194,
+     0.0334
+    ],
+    "bilateral": 0.0445,
+    "bilateral_wilson95": [
+     0.0363,
+     0.0544
+    ]
+   },
+   "seuil=40": {
+    "unilateral": 0.0125,
+    "unilateral_wilson95": [
+     0.0085,
+     0.0184
+    ],
+    "bilateral": 0.0225,
+    "bilateral_wilson95": [
+     0.0169,
+     0.03
+    ]
+   },
+   "seuil=60": {
+    "unilateral": 0.0045,
+    "unilateral_wilson95": [
+     0.0024,
+     0.0085
+    ],
+    "bilateral": 0.009,
+    "bilateral_wilson95": [
+     0.0057,
+     0.0142
+    ]
+   },
+   "G1": {
+    "par_mode": 0.2313,
+    "par_mode_wilson95": [
+     0.2184,
+     0.2446
+    ],
+    "deux_modes": 0.0865,
+    "deux_modes_wilson95": [
+     0.075,
+     0.0996
+    ],
+    "deux_modes_et_controle_12_propre_bilateral_40": 0.086,
+    "deux_modes_et_controle_12_propre_bilateral_40_wilson95": [
+     0.0745,
+     0.0991
+    ]
+   }
+  },
+  {
+   "etiquette": "rho08|derive=0.0|entre",
+   "parametres": {
+    "N": 9600,
+    "taches": 64,
+    "a": 0.3,
+    "h": 0.3,
+    "rho": 0.8,
+    "coupe": "entre",
+    "derive": 0.0,
+    "derive_cellules": null,
+    "derive_taches": 0.0,
+    "grille": null,
+    "G1": true,
+    "ecart_G1": 0.1,
+    "modes": 2
+   },
+   "repetitions": 2000,
+   "controles": 16,
+   "taille_lot": 28,
+   "duree_s": 8.8,
+   "ecart_type_s1_moins_s2_cellule_1_sigma": 0.2167,
+   "moyenne_s1_moins_s2_cellule_1_sigma": 0.0001,
+   "seuil=20": {
+    "unilateral": 0.31,
+    "unilateral_wilson95": [
+     0.2901,
+     0.3306
+    ],
+    "bilateral": 0.6125,
+    "bilateral_wilson95": [
+     0.591,
+     0.6336
+    ]
+   },
+   "seuil=30": {
+    "unilateral": 0.278,
+    "unilateral_wilson95": [
+     0.2588,
+     0.298
+    ],
+    "bilateral": 0.549,
+    "bilateral_wilson95": [
+     0.5271,
+     0.5707
+    ]
+   },
+   "seuil=40": {
+    "unilateral": 0.2515,
+    "unilateral_wilson95": [
+     0.233,
+     0.271
+    ],
+    "bilateral": 0.499,
+    "bilateral_wilson95": [
+     0.4771,
+     0.5209
+    ]
+   },
+   "seuil=60": {
+    "unilateral": 0.22,
+    "unilateral_wilson95": [
+     0.2024,
+     0.2387
+    ],
+    "bilateral": 0.4365,
+    "bilateral_wilson95": [
+     0.4149,
+     0.4583
+    ]
+   },
+   "G1": {
+    "par_mode": 0.481,
+    "par_mode_wilson95": [
+     0.4655,
+     0.4965
+    ],
+    "deux_modes": 0.2975,
+    "deux_modes_wilson95": [
+     0.2779,
+     0.3179
+    ],
+    "deux_modes_et_controle_12_propre_bilateral_40": 0.1545,
+    "deux_modes_et_controle_12_propre_bilateral_40_wilson95": [
+     0.1393,
+     0.171
+    ]
+   }
+  },
+  {
+   "etiquette": "h0|derive=0.0|entre",
+   "parametres": {
+    "N": 9600,
+    "taches": 64,
+    "a": 0.3,
+    "h": 0.0,
+    "rho": 0.0,
+    "coupe": "entre",
+    "derive": 0.0,
+    "derive_cellules": null,
+    "derive_taches": 0.0,
+    "grille": null,
+    "G1": true,
+    "ecart_G1": 0.1,
+    "modes": 2
+   },
+   "repetitions": 2000,
+   "controles": 16,
+   "taille_lot": 28,
+   "duree_s": 8.5,
+   "ecart_type_s1_moins_s2_cellule_1_sigma": 0.2118,
+   "moyenne_s1_moins_s2_cellule_1_sigma": -0.0123,
+   "seuil=20": {
+    "unilateral": 0.381,
+    "unilateral_wilson95": [
+     0.36,
+     0.4025
+    ],
+    "bilateral": 0.716,
+    "bilateral_wilson95": [
+     0.6958,
+     0.7353
+    ]
+   },
+   "seuil=30": {
+    "unilateral": 0.3365,
+    "unilateral_wilson95": [
+     0.3161,
+     0.3575
+    ],
+    "bilateral": 0.637,
+    "bilateral_wilson95": [
+     0.6157,
+     0.6578
+    ]
+   },
+   "seuil=40": {
+    "unilateral": 0.3135,
+    "unilateral_wilson95": [
+     0.2935,
+     0.3342
+    ],
+    "bilateral": 0.592,
+    "bilateral_wilson95": [
+     0.5703,
+     0.6133
+    ]
+   },
+   "seuil=60": {
+    "unilateral": 0.2785,
+    "unilateral_wilson95": [
+     0.2593,
+     0.2986
+    ],
+    "bilateral": 0.5195,
+    "bilateral_wilson95": [
+     0.4976,
+     0.5413
+    ]
+   },
+   "G1": {
+    "par_mode": 0.2375,
+    "par_mode_wilson95": [
+     0.2246,
+     0.2509
+    ],
+    "deux_modes": 0.0975,
+    "deux_modes_wilson95": [
+     0.0853,
+     0.1113
+    ],
+    "deux_modes_et_controle_12_propre_bilateral_40": 0.036,
+    "deux_modes_et_controle_12_propre_bilateral_40_wilson95": [
+     0.0287,
+     0.0451
+    ]
+   }
+  },
+  {
+   "etiquette": "grille025_bris|derive=0.0|entre",
+   "parametres": {
+    "N": 9600,
+    "taches": 64,
+    "a": 0.3,
+    "h": 0.3,
+    "rho": 0.0,
+    "coupe": "entre",
+    "derive": 0.0,
+    "derive_cellules": null,
+    "derive_taches": 0.0,
+    "grille": 0.25,
+    "G1": true,
+    "ecart_G1": 0.1,
+    "modes": 2
+   },
+   "repetitions": 2000,
+   "controles": 16,
+   "taille_lot": 28,
+   "duree_s": 11.1,
+   "ecart_type_s1_moins_s2_cellule_1_sigma": 0.2019,
+   "moyenne_s1_moins_s2_cellule_1_sigma": -0.0008,
+   "seuil=20": {
+    "unilateral": 0.3345,
+    "unilateral_wilson95": [
+     0.3142,
+     0.3555
+    ],
+    "bilateral": 0.6735,
+    "bilateral_wilson95": [
+     0.6526,
+     0.6937
+    ]
+   },
+   "seuil=30": {
+    "unilateral": 0.294,
+    "unilateral_wilson95": [
+     0.2744,
+     0.3143
+    ],
+    "bilateral": 0.59,
+    "bilateral_wilson95": [
+     0.5683,
+     0.6114
+    ]
+   },
+   "seuil=40": {
+    "unilateral": 0.2635,
+    "unilateral_wilson95": [
+     0.2447,
+     0.2832
+    ],
+    "bilateral": 0.531,
+    "bilateral_wilson95": [
+     0.5091,
+     0.5528
+    ]
+   },
+   "seuil=60": {
+    "unilateral": 0.223,
+    "unilateral_wilson95": [
+     0.2053,
+     0.2418
+    ],
+    "bilateral": 0.454,
+    "bilateral_wilson95": [
+     0.4323,
+     0.4759
+    ]
+   },
+   "G1": {
+    "par_mode": 0.2313,
+    "par_mode_wilson95": [
+     0.2184,
+     0.2446
+    ],
+    "deux_modes": 0.0865,
+    "deux_modes_wilson95": [
+     0.075,
+     0.0996
+    ],
+    "deux_modes_et_controle_12_propre_bilateral_40": 0.0375,
+    "deux_modes_et_controle_12_propre_bilateral_40_wilson95": [
+     0.03,
+     0.0468
+    ]
+   }
+  },
+  {
+   "etiquette": "rho08|derive=0.1|dans_temporelle",
+   "parametres": {
+    "N": 9600,
+    "taches": 64,
+    "a": 0.3,
+    "h": 0.3,
+    "rho": 0.8,
+    "coupe": "dans_temporelle",
+    "derive": 0.1,
+    "derive_cellules": null,
+    "derive_taches": 0.0,
+    "grille": null,
+    "G1": true,
+    "ecart_G1": 0.1,
+    "modes": 2
+   },
+   "repetitions": 2000,
+   "controles": 16,
+   "taille_lot": 28,
+   "duree_s": 8.1,
+   "ecart_type_s1_moins_s2_cellule_1_sigma": 0.0736,
+   "moyenne_s1_moins_s2_cellule_1_sigma": -0.0998,
+   "seuil=20": {
+    "unilateral": 0.462,
+    "unilateral_wilson95": [
+     0.4402,
+     0.4839
+    ],
+    "bilateral": 0.4625,
+    "bilateral_wilson95": [
+     0.4407,
+     0.4844
+    ]
+   },
+   "seuil=30": {
+    "unilateral": 0.32,
+    "unilateral_wilson95": [
+     0.2999,
+     0.3408
+    ],
+    "bilateral": 0.32,
+    "bilateral_wilson95": [
+     0.2999,
+     0.3408
+    ]
+   },
+   "seuil=40": {
+    "unilateral": 0.2345,
+    "unilateral_wilson95": [
+     0.2165,
+     0.2536
+    ],
+    "bilateral": 0.2345,
+    "bilateral_wilson95": [
+     0.2165,
+     0.2536
+    ]
+   },
+   "seuil=60": {
+    "unilateral": 0.1445,
+    "unilateral_wilson95": [
+     0.1298,
+     0.1606
+    ],
+    "bilateral": 0.1445,
+    "bilateral_wilson95": [
+     0.1298,
+     0.1606
+    ]
+   },
+   "G1": {
+    "par_mode": 0.4735,
+    "par_mode_wilson95": [
+     0.4581,
+     0.489
+    ],
+    "deux_modes": 0.296,
+    "deux_modes_wilson95": [
+     0.2764,
+     0.3164
+    ],
+    "deux_modes_et_controle_12_propre_bilateral_40": 0.2325,
+    "deux_modes_et_controle_12_propre_bilateral_40_wilson95": [
+     0.2145,
+     0.2515
+    ]
+   }
+  },
+  {
+   "etiquette": "h0|derive=0.1|dans_temporelle",
+   "parametres": {
+    "N": 9600,
+    "taches": 64,
+    "a": 0.3,
+    "h": 0.0,
+    "rho": 0.0,
+    "coupe": "dans_temporelle",
+    "derive": 0.1,
+    "derive_cellules": null,
+    "derive_taches": 0.0,
+    "grille": null,
+    "G1": true,
+    "ecart_G1": 0.1,
+    "modes": 2
+   },
+   "repetitions": 2000,
+   "controles": 16,
+   "taille_lot": 28,
+   "duree_s": 8.3,
+   "ecart_type_s1_moins_s2_cellule_1_sigma": 0.0745,
+   "moyenne_s1_moins_s2_cellule_1_sigma": -0.1002,
+   "seuil=20": {
+    "unilateral": 0.708,
+    "unilateral_wilson95": [
+     0.6877,
+     0.7275
+    ],
+    "bilateral": 0.7085,
+    "bilateral_wilson95": [
+     0.6882,
+     0.728
+    ]
+   },
+   "seuil=30": {
+    "unilateral": 0.5175,
+    "unilateral_wilson95": [
+     0.4956,
+     0.5393
+    ],
+    "bilateral": 0.5175,
+    "bilateral_wilson95": [
+     0.4956,
+     0.5393
+    ]
+   },
+   "seuil=40": {
+    "unilateral": 0.4025,
+    "unilateral_wilson95": [
+     0.3812,
+     0.4242
+    ],
+    "bilateral": 0.4025,
+    "bilateral_wilson95": [
+     0.3812,
+     0.4242
+    ]
+   },
+   "seuil=60": {
+    "unilateral": 0.2415,
+    "unilateral_wilson95": [
+     0.2232,
+     0.2607
+    ],
+    "bilateral": 0.2415,
+    "bilateral_wilson95": [
+     0.2232,
+     0.2607
+    ]
+   },
+   "G1": {
+    "par_mode": 0.2447,
+    "par_mode_wilson95": [
+     0.2317,
+     0.2583
+    ],
+    "deux_modes": 0.1075,
+    "deux_modes_wilson95": [
+     0.0947,
+     0.1218
+    ],
+    "deux_modes_et_controle_12_propre_bilateral_40": 0.06,
+    "deux_modes_et_controle_12_propre_bilateral_40_wilson95": [
+     0.0504,
+     0.0713
+    ]
+   }
+  },
+  {
+   "etiquette": "grille025_bris|derive=0.1|dans_temporelle",
+   "parametres": {
+    "N": 9600,
+    "taches": 64,
+    "a": 0.3,
+    "h": 0.3,
+    "rho": 0.0,
+    "coupe": "dans_temporelle",
+    "derive": 0.1,
+    "derive_cellules": null,
+    "derive_taches": 0.0,
+    "grille": 0.25,
+    "G1": true,
+    "ecart_G1": 0.1,
+    "modes": 2
+   },
+   "repetitions": 2000,
+   "controles": 16,
+   "taille_lot": 28,
+   "duree_s": 10.3,
+   "ecart_type_s1_moins_s2_cellule_1_sigma": 0.0753,
+   "moyenne_s1_moins_s2_cellule_1_sigma": -0.1014,
+   "seuil=20": {
+    "unilateral": 0.6385,
+    "unilateral_wilson95": [
+     0.6172,
+     0.6593
+    ],
+    "bilateral": 0.6385,
+    "bilateral_wilson95": [
+     0.6172,
+     0.6593
+    ]
+   },
+   "seuil=30": {
+    "unilateral": 0.447,
+    "unilateral_wilson95": [
+     0.4253,
+     0.4689
+    ],
+    "bilateral": 0.447,
+    "bilateral_wilson95": [
+     0.4253,
+     0.4689
+    ]
+   },
+   "seuil=40": {
+    "unilateral": 0.3275,
+    "unilateral_wilson95": [
+     0.3073,
+     0.3484
+    ],
+    "bilateral": 0.3275,
+    "bilateral_wilson95": [
+     0.3073,
+     0.3484
+    ]
+   },
+   "seuil=60": {
+    "unilateral": 0.1975,
+    "unilateral_wilson95": [
+     0.1806,
+     0.2155
+    ],
+    "bilateral": 0.1975,
+    "bilateral_wilson95": [
+     0.1806,
+     0.2155
+    ]
+   },
+   "G1": {
+    "par_mode": 0.242,
+    "par_mode_wilson95": [
+     0.229,
+     0.2555
+    ],
+    "deux_modes": 0.0935,
+    "deux_modes_wilson95": [
+     0.0815,
+     0.1071
+    ],
+    "deux_modes_et_controle_12_propre_bilateral_40": 0.0585,
+    "deux_modes_et_controle_12_propre_bilateral_40_wilson95": [
+     0.049,
+     0.0697
+    ]
+   }
+  },
+  {
+   "etiquette": "rho08|derive=0.1|dans_graine",
+   "parametres": {
+    "N": 9600,
+    "taches": 64,
+    "a": 0.3,
+    "h": 0.3,
+    "rho": 0.8,
+    "coupe": "dans_graine",
+    "derive": 0.1,
+    "derive_cellules": null,
+    "derive_taches": 0.0,
+    "grille": null,
+    "G1": true,
+    "ecart_G1": 0.1,
+    "modes": 2
+   },
+   "repetitions": 2000,
+   "controles": 16,
+   "taille_lot": 28,
+   "duree_s": 9.8,
+   "ecart_type_s1_moins_s2_cellule_1_sigma": 0.0734,
+   "moyenne_s1_moins_s2_cellule_1_sigma": -0.0012,
+   "seuil=20": {
+    "unilateral": 0.049,
+    "unilateral_wilson95": [
+     0.0404,
+     0.0594
+    ],
+    "bilateral": 0.095,
+    "bilateral_wilson95": [
+     0.0829,
+     0.1086
+    ]
+   },
+   "seuil=30": {
+    "unilateral": 0.0225,
+    "unilateral_wilson95": [
+     0.0169,
+     0.03
+    ],
+    "bilateral": 0.043,
+    "bilateral_wilson95": [
+     0.035,
+     0.0528
+    ]
+   },
+   "seuil=40": {
+    "unilateral": 0.0115,
+    "unilateral_wilson95": [
+     0.0077,
+     0.0172
+    ],
+    "bilateral": 0.024,
+    "bilateral_wilson95": [
+     0.0181,
+     0.0317
+    ]
+   },
+   "seuil=60": {
+    "unilateral": 0.0045,
+    "unilateral_wilson95": [
+     0.0024,
+     0.0085
+    ],
+    "bilateral": 0.01,
+    "bilateral_wilson95": [
+     0.0065,
+     0.0154
+    ]
+   },
+   "G1": {
+    "par_mode": 0.4735,
+    "par_mode_wilson95": [
+     0.4581,
+     0.489
+    ],
+    "deux_modes": 0.296,
+    "deux_modes_wilson95": [
+     0.2764,
+     0.3164
+    ],
+    "deux_modes_et_controle_12_propre_bilateral_40": 0.2875,
+    "deux_modes_et_controle_12_propre_bilateral_40_wilson95": [
+     0.2681,
+     0.3077
+    ]
+   }
+  },
+  {
+   "etiquette": "h0|derive=0.1|dans_graine",
+   "parametres": {
+    "N": 9600,
+    "taches": 64,
+    "a": 0.3,
+    "h": 0.0,
+    "rho": 0.0,
+    "coupe": "dans_graine",
+    "derive": 0.1,
+    "derive_cellules": null,
+    "derive_taches": 0.0,
+    "grille": null,
+    "G1": true,
+    "ecart_G1": 0.1,
+    "modes": 2
+   },
+   "repetitions": 2000,
+   "controles": 16,
+   "taille_lot": 28,
+   "duree_s": 9.9,
+   "ecart_type_s1_moins_s2_cellule_1_sigma": 0.0755,
+   "moyenne_s1_moins_s2_cellule_1_sigma": 0.0003,
+   "seuil=20": {
+    "unilateral": 0.071,
+    "unilateral_wilson95": [
+     0.0605,
+     0.0831
+    ],
+    "bilateral": 0.1445,
+    "bilateral_wilson95": [
+     0.1298,
+     0.1606
+    ]
+   },
+   "seuil=30": {
+    "unilateral": 0.0345,
+    "unilateral_wilson95": [
+     0.0274,
+     0.0434
+    ],
+    "bilateral": 0.0705,
+    "bilateral_wilson95": [
+     0.0601,
+     0.0826
+    ]
+   },
+   "seuil=40": {
+    "unilateral": 0.0215,
+    "unilateral_wilson95": [
+     0.016,
+     0.0288
+    ],
+    "bilateral": 0.046,
+    "bilateral_wilson95": [
+     0.0377,
+     0.0561
+    ]
+   },
+   "seuil=60": {
+    "unilateral": 0.006,
+    "unilateral_wilson95": [
+     0.0034,
+     0.0105
+    ],
+    "bilateral": 0.0135,
+    "bilateral_wilson95": [
+     0.0093,
+     0.0196
+    ]
+   },
+   "G1": {
+    "par_mode": 0.2447,
+    "par_mode_wilson95": [
+     0.2317,
+     0.2583
+    ],
+    "deux_modes": 0.1075,
+    "deux_modes_wilson95": [
+     0.0947,
+     0.1218
+    ],
+    "deux_modes_et_controle_12_propre_bilateral_40": 0.1015,
+    "deux_modes_et_controle_12_propre_bilateral_40_wilson95": [
+     0.089,
+     0.1155
+    ]
+   }
+  },
+  {
+   "etiquette": "grille025_bris|derive=0.1|dans_graine",
+   "parametres": {
+    "N": 9600,
+    "taches": 64,
+    "a": 0.3,
+    "h": 0.3,
+    "rho": 0.0,
+    "coupe": "dans_graine",
+    "derive": 0.1,
+    "derive_cellules": null,
+    "derive_taches": 0.0,
+    "grille": 0.25,
+    "G1": true,
+    "ecart_G1": 0.1,
+    "modes": 2
+   },
+   "repetitions": 2000,
+   "controles": 16,
+   "taille_lot": 28,
+   "duree_s": 11.8,
+   "ecart_type_s1_moins_s2_cellule_1_sigma": 0.0737,
+   "moyenne_s1_moins_s2_cellule_1_sigma": -0.0018,
+   "seuil=20": {
+    "unilateral": 0.057,
+    "unilateral_wilson95": [
+     0.0477,
+     0.068
+    ],
+    "bilateral": 0.1045,
+    "bilateral_wilson95": [
+     0.0918,
+     0.1187
+    ]
+   },
+   "seuil=30": {
+    "unilateral": 0.0265,
+    "unilateral_wilson95": [
+     0.0203,
+     0.0345
+    ],
+    "bilateral": 0.0515,
+    "bilateral_wilson95": [
+     0.0426,
+     0.0621
+    ]
+   },
+   "seuil=40": {
+    "unilateral": 0.014,
+    "unilateral_wilson95": [
+     0.0097,
+     0.0202
+    ],
+    "bilateral": 0.026,
+    "bilateral_wilson95": [
+     0.0199,
+     0.0339
+    ]
+   },
+   "seuil=60": {
+    "unilateral": 0.008,
+    "unilateral_wilson95": [
+     0.0049,
+     0.013
+    ],
+    "bilateral": 0.0105,
+    "bilateral_wilson95": [
+     0.0069,
+     0.016
+    ]
+   },
+   "G1": {
+    "par_mode": 0.242,
+    "par_mode_wilson95": [
+     0.229,
+     0.2555
+    ],
+    "deux_modes": 0.0935,
+    "deux_modes_wilson95": [
+     0.0815,
+     0.1071
+    ],
+    "deux_modes_et_controle_12_propre_bilateral_40": 0.0915,
+    "deux_modes_et_controle_12_propre_bilateral_40_wilson95": [
+     0.0796,
+     0.1049
+    ]
+   }
+  },
+  {
+   "etiquette": "rho08|derive=0.1|entre",
+   "parametres": {
+    "N": 9600,
+    "taches": 64,
+    "a": 0.3,
+    "h": 0.3,
+    "rho": 0.8,
+    "coupe": "entre",
+    "derive": 0.1,
+    "derive_cellules": null,
+    "derive_taches": 0.0,
+    "grille": null,
+    "G1": true,
+    "ecart_G1": 0.1,
+    "modes": 2
+   },
+   "repetitions": 2000,
+   "controles": 16,
+   "taille_lot": 28,
+   "duree_s": 8.8,
+   "ecart_type_s1_moins_s2_cellule_1_sigma": 0.2098,
+   "moyenne_s1_moins_s2_cellule_1_sigma": 0.0042,
+   "seuil=20": {
+    "unilateral": 0.2935,
+    "unilateral_wilson95": [
+     0.274,
+     0.3138
+    ],
+    "bilateral": 0.594,
+    "bilateral_wilson95": [
+     0.5723,
+     0.6153
+    ]
+   },
+   "seuil=30": {
+    "unilateral": 0.255,
+    "unilateral_wilson95": [
+     0.2364,
+     0.2746
+    ],
+    "bilateral": 0.5155,
+    "bilateral_wilson95": [
+     0.4936,
+     0.5374
+    ]
+   },
+   "seuil=40": {
+    "unilateral": 0.2325,
+    "unilateral_wilson95": [
+     0.2145,
+     0.2515
+    ],
+    "bilateral": 0.4705,
+    "bilateral_wilson95": [
+     0.4487,
+     0.4924
+    ]
+   },
+   "seuil=60": {
+    "unilateral": 0.203,
+    "unilateral_wilson95": [
+     0.1859,
+     0.2212
+    ],
+    "bilateral": 0.417,
+    "bilateral_wilson95": [
+     0.3956,
+     0.4387
+    ]
+   },
+   "G1": {
+    "par_mode": 0.4735,
+    "par_mode_wilson95": [
+     0.4581,
+     0.489
+    ],
+    "deux_modes": 0.296,
+    "deux_modes_wilson95": [
+     0.2764,
+     0.3164
+    ],
+    "deux_modes_et_controle_12_propre_bilateral_40": 0.1495,
+    "deux_modes_et_controle_12_propre_bilateral_40_wilson95": [
+     0.1345,
+     0.1658
+    ]
+   }
+  },
+  {
+   "etiquette": "h0|derive=0.1|entre",
+   "parametres": {
+    "N": 9600,
+    "taches": 64,
+    "a": 0.3,
+    "h": 0.0,
+    "rho": 0.0,
+    "coupe": "entre",
+    "derive": 0.1,
+    "derive_cellules": null,
+    "derive_taches": 0.0,
+    "grille": null,
+    "G1": true,
+    "ecart_G1": 0.1,
+    "modes": 2
+   },
+   "repetitions": 2000,
+   "controles": 16,
+   "taille_lot": 28,
+   "duree_s": 9.1,
+   "ecart_type_s1_moins_s2_cellule_1_sigma": 0.2088,
+   "moyenne_s1_moins_s2_cellule_1_sigma": 0.0041,
+   "seuil=20": {
+    "unilateral": 0.3575,
+    "unilateral_wilson95": [
+     0.3368,
+     0.3788
+    ],
+    "bilateral": 0.713,
+    "bilateral_wilson95": [
+     0.6928,
+     0.7324
+    ]
+   },
+   "seuil=30": {
+    "unilateral": 0.311,
+    "unilateral_wilson95": [
+     0.2911,
+     0.3316
+    ],
+    "bilateral": 0.629,
+    "bilateral_wilson95": [
+     0.6076,
+     0.6499
+    ]
+   },
+   "seuil=40": {
+    "unilateral": 0.2915,
+    "unilateral_wilson95": [
+     0.272,
+     0.3118
+    ],
+    "bilateral": 0.5895,
+    "bilateral_wilson95": [
+     0.5678,
+     0.6109
+    ]
+   },
+   "seuil=60": {
+    "unilateral": 0.2585,
+    "unilateral_wilson95": [
+     0.2398,
+     0.2781
+    ],
+    "bilateral": 0.522,
+    "bilateral_wilson95": [
+     0.5001,
+     0.5438
+    ]
+   },
+   "G1": {
+    "par_mode": 0.2447,
+    "par_mode_wilson95": [
+     0.2317,
+     0.2583
+    ],
+    "deux_modes": 0.1075,
+    "deux_modes_wilson95": [
+     0.0947,
+     0.1218
+    ],
+    "deux_modes_et_controle_12_propre_bilateral_40": 0.0385,
+    "deux_modes_et_controle_12_propre_bilateral_40_wilson95": [
+     0.0309,
+     0.0479
+    ]
+   }
+  },
+  {
+   "etiquette": "grille025_bris|derive=0.1|entre",
+   "parametres": {
+    "N": 9600,
+    "taches": 64,
+    "a": 0.3,
+    "h": 0.3,
+    "rho": 0.0,
+    "coupe": "entre",
+    "derive": 0.1,
+    "derive_cellules": null,
+    "derive_taches": 0.0,
+    "grille": 0.25,
+    "G1": true,
+    "ecart_G1": 0.1,
+    "modes": 2
+   },
+   "repetitions": 2000,
+   "controles": 16,
+   "taille_lot": 28,
+   "duree_s": 11.0,
+   "ecart_type_s1_moins_s2_cellule_1_sigma": 0.208,
+   "moyenne_s1_moins_s2_cellule_1_sigma": 0.005,
+   "seuil=20": {
+    "unilateral": 0.3355,
+    "unilateral_wilson95": [
+     0.3151,
+     0.3565
+    ],
+    "bilateral": 0.691,
+    "bilateral_wilson95": [
+     0.6704,
+     0.7109
+    ]
+   },
+   "seuil=30": {
+    "unilateral": 0.298,
+    "unilateral_wilson95": [
+     0.2784,
+     0.3184
+    ],
+    "bilateral": 0.6115,
+    "bilateral_wilson95": [
+     0.5899,
+     0.6326
+    ]
+   },
+   "seuil=40": {
+    "unilateral": 0.2715,
+    "unilateral_wilson95": [
+     0.2525,
+     0.2914
+    ],
+    "bilateral": 0.5525,
+    "bilateral_wilson95": [
+     0.5306,
+     0.5742
+    ]
+   },
+   "seuil=60": {
+    "unilateral": 0.23,
+    "unilateral_wilson95": [
+     0.2121,
+     0.249
+    ],
+    "bilateral": 0.4765,
+    "bilateral_wilson95": [
+     0.4547,
+     0.4984
+    ]
+   },
+   "G1": {
+    "par_mode": 0.242,
+    "par_mode_wilson95": [
+     0.229,
+     0.2555
+    ],
+    "deux_modes": 0.0935,
+    "deux_modes_wilson95": [
+     0.0815,
+     0.1071
+    ],
+    "deux_modes_et_controle_12_propre_bilateral_40": 0.0405,
+    "deux_modes_et_controle_12_propre_bilateral_40_wilson95": [
+     0.0327,
+     0.0501
+    ]
+   }
+  },
+  {
+   "etiquette": "trois_modes_24_controles|derive=0.0|dans_temporelle",
+   "parametres": {
+    "N": 9600,
+    "taches": 64,
+    "a": 0.3,
+    "h": 0.3,
+    "rho": 0.0,
+    "coupe": "dans_temporelle",
+    "derive": 0.0,
+    "derive_cellules": null,
+    "derive_taches": 0.0,
+    "grille": null,
+    "G1": true,
+    "ecart_G1": 0.1,
+    "modes": 3
+   },
+   "repetitions": 2000,
+   "controles": 24,
+   "taille_lot": 28,
+   "duree_s": 8.7,
+   "ecart_type_s1_moins_s2_cellule_1_sigma": 0.0728,
+   "moyenne_s1_moins_s2_cellule_1_sigma": 0.0002,
+   "seuil=20": {
+    "unilateral": 0.0615,
+    "unilateral_wilson95": [
+     0.0518,
+     0.0729
+    ],
+    "bilateral": 0.126,
+    "bilateral_wilson95": [
+     0.1122,
+     0.1413
+    ]
+   },
+   "seuil=30": {
+    "unilateral": 0.024,
+    "unilateral_wilson95": [
+     0.0181,
+     0.0317
+    ],
+    "bilateral": 0.06,
+    "bilateral_wilson95": [
+     0.0504,
+     0.0713
+    ]
+   },
+   "seuil=40": {
+    "unilateral": 0.012,
+    "unilateral_wilson95": [
+     0.0081,
+     0.0178
+    ],
+    "bilateral": 0.0325,
+    "bilateral_wilson95": [
+     0.0256,
+     0.0412
+    ]
+   },
+   "seuil=60": {
+    "unilateral": 0.0045,
+    "unilateral_wilson95": [
+     0.0024,
+     0.0085
+    ],
+    "bilateral": 0.0145,
+    "bilateral_wilson95": [
+     0.0101,
+     0.0207
+    ]
+   },
+   "G1": {
+    "par_mode": 0.257,
+    "par_mode_wilson95": [
+     0.2461,
+     0.2682
+    ],
+    "deux_modes": 0.0535,
+    "deux_modes_wilson95": [
+     0.0445,
+     0.0642
+    ],
+    "deux_modes_et_controle_12_propre_bilateral_40": 0.051,
+    "deux_modes_et_controle_12_propre_bilateral_40_wilson95": [
+     0.0422,
+     0.0615
+    ]
+   }
+  },
+  {
+   "etiquette": "trois_modes_24_controles|derive=0.0|dans_graine",
+   "parametres": {
+    "N": 9600,
+    "taches": 64,
+    "a": 0.3,
+    "h": 0.3,
+    "rho": 0.0,
+    "coupe": "dans_graine",
+    "derive": 0.0,
+    "derive_cellules": null,
+    "derive_taches": 0.0,
+    "grille": null,
+    "G1": true,
+    "ecart_G1": 0.1,
+    "modes": 3
+   },
+   "repetitions": 2000,
+   "controles": 24,
+   "taille_lot": 28,
+   "duree_s": 10.8,
+   "ecart_type_s1_moins_s2_cellule_1_sigma": 0.0721,
+   "moyenne_s1_moins_s2_cellule_1_sigma": 0.0001,
+   "seuil=20": {
+    "unilateral": 0.0685,
+    "unilateral_wilson95": [
+     0.0582,
+     0.0804
+    ],
+    "bilateral": 0.1435,
+    "bilateral_wilson95": [
+     0.1288,
+     0.1595
+    ]
+   },
+   "seuil=30": {
+    "unilateral": 0.0315,
+    "unilateral_wilson95": [
+     0.0247,
+     0.0401
+    ],
+    "bilateral": 0.065,
+    "bilateral_wilson95": [
+     0.055,
+     0.0767
+    ]
+   },
+   "seuil=40": {
+    "unilateral": 0.018,
+    "unilateral_wilson95": [
+     0.013,
+     0.0248
+    ],
+    "bilateral": 0.038,
+    "bilateral_wilson95": [
+     0.0305,
+     0.0473
+    ]
+   },
+   "seuil=60": {
+    "unilateral": 0.007,
+    "unilateral_wilson95": [
+     0.0042,
+     0.0117
+    ],
+    "bilateral": 0.0135,
+    "bilateral_wilson95": [
+     0.0093,
+     0.0196
+    ]
+   },
+   "G1": {
+    "par_mode": 0.257,
+    "par_mode_wilson95": [
+     0.2461,
+     0.2682
+    ],
+    "deux_modes": 0.0535,
+    "deux_modes_wilson95": [
+     0.0445,
+     0.0642
+    ],
+    "deux_modes_et_controle_12_propre_bilateral_40": 0.0485,
+    "deux_modes_et_controle_12_propre_bilateral_40_wilson95": [
+     0.0399,
+     0.0588
+    ]
+   }
+  },
+  {
+   "etiquette": "trois_modes_24_controles|derive=0.0|entre",
+   "parametres": {
+    "N": 9600,
+    "taches": 64,
+    "a": 0.3,
+    "h": 0.3,
+    "rho": 0.0,
+    "coupe": "entre",
+    "derive": 0.0,
+    "derive_cellules": null,
+    "derive_taches": 0.0,
+    "grille": null,
+    "G1": true,
+    "ecart_G1": 0.1,
+    "modes": 3
+   },
+   "repetitions": 2000,
+   "controles": 24,
+   "taille_lot": 28,
+   "duree_s": 9.7,
+   "ecart_type_s1_moins_s2_cellule_1_sigma": 0.2068,
+   "moyenne_s1_moins_s2_cellule_1_sigma": -0.0079,
+   "seuil=20": {
+    "unilateral": 0.3595,
+    "unilateral_wilson95": [
+     0.3388,
+     0.3808
+    ],
+    "bilateral": 0.689,
+    "bilateral_wilson95": [
+     0.6684,
+     0.7089
+    ]
+   },
+   "seuil=30": {
+    "unilateral": 0.3165,
+    "unilateral_wilson95": [
+     0.2965,
+     0.3372
+    ],
+    "bilateral": 0.608,
+    "bilateral_wilson95": [
+     0.5864,
+     0.6292
+    ]
+   },
+   "seuil=40": {
+    "unilateral": 0.2935,
+    "unilateral_wilson95": [
+     0.274,
+     0.3138
+    ],
+    "bilateral": 0.559,
+    "bilateral_wilson95": [
+     0.5371,
+     0.5806
+    ]
+   },
+   "seuil=60": {
+    "unilateral": 0.2585,
+    "unilateral_wilson95": [
+     0.2398,
+     0.2781
+    ],
+    "bilateral": 0.4895,
+    "bilateral_wilson95": [
+     0.4676,
+     0.5114
+    ]
+   },
+   "G1": {
+    "par_mode": 0.257,
+    "par_mode_wilson95": [
+     0.2461,
+     0.2682
+    ],
+    "deux_modes": 0.0535,
+    "deux_modes_wilson95": [
+     0.0445,
+     0.0642
+    ],
+    "deux_modes_et_controle_12_propre_bilateral_40": 0.023,
+    "deux_modes_et_controle_12_propre_bilateral_40_wilson95": [
+     0.0173,
+     0.0305
+    ]
+   }
+  },
+  {
+   "etiquette": "trois_modes_24_controles|derive=0.1|dans_temporelle",
+   "parametres": {
+    "N": 9600,
+    "taches": 64,
+    "a": 0.3,
+    "h": 0.3,
+    "rho": 0.0,
+    "coupe": "dans_temporelle",
+    "derive": 0.1,
+    "derive_cellules": null,
+    "derive_taches": 0.0,
+    "grille": null,
+    "G1": true,
+    "ecart_G1": 0.1,
+    "modes": 3
+   },
+   "repetitions": 2000,
+   "controles": 24,
+   "taille_lot": 28,
+   "duree_s": 8.8,
+   "ecart_type_s1_moins_s2_cellule_1_sigma": 0.0751,
+   "moyenne_s1_moins_s2_cellule_1_sigma": -0.1015,
+   "seuil=20": {
+    "unilateral": 0.6995,
+    "unilateral_wilson95": [
+     0.679,
+     0.7192
+    ],
+    "bilateral": 0.7,
+    "bilateral_wilson95": [
+     0.6795,
+     0.7197
+    ]
+   },
+   "seuil=30": {
+    "unilateral": 0.5095,
+    "unilateral_wilson95": [
+     0.4876,
+     0.5314
+    ],
+    "bilateral": 0.5095,
+    "bilateral_wilson95": [
+     0.4876,
+     0.5314
+    ]
+   },
+   "seuil=40": {
+    "unilateral": 0.394,
+    "unilateral_wilson95": [
+     0.3728,
+     0.4156
+    ],
+    "bilateral": 0.394,
+    "bilateral_wilson95": [
+     0.3728,
+     0.4156
+    ]
+   },
+   "seuil=60": {
+    "unilateral": 0.2345,
+    "unilateral_wilson95": [
+     0.2165,
+     0.2536
+    ],
+    "bilateral": 0.2345,
+    "bilateral_wilson95": [
+     0.2165,
+     0.2536
+    ]
+   },
+   "G1": {
+    "par_mode": 0.252,
+    "par_mode_wilson95": [
+     0.2412,
+     0.2631
+    ],
+    "deux_modes": 0.051,
+    "deux_modes_wilson95": [
+     0.0422,
+     0.0615
+    ],
+    "deux_modes_et_controle_12_propre_bilateral_40": 0.034,
+    "deux_modes_et_controle_12_propre_bilateral_40_wilson95": [
+     0.0269,
+     0.0429
+    ]
+   }
+  },
+  {
+   "etiquette": "trois_modes_24_controles|derive=0.1|dans_graine",
+   "parametres": {
+    "N": 9600,
+    "taches": 64,
+    "a": 0.3,
+    "h": 0.3,
+    "rho": 0.0,
+    "coupe": "dans_graine",
+    "derive": 0.1,
+    "derive_cellules": null,
+    "derive_taches": 0.0,
+    "grille": null,
+    "G1": true,
+    "ecart_G1": 0.1,
+    "modes": 3
+   },
+   "repetitions": 2000,
+   "controles": 24,
+   "taille_lot": 28,
+   "duree_s": 11.2,
+   "ecart_type_s1_moins_s2_cellule_1_sigma": 0.0748,
+   "moyenne_s1_moins_s2_cellule_1_sigma": -0.001,
+   "seuil=20": {
+    "unilateral": 0.0655,
+    "unilateral_wilson95": [
+     0.0555,
+     0.0772
+    ],
+    "bilateral": 0.1345,
+    "bilateral_wilson95": [
+     0.1202,
+     0.1502
+    ]
+   },
+   "seuil=30": {
+    "unilateral": 0.029,
+    "unilateral_wilson95": [
+     0.0225,
+     0.0373
+    ],
+    "bilateral": 0.058,
+    "bilateral_wilson95": [
+     0.0486,
+     0.0691
+    ]
+   },
+   "seuil=40": {
+    "unilateral": 0.0185,
+    "unilateral_wilson95": [
+     0.0135,
+     0.0254
+    ],
+    "bilateral": 0.0325,
+    "bilateral_wilson95": [
+     0.0256,
+     0.0412
+    ]
+   },
+   "seuil=60": {
+    "unilateral": 0.006,
+    "unilateral_wilson95": [
+     0.0034,
+     0.0105
+    ],
+    "bilateral": 0.0105,
+    "bilateral_wilson95": [
+     0.0069,
+     0.016
+    ]
+   },
+   "G1": {
+    "par_mode": 0.252,
+    "par_mode_wilson95": [
+     0.2412,
+     0.2631
+    ],
+    "deux_modes": 0.051,
+    "deux_modes_wilson95": [
+     0.0422,
+     0.0615
+    ],
+    "deux_modes_et_controle_12_propre_bilateral_40": 0.0495,
+    "deux_modes_et_controle_12_propre_bilateral_40_wilson95": [
+     0.0408,
+     0.0599
+    ]
+   }
+  },
+  {
+   "etiquette": "trois_modes_24_controles|derive=0.1|entre",
+   "parametres": {
+    "N": 9600,
+    "taches": 64,
+    "a": 0.3,
+    "h": 0.3,
+    "rho": 0.0,
+    "coupe": "entre",
+    "derive": 0.1,
+    "derive_cellules": null,
+    "derive_taches": 0.0,
+    "grille": null,
+    "G1": true,
+    "ecart_G1": 0.1,
+    "modes": 3
+   },
+   "repetitions": 2000,
+   "controles": 24,
+   "taille_lot": 28,
+   "duree_s": 9.4,
+   "ecart_type_s1_moins_s2_cellule_1_sigma": 0.2131,
+   "moyenne_s1_moins_s2_cellule_1_sigma": 0.004,
+   "seuil=20": {
+    "unilateral": 0.3415,
+    "unilateral_wilson95": [
+     0.321,
+     0.3626
+    ],
+    "bilateral": 0.706,
+    "bilateral_wilson95": [
+     0.6857,
+     0.7256
+    ]
+   },
+   "seuil=30": {
+    "unilateral": 0.306,
+    "unilateral_wilson95": [
+     0.2862,
+     0.3266
+    ],
+    "bilateral": 0.6315,
+    "bilateral_wilson95": [
+     0.6101,
+     0.6524
+    ]
+   },
+   "seuil=40": {
+    "unilateral": 0.279,
+    "unilateral_wilson95": [
+     0.2598,
+     0.2991
+    ],
+    "bilateral": 0.5855,
+    "bilateral_wilson95": [
+     0.5638,
+     0.6069
+    ]
+   },
+   "seuil=60": {
+    "unilateral": 0.24,
+    "unilateral_wilson95": [
+     0.2218,
+     0.2592
+    ],
+    "bilateral": 0.513,
+    "bilateral_wilson95": [
+     0.4911,
+     0.5349
+    ]
+   },
+   "G1": {
+    "par_mode": 0.252,
+    "par_mode_wilson95": [
+     0.2412,
+     0.2631
+    ],
+    "deux_modes": 0.051,
+    "deux_modes_wilson95": [
+     0.0422,
+     0.0615
+    ],
+    "deux_modes_et_controle_12_propre_bilateral_40": 0.0235,
+    "deux_modes_et_controle_12_propre_bilateral_40_wilson95": [
+     0.0177,
+     0.0311
+    ]
+   }
+  },
+  {
+   "etiquette": "derive_une_cellule|derive=0.1|dans_temporelle",
+   "parametres": {
+    "N": 9600,
+    "taches": 64,
+    "a": 0.3,
+    "h": 0.3,
+    "rho": 0.0,
+    "coupe": "dans_temporelle",
+    "derive": 0.1,
+    "derive_cellules": 1,
+    "derive_taches": 0.0,
+    "grille": null,
+    "G1": true,
+    "ecart_G1": 0.1,
+    "modes": 2
+   },
+   "repetitions": 2000,
+   "controles": 16,
+   "taille_lot": 28,
+   "duree_s": 7.9,
+   "ecart_type_s1_moins_s2_cellule_1_sigma": 0.0755,
+   "moyenne_s1_moins_s2_cellule_1_sigma": -0.0994,
+   "seuil=20": {
+    "unilateral": 0.1755,
+    "unilateral_wilson95": [
+     0.1595,
+     0.1928
+    ],
+    "bilateral": 0.224,
+    "bilateral_wilson95": [
+     0.2063,
+     0.2428
+    ]
+   },
+   "seuil=30": {
+    "unilateral": 0.094,
+    "unilateral_wilson95": [
+     0.082,
+     0.1076
+    ],
+    "bilateral": 0.1185,
+    "bilateral_wilson95": [
+     0.1051,
+     0.1334
+    ]
+   },
+   "seuil=40": {
+    "unilateral": 0.057,
+    "unilateral_wilson95": [
+     0.0477,
+     0.068
+    ],
+    "bilateral": 0.0715,
+    "bilateral_wilson95": [
+     0.061,
+     0.0836
+    ]
+   },
+   "seuil=60": {
+    "unilateral": 0.032,
+    "unilateral_wilson95": [
+     0.0251,
+     0.0407
+    ],
+    "bilateral": 0.039,
+    "bilateral_wilson95": [
+     0.0314,
+     0.0484
+    ]
+   },
+   "G1": {
+    "par_mode": 0.2705,
+    "par_mode_wilson95": [
+     0.257,
+     0.2845
+    ],
+    "deux_modes": 0.113,
+    "deux_modes_wilson95": [
+     0.0999,
+     0.1276
+    ],
+    "deux_modes_et_controle_12_propre_bilateral_40": 0.1065,
+    "deux_modes_et_controle_12_propre_bilateral_40_wilson95": [
+     0.0937,
+     0.1208
+    ]
+   }
+  },
+  {
+   "etiquette": "derive_une_cellule|derive=0.1|dans_graine",
+   "parametres": {
+    "N": 9600,
+    "taches": 64,
+    "a": 0.3,
+    "h": 0.3,
+    "rho": 0.0,
+    "coupe": "dans_graine",
+    "derive": 0.1,
+    "derive_cellules": 1,
+    "derive_taches": 0.0,
+    "grille": null,
+    "G1": true,
+    "ecart_G1": 0.1,
+    "modes": 2
+   },
+   "repetitions": 2000,
+   "controles": 16,
+   "taille_lot": 28,
+   "duree_s": 10.0,
+   "ecart_type_s1_moins_s2_cellule_1_sigma": 0.0745,
+   "moyenne_s1_moins_s2_cellule_1_sigma": -0.003,
+   "seuil=20": {
+    "unilateral": 0.049,
+    "unilateral_wilson95": [
+     0.0404,
+     0.0594
+    ],
+    "bilateral": 0.101,
+    "bilateral_wilson95": [
+     0.0885,
+     0.115
+    ]
+   },
+   "seuil=30": {
+    "unilateral": 0.022,
+    "unilateral_wilson95": [
+     0.0164,
+     0.0294
+    ],
+    "bilateral": 0.0425,
+    "bilateral_wilson95": [
+     0.0345,
+     0.0523
+    ]
+   },
+   "seuil=40": {
+    "unilateral": 0.0145,
+    "unilateral_wilson95": [
+     0.0101,
+     0.0207
+    ],
+    "bilateral": 0.024,
+    "bilateral_wilson95": [
+     0.0181,
+     0.0317
+    ]
+   },
+   "seuil=60": {
+    "unilateral": 0.0065,
+    "unilateral_wilson95": [
+     0.0038,
+     0.0111
+    ],
+    "bilateral": 0.011,
+    "bilateral_wilson95": [
+     0.0073,
+     0.0166
+    ]
+   },
+   "G1": {
+    "par_mode": 0.2705,
+    "par_mode_wilson95": [
+     0.257,
+     0.2845
+    ],
+    "deux_modes": 0.113,
+    "deux_modes_wilson95": [
+     0.0999,
+     0.1276
+    ],
+    "deux_modes_et_controle_12_propre_bilateral_40": 0.11,
+    "deux_modes_et_controle_12_propre_bilateral_40_wilson95": [
+     0.097,
+     0.1245
+    ]
+   }
+  },
+  {
+   "etiquette": "derive_une_cellule|derive=0.1|entre",
+   "parametres": {
+    "N": 9600,
+    "taches": 64,
+    "a": 0.3,
+    "h": 0.3,
+    "rho": 0.0,
+    "coupe": "entre",
+    "derive": 0.1,
+    "derive_cellules": 1,
+    "derive_taches": 0.0,
+    "grille": null,
+    "G1": true,
+    "ecart_G1": 0.1,
+    "modes": 2
+   },
+   "repetitions": 2000,
+   "controles": 16,
+   "taille_lot": 28,
+   "duree_s": 8.7,
+   "ecart_type_s1_moins_s2_cellule_1_sigma": 0.211,
+   "moyenne_s1_moins_s2_cellule_1_sigma": 0.0037,
+   "seuil=20": {
+    "unilateral": 0.3395,
+    "unilateral_wilson95": [
+     0.3191,
+     0.3605
+    ],
+    "bilateral": 0.681,
+    "bilateral_wilson95": [
+     0.6602,
+     0.7011
+    ]
+   },
+   "seuil=30": {
+    "unilateral": 0.302,
+    "unilateral_wilson95": [
+     0.2823,
+     0.3225
+    ],
+    "bilateral": 0.6055,
+    "bilateral_wilson95": [
+     0.5839,
+     0.6267
+    ]
+   },
+   "seuil=40": {
+    "unilateral": 0.2765,
+    "unilateral_wilson95": [
+     0.2573,
+     0.2965
+    ],
+    "bilateral": 0.5525,
+    "bilateral_wilson95": [
+     0.5306,
+     0.5742
+    ]
+   },
+   "seuil=60": {
+    "unilateral": 0.2465,
+    "unilateral_wilson95": [
+     0.2281,
+     0.2659
+    ],
+    "bilateral": 0.4945,
+    "bilateral_wilson95": [
+     0.4726,
+     0.5164
+    ]
+   },
+   "G1": {
+    "par_mode": 0.2705,
+    "par_mode_wilson95": [
+     0.257,
+     0.2845
+    ],
+    "deux_modes": 0.113,
+    "deux_modes_wilson95": [
+     0.0999,
+     0.1276
+    ],
+    "deux_modes_et_controle_12_propre_bilateral_40": 0.052,
+    "deux_modes_et_controle_12_propre_bilateral_40_wilson95": [
+     0.0431,
+     0.0626
+    ]
+   }
+  },
+  {
+   "etiquette": "derive_une_cellule|derive=0.2|dans_temporelle",
+   "parametres": {
+    "N": 9600,
+    "taches": 64,
+    "a": 0.3,
+    "h": 0.3,
+    "rho": 0.0,
+    "coupe": "dans_temporelle",
+    "derive": 0.2,
+    "derive_cellules": 1,
+    "derive_taches": 0.0,
+    "grille": null,
+    "G1": true,
+    "ecart_G1": 0.1,
+    "modes": 2
+   },
+   "repetitions": 2000,
+   "controles": 16,
+   "taille_lot": 28,
+   "duree_s": 8.1,
+   "ecart_type_s1_moins_s2_cellule_1_sigma": 0.0741,
+   "moyenne_s1_moins_s2_cellule_1_sigma": -0.2,
+   "seuil=20": {
+    "unilateral": 0.569,
+    "unilateral_wilson95": [
+     0.5472,
+     0.5906
+    ],
+    "bilateral": 0.595,
+    "bilateral_wilson95": [
+     0.5733,
+     0.6163
+    ]
+   },
+   "seuil=30": {
+    "unilateral": 0.4515,
+    "unilateral_wilson95": [
+     0.4298,
+     0.4734
+    ],
+    "bilateral": 0.4655,
+    "bilateral_wilson95": [
+     0.4437,
+     0.4874
+    ]
+   },
+   "seuil=40": {
+    "unilateral": 0.36,
+    "unilateral_wilson95": [
+     0.3393,
+     0.3813
+    ],
+    "bilateral": 0.3695,
+    "bilateral_wilson95": [
+     0.3486,
+     0.3909
+    ]
+   },
+   "seuil=60": {
+    "unilateral": 0.2565,
+    "unilateral_wilson95": [
+     0.2378,
+     0.2761
+    ],
+    "bilateral": 0.26,
+    "bilateral_wilson95": [
+     0.2412,
+     0.2797
+    ]
+   },
+   "G1": {
+    "par_mode": 0.279,
+    "par_mode_wilson95": [
+     0.2653,
+     0.2931
+    ],
+    "deux_modes": 0.1255,
+    "deux_modes_wilson95": [
+     0.1117,
+     0.1407
+    ],
+    "deux_modes_et_controle_12_propre_bilateral_40": 0.076,
+    "deux_modes_et_controle_12_propre_bilateral_40_wilson95": [
+     0.0652,
+     0.0884
+    ]
+   }
+  },
+  {
+   "etiquette": "derive_une_cellule|derive=0.2|dans_graine",
+   "parametres": {
+    "N": 9600,
+    "taches": 64,
+    "a": 0.3,
+    "h": 0.3,
+    "rho": 0.0,
+    "coupe": "dans_graine",
+    "derive": 0.2,
+    "derive_cellules": 1,
+    "derive_taches": 0.0,
+    "grille": null,
+    "G1": true,
+    "ecart_G1": 0.1,
+    "modes": 2
+   },
+   "repetitions": 2000,
+   "controles": 16,
+   "taille_lot": 28,
+   "duree_s": 9.9,
+   "ecart_type_s1_moins_s2_cellule_1_sigma": 0.0743,
+   "moyenne_s1_moins_s2_cellule_1_sigma": 0.0007,
+   "seuil=20": {
+    "unilateral": 0.05,
+    "unilateral_wilson95": [
+     0.0413,
+     0.0604
+    ],
+    "bilateral": 0.1005,
+    "bilateral_wilson95": [
+     0.0881,
+     0.1145
+    ]
+   },
+   "seuil=30": {
+    "unilateral": 0.0215,
+    "unilateral_wilson95": [
+     0.016,
+     0.0288
+    ],
+    "bilateral": 0.0465,
+    "bilateral_wilson95": [
+     0.0381,
+     0.0566
+    ]
+   },
+   "seuil=40": {
+    "unilateral": 0.013,
+    "unilateral_wilson95": [
+     0.0089,
+     0.019
+    ],
+    "bilateral": 0.028,
+    "bilateral_wilson95": [
+     0.0216,
+     0.0362
+    ]
+   },
+   "seuil=60": {
+    "unilateral": 0.005,
+    "unilateral_wilson95": [
+     0.0027,
+     0.0092
+    ],
+    "bilateral": 0.012,
+    "bilateral_wilson95": [
+     0.0081,
+     0.0178
+    ]
+   },
+   "G1": {
+    "par_mode": 0.279,
+    "par_mode_wilson95": [
+     0.2653,
+     0.2931
+    ],
+    "deux_modes": 0.1255,
+    "deux_modes_wilson95": [
+     0.1117,
+     0.1407
+    ],
+    "deux_modes_et_controle_12_propre_bilateral_40": 0.121,
+    "deux_modes_et_controle_12_propre_bilateral_40_wilson95": [
+     0.1074,
+     0.136
+    ]
+   }
+  },
+  {
+   "etiquette": "derive_une_cellule|derive=0.2|entre",
+   "parametres": {
+    "N": 9600,
+    "taches": 64,
+    "a": 0.3,
+    "h": 0.3,
+    "rho": 0.0,
+    "coupe": "entre",
+    "derive": 0.2,
+    "derive_cellules": 1,
+    "derive_taches": 0.0,
+    "grille": null,
+    "G1": true,
+    "ecart_G1": 0.1,
+    "modes": 2
+   },
+   "repetitions": 2000,
+   "controles": 16,
+   "taille_lot": 28,
+   "duree_s": 8.7,
+   "ecart_type_s1_moins_s2_cellule_1_sigma": 0.2019,
+   "moyenne_s1_moins_s2_cellule_1_sigma": 0.0027,
+   "seuil=20": {
+    "unilateral": 0.333,
+    "unilateral_wilson95": [
+     0.3127,
+     0.354
+    ],
+    "bilateral": 0.6635,
+    "bilateral_wilson95": [
+     0.6425,
+     0.6839
+    ]
+   },
+   "seuil=30": {
+    "unilateral": 0.2935,
+    "unilateral_wilson95": [
+     0.274,
+     0.3138
+    ],
+    "bilateral": 0.586,
+    "bilateral_wilson95": [
+     0.5643,
+     0.6074
+    ]
+   },
+   "seuil=40": {
+    "unilateral": 0.2675,
+    "unilateral_wilson95": [
+     0.2486,
+     0.2873
+    ],
+    "bilateral": 0.531,
+    "bilateral_wilson95": [
+     0.5091,
+     0.5528
+    ]
+   },
+   "seuil=60": {
+    "unilateral": 0.229,
+    "unilateral_wilson95": [
+     0.2111,
+     0.2479
+    ],
+    "bilateral": 0.4595,
+    "bilateral_wilson95": [
+     0.4378,
+     0.4814
+    ]
+   },
+   "G1": {
+    "par_mode": 0.279,
+    "par_mode_wilson95": [
+     0.2653,
+     0.2931
+    ],
+    "deux_modes": 0.1255,
+    "deux_modes_wilson95": [
+     0.1117,
+     0.1407
+    ],
+    "deux_modes_et_controle_12_propre_bilateral_40": 0.057,
+    "deux_modes_et_controle_12_propre_bilateral_40_wilson95": [
+     0.0477,
+     0.068
+    ]
+   }
+  },
+  {
+   "etiquette": "derive_ordre_taches|d=0.1|dans_temporelle",
+   "parametres": {
+    "N": 9600,
+    "taches": 64,
+    "a": 0.3,
+    "h": 0.3,
+    "rho": 0.0,
+    "coupe": "dans_temporelle",
+    "derive": 0.0,
+    "derive_cellules": null,
+    "derive_taches": 0.1,
+    "grille": null,
+    "G1": true,
+    "ecart_G1": 0.1,
+    "modes": 2
+   },
+   "repetitions": 2000,
+   "controles": 16,
+   "taille_lot": 28,
+   "duree_s": 8.1,
+   "ecart_type_s1_moins_s2_cellule_1_sigma": 0.0767,
+   "moyenne_s1_moins_s2_cellule_1_sigma": 0.0012,
+   "seuil=20": {
+    "unilateral": 0.059,
+    "unilateral_wilson95": [
+     0.0495,
+     0.0702
+    ],
+    "bilateral": 0.1155,
+    "bilateral_wilson95": [
+     0.1022,
+     0.1303
+    ]
+   },
+   "seuil=30": {
+    "unilateral": 0.03,
+    "unilateral_wilson95": [
+     0.0234,
+     0.0384
+    ],
+    "bilateral": 0.0555,
+    "bilateral_wilson95": [
+     0.0463,
+     0.0664
+    ]
+   },
+   "seuil=40": {
+    "unilateral": 0.013,
+    "unilateral_wilson95": [
+     0.0089,
+     0.019
+    ],
+    "bilateral": 0.028,
+    "bilateral_wilson95": [
+     0.0216,
+     0.0362
+    ]
+   },
+   "seuil=60": {
+    "unilateral": 0.0055,
+    "unilateral_wilson95": [
+     0.0031,
+     0.0098
+    ],
+    "bilateral": 0.011,
+    "bilateral_wilson95": [
+     0.0073,
+     0.0166
+    ]
+   },
+   "G1": {
+    "par_mode": 0.2425,
+    "par_mode_wilson95": [
+     0.2295,
+     0.256
+    ],
+    "deux_modes": 0.0905,
+    "deux_modes_wilson95": [
+     0.0787,
+     0.1039
+    ],
+    "deux_modes_et_controle_12_propre_bilateral_40": 0.0855,
+    "deux_modes_et_controle_12_propre_bilateral_40_wilson95": [
+     0.074,
+     0.0986
+    ]
+   }
+  },
+  {
+   "etiquette": "derive_ordre_taches|d=0.1|entre",
+   "parametres": {
+    "N": 9600,
+    "taches": 64,
+    "a": 0.3,
+    "h": 0.3,
+    "rho": 0.0,
+    "coupe": "entre",
+    "derive": 0.0,
+    "derive_cellules": null,
+    "derive_taches": 0.1,
+    "grille": null,
+    "G1": true,
+    "ecart_G1": 0.1,
+    "modes": 2
+   },
+   "repetitions": 2000,
+   "controles": 16,
+   "taille_lot": 28,
+   "duree_s": 9.1,
+   "ecart_type_s1_moins_s2_cellule_1_sigma": 0.2115,
+   "moyenne_s1_moins_s2_cellule_1_sigma": 0.0021,
+   "seuil=20": {
+    "unilateral": 0.35,
+    "unilateral_wilson95": [
+     0.3294,
+     0.3712
+    ],
+    "bilateral": 0.6955,
+    "bilateral_wilson95": [
+     0.675,
+     0.7153
+    ]
+   },
+   "seuil=30": {
+    "unilateral": 0.312,
+    "unilateral_wilson95": [
+     0.2921,
+     0.3326
+    ],
+    "bilateral": 0.621,
+    "bilateral_wilson95": [
+     0.5995,
+     0.642
+    ]
+   },
+   "seuil=40": {
+    "unilateral": 0.284,
+    "unilateral_wilson95": [
+     0.2647,
+     0.3042
+    ],
+    "bilateral": 0.566,
+    "bilateral_wilson95": [
+     0.5442,
+     0.5876
+    ]
+   },
+   "seuil=60": {
+    "unilateral": 0.236,
+    "unilateral_wilson95": [
+     0.2179,
+     0.2551
+    ],
+    "bilateral": 0.484,
+    "bilateral_wilson95": [
+     0.4621,
+     0.5059
+    ]
+   },
+   "G1": {
+    "par_mode": 0.2425,
+    "par_mode_wilson95": [
+     0.2295,
+     0.256
+    ],
+    "deux_modes": 0.0905,
+    "deux_modes_wilson95": [
+     0.0787,
+     0.1039
+    ],
+    "deux_modes_et_controle_12_propre_bilateral_40": 0.0375,
+    "deux_modes_et_controle_12_propre_bilateral_40_wilson95": [
+     0.03,
+     0.0468
+    ]
+   }
+  },
+  {
+   "etiquette": "derive_ordre_taches|d=0.1|entre_contigu",
+   "parametres": {
+    "N": 9600,
+    "taches": 64,
+    "a": 0.3,
+    "h": 0.3,
+    "rho": 0.0,
+    "coupe": "entre_contigu",
+    "derive": 0.0,
+    "derive_cellules": null,
+    "derive_taches": 0.1,
+    "grille": null,
+    "G1": true,
+    "ecart_G1": 0.1,
+    "modes": 2
+   },
+   "repetitions": 2000,
+   "controles": 16,
+   "taille_lot": 28,
+   "duree_s": 8.0,
+   "ecart_type_s1_moins_s2_cellule_1_sigma": 0.2086,
+   "moyenne_s1_moins_s2_cellule_1_sigma": -0.1046,
+   "seuil=20": {
+    "unilateral": 0.541,
+    "unilateral_wilson95": [
+     0.5191,
+     0.5627
+    ],
+    "bilateral": 0.7225,
+    "bilateral_wilson95": [
+     0.7025,
+     0.7417
+    ]
+   },
+   "seuil=30": {
+    "unilateral": 0.4965,
+    "unilateral_wilson95": [
+     0.4746,
+     0.5184
+    ],
+    "bilateral": 0.649,
+    "bilateral_wilson95": [
+     0.6278,
+     0.6696
+    ]
+   },
+   "seuil=40": {
+    "unilateral": 0.4615,
+    "unilateral_wilson95": [
+     0.4397,
+     0.4834
+    ],
+    "bilateral": 0.592,
+    "bilateral_wilson95": [
+     0.5703,
+     0.6133
+    ]
+   },
+   "seuil=60": {
+    "unilateral": 0.424,
+    "unilateral_wilson95": [
+     0.4025,
+     0.4458
+    ],
+    "bilateral": 0.5255,
+    "bilateral_wilson95": [
+     0.5036,
+     0.5473
+    ]
+   },
+   "G1": {
+    "par_mode": 0.2425,
+    "par_mode_wilson95": [
+     0.2295,
+     0.256
+    ],
+    "deux_modes": 0.0905,
+    "deux_modes_wilson95": [
+     0.0787,
+     0.1039
+    ],
+    "deux_modes_et_controle_12_propre_bilateral_40": 0.0375,
+    "deux_modes_et_controle_12_propre_bilateral_40_wilson95": [
+     0.03,
+     0.0468
+    ]
+   }
+  },
+  {
+   "etiquette": "derive_ordre_taches|d=0.2|dans_temporelle",
+   "parametres": {
+    "N": 9600,
+    "taches": 64,
+    "a": 0.3,
+    "h": 0.3,
+    "rho": 0.0,
+    "coupe": "dans_temporelle",
+    "derive": 0.0,
+    "derive_cellules": null,
+    "derive_taches": 0.2,
+    "grille": null,
+    "G1": true,
+    "ecart_G1": 0.1,
+    "modes": 2
+   },
+   "repetitions": 2000,
+   "controles": 16,
+   "taille_lot": 28,
+   "duree_s": 8.0,
+   "ecart_type_s1_moins_s2_cellule_1_sigma": 0.075,
+   "moyenne_s1_moins_s2_cellule_1_sigma": 0.0002,
+   "seuil=20": {
+    "unilateral": 0.055,
+    "unilateral_wilson95": [
+     0.0458,
+     0.0659
+    ],
+    "bilateral": 0.1185,
+    "bilateral_wilson95": [
+     0.1051,
+     0.1334
+    ]
+   },
+   "seuil=30": {
+    "unilateral": 0.03,
+    "unilateral_wilson95": [
+     0.0234,
+     0.0384
+    ],
+    "bilateral": 0.061,
+    "bilateral_wilson95": [
+     0.0513,
+     0.0724
+    ]
+   },
+   "seuil=40": {
+    "unilateral": 0.0165,
+    "unilateral_wilson95": [
+     0.0118,
+     0.0231
+    ],
+    "bilateral": 0.0345,
+    "bilateral_wilson95": [
+     0.0274,
+     0.0434
+    ]
+   },
+   "seuil=60": {
+    "unilateral": 0.005,
+    "unilateral_wilson95": [
+     0.0027,
+     0.0092
+    ],
+    "bilateral": 0.0125,
+    "bilateral_wilson95": [
+     0.0085,
+     0.0184
+    ]
+   },
+   "G1": {
+    "par_mode": 0.2462,
+    "par_mode_wilson95": [
+     0.2331,
+     0.2598
+    ],
+    "deux_modes": 0.092,
+    "deux_modes_wilson95": [
+     0.0801,
+     0.1055
+    ],
+    "deux_modes_et_controle_12_propre_bilateral_40": 0.088,
+    "deux_modes_et_controle_12_propre_bilateral_40_wilson95": [
+     0.0764,
+     0.1012
+    ]
+   }
+  },
+  {
+   "etiquette": "derive_ordre_taches|d=0.2|entre",
+   "parametres": {
+    "N": 9600,
+    "taches": 64,
+    "a": 0.3,
+    "h": 0.3,
+    "rho": 0.0,
+    "coupe": "entre",
+    "derive": 0.0,
+    "derive_cellules": null,
+    "derive_taches": 0.2,
+    "grille": null,
+    "G1": true,
+    "ecart_G1": 0.1,
+    "modes": 2
+   },
+   "repetitions": 2000,
+   "controles": 16,
+   "taille_lot": 28,
+   "duree_s": 8.8,
+   "ecart_type_s1_moins_s2_cellule_1_sigma": 0.2107,
+   "moyenne_s1_moins_s2_cellule_1_sigma": 0.0041,
+   "seuil=20": {
+    "unilateral": 0.334,
+    "unilateral_wilson95": [
+     0.3137,
+     0.355
+    ],
+    "bilateral": 0.702,
+    "bilateral_wilson95": [
+     0.6816,
+     0.7216
+    ]
+   },
+   "seuil=30": {
+    "unilateral": 0.2955,
+    "unilateral_wilson95": [
+     0.2759,
+     0.3159
+    ],
+    "bilateral": 0.611,
+    "bilateral_wilson95": [
+     0.5894,
+     0.6321
+    ]
+   },
+   "seuil=40": {
+    "unilateral": 0.2725,
+    "unilateral_wilson95": [
+     0.2534,
+     0.2924
+    ],
+    "bilateral": 0.5675,
+    "bilateral_wilson95": [
+     0.5457,
+     0.5891
+    ]
+   },
+   "seuil=60": {
+    "unilateral": 0.2315,
+    "unilateral_wilson95": [
+     0.2135,
+     0.2505
+    ],
+    "bilateral": 0.4855,
+    "bilateral_wilson95": [
+     0.4636,
+     0.5074
+    ]
+   },
+   "G1": {
+    "par_mode": 0.2462,
+    "par_mode_wilson95": [
+     0.2331,
+     0.2598
+    ],
+    "deux_modes": 0.092,
+    "deux_modes_wilson95": [
+     0.0801,
+     0.1055
+    ],
+    "deux_modes_et_controle_12_propre_bilateral_40": 0.0435,
+    "deux_modes_et_controle_12_propre_bilateral_40_wilson95": [
+     0.0354,
+     0.0533
+    ]
+   }
+  },
+  {
+   "etiquette": "derive_ordre_taches|d=0.2|entre_contigu",
+   "parametres": {
+    "N": 9600,
+    "taches": 64,
+    "a": 0.3,
+    "h": 0.3,
+    "rho": 0.0,
+    "coupe": "entre_contigu",
+    "derive": 0.0,
+    "derive_cellules": null,
+    "derive_taches": 0.2,
+    "grille": null,
+    "G1": true,
+    "ecart_G1": 0.1,
+    "modes": 2
+   },
+   "repetitions": 2000,
+   "controles": 16,
+   "taille_lot": 28,
+   "duree_s": 8.2,
+   "ecart_type_s1_moins_s2_cellule_1_sigma": 0.2093,
+   "moyenne_s1_moins_s2_cellule_1_sigma": -0.2024,
+   "seuil=20": {
+    "unilateral": 0.7155,
+    "unilateral_wilson95": [
+     0.6953,
+     0.7348
+    ],
+    "bilateral": 0.804,
+    "bilateral_wilson95": [
+     0.786,
+     0.8208
+    ]
+   },
+   "seuil=30": {
+    "unilateral": 0.6775,
+    "unilateral_wilson95": [
+     0.6567,
+     0.6976
+    ],
+    "bilateral": 0.7485,
+    "bilateral_wilson95": [
+     0.729,
+     0.767
+    ]
+   },
+   "seuil=40": {
+    "unilateral": 0.653,
+    "unilateral_wilson95": [
+     0.6319,
+     0.6736
+    ],
+    "bilateral": 0.7115,
+    "bilateral_wilson95": [
+     0.6913,
+     0.7309
+    ]
+   },
+   "seuil=60": {
+    "unilateral": 0.6115,
+    "unilateral_wilson95": [
+     0.5899,
+     0.6326
+    ],
+    "bilateral": 0.658,
+    "bilateral_wilson95": [
+     0.6369,
+     0.6785
+    ]
+   },
+   "G1": {
+    "par_mode": 0.2462,
+    "par_mode_wilson95": [
+     0.2331,
+     0.2598
+    ],
+    "deux_modes": 0.092,
+    "deux_modes_wilson95": [
+     0.0801,
+     0.1055
+    ],
+    "deux_modes_et_controle_12_propre_bilateral_40": 0.024,
+    "deux_modes_et_controle_12_propre_bilateral_40_wilson95": [
+     0.0181,
+     0.0317
+    ]
+   }
+  },
+  {
+   "etiquette": "taille|dans|T=64|K_cal=20",
+   "parametres": {
+    "N": 1280,
+    "taches": 64,
+    "a": 0.3,
+    "h": 0.3,
+    "rho": 0.0,
+    "coupe": "dans_temporelle",
+    "derive": 0.0,
+    "derive_cellules": null,
+    "derive_taches": 0.0,
+    "grille": null,
+    "G1": false,
+    "ecart_G1": 0.1,
+    "modes": 2
+   },
+   "repetitions": 2000,
+   "controles": 16,
+   "taille_lot": 50,
+   "duree_s": 1.9,
+   "ecart_type_s1_moins_s2_cellule_1_sigma": 0.2119,
+   "moyenne_s1_moins_s2_cellule_1_sigma": -0.0017,
+   "seuil=20": {
+    "unilateral": 0.806,
+    "unilateral_wilson95": [
+     0.7881,
+     0.8227
+    ],
+    "bilateral": 0.968,
+    "bilateral_wilson95": [
+     0.9593,
+     0.9749
+    ]
+   },
+   "seuil=30": {
+    "unilateral": 0.739,
+    "unilateral_wilson95": [
+     0.7193,
+     0.7578
+    ],
+    "bilateral": 0.9415,
+    "bilateral_wilson95": [
+     0.9303,
+     0.951
+    ]
+   },
+   "seuil=40": {
+    "unilateral": 0.6915,
+    "unilateral_wilson95": [
+     0.6709,
+     0.7114
+    ],
+    "bilateral": 0.9085,
+    "bilateral_wilson95": [
+     0.8951,
+     0.9204
+    ]
+   },
+   "seuil=60": {
+    "unilateral": 0.6085,
+    "unilateral_wilson95": [
+     0.5869,
+     0.6297
+    ],
+    "bilateral": 0.861,
+    "bilateral_wilson95": [
+     0.8451,
+     0.8755
+    ]
+   }
+  },
+  {
+   "etiquette": "taille|dans|T=64|K_cal=30",
+   "parametres": {
+    "N": 1920,
+    "taches": 64,
+    "a": 0.3,
+    "h": 0.3,
+    "rho": 0.0,
+    "coupe": "dans_temporelle",
+    "derive": 0.0,
+    "derive_cellules": null,
+    "derive_taches": 0.0,
+    "grille": null,
+    "G1": false,
+    "ecart_G1": 0.1,
+    "modes": 2
+   },
+   "repetitions": 2000,
+   "controles": 16,
+   "taille_lot": 50,
+   "duree_s": 2.3,
+   "ecart_type_s1_moins_s2_cellule_1_sigma": 0.1717,
+   "moyenne_s1_moins_s2_cellule_1_sigma": 0.0059,
+   "seuil=20": {
+    "unilateral": 0.6815,
+    "unilateral_wilson95": [
+     0.6608,
+     0.7016
+    ],
+    "bilateral": 0.917,
+    "bilateral_wilson95": [
+     0.9041,
+     0.9283
+    ]
+   },
+   "seuil=30": {
+    "unilateral": 0.581,
+    "unilateral_wilson95": [
+     0.5592,
+     0.6024
+    ],
+    "bilateral": 0.8525,
+    "bilateral_wilson95": [
+     0.8363,
+     0.8674
+    ]
+   },
+   "seuil=40": {
+    "unilateral": 0.523,
+    "unilateral_wilson95": [
+     0.5011,
+     0.5448
+    ],
+    "bilateral": 0.79,
+    "bilateral_wilson95": [
+     0.7716,
+     0.8073
+    ]
+   },
+   "seuil=60": {
+    "unilateral": 0.4365,
+    "unilateral_wilson95": [
+     0.4149,
+     0.4583
+    ],
+    "bilateral": 0.6955,
+    "bilateral_wilson95": [
+     0.675,
+     0.7153
+    ]
+   }
+  },
+  {
+   "etiquette": "taille|dans|T=64|K_cal=40",
+   "parametres": {
+    "N": 2560,
+    "taches": 64,
+    "a": 0.3,
+    "h": 0.3,
+    "rho": 0.0,
+    "coupe": "dans_temporelle",
+    "derive": 0.0,
+    "derive_cellules": null,
+    "derive_taches": 0.0,
+    "grille": null,
+    "G1": false,
+    "ecart_G1": 0.1,
+    "modes": 2
+   },
+   "repetitions": 2000,
+   "controles": 16,
+   "taille_lot": 50,
+   "duree_s": 2.5,
+   "ecart_type_s1_moins_s2_cellule_1_sigma": 0.1532,
+   "moyenne_s1_moins_s2_cellule_1_sigma": -0.0016,
+   "seuil=20": {
+    "unilateral": 0.574,
+    "unilateral_wilson95": [
+     0.5522,
+     0.5955
+    ],
+    "bilateral": 0.8395,
+    "bilateral_wilson95": [
+     0.8228,
+     0.8549
+    ]
+   },
+   "seuil=30": {
+    "unilateral": 0.4805,
+    "unilateral_wilson95": [
+     0.4587,
+     0.5024
+    ],
+    "bilateral": 0.736,
+    "bilateral_wilson95": [
+     0.7162,
+     0.7549
+    ]
+   },
+   "seuil=40": {
+    "unilateral": 0.4115,
+    "unilateral_wilson95": [
+     0.3901,
+     0.4332
+    ],
+    "bilateral": 0.6525,
+    "bilateral_wilson95": [
+     0.6314,
+     0.6731
+    ]
+   },
+   "seuil=60": {
+    "unilateral": 0.3155,
+    "unilateral_wilson95": [
+     0.2955,
+     0.3362
+    ],
+    "bilateral": 0.54,
+    "bilateral_wilson95": [
+     0.5181,
+     0.5617
+    ]
+   }
+  },
+  {
+   "etiquette": "taille|dans|T=64|K_cal=50",
+   "parametres": {
+    "N": 3200,
+    "taches": 64,
+    "a": 0.3,
+    "h": 0.3,
+    "rho": 0.0,
+    "coupe": "dans_temporelle",
+    "derive": 0.0,
+    "derive_cellules": null,
+    "derive_taches": 0.0,
+    "grille": null,
+    "G1": false,
+    "ecart_G1": 0.1,
+    "modes": 2
+   },
+   "repetitions": 2000,
+   "controles": 16,
+   "taille_lot": 50,
+   "duree_s": 2.8,
+   "ecart_type_s1_moins_s2_cellule_1_sigma": 0.1313,
+   "moyenne_s1_moins_s2_cellule_1_sigma": -0.0001,
+   "seuil=20": {
+    "unilateral": 0.445,
+    "unilateral_wilson95": [
+     0.4233,
+     0.4669
+    ],
+    "bilateral": 0.7055,
+    "bilateral_wilson95": [
+     0.6851,
+     0.7251
+    ]
+   },
+   "seuil=30": {
+    "unilateral": 0.344,
+    "unilateral_wilson95": [
+     0.3235,
+     0.3651
+    ],
+    "bilateral": 0.5805,
+    "bilateral_wilson95": [
+     0.5587,
+     0.602
+    ]
+   },
+   "seuil=40": {
+    "unilateral": 0.282,
+    "unilateral_wilson95": [
+     0.2627,
+     0.3021
+    ],
+    "bilateral": 0.487,
+    "bilateral_wilson95": [
+     0.4651,
+     0.5089
+    ]
+   },
+   "seuil=60": {
+    "unilateral": 0.194,
+    "unilateral_wilson95": [
+     0.1773,
+     0.2119
+    ],
+    "bilateral": 0.3465,
+    "bilateral_wilson95": [
+     0.326,
+     0.3676
+    ]
+   }
+  },
+  {
+   "etiquette": "taille|dans|T=64|K_cal=75",
+   "parametres": {
+    "N": 4800,
+    "taches": 64,
+    "a": 0.3,
+    "h": 0.3,
+    "rho": 0.0,
+    "coupe": "dans_temporelle",
+    "derive": 0.0,
+    "derive_cellules": null,
+    "derive_taches": 0.0,
+    "grille": null,
+    "G1": false,
+    "ecart_G1": 0.1,
+    "modes": 2
+   },
+   "repetitions": 2000,
+   "controles": 16,
+   "taille_lot": 50,
+   "duree_s": 3.9,
+   "ecart_type_s1_moins_s2_cellule_1_sigma": 0.1065,
+   "moyenne_s1_moins_s2_cellule_1_sigma": 0.0056,
+   "seuil=20": {
+    "unilateral": 0.249,
+    "unilateral_wilson95": [
+     0.2305,
+     0.2684
+    ],
+    "bilateral": 0.48,
+    "bilateral_wilson95": [
+     0.4582,
+     0.5019
+    ]
+   },
+   "seuil=30": {
+    "unilateral": 0.159,
+    "unilateral_wilson95": [
+     0.1436,
+     0.1757
+    ],
+    "bilateral": 0.3325,
+    "bilateral_wilson95": [
+     0.3122,
+     0.3535
+    ]
+   },
+   "seuil=40": {
+    "unilateral": 0.12,
+    "unilateral_wilson95": [
+     0.1065,
+     0.135
+    ],
+    "bilateral": 0.2595,
+    "bilateral_wilson95": [
+     0.2408,
+     0.2792
+    ]
+   },
+   "seuil=60": {
+    "unilateral": 0.0745,
+    "unilateral_wilson95": [
+     0.0638,
+     0.0868
+    ],
+    "bilateral": 0.172,
+    "bilateral_wilson95": [
+     0.1561,
+     0.1892
+    ]
+   }
+  },
+  {
+   "etiquette": "taille|dans|T=64|K_cal=100",
+   "parametres": {
+    "N": 6400,
+    "taches": 64,
+    "a": 0.3,
+    "h": 0.3,
+    "rho": 0.0,
+    "coupe": "dans_temporelle",
+    "derive": 0.0,
+    "derive_cellules": null,
+    "derive_taches": 0.0,
+    "grille": null,
+    "G1": false,
+    "ecart_G1": 0.1,
+    "modes": 2
+   },
+   "repetitions": 2000,
+   "controles": 16,
+   "taille_lot": 43,
+   "duree_s": 4.6,
+   "ecart_type_s1_moins_s2_cellule_1_sigma": 0.0901,
+   "moyenne_s1_moins_s2_cellule_1_sigma": -0.0017,
+   "seuil=20": {
+    "unilateral": 0.154,
+    "unilateral_wilson95": [
+     0.1388,
+     0.1705
+    ],
+    "bilateral": 0.2895,
+    "bilateral_wilson95": [
+     0.27,
+     0.3098
+    ]
+   },
+   "seuil=30": {
+    "unilateral": 0.088,
+    "unilateral_wilson95": [
+     0.0764,
+     0.1012
+    ],
+    "bilateral": 0.1665,
+    "bilateral_wilson95": [
+     0.1508,
+     0.1835
+    ]
+   },
+   "seuil=40": {
+    "unilateral": 0.0575,
+    "unilateral_wilson95": [
+     0.0481,
+     0.0686
+    ],
+    "bilateral": 0.1115,
+    "bilateral_wilson95": [
+     0.0984,
+     0.126
+    ]
+   },
+   "seuil=60": {
+    "unilateral": 0.03,
+    "unilateral_wilson95": [
+     0.0234,
+     0.0384
+    ],
+    "bilateral": 0.057,
+    "bilateral_wilson95": [
+     0.0477,
+     0.068
+    ]
+   }
+  },
+  {
+   "etiquette": "taille|dans|T=64|K_cal=112",
+   "parametres": {
+    "N": 7168,
+    "taches": 64,
+    "a": 0.3,
+    "h": 0.3,
+    "rho": 0.0,
+    "coupe": "dans_temporelle",
+    "derive": 0.0,
+    "derive_cellules": null,
+    "derive_taches": 0.0,
+    "grille": null,
+    "G1": false,
+    "ecart_G1": 0.1,
+    "modes": 2
+   },
+   "repetitions": 2000,
+   "controles": 16,
+   "taille_lot": 38,
+   "duree_s": 5.0,
+   "ecart_type_s1_moins_s2_cellule_1_sigma": 0.0884,
+   "moyenne_s1_moins_s2_cellule_1_sigma": 0.0025,
+   "seuil=20": {
+    "unilateral": 0.123,
+    "unilateral_wilson95": [
+     0.1093,
+     0.1381
+    ],
+    "bilateral": 0.2275,
+    "bilateral_wilson95": [
+     0.2097,
+     0.2464
+    ]
+   },
+   "seuil=30": {
+    "unilateral": 0.069,
+    "unilateral_wilson95": [
+     0.0587,
+     0.081
+    ],
+    "bilateral": 0.1265,
+    "bilateral_wilson95": [
+     0.1126,
+     0.1418
+    ]
+   },
+   "seuil=40": {
+    "unilateral": 0.0445,
+    "unilateral_wilson95": [
+     0.0363,
+     0.0544
+    ],
+    "bilateral": 0.082,
+    "bilateral_wilson95": [
+     0.0708,
+     0.0948
+    ]
+   },
+   "seuil=60": {
+    "unilateral": 0.023,
+    "unilateral_wilson95": [
+     0.0173,
+     0.0305
+    ],
+    "bilateral": 0.045,
+    "bilateral_wilson95": [
+     0.0368,
+     0.055
+    ]
+   }
+  },
+  {
+   "etiquette": "taille|dans|T=64|K_cal=150",
+   "parametres": {
+    "N": 9600,
+    "taches": 64,
+    "a": 0.3,
+    "h": 0.3,
+    "rho": 0.0,
+    "coupe": "dans_temporelle",
+    "derive": 0.0,
+    "derive_cellules": null,
+    "derive_taches": 0.0,
+    "grille": null,
+    "G1": false,
+    "ecart_G1": 0.1,
+    "modes": 2
+   },
+   "repetitions": 2000,
+   "controles": 16,
+   "taille_lot": 28,
+   "duree_s": 6.6,
+   "ecart_type_s1_moins_s2_cellule_1_sigma": 0.0744,
+   "moyenne_s1_moins_s2_cellule_1_sigma": 0.0001,
+   "seuil=20": {
+    "unilateral": 0.0495,
+    "unilateral_wilson95": [
+     0.0408,
+     0.0599
+    ],
+    "bilateral": 0.1115,
+    "bilateral_wilson95": [
+     0.0984,
+     0.126
+    ]
+   },
+   "seuil=30": {
+    "unilateral": 0.022,
+    "unilateral_wilson95": [
+     0.0164,
+     0.0294
+    ],
+    "bilateral": 0.054,
+    "bilateral_wilson95": [
+     0.0449,
+     0.0648
+    ]
+   },
+   "seuil=40": {
+    "unilateral": 0.011,
+    "unilateral_wilson95": [
+     0.0073,
+     0.0166
+    ],
+    "bilateral": 0.0305,
+    "bilateral_wilson95": [
+     0.0238,
+     0.039
+    ]
+   },
+   "seuil=60": {
+    "unilateral": 0.0035,
+    "unilateral_wilson95": [
+     0.0017,
+     0.0072
+    ],
+    "bilateral": 0.009,
+    "bilateral_wilson95": [
+     0.0057,
+     0.0142
+    ]
+   }
+  },
+  {
+   "etiquette": "taille|entre|a=0.1|T=64|K_cal=150",
+   "parametres": {
+    "N": 9600,
+    "taches": 64,
+    "a": 0.1,
+    "h": 0.3,
+    "rho": 0.0,
+    "coupe": "entre",
+    "derive": 0.0,
+    "derive_cellules": null,
+    "derive_taches": 0.0,
+    "grille": null,
+    "G1": false,
+    "ecart_G1": 0.1,
+    "modes": 2
+   },
+   "repetitions": 2000,
+   "controles": 16,
+   "taille_lot": 28,
+   "duree_s": 7.3,
+   "ecart_type_s1_moins_s2_cellule_1_sigma": 0.1197,
+   "moyenne_s1_moins_s2_cellule_1_sigma": 0.004,
+   "seuil=20": {
+    "unilateral": 0.2175,
+    "unilateral_wilson95": [
+     0.2,
+     0.2361
+    ],
+    "bilateral": 0.4625,
+    "bilateral_wilson95": [
+     0.4407,
+     0.4844
+    ]
+   },
+   "seuil=30": {
+    "unilateral": 0.1595,
+    "unilateral_wilson95": [
+     0.1441,
+     0.1762
+    ],
+    "bilateral": 0.3395,
+    "bilateral_wilson95": [
+     0.3191,
+     0.3605
+    ]
+   },
+   "seuil=40": {
+    "unilateral": 0.126,
+    "unilateral_wilson95": [
+     0.1122,
+     0.1413
+    ],
+    "bilateral": 0.2675,
+    "bilateral_wilson95": [
+     0.2486,
+     0.2873
+    ]
+   },
+   "seuil=60": {
+    "unilateral": 0.0875,
+    "unilateral_wilson95": [
+     0.0759,
+     0.1007
+    ],
+    "bilateral": 0.182,
+    "bilateral_wilson95": [
+     0.1657,
+     0.1995
+    ]
+   }
+  },
+  {
+   "etiquette": "taille|entre|a=0.1|T=64|K_cal=300",
+   "parametres": {
+    "N": 19200,
+    "taches": 64,
+    "a": 0.1,
+    "h": 0.3,
+    "rho": 0.0,
+    "coupe": "entre",
+    "derive": 0.0,
+    "derive_cellules": null,
+    "derive_taches": 0.0,
+    "grille": null,
+    "G1": false,
+    "ecart_G1": 0.1,
+    "modes": 2
+   },
+   "repetitions": 2000,
+   "controles": 16,
+   "taille_lot": 14,
+   "duree_s": 13.8,
+   "ecart_type_s1_moins_s2_cellule_1_sigma": 0.1068,
+   "moyenne_s1_moins_s2_cellule_1_sigma": -0.0009,
+   "seuil=20": {
+    "unilateral": 0.133,
+    "unilateral_wilson95": [
+     0.1188,
+     0.1486
+    ],
+    "bilateral": 0.265,
+    "bilateral_wilson95": [
+     0.2461,
+     0.2848
+    ]
+   },
+   "seuil=30": {
+    "unilateral": 0.0935,
+    "unilateral_wilson95": [
+     0.0815,
+     0.1071
+    ],
+    "bilateral": 0.1815,
+    "bilateral_wilson95": [
+     0.1652,
+     0.199
+    ]
+   },
+   "seuil=40": {
+    "unilateral": 0.069,
+    "unilateral_wilson95": [
+     0.0587,
+     0.081
+    ],
+    "bilateral": 0.134,
+    "bilateral_wilson95": [
+     0.1198,
+     0.1496
+    ]
+   },
+   "seuil=60": {
+    "unilateral": 0.046,
+    "unilateral_wilson95": [
+     0.0377,
+     0.0561
+    ],
+    "bilateral": 0.0895,
+    "bilateral_wilson95": [
+     0.0778,
+     0.1028
+    ]
+   }
+  },
+  {
+   "etiquette": "taille|entre|a=0.1|T=64|K_cal=600",
+   "parametres": {
+    "N": 38400,
+    "taches": 64,
+    "a": 0.1,
+    "h": 0.3,
+    "rho": 0.0,
+    "coupe": "entre",
+    "derive": 0.0,
+    "derive_cellules": null,
+    "derive_taches": 0.0,
+    "grille": null,
+    "G1": false,
+    "ecart_G1": 0.1,
+    "modes": 2
+   },
+   "repetitions": 2000,
+   "controles": 16,
+   "taille_lot": 7,
+   "duree_s": 25.8,
+   "ecart_type_s1_moins_s2_cellule_1_sigma": 0.0977,
+   "moyenne_s1_moins_s2_cellule_1_sigma": -0.0006,
+   "seuil=20": {
+    "unilateral": 0.0865,
+    "unilateral_wilson95": [
+     0.075,
+     0.0996
+    ],
+    "bilateral": 0.1635,
+    "bilateral_wilson95": [
+     0.1479,
+     0.1804
+    ]
+   },
+   "seuil=30": {
+    "unilateral": 0.0575,
+    "unilateral_wilson95": [
+     0.0481,
+     0.0686
+    ],
+    "bilateral": 0.1125,
+    "bilateral_wilson95": [
+     0.0994,
+     0.1271
+    ]
+   },
+   "seuil=40": {
+    "unilateral": 0.0415,
+    "unilateral_wilson95": [
+     0.0336,
+     0.0512
+    ],
+    "bilateral": 0.078,
+    "bilateral_wilson95": [
+     0.067,
+     0.0906
+    ]
+   },
+   "seuil=60": {
+    "unilateral": 0.025,
+    "unilateral_wilson95": [
+     0.019,
+     0.0328
+    ],
+    "bilateral": 0.046,
+    "bilateral_wilson95": [
+     0.0377,
+     0.0561
+    ]
+   }
+  },
+  {
+   "etiquette": "taille|entre|a=0.1|T=64|K_cal=1200",
+   "parametres": {
+    "N": 76800,
+    "taches": 64,
+    "a": 0.1,
+    "h": 0.3,
+    "rho": 0.0,
+    "coupe": "entre",
+    "derive": 0.0,
+    "derive_cellules": null,
+    "derive_taches": 0.0,
+    "grille": null,
+    "G1": false,
+    "ecart_G1": 0.1,
+    "modes": 2
+   },
+   "repetitions": 2000,
+   "controles": 16,
+   "taille_lot": 5,
+   "duree_s": 51.7,
+   "ecart_type_s1_moins_s2_cellule_1_sigma": 0.0912,
+   "moyenne_s1_moins_s2_cellule_1_sigma": 0.0016,
+   "seuil=20": {
+    "unilateral": 0.0545,
+    "unilateral_wilson95": [
+     0.0454,
+     0.0653
+    ],
+    "bilateral": 0.1155,
+    "bilateral_wilson95": [
+     0.1022,
+     0.1303
+    ]
+   },
+   "seuil=30": {
+    "unilateral": 0.0315,
+    "unilateral_wilson95": [
+     0.0247,
+     0.0401
+    ],
+    "bilateral": 0.068,
+    "bilateral_wilson95": [
+     0.0578,
+     0.0799
+    ]
+   },
+   "seuil=40": {
+    "unilateral": 0.019,
+    "unilateral_wilson95": [
+     0.0139,
+     0.026
+    ],
+    "bilateral": 0.0435,
+    "bilateral_wilson95": [
+     0.0354,
+     0.0533
+    ]
+   },
+   "seuil=60": {
+    "unilateral": 0.01,
+    "unilateral_wilson95": [
+     0.0065,
+     0.0154
+    ],
+    "bilateral": 0.021,
+    "bilateral_wilson95": [
+     0.0156,
+     0.0283
+    ]
+   }
+  },
+  {
+   "etiquette": "taille|entre|a=0.1|N=9600|T=128",
+   "parametres": {
+    "N": 9600,
+    "taches": 128,
+    "a": 0.1,
+    "h": 0.3,
+    "rho": 0.0,
+    "coupe": "entre",
+    "derive": 0.0,
+    "derive_cellules": null,
+    "derive_taches": 0.0,
+    "grille": null,
+    "G1": false,
+    "ecart_G1": 0.1,
+    "modes": 2
+   },
+   "repetitions": 2000,
+   "controles": 16,
+   "taille_lot": 28,
+   "duree_s": 7.4,
+   "ecart_type_s1_moins_s2_cellule_1_sigma": 0.0992,
+   "moyenne_s1_moins_s2_cellule_1_sigma": 0.0008,
+   "seuil=20": {
+    "unilateral": 0.1505,
+    "unilateral_wilson95": [
+     0.1355,
+     0.1668
+    ],
+    "bilateral": 0.3045,
+    "bilateral_wilson95": [
+     0.2847,
+     0.325
+    ]
+   },
+   "seuil=30": {
+    "unilateral": 0.1055,
+    "unilateral_wilson95": [
+     0.0928,
+     0.1197
+    ],
+    "bilateral": 0.206,
+    "bilateral_wilson95": [
+     0.1888,
+     0.2243
+    ]
+   },
+   "seuil=40": {
+    "unilateral": 0.0735,
+    "unilateral_wilson95": [
+     0.0629,
+     0.0858
+    ],
+    "bilateral": 0.139,
+    "bilateral_wilson95": [
+     0.1245,
+     0.1549
+    ]
+   },
+   "seuil=60": {
+    "unilateral": 0.0475,
+    "unilateral_wilson95": [
+     0.039,
+     0.0577
+    ],
+    "bilateral": 0.087,
+    "bilateral_wilson95": [
+     0.0754,
+     0.1002
+    ]
+   }
+  },
+  {
+   "etiquette": "taille|entre|a=0.1|N=9600|T=192",
+   "parametres": {
+    "N": 9600,
+    "taches": 192,
+    "a": 0.1,
+    "h": 0.3,
+    "rho": 0.0,
+    "coupe": "entre",
+    "derive": 0.0,
+    "derive_cellules": null,
+    "derive_taches": 0.0,
+    "grille": null,
+    "G1": false,
+    "ecart_G1": 0.1,
+    "modes": 2
+   },
+   "repetitions": 2000,
+   "controles": 16,
+   "taille_lot": 28,
+   "duree_s": 7.2,
+   "ecart_type_s1_moins_s2_cellule_1_sigma": 0.0918,
+   "moyenne_s1_moins_s2_cellule_1_sigma": -0.0016,
+   "seuil=20": {
+    "unilateral": 0.148,
+    "unilateral_wilson95": [
+     0.1331,
+     0.1642
+    ],
+    "bilateral": 0.284,
+    "bilateral_wilson95": [
+     0.2647,
+     0.3042
+    ]
+   },
+   "seuil=30": {
+    "unilateral": 0.088,
+    "unilateral_wilson95": [
+     0.0764,
+     0.1012
+    ],
+    "bilateral": 0.172,
+    "bilateral_wilson95": [
+     0.1561,
+     0.1892
+    ]
+   },
+   "seuil=40": {
+    "unilateral": 0.064,
+    "unilateral_wilson95": [
+     0.0541,
+     0.0756
+    ],
+    "bilateral": 0.1205,
+    "bilateral_wilson95": [
+     0.107,
+     0.1355
+    ]
+   },
+   "seuil=60": {
+    "unilateral": 0.033,
+    "unilateral_wilson95": [
+     0.026,
+     0.0418
+    ],
+    "bilateral": 0.0655,
+    "bilateral_wilson95": [
+     0.0555,
+     0.0772
+    ]
+   }
+  },
+  {
+   "etiquette": "taille|entre|a=0.1|N=9600|T=320",
+   "parametres": {
+    "N": 9600,
+    "taches": 320,
+    "a": 0.1,
+    "h": 0.3,
+    "rho": 0.0,
+    "coupe": "entre",
+    "derive": 0.0,
+    "derive_cellules": null,
+    "derive_taches": 0.0,
+    "grille": null,
+    "G1": false,
+    "ecart_G1": 0.1,
+    "modes": 2
+   },
+   "repetitions": 2000,
+   "controles": 16,
+   "taille_lot": 28,
+   "duree_s": 7.4,
+   "ecart_type_s1_moins_s2_cellule_1_sigma": 0.0853,
+   "moyenne_s1_moins_s2_cellule_1_sigma": -0.0004,
+   "seuil=20": {
+    "unilateral": 0.104,
+    "unilateral_wilson95": [
+     0.0914,
+     0.1181
+    ],
+    "bilateral": 0.208,
+    "bilateral_wilson95": [
+     0.1908,
+     0.2263
+    ]
+   },
+   "seuil=30": {
+    "unilateral": 0.0615,
+    "unilateral_wilson95": [
+     0.0518,
+     0.0729
+    ],
+    "bilateral": 0.119,
+    "bilateral_wilson95": [
+     0.1055,
+     0.1339
+    ]
+   },
+   "seuil=40": {
+    "unilateral": 0.0405,
+    "unilateral_wilson95": [
+     0.0327,
+     0.0501
+    ],
+    "bilateral": 0.079,
+    "bilateral_wilson95": [
+     0.068,
+     0.0916
+    ]
+   },
+   "seuil=60": {
+    "unilateral": 0.018,
+    "unilateral_wilson95": [
+     0.013,
+     0.0248
+    ],
+    "bilateral": 0.036,
+    "bilateral_wilson95": [
+     0.0287,
+     0.0451
+    ]
+   }
+  },
+  {
+   "etiquette": "taille|entre|a=0.1|N=9600|T=640",
+   "parametres": {
+    "N": 9600,
+    "taches": 640,
+    "a": 0.1,
+    "h": 0.3,
+    "rho": 0.0,
+    "coupe": "entre",
+    "derive": 0.0,
+    "derive_cellules": null,
+    "derive_taches": 0.0,
+    "grille": null,
+    "G1": false,
+    "ecart_G1": 0.1,
+    "modes": 2
+   },
+   "repetitions": 2000,
+   "controles": 16,
+   "taille_lot": 28,
+   "duree_s": 7.8,
+   "ecart_type_s1_moins_s2_cellule_1_sigma": 0.0811,
+   "moyenne_s1_moins_s2_cellule_1_sigma": 0.0017,
+   "seuil=20": {
+    "unilateral": 0.084,
+    "unilateral_wilson95": [
+     0.0726,
+     0.097
+    ],
+    "bilateral": 0.1695,
+    "bilateral_wilson95": [
+     0.1537,
+     0.1866
+    ]
+   },
+   "seuil=30": {
+    "unilateral": 0.0445,
+    "unilateral_wilson95": [
+     0.0363,
+     0.0544
+    ],
+    "bilateral": 0.09,
+    "bilateral_wilson95": [
+     0.0782,
+     0.1033
+    ]
+   },
+   "seuil=40": {
+    "unilateral": 0.0295,
+    "unilateral_wilson95": [
+     0.0229,
+     0.0379
+    ],
+    "bilateral": 0.053,
+    "bilateral_wilson95": [
+     0.044,
+     0.0637
+    ]
+   },
+   "seuil=60": {
+    "unilateral": 0.01,
+    "unilateral_wilson95": [
+     0.0065,
+     0.0154
+    ],
+    "bilateral": 0.021,
+    "bilateral_wilson95": [
+     0.0156,
+     0.0283
+    ]
+   }
+  },
+  {
+   "etiquette": "taille|entre|a=0.1|N=9600|T=1920",
+   "parametres": {
+    "N": 9600,
+    "taches": 1920,
+    "a": 0.1,
+    "h": 0.3,
+    "rho": 0.0,
+    "coupe": "entre",
+    "derive": 0.0,
+    "derive_cellules": null,
+    "derive_taches": 0.0,
+    "grille": null,
+    "G1": false,
+    "ecart_G1": 0.1,
+    "modes": 2
+   },
+   "repetitions": 2000,
+   "controles": 16,
+   "taille_lot": 28,
+   "duree_s": 7.9,
+   "ecart_type_s1_moins_s2_cellule_1_sigma": 0.0769,
+   "moyenne_s1_moins_s2_cellule_1_sigma": -0.003,
+   "seuil=20": {
+    "unilateral": 0.0805,
+    "unilateral_wilson95": [
+     0.0694,
+     0.0932
+    ],
+    "bilateral": 0.155,
+    "bilateral_wilson95": [
+     0.1398,
+     0.1715
+    ]
+   },
+   "seuil=30": {
+    "unilateral": 0.042,
+    "unilateral_wilson95": [
+     0.0341,
+     0.0517
+    ],
+    "bilateral": 0.084,
+    "bilateral_wilson95": [
+     0.0726,
+     0.097
+    ]
+   },
+   "seuil=40": {
+    "unilateral": 0.0215,
+    "unilateral_wilson95": [
+     0.016,
+     0.0288
+    ],
+    "bilateral": 0.0455,
+    "bilateral_wilson95": [
+     0.0372,
+     0.0555
+    ]
+   },
+   "seuil=60": {
+    "unilateral": 0.01,
+    "unilateral_wilson95": [
+     0.0065,
+     0.0154
+    ],
+    "bilateral": 0.0215,
+    "bilateral_wilson95": [
+     0.016,
+     0.0288
+    ]
+   }
+  },
+  {
+   "etiquette": "taille|entre|a=0.1|N=9600|T=9600",
+   "parametres": {
+    "N": 9600,
+    "taches": 9600,
+    "a": 0.1,
+    "h": 0.3,
+    "rho": 0.0,
+    "coupe": "entre",
+    "derive": 0.0,
+    "derive_cellules": null,
+    "derive_taches": 0.0,
+    "grille": null,
+    "G1": false,
+    "ecart_G1": 0.1,
+    "modes": 2
+   },
+   "repetitions": 2000,
+   "controles": 16,
+   "taille_lot": 28,
+   "duree_s": 8.1,
+   "ecart_type_s1_moins_s2_cellule_1_sigma": 0.0776,
+   "moyenne_s1_moins_s2_cellule_1_sigma": 0.0017,
+   "seuil=20": {
+    "unilateral": 0.066,
+    "unilateral_wilson95": [
+     0.0559,
+     0.0777
+    ],
+    "bilateral": 0.123,
+    "bilateral_wilson95": [
+     0.1093,
+     0.1381
+    ]
+   },
+   "seuil=30": {
+    "unilateral": 0.035,
+    "unilateral_wilson95": [
+     0.0278,
+     0.044
+    ],
+    "bilateral": 0.062,
+    "bilateral_wilson95": [
+     0.0522,
+     0.0734
+    ]
+   },
+   "seuil=40": {
+    "unilateral": 0.019,
+    "unilateral_wilson95": [
+     0.0139,
+     0.026
+    ],
+    "bilateral": 0.036,
+    "bilateral_wilson95": [
+     0.0287,
+     0.0451
+    ]
+   },
+   "seuil=60": {
+    "unilateral": 0.008,
+    "unilateral_wilson95": [
+     0.0049,
+     0.013
+    ],
+    "bilateral": 0.016,
+    "bilateral_wilson95": [
+     0.0114,
+     0.0225
+    ]
+   }
+  },
+  {
+   "etiquette": "taille|entre|a=0.1|K_cal=150|T=128",
+   "parametres": {
+    "N": 19200,
+    "taches": 128,
+    "a": 0.1,
+    "h": 0.3,
+    "rho": 0.0,
+    "coupe": "entre",
+    "derive": 0.0,
+    "derive_cellules": null,
+    "derive_taches": 0.0,
+    "grille": null,
+    "G1": false,
+    "ecart_G1": 0.1,
+    "modes": 2
+   },
+   "repetitions": 2000,
+   "controles": 16,
+   "taille_lot": 14,
+   "duree_s": 13.5,
+   "ecart_type_s1_moins_s2_cellule_1_sigma": 0.0823,
+   "moyenne_s1_moins_s2_cellule_1_sigma": -0.0034,
+   "seuil=20": {
+    "unilateral": 0.077,
+    "unilateral_wilson95": [
+     0.0661,
+     0.0895
+    ],
+    "bilateral": 0.1385,
+    "bilateral_wilson95": [
+     0.1241,
+     0.1543
+    ]
+   },
+   "seuil=30": {
+    "unilateral": 0.046,
+    "unilateral_wilson95": [
+     0.0377,
+     0.0561
+    ],
+    "bilateral": 0.08,
+    "bilateral_wilson95": [
+     0.0689,
+     0.0927
+    ]
+   },
+   "seuil=40": {
+    "unilateral": 0.0295,
+    "unilateral_wilson95": [
+     0.0229,
+     0.0379
+    ],
+    "bilateral": 0.0525,
+    "bilateral_wilson95": [
+     0.0436,
+     0.0632
+    ]
+   },
+   "seuil=60": {
+    "unilateral": 0.01,
+    "unilateral_wilson95": [
+     0.0065,
+     0.0154
+    ],
+    "bilateral": 0.022,
+    "bilateral_wilson95": [
+     0.0164,
+     0.0294
+    ]
+   }
+  },
+  {
+   "etiquette": "taille|entre|a=0.1|K_cal=150|T=256",
+   "parametres": {
+    "N": 38400,
+    "taches": 256,
+    "a": 0.1,
+    "h": 0.3,
+    "rho": 0.0,
+    "coupe": "entre",
+    "derive": 0.0,
+    "derive_cellules": null,
+    "derive_taches": 0.0,
+    "grille": null,
+    "G1": false,
+    "ecart_G1": 0.1,
+    "modes": 2
+   },
+   "repetitions": 2000,
+   "controles": 16,
+   "taille_lot": 7,
+   "duree_s": 25.9,
+   "ecart_type_s1_moins_s2_cellule_1_sigma": 0.059,
+   "moyenne_s1_moins_s2_cellule_1_sigma": -0.0007,
+   "seuil=20": {
+    "unilateral": 0.0085,
+    "unilateral_wilson95": [
+     0.0053,
+     0.0136
+    ],
+    "bilateral": 0.0205,
+    "bilateral_wilson95": [
+     0.0151,
+     0.0277
+    ]
+   },
+   "seuil=30": {
+    "unilateral": 0.004,
+    "unilateral_wilson95": [
+     0.002,
+     0.0079
+    ],
+    "bilateral": 0.0075,
+    "bilateral_wilson95": [
+     0.0046,
+     0.0123
+    ]
+   },
+   "seuil=40": {
+    "unilateral": 0.0015,
+    "unilateral_wilson95": [
+     0.0005,
+     0.0044
+    ],
+    "bilateral": 0.003,
+    "bilateral_wilson95": [
+     0.0014,
+     0.0065
+    ]
+   },
+   "seuil=60": {
+    "unilateral": 0.0005,
+    "unilateral_wilson95": [
+     0.0001,
+     0.0028
+    ],
+    "bilateral": 0.0015,
+    "bilateral_wilson95": [
+     0.0005,
+     0.0044
+    ]
+   }
+  },
+  {
+   "etiquette": "taille|entre|a=0.1|K_cal=150|T=512",
+   "parametres": {
+    "N": 76800,
+    "taches": 512,
+    "a": 0.1,
+    "h": 0.3,
+    "rho": 0.0,
+    "coupe": "entre",
+    "derive": 0.0,
+    "derive_cellules": null,
+    "derive_taches": 0.0,
+    "grille": null,
+    "G1": false,
+    "ecart_G1": 0.1,
+    "modes": 2
+   },
+   "repetitions": 2000,
+   "controles": 16,
+   "taille_lot": 5,
+   "duree_s": 51.4,
+   "ecart_type_s1_moins_s2_cellule_1_sigma": 0.0421,
+   "moyenne_s1_moins_s2_cellule_1_sigma": 0.0019,
+   "seuil=20": {
+    "unilateral": 0.0,
+    "unilateral_wilson95": [
+     0.0,
+     0.0019
+    ],
+    "bilateral": 0.001,
+    "bilateral_wilson95": [
+     0.0003,
+     0.0036
+    ]
+   },
+   "seuil=30": {
+    "unilateral": 0.0,
+    "unilateral_wilson95": [
+     0.0,
+     0.0019
+    ],
+    "bilateral": 0.0,
+    "bilateral_wilson95": [
+     0.0,
+     0.0019
+    ]
+   },
+   "seuil=40": {
+    "unilateral": 0.0,
+    "unilateral_wilson95": [
+     0.0,
+     0.0019
+    ],
+    "bilateral": 0.0,
+    "bilateral_wilson95": [
+     0.0,
+     0.0019
+    ]
+   },
+   "seuil=60": {
+    "unilateral": 0.0,
+    "unilateral_wilson95": [
+     0.0,
+     0.0019
+    ],
+    "bilateral": 0.0,
+    "bilateral_wilson95": [
+     0.0,
+     0.0019
+    ]
+   }
+  },
+  {
+   "etiquette": "taille|entre|a=0.1|K_cal=150|T=1024",
+   "parametres": {
+    "N": 153600,
+    "taches": 1024,
+    "a": 0.1,
+    "h": 0.3,
+    "rho": 0.0,
+    "coupe": "entre",
+    "derive": 0.0,
+    "derive_cellules": null,
+    "derive_taches": 0.0,
+    "grille": null,
+    "G1": false,
+    "ecart_G1": 0.1,
+    "modes": 2
+   },
+   "repetitions": 2000,
+   "controles": 16,
+   "taille_lot": 5,
+   "duree_s": 116.4,
+   "ecart_type_s1_moins_s2_cellule_1_sigma": 0.0289,
+   "moyenne_s1_moins_s2_cellule_1_sigma": -0.0002,
+   "seuil=20": {
+    "unilateral": 0.0,
+    "unilateral_wilson95": [
+     0.0,
+     0.0019
+    ],
+    "bilateral": 0.0,
+    "bilateral_wilson95": [
+     0.0,
+     0.0019
+    ]
+   },
+   "seuil=30": {
+    "unilateral": 0.0,
+    "unilateral_wilson95": [
+     0.0,
+     0.0019
+    ],
+    "bilateral": 0.0,
+    "bilateral_wilson95": [
+     0.0,
+     0.0019
+    ]
+   },
+   "seuil=40": {
+    "unilateral": 0.0,
+    "unilateral_wilson95": [
+     0.0,
+     0.0019
+    ],
+    "bilateral": 0.0,
+    "bilateral_wilson95": [
+     0.0,
+     0.0019
+    ]
+   },
+   "seuil=60": {
+    "unilateral": 0.0,
+    "unilateral_wilson95": [
+     0.0,
+     0.0019
+    ],
+    "bilateral": 0.0,
+    "bilateral_wilson95": [
+     0.0,
+     0.0019
+    ]
+   }
+  },
+  {
+   "etiquette": "taille|entre|a=0.3|T=64|K_cal=150",
+   "parametres": {
+    "N": 9600,
+    "taches": 64,
+    "a": 0.3,
+    "h": 0.3,
+    "rho": 0.0,
+    "coupe": "entre",
+    "derive": 0.0,
+    "derive_cellules": null,
+    "derive_taches": 0.0,
+    "grille": null,
+    "G1": false,
+    "ecart_G1": 0.1,
+    "modes": 2
+   },
+   "repetitions": 2000,
+   "controles": 16,
+   "taille_lot": 28,
+   "duree_s": 7.1,
+   "ecart_type_s1_moins_s2_cellule_1_sigma": 0.2058,
+   "moyenne_s1_moins_s2_cellule_1_sigma": 0.0035,
+   "seuil=20": {
+    "unilateral": 0.3395,
+    "unilateral_wilson95": [
+     0.3191,
+     0.3605
+    ],
+    "bilateral": 0.6895,
+    "bilateral_wilson95": [
+     0.6689,
+     0.7094
+    ]
+   },
+   "seuil=30": {
+    "unilateral": 0.299,
+    "unilateral_wilson95": [
+     0.2793,
+     0.3194
+    ],
+    "bilateral": 0.6065,
+    "bilateral_wilson95": [
+     0.5849,
+     0.6277
+    ]
+   },
+   "seuil=40": {
+    "unilateral": 0.2745,
+    "unilateral_wilson95": [
+     0.2554,
+     0.2945
+    ],
+    "bilateral": 0.5515,
+    "bilateral_wilson95": [
+     0.5296,
+     0.5732
+    ]
+   },
+   "seuil=60": {
+    "unilateral": 0.2385,
+    "unilateral_wilson95": [
+     0.2203,
+     0.2577
+    ],
+    "bilateral": 0.479,
+    "bilateral_wilson95": [
+     0.4572,
+     0.5009
+    ]
+   }
+  },
+  {
+   "etiquette": "taille|entre|a=0.3|T=64|K_cal=300",
+   "parametres": {
+    "N": 19200,
+    "taches": 64,
+    "a": 0.3,
+    "h": 0.3,
+    "rho": 0.0,
+    "coupe": "entre",
+    "derive": 0.0,
+    "derive_cellules": null,
+    "derive_taches": 0.0,
+    "grille": null,
+    "G1": false,
+    "ecart_G1": 0.1,
+    "modes": 2
+   },
+   "repetitions": 2000,
+   "controles": 16,
+   "taille_lot": 14,
+   "duree_s": 13.8,
+   "ecart_type_s1_moins_s2_cellule_1_sigma": 0.2024,
+   "moyenne_s1_moins_s2_cellule_1_sigma": -0.0042,
+   "seuil=20": {
+    "unilateral": 0.2845,
+    "unilateral_wilson95": [
+     0.2652,
+     0.3047
+    ],
+    "bilateral": 0.574,
+    "bilateral_wilson95": [
+     0.5522,
+     0.5955
+    ]
+   },
+   "seuil=30": {
+    "unilateral": 0.2455,
+    "unilateral_wilson95": [
+     0.2271,
+     0.2648
+    ],
+    "bilateral": 0.4945,
+    "bilateral_wilson95": [
+     0.4726,
+     0.5164
+    ]
+   },
+   "seuil=40": {
+    "unilateral": 0.222,
+    "unilateral_wilson95": [
+     0.2043,
+     0.2407
+    ],
+    "bilateral": 0.452,
+    "bilateral_wilson95": [
+     0.4303,
+     0.4739
+    ]
+   },
+   "seuil=60": {
+    "unilateral": 0.193,
+    "unilateral_wilson95": [
+     0.1763,
+     0.2109
+    ],
+    "bilateral": 0.381,
+    "bilateral_wilson95": [
+     0.36,
+     0.4025
+    ]
+   }
+  },
+  {
+   "etiquette": "taille|entre|a=0.3|T=64|K_cal=600",
+   "parametres": {
+    "N": 38400,
+    "taches": 64,
+    "a": 0.3,
+    "h": 0.3,
+    "rho": 0.0,
+    "coupe": "entre",
+    "derive": 0.0,
+    "derive_cellules": null,
+    "derive_taches": 0.0,
+    "grille": null,
+    "G1": false,
+    "ecart_G1": 0.1,
+    "modes": 2
+   },
+   "repetitions": 2000,
+   "controles": 16,
+   "taille_lot": 7,
+   "duree_s": 26.3,
+   "ecart_type_s1_moins_s2_cellule_1_sigma": 0.2018,
+   "moyenne_s1_moins_s2_cellule_1_sigma": 0.0025,
+   "seuil=20": {
+    "unilateral": 0.2475,
+    "unilateral_wilson95": [
+     0.2291,
+     0.2669
+    ],
+    "bilateral": 0.501,
+    "bilateral_wilson95": [
+     0.4791,
+     0.5229
+    ]
+   },
+   "seuil=30": {
+    "unilateral": 0.214,
+    "unilateral_wilson95": [
+     0.1966,
+     0.2325
+    ],
+    "bilateral": 0.431,
+    "bilateral_wilson95": [
+     0.4094,
+     0.4528
+    ]
+   },
+   "seuil=40": {
+    "unilateral": 0.1875,
+    "unilateral_wilson95": [
+     0.171,
+     0.2052
+    ],
+    "bilateral": 0.3815,
+    "bilateral_wilson95": [
+     0.3605,
+     0.403
+    ]
+   },
+   "seuil=60": {
+    "unilateral": 0.1595,
+    "unilateral_wilson95": [
+     0.1441,
+     0.1762
+    ],
+    "bilateral": 0.322,
+    "bilateral_wilson95": [
+     0.3019,
+     0.3428
+    ]
+   }
+  },
+  {
+   "etiquette": "taille|entre|a=0.3|T=64|K_cal=1200",
+   "parametres": {
+    "N": 76800,
+    "taches": 64,
+    "a": 0.3,
+    "h": 0.3,
+    "rho": 0.0,
+    "coupe": "entre",
+    "derive": 0.0,
+    "derive_cellules": null,
+    "derive_taches": 0.0,
+    "grille": null,
+    "G1": false,
+    "ecart_G1": 0.1,
+    "modes": 2
+   },
+   "repetitions": 2000,
+   "controles": 16,
+   "taille_lot": 5,
+   "duree_s": 52.6,
+   "ecart_type_s1_moins_s2_cellule_1_sigma": 0.1982,
+   "moyenne_s1_moins_s2_cellule_1_sigma": -0.002,
+   "seuil=20": {
+    "unilateral": 0.2385,
+    "unilateral_wilson95": [
+     0.2203,
+     0.2577
+    ],
+    "bilateral": 0.4745,
+    "bilateral_wilson95": [
+     0.4527,
+     0.4964
+    ]
+   },
+   "seuil=30": {
+    "unilateral": 0.21,
+    "unilateral_wilson95": [
+     0.1927,
+     0.2284
+    ],
+    "bilateral": 0.4105,
+    "bilateral_wilson95": [
+     0.3891,
+     0.4322
+    ]
+   },
+   "seuil=40": {
+    "unilateral": 0.1895,
+    "unilateral_wilson95": [
+     0.1729,
+     0.2073
+    ],
+    "bilateral": 0.3635,
+    "bilateral_wilson95": [
+     0.3427,
+     0.3848
+    ]
+   },
+   "seuil=60": {
+    "unilateral": 0.1555,
+    "unilateral_wilson95": [
+     0.1403,
+     0.172
+    ],
+    "bilateral": 0.303,
+    "bilateral_wilson95": [
+     0.2833,
+     0.3235
+    ]
+   }
+  },
+  {
+   "etiquette": "taille|entre|a=0.3|N=9600|T=128",
+   "parametres": {
+    "N": 9600,
+    "taches": 128,
+    "a": 0.3,
+    "h": 0.3,
+    "rho": 0.0,
+    "coupe": "entre",
+    "derive": 0.0,
+    "derive_cellules": null,
+    "derive_taches": 0.0,
+    "grille": null,
+    "G1": false,
+    "ecart_G1": 0.1,
+    "modes": 2
+   },
+   "repetitions": 2000,
+   "controles": 16,
+   "taille_lot": 28,
+   "duree_s": 7.6,
+   "ecart_type_s1_moins_s2_cellule_1_sigma": 0.1588,
+   "moyenne_s1_moins_s2_cellule_1_sigma": -0.0042,
+   "seuil=20": {
+    "unilateral": 0.3035,
+    "unilateral_wilson95": [
+     0.2837,
+     0.324
+    ],
+    "bilateral": 0.5765,
+    "bilateral_wilson95": [
+     0.5547,
+     0.598
+    ]
+   },
+   "seuil=30": {
+    "unilateral": 0.2555,
+    "unilateral_wilson95": [
+     0.2369,
+     0.2751
+    ],
+    "bilateral": 0.485,
+    "bilateral_wilson95": [
+     0.4631,
+     0.5069
+    ]
+   },
+   "seuil=40": {
+    "unilateral": 0.224,
+    "unilateral_wilson95": [
+     0.2063,
+     0.2428
+    ],
+    "bilateral": 0.42,
+    "bilateral_wilson95": [
+     0.3985,
+     0.4418
+    ]
+   },
+   "seuil=60": {
+    "unilateral": 0.1805,
+    "unilateral_wilson95": [
+     0.1643,
+     0.198
+    ],
+    "bilateral": 0.334,
+    "bilateral_wilson95": [
+     0.3137,
+     0.355
+    ]
+   }
+  },
+  {
+   "etiquette": "taille|entre|a=0.3|N=9600|T=192",
+   "parametres": {
+    "N": 9600,
+    "taches": 192,
+    "a": 0.3,
+    "h": 0.3,
+    "rho": 0.0,
+    "coupe": "entre",
+    "derive": 0.0,
+    "derive_cellules": null,
+    "derive_taches": 0.0,
+    "grille": null,
+    "G1": false,
+    "ecart_G1": 0.1,
+    "modes": 2
+   },
+   "repetitions": 2000,
+   "controles": 16,
+   "taille_lot": 28,
+   "duree_s": 7.3,
+   "ecart_type_s1_moins_s2_cellule_1_sigma": 0.1341,
+   "moyenne_s1_moins_s2_cellule_1_sigma": 0.0028,
+   "seuil=20": {
+    "unilateral": 0.2395,
+    "unilateral_wilson95": [
+     0.2213,
+     0.2587
+    ],
+    "bilateral": 0.5005,
+    "bilateral_wilson95": [
+     0.4786,
+     0.5224
+    ]
+   },
+   "seuil=30": {
+    "unilateral": 0.186,
+    "unilateral_wilson95": [
+     0.1696,
+     0.2036
+    ],
+    "bilateral": 0.38,
+    "bilateral_wilson95": [
+     0.359,
+     0.4015
+    ]
+   },
+   "seuil=40": {
+    "unilateral": 0.156,
+    "unilateral_wilson95": [
+     0.1408,
+     0.1726
+    ],
+    "bilateral": 0.323,
+    "bilateral_wilson95": [
+     0.3029,
+     0.3438
+    ]
+   },
+   "seuil=60": {
+    "unilateral": 0.12,
+    "unilateral_wilson95": [
+     0.1065,
+     0.135
+    ],
+    "bilateral": 0.248,
+    "bilateral_wilson95": [
+     0.2296,
+     0.2674
+    ]
+   }
+  },
+  {
+   "etiquette": "taille|entre|a=0.3|N=9600|T=320",
+   "parametres": {
+    "N": 9600,
+    "taches": 320,
+    "a": 0.3,
+    "h": 0.3,
+    "rho": 0.0,
+    "coupe": "entre",
+    "derive": 0.0,
+    "derive_cellules": null,
+    "derive_taches": 0.0,
+    "grille": null,
+    "G1": false,
+    "ecart_G1": 0.1,
+    "modes": 2
+   },
+   "repetitions": 2000,
+   "controles": 16,
+   "taille_lot": 28,
+   "duree_s": 7.3,
+   "ecart_type_s1_moins_s2_cellule_1_sigma": 0.1189,
+   "moyenne_s1_moins_s2_cellule_1_sigma": 0.0016,
+   "seuil=20": {
+    "unilateral": 0.219,
+    "unilateral_wilson95": [
+     0.2014,
+     0.2377
+    ],
+    "bilateral": 0.4335,
+    "bilateral_wilson95": [
+     0.4119,
+     0.4553
+    ]
+   },
+   "seuil=30": {
+    "unilateral": 0.163,
+    "unilateral_wilson95": [
+     0.1475,
+     0.1798
+    ],
+    "bilateral": 0.316,
+    "bilateral_wilson95": [
+     0.296,
+     0.3367
+    ]
+   },
+   "seuil=40": {
+    "unilateral": 0.1335,
+    "unilateral_wilson95": [
+     0.1193,
+     0.1491
+    ],
+    "bilateral": 0.257,
+    "bilateral_wilson95": [
+     0.2383,
+     0.2766
+    ]
+   },
+   "seuil=60": {
+    "unilateral": 0.0905,
+    "unilateral_wilson95": [
+     0.0787,
+     0.1039
+    ],
+    "bilateral": 0.1755,
+    "bilateral_wilson95": [
+     0.1595,
+     0.1928
+    ]
+   }
+  },
+  {
+   "etiquette": "taille|entre|a=0.3|N=9600|T=640",
+   "parametres": {
+    "N": 9600,
+    "taches": 640,
+    "a": 0.3,
+    "h": 0.3,
+    "rho": 0.0,
+    "coupe": "entre",
+    "derive": 0.0,
+    "derive_cellules": null,
+    "derive_taches": 0.0,
+    "grille": null,
+    "G1": false,
+    "ecart_G1": 0.1,
+    "modes": 2
+   },
+   "repetitions": 2000,
+   "controles": 16,
+   "taille_lot": 28,
+   "duree_s": 7.2,
+   "ecart_type_s1_moins_s2_cellule_1_sigma": 0.1006,
+   "moyenne_s1_moins_s2_cellule_1_sigma": -0.0047,
+   "seuil=20": {
+    "unilateral": 0.1705,
+    "unilateral_wilson95": [
+     0.1547,
+     0.1876
+    ],
+    "bilateral": 0.3155,
+    "bilateral_wilson95": [
+     0.2955,
+     0.3362
+    ]
+   },
+   "seuil=30": {
+    "unilateral": 0.1045,
+    "unilateral_wilson95": [
+     0.0918,
+     0.1187
+    ],
+    "bilateral": 0.1955,
+    "bilateral_wilson95": [
+     0.1787,
+     0.2135
+    ]
+   },
+   "seuil=40": {
+    "unilateral": 0.0715,
+    "unilateral_wilson95": [
+     0.061,
+     0.0836
+    ],
+    "bilateral": 0.135,
+    "bilateral_wilson95": [
+     0.1207,
+     0.1507
+    ]
+   },
+   "seuil=60": {
+    "unilateral": 0.0395,
+    "unilateral_wilson95": [
+     0.0318,
+     0.049
+    ],
+    "bilateral": 0.0735,
+    "bilateral_wilson95": [
+     0.0629,
+     0.0858
+    ]
+   }
+  },
+  {
+   "etiquette": "taille|entre|a=0.3|N=9600|T=1920",
+   "parametres": {
+    "N": 9600,
+    "taches": 1920,
+    "a": 0.3,
+    "h": 0.3,
+    "rho": 0.0,
+    "coupe": "entre",
+    "derive": 0.0,
+    "derive_cellules": null,
+    "derive_taches": 0.0,
+    "grille": null,
+    "G1": false,
+    "ecart_G1": 0.1,
+    "modes": 2
+   },
+   "repetitions": 2000,
+   "controles": 16,
+   "taille_lot": 28,
+   "duree_s": 8.0,
+   "ecart_type_s1_moins_s2_cellule_1_sigma": 0.0833,
+   "moyenne_s1_moins_s2_cellule_1_sigma": -0.0007,
+   "seuil=20": {
+    "unilateral": 0.097,
+    "unilateral_wilson95": [
+     0.0848,
+     0.1108
+    ],
+    "bilateral": 0.188,
+    "bilateral_wilson95": [
+     0.1715,
+     0.2057
+    ]
+   },
+   "seuil=30": {
+    "unilateral": 0.0545,
+    "unilateral_wilson95": [
+     0.0454,
+     0.0653
+    ],
+    "bilateral": 0.1105,
+    "bilateral_wilson95": [
+     0.0975,
+     0.125
+    ]
+   },
+   "seuil=40": {
+    "unilateral": 0.036,
+    "unilateral_wilson95": [
+     0.0287,
+     0.0451
+    ],
+    "bilateral": 0.072,
+    "bilateral_wilson95": [
+     0.0615,
+     0.0842
+    ]
+   },
+   "seuil=60": {
+    "unilateral": 0.0155,
+    "unilateral_wilson95": [
+     0.0109,
+     0.0219
+    ],
+    "bilateral": 0.035,
+    "bilateral_wilson95": [
+     0.0278,
+     0.044
+    ]
+   }
+  },
+  {
+   "etiquette": "taille|entre|a=0.3|N=9600|T=9600",
+   "parametres": {
+    "N": 9600,
+    "taches": 9600,
+    "a": 0.3,
+    "h": 0.3,
+    "rho": 0.0,
+    "coupe": "entre",
+    "derive": 0.0,
+    "derive_cellules": null,
+    "derive_taches": 0.0,
+    "grille": null,
+    "G1": false,
+    "ecart_G1": 0.1,
+    "modes": 2
+   },
+   "repetitions": 2000,
+   "controles": 16,
+   "taille_lot": 28,
+   "duree_s": 8.2,
+   "ecart_type_s1_moins_s2_cellule_1_sigma": 0.0751,
+   "moyenne_s1_moins_s2_cellule_1_sigma": 0.0004,
+   "seuil=20": {
+    "unilateral": 0.059,
+    "unilateral_wilson95": [
+     0.0495,
+     0.0702
+    ],
+    "bilateral": 0.1225,
+    "bilateral_wilson95": [
+     0.1089,
+     0.1376
+    ]
+   },
+   "seuil=30": {
+    "unilateral": 0.027,
+    "unilateral_wilson95": [
+     0.0208,
+     0.0351
+    ],
+    "bilateral": 0.06,
+    "bilateral_wilson95": [
+     0.0504,
+     0.0713
+    ]
+   },
+   "seuil=40": {
+    "unilateral": 0.0145,
+    "unilateral_wilson95": [
+     0.0101,
+     0.0207
+    ],
+    "bilateral": 0.035,
+    "bilateral_wilson95": [
+     0.0278,
+     0.044
+    ]
+   },
+   "seuil=60": {
+    "unilateral": 0.004,
+    "unilateral_wilson95": [
+     0.002,
+     0.0079
+    ],
+    "bilateral": 0.0145,
+    "bilateral_wilson95": [
+     0.0101,
+     0.0207
+    ]
+   }
+  },
+  {
+   "etiquette": "taille|entre|a=0.3|K_cal=150|T=128",
+   "parametres": {
+    "N": 19200,
+    "taches": 128,
+    "a": 0.3,
+    "h": 0.3,
+    "rho": 0.0,
+    "coupe": "entre",
+    "derive": 0.0,
+    "derive_cellules": null,
+    "derive_taches": 0.0,
+    "grille": null,
+    "G1": false,
+    "ecart_G1": 0.1,
+    "modes": 2
+   },
+   "repetitions": 2000,
+   "controles": 16,
+   "taille_lot": 14,
+   "duree_s": 13.5,
+   "ecart_type_s1_moins_s2_cellule_1_sigma": 0.1457,
+   "moyenne_s1_moins_s2_cellule_1_sigma": 0.002,
+   "seuil=20": {
+    "unilateral": 0.2125,
+    "unilateral_wilson95": [
+     0.1951,
+     0.231
+    ],
+    "bilateral": 0.4315,
+    "bilateral_wilson95": [
+     0.4099,
+     0.4533
+    ]
+   },
+   "seuil=30": {
+    "unilateral": 0.163,
+    "unilateral_wilson95": [
+     0.1475,
+     0.1798
+    ],
+    "bilateral": 0.34,
+    "bilateral_wilson95": [
+     0.3196,
+     0.361
+    ]
+   },
+   "seuil=40": {
+    "unilateral": 0.1335,
+    "unilateral_wilson95": [
+     0.1193,
+     0.1491
+    ],
+    "bilateral": 0.282,
+    "bilateral_wilson95": [
+     0.2627,
+     0.3021
+    ]
+   },
+   "seuil=60": {
+    "unilateral": 0.104,
+    "unilateral_wilson95": [
+     0.0914,
+     0.1181
+    ],
+    "bilateral": 0.2245,
+    "bilateral_wilson95": [
+     0.2068,
+     0.2433
+    ]
+   }
+  },
+  {
+   "etiquette": "taille|entre|a=0.3|K_cal=150|T=256",
+   "parametres": {
+    "N": 38400,
+    "taches": 256,
+    "a": 0.3,
+    "h": 0.3,
+    "rho": 0.0,
+    "coupe": "entre",
+    "derive": 0.0,
+    "derive_cellules": null,
+    "derive_taches": 0.0,
+    "grille": null,
+    "G1": false,
+    "ecart_G1": 0.1,
+    "modes": 2
+   },
+   "repetitions": 2000,
+   "controles": 16,
+   "taille_lot": 7,
+   "duree_s": 26.0,
+   "ecart_type_s1_moins_s2_cellule_1_sigma": 0.1068,
+   "moyenne_s1_moins_s2_cellule_1_sigma": -0.0021,
+   "seuil=20": {
+    "unilateral": 0.1055,
+    "unilateral_wilson95": [
+     0.0928,
+     0.1197
+    ],
+    "bilateral": 0.209,
+    "bilateral_wilson95": [
+     0.1917,
+     0.2274
+    ]
+   },
+   "seuil=30": {
+    "unilateral": 0.072,
+    "unilateral_wilson95": [
+     0.0615,
+     0.0842
+    ],
+    "bilateral": 0.143,
+    "bilateral_wilson95": [
+     0.1283,
+     0.159
+    ]
+   },
+   "seuil=40": {
+    "unilateral": 0.052,
+    "unilateral_wilson95": [
+     0.0431,
+     0.0626
+    ],
+    "bilateral": 0.106,
+    "bilateral_wilson95": [
+     0.0933,
+     0.1203
+    ]
+   },
+   "seuil=60": {
+    "unilateral": 0.0345,
+    "unilateral_wilson95": [
+     0.0274,
+     0.0434
+    ],
+    "bilateral": 0.071,
+    "bilateral_wilson95": [
+     0.0605,
+     0.0831
+    ]
+   }
+  },
+  {
+   "etiquette": "taille|entre|a=0.3|K_cal=150|T=512",
+   "parametres": {
+    "N": 76800,
+    "taches": 512,
+    "a": 0.3,
+    "h": 0.3,
+    "rho": 0.0,
+    "coupe": "entre",
+    "derive": 0.0,
+    "derive_cellules": null,
+    "derive_taches": 0.0,
+    "grille": null,
+    "G1": false,
+    "ecart_G1": 0.1,
+    "modes": 2
+   },
+   "repetitions": 2000,
+   "controles": 16,
+   "taille_lot": 5,
+   "duree_s": 52.6,
+   "ecart_type_s1_moins_s2_cellule_1_sigma": 0.078,
+   "moyenne_s1_moins_s2_cellule_1_sigma": -0.0005,
+   "seuil=20": {
+    "unilateral": 0.0345,
+    "unilateral_wilson95": [
+     0.0274,
+     0.0434
+    ],
+    "bilateral": 0.0615,
+    "bilateral_wilson95": [
+     0.0518,
+     0.0729
+    ]
+   },
+   "seuil=30": {
+    "unilateral": 0.0185,
+    "unilateral_wilson95": [
+     0.0135,
+     0.0254
+    ],
+    "bilateral": 0.033,
+    "bilateral_wilson95": [
+     0.026,
+     0.0418
+    ]
+   },
+   "seuil=40": {
+    "unilateral": 0.013,
+    "unilateral_wilson95": [
+     0.0089,
+     0.019
+    ],
+    "bilateral": 0.0225,
+    "bilateral_wilson95": [
+     0.0169,
+     0.03
+    ]
+   },
+   "seuil=60": {
+    "unilateral": 0.006,
+    "unilateral_wilson95": [
+     0.0034,
+     0.0105
+    ],
+    "bilateral": 0.011,
+    "bilateral_wilson95": [
+     0.0073,
+     0.0166
+    ]
+   }
+  },
+  {
+   "etiquette": "taille|entre|a=0.3|K_cal=150|T=1024",
+   "parametres": {
+    "N": 153600,
+    "taches": 1024,
+    "a": 0.3,
+    "h": 0.3,
+    "rho": 0.0,
+    "coupe": "entre",
+    "derive": 0.0,
+    "derive_cellules": null,
+    "derive_taches": 0.0,
+    "grille": null,
+    "G1": false,
+    "ecart_G1": 0.1,
+    "modes": 2
+   },
+   "repetitions": 2000,
+   "controles": 16,
+   "taille_lot": 5,
+   "duree_s": 116.2,
+   "ecart_type_s1_moins_s2_cellule_1_sigma": 0.0525,
+   "moyenne_s1_moins_s2_cellule_1_sigma": 0.0026,
+   "seuil=20": {
+    "unilateral": 0.0035,
+    "unilateral_wilson95": [
+     0.0017,
+     0.0072
+    ],
+    "bilateral": 0.0065,
+    "bilateral_wilson95": [
+     0.0038,
+     0.0111
+    ]
+   },
+   "seuil=30": {
+    "unilateral": 0.001,
+    "unilateral_wilson95": [
+     0.0003,
+     0.0036
+    ],
+    "bilateral": 0.0015,
+    "bilateral_wilson95": [
+     0.0005,
+     0.0044
+    ]
+   },
+   "seuil=40": {
+    "unilateral": 0.001,
+    "unilateral_wilson95": [
+     0.0003,
+     0.0036
+    ],
+    "bilateral": 0.001,
+    "bilateral_wilson95": [
+     0.0003,
+     0.0036
+    ]
+   },
+   "seuil=60": {
+    "unilateral": 0.0,
+    "unilateral_wilson95": [
+     0.0,
+     0.0019
+    ],
+    "bilateral": 0.0,
+    "bilateral_wilson95": [
+     0.0,
+     0.0019
+    ]
+   }
+  },
+  {
+   "etiquette": "taille|entre|a=0.5|T=64|K_cal=150",
+   "parametres": {
+    "N": 9600,
+    "taches": 64,
+    "a": 0.5,
+    "h": 0.3,
+    "rho": 0.0,
+    "coupe": "entre",
+    "derive": 0.0,
+    "derive_cellules": null,
+    "derive_taches": 0.0,
+    "grille": null,
+    "G1": false,
+    "ecart_G1": 0.1,
+    "modes": 2
+   },
+   "repetitions": 2000,
+   "controles": 16,
+   "taille_lot": 28,
+   "duree_s": 7.1,
+   "ecart_type_s1_moins_s2_cellule_1_sigma": 0.3133,
+   "moyenne_s1_moins_s2_cellule_1_sigma": -0.0091,
+   "seuil=20": {
+    "unilateral": 0.395,
+    "unilateral_wilson95": [
+     0.3738,
+     0.4166
+    ],
+    "bilateral": 0.7635,
+    "bilateral_wilson95": [
+     0.7444,
+     0.7816
+    ]
+   },
+   "seuil=30": {
+    "unilateral": 0.3675,
+    "unilateral_wilson95": [
+     0.3466,
+     0.3889
+    ],
+    "bilateral": 0.7055,
+    "bilateral_wilson95": [
+     0.6851,
+     0.7251
+    ]
+   },
+   "seuil=40": {
+    "unilateral": 0.3425,
+    "unilateral_wilson95": [
+     0.322,
+     0.3636
+    ],
+    "bilateral": 0.6635,
+    "bilateral_wilson95": [
+     0.6425,
+     0.6839
+    ]
+   },
+   "seuil=60": {
+    "unilateral": 0.3215,
+    "unilateral_wilson95": [
+     0.3014,
+     0.3423
+    ],
+    "bilateral": 0.617,
+    "bilateral_wilson95": [
+     0.5955,
+     0.6381
+    ]
+   }
+  },
+  {
+   "etiquette": "taille|entre|a=0.5|T=64|K_cal=300",
+   "parametres": {
+    "N": 19200,
+    "taches": 64,
+    "a": 0.5,
+    "h": 0.3,
+    "rho": 0.0,
+    "coupe": "entre",
+    "derive": 0.0,
+    "derive_cellules": null,
+    "derive_taches": 0.0,
+    "grille": null,
+    "G1": false,
+    "ecart_G1": 0.1,
+    "modes": 2
+   },
+   "repetitions": 2000,
+   "controles": 16,
+   "taille_lot": 14,
+   "duree_s": 14.4,
+   "ecart_type_s1_moins_s2_cellule_1_sigma": 0.3204,
+   "moyenne_s1_moins_s2_cellule_1_sigma": 0.0047,
+   "seuil=20": {
+    "unilateral": 0.3495,
+    "unilateral_wilson95": [
+     0.3289,
+     0.3707
+    ],
+    "bilateral": 0.704,
+    "bilateral_wilson95": [
+     0.6836,
+     0.7236
+    ]
+   },
+   "seuil=30": {
+    "unilateral": 0.323,
+    "unilateral_wilson95": [
+     0.3029,
+     0.3438
+    ],
+    "bilateral": 0.6525,
+    "bilateral_wilson95": [
+     0.6314,
+     0.6731
+    ]
+   },
+   "seuil=40": {
+    "unilateral": 0.304,
+    "unilateral_wilson95": [
+     0.2842,
+     0.3245
+    ],
+    "bilateral": 0.614,
+    "bilateral_wilson95": [
+     0.5925,
+     0.6351
+    ]
+   },
+   "seuil=60": {
+    "unilateral": 0.281,
+    "unilateral_wilson95": [
+     0.2617,
+     0.3011
+    ],
+    "bilateral": 0.564,
+    "bilateral_wilson95": [
+     0.5422,
+     0.5856
+    ]
+   }
+  },
+  {
+   "etiquette": "taille|entre|a=0.5|T=64|K_cal=600",
+   "parametres": {
+    "N": 38400,
+    "taches": 64,
+    "a": 0.5,
+    "h": 0.3,
+    "rho": 0.0,
+    "coupe": "entre",
+    "derive": 0.0,
+    "derive_cellules": null,
+    "derive_taches": 0.0,
+    "grille": null,
+    "G1": false,
+    "ecart_G1": 0.1,
+    "modes": 2
+   },
+   "repetitions": 2000,
+   "controles": 16,
+   "taille_lot": 7,
+   "duree_s": 27.1,
+   "ecart_type_s1_moins_s2_cellule_1_sigma": 0.3128,
+   "moyenne_s1_moins_s2_cellule_1_sigma": -0.0022,
+   "seuil=20": {
+    "unilateral": 0.334,
+    "unilateral_wilson95": [
+     0.3137,
+     0.355
+    ],
+    "bilateral": 0.6555,
+    "bilateral_wilson95": [
+     0.6344,
+     0.676
+    ]
+   },
+   "seuil=30": {
+    "unilateral": 0.3015,
+    "unilateral_wilson95": [
+     0.2818,
+     0.322
+    ],
+    "bilateral": 0.5985,
+    "bilateral_wilson95": [
+     0.5768,
+     0.6198
+    ]
+   },
+   "seuil=40": {
+    "unilateral": 0.2815,
+    "unilateral_wilson95": [
+     0.2622,
+     0.3016
+    ],
+    "bilateral": 0.5625,
+    "bilateral_wilson95": [
+     0.5407,
+     0.5841
+    ]
+   },
+   "seuil=60": {
+    "unilateral": 0.2555,
+    "unilateral_wilson95": [
+     0.2369,
+     0.2751
+    ],
+    "bilateral": 0.5115,
+    "bilateral_wilson95": [
+     0.4896,
+     0.5334
+    ]
+   }
+  },
+  {
+   "etiquette": "taille|entre|a=0.5|T=64|K_cal=1200",
+   "parametres": {
+    "N": 76800,
+    "taches": 64,
+    "a": 0.5,
+    "h": 0.3,
+    "rho": 0.0,
+    "coupe": "entre",
+    "derive": 0.0,
+    "derive_cellules": null,
+    "derive_taches": 0.0,
+    "grille": null,
+    "G1": false,
+    "ecart_G1": 0.1,
+    "modes": 2
+   },
+   "repetitions": 2000,
+   "controles": 16,
+   "taille_lot": 5,
+   "duree_s": 51.0,
+   "ecart_type_s1_moins_s2_cellule_1_sigma": 0.3246,
+   "moyenne_s1_moins_s2_cellule_1_sigma": -0.0035,
+   "seuil=20": {
+    "unilateral": 0.322,
+    "unilateral_wilson95": [
+     0.3019,
+     0.3428
+    ],
+    "bilateral": 0.6435,
+    "bilateral_wilson95": [
+     0.6223,
+     0.6642
+    ]
+   },
+   "seuil=30": {
+    "unilateral": 0.294,
+    "unilateral_wilson95": [
+     0.2744,
+     0.3143
+    ],
+    "bilateral": 0.592,
+    "bilateral_wilson95": [
+     0.5703,
+     0.6133
+    ]
+   },
+   "seuil=40": {
+    "unilateral": 0.2765,
+    "unilateral_wilson95": [
+     0.2573,
+     0.2965
+    ],
+    "bilateral": 0.5575,
+    "bilateral_wilson95": [
+     0.5356,
+     0.5791
+    ]
+   },
+   "seuil=60": {
+    "unilateral": 0.2565,
+    "unilateral_wilson95": [
+     0.2378,
+     0.2761
+    ],
+    "bilateral": 0.514,
+    "bilateral_wilson95": [
+     0.4921,
+     0.5359
+    ]
+   }
+  },
+  {
+   "etiquette": "taille|entre|a=0.5|N=9600|T=128",
+   "parametres": {
+    "N": 9600,
+    "taches": 128,
+    "a": 0.5,
+    "h": 0.3,
+    "rho": 0.0,
+    "coupe": "entre",
+    "derive": 0.0,
+    "derive_cellules": null,
+    "derive_taches": 0.0,
+    "grille": null,
+    "G1": false,
+    "ecart_G1": 0.1,
+    "modes": 2
+   },
+   "repetitions": 2000,
+   "controles": 16,
+   "taille_lot": 28,
+   "duree_s": 7.4,
+   "ecart_type_s1_moins_s2_cellule_1_sigma": 0.2386,
+   "moyenne_s1_moins_s2_cellule_1_sigma": 0.001,
+   "seuil=20": {
+    "unilateral": 0.3575,
+    "unilateral_wilson95": [
+     0.3368,
+     0.3788
+    ],
+    "bilateral": 0.7085,
+    "bilateral_wilson95": [
+     0.6882,
+     0.728
+    ]
+   },
+   "seuil=30": {
+    "unilateral": 0.3175,
+    "unilateral_wilson95": [
+     0.2975,
+     0.3382
+    ],
+    "bilateral": 0.631,
+    "bilateral_wilson95": [
+     0.6096,
+     0.6519
+    ]
+   },
+   "seuil=40": {
+    "unilateral": 0.286,
+    "unilateral_wilson95": [
+     0.2666,
+     0.3062
+    ],
+    "bilateral": 0.575,
+    "bilateral_wilson95": [
+     0.5532,
+     0.5965
+    ]
+   },
+   "seuil=60": {
+    "unilateral": 0.2505,
+    "unilateral_wilson95": [
+     0.232,
+     0.27
+    ],
+    "bilateral": 0.505,
+    "bilateral_wilson95": [
+     0.4831,
+     0.5269
+    ]
+   }
+  },
+  {
+   "etiquette": "taille|entre|a=0.5|N=9600|T=192",
+   "parametres": {
+    "N": 9600,
+    "taches": 192,
+    "a": 0.5,
+    "h": 0.3,
+    "rho": 0.0,
+    "coupe": "entre",
+    "derive": 0.0,
+    "derive_cellules": null,
+    "derive_taches": 0.0,
+    "grille": null,
+    "G1": false,
+    "ecart_G1": 0.1,
+    "modes": 2
+   },
+   "repetitions": 2000,
+   "controles": 16,
+   "taille_lot": 28,
+   "duree_s": 7.4,
+   "ecart_type_s1_moins_s2_cellule_1_sigma": 0.2012,
+   "moyenne_s1_moins_s2_cellule_1_sigma": -0.0078,
+   "seuil=20": {
+    "unilateral": 0.335,
+    "unilateral_wilson95": [
+     0.3146,
+     0.356
+    ],
+    "bilateral": 0.641,
+    "bilateral_wilson95": [
+     0.6197,
+     0.6617
+    ]
+   },
+   "seuil=30": {
+    "unilateral": 0.298,
+    "unilateral_wilson95": [
+     0.2784,
+     0.3184
+    ],
+    "bilateral": 0.5715,
+    "bilateral_wilson95": [
+     0.5497,
+     0.593
+    ]
+   },
+   "seuil=40": {
+    "unilateral": 0.267,
+    "unilateral_wilson95": [
+     0.2481,
+     0.2868
+    ],
+    "bilateral": 0.5115,
+    "bilateral_wilson95": [
+     0.4896,
+     0.5334
+    ]
+   },
+   "seuil=60": {
+    "unilateral": 0.232,
+    "unilateral_wilson95": [
+     0.214,
+     0.251
+    ],
+    "bilateral": 0.445,
+    "bilateral_wilson95": [
+     0.4233,
+     0.4669
+    ]
+   }
+  },
+  {
+   "etiquette": "taille|entre|a=0.5|N=9600|T=320",
+   "parametres": {
+    "N": 9600,
+    "taches": 320,
+    "a": 0.5,
+    "h": 0.3,
+    "rho": 0.0,
+    "coupe": "entre",
+    "derive": 0.0,
+    "derive_cellules": null,
+    "derive_taches": 0.0,
+    "grille": null,
+    "G1": false,
+    "ecart_G1": 0.1,
+    "modes": 2
+   },
+   "repetitions": 2000,
+   "controles": 16,
+   "taille_lot": 28,
+   "duree_s": 7.4,
+   "ecart_type_s1_moins_s2_cellule_1_sigma": 0.1638,
+   "moyenne_s1_moins_s2_cellule_1_sigma": 0.0019,
+   "seuil=20": {
+    "unilateral": 0.2895,
+    "unilateral_wilson95": [
+     0.27,
+     0.3098
+    ],
+    "bilateral": 0.571,
+    "bilateral_wilson95": [
+     0.5492,
+     0.5925
+    ]
+   },
+   "seuil=30": {
+    "unilateral": 0.2355,
+    "unilateral_wilson95": [
+     0.2174,
+     0.2546
+    ],
+    "bilateral": 0.4675,
+    "bilateral_wilson95": [
+     0.4457,
+     0.4894
+    ]
+   },
+   "seuil=40": {
+    "unilateral": 0.2025,
+    "unilateral_wilson95": [
+     0.1855,
+     0.2207
+    ],
+    "bilateral": 0.4065,
+    "bilateral_wilson95": [
+     0.3852,
+     0.4282
+    ]
+   },
+   "seuil=60": {
+    "unilateral": 0.166,
+    "unilateral_wilson95": [
+     0.1503,
+     0.1829
+    ],
+    "bilateral": 0.338,
+    "bilateral_wilson95": [
+     0.3176,
+     0.359
+    ]
+   }
+  },
+  {
+   "etiquette": "taille|entre|a=0.5|N=9600|T=640",
+   "parametres": {
+    "N": 9600,
+    "taches": 640,
+    "a": 0.5,
+    "h": 0.3,
+    "rho": 0.0,
+    "coupe": "entre",
+    "derive": 0.0,
+    "derive_cellules": null,
+    "derive_taches": 0.0,
+    "grille": null,
+    "G1": false,
+    "ecart_G1": 0.1,
+    "modes": 2
+   },
+   "repetitions": 2000,
+   "controles": 16,
+   "taille_lot": 28,
+   "duree_s": 7.9,
+   "ecart_type_s1_moins_s2_cellule_1_sigma": 0.1252,
+   "moyenne_s1_moins_s2_cellule_1_sigma": 0.0031,
+   "seuil=20": {
+    "unilateral": 0.2265,
+    "unilateral_wilson95": [
+     0.2087,
+     0.2454
+    ],
+    "bilateral": 0.452,
+    "bilateral_wilson95": [
+     0.4303,
+     0.4739
+    ]
+   },
+   "seuil=30": {
+    "unilateral": 0.1625,
+    "unilateral_wilson95": [
+     0.147,
+     0.1793
+    ],
+    "bilateral": 0.3275,
+    "bilateral_wilson95": [
+     0.3073,
+     0.3484
+    ]
+   },
+   "seuil=40": {
+    "unilateral": 0.133,
+    "unilateral_wilson95": [
+     0.1188,
+     0.1486
+    ],
+    "bilateral": 0.2685,
+    "bilateral_wilson95": [
+     0.2495,
+     0.2884
+    ]
+   },
+   "seuil=60": {
+    "unilateral": 0.093,
+    "unilateral_wilson95": [
+     0.081,
+     0.1065
+    ],
+    "bilateral": 0.1955,
+    "bilateral_wilson95": [
+     0.1787,
+     0.2135
+    ]
+   }
+  },
+  {
+   "etiquette": "taille|entre|a=0.5|N=9600|T=1920",
+   "parametres": {
+    "N": 9600,
+    "taches": 1920,
+    "a": 0.5,
+    "h": 0.3,
+    "rho": 0.0,
+    "coupe": "entre",
+    "derive": 0.0,
+    "derive_cellules": null,
+    "derive_taches": 0.0,
+    "grille": null,
+    "G1": false,
+    "ecart_G1": 0.1,
+    "modes": 2
+   },
+   "repetitions": 2000,
+   "controles": 16,
+   "taille_lot": 28,
+   "duree_s": 8.0,
+   "ecart_type_s1_moins_s2_cellule_1_sigma": 0.0915,
+   "moyenne_s1_moins_s2_cellule_1_sigma": -0.0012,
+   "seuil=20": {
+    "unilateral": 0.1245,
+    "unilateral_wilson95": [
+     0.1107,
+     0.1397
+    ],
+    "bilateral": 0.2405,
+    "bilateral_wilson95": [
+     0.2223,
+     0.2597
+    ]
+   },
+   "seuil=30": {
+    "unilateral": 0.075,
+    "unilateral_wilson95": [
+     0.0643,
+     0.0874
+    ],
+    "bilateral": 0.1525,
+    "bilateral_wilson95": [
+     0.1374,
+     0.1689
+    ]
+   },
+   "seuil=40": {
+    "unilateral": 0.043,
+    "unilateral_wilson95": [
+     0.035,
+     0.0528
+    ],
+    "bilateral": 0.099,
+    "bilateral_wilson95": [
+     0.0867,
+     0.1129
+    ]
+   },
+   "seuil=60": {
+    "unilateral": 0.0245,
+    "unilateral_wilson95": [
+     0.0186,
+     0.0322
+    ],
+    "bilateral": 0.0555,
+    "bilateral_wilson95": [
+     0.0463,
+     0.0664
+    ]
+   }
+  },
+  {
+   "etiquette": "taille|entre|a=0.5|N=9600|T=9600",
+   "parametres": {
+    "N": 9600,
+    "taches": 9600,
+    "a": 0.5,
+    "h": 0.3,
+    "rho": 0.0,
+    "coupe": "entre",
+    "derive": 0.0,
+    "derive_cellules": null,
+    "derive_taches": 0.0,
+    "grille": null,
+    "G1": false,
+    "ecart_G1": 0.1,
+    "modes": 2
+   },
+   "repetitions": 2000,
+   "controles": 16,
+   "taille_lot": 28,
+   "duree_s": 8.1,
+   "ecart_type_s1_moins_s2_cellule_1_sigma": 0.077,
+   "moyenne_s1_moins_s2_cellule_1_sigma": -0.001,
+   "seuil=20": {
+    "unilateral": 0.061,
+    "unilateral_wilson95": [
+     0.0513,
+     0.0724
+    ],
+    "bilateral": 0.1295,
+    "bilateral_wilson95": [
+     0.1155,
+     0.1449
+    ]
+   },
+   "seuil=30": {
+    "unilateral": 0.031,
+    "unilateral_wilson95": [
+     0.0243,
+     0.0395
+    ],
+    "bilateral": 0.0675,
+    "bilateral_wilson95": [
+     0.0573,
+     0.0793
+    ]
+   },
+   "seuil=40": {
+    "unilateral": 0.0195,
+    "unilateral_wilson95": [
+     0.0143,
+     0.0265
+    ],
+    "bilateral": 0.039,
+    "bilateral_wilson95": [
+     0.0314,
+     0.0484
+    ]
+   },
+   "seuil=60": {
+    "unilateral": 0.0075,
+    "unilateral_wilson95": [
+     0.0046,
+     0.0123
+    ],
+    "bilateral": 0.018,
+    "bilateral_wilson95": [
+     0.013,
+     0.0248
+    ]
+   }
+  },
+  {
+   "etiquette": "taille|entre|a=0.5|K_cal=150|T=128",
+   "parametres": {
+    "N": 19200,
+    "taches": 128,
+    "a": 0.5,
+    "h": 0.3,
+    "rho": 0.0,
+    "coupe": "entre",
+    "derive": 0.0,
+    "derive_cellules": null,
+    "derive_taches": 0.0,
+    "grille": null,
+    "G1": false,
+    "ecart_G1": 0.1,
+    "modes": 2
+   },
+   "repetitions": 2000,
+   "controles": 16,
+   "taille_lot": 14,
+   "duree_s": 14.3,
+   "ecart_type_s1_moins_s2_cellule_1_sigma": 0.2354,
+   "moyenne_s1_moins_s2_cellule_1_sigma": 0.0016,
+   "seuil=20": {
+    "unilateral": 0.2995,
+    "unilateral_wilson95": [
+     0.2798,
+     0.3199
+    ],
+    "bilateral": 0.6,
+    "bilateral_wilson95": [
+     0.5784,
+     0.6213
+    ]
+   },
+   "seuil=30": {
+    "unilateral": 0.2635,
+    "unilateral_wilson95": [
+     0.2447,
+     0.2832
+    ],
+    "bilateral": 0.532,
+    "bilateral_wilson95": [
+     0.5101,
+     0.5538
+    ]
+   },
+   "seuil=40": {
+    "unilateral": 0.239,
+    "unilateral_wilson95": [
+     0.2208,
+     0.2582
+    ],
+    "bilateral": 0.4895,
+    "bilateral_wilson95": [
+     0.4676,
+     0.5114
+    ]
+   },
+   "seuil=60": {
+    "unilateral": 0.2125,
+    "unilateral_wilson95": [
+     0.1951,
+     0.231
+    ],
+    "bilateral": 0.4295,
+    "bilateral_wilson95": [
+     0.408,
+     0.4513
+    ]
+   }
+  },
+  {
+   "etiquette": "taille|entre|a=0.5|K_cal=150|T=256",
+   "parametres": {
+    "N": 38400,
+    "taches": 256,
+    "a": 0.5,
+    "h": 0.3,
+    "rho": 0.0,
+    "coupe": "entre",
+    "derive": 0.0,
+    "derive_cellules": null,
+    "derive_taches": 0.0,
+    "grille": null,
+    "G1": false,
+    "ecart_G1": 0.1,
+    "modes": 2
+   },
+   "repetitions": 2000,
+   "controles": 16,
+   "taille_lot": 7,
+   "duree_s": 27.1,
+   "ecart_type_s1_moins_s2_cellule_1_sigma": 0.1668,
+   "moyenne_s1_moins_s2_cellule_1_sigma": -0.0068,
+   "seuil=20": {
+    "unilateral": 0.22,
+    "unilateral_wilson95": [
+     0.2024,
+     0.2387
+    ],
+    "bilateral": 0.425,
+    "bilateral_wilson95": [
+     0.4035,
+     0.4468
+    ]
+   },
+   "seuil=30": {
+    "unilateral": 0.187,
+    "unilateral_wilson95": [
+     0.1705,
+     0.2047
+    ],
+    "bilateral": 0.35,
+    "bilateral_wilson95": [
+     0.3294,
+     0.3712
+    ]
+   },
+   "seuil=40": {
+    "unilateral": 0.1595,
+    "unilateral_wilson95": [
+     0.1441,
+     0.1762
+    ],
+    "bilateral": 0.2995,
+    "bilateral_wilson95": [
+     0.2798,
+     0.3199
+    ]
+   },
+   "seuil=60": {
+    "unilateral": 0.13,
+    "unilateral_wilson95": [
+     0.116,
+     0.1455
+    ],
+    "bilateral": 0.248,
+    "bilateral_wilson95": [
+     0.2296,
+     0.2674
+    ]
+   }
+  },
+  {
+   "etiquette": "taille|entre|a=0.5|K_cal=150|T=512",
+   "parametres": {
+    "N": 76800,
+    "taches": 512,
+    "a": 0.5,
+    "h": 0.3,
+    "rho": 0.0,
+    "coupe": "entre",
+    "derive": 0.0,
+    "derive_cellules": null,
+    "derive_taches": 0.0,
+    "grille": null,
+    "G1": false,
+    "ecart_G1": 0.1,
+    "modes": 2
+   },
+   "repetitions": 2000,
+   "controles": 16,
+   "taille_lot": 5,
+   "duree_s": 51.7,
+   "ecart_type_s1_moins_s2_cellule_1_sigma": 0.116,
+   "moyenne_s1_moins_s2_cellule_1_sigma": 0.0012,
+   "seuil=20": {
+    "unilateral": 0.104,
+    "unilateral_wilson95": [
+     0.0914,
+     0.1181
+    ],
+    "bilateral": 0.216,
+    "bilateral_wilson95": [
+     0.1985,
+     0.2346
+    ]
+   },
+   "seuil=30": {
+    "unilateral": 0.078,
+    "unilateral_wilson95": [
+     0.067,
+     0.0906
+    ],
+    "bilateral": 0.158,
+    "bilateral_wilson95": [
+     0.1427,
+     0.1746
+    ]
+   },
+   "seuil=40": {
+    "unilateral": 0.0575,
+    "unilateral_wilson95": [
+     0.0481,
+     0.0686
+    ],
+    "bilateral": 0.12,
+    "bilateral_wilson95": [
+     0.1065,
+     0.135
+    ]
+   },
+   "seuil=60": {
+    "unilateral": 0.0375,
+    "unilateral_wilson95": [
+     0.03,
+     0.0468
+    ],
+    "bilateral": 0.0825,
+    "bilateral_wilson95": [
+     0.0712,
+     0.0954
+    ]
+   }
+  },
+  {
+   "etiquette": "taille|entre|a=0.5|K_cal=150|T=1024",
+   "parametres": {
+    "N": 153600,
+    "taches": 1024,
+    "a": 0.5,
+    "h": 0.3,
+    "rho": 0.0,
+    "coupe": "entre",
+    "derive": 0.0,
+    "derive_cellules": null,
+    "derive_taches": 0.0,
+    "grille": null,
+    "G1": false,
+    "ecart_G1": 0.1,
+    "modes": 2
+   },
+   "repetitions": 2000,
+   "controles": 16,
+   "taille_lot": 5,
+   "duree_s": 115.1,
+   "ecart_type_s1_moins_s2_cellule_1_sigma": 0.0816,
+   "moyenne_s1_moins_s2_cellule_1_sigma": -0.0003,
+   "seuil=20": {
+    "unilateral": 0.03,
+    "unilateral_wilson95": [
+     0.0234,
+     0.0384
+    ],
+    "bilateral": 0.0565,
+    "bilateral_wilson95": [
+     0.0472,
+     0.0675
+    ]
+   },
+   "seuil=30": {
+    "unilateral": 0.019,
+    "unilateral_wilson95": [
+     0.0139,
+     0.026
+    ],
+    "bilateral": 0.0355,
+    "bilateral_wilson95": [
+     0.0282,
+     0.0445
+    ]
+   },
+   "seuil=40": {
+    "unilateral": 0.0105,
+    "unilateral_wilson95": [
+     0.0069,
+     0.016
+    ],
+    "bilateral": 0.0225,
+    "bilateral_wilson95": [
+     0.0169,
+     0.03
+    ]
+   },
+   "seuil=60": {
+    "unilateral": 0.006,
+    "unilateral_wilson95": [
+     0.0034,
+     0.0105
+    ],
+    "bilateral": 0.0115,
+    "bilateral_wilson95": [
+     0.0077,
+     0.0172
+    ]
+   }
+  }
+ ],
+ "duree_totale_s": 584.4
+}

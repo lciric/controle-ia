@@ -1,0 +1,248 @@
+--- echelle-v5/tests/test_offre_et_surveillance_v5.py	2026-10-27 04:19:24.224453573 +0000
++++ echelle-v6/tests/test_offre_et_surveillance_v6.py	2026-10-27 05:28:52.550707282 +0000
+@@ -1,12 +1,15 @@
+-"""Gardes du choix d'offre (`choisir_offre_v5.py` : CLX-07 ; CLY-03, 24 h de stockage ; CLZ-03, prix majoré de la
++"""Gardes du choix d'offre (`choisir_offre_v6.py` : CLX-07 ; CLY-03, 24 h de stockage ; CLZ-03, prix majoré de la
+ tolérance ; CLZ-05, remontée et débit ; CLW-10, 165 Go de descente), du contrôle du prix relu (`verifier_prix_relu` et
+-`controler_prix_v5.sh`, CLZ-04 : prix égal, +4 %, +6 %, illisible, arrêt relu ou non), du GO cité (`verifier_go_v5.py`,
+-CLW-03 : périmètre, empreinte du texte scellé, plafond, type, auteur) et de la surveillance (`surveiller_echelle_v5.sh`,
++`controler_prix_v6.sh`, CLZ-04 : prix égal, +4 %, +6 %, illisible, arrêt relu ou non), du GO cité (`verifier_go_v6.py`,
++CLW-03 : périmètre, empreinte du texte scellé, plafond, type, auteur), de la surveillance (`surveiller_echelle_v6.sh`,
+ R10 ; plafond exigé dans [4 500 ; 7 200] et égal à celui du lanceur, création et identifiant relus, code de fin de
+-l'amorce rendu, conteneur sorti sans ligne de fin, CLZ-11, CLW-09), sur des offres fabriquées, un registre fabriqué et
+-un faux outil vastai (R5). Aucun appel réseau, aucune instance réelle.
+-Lancement : python -m pytest -q echelle-v5/tests
++l'amorce rendu, conteneur sorti sans ligne de fin, CLZ-11, CLW-09 ; empreinte attendue, CLV-06 ; appels lents ou
++bloqués, CLV-02) et des gardes du lanceur extraites telles quelles (commit cité, version de vastai, GO relu, empreinte
++du texte scellé extraite, CLV-08 ; lanceur et surveillance du commit, CLV-06), sur des offres fabriquées, un registre
++fabriqué, un faux dépôt et un faux outil vastai (R5). Aucun appel réseau, aucune instance réelle.
++Lancement : python -m pytest -q echelle-v6/tests
+ """
++import hashlib
+ import importlib.util
+ import itertools
+ import json
+@@ -20,7 +23,7 @@
+ import pytest
+ 
+ SCRIPTS = pathlib.Path(__file__).resolve().parent.parent / "scripts"
+-spec = importlib.util.spec_from_file_location("offre", SCRIPTS / "choisir_offre_v5.py")
++spec = importlib.util.spec_from_file_location("offre", SCRIPTS / "choisir_offre_v6.py")
+ OF = importlib.util.module_from_spec(spec)
+ spec.loader.exec_module(OF)
+ 
+@@ -36,7 +39,7 @@
+ def choisir(tmp_path, offres, plafond="8.00", prix_max="3.50", descente_max="0.005"):
+     brut = tmp_path / "brut.json"
+     brut.write_text(json.dumps(offres) if not isinstance(offres, str) else offres)
+-    r = subprocess.run([sys.executable, "-I", "-B", str(SCRIPTS / "choisir_offre_v5.py"), str(brut),
++    r = subprocess.run([sys.executable, "-I", "-B", str(SCRIPTS / "choisir_offre_v6.py"), str(brut),
+                         str(tmp_path / "offre.json"), prix_max, descente_max, plafond, str(tmp_path / "journal.txt"),
+                         str(tmp_path / "relues.json")], capture_output=True, text=True)
+     return r.returncode, r.stdout.split()
+@@ -151,7 +154,7 @@
+     (tmp_path / "etat").write_text(etat_apres)
+     env = dict(os.environ, VASTAI=str(faux), INSTANCE_FAUSSE=str(tmp_path / "instance.json"),
+                ETAT_FAUX=str(tmp_path / "etat"), ARRETS_FAUX=str(tmp_path / "arrets"), ATTENTE_ARRET_S="0")
+-    r = subprocess.run(["bash", str(SCRIPTS / "controler_prix_v5.sh"), "12345678", str(tmp_path / "offre.json"),
++    r = subprocess.run(["bash", str(SCRIPTS / "controler_prix_v6.sh"), "12345678", str(tmp_path / "offre.json"),
+                         str(tmp_path / "journal.txt")], env=env, capture_output=True, text=True, timeout=60)
+     arrets = (tmp_path / "arrets").read_text().split() if (tmp_path / "arrets").exists() else []
+     return r.returncode, arrets
+@@ -184,35 +187,51 @@
+ # ---------- surveillance ----------
+ 
+ FAUX_VASTAI = r"""#!/usr/bin/env bash
+-# faux vastai : l'état vit dans $ETAT_FAUX (running|stopped), les journaux dans $JOURNAL_FAUX, les arrêts dans $ARRETS_FAUX
++# faux vastai : l'état vit dans $ETAT_FAUX (running|stopped), les journaux dans $JOURNAL_FAUX, les arrêts dans
++# $ARRETS_FAUX (et leur heure dans $ARRETS_FAUX.heure) ; avant tout arrêt, « show » et « logs » répondent en
++# $LENTEUR_FAUSSE secondes (CLV-02)
+ case "$1 $2" in
+-  "show instance") echo "{\"actual_status\": \"$(cat "$ETAT_FAUX")\", \"cur_state\": \"$(cat "$ETAT_FAUX")\", \"dph_total\": 2.4, \"status_msg\": \"\"}" ;;
+-  "logs "*) cat "$JOURNAL_FAUX" ;;
+-  "stop instance") echo "$3" >> "$ARRETS_FAUX"; [ -n "$ARRET_EFFECTIF" ] && echo stopped > "$ETAT_FAUX"; echo "arrêt demandé" ;;
++  "show instance") [ -s "$ARRETS_FAUX" ] || sleep "$LENTEUR_FAUSSE"; echo "{\"actual_status\": \"$(cat "$ETAT_FAUX")\", \"cur_state\": \"$(cat "$ETAT_FAUX")\", \"dph_total\": 2.4, \"status_msg\": \"\"}" ;;
++  "logs "*) [ -s "$ARRETS_FAUX" ] || sleep "$LENTEUR_FAUSSE"; cat "$JOURNAL_FAUX" ;;
++  "stop instance") date +%s.%N >> "$ARRETS_FAUX.heure"; echo "$3" >> "$ARRETS_FAUX"; [ -n "$ARRET_EFFECTIF" ] && echo stopped > "$ETAT_FAUX"; echo "arrêt demandé" ;;
+ esac
+ """
++SURVEILLANCE = SCRIPTS / "surveiller_echelle_v6.sh"
++
++
++def sha_fichier(f):
++    return hashlib.sha256(pathlib.Path(f).read_bytes()).hexdigest()
+ 
+ 
+ def surveiller(tmp_path, journal, duree="4500", effectif="1", sans_duree=False, duree_lancement=None, ident="12345678",
+-               age_s=0, creation_lancement=None, etat_initial="running"):
++               age_s=0, creation_lancement=None, etat_initial="running", attendue=None, lenteur="0", appel_s=None,
++               avec_heure=False):
++    """`attendue` : empreinte écrite par le lanceur (par défaut, celle du script ; "" : ligne absente, CLV-06)."""
+     faux = faux_vastai(tmp_path, FAUX_VASTAI)
+     (tmp_path / "etat").write_text(etat_initial)
+     (tmp_path / "journal").write_text(journal)
+     creation = str(int(time.time()) - age_s)
+     lanc = tmp_path / "lancement"
+     lanc.mkdir()
+-    (lanc / "lancement.txt").write_text(f"go GO-0000-00-00-00\ncreation {creation_lancement or creation}\n"
++    attendue = sha_fichier(SURVEILLANCE) if attendue is None else attendue
++    (lanc / "lancement.txt").write_text((f"surveillance attendue {attendue}\n" if attendue else "")
++                                        + f"go GO-0000-00-00-00\ncreation {creation_lancement or creation}\n"
+                                         f"duree_max_s {duree_lancement or duree}\n"
+                                         f"succès : True ; identifiant {ident} ; message : essai\n")
+     env = dict(os.environ, VASTAI=str(faux), ETAT_FAUX=str(tmp_path / "etat"), JOURNAL_FAUX=str(tmp_path / "journal"),
+                ARRETS_FAUX=str(tmp_path / "arrets"), ARRET_EFFECTIF=effectif, DUREE_MAX_S=duree, PAS_S="1",
+-               ATTENTE_ARRET_S="0")
++               ATTENTE_ARRET_S="0", LENTEUR_FAUSSE=lenteur)
++    if appel_s is not None:
++        env["APPEL_S"] = appel_s
+     if sans_duree:
+         env.pop("DUREE_MAX_S")
+-    r = subprocess.run(["bash", str(SCRIPTS / "surveiller_echelle_v5.sh"), "12345678", creation, str(lanc),
+-                        str(tmp_path / "s")], env=env, capture_output=True, text=True, timeout=60)
++    r = subprocess.run(["bash", str(SURVEILLANCE), "12345678", creation, str(lanc), str(tmp_path / "s")], env=env,
++                       capture_output=True, text=True, timeout=60)
+     arrets = (tmp_path / "arrets").read_text().split() if (tmp_path / "arrets").exists() else []
+     arret_txt = (tmp_path / "s" / "arret.txt").read_text() if (tmp_path / "s" / "arret.txt").exists() else ""
++    if avec_heure:
++        heures = [float(x) for x in (tmp_path / "arrets.heure").read_text().split()]
++        return r.returncode, arrets, arret_txt, heures, int(creation) + int(duree)
+     return r.returncode, arrets, arret_txt
+ 
+ 
+@@ -246,19 +265,32 @@
+ 
+ @pytest.mark.parametrize("kw", [dict(sans_duree=True), dict(duree="9000"), dict(duree="7201"), dict(duree="4499"),
+                                 dict(duree="abc"), dict(duree="5000", duree_lancement="4500"),
+-                                dict(ident="87654321"), dict(creation_lancement="1700000000")])
++                                dict(ident="87654321"), dict(creation_lancement="1700000000"),
++                                dict(attendue="0" * 64), dict(attendue="")])          # CLV-06
+ def test_surveillance_refus_de_partir(tmp_path, kw):
+     code, arrets, _ = surveiller(tmp_path, "AMORCE 2026 : fin, code 0\n", **kw)
+     assert code == 2 and arrets == []
+ 
+ 
++@pytest.mark.parametrize("lenteur, appel_s", [("2", "3"),        # appels lents, sous leur borne
++                                               ("30", "2")])     # appels bloqués, coupés à leur borne
++def test_surveillance_appels_lents(tmp_path, lenteur, appel_s):
++    """CLV-02 : le plafond tombe une seconde après le départ, pendant les appels ; l'heure relue après les appels et la
++    pause bornée par le temps qui reste font demander l'arrêt au plus deux appels après le plafond (la v5, qui testait
++    l'heure lue avant les appels, attendait encore une pause et deux appels)."""
++    code, arrets, txt, heures, fin = surveiller(tmp_path, "ECHELLE 2026 : mesure\n", age_s=4499, lenteur=lenteur,
++                                                appel_s=appel_s, avec_heure=True)
++    assert code == 5 and arrets == ["12345678"] and "plafond" in txt
++    assert fin <= heures[0] <= fin + 2 * int(appel_s) + 1
++
++
+ # ---------- GO cité (CLW-03) ----------
+ 
+-spec_go = importlib.util.spec_from_file_location("go", SCRIPTS / "verifier_go_v5.py")
++spec_go = importlib.util.spec_from_file_location("go", SCRIPTS / "verifier_go_v6.py")
+ GO = importlib.util.module_from_spec(spec_go)
+ spec_go.loader.exec_module(GO)
+ EMPREINTE = "0123456789abcdef" + "0" * 48
+-NOM = "test-echelle-conscience-eval-v6.md"
++NOM = "test-echelle-conscience-eval-v7.md"
+ ENTETE = """# Registre des GO
+ 
+ | id | accordé le | type | périmètre | plafond | échéance | accordé par | référence |
+@@ -292,7 +324,7 @@
+ def test_go_ligne_mal_formee_et_codes(tmp_path):
+     f = tmp_path / "go.md"
+     f.write_text(ENTETE + ligne())
+-    code = lambda: subprocess.run([sys.executable, "-I", "-B", str(SCRIPTS / "verifier_go_v5.py"), str(f),
++    code = lambda: subprocess.run([sys.executable, "-I", "-B", str(SCRIPTS / "verifier_go_v6.py"), str(f),
+                                    "GO-2026-10-27-01", NOM, EMPREINTE, "8.00"], capture_output=True).returncode
+     assert code() == 0
+     f.write_text(ENTETE + ligne(plafond="2 USD"))
+@@ -305,7 +337,7 @@
+ 
+ def bloc_du_lanceur(debut, n_lignes):
+     """Les n lignes du lanceur qui commencent par `debut` (la garde et sa suite), telles qu'elles sont dans le script."""
+-    lignes = (SCRIPTS / "lancer_echelle_v5.sh").read_text(encoding="utf-8").splitlines()
++    lignes = (SCRIPTS / "lancer_echelle_v6.sh").read_text(encoding="utf-8").splitlines()
+     i = [k for k, l in enumerate(lignes) if l.startswith(debut)]
+     assert len(i) == 1, debut
+     return "\n".join(lignes[i[0]:i[0] + n_lignes])
+@@ -342,9 +374,79 @@
+     """CLW-03 : la ligne du lanceur qui relit le GO arrête si le GO n'est pas propre à l'expérience."""
+     (tmp_path / "registres").mkdir()
+     (tmp_path / "registres" / "go.md").write_text(ENTETE + ligne(plafond=plafond))
+-    (tmp_path / "verifier_go_v5.py").write_text((SCRIPTS / "verifier_go_v5.py").read_text(encoding="utf-8"))
++    (tmp_path / "verifier_go_v6.py").write_text((SCRIPTS / "verifier_go_v6.py").read_text(encoding="utf-8"))
+     (tmp_path / "lancement.txt").write_text("")
+-    bloc = bloc_du_lanceur('python3 -I -B "$T/verifier_go_v5.py"', 2)
++    bloc = bloc_du_lanceur('python3 -I -B "$T/verifier_go_v6.py"', 2)
+     prelude = (f"T={tmp_path}; DEPOT={tmp_path}; GO=GO-2026-10-27-01; PREREG=prereg/{NOM}; "
+                f"EMPREINTE_PREREG={EMPREINTE}; PLAFOND_GO=8.00")
+     assert jouer(tmp_path, prelude, bloc) == attendu
++
++
++def jouer_sortie(tmp_path, prelude, bloc, apres=""):
++    script = tmp_path / "essai.sh"
++    script.write_text("set -uo pipefail\n" + prelude + "\n" + bloc + "\n" + apres + "\necho passe\n")
++    r = subprocess.run(["bash", str(script)], capture_output=True, text=True, timeout=60, env=dict(os.environ))
++    return r.returncode, r.stdout
++
++
++STUB_PREREG = '''import os
++
++
++def exiger_prereg_scelle(chemin):
++    mode = os.environ["ESSAI_PREREG"]
++    if mode == "scelle":
++        return "ab" * 32
++    if mode == "court":
++        return "abc"
++    raise RuntimeError(f"{chemin} : non scellé")
++'''
++
++
++@pytest.mark.parametrize("mode, attendu", [("scelle", (0, "ab" * 32)), ("court", (2, None)), ("refus", (2, None))])
++def test_lanceur_empreinte_du_texte_scelle_extraite(tmp_path, monkeypatch, mode, attendu):
++    """CLV-08 : les lignes du lanceur qui appellent la garde de scellement et extraient l'empreinte passée au contrôle du
++    GO, jouées telles quelles sur un faux dépôt dont la garde rend une empreinte (cas sain), une réponse trop courte ou
++    un refus (artefacts) ; la garde réelle a ses propres tests dans le dépôt."""
++    depot = tmp_path / "depot"
++    (depot / "src" / "controle_ia").mkdir(parents=True)
++    (depot / "src" / "controle_ia" / "__init__.py").write_text("")
++    (depot / "src" / "controle_ia" / "prereg.py").write_text(STUB_PREREG)
++    (tmp_path / "t").mkdir()
++    monkeypatch.setenv("ESSAI_PREREG", mode)
++    bloc = bloc_du_lanceur('(cd "$DEPOT" && PYTHONPATH=src python3', 4)
++    assert "EMPREINTE_PREREG=" in bloc.splitlines()[-1]
++    code, sortie = jouer_sortie(tmp_path, f"DEPOT={depot}; PREREG=prereg/texte.md; T={tmp_path / 't'}", bloc,
++                                'echo "empreinte=$EMPREINTE_PREREG"')
++    extraite = next((l.split("=", 1)[1] for l in sortie.splitlines() if l.startswith("empreinte=")), None)
++    assert (code, extraite) == attendu
++
++
++def depot_du_commit(tmp_path, lanceur, surveillance):
++    """Faux dépôt git dont un commit porte le lanceur et la surveillance donnés ; rend (dépôt, commit)."""
++    d = tmp_path / "depot-git"
++    (d / "echelle-v6" / "scripts").mkdir(parents=True)
++    (d / "echelle-v6" / "scripts" / "lancer_echelle_v6.sh").write_bytes(lanceur)
++    (d / "echelle-v6" / "scripts" / "surveiller_echelle_v6.sh").write_bytes(surveillance)
++    g = ["git", "-C", str(d), "-c", "user.name=essai", "-c", "user.email=essai@invalid"]
++    subprocess.run(["git", "init", "-q", str(d)], check=True)
++    subprocess.run(g + ["add", "."], check=True)
++    subprocess.run(g + ["commit", "-q", "-m", "essai"], check=True)
++    commit = subprocess.run(["git", "-C", str(d), "rev-parse", "HEAD"], check=True, capture_output=True,
++                            text=True).stdout.strip()
++    return d, commit
++
++
++@pytest.mark.parametrize("lanceur_modifie, attendu", [(False, 0), (True, 2)])
++def test_lanceur_et_surveillance_du_commit(tmp_path, lanceur_modifie, attendu):
++    """CLV-06 : les lignes du lanceur qui comparent son empreinte à celle du fichier du commit et écrivent l'empreinte
++    attendue de la surveillance, jouées telles quelles ; la surveillance relit cette ligne (test de refus de partir)."""
++    vrai = (SCRIPTS / "lancer_echelle_v6.sh").read_bytes()
++    depot, commit = depot_du_commit(tmp_path, vrai, SURVEILLANCE.read_bytes())
++    local = tmp_path / "lancer_echelle_v6.sh"
++    local.write_bytes(vrai + (b"# copie modifiee\n" if lanceur_modifie else b""))
++    (tmp_path / "t").mkdir()
++    bloc = bloc_du_lanceur('L_COMMIT=$(git -C "$DEPOT" show', 4)
++    code, _ = jouer_sortie(tmp_path, f"DEPOT={depot}; COMMIT={commit}; LANCEUR={local}; T={tmp_path / 't'}", bloc)
++    assert code == attendu
++    ecrit = (tmp_path / "t" / "lancement.txt").read_text() if (tmp_path / "t" / "lancement.txt").exists() else ""
++    assert (f"surveillance attendue {sha_fichier(SURVEILLANCE)}" in ecrit) is (attendu == 0)

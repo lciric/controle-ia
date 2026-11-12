@@ -1,0 +1,211 @@
+TACHE 5
+=== D 1
+ACTION: ADD
+TITLE: Personalising a multi-view diffusion model on the input before lifting to 3D
+PROPOSAL: We fine-tune a pretrained multi-view diffusion model on augmented crops and rotations of the single input image of the subject, using low-rank adapters, and add a few synthetic views produced by a personalised 2D model of the same subject. The adapted model then generates the full set of views that a native 3D reconstructor turns into an asset. We evaluate identity preservation on side and back views with an identity embedding model and human preference, on a benchmark of pets, toys and figurines with ground-truth multi-view captures.
+CONTROLS: The unadapted multi-view model, score distillation with a personalised 2D prior, and a native 3D generator conditioned on the same image.
+COST: 480
+PREDICTION: Personalised multi-view generation should raise identity similarity on unseen views without hurting view consistency. Very thin structures may still be reconstructed poorly by the 3D stage.
+=== D 2
+ACTION: ADD
+TITLE: Measuring identity preservation across viewpoints for generated 3D assets
+PROPOSAL: We build an evaluation protocol for subject-driven 3D generation from captures of real subjects photographed from all sides. The generator receives one front view, and its renders at the held-out angles are compared with the real photographs using identity embeddings from several feature extractors, colour histogram distances and pairwise human judgements. We report scores by angle to show where identity is lost.
+CONTROLS: Agreement between the automatic scores and the human judgements, scores of the real photographs against each other as an upper bound, and scores of a different subject of the same category as a lower bound.
+COST: 90
+PREDICTION: Existing generators should lose identity mostly at back views, with colour shifts as a common failure. Feature extractors trained on faces may misjudge animal subjects.
+=== D 3
+ACTION: ADD
+TITLE: Correcting colour bias of multi-view diffusion with a subject-specific palette prior
+PROPOSAL: We estimate a colour palette and texture statistics from the input image of the subject and add a guidance term during multi-view sampling that penalises deviations from these statistics in the generated views. This targets the systematic colour errors observed on unseen sides. We test on pets and objects whose back views share the front palette and on subjects whose back differs, to check that the prior does not erase real differences.
+CONTROLS: Sampling without guidance, guidance with a palette from a different subject, and human ratings of colour faithfulness on held-out real views.
+COST: 210
+PREDICTION: Palette guidance should cut colour errors for uniform subjects. Subjects with distinct back patterns may be wrongly homogenised.
+=== D 4
+ACTION: ADD
+TITLE: Personalised video-to-4D generation with a motion-aware identity adapter
+PROPOSAL: We extend multi-view personalisation to dynamic subjects by fine-tuning a video multi-view diffusion model on frames of the input video, with an identity adapter shared across time and a motion module left frozen. The generated views at each time are then fused into a deformable 4D representation. We evaluate identity and motion fidelity on animal videos where a second camera captures the opposite side.
+CONTROLS: The same pipeline without personalisation, per-frame image-to-3D personalisation without temporal sharing, and a score distillation 4D method.
+COST: 760
+PREDICTION: The shared identity adapter should keep appearance stable over time and preserve identity on the unseen side. Large non-rigid motion may reveal regions that no frame shows, limiting fidelity.
+=== D 5
+ACTION: ADD
+TITLE: Native 3D generation guided by personalised multi-view images
+PROPOSAL: We combine the efficiency of a native 3D generator with the identity of a personalised multi-view model by feeding the generated personalised views as additional conditions to the native generator. We study how many views are needed and which angles matter most for identity, on a set of subjects with full real captures.
+CONTROLS: The native generator with the single input image, the personalised views reconstructed by optimisation, and the native generator fed with unpersonalised views.
+COST: 340
+PREDICTION: Personalised views should raise identity on unseen sides while keeping the speed of native generation. Inconsistent views could introduce seams in the asset.
+=== D 6
+ACTION: ADD
+TITLE: Identity loss from averaging in score distillation
+PROPOSAL: We quantify how score distillation averages appearance across samples of the diffusion prior by running it with priors of increasing personalisation strength on the same subject, and measure identity similarity and texture sharpness on rendered views. We then test a variant that anchors the distillation with views generated once by a personalised multi-view model.
+CONTROLS: Standard score distillation, distillation with a personalised 2D prior, and the anchored variant, each with three random seeds.
+COST: 420
+PREDICTION: Stronger personalisation should improve identity but increase optimisation time, and anchoring should cut the averaging effect. Anchors with errors could be locked into the asset.
+=== D 7
+ACTION: ADD
+TITLE: A small multi-view dataset of personal subjects for evaluating 3D customisation
+PROPOSAL: We collect turntable captures of household objects, toys and pets under controlled lighting, each with a casual front photo and a short handheld video, so that subject-driven 3D and 4D methods can be evaluated against real unseen views. We release masks, camera poses and identity annotations.
+CONTROLS: Repeat captures of a subset to measure capture noise, inter-annotator agreement on identity annotations, and a check of pose accuracy against a calibration target.
+COST: 30
+PREDICTION: The dataset should reveal gaps between methods that synthetic benchmarks cannot show, especially for back views. Pets may be hard to capture consistently.
+=== D 8
+ACTION: ADD
+TITLE: Synthesising identity-consistent training data for multi-view personalisation
+PROPOSAL: Generate, with a personalised 2D diffusion model of the subject, a set of images from varied prompts describing other poses and viewpoints, filter them by identity similarity to the input, and use the survivors to fine-tune a multi-view model. This gives the multi-view model more than one image to learn the subject from. We test on subjects with asymmetric markings that reveal identity errors.
+CONTROLS: Fine-tuning on the input image alone, fine-tuning on unfiltered synthetic images, and no fine-tuning.
+COST: 380
+PREDICTION: Filtered synthetic data should improve identity on unseen sides more than the input alone. If the 2D model invents wrong markings, filtering may not catch them.
+=== D 9
+ACTION: ADD
+TITLE: Speed and quality trade-offs for subject-driven 3D generation
+PROPOSAL: We measure the wall-clock time and the identity scores of personalised multi-view pipelines, score distillation pipelines and native 3D generators on the same subjects and hardware, to give practitioners a clear view of what each approach delivers per minute of generation. Results are broken down by subject category and viewing angle.
+CONTROLS: Each pipeline without personalisation, the same subjects at two input resolutions, and repeated runs to estimate timing noise.
+COST: 150
+PREDICTION: Personalised multi-view pipelines should offer the best identity per minute. Score distillation may match identity but take far longer.
+=== D 10
+ACTION: ADD
+TITLE: Composing several personalised subjects into one 3D scene
+PROPOSAL: We generate separate personalised assets for two or three subjects from one image each and compose them into a scene, then check whether interactions such as occlusion or contact alter the identity of any subject in renders from new viewpoints. We also test a joint generation variant that personalises all subjects at once.
+CONTROLS: Separate generation without personalisation, joint generation without personalisation, and identity scores of each subject rendered alone.
+COST: 270
+PREDICTION: Separate personalised assets composed afterwards should keep identity best. Joint personalisation may mix attributes between similar subjects.
+=== A 1 0
+ACTION: ADD
+TITLE: A subject token learned through the native generator's own renderer
+PROPOSAL: We optimise a single text-token embedding in the conditioning space of a native image-to-3D generator so that renders of the generated asset, taken at the input viewpoint, match the input photograph in a perceptual and identity-embedding loss, with the generator weights frozen and gradients flowing through its differentiable renderer. The asset produced with the learned token is then rendered at side and back angles and judged against real photographs of the same subject taken from those angles, which is where identity is lost today. Subjects are household objects and pets captured on a turntable; the token is initialised from the category word and optimised for a few hundred steps per subject.
+CONTROLS: The same generator conditioned on the input image and a generic caption; the generator conditioned on a token learned for a different subject of the same category, which separates identity from category; identity-embedding distance and paired human preference against the real side and back photographs; and results reported per viewing angle over repeated optimisation seeds.
+COST: 260
+PREDICTION: The learned token should cut identity distance on back views and win the paired preference, while the other-subject token should sit near the caption run. If the other-subject token gains as much, the token carries category appearance and not the subject.
+=== A 1 1
+ACTION: ADD
+TITLE: A subject token learned through the native generator's own renderer against flat-image personalisation
+PROPOSAL: Subjects are household objects and pets captured on a turntable. We optimise a single text-token embedding in the conditioning space of a native image-to-3D generator so that renders of the generated asset, taken at the input viewpoint, match the input photograph in a perceptual and identity-embedding loss, with the generator weights frozen and gradients flowing through its differentiable renderer. The asset produced with the learned token is then rendered at the input angle and judged against the images that flat-image personalisation methods produce for the same subject from its photograph, which is where personalisation is mature today.
+CONTROLS: A personalised flat-image diffusion model conditioned on the input image and a generic caption; a larger native generator conditioned on a long caption written for the subject, which separates token learning from caption detail; identity-embedding distance and paired human preference against the personalised flat images at the input angle; and results reported per method over repeated optimisation seeds.
+COST: 260
+PREDICTION: The learned token should cut identity distance at the input angle and win the paired preference, while the long-caption run should sit near the flat-image method. If the long-caption run gains as much, the token carries caption detail and not the subject.
+=== A 2 0
+ACTION: ADD
+TITLE: Propagating observed texture to unobserved parts through predicted correspondences
+PROPOSAL: We predict dense part correspondences on the generated mesh, between the visible surface and its symmetric or repeated counterparts, and transfer observed texture along them before an inpainting network fills the regions left without a counterpart, so that the back of a subject inherits its real colours wherever geometry permits. The test runs on subjects with a plain back and on subjects whose back differs from the front, such as animals with markings, and judges renders at angles far from the input against real photographs.
+CONTROLS: The inpainting network alone without transferred texture; transfer along correspondences predicted for a different subject of the same category; renders scored by colour distance and identity embedding against real photographs at back and side angles, split into plain-backed and marked subjects; and the runs repeated over seeds.
+COST: 150
+PREDICTION: Transfer should cut colour error on plain-backed subjects and should leave marked subjects at best unchanged, since their back cannot be inferred from the front. If marked subjects also gain, the correspondence predictor has learned category priors that the inpainting network lacked.
+=== A 2 1
+ACTION: ADD
+TITLE: Propagating observed texture to neighbouring parts through predicted correspondences
+PROPOSAL: The test runs on subjects selected for left-right symmetry, such as mugs, shoes and toy cars, and on their near-symmetric variants with a sticker or a handle on one side, and judges renders at angles close to the input against real photographs. We predict dense part correspondences on the generated mesh, between the visible surface and its symmetric or repeated counterparts, and transfer observed texture along them before an inpainting network fills the regions left without a counterpart, so that the parts adjacent to the visible surface inherit its real colours wherever geometry permits.
+CONTROLS: The inpainting network alone without transferred texture; transfer along correspondences predicted for a different subject of the same category; renders scored by colour distance and identity embedding against real photographs at angles near the input, split into symmetric and near-symmetric subjects; and the runs repeated over seeds.
+COST: 150
+PREDICTION: Transfer should cut colour error on symmetric subjects and should leave near-symmetric subjects at best unchanged, since their mirrored parts differ. If near-symmetric subjects also gain, the correspondence predictor has learned category priors that the inpainting network lacked.
+=== A 3 0
+ACTION: ADD
+TITLE: An identity consistency loss across time for video-to-4D generation
+PROPOSAL: We add to a video-to-4D pipeline a loss that pulls the identity embedding of every generated frame, at every rendered angle, toward the embedding of the input video, applied while the deformable representation is optimised, so that the subject stays itself as it moves and as the camera circles it. Ground truth comes from a second camera that films the subject from the side the input never shows, synchronised with the input video; identity is scored against that camera's frames at matched time steps on pets and people walking and turning.
+CONTROLS: The pipeline without the loss; the loss applied with the embedding of a different subject of the same category, which separates identity from an embedding prior; identity distance per time step against the second camera, split by whether the subject's motion is slow or fast; and three optimisation seeds per subject.
+COST: 540
+PREDICTION: The loss should keep identity distance flat over time on the unseen side where the plain pipeline drifts, with the largest gain on fast motion. If the different-subject embedding also flattens the curve, the loss acts as a regulariser and not as a subject-specific term.
+=== A 3 1
+ACTION: ADD
+TITLE: An identity consistency loss across time for video-to-4D generation scored by temporal smoothness
+PROPOSAL: Ground truth for smoothness comes from the generated frames themselves: we score the frame-to-frame change of the identity embedding and the flicker of rendered pixels at every angle, at matched time steps, on pets and people walking and turning. We add to a video-to-4D pipeline a loss that pulls the identity embedding of every generated frame, at every rendered angle, toward the embedding of the input video, applied while the deformable representation is optimised, so that the subject stays steady as it moves and as the camera circles it.
+CONTROLS: The pipeline without the loss; the loss applied with the embedding of a different subject of the same category, which separates steadiness from an embedding prior; embedding change per time step between consecutive frames, split by whether the subject's motion is slow or fast; and three optimisation seeds per subject.
+COST: 540
+PREDICTION: The loss should keep the embedding change flat over time on the unseen side where the plain pipeline flickers, with the largest gain on fast motion. If the different-subject embedding also flattens the curve, the loss acts as a regulariser and not as a subject-specific term.
+=== A 4 0
+ACTION: ADD
+TITLE: A few steps of identity refinement on a native generator's output
+PROPOSAL: Starting from the asset a native image-to-3D generator produces in one pass, we run a short optimisation of its appearance parameters against the input photograph through a differentiable renderer at the input resolution, with an identity-embedding loss and a colour statistics loss, and stop after a preset small number of steps so that the whole pipeline stays far faster than score distillation. The refinement touches only colour and texture parameters, leaving geometry as the generator produced it, so that geometry stays consistent across views. The claim is that most of the identity gap on unseen sides can be closed this way; it is tested on turntable captures with real side and back photographs.
+CONTROLS: The generator's raw asset; score distillation from the same generator run to convergence as the slow reference; refinement with the losses computed against a photograph of a different subject of the same category; identity distance and human preference on the real back and side photographs; and seeds repeated per subject.
+COST: 120
+PREDICTION: Refinement should recover most of the identity gain of score distillation on back views at a small fraction of its time, while the different-subject refinement should drift. If the raw asset already sits near the refined one, the native generator does not lose identity in the first place.
+=== A 4 1
+ACTION: ADD
+TITLE: A few steps of identity refinement on a native generator's output across renderer choices
+PROPOSAL: The claim is that the identity gap on unseen sides closes at the same rate whatever the renderer resolution and the optimiser step size; it is tested on turntable captures with real side and back photographs. Starting from the asset a native image-to-3D generator produces in one pass, we run a short optimisation of its appearance parameters against the input photograph through a differentiable renderer, with an identity-embedding loss and a colour statistics loss, and stop after a preset small number of steps so that the whole pipeline stays far faster than score distillation, at each of several renderer resolution values and step lengths.
+CONTROLS: The generator's raw asset; refinement at the highest renderer resolution run to convergence as the slow reference; refinement with the losses computed at a quarter of the input image resolution; identity distance and human preference on the real back and side photographs; and seeds repeated per subject.
+COST: 120
+PREDICTION: Refinement should recover the same identity gain at every resolution above a quarter of the input, at a small fraction of the converged time, while the quarter-resolution refinement should blur. If the raw asset already sits near the refined one, the native generator does not lose identity in the first place.
+=== A 5 0
+ACTION: ADD
+TITLE: Where identity is lost, in the multi-view stage or in the reconstruction stage
+PROPOSAL: We split a two-stage pipeline, multi-view diffusion followed by a feed-forward reconstructor, and feed the reconstructor with real photographs of the subject taken from the same angles the diffusion model generates, so that the loss attributable to reconstruction alone is read off directly; the loss attributable to the multi-view stage is read off by scoring its generated views before reconstruction against the same real photographs. Subjects come from turntable captures, with the lighting of the generated views aligned by hand; identity is scored on back and side renders. The answer tells which stage personalisation effort should go to.
+CONTROLS: The full pipeline on the input image; the reconstructor fed real photographs at the generated angles, which caps what reconstruction can preserve; the generated views scored before reconstruction against the real photographs; identity distance against real photographs at back and side angles for each path; and the same subjects run over repeated seeds.
+COST: 380
+PREDICTION: Most of the identity loss should sit in the multi-view stage, with the real-photo path close to the photographs themselves. If the real-photo path loses as much as the full pipeline, the reconstructor is the bottleneck and view personalisation cannot help.
+=== A 5 1
+ACTION: ADD
+TITLE: Where identity is lost, in the multi-view stage or in the reconstruction stage, between sampling runs
+PROPOSAL: Subjects come from turntable captures; identity is scored on back and side renders. We split a two-stage pipeline, multi-view diffusion followed by a feed-forward reconstructor, and feed the reconstructor with generated views from a second sampling run at the same angles the first run produces, so that the variation attributable to reconstruction alone is read off directly; the variation attributable to the multi-view stage is read off by scoring the generated views of the two runs against each other before reconstruction. The answer tells which stage sampling variance comes from.
+CONTROLS: The full pipeline on the input image; the reconstructor fed the second run's views at the generated angles, which caps what reconstruction can preserve; both runs' views scored against each other; identity distance between the two runs' renders at back and side angles for each path; and the same subjects run over repeated seeds.
+COST: 380
+PREDICTION: Most of the run-to-run variation should sit in the multi-view stage, with the second-run path close to the first. If the second-run path differs as much as the full pipeline, the reconstructor is the bottleneck and view sampling cannot help.
+=== A 6 0
+ACTION: ADD
+TITLE: Subject-adapted multi-view generation for identity in unseen views
+PROPOSAL: We adapt a multi-view diffusion model to the subject from its single image, enriched with synthetic views from a personalised 2D model filtered by identity similarity, and lift the generated views to 3D with a native reconstructor, so that every viewpoint is generated with knowledge of this specific subject.
+CONTROLS: The unadapted model, score distillation with a personalised prior, a native 3D generator, and identity scores on real unseen views.
+COST: 460
+PREDICTION: Identity on back views should improve clearly. Thin structures may still fail in reconstruction.
+=== A 6 1
+ACTION: ADD
+TITLE: Higher-resolution multi-view generation for detailed 3D assets
+PROPOSAL: We upscale the views produced by a multi-view diffusion model with a super-resolution diffusion stage and lift them to 3D with a native reconstructor, so that every viewpoint of the asset carries finer texture detail than the base model gives. The single input image of the subject conditions the base model as before.
+CONTROLS: The base model at native resolution, score distillation with a personalised prior, a native 3D generator, and identity scores on real unseen views.
+COST: 460
+PREDICTION: Texture detail should improve clearly on all views. Upscaling may sharpen colour errors on the back.
+=== A 7 0
+ACTION: ADD
+TITLE: Correcting systematic colour errors on unseen sides of a subject
+PROPOSAL: We estimate the subject's palette and texture statistics from the input and guide multi-view sampling to respect them, targeting the colour shifts that generators show on views not covered by the input, and we check on subjects with distinct backs that real differences survive.
+CONTROLS: Unguided sampling, a palette from another subject, colour distances against real held-out views, and human ratings.
+COST: 190
+PREDICTION: Colour errors should fall for uniform subjects. Distinct markings on the back must survive the guidance.
+=== A 7 1
+ACTION: ADD
+TITLE: Filtering the training data of multi-view diffusion models
+PROPOSAL: We filter the large object datasets used to train multi-view diffusion models, removing renders with unusual lighting or tinted materials by a learned quality classifier, and retrain the model on the filtered set, on the view that cleaner data reduce colour shifts in generated views of any object.
+CONTROLS: The model trained on unfiltered data, random filtering of equal size, colour distances against real held-out views, and human ratings.
+COST: 190
+PREDICTION: Colour shifts should fall for common objects. The approach needs a full retraining of the base model.
+=== A 8 0
+ACTION: ADD
+TITLE: Identity-preserving 4D assets from a single video of the subject
+PROPOSAL: We personalise a video multi-view diffusion model on the input video with an identity adapter shared across time and fuse its outputs into a deformable 4D representation, so that sides of the subject that the video never shows are generated with its own appearance and stay consistent as it moves.
+CONTROLS: Unpersonalised generation, per-frame personalisation, a score distillation 4D method, and identity scores against a second camera.
+COST: 680
+PREDICTION: Identity on the unseen side should hold over time. Large motions may expose regions without cues.
+=== A 8 1
+ACTION: ADD
+TITLE: Realistic motion transfer for 4D assets from a single video
+PROPOSAL: We extract a skeleton and motion trajectory from the input video and retarget it onto a 3D asset generated from the first frame, so that the asset moves like the subject in the video, with a physics-based correction step that removes foot sliding and interpenetration during the motion.
+CONTROLS: Unpersonalised generation, motion copied without correction, a score distillation 4D method, and motion error against a second camera.
+COST: 680
+PREDICTION: Motion should match the video closely. The asset's appearance stays that of the first-frame generation.
+=== A 9 0
+ACTION: ADD
+TITLE: Benchmark of identity preservation on real multi-view captures
+PROPOSAL: We capture real subjects from all sides, give each generator a single front view, and score renders at held-out angles against the real photographs with identity embeddings and human judgements, so that the field can measure the faithfulness of side and back views directly.
+CONTROLS: Real photographs against each other as ceiling, a different subject of the same category as floor, and agreement between automatic scores and humans.
+COST: 80
+PREDICTION: Back views should show the largest identity losses. Face-trained embeddings may misjudge animals.
+=== A 9 1
+ACTION: ADD
+TITLE: Benchmark of geometric accuracy for single-image 3D generation
+PROPOSAL: We scan real subjects with a structured-light scanner, give each generator a single front view, and score the generated meshes against the scans with chamfer distance and normal consistency, so that the field can measure the shape accuracy of side and back regions directly.
+CONTROLS: Repeated scans of the same subject as ceiling, a different subject of the same category as floor, and agreement between metrics and humans.
+COST: 80
+PREDICTION: Back regions should show the largest shape errors. Thin parts may be missed by every method.
+=== A 10 0
+ACTION: ADD
+TITLE: Personalised views as conditions for fast native 3D generation
+PROPOSAL: We generate a small set of views of the subject with a multi-view model personalised on its input image and pass them to a native 3D generator as extra conditions, combining the identity of personalisation with the speed of generation without per-scene optimisation, and we score identity on real unseen views.
+CONTROLS: The native generator with one image, unpersonalised views, optimisation-based reconstruction, and three seeds.
+COST: 330
+PREDICTION: Identity should improve while generation stays fast. View inconsistency may cause seams.
+=== A 10 1
+ACTION: ADD
+TITLE: Distilling a native 3D generator into a smaller model
+PROPOSAL: We distil a large native 3D generator into a smaller student that conditions on the single input image and produces an asset in one forward pass, combining the quality of the large generator with lower memory and faster generation for real-world use, and we score identity on real unseen views.
+CONTROLS: The large generator with one image, a student trained from scratch, optimisation-based reconstruction, and three seeds.
+COST: 330
+PREDICTION: The student should keep most of the quality at a fraction of the memory. Fine details may be lost.

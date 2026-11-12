@@ -1,0 +1,62 @@
+[
+ {
+  "id": "CLO-01",
+  "constat": "FIDELITE-01",
+  "ancien": "les quatorze fichiers `tests/test_t07_*.py` du commit cité par `CODE-T07`",
+  "nouveau": "les fichiers `tests/test_t07_*.py` du commit cité par `CODE-T07` (quatorze au commit `8ae9fc44` ; quinze au commit `37485ce5` ; s'y ajoute tout fichier de ce motif versé sur `main` avant C7, dont l'essai CLC-04, `tests/test_t07_ouvrir_reel_concepts_v1.py` ; motif `tests/test_t07_*.py` du script v2, l. 204)"
+ },
+ {
+  "id": "CLO-02",
+  "constat": "FIDELITE-03",
+  "ancien": "remplissage de son marqueur de la ligne `AUDIT-FUITES-T07` du brouillon 22 (cellule et empreinte)",
+  "nouveau": "remplissage de son marqueur par la cellule de la ligne `AUDIT-FUITES-T07` du texte scellé de ce préenregistrement (cellule et empreinte ; R-2241, Q-7 : après les contre-lectures ; cellule au brouillon 22 : `381a72d5…`)"
+ },
+ {
+  "id": "CLO-03",
+  "constat": "GARDES-CODE-01 (option (b) seulement)",
+  "ancien": "tirages dégénérés > 1 % → arrêt de la lecture concernée ; L5 : jeu construit",
+  "nouveau": "tirages dégénérés > 1 % → arrêt de la lecture concernée (**brouillon 22, écart déclaré** : l'arrêt est celui du paquet gelé, `sondes.evaluation.intervalle_blocs`, `sondes.temoins.difference_aires_appariee` et `premier_test_ia.statistiques.detection_stratifiee`, éprouvé sur un cas sain et un artefact dans `tests/test_sondes_v0.py`, `tests/test_sondes_temoins.py` et `tests/test_premier_test_ia_statistiques.py`, hors des essais joués sur l'instance ; sa reprise en « échec » de la seule lecture concernée, `lecture_v1.lecture_jeux` l. 866-874 et `lectures_t07_v1.py` l. 104-105, 125-126, 141-142, 304-305, 318-319 et 358-359, n'a d'artefact de tirages dégénérés dans aucun fichier `tests/test_t07_*.py` au commit `37485ce5`) ; L5 : jeu construit"
+ },
+ {
+  "id": "CLO-04",
+  "constat": "GARDES-CODE-02",
+  "ancien": "essais rejoués par la contre-lecture : 404 passés, 2 sautés, 4 échecs attendus, aucun échec",
+  "nouveau": "essais rejoués par la contre-lecture : 404 passés, 2 sautés, 4 échecs attendus, aucun échec, sur seize fichiers : les quinze `tests/test_t07_*.py` (344 essais) et `tests/test_verifier_jeux_synthetiques_t07_v2.py` (66 essais), que le script de l'instance ne joue pas (`pytest --collect-only` au commit `37485ce5` ; la contre-lecture écrit « 17 fichiers » pour les premiers) ; ce compte n'est pas la ligne d'essais attendue de l'instance, qui reste à mesurer dans un clone fait comme celui de l'instance"
+ },
+ {
+  "id": "CLO-05",
+  "constat": "CRITERES-01",
+  "ancien": "**ce qui change d'une dose à l'autre est l'aire vraie**, qu'aucun calcul ne fixe d'avance",
+  "nouveau": "**ce qui change d'une dose à l'autre est d'abord l'aire vraie**, qu'aucun calcul ne fixe d'avance ; le quantile 0,95 du plancher et la demi-largeur de l'intervalle, estimés sur chaque jeu (section « Métrique » ; T7-P2 lue dose par dose, section « Seuil »), peuvent aussi en différer : l'égalité des aires minimales entre doses tient aux effectifs et à la supposition qu'ils valent ceux de P3 à chaque dose (sensibilité au plancher : (4))"
+ },
+ {
+  "id": "CLO-06",
+  "constat": "CRITERES-02",
+  "ancien": "exclut, à 80 %, une aire vraie au moins égale à l'aire minimale de (1), pour ces sondes, à cette dose, et rien d'autre",
+  "nouveau": "exclut, à 80 %, une aire vraie au moins égale à l'aire minimale que donne la formule de (1) avec le quantile du plancher et la demi-largeur (aire moins borne basse) lus au résultat pour cette dose (les valeurs de (1), tirées de P3, sont de planification et ne se citent pas comme borne d'un nul observé ; un plancher plus haut relève cette aire d'autant, (4)), pour ces sondes, à cette dose, et rien d'autre"
+ },
+ {
+  "id": "CLO-07",
+  "constat": "CRITERES-04",
+  "ancien": "deux (97,5 %) : 0,6296, 0,5947, 0,5703 à 0,6546 (repli à trois ou deux sondes calculé d'avance)",
+  "nouveau": "deux (97,5 %) : 0,6296, 0,5947 (les deux sondes figées seules : aucune sonde neuve n'est lue à ce niveau, section « Seuil », repli ; les valeurs 0,5703 à 0,6546 de la sortie versée y sont sans objet) (repli à trois ou deux sondes calculé d'avance : remplace le « à recalculer par le même script au candidat » du paragraphe précédent, phrase du brouillon 7)"
+ },
+ {
+  "id": "CLO-08",
+  "constat": "CONCORDANCE-01 (section gelée, décision de la mère, option (a))",
+  "ancien": "instance du programme déjà sur le compte, carte H200",
+  "nouveau": "instance d'étiquette `t06…` ou `t07…` déjà sur le compte (autre que celle de 7b pour l'étape annexe ; périmètre de l'inventaire de l'ordre d'exécution ; une instance d'une autre tâche du programme — P3-bis, T0.8, pièces HD ou R du texte de validité de l'adaptateur — n'interdit ni ne retarde la création, écrits (b) 1 et 2), carte H200"
+ },
+ {
+  "id": "CLO-09",
+  "constat": "CONCORDANCE-01 (avec CLO-08)",
+  "ancien": "à trancher dans l'ordre d'exécution.",
+  "nouveau": "tranché par la liste d'arrêt (étiquettes `t06…` et `t07…` seules) : elle n'interdit ni ne retarde la création de l'instance de l'étape A."
+ },
+ {
+  "id": "CLO-10",
+  "constat": "CONCORDANCE-02",
+  "ancien": "saut de ligne final exigé, aucune ligne vide",
+  "nouveau": "fichier lu en UTF-8 en mode texte (fins de ligne CRLF et retour chariot seul lues comme LF, mêlées ou non, comme chez l'écrivain, qui n'écrit que LF ; P3-bis brouillon 12, plan, point 8, CL4-C05 ; vérifié par essai sur le lecteur au commit `37485ce5` ; cas à rejouer au préalable P-9 de P3-bis), saut de ligne final exigé, aucune ligne vide"
+ }
+]

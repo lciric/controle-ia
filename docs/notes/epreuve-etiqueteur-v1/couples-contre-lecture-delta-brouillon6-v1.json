@@ -1,0 +1,74 @@
+[
+ {
+  "id": "CD6-01-statut",
+  "n": 1,
+  "ancien": "ces compléments et la version 4 **ne sont pas contre-lus** ; **non scellé**. Historique",
+  "nouveau": "ces compléments et la version 4 sont **contre-lus par la contre-lecture bornée du delta du brouillon 6** (scellable après ses couples, aucun bloquant ; voir la section « Contre-lecture ») ; **non scellé**. Historique"
+ },
+ {
+  "id": "CD6-02-annexe-c-essais-v4",
+  "n": 1,
+  "ancien": "| `test_lire_items_phase1_v4.py` | `518ee4593cda2a035a5d9e607d3676752898039b049f6fa95d9ffa34d76cff7d` | en vigueur, 79 essais |",
+  "nouveau": "| `test_lire_items_phase1_v4.py` | `a097958005d48298e1d9bbb107741f3eb55bfe3a56633a9e15b3709abaaf1f4f` | en vigueur, 79 essais ; réécrit par la session mère après 00:02:25, la fausse clé écrite par concaténation et rien d'autre (l'empreinte d'avant, `518ee4593cda2a035a5d9e607d3676752898039b049f6fa95d9ffa34d76cff7d`, se retrouve en défaisant cette seule ligne : contre-lecture bornée du delta du brouillon 6) |"
+ },
+ {
+  "id": "CD6-03-annexe-c-essais-rejoues",
+  "n": 1,
+  "ancien": "les 6 démonstrations de la contre-lecture 1 ; les jeux des versions remplacées passent toujours contre leurs versions intactes.",
+  "nouveau": "les 6 démonstrations de la contre-lecture 1 ; les jeux des versions remplacées passent toujours contre leurs versions intactes. Rejoués par la contre-lecture bornée du delta du brouillon 6, le 8 novembre 2026 à 00:07:59, en environnement vidé, contre le fichier d'essais en vigueur (`a0979580…`) : 127 passés."
+ },
+ {
+  "id": "CD6-04-noms-des-sorties",
+  "n": 1,
+  "ancien": "`reponses-phase1-A-v2.jsonl`, `reponses-phase1-B-v2.jsonl` (une ligne par item et par lecture : statut, réponse brute, tentatives, jetons, pensée, coût, températures envoyée et documentée, la seconde non rendue par les fournisseurs), écrites au fil dans `reponses-phase1-<A|B>-v2.encours.jsonl` puis triées à la fin, `journal-phase1-A-v2.jsonl`, `journal-phase1-B-v2.jsonl` (au fil des tentatives), `manifeste-lecture-phase1-v2.json` (avec",
+  "nouveau": "`reponses-phase1-A-v4.jsonl`, `reponses-phase1-B-v4.jsonl` (une ligne par item et par lecture : statut, réponse brute, tentatives, jetons, pensée, coût, températures envoyée et documentée, la seconde non rendue par les fournisseurs), écrites au fil dans `reponses-phase1-<A|B>-v4.encours.jsonl` puis triées à la fin, `journal-phase1-A-v4.jsonl`, `journal-phase1-B-v4.jsonl` (au fil des tentatives), `manifeste-lecture-phase1-v4.json` (avec"
+ },
+ {
+  "id": "CD6-05-limite-14-temps",
+  "n": 1,
+  "ancien": "Deux chemins écrivent encore une valeur de clé en entier",
+  "nouveau": "En version 3, deux chemins écrivaient encore une valeur de clé en entier"
+ },
+ {
+  "id": "CD6-06-limite-14-sortie",
+  "n": 1,
+  "ancien": "Reste hors de portée du script la clé de Kimi, qui vit dans le relais.",
+  "nouveau": "Reste hors de portée du script la clé de Kimi, qui vit dans le relais. Reste aussi, hors des six chemins et inchangée depuis la version 3, une valeur de clé passée comme `--sortie` : aucun message ni aucun fichier ne la recopie, mais elle devient le nom du dossier créé, qui reçoit les sorties (contre-lecture bornée du delta du brouillon 6 : 14 scénarios où une fausse clé est posée ou passée, en mode simulé, sans réseau ; 13 sans aucun fragment de 6 caractères, celui-ci au nom du dossier seulement, en version 3 comme en version 4) ; règle d'exécution : `--sortie` copié de l'ordre des opérations, et le nom de chaque dossier de sortie relu avant tout commit ; correctif recommandé à toute version ultérieure : en mode réel, refuser un chemin de sortie qui porte un fragment de la clé. Deux valeurs reçues restent recopiées dans un message, de forme contrôlée et incapables de porter une clé : le nombre de `--depense-engagee` refusé par la garde de dépense, et le nom de la variable de la clé quand elle est absente."
+ },
+ {
+  "id": "CD6-07-R3-temps",
+  "n": 1,
+  "ancien": "la dépense écrite au manifeste de ce lancement est alors **sous-comptée**",
+  "nouveau": "en version 3, la dépense écrite au manifeste de ce lancement était alors **sous-comptée**"
+ },
+ {
+  "id": "CD6-08-entree-illisible",
+  "n": 1,
+  "ancien": "chemin d'entrée qui n'est pas un fichier, option abrégée, argument inconnu,",
+  "nouveau": "chemin d'entrée qui n'est pas un fichier, entrée illisible ou mal formée (code 2 en version 4 ; code 7 en version 3), option abrégée, argument inconnu,"
+ },
+ {
+  "id": "CD6-09-limite-7",
+  "n": 1,
+  "ancien": "7. Trois contre-lectures (brouillon 3 ; delta du brouillon 4 ; delta borné du brouillon 5) ; la troisième n'a relu que les correctifs de D1 et D2, les remarques R1 à R4, le plafond et le feu vert, les couples et les compléments, sans relire le reste du texte.",
+  "nouveau": "7. Quatre contre-lectures (brouillon 3 ; delta du brouillon 4 ; delta borné du brouillon 5 ; delta borné du brouillon 6) ; la troisième n'a relu que les correctifs de D1 et D2, les remarques R1 à R4, le plafond et le feu vert, les couples et les compléments, sans relire le reste du texte ; la quatrième n'a relu que les 11 couples et les 22 compléments du brouillon 6, la version 4 de la lecture (contre la version 3) et ses essais, et le contrôle de la facture de l'essai de format, sans relire le reste du texte."
+ },
+ {
+  "id": "CD6-10-contre-lecture-bornee",
+  "n": 1,
+  "ancien": "La version 4 et ces compléments ne sont pas contre-lus.",
+  "nouveau": "La version 4 et ces compléments sont relus par la contre-lecture bornée du delta du brouillon 6.\n- **Contre-lecture bornée du delta du brouillon 6** : sous-agent neuf, Claude Opus 5.5 (`claude-opus-5-5`), 8 novembre 2026, de 00:05:22 à 00:16:01 (temps universel, `date -u`) ; brouillon relu `6b4ac2c265d1ddc14dc75718632cebda7450995b31f1456619caa1059ed70ea7` ; rapport `docs/notes/epreuve-etiqueteur-v1/contre-lecture-delta-brouillon6-v1.md` (`4170de6ca83cfca170dd5d7fbeb2b4389cb3f5d1aa379a2e5da77a94eaf32e20`) ; couples `couples-contre-lecture-delta-brouillon6-v1.json` ; verdict : **scellable après couples**, aucun bloquant ; 11 couples appliqués à l'octet et 22 compléments justifiés, aucune grandeur gelée changée (seuils, critères, issues, plafond, effectifs, graines) ; une ligne d'empreintes de l'annexe C ôtée sans le dire, rétablie (CD6-11) ; brouillon 6 et journal reproduits à l'identique, hors de l'empreinte du fichier d'essais réécrit ensuite (CD6-02) ; contrôle de la facture de l'essai de format écrit à l'ordre des opérations ; six chemins fermés en version 4 (rejoués ; 127 essais passés), un chemin voisin, inchangé depuis la version 3, écrit à la limite 14 ; aucun autre changement de comportement que la dépense d'une tentative interrompue, les refus de chemins et d'options abrégées, et le code 2 d'une entrée illisible (code 7 en version 3)."
+ },
+ {
+  "id": "CD6-11-annexe-c-generation-d-essai",
+  "n": 1,
+  "ancien": "**Essais** : 127 passés à 00:02:25 en environnement vidé",
+  "nouveau": "**Génération d'essai de la version 2** (graine 20261107, hors du dépôt) : items `f11ba2734f7a961c396aff11f7042283b03d7af3ce4ccf8545575bc8048dba62`, clé `97e7e107e1c93eb7521f6b2f4586587eee6ffdb992707b5b97fcf23a7be4f1ad` (empreinte seulement ; ligne de l'annexe C du brouillon 5, ôtée sans le dire par le complément C6-22 et rétablie par la contre-lecture bornée du delta du brouillon 6 : les calculs du devis, annexe B, en dépendent).\n\n**Essais** : 127 passés à 00:02:25 en environnement vidé"
+ },
+ {
+  "id": "CD6-12-portee-des-messages-omis",
+  "n": 2,
+  "ancien": "erreurs du système et exceptions écrites sans leur message",
+  "nouveau": "erreurs du système en lisant une entrée ou en créant la sortie, et exceptions remontées jusqu'à `__main__`, écrites sans leur message (une exception pendant une lecture garde son message, masqué : B6, R3)"
+ }
+]

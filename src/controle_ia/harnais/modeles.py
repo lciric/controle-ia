@@ -101,9 +101,35 @@ def exiger_modele_autorise(nom: str, revision: str | None) -> None:
                          "une branche comme « main » peut bouger, la reproductibilité l'exige")
 
 
+# Fichiers d'un modèle téléchargés d'avance (configuration, tokeniseur, poids en safetensors) ; les poids au format
+# d'origine (dossier « original/ ») ne servent pas et ne sont pas téléchargés.
+MOTIFS_PRECHARGEMENT = ("config.json", "generation_config.json", "tokenizer.json", "tokenizer_config.json",
+                        "special_tokens_map.json", "model.safetensors.index.json", "model*.safetensors")
+
+
+def precharger_modele(nom: str, revision: str, cache_dir: str | None = None) -> str:
+    """Fichiers du modèle téléchargés dans le cache local à la révision figée, sans rien charger en mémoire ni sur la
+    carte. Un chargement ultérieur hors ligne (`charger_modele(..., hors_ligne=True)`) ne dépend plus du réseau :
+    pilote de T0.5, juge 3B chargé après l'écriture des épisodes, quand aucun relancement n'est plus permis (SI-02,
+    PF-04). Rend le dossier de la révision ; arrêt si un fichier essentiel ou les poids manquent."""
+    exiger_modele_autorise(nom, revision)
+    from huggingface_hub import snapshot_download
+
+    dossier = Path(snapshot_download(repo_id=nom, revision=revision, allow_patterns=list(MOTIFS_PRECHARGEMENT),
+                                     cache_dir=cache_dir))
+    manquants = [n for n in ("config.json", "tokenizer.json", "tokenizer_config.json") if not (dossier / n).is_file()]
+    if manquants or not any(dossier.glob("*.safetensors")):
+        raise GardeArret(f"{nom}@{revision[:12]} : préchargement incomplet ({manquants or 'poids'} absents)")
+    if dossier.name != revision:
+        raise GardeArret(f"{nom} : préchargement dans {dossier.name}, pas dans la révision {revision[:12]}")
+    return str(dossier)
+
+
 def charger_modele(nom: str, revision: str, dtype: str = "bfloat16", appareil: str = "cuda",
-                   attention: str = "sdpa"):
+                   attention: str = "sdpa", hors_ligne: bool = False, cache_dir: str | None = None):
     """Modèle réel (machines de calcul seulement). Aucun téléchargement sans liste blanche et révision figée.
+    `hors_ligne` : lecture du seul cache local (fichiers préchargés par `precharger_modele`), aucun accès au réseau ;
+    sans fichier en cache, arrêt immédiat plutôt qu'un téléchargement.
 
     Le point de contrôle (bfloat16, vérifié) est chargé tel quel, puis porté sur la carte ; une demande en simple
     précision s'y convertit ensuite, sans perte (bfloat16 ⊂ float32). La mémoire vive n'accueille ainsi que
@@ -113,12 +139,13 @@ def charger_modele(nom: str, revision: str, dtype: str = "bfloat16", appareil: s
     exiger_modele_autorise(nom, revision)
     from transformers import AutoConfig, AutoModelForCausalLM, AutoTokenizer
 
-    natif = type_natif(AutoConfig.from_pretrained(nom, revision=revision))
+    local = {"local_files_only": hors_ligne, "cache_dir": cache_dir}
+    natif = type_natif(AutoConfig.from_pretrained(nom, revision=revision, **local))
     if natif != "bfloat16":
         raise GardeArret(f"{nom} : point de contrôle en {natif}, pas en bfloat16 ; la conversion ne serait pas exacte")
-    tokeniseur = AutoTokenizer.from_pretrained(nom, revision=revision)
+    tokeniseur = AutoTokenizer.from_pretrained(nom, revision=revision, **local)
     modele = AutoModelForCausalLM.from_pretrained(nom, revision=revision, dtype=torch.bfloat16,
-                                                  attn_implementation=attention)
+                                                  attn_implementation=attention, **local)
     if dtype == "float64":
         modele = modele.to(torch.float64).to(appareil)
         normalisations_en_double(modele)

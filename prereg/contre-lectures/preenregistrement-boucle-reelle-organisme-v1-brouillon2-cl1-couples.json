@@ -1,0 +1,68 @@
+{
+ "objet": "couples CLC-01 à CLC-09 de la contre-lecture 1 du brouillon 2 (f87ad0e4…)",
+ "couples": [
+  {
+   "id": "CLC-01",
+   "section": "12.4",
+   "constat": "CLB-01, CLB-02, CLB-08",
+   "ancien": "`DOSSIER_COURSE` = le dossier `configuration-v6/` versé, avec `heritage-depart-v65.json` ; `CHEMIN/registres/go.md` = la copie\ndu point 4 de la section 12.3 :",
+   "nouveau": "`DOSSIER_COURSE` = le dossier `configuration-v6/` versé, avec `heritage-depart-v65.json` **et son compagnon\n`heritage-depart-v65.json.sha256`** (sans lui la garde 17 refuse, code 2) ; `CHEMIN/registres/go.md` = la copie\ndu point 4 de la section 12.3 ; `SORTIE` = un dossier neuf, frère de `SORTIE_ESSAI` (section 12.3, points 3 et 7).\n**Environnement du lanceur (garde 15)** : `POLE_MACHINE_JETABLE_V56=1` est exigée, et tout autre nom de variable doit\nêtre dans la liste blanche fermée de `pole/etage_entre_generations_v56.py` (`NOMS_PERMIS` ; la configuration v6 n'en\najoute aucun) ; aucune variable de clé (les relais tiennent les clés). D'où le préfixe `env -i` des deux commandes du\nlanceur, dont tous les noms sont dans la liste ; le point 5 de la section 12.3 le confirme sur la machine :"
+  },
+  {
+   "id": "CLC-02",
+   "section": "12.4",
+   "constat": "CLB-01",
+   "ancien": "```\npython3 -I -B demonstrations/boucle_reelle_v66.py SORTIE --preenregistrement prereg/",
+   "nouveau": "```\nenv -i PATH=/usr/sbin:/usr/bin:/sbin:/bin HOME=/root LANG=C.UTF-8 TMPDIR=/tmp POLE_MACHINE_JETABLE_V56=1 \\\npython3 -I -B demonstrations/boucle_reelle_v66.py SORTIE --preenregistrement prereg/"
+  },
+  {
+   "id": "CLC-03",
+   "section": "12.3",
+   "constat": "CLB-02, CLB-05",
+   "ancien": "Chaque relais\n   local est lancé avec un plafond au plus égal à la part de son fournisseur (Kimi 33 USD, Argon 7 USD) ; valeurs notées au\n   rapport de course.",
+   "nouveau": "Options exigées de\n   `servir` : `--port 8805`, `--plafond-usd`, `--max-appels`, `--journal`. Le relais Kimi (port 8804, à donner par `--port` :\n   son défaut est un autre port) est `relais_kimi_v3.py` (`d54ed2bce54f5c89e9f078d1a03b5d8159894d6565ae560c3601c1e63ca76239`,\n   dépôt de travail, `docs/notes/ideation-organisme-v1/relais-kimi-v1/`), hors du dossier de course ; il exige\n   `--modeles-permis`, `--plafond-usd` et ses trois prix, et son `--max-appels` par défaut est plus petit que le nombre\n   d'appels attendu si chaque test prend ses tours : il se donne toujours. Chaque relais est lancé avec un plafond **égal**\n   à la part de son fournisseur (Kimi 33 USD, Argon 7 USD : un plafond plus bas pourrait arrêter la course par défaut de\n   plafond, ce que le devis exclut) et un `--max-appels` au moins égal au nombre d'appels de son pire cas (devis,\n   section 3.4), sans quoi un refus du relais arrête la course (code 3). Les clés ne sont posées que dans l'environnement\n   des relais, jamais dans celui du lanceur ni dans un fichier. Valeurs notées au rapport de course.\n7. `SORTIE_ESSAI` (point 3) et `SORTIE` (section 12.4) sont deux dossiers neufs du même dossier parent, et `TMPDIR` vaut\n   `/tmp` : le chemin réel d'un dossier de sortie ne doit contenir aucun des fragments que refuse le dossier fermé de la\n   tranche (`pole/ideation.py`, `FRAGMENTS_PIECES_INTERDITS` : « donnees », « mode-tenu-a-l-ecart », « bras-attaque »,\n   « bras-d-attaque », « carte-des-hypotheses », « carte-hypotheses », « internes-des-moniteurs », « banque », « prereg »,\n   « test-final » ; chemin lu en minuscules, sans accents, `_` et espace lus `-`). Sinon l'étage refuse la tranche **après**\n   les appels payés des proposeurs : arrêt, code 3. L'essai à blanc du point 3, joué à côté de `SORTIE`, le montre sans\n   dépense."
+  },
+  {
+   "id": "CLC-04",
+   "section": "8",
+   "constat": "CLB-03",
+   "ancien": "Mesures sans issue : P3 (puissance aux vraies faibles), P7 (cartes réelles), coût, recherche de la loi plantée.",
+   "nouveau": "Mesures sans issue : P3 (puissance aux vraies faibles), P7 (cartes réelles), coût, recherche de la loi plantée. **P2\nmanquée alors que P1 tient** (V1 ou V2 non promue, ou promue sans survivre) ne change pas l'issue ; elle s'écrit en tête du\nrapport, avant la phrase de résultat, et déclenche l'audit A3 pour la vraie manquante (non promue, promue non\nsurvivante, ou non concluante)."
+  },
+  {
+   "id": "CLC-05",
+   "section": "8",
+   "constat": "CLB-06",
+   "ancien": "**Les issues sont celles de ce texte.** Avant\nd'écrire l'issue",
+   "nouveau": "**Les issues sont celles de ce texte.** Tout écart que le\nprogramme écrit dans `ecarts_p6` (incident consigné des gardes 7, 21 ou 23 ; héritage ou relecture finale refusés ;\nempreinte, vue lue, vue servie, retenues lues, archive ou nombre de membres d'archive de la génération 2 en écart ; copie\nd'une carte non retenue ; loi plantée retenue) est un écart de P6 au sens de la ligne C4 ; les vérifications V ne peuvent\nqu'en ajouter. Avant\nd'écrire l'issue"
+  },
+  {
+   "id": "CLC-06",
+   "section": "10",
+   "constat": "CLB-07",
+   "ancien": "| copie d'une carte non retenue → refus |",
+   "nouveau": "| copie d'une carte non retenue → arrêt, code 3, incident consigné, lu C5 et « C4 (partielle) » |"
+  },
+  {
+   "id": "CLC-07",
+   "section": "10",
+   "constat": "CLB-07",
+   "ancien": "loi plantée jugée avec 0 membre ou avec une archive plus petite → arrêt, code 3",
+   "nouveau": "loi plantée jugée avec 0 membre ou avec un autre nombre de membres que celui de l'archive de sa génération → arrêt, code 3"
+  },
+  {
+   "id": "CLC-08",
+   "section": "8",
+   "constat": "CLB-09",
+   "ancien": "`vues_servies[g].appels` porte deux appels (Kimi, Argon) et chaque `texte_recu_sha256` = `vues_servies[g].texte_sha256` | moins de deux appels : manque, C5 ;",
+   "nouveau": "`vues_servies[g].appels` porte deux appels, un par proposeur (champ `proposeur` : `kimi` et `argon`, une fois chacun), et chaque `texte_recu_sha256` = `vues_servies[g].texte_sha256` | moins de deux appels, ou un proposeur absent : manque, C5 ;"
+  },
+  {
+   "id": "CLC-09",
+   "section": "8",
+   "constat": "CLB-09",
+   "ancien": "qu'il produit, et empêchent une lecture à vide si l'un d'eux se produisait quand même :",
+   "nouveau": "qu'il produit, et empêchent une lecture à vide si l'un d'eux se produisait quand même. Dans V-4, V-5 et V-6, un champ à\ncomparer qui est absent ou nul compte comme un manque (C5), non comme un écart :"
+  }
+ ]
+}

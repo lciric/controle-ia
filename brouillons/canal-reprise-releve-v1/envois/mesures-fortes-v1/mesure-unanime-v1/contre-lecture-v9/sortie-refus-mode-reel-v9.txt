@@ -1,0 +1,32 @@
+effectifs_sans_empreinte | code 1 | mode réel : --empreinte-attendue est obligatoire (aussi avec --effectifs-seulement, CV4-6) | octets sur stdout : 0
+effectifs_empreinte_vide | code 1 | mode réel : --empreinte-attendue est obligatoire (aussi avec --effectifs-seulement, CV4-6) | octets sur stdout : 0
+effectifs_empreinte_fausse | code 1 | RuntimeError: liste d'arrêt : empreinte des données différente de celle du préenregistrement | octets sur stdout : 0
+effectifs_tirages_5 | code 1 | mode réel : --tirages et --bootstrap sont fixes (20, 2000) — CV4-6 | octets sur stdout : 0
+effectifs_bootstrap_300 | code 1 | mode réel : --tirages et --bootstrap sont fixes (20, 2000) — CV4-6 | octets sur stdout : 0
+reel_tirages_5 | code 1 | mode réel : --tirages et --bootstrap sont fixes (20, 2000) — CV4-6 | octets sur stdout : 0
+reel_bootstrap_300 | code 1 | mode réel : --tirages et --bootstrap sont fixes (20, 2000) — CV4-6 | octets sur stdout : 0
+reel_sans_commit | code 1 | mode réel : --empreinte-attendue, --sondes-reelles, --sondes-placebo et --commit sont obligatoires | octets sur stdout : 0
+reel_commit_vide | code 1 | mode réel : --empreinte-attendue, --sondes-reelles, --sondes-placebo et --commit sont obligatoires | octets sur stdout : 0
+reel_sans_sondes_reelles | code 1 | mode réel : --empreinte-attendue, --sondes-reelles, --sondes-placebo et --commit sont obligatoires | octets sur stdout : 0
+reel_sans_sondes_placebo | code 1 | mode réel : --empreinte-attendue, --sondes-reelles, --sondes-placebo et --commit sont obligatoires | octets sur stdout : 0
+reel_effectif_faux | code 1 | RuntimeError: liste d'arrêt : 3 sondes réelles, 30 attendues | octets sur stdout : 0
+reel_et_synthetique | code 1 | un seul de --synthetique ou --reel | octets sur stdout : 0
+effectifs_sain | code 0 |  | octets sur stdout : 807
+--- test des gardes
+code 0
+15 entrées
+  sain : passe
+  sain_bras_M4 : passe
+  sain_melange_pas_fixe : passe (marges par pas et masque gardés)
+  melange_masque_artefact : liste d'arrêt : score porté par une action invalide
+  chargement_sain : passe
+  empreinte_fausse : liste d'arrêt : empreinte des données différente de celle du préenregistrement
+  effectif_reel_faux : liste d'arrêt : 3 sondes réelles, 4 attendues
+  effectif_placebo_faux : liste d'arrêt : 2 sondes placebo, 1 attendues
+  E_minimal : liste d'arrêt : 40 épisodes honnêtes gardés (< 44)
+  E_sain : passe
+  correlation_constante : liste d'arrêt : corrélation intraclasse indéfinie (scores constants)
+  correlation_saine : 0.171
+  score_non_fini : liste d'arrêt : score non fini sur une action valide
+  scores_constants : liste d'arrêt : scores constants, normalisation impossible
+  K_trop_petit : liste d'arrêt : K = 12 trop petit pour α = 0.05 (seuil infini)

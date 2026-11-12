@@ -1,0 +1,114 @@
+{
+ "M1": {
+  "med 0.06, bb 0.03+1e-9 → confirmé": "confirmé",
+  "med 0.06, bb 0.03 → non concluant": "non concluant",
+  "med 0.06-2e-9, bb 0.04 → non concluant": "non concluant",
+  "med 0.03 → réfuté": "réfuté",
+  "med 0.03+2e-9 → non concluant": "non concluant"
+ },
+ "M2_M2bis": {
+  "v2 0.075 → attendu": "attendu",
+  "v2 0.075-2e-9 → AUDIT": "AUDIT (bogue : médiane de Ville à τ = 2 < 0,075)",
+  "r0 0.3, bh 0 → AUDIT RÉFUTÉE": "conforme à la table ; AUDIT de cohérence : RÉFUTÉE (borne haute de la différence ≤ 0 avec r₀ < 0,5), incohérent avec le contrôle M2",
+  "r0 0.3, bh 1e-9 → pas d'audit": "conforme à la table ; signe > 0 attendu : tenu",
+  "r0 0.5, bh -0.1 → aucune réfutation": "conforme à la table ; aucune réfutation (r₀ ≥ 0,5)",
+  "r0 0.2 (table 0.104), med 0.154 → conforme": "conforme à la table ; signe > 0 attendu : tenu",
+  "r0 0.2, med 0.104+0.05+2e-9 → hors table": "hors table (rapporté) ; signe > 0 attendu : tenu"
+ },
+ "M3": {
+  "L, B": [
+   0.05,
+   0.1
+  ],
+  "cellule 0.10 (= B) → tenu": "tenu, fragile sur 1 cellule(s) (rapporté, la lecture continue)",
+  "cellule 0.10+2e-9 → AUDIT": "AUDIT R4 — rien d'autre n'est lu",
+  "cellule 0.08 (= 1,6 L) → tenu": "tenu",
+  "cellule 0.08+2e-9 → fragile": "tenu, fragile sur 1 cellule(s) (rapporté, la lecture continue)",
+  "cellule 0.02 (= 0,4 L) → tenu": "tenu",
+  "cellule 0.02-2e-9 → fragile": "tenu, fragile sur 1 cellule(s) (rapporté, la lecture continue)",
+  "cellule med 0, q3 0 → cellule_a_zero AUDIT": "AUDIT R4 (trop propre : médiane et troisième quartile nuls sur une cellule de M3) : ['tau=0.0:max']",
+  "cellule med 0, q3 0.017 → aucune": "aucune",
+  "bras à zéro → réserve, pas audit": [
+   "aucune",
+   [
+    "cellules conformes à zéro (médiane et troisième quartile) da"
+   ],
+   []
+  ]
+ },
+ "M4": {
+  "exces 0.02, bb 0.01, max 0.013 → non concluant": "non concluant",
+  "exces 0.02+1e-12 → non concluant": "non concluant",
+  "exces 0.02+2e-9 → confirmé": "confirmé",
+  "exces 0.05, bb 0 → non concluant": "non concluant",
+  "exces 0.05, bb 1e-9 → confirmé": "confirmé",
+  "exces 0.05, bb 0.01, max 0.08 → confirmé": "confirmé",
+  "max 0.081 → non concluant": "non concluant",
+  "exces 0 → réfuté": "réfuté",
+  "exces -1e-12 → réfuté": "réfuté",
+  "exces 0.01, bb -0.01 → non concluant": "non concluant",
+  "max 0.10 → pas d'audit (confirmé ? non : max > 0.08 → non concluant)": "non concluant",
+  "max 0.10+2e-9 → AUDIT": "AUDIT (maximum conforme > 0,10)",
+  "max 0.10+2e-9, r0 0.5 → AUDIT (à tout r₀)": "AUDIT (maximum conforme > 0,10)",
+  "r0 0.5 → non lisible": "non lisible à τ = 2 (r₀ ≥ 0,5), rapporté",
+  "r0 0.5-2e-9 → confirmé": "confirmé"
+ },
+ "placebo": {
+  "écart cellule 0.05 → mêmes médianes": "mêmes médianes (aucun écart > 0,05)",
+  "écart cellule 0.05+2e-9 → AUDIT": "AUDIT R4 sur ['tau=1.0:page']",
+  "écart max M4 0.06 → AUDIT": "AUDIT R4 sur ['M4:max']"
+ },
+ "ligne_de_lecture": {
+  "base (répétition) → première ligne, aucun audit": [
+   "première ligne : la synthèse a raison (comparateur par épisode entier ",
+   []
+  ],
+  "M1 confirmé, M4 confirmé, mais M3 audit → AUDIT, pas première ligne": [
+   "AUDIT R4 avant toute lecture (M3, placebo) : rien d'autre n'est lu ; l",
+   [
+    "M3",
+    "placebo"
+   ]
+  ],
+  "M1 confirmé, M4 confirmé, M2 bis réfutée (r0 0.2) → AUDIT": [
+   "AUDIT R4 avant toute lecture (M2_bis) : rien d'autre n'est lu ; les ve",
+   [
+    "M2_bis"
+   ]
+  ],
+  "M1 confirmé, M4 confirmé, placebo écart → AUDIT": [
+   "AUDIT R4 avant toute lecture (placebo) : rien d'autre n'est lu ; les v",
+   [
+    "placebo"
+   ]
+  ],
+  "M1 confirmé, M4 non concluant → pas de dépassement établi": [
+   "pas de dépassement établi des sommes sous dépendance non vue (τ = 2, 5",
+   []
+  ],
+  "M1 confirmé, M4 réfuté → pas de dépassement établi": [
+   "pas de dépassement établi des sommes sous dépendance non vue (τ = 2, 5",
+   []
+  ],
+  "r0 0.6 → M4 non lisible ; M2 ter porte": [
+   "M4 non lisible (r₀ ≥ 0,5) ; M2 ter porte le résultat",
+   []
+  ],
+  "M3 fragile seul → la ligne continue (première ligne)": [
+   "première ligne : la synthèse a raison (comparateur par épisode entier ",
+   []
+  ],
+  "M2 bis hors table seul → la ligne continue": [
+   "première ligne : la synthèse a raison (comparateur par épisode entier ",
+   []
+  ],
+  "M1 non concluant, M4 confirmé → ni première ligne ni blocage": [
+   "M1 non concluant ; voir les lignes des critères",
+   []
+  ],
+  "M1 réfuté → voir les lignes des critères": [
+   "M1 réfuté ; voir les lignes des critères",
+   []
+  ]
+ }
+}

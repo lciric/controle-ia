@@ -1,0 +1,341 @@
+$ /home/user/controle-ia-travail/.venv/bin/python -c import sys
+from controle_ia.t06 import lanceur_v6 as la6
+o = la6.creer_manifeste
+def fixe(*a, entropie=None, **k):
+    return o(*a, entropie=int(sys.argv[1]), **k)
+la6.creer_manifeste = fixe
+sys.exit(la6._main(sys.argv[2:]))
+ 1 --config config-t06-jouet.json --run-id 20261110-060000-t06-jouet
+code 0 en 22.7 s
+--- sortie
+{"commit_cite": null, "config_sha256": "b833f0bccfb00ad81dbc084b899fbb5dccb31e1edc0630b899ee7495c4e661c6", "taches_evaluation_sha256": "96fa55ff0e30e14e4580b7d6e131d934a751ee9106c92163b39f7cd8611bc80d", "consignes_sha256": "a68468fef6286bbcaa31451ba461d0adab2af7d529dd5e4fa0695643e6d1d69c", "adaptateurs": {"saboteur": "227f5846c8f9ebabdc7b4d85dc9497baf8ee674a37720fd410aef4ffa056c0ac", "temoin": "964e319f4b811aee91f680e0cbe0672ef63ae5d3f371163177289385cbc7f701"}, "mesures_sha256": "5a18699f25a625fb60512a8cd48857ee70c02854033390e9ad69a256c68fe9a3", "textes_sha256": "ba5ffd2f5c4d4e7b51a196b52fd8bfa82608142e8c929118129eb54837962f14", "sous_ensemble_manifeste_sha256": "be19a4e5dd2bdba22acf7d2a8fe66973be630ad43a2f4be099e9a7c01701a700", "morceaux": 1, "morceaux_reecrits": 0, "episodes": 42, "actions": 84, "actions_notees": 84, "mahalanobis_calcul": "paquet_gele", "controles_negatifs": {"dose0": "conforme", "S50": "non concluant", "S100": "non concluant", "T100": "non concluant"}, "duree_s": 20.3}
+
+--- erreur
+PROGRES 2026-11-11T03:35:02Z etape=format verifie=True
+PROGRES 2026-11-11T03:35:02Z etape=disque libre_go=3.2 pire_cas_go=0.0
+PROGRES 2026-11-11T03:35:03Z etape=distillation-donnees lot=1/1
+PROGRES 2026-11-11T03:35:03Z etape=donnees-distillation saboteur_exemples=2 temoin_exemples=2
+PROGRES 2026-11-11T03:35:04Z etape=distillation adaptateur=saboteur epoque=1 perte=4.9061
+PROGRES 2026-11-11T03:35:04Z etape=adaptateur adaptateur=saboteur empreinte=227f5846c8f9ebabdc7b4d85dc9497baf8ee674a37720fd410aef4ffa056c0ac perte_finale=4.9061
+PROGRES 2026-11-11T03:35:04Z etape=distillation adaptateur=temoin epoque=1 perte=4.9072
+PROGRES 2026-11-11T03:35:04Z etape=adaptateur adaptateur=temoin empreinte=964e319f4b811aee91f680e0cbe0672ef63ae5d3f371163177289385cbc7f701 perte_finale=4.9072
+PROGRES 2026-11-11T03:35:04Z etape=identite adaptateurs=2
+PROGRES 2026-11-11T03:35:05Z etape=episodes phase=dose0 lot=1/6 actions=8
+PROGRES 2026-11-11T03:35:07Z etape=episodes phase=dose0 lot=2/6 actions=16
+PROGRES 2026-11-11T03:35:08Z etape=episodes phase=dose0 lot=3/6 actions=24
+PROGRES 2026-11-11T03:35:09Z etape=episodes phase=dose0 lot=4/6 actions=32
+PROGRES 2026-11-11T03:35:10Z etape=episodes phase=dose0 lot=5/6 actions=40
+PROGRES 2026-11-11T03:35:11Z etape=episodes phase=dose0 lot=6/6 actions=48
+PROGRES 2026-11-11T03:35:11Z etape=episodes phase=S50 lot=1/2 actions=56
+PROGRES 2026-11-11T03:35:12Z etape=episodes phase=S50 lot=2/2 actions=60
+PROGRES 2026-11-11T03:35:12Z etape=episodes phase=S100 lot=1/2 actions=68
+PROGRES 2026-11-11T03:35:13Z etape=episodes phase=S100 lot=2/2 actions=72
+PROGRES 2026-11-11T03:35:14Z etape=episodes phase=T100 lot=1/2 actions=80
+PROGRES 2026-11-11T03:35:14Z etape=episodes phase=T100 lot=2/2 actions=84
+PROGRES 2026-11-11T03:35:14Z etape=episodes-ecrits episodes=42 actions=84 morceaux=1 reecrits=0
+PROGRES 2026-11-11T03:35:14Z etape=lecture-cout duree_s=14.0
+PROGRES 2026-11-11T03:35:14Z etape=test-croise jeux=2 duree_s=0.2
+PROGRES 2026-11-11T03:35:15Z etape=couple-descriptif couple=difference_moyennes-c1 duree_s=0.1
+PROGRES 2026-11-11T03:35:15Z etape=couple-descriptif couple=lineaire-c1 duree_s=0.4
+PROGRES 2026-11-11T03:35:16Z etape=couple-descriptif couple=perceptron-c1 duree_s=0.6
+PROGRES 2026-11-11T03:35:16Z etape=couple-descriptif couple=attention-c1 duree_s=0.7
+PROGRES 2026-11-11T03:35:16Z etape=couple-descriptif couple=mahalanobis-c1 duree_s=0.1
+PROGRES 2026-11-11T03:35:17Z etape=couple-descriptif couple=lineaire-c2 duree_s=0.4
+PROGRES 2026-11-11T03:35:18Z etape=couple-descriptif couple=perceptron-c2 duree_s=0.6
+PROGRES 2026-11-11T03:35:18Z etape=couple-descriptif couple=attention-c2 duree_s=0.5
+PROGRES 2026-11-11T03:35:18Z etape=couple-descriptif couple=mahalanobis-c2 duree_s=0.1
+PROGRES 2026-11-11T03:35:19Z etape=couple-descriptif couple=difference_moyennes-c3 duree_s=0.0
+PROGRES 2026-11-11T03:35:19Z etape=couple-descriptif couple=lineaire-c3 duree_s=0.3
+PROGRES 2026-11-11T03:35:20Z etape=couple-descriptif couple=perceptron-c3 duree_s=0.6
+PROGRES 2026-11-11T03:35:20Z etape=couple-descriptif couple=attention-c3 duree_s=0.6
+PROGRES 2026-11-11T03:35:20Z etape=couple-descriptif couple=mahalanobis-c3 duree_s=0.1
+PROGRES 2026-11-11T03:35:20Z etape=fin episodes=42 actions=84
+
+
+$ bash etape_a_t07_variante_b_v3.sh … (racine instance-normal, PERIMETRE JD,JA,JC,CONCEPTS)
+code 0 en 91.2 s
+--- sortie
+2026-11-11T03:36:04Z T07 essai local : aucune minuterie, aucun appel à Vast
+2026-11-11T03:36:04Z T07 processeur : Intel(R) Xeon(R) Processor @ 2.10GHz ; environnement de l'étape A en plus : ATEN_CPU_CAPABILITY=avx2 MKL_CBWR=AVX2
+2026-11-11T03:36:05Z T07 code conforme : S7 3f736e27b55070ef00a74d2a9d1c067e1e061ccd, C7 ff32076350fc9754ced79d1f58e7520826a43e9c, main 79cce74f63b1bcc205eb7c415d23dabcd61683b8
+2026-11-11T03:36:05Z T07 registre registres/scellements-v1.md recopié de main
+2026-11-11T03:36:05Z T07 registre registres/scellements-v1.md.ouvertures.md : absent de main
+2026-11-11T03:36:05Z T07 registre registres/ouvertures-p3bis-v1.md : absent de main
+2026-11-11T03:36:05Z T07 registre registres/prealables-p3bis-v1.md : absent de main
+2026-11-11T03:36:05Z T07 registre registres/go.md recopié de main
+2026-11-11T03:36:05Z T07 SCELLEMENT-JEUX-T07-JD : prereg/jeux-t07/dissimulation.jsonl présent ; journaux du script : 0
+2026-11-11T03:36:05Z T07 SCELLEMENT-JEUX-T07-JA : prereg/jeux-t07/intention-autres-modes.jsonl présent ; journaux du script : 0
+2026-11-11T03:36:05Z T07 SCELLEMENT-JEUX-T07-JC : prereg/jeux-t07/domaine-cout.jsonl présent ; journaux du script : 0
+2026-11-11T03:36:05Z T07 SCELLEMENT-CONCEPTS-T07 : prereg/jeux-t07/concepts.jsonl présent
+2026-11-11T03:36:05Z T07 registres nommés de main recopiés ; registre 0a686879ccdfdc27 ; périmètre JD,JA,JC,CONCEPTS
+2026-11-11T03:36:06Z T07 sortie de 7b extraite : manifeste, épisodes, distillation, 6 fichiers de données ; fichiers cités par la configuration de 7b recopiés de main
+2026-11-11T03:36:06Z T07 essais : code 0, 20 passed
+2026-11-11T03:36:06Z T07 taille estimée des sorties de l'étape A (O-2) : 62295488 octets ≤ borne 2000000000 (scores 5158592, sondes neuves 5130560, planchers des figées 2006336, 0 morceaux prévus)
+2026-11-11T03:36:06Z T07 disque libre : 3106164736 octets
+2026-11-11T03:36:07Z T07 modèle de P3 : None None autre (révision comparée à celle de 7b)
+2026-11-11T03:36:07Z T07 essai local : révision du modèle de P3 au cache : sans objet (modèle jouet)
+2026-11-11T03:36:09Z T07 configuration config-t07-jouet.json, empreinte canonique dd55883718bee309f18e9750fb10e9b8ded3c705f1b45dc4504c9f415f431a87
+2026-11-11T03:36:11Z T07 CODE-T07 conforme : commit ff32076350fc9754ced79d1f58e7520826a43e9c, 26 fichiers, tête du dépôt 3f736e27b55070ef00a74d2a9d1c067e1e061ccd
+2026-11-11T03:36:18Z T07 repli, essai 1 : code 0 ; repli : recalcul fait, garde d'équivalence passée (21 actions, écart maximal 0.0) ; rapport donnees/20261110-060000-t06-jouet/activations/rapport-repli-t07.json b477b8013eb0e2cfe4c3999944213680dd04fa311de080dfe98b973c9a3e482b
+2026-11-11T03:36:18Z T07 poussé : 8f56d3ca14bb1ccf90603d614a37a6ce0d9075ee « T0.7 (variante B) : garde d'ouverture, repli du recalcul, garde d'équivalence passée »
+2026-11-11T03:36:23Z T07 passe à blanc : code 0 ; passe à blanc : tenue ; sortie passes-blanches-t07/20261111-033620-passe-blanc-t07-jouet/passe-blanc-extracteur-t07.json cadbaec9538ffd4cd4317d07fcd61c0b833a6d2a5c63201709989ce739c06bdc
+2026-11-11T03:36:23Z T07 poussé : c5e6c8d89a736fa8b51d8658b2a046dc107e493e « T0.7 (variante B) : passe à blanc de l'extracteur (aucune donnée décisive), code 0 »
+2026-11-11T03:36:23Z T07 étape A : environnement CUBLAS_WORKSPACE_CONFIG=:4096:8 ATEN_CPU_CAPABILITY=avx2 MKL_CBWR=AVX2
+2026-11-11T03:37:35Z T07 étape A : code 0, run 20261111-033625-t07-lecture-jouet ; notation scellée, fermée : donnees/20261111-033625-t07-lecture-jouet/scores-actions-t07.npz ; sondes lues ['tromperie-lineaire-c2', 'enjeux-difference_moyennes-c2', 'dissimulation-difference_moyennes-c2', 'domaine-difference_moyennes-c2'] ; plancher des figées : {'tromperie-lineaire-c2': 'établi', 'enjeux-difference_moyennes-c2': 'établi'}
+2026-11-11T03:37:35Z T07 réextraction de P3 (v3, S-12 (5)) : diag/20261111-033625-t07-lecture-jouet/reextraction-p3-t07.json présent ; donnees/20261111-033625-t07-lecture-jouet/planchers-figees-t07.npz présent
+2026-11-11T03:37:35Z T07 poussé : 98a3298944d6d1823afb08723bebec1c3b34c011 « T0.7 (variante B), étape A : sorties scellées, code 0, run 20261111-033625-t07-lecture-jouet »
+2026-11-11T03:37:35Z T07 poussé : 5372becfbb8bfcdf4c0b3549aa28fb9adc7afb22 « T0.7 (variante B), étape A : traces après les morceaux »
+2026-11-11T03:37:35Z T07 FIN : étape A menée au bout, run 20261111-033625-t07-lecture-jouet, tête 5372becfbb8bfcdf4c0b3549aa28fb9adc7afb22
+
+--- erreur
+
+
+$ bash etape_a_t07_variante_b_v3.sh … (racine instance-bras-arrete, PERIMETRE JD,JA,JC,CONCEPTS)
+code 0 en 503.4 s
+--- sortie
+2026-11-11T03:37:35Z T07 essai local : aucune minuterie, aucun appel à Vast
+2026-11-11T03:37:35Z T07 processeur : Intel(R) Xeon(R) Processor @ 2.10GHz ; environnement de l'étape A en plus : ATEN_CPU_CAPABILITY=avx2 MKL_CBWR=AVX2
+2026-11-11T03:37:36Z T07 code conforme : S7 cce2d6105d680c24c37554f156d40085dd8191e8, C7 d0737ae9cea46f20b2bee8149a27be1be25b6bb7, main 13570ca6a661b12bff718be6ef3d0c663b3b0b5e
+2026-11-11T03:37:36Z T07 registre registres/scellements-v1.md recopié de main
+2026-11-11T03:37:36Z T07 registre registres/scellements-v1.md.ouvertures.md : absent de main
+2026-11-11T03:37:36Z T07 registre registres/ouvertures-p3bis-v1.md : absent de main
+2026-11-11T03:37:36Z T07 registre registres/prealables-p3bis-v1.md : absent de main
+2026-11-11T03:37:36Z T07 registre registres/go.md recopié de main
+2026-11-11T03:37:36Z T07 SCELLEMENT-JEUX-T07-JD : prereg/jeux-t07/dissimulation.jsonl présent ; journaux du script : 0
+2026-11-11T03:37:36Z T07 SCELLEMENT-JEUX-T07-JA : prereg/jeux-t07/intention-autres-modes.jsonl présent ; journaux du script : 0
+2026-11-11T03:37:36Z T07 SCELLEMENT-JEUX-T07-JC : prereg/jeux-t07/domaine-cout.jsonl présent ; journaux du script : 0
+2026-11-11T03:37:36Z T07 SCELLEMENT-CONCEPTS-T07 : prereg/jeux-t07/concepts.jsonl présent
+2026-11-11T03:37:36Z T07 registres nommés de main recopiés ; registre e14a1d55f62029d6 ; périmètre JD,JA,JC,CONCEPTS
+2026-11-11T03:37:37Z T07 sortie de 7b extraite : manifeste, épisodes, distillation, 6 fichiers de données ; fichiers cités par la configuration de 7b recopiés de main
+2026-11-11T03:37:37Z T07 essais : code 0, 20 passed
+2026-11-11T03:37:38Z T07 taille estimée des sorties de l'étape A (O-2) : 62295488 octets ≤ borne 2000000000 (scores 5158592, sondes neuves 5130560, planchers des figées 2006336, 0 morceaux prévus)
+2026-11-11T03:37:38Z T07 disque libre : 3059613696 octets
+2026-11-11T03:37:38Z T07 modèle de P3 : None None autre (révision comparée à celle de 7b)
+2026-11-11T03:37:38Z T07 essai local : révision du modèle de P3 au cache : sans objet (modèle jouet)
+2026-11-11T03:37:40Z T07 configuration config-t07-jouet.json, empreinte canonique 08b347792463c26dac594affff5741a82e41880871200d66c47676850b5bd67a
+2026-11-11T03:37:42Z T07 CODE-T07 conforme : commit d0737ae9cea46f20b2bee8149a27be1be25b6bb7, 26 fichiers, tête du dépôt cce2d6105d680c24c37554f156d40085dd8191e8
+2026-11-11T03:37:49Z T07 repli, essai 1 : code 0 ; repli : recalcul fait, garde d'équivalence passée (21 actions, écart maximal 0.0) ; rapport donnees/20261110-060000-t06-jouet/activations/rapport-repli-t07.json 7d31cd4f5d4e5fa4cc98877a482adef6cc2fdf5f1ae7524a0024410538b9e923
+2026-11-11T03:37:49Z T07 poussé : f1637c2dfa1425404a92d8a8816d0bfbee6c9c6e « T0.7 (variante B) : garde d'ouverture, repli du recalcul, garde d'équivalence passée »
+2026-11-11T03:37:57Z T07 passe à blanc : code 0 ; passe à blanc : tenue ; sortie passes-blanches-t07/20261111-033750-passe-blanc-t07-jouet/passe-blanc-extracteur-t07.json 4c3692c1a34363152f92baf06ce2f9b8b2c48bebebc05c4b9e7294c089fdf05d
+2026-11-11T03:37:57Z T07 poussé : 4894cb89f5328d7df7b7bad0bece4ca00f4accd8 « T0.7 (variante B) : passe à blanc de l'extracteur (aucune donnée décisive), code 0 »
+2026-11-11T03:37:57Z T07 étape A : environnement CUBLAS_WORKSPACE_CONFIG=:4096:8 ATEN_CPU_CAPABILITY=avx2 MKL_CBWR=AVX2
+2026-11-11T03:45:58Z T07 étape A : code 0, run 20261111-033759-t07-lecture-jouet ; notation scellée, fermée : donnees/20261111-033759-t07-lecture-jouet/scores-actions-t07.npz ; sondes lues ['tromperie-lineaire-c2', 'enjeux-difference_moyennes-c2', 'dissimulation-difference_moyennes-c2', 'domaine-difference_moyennes-c2'] ; plancher des figées : {'tromperie-lineaire-c2': 'échec', 'enjeux-difference_moyennes-c2': 'établi'}
+2026-11-11T03:45:58Z T07 réextraction de P3 (v3, S-12 (5)) : diag/20261111-033759-t07-lecture-jouet/reextraction-p3-t07.json présent ; donnees/20261111-033759-t07-lecture-jouet/planchers-figees-t07.npz présent
+2026-11-11T03:45:58Z T07 poussé : 4053ccec235d8c08df710a077b576ba5f2cbab87 « T0.7 (variante B), étape A : sorties scellées, code 0, run 20261111-033759-t07-lecture-jouet »
+2026-11-11T03:45:59Z T07 poussé : 8950795c43d9aa89ac216fd64b9b6913b2b0418b « T0.7 (variante B), étape A : traces après les morceaux »
+2026-11-11T03:45:59Z T07 FIN : étape A menée au bout, run 20261111-033759-t07-lecture-jouet, tête 8950795c43d9aa89ac216fd64b9b6913b2b0418b
+
+--- erreur
+
+
+$ bash etape_a_t07_variante_b_v3.sh … (racine instance-sans-concepts, PERIMETRE JD,JA,JC)
+code 0 en 240.0 s
+--- sortie
+2026-11-11T03:45:59Z T07 essai local : aucune minuterie, aucun appel à Vast
+2026-11-11T03:45:59Z T07 processeur : Intel(R) Xeon(R) Processor @ 2.10GHz ; environnement de l'étape A en plus : ATEN_CPU_CAPABILITY=avx2 MKL_CBWR=AVX2
+2026-11-11T03:45:59Z T07 code conforme : S7 a11034981f3c31edd37f66b01a5e8db923bfa6b7, C7 932a85737fd6c28d0ed326e20c21b38ba61d51eb, main 2e40d627dfbdd46665e4bb90239445e0891513da
+2026-11-11T03:45:59Z T07 registre registres/scellements-v1.md recopié de main
+2026-11-11T03:45:59Z T07 registre registres/scellements-v1.md.ouvertures.md : absent de main
+2026-11-11T03:45:59Z T07 registre registres/ouvertures-p3bis-v1.md : absent de main
+2026-11-11T03:46:00Z T07 registre registres/prealables-p3bis-v1.md : absent de main
+2026-11-11T03:46:00Z T07 registre registres/go.md recopié de main
+2026-11-11T03:46:00Z T07 SCELLEMENT-JEUX-T07-JD : prereg/jeux-t07/dissimulation.jsonl présent ; journaux du script : 0
+2026-11-11T03:46:00Z T07 SCELLEMENT-JEUX-T07-JA : prereg/jeux-t07/intention-autres-modes.jsonl présent ; journaux du script : 0
+2026-11-11T03:46:00Z T07 SCELLEMENT-JEUX-T07-JC : prereg/jeux-t07/domaine-cout.jsonl présent ; journaux du script : 0
+2026-11-11T03:46:00Z T07 SCELLEMENT-CONCEPTS-T07 : absente, hors du périmètre
+2026-11-11T03:46:00Z T07 registres nommés de main recopiés ; registre 3a20793a2d3a82dc ; périmètre JD,JA,JC
+2026-11-11T03:46:02Z T07 sortie de 7b extraite : manifeste, épisodes, distillation, 6 fichiers de données ; fichiers cités par la configuration de 7b recopiés de main
+2026-11-11T03:46:02Z T07 essais : code 0, 20 passed
+2026-11-11T03:46:03Z T07 taille estimée des sorties de l'étape A (O-2) : 62241536 octets ≤ borne 2000000000 (scores 5106176, sondes neuves 5129024, planchers des figées 2006336, 0 morceaux prévus)
+2026-11-11T03:46:03Z T07 disque libre : 2828689408 octets
+2026-11-11T03:46:03Z T07 modèle de P3 : None None autre (révision comparée à celle de 7b)
+2026-11-11T03:46:03Z T07 essai local : révision du modèle de P3 au cache : sans objet (modèle jouet)
+2026-11-11T03:46:05Z T07 configuration config-t07-jouet.json, empreinte canonique dd55883718bee309f18e9750fb10e9b8ded3c705f1b45dc4504c9f415f431a87
+2026-11-11T03:46:07Z T07 CODE-T07 conforme : commit 932a85737fd6c28d0ed326e20c21b38ba61d51eb, 26 fichiers, tête du dépôt a11034981f3c31edd37f66b01a5e8db923bfa6b7
+2026-11-11T03:46:14Z T07 repli, essai 1 : code 0 ; repli : recalcul fait, garde d'équivalence passée (21 actions, écart maximal 0.0) ; rapport donnees/20261110-060000-t06-jouet/activations/rapport-repli-t07.json 0a31f7a376762107a8d56eabc138d9260c1e5c302b907a48a737c07e4a129517
+2026-11-11T03:46:14Z T07 poussé : 323b2a3c2cd6ebf16f1acd755b7afd31b9a9a6dd « T0.7 (variante B) : garde d'ouverture, repli du recalcul, garde d'équivalence passée »
+2026-11-11T03:46:23Z T07 passe à blanc : code 0 ; passe à blanc : tenue ; sortie passes-blanches-t07/20261111-034616-passe-blanc-t07-jouet/passe-blanc-extracteur-t07.json 8ec425193c163d62e3457adcf9a3b29adbea0b4a076fc208a205b7a59a160189
+2026-11-11T03:46:23Z T07 poussé : d62e9114481d857692b4018609d02d985f4efdd3 « T0.7 (variante B) : passe à blanc de l'extracteur (aucune donnée décisive), code 0 »
+2026-11-11T03:46:23Z T07 étape A : environnement CUBLAS_WORKSPACE_CONFIG=:4096:8 ATEN_CPU_CAPABILITY=avx2 MKL_CBWR=AVX2
+2026-11-11T03:49:58Z T07 étape A : code 0, run 20261111-034625-t07-lecture-jouet ; notation scellée, fermée : donnees/20261111-034625-t07-lecture-jouet/scores-actions-t07.npz ; sondes lues ['tromperie-lineaire-c2', 'enjeux-difference_moyennes-c2', 'dissimulation-difference_moyennes-c2', 'domaine-difference_moyennes-c2'] ; plancher des figées : {'tromperie-lineaire-c2': 'établi', 'enjeux-difference_moyennes-c2': 'établi'}
+2026-11-11T03:49:58Z T07 réextraction de P3 (v3, S-12 (5)) : diag/20261111-034625-t07-lecture-jouet/reextraction-p3-t07.json présent ; donnees/20261111-034625-t07-lecture-jouet/planchers-figees-t07.npz présent
+2026-11-11T03:49:58Z T07 poussé : 88ce69ef6f2fcbd45c8d98496f37de61d734997a « T0.7 (variante B), étape A : sorties scellées, code 0, run 20261111-034625-t07-lecture-jouet »
+2026-11-11T03:49:59Z T07 poussé : a4075695259da0890e8c9d591d9dd137032591f2 « T0.7 (variante B), étape A : traces après les morceaux »
+2026-11-11T03:49:59Z T07 FIN : étape A menée au bout, run 20261111-034625-t07-lecture-jouet, tête a4075695259da0890e8c9d591d9dd137032591f2
+
+--- erreur
+
+
+$ bash etape_a_t07_variante_b_v3.sh … (racine instance-artefact-branche, PERIMETRE JD,JA,JC,CONCEPTS)
+code 2 en 6.6 s
+--- sortie
+2026-11-11T03:49:59Z T07 essai local : aucune minuterie, aucun appel à Vast
+2026-11-11T03:49:59Z T07 processeur : Intel(R) Xeon(R) Processor @ 2.10GHz ; environnement de l'étape A en plus : ATEN_CPU_CAPABILITY=avx2 MKL_CBWR=AVX2
+2026-11-11T03:49:59Z T07 code conforme : S7 3f736e27b55070ef00a74d2a9d1c067e1e061ccd, C7 ff32076350fc9754ced79d1f58e7520826a43e9c, main 79cce74f63b1bcc205eb7c415d23dabcd61683b8
+2026-11-11T03:49:59Z T07 registre registres/scellements-v1.md recopié de main
+2026-11-11T03:49:59Z T07 registre registres/scellements-v1.md.ouvertures.md : absent de main
+2026-11-11T03:49:59Z T07 registre registres/ouvertures-p3bis-v1.md : absent de main
+2026-11-11T03:49:59Z T07 registre registres/prealables-p3bis-v1.md : absent de main
+2026-11-11T03:49:59Z T07 registre registres/go.md recopié de main
+2026-11-11T03:50:00Z T07 SCELLEMENT-JEUX-T07-JD : prereg/jeux-t07/dissimulation.jsonl présent ; journaux du script : 0
+2026-11-11T03:50:00Z T07 SCELLEMENT-JEUX-T07-JA : prereg/jeux-t07/intention-autres-modes.jsonl présent ; journaux du script : 0
+2026-11-11T03:50:00Z T07 SCELLEMENT-JEUX-T07-JC : prereg/jeux-t07/domaine-cout.jsonl présent ; journaux du script : 0
+2026-11-11T03:50:00Z T07 SCELLEMENT-CONCEPTS-T07 : prereg/jeux-t07/concepts.jsonl présent
+2026-11-11T03:50:00Z T07 registres nommés de main recopiés ; registre 0a686879ccdfdc27 ; périmètre JD,JA,JC,CONCEPTS
+2026-11-11T03:50:00Z T07 sortie de 7b extraite : manifeste, épisodes, distillation, 6 fichiers de données ; fichiers cités par la configuration de 7b recopiés de main
+2026-11-11T03:50:01Z T07 essais : code 0, 20 passed
+2026-11-11T03:50:01Z T07 taille estimée des sorties de l'étape A (O-2) : 62295488 octets ≤ borne 2000000000 (scores 5158592, sondes neuves 5130560, planchers des figées 2006336, 0 morceaux prévus)
+2026-11-11T03:50:01Z T07 disque libre : 2728886272 octets
+2026-11-11T03:50:01Z T07 modèle de P3 : None None autre (révision comparée à celle de 7b)
+2026-11-11T03:50:01Z T07 essai local : révision du modèle de P3 au cache : sans objet (modèle jouet)
+2026-11-11T03:50:03Z T07 configuration config-t07-jouet.json, empreinte canonique dd55883718bee309f18e9750fb10e9b8ded3c705f1b45dc4504c9f415f431a87
+2026-11-11T03:50:05Z T07 CODE-T07 conforme : commit ff32076350fc9754ced79d1f58e7520826a43e9c, 26 fichiers, tête du dépôt 3f736e27b55070ef00a74d2a9d1c067e1e061ccd
+2026-11-11T03:50:05Z T07 ARRET : branche donnees/t07-etape-a-v1 présente sur le dépôt distant (R12) ou dépôt injoignable
+
+--- erreur
+
+
+$ bash etape_a_t07_variante_b_v3.sh … (racine instance-artefact-perimetre, PERIMETRE JD,JA,JC,CONCEPTS)
+code 2 en 1.4 s
+--- sortie
+2026-11-11T03:50:05Z T07 essai local : aucune minuterie, aucun appel à Vast
+2026-11-11T03:50:05Z T07 processeur : Intel(R) Xeon(R) Processor @ 2.10GHz ; environnement de l'étape A en plus : ATEN_CPU_CAPABILITY=avx2 MKL_CBWR=AVX2
+2026-11-11T03:50:06Z T07 code conforme : S7 a11034981f3c31edd37f66b01a5e8db923bfa6b7, C7 932a85737fd6c28d0ed326e20c21b38ba61d51eb, main 2e40d627dfbdd46665e4bb90239445e0891513da
+2026-11-11T03:50:06Z T07 registre registres/scellements-v1.md recopié de main
+2026-11-11T03:50:06Z T07 registre registres/scellements-v1.md.ouvertures.md : absent de main
+2026-11-11T03:50:06Z T07 registre registres/ouvertures-p3bis-v1.md : absent de main
+2026-11-11T03:50:06Z T07 registre registres/prealables-p3bis-v1.md : absent de main
+2026-11-11T03:50:06Z T07 registre registres/go.md recopié de main
+2026-11-11T03:50:07Z T07 SCELLEMENT-JEUX-T07-JD : prereg/jeux-t07/dissimulation.jsonl présent ; journaux du script : 0
+2026-11-11T03:50:07Z T07 SCELLEMENT-JEUX-T07-JA : prereg/jeux-t07/intention-autres-modes.jsonl présent ; journaux du script : 0
+2026-11-11T03:50:07Z T07 SCELLEMENT-JEUX-T07-JC : prereg/jeux-t07/domaine-cout.jsonl présent ; journaux du script : 0
+2026-11-11T03:50:07Z T07 ARRET : périmètre (C-1) : SCELLEMENT-CONCEPTS-T07 absente à main, exigée par PERIMETRE=JD,JA,JC,CONCEPTS : rien n'est ouvert
+
+--- erreur
+
+
+$ bash etape_a_t07_variante_b_v3.sh … (racine instance-mesure, PERIMETRE JD,JA,JC,CONCEPTS)
+code 0 en 3.4 s
+--- sortie
+2026-11-11T03:50:07Z T07 essai local : aucune minuterie, aucun appel à Vast
+2026-11-11T03:50:07Z T07 processeur : Intel(R) Xeon(R) Processor @ 2.10GHz ; environnement de l'étape A en plus : ATEN_CPU_CAPABILITY=avx2 MKL_CBWR=AVX2
+2026-11-11T03:50:07Z T07 code conforme : S7 3f736e27b55070ef00a74d2a9d1c067e1e061ccd, C7 ff32076350fc9754ced79d1f58e7520826a43e9c, main 79cce74f63b1bcc205eb7c415d23dabcd61683b8
+2026-11-11T03:50:08Z T07 registre registres/scellements-v1.md recopié de main
+2026-11-11T03:50:08Z T07 registre registres/scellements-v1.md.ouvertures.md : absent de main
+2026-11-11T03:50:08Z T07 registre registres/ouvertures-p3bis-v1.md : absent de main
+2026-11-11T03:50:08Z T07 registre registres/prealables-p3bis-v1.md : absent de main
+2026-11-11T03:50:08Z T07 registre registres/go.md recopié de main
+2026-11-11T03:50:08Z T07 SCELLEMENT-JEUX-T07-JD : prereg/jeux-t07/dissimulation.jsonl présent ; journaux du script : 0
+2026-11-11T03:50:08Z T07 SCELLEMENT-JEUX-T07-JA : prereg/jeux-t07/intention-autres-modes.jsonl présent ; journaux du script : 0
+2026-11-11T03:50:08Z T07 SCELLEMENT-JEUX-T07-JC : prereg/jeux-t07/domaine-cout.jsonl présent ; journaux du script : 0
+2026-11-11T03:50:08Z T07 SCELLEMENT-CONCEPTS-T07 : prereg/jeux-t07/concepts.jsonl présent
+2026-11-11T03:50:08Z T07 registres nommés de main recopiés ; registre 0a686879ccdfdc27 ; périmètre JD,JA,JC,CONCEPTS
+2026-11-11T03:50:09Z T07 sortie de 7b extraite : manifeste, épisodes, distillation, 6 fichiers de données ; fichiers cités par la configuration de 7b recopiés de main
+2026-11-11T03:50:10Z T07 essais : code 0, 20 passed
+2026-11-11T03:50:10Z T07 MESURE : ligne d'essais « 20 passed » (code 0) ; arrêt après les essais (mesure seulement, rien d'ouvert)
+
+--- erreur
+
+
+$ bash etape_a_t07_variante_b_v3.sh … (racine instance-decoupage, PERIMETRE JD,JA,JC,CONCEPTS)
+code 0 en 177.5 s
+--- sortie
+2026-11-11T03:50:10Z T07 essai local : aucune minuterie, aucun appel à Vast
+2026-11-11T03:50:10Z T07 processeur : Intel(R) Xeon(R) Processor @ 2.10GHz ; environnement de l'étape A en plus : ATEN_CPU_CAPABILITY=avx2 MKL_CBWR=AVX2
+2026-11-11T03:50:11Z T07 code conforme : S7 3f736e27b55070ef00a74d2a9d1c067e1e061ccd, C7 ff32076350fc9754ced79d1f58e7520826a43e9c, main 79cce74f63b1bcc205eb7c415d23dabcd61683b8
+2026-11-11T03:50:11Z T07 registre registres/scellements-v1.md recopié de main
+2026-11-11T03:50:11Z T07 registre registres/scellements-v1.md.ouvertures.md : absent de main
+2026-11-11T03:50:11Z T07 registre registres/ouvertures-p3bis-v1.md : absent de main
+2026-11-11T03:50:11Z T07 registre registres/prealables-p3bis-v1.md : absent de main
+2026-11-11T03:50:11Z T07 registre registres/go.md recopié de main
+2026-11-11T03:50:11Z T07 SCELLEMENT-JEUX-T07-JD : prereg/jeux-t07/dissimulation.jsonl présent ; journaux du script : 0
+2026-11-11T03:50:11Z T07 SCELLEMENT-JEUX-T07-JA : prereg/jeux-t07/intention-autres-modes.jsonl présent ; journaux du script : 0
+2026-11-11T03:50:11Z T07 SCELLEMENT-JEUX-T07-JC : prereg/jeux-t07/domaine-cout.jsonl présent ; journaux du script : 0
+2026-11-11T03:50:11Z T07 SCELLEMENT-CONCEPTS-T07 : prereg/jeux-t07/concepts.jsonl présent
+2026-11-11T03:50:11Z T07 registres nommés de main recopiés ; registre 0a686879ccdfdc27 ; périmètre JD,JA,JC,CONCEPTS
+2026-11-11T03:50:12Z T07 sortie de 7b extraite : manifeste, épisodes, distillation, 6 fichiers de données ; fichiers cités par la configuration de 7b recopiés de main
+2026-11-11T03:50:12Z T07 essais : code 0, 20 passed
+2026-11-11T03:50:12Z T07 taille estimée des sorties de l'étape A (O-2) : 62295488 octets ≤ borne 2000000000 (scores 5158592, sondes neuves 5130560, planchers des figées 2006336, 309 morceaux prévus)
+2026-11-11T03:50:12Z T07 disque libre : 2614902784 octets
+2026-11-11T03:50:12Z T07 modèle de P3 : None None autre (révision comparée à celle de 7b)
+2026-11-11T03:50:12Z T07 essai local : révision du modèle de P3 au cache : sans objet (modèle jouet)
+2026-11-11T03:50:15Z T07 configuration config-t07-jouet.json, empreinte canonique dd55883718bee309f18e9750fb10e9b8ded3c705f1b45dc4504c9f415f431a87
+2026-11-11T03:50:17Z T07 CODE-T07 conforme : commit ff32076350fc9754ced79d1f58e7520826a43e9c, 26 fichiers, tête du dépôt 3f736e27b55070ef00a74d2a9d1c067e1e061ccd
+2026-11-11T03:50:23Z T07 repli, essai 1 : code 0 ; repli : recalcul fait, garde d'équivalence passée (21 actions, écart maximal 0.0) ; rapport donnees/20261110-060000-t06-jouet/activations/rapport-repli-t07.json 76f57bc67abc0855deb5a7328e062a2e8b3d739382b1f6cdb6b7dea74e8300ac
+2026-11-11T03:50:23Z T07 poussé : 5c9455e1124f635288621501be38f880d4d164e7 « T0.7 (variante B) : garde d'ouverture, repli du recalcul, garde d'équivalence passée »
+2026-11-11T03:50:30Z T07 passe à blanc : code 0 ; passe à blanc : tenue ; sortie passes-blanches-t07/20261111-035025-passe-blanc-t07-jouet/passe-blanc-extracteur-t07.json e31e2cc88505eb895397874a2b91aabd9da47f404d55dbbb20090ae079a95b39
+2026-11-11T03:50:30Z T07 poussé : 5cc61769ae9a3f34abbca3eb81e7cd0a64f1c52f « T0.7 (variante B) : passe à blanc de l'extracteur (aucune donnée décisive), code 0 »
+2026-11-11T03:50:30Z T07 étape A : environnement CUBLAS_WORKSPACE_CONFIG=:4096:8 ATEN_CPU_CAPABILITY=avx2 MKL_CBWR=AVX2
+2026-11-11T03:53:07Z T07 étape A : code 0, run 20261111-035032-t07-lecture-jouet ; notation scellée, fermée : donnees/20261111-035032-t07-lecture-jouet/scores-actions-t07.npz ; sondes lues ['tromperie-lineaire-c2', 'enjeux-difference_moyennes-c2', 'dissimulation-difference_moyennes-c2', 'domaine-difference_moyennes-c2'] ; plancher des figées : {'tromperie-lineaire-c2': 'établi', 'enjeux-difference_moyennes-c2': 'établi'}
+2026-11-11T03:53:07Z T07 réextraction de P3 (v3, S-12 (5)) : diag/20261111-035032-t07-lecture-jouet/reextraction-p3-t07.json présent ; donnees/20261111-035032-t07-lecture-jouet/planchers-figees-t07.npz présent
+2026-11-11T03:53:07Z T07 poussé : 9ce9eb6acfbb30cdfd84e9544e40f832a00b8247 « T0.7 (variante B), étape A : sorties scellées, code 0, run 20261111-035032-t07-lecture-jouet »
+2026-11-11T03:53:07Z T07 découpé (O-2) : donnees/20261111-035032-t07-lecture-jouet/scores-actions-t07.npz, 188922 octets, 5 morceaux de ≤ 40000 octets, manifeste donnees/20261111-035032-t07-lecture-jouet/scores-actions-t07.npz.morceaux.json scellé ; original hors du dépôt
+2026-11-11T03:53:07Z T07 découpé (O-2) : donnees/20261111-035032-t07-lecture-jouet/sondes-neuves-t07.npz, 157111 octets, 4 morceaux de ≤ 40000 octets, manifeste donnees/20261111-035032-t07-lecture-jouet/sondes-neuves-t07.npz.morceaux.json scellé ; original hors du dépôt
+2026-11-11T03:53:07Z T07 poussé : bf360768954098be5e40b220c5bd0891332de64e « T0.7 (variante B), étape A : sorties scellées, code 0, run 20261111-035032-t07-lecture-jouet : morceaux 1 à 2 sur 9 »
+2026-11-11T03:53:07Z T07 poussé : 526e52eb346bfbe9443fa418f64e439118f679b6 « T0.7 (variante B), étape A : sorties scellées, code 0, run 20261111-035032-t07-lecture-jouet : morceaux 3 à 4 sur 9 »
+2026-11-11T03:53:07Z T07 poussé : 507cb69459131f484440a3e5e9772669d8dd4c11 « T0.7 (variante B), étape A : sorties scellées, code 0, run 20261111-035032-t07-lecture-jouet : morceaux 5 à 6 sur 9 »
+2026-11-11T03:53:07Z T07 poussé : 9ac37263e0ab99e7266201cf0853deb2011868b7 « T0.7 (variante B), étape A : sorties scellées, code 0, run 20261111-035032-t07-lecture-jouet : morceaux 7 à 8 sur 9 »
+2026-11-11T03:53:08Z T07 poussé : 651386e4b60e996e1005e9ff14c38f56ab58ead6 « T0.7 (variante B), étape A : sorties scellées, code 0, run 20261111-035032-t07-lecture-jouet : morceaux 9 à 9 sur 9 »
+2026-11-11T03:53:08Z T07 poussé : a1c8c52e1161c90aa32ef658b452ece2f94b86e0 « T0.7 (variante B), étape A : traces après les morceaux »
+2026-11-11T03:53:08Z T07 FIN : étape A menée au bout, run 20261111-035032-t07-lecture-jouet, tête a1c8c52e1161c90aa32ef658b452ece2f94b86e0
+
+--- erreur
+
+
+$ bash etape_a_t07_variante_b_v3.sh … (racine instance-minuterie_saine, PERIMETRE JD,JA,JC,CONCEPTS)
+code 0 en 8.2 s
+--- sortie
+2026-11-11T03:53:08Z T07 minuterie lancée (PID 7211, échéance 2026-11-11T03:53:10Z) ; elle meurt avec le conteneur à l'état « stopped »
+2026-11-11T03:53:08Z T07 processeur : Intel(R) Xeon(R) Processor @ 2.10GHz ; environnement de l'étape A en plus : ATEN_CPU_CAPABILITY=avx2 MKL_CBWR=AVX2
+2026-11-11T03:53:08Z T07 code conforme : S7 3f736e27b55070ef00a74d2a9d1c067e1e061ccd, C7 ff32076350fc9754ced79d1f58e7520826a43e9c, main 79cce74f63b1bcc205eb7c415d23dabcd61683b8
+2026-11-11T03:53:08Z T07 registre registres/scellements-v1.md recopié de main
+2026-11-11T03:53:08Z T07 registre registres/scellements-v1.md.ouvertures.md : absent de main
+2026-11-11T03:53:08Z T07 registre registres/ouvertures-p3bis-v1.md : absent de main
+2026-11-11T03:53:08Z T07 registre registres/prealables-p3bis-v1.md : absent de main
+2026-11-11T03:53:08Z T07 registre registres/go.md recopié de main
+2026-11-11T03:53:09Z T07 SCELLEMENT-JEUX-T07-JD : prereg/jeux-t07/dissimulation.jsonl présent ; journaux du script : 0
+2026-11-11T03:53:09Z T07 SCELLEMENT-JEUX-T07-JA : prereg/jeux-t07/intention-autres-modes.jsonl présent ; journaux du script : 0
+2026-11-11T03:53:09Z T07 SCELLEMENT-JEUX-T07-JC : prereg/jeux-t07/domaine-cout.jsonl présent ; journaux du script : 0
+2026-11-11T03:53:09Z T07 SCELLEMENT-CONCEPTS-T07 : prereg/jeux-t07/concepts.jsonl présent
+2026-11-11T03:53:09Z T07 registres nommés de main recopiés ; registre 0a686879ccdfdc27 ; périmètre JD,JA,JC,CONCEPTS
+2026-11-11T03:53:09Z T07 sortie de 7b extraite : manifeste, épisodes, distillation, 6 fichiers de données ; fichiers cités par la configuration de 7b recopiés de main
+2026-11-11T03:53:10Z T07 MINUTERIE : échéance atteinte : destruction de l'instance 4242 par son identifiant (DELETE)
+2026-11-11T03:53:10Z T07 MINUTERIE : DELETE, essai 1 : HTTP 200
+2026-11-11T03:53:10Z T07 essais : code 0, 20 passed
+2026-11-11T03:53:10Z T07 MESURE : ligne d'essais « 20 passed » (code 0) ; arrêt après les essais (mesure seulement, rien d'ouvert)
+2026-11-11T03:53:16Z T07 fin, code 0 ; état « stopped » demandé : HTTP 200 ; la minuterie meurt avec le conteneur : la session détruit par l'identifiant
+
+--- erreur
+
+
+$ bash etape_a_t07_variante_b_v3.sh … (racine instance-minuterie_delete_en_echec, PERIMETRE JD,JA,JC,CONCEPTS)
+code 0 en 8.2 s
+--- sortie
+2026-11-11T03:53:16Z T07 minuterie lancée (PID 8253, échéance 2026-11-11T03:53:18Z) ; elle meurt avec le conteneur à l'état « stopped »
+2026-11-11T03:53:16Z T07 processeur : Intel(R) Xeon(R) Processor @ 2.10GHz ; environnement de l'étape A en plus : ATEN_CPU_CAPABILITY=avx2 MKL_CBWR=AVX2
+2026-11-11T03:53:17Z T07 code conforme : S7 3f736e27b55070ef00a74d2a9d1c067e1e061ccd, C7 ff32076350fc9754ced79d1f58e7520826a43e9c, main 79cce74f63b1bcc205eb7c415d23dabcd61683b8
+2026-11-11T03:53:17Z T07 registre registres/scellements-v1.md recopié de main
+2026-11-11T03:53:17Z T07 registre registres/scellements-v1.md.ouvertures.md : absent de main
+2026-11-11T03:53:17Z T07 registre registres/ouvertures-p3bis-v1.md : absent de main
+2026-11-11T03:53:17Z T07 registre registres/prealables-p3bis-v1.md : absent de main
+2026-11-11T03:53:17Z T07 registre registres/go.md recopié de main
+2026-11-11T03:53:17Z T07 SCELLEMENT-JEUX-T07-JD : prereg/jeux-t07/dissimulation.jsonl présent ; journaux du script : 0
+2026-11-11T03:53:17Z T07 SCELLEMENT-JEUX-T07-JA : prereg/jeux-t07/intention-autres-modes.jsonl présent ; journaux du script : 0
+2026-11-11T03:53:17Z T07 SCELLEMENT-JEUX-T07-JC : prereg/jeux-t07/domaine-cout.jsonl présent ; journaux du script : 0
+2026-11-11T03:53:17Z T07 SCELLEMENT-CONCEPTS-T07 : prereg/jeux-t07/concepts.jsonl présent
+2026-11-11T03:53:17Z T07 registres nommés de main recopiés ; registre 0a686879ccdfdc27 ; périmètre JD,JA,JC,CONCEPTS
+2026-11-11T03:53:18Z T07 sortie de 7b extraite : manifeste, épisodes, distillation, 6 fichiers de données ; fichiers cités par la configuration de 7b recopiés de main
+2026-11-11T03:53:18Z T07 MINUTERIE : échéance atteinte : destruction de l'instance 4242 par son identifiant (DELETE)
+2026-11-11T03:53:18Z T07 MINUTERIE : DELETE, essai 1 : HTTP 500
+2026-11-11T03:53:18Z T07 MINUTERIE : DELETE, essai 2 : HTTP 500
+2026-11-11T03:53:18Z T07 MINUTERIE : DELETE, essai 3 : HTTP 500
+2026-11-11T03:53:18Z T07 MINUTERIE : DELETE, essai 4 : HTTP 500
+2026-11-11T03:53:18Z T07 MINUTERIE : DELETE, essai 5 : HTTP 500
+2026-11-11T03:53:18Z T07 MINUTERIE : cinq DELETE sans succès : destruction laissée à la session (R10)
+2026-11-11T03:53:18Z T07 essais : code 0, 20 passed
+2026-11-11T03:53:18Z T07 MESURE : ligne d'essais « 20 passed » (code 0) ; arrêt après les essais (mesure seulement, rien d'ouvert)
+2026-11-11T03:53:24Z T07 fin, code 0 ; état « stopped » demandé : HTTP 200 ; la minuterie meurt avec le conteneur : la session détruit par l'identifiant
+
+--- erreur
+
+

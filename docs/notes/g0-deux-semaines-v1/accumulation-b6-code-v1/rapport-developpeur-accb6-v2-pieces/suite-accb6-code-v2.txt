@@ -1,0 +1,263 @@
+........................................................................ [ 36%]
+........................................................................ [ 73%]
+...................................................                      [100%]
+==================================== PASSES ====================================
+_____________ test_commande_controle_le_paquet_reellement_importe ______________
+----------------------------- Captured stderr call -----------------------------
+REFUS : CODE-ACCB6 : commit cité decef17ea0dc… absent du dépôt du paquet importé
+_______________________ test_commande_verifier_et_ecrire _______________________
+----------------------------- Captured stdout call -----------------------------
+CODE-ACCB6 conforme : commit bf5479fd0ab725028daea19da542dcec1b55f83c, 6 fichiers, tête du dépôt bf5479fd0ab725028daea19da542dcec1b55f83c
+/tmp/claude-0/-home-user/1cc16375-a2bd-54b9-a03f-27d43b6f26a6/scratchpad/accb6-v2/bac/bt-suite-2/test_commande_verifier_et_ecri0/registres/code-accb6/code-accb6-v2.json : commit bf5479fd0ab725028daea19da542dcec1b55f83c, 6 fichiers, entropie écrite (à sceller, puis ligne CODE-ACCB6)
+----------------------------- Captured stderr call -----------------------------
+REFUS : /tmp/claude-0/-home-user/1cc16375-a2bd-54b9-a03f-27d43b6f26a6/scratchpad/accb6-v2/bac/bt-suite-2/test_commande_verifier_et_ecri0/registres/code-accb6/code-accb6-v2.json existe déjà : jamais réécrit (R12)
+usage : python -m controle_ia.accumulation_b6.code_accb6_v1 ecrire DEPOT COMMIT SORTIE | verifier RACINE
+___________ test_reference_independante_de_bout_en_bout[4-5-fuites0] ___________
+----------------------------- Captured stdout call -----------------------------
+
+CL états de jeux 4 {'(i-a)': 'accumuler bat', 'S100': 'accumuler bat', 'S75': 'accumuler bat', 'S50': 'le maximum bat', 'S25': 'sous le plancher', 'T100': 'sous le plancher', 'temoin': 'sous le plancher', 'saboteur contre temoin': 'accumuler bat', 'S100 contre T100': 'accumuler bat'} franchies ['S100', 'S75'] états de couples vus ['A', 'M', 'P', 'Z'] ligne (ii) : S100 « accumuler bat »
+__________ test_reference_independante_de_bout_en_bout[3-21-fuites1] ___________
+----------------------------- Captured stdout call -----------------------------
+
+CL états de jeux 3 {'(i-a)': 'accumuler bat', 'S100': 'accumuler bat', 'S75': 'non tranché : fuite nommée', 'S50': 'le maximum bat', 'S25': 'sous le plancher', 'T100': 'sous le plancher', 'temoin': 'sous le plancher', 'saboteur contre temoin': 'non départagé à cette puissance', 'S100 contre T100': 'accumuler bat'} franchies ['S100'] états de couples vus ['A', 'F', 'M', 'P', 'Z'] ligne (ii) : S100 « accumuler bat »
+__________ test_reference_independante_de_bout_en_bout[2-33-fuites2] ___________
+----------------------------- Captured stdout call -----------------------------
+
+CL états de jeux 2 {'(i-a)': 'non départagé à cette puissance', 'S100': 'accumuler bat', 'S75': 'non départagé à cette puissance', 'S50': 'le maximum bat', 'S25': 'sous le plancher', 'T100': 'sous le plancher', 'temoin': 'sous le plancher', 'saboteur contre temoin': 'accumuler bat', 'S100 contre T100': 'accumuler bat'} franchies ['S100'] états de couples vus ['A', 'M', 'P', 'Z'] ligne (ii) : S100 « accumuler bat »
+_____________ test_sondage_exception_inattendue_apres_le_manifeste _____________
+----------------------------- Captured stdout call -----------------------------
+
+CL exception TypeError False | runs ['20261101-012320-accb6-lecture'] | arrêts 0 | lectures 0 | E1 journalisé True | relance : garde passée
+____________________ test_sondage_audit_aires_egales_a_1000 ____________________
+----------------------------- Captured stdout call -----------------------------
+
+CL audit aire 1.0 (1.000) ["(i-a), s : aires d'épisode de S_Σ et de S_max toutes deux égales à 1,000"]
+
+CL audit aire 0.99976 (1.000) []
+
+CL audit aire 0.9996 (1.000) []
+_____________________ test_commande_aux_constantes_reelles _____________________
+----------------------------- Captured stdout call -----------------------------
+
+CL constantes réelles : code 0 | états {'(i-a)': 'accumuler bat', 'S100': 'accumuler bat', 'S100 contre T100': 'accumuler bat', 'S25': 'sous le plancher', 'S50': 'sous le plancher', 'S75': 'le maximum bat', 'T100': 'sous le plancher', 'saboteur contre temoin': 'accumuler bat', 'temoin': 'sous le plancher'} | effectifs plan à 64 tâches | sortie standard : diag/20261111-103313-accb6-lecture/lecture-accb6.json : Barreau 6, forme faible (somme contre maximum, aire d'épisode) é
+____________________________ test_g1_rien_n_est_lu _____________________________
+----------------------------- Captured stdout call -----------------------------
+diag/20261111-103826-accb6-lecture/lecture-accb6.json : Barreau 6, forme faible (somme contre maximum, aire d'épisode) non lu : les scores de T0.7 ne sont pas ouverts (L0a) ; ce texte est scellé et fermé.
+_______________ test_commande_refuse_un_nombre_de_tirages_change _______________
+----------------------------- Captured stderr call -----------------------------
+REFUS : 2000 tirages ≠ 10000 (« Seuil »)
+============================= slowest 15 durations =============================
+250.49s call     tests/test_accb6_contre_lecture_v1.py::test_commande_aux_constantes_reelles
+18.52s call     tests/test_accb6_contre_lecture_v1.py::test_reference_independante_de_bout_en_bout[4-5-fuites0]
+13.33s call     tests/test_accb6_contre_lecture_v1.py::test_reference_independante_de_bout_en_bout[3-21-fuites1]
+8.42s call     tests/test_accb6_contre_lecture_v1.py::test_reference_independante_de_bout_en_bout[2-33-fuites2]
+7.97s call     tests/test_accb6_contre_lecture_v1.py::test_doses_marques_hors_de_forme_arret
+7.72s call     tests/test_accb6_lecture_v1.py::test_aire_par_action_egale_au_champ_de_t07
+7.52s call     tests/test_accb6_lecture_v1.py::test_aire_par_action_ecart_tolere_sous_1e9
+7.46s call     tests/test_accb6_lecture_v1.py::test_episode_incomplet_tache_exclue_et_comptee
+7.44s call     tests/test_accb6_lecture_v1.py::test_reserve_carte_du_plancher_neuf_recopiee_de_bout_en_bout[avec-carte]
+7.44s call     tests/test_accb6_lecture_v1.py::test_bout_en_bout_g4_etats_attendus_et_ecrits
+7.42s call     tests/test_accb6_lecture_v1.py::test_reserve_carte_du_plancher_neuf_recopiee_de_bout_en_bout[sans]
+7.39s call     tests/test_accb6_lecture_v1.py::test_somme_et_maximum_egaux_a_la_reference
+7.33s call     tests/test_accb6_lecture_v1.py::test_manifeste_graines_par_jeu_et_sonde_et_memes_tirages
+7.18s call     tests/test_accb6_lecture_v1.py::test_seuls_les_tableaux_nommes_de_e1_et_e3_sont_lus
+7.18s call     tests/test_accb6_lecture_v1.py::test_g3_ii_descriptif_jamais_etabli
+=========================== short test summary info ============================
+PASSED tests/test_accb6_code_v1.py::test_cas_sain_et_ecrire
+PASSED tests/test_accb6_code_v1.py::test_commit_ancetre_de_la_tete_accepte
+PASSED tests/test_accb6_code_v1.py::test_ecrire_gardes
+PASSED tests/test_accb6_code_v1.py::test_fichier_du_paquet_importe_modifie
+PASSED tests/test_accb6_code_v1.py::test_fichier_en_plus_ou_en_moins_dans_le_paquet_importe[ajout]
+PASSED tests/test_accb6_code_v1.py::test_fichier_en_plus_ou_en_moins_dans_le_paquet_importe[retrait]
+PASSED tests/test_accb6_code_v1.py::test_empreinte_ecrite_fausse
+PASSED tests/test_accb6_code_v1.py::test_commit_absent
+PASSED tests/test_accb6_code_v1.py::test_commit_non_ancetre_de_la_tete
+PASSED tests/test_accb6_code_v1.py::test_commit_cite_d_un_autre_contenu
+PASSED tests/test_accb6_code_v1.py::test_chemin_liste_hors_du_paquet
+PASSED tests/test_accb6_code_v1.py::test_forme_du_fichier
+PASSED tests/test_accb6_code_v1.py::test_paquet_hors_d_un_depot_git
+PASSED tests/test_accb6_code_v1.py::test_paquet_ailleurs_dans_le_depot
+PASSED tests/test_accb6_code_v1.py::test_lecture_refusee_avant_tout_calcul
+PASSED tests/test_accb6_code_v1.py::test_lecture_saine_ecrit_le_controle
+PASSED tests/test_accb6_code_v1.py::test_commande_controle_le_paquet_reellement_importe
+PASSED tests/test_accb6_code_v1.py::test_commande_verifier_et_ecrire
+PASSED tests/test_accb6_code_v1.py::test_fichier_du_commit_absent_de_la_liste_et_du_paquet_importe
+PASSED tests/test_accb6_contre_lecture_v1.py::test_reference_independante_de_bout_en_bout[4-5-fuites0]
+PASSED tests/test_accb6_contre_lecture_v1.py::test_reference_independante_de_bout_en_bout[3-21-fuites1]
+PASSED tests/test_accb6_contre_lecture_v1.py::test_reference_independante_de_bout_en_bout[2-33-fuites2]
+PASSED tests/test_accb6_contre_lecture_v1.py::test_sondage_exception_inattendue_apres_le_manifeste
+PASSED tests/test_accb6_contre_lecture_v1.py::test_sondage_audit_aires_egales_a_1000
+PASSED tests/test_accb6_contre_lecture_v1.py::test_commande_aux_constantes_reelles
+PASSED tests/test_accb6_contre_lecture_v1.py::test_unites_seuils_cote_maximum
+PASSED tests/test_accb6_contre_lecture_v1.py::test_unite_audit_les_deux_aires_a_un
+PASSED tests/test_accb6_contre_lecture_v1.py::test_unite_e1_egal_aux_actions_notees_de_e3_dans_les_deux_sens
+PASSED tests/test_accb6_contre_lecture_v1.py::test_gardes_de_e1_cas_sain_et_artefacts
+PASSED tests/test_accb6_contre_lecture_v1.py::test_gardes_de_e3_mention_etendue_et_jetons
+PASSED tests/test_accb6_contre_lecture_v1.py::test_doses_marques_hors_de_forme_arret
+PASSED tests/test_accb6_contre_lecture_v1.py::test_aire_par_action_d_une_dose_hors_jugement_en_ecart_arret
+PASSED tests/test_accb6_contre_lecture_v1.py::test_reserves_de_t07_sonde_visee_par_le_nom_ou_par_le_concept
+PASSED tests/test_accb6_contre_lecture_v1.py::test_annotations_sous_g3_prefixe_et_hors_jugement
+PASSED tests/test_accb6_contre_lecture_v1.py::test_reserve_adapt_lue_sur_b6_d4_et_non_sur_b6_d3b
+PASSED tests/test_accb6_etats_v1.py::test_etat_couple_regles_et_ordre[modif0-Z]
+PASSED tests/test_accb6_etats_v1.py::test_etat_couple_regles_et_ordre[modif1-E]
+PASSED tests/test_accb6_etats_v1.py::test_etat_couple_regles_et_ordre[modif2-F]
+PASSED tests/test_accb6_etats_v1.py::test_etat_couple_regles_et_ordre[modif3-Z]
+PASSED tests/test_accb6_etats_v1.py::test_etat_couple_regles_et_ordre[modif4-P]
+PASSED tests/test_accb6_etats_v1.py::test_etat_couple_regles_et_ordre[modif5-S]
+PASSED tests/test_accb6_etats_v1.py::test_etat_couple_regles_et_ordre[modif6-A]
+PASSED tests/test_accb6_etats_v1.py::test_etat_couple_regles_et_ordre[modif7-A]
+PASSED tests/test_accb6_etats_v1.py::test_etat_couple_regles_et_ordre[modif8-Z]
+PASSED tests/test_accb6_etats_v1.py::test_etat_couple_regles_et_ordre[modif9-N]
+PASSED tests/test_accb6_etats_v1.py::test_etat_couple_regles_et_ordre[modif10-A]
+PASSED tests/test_accb6_etats_v1.py::test_etat_couple_regles_et_ordre[modif11-M]
+PASSED tests/test_accb6_etats_v1.py::test_etat_couple_regles_et_ordre[modif12-Z]
+PASSED tests/test_accb6_etats_v1.py::test_etat_couple_regles_et_ordre[modif13-N]
+PASSED tests/test_accb6_etats_v1.py::test_etat_couple_regles_et_ordre[modif14-M]
+PASSED tests/test_accb6_etats_v1.py::test_etat_couple_regles_et_ordre[modif15-M]
+PASSED tests/test_accb6_etats_v1.py::test_etat_couple_entrees_hors_domaine
+PASSED tests/test_accb6_etats_v1.py::test_seuils_stricts_par_le_calcul
+PASSED tests/test_accb6_etats_v1.py::test_etat_jeu[etats0-True-non tranch\xe9 : fuite nomm\xe9e]
+PASSED tests/test_accb6_etats_v1.py::test_etat_jeu[etats1-False-partag\xe9]
+PASSED tests/test_accb6_etats_v1.py::test_etat_jeu[etats2-False-accumuler bat]
+PASSED tests/test_accb6_etats_v1.py::test_etat_jeu[etats3-False-le maximum bat]
+PASSED tests/test_accb6_etats_v1.py::test_etat_jeu[etats4-False-non interpr\xe9table]
+PASSED tests/test_accb6_etats_v1.py::test_etat_jeu[etats5-False-\xe9chec]
+PASSED tests/test_accb6_etats_v1.py::test_etat_jeu[etats6-False-sous le plancher]
+PASSED tests/test_accb6_etats_v1.py::test_etat_jeu[etats7-False-satur\xe9]
+PASSED tests/test_accb6_etats_v1.py::test_etat_jeu[etats8-False-satur\xe9]
+PASSED tests/test_accb6_etats_v1.py::test_etat_jeu[etats9-False-non d\xe9partag\xe9 \xe0 cette puissance]
+PASSED tests/test_accb6_etats_v1.py::test_etat_jeu[etats10-False-non d\xe9partag\xe9 \xe0 cette puissance]
+PASSED tests/test_accb6_etats_v1.py::test_etat_jeu[etats11-False-accumuler bat]
+PASSED tests/test_accb6_etats_v1.py::test_etat_jeu_gardes
+PASSED tests/test_accb6_etats_v1.py::test_familles_n054
+PASSED tests/test_accb6_etats_v1.py::test_sequence_fixee_toutes_les_issues
+PASSED tests/test_accb6_etats_v1.py::test_sequence_gardes
+PASSED tests/test_accb6_etats_v1.py::test_une_phrase_et_une_seule_par_cas
+PASSED tests/test_accb6_etats_v1.py::test_g3_jamais_etabli_pour_l_organisme_sans_consigne
+PASSED tests/test_accb6_etats_v1.py::test_phrases_de_la_table_mot_pour_mot
+PASSED tests/test_accb6_etats_v1.py::test_crochet_manquant_garde
+PASSED tests/test_accb6_etats_v1.py::test_enumeration_rejouee_egale_a_la_sortie_versee
+PASSED tests/test_accb6_etats_v1.py::test_enumeration_du_code_v2_egale_a_celle_du_code_v1_hors_empreinte_de_etats_v1
+PASSED tests/test_accb6_garde_v1.py::test_garde_cas_sain
+PASSED tests/test_accb6_garde_v1.py::test_cle_propre_absente[SCELLEMENT-ACCB6]
+PASSED tests/test_accb6_garde_v1.py::test_cle_propre_absente[CODE-ACCB6]
+PASSED tests/test_accb6_garde_v1.py::test_cle_propre_en_double
+PASSED tests/test_accb6_garde_v1.py::test_cle_partagee_absente[RUN-CONFIRMATION-T06]
+PASSED tests/test_accb6_garde_v1.py::test_cle_partagee_absente[SCORES-T07]
+PASSED tests/test_accb6_garde_v1.py::test_cle_partagee_absente[SONDES-T07]
+PASSED tests/test_accb6_garde_v1.py::test_cle_partagee_absente[VERDICT-P3BIS]
+PASSED tests/test_accb6_garde_v1.py::test_cle_partagee_en_double
+PASSED tests/test_accb6_garde_v1.py::test_cle_partagee_mal_formee
+PASSED tests/test_accb6_garde_v1.py::test_ligne_non_anterieure_a_l_ouverture[0]
+PASSED tests/test_accb6_garde_v1.py::test_ligne_non_anterieure_a_l_ouverture[3600]
+PASSED tests/test_accb6_garde_v1.py::test_sceau_faux_fichier_cite
+PASSED tests/test_accb6_garde_v1.py::test_scellement_non_anterieur_a_scores_t07
+PASSED tests/test_accb6_garde_v1.py::test_reserve_tard
+PASSED tests/test_accb6_garde_v1.py::test_arret_etape_b_present
+PASSED tests/test_accb6_garde_v1.py::test_lecture_t07_absente_attente
+PASSED tests/test_accb6_garde_v1.py::test_lecture_t07_compagnon_faux
+PASSED tests/test_accb6_garde_v1.py::test_lecture_unique_fichier_deja_present
+PASSED tests/test_accb6_garde_v1.py::test_lecture_unique_ligne_deja_inscrite
+PASSED tests/test_accb6_garde_v1.py::test_cle_inconnue_au_registre_propre
+PASSED tests/test_accb6_garde_v1.py::test_cle_de_ce_texte_au_registre_partage
+PASSED tests/test_accb6_garde_v1.py::test_run_7a_refuse
+PASSED tests/test_accb6_garde_v1.py::test_runs_de_t07_differents
+PASSED tests/test_accb6_garde_v1.py::test_fichier_code_mal_forme[code0-forme]
+PASSED tests/test_accb6_garde_v1.py::test_fichier_code_mal_forme[code1-commit]
+PASSED tests/test_accb6_garde_v1.py::test_fichier_code_mal_forme[code2-fichiers]
+PASSED tests/test_accb6_garde_v1.py::test_fichier_code_mal_forme[code3-entropie]
+PASSED tests/test_accb6_garde_v1.py::test_fichier_code_mal_forme[code4-entropie]
+PASSED tests/test_accb6_garde_v1.py::test_chemin_du_texte_scelle
+PASSED tests/test_accb6_garde_v1.py::test_journal_absent_rien_ecrit
+PASSED tests/test_accb6_garde_v1.py::test_inscription_jamais_au_registre_partage
+PASSED tests/test_accb6_garde_v1.py::test_lecture_complete_n_ecrit_rien_dans_le_registre_partage
+PASSED tests/test_accb6_garde_v1.py::test_reserve_code
+PASSED tests/test_accb6_garde_v1.py::test_aiguillage_cas_sains[G-1]
+PASSED tests/test_accb6_garde_v1.py::test_aiguillage_cas_sains[G-2]
+PASSED tests/test_accb6_garde_v1.py::test_aiguillage_cas_sains[G-3]
+PASSED tests/test_accb6_garde_v1.py::test_aiguillage_cas_sains[G-4]
+PASSED tests/test_accb6_garde_v1.py::test_aiguillage_g2_par_l1b_et_q_fermant
+PASSED tests/test_accb6_garde_v1.py::test_aiguillage_artefacts[G-1-modif0-recoupement]
+PASSED tests/test_accb6_garde_v1.py::test_aiguillage_artefacts[G-1-modif1-recoupement]
+PASSED tests/test_accb6_garde_v1.py::test_aiguillage_artefacts[G-4-modif2-recoupement]
+PASSED tests/test_accb6_garde_v1.py::test_aiguillage_artefacts[G-2-modif3-recoupement]
+PASSED tests/test_accb6_garde_v1.py::test_aiguillage_artefacts[G-2-modif4-recoupement]
+PASSED tests/test_accb6_garde_v1.py::test_aiguillage_artefacts[G-2-modif5-recoupement]
+PASSED tests/test_accb6_garde_v1.py::test_aiguillage_artefacts[G-4-modif6-recoupement]
+PASSED tests/test_accb6_garde_v1.py::test_aiguillage_artefacts[G-4-modif7-recoupement]
+PASSED tests/test_accb6_garde_v1.py::test_aiguillage_artefacts[G-3-modif8-\u2260 table_A.A]
+PASSED tests/test_accb6_garde_v1.py::test_aiguillage_artefacts[G-4-modif9-\u2260 table_A.A]
+PASSED tests/test_accb6_garde_v1.py::test_aiguillage_artefacts[G-4-modif10-bool\xe9ens]
+PASSED tests/test_accb6_garde_v1.py::test_aiguillage_artefacts[G-4-modif11-hors de]
+PASSED tests/test_accb6_garde_v1.py::test_aiguillage_artefacts[G-4-modif12-entrees.A ou entrees.Q]
+PASSED tests/test_accb6_garde_v1.py::test_aiguillage_artefacts[G-4-modif13-table_A.A]
+PASSED tests/test_accb6_garde_v1.py::test_aiguillage_champ_absent[scores_ouverts]
+PASSED tests/test_accb6_garde_v1.py::test_aiguillage_champ_absent[scores_ii_ouverts]
+PASSED tests/test_accb6_garde_v1.py::test_aiguillage_champ_absent[issue_critere_3]
+PASSED tests/test_accb6_garde_v1.py::test_aiguillage_champ_absent[entrees]
+PASSED tests/test_accb6_garde_v1.py::test_aiguillage_champ_absent[table_A]
+PASSED tests/test_accb6_garde_v1.py::test_aiguillage_champ_absent[fuites]
+PASSED tests/test_accb6_garde_v1.py::test_aiguillage_champ_absent[doses]
+PASSED tests/test_accb6_garde_v1.py::test_aiguillage_champ_absent[conditions_retirees]
+PASSED tests/test_accb6_garde_v1.py::test_aiguillage_champ_absent[jeux]
+PASSED tests/test_accb6_garde_v1.py::test_aiguillage_champ_absent[jeux_hors_jugement]
+PASSED tests/test_accb6_garde_v1.py::test_aiguillage_champ_absent[reserves_identifiees]
+PASSED tests/test_accb6_garde_v1.py::test_aiguillage_champ_absent[sondes_lues]
+PASSED tests/test_accb6_garde_v1.py::test_aiguillage_champ_absent[niveau_applique]
+PASSED tests/test_accb6_garde_v1.py::test_aiguillage_refus_de_bout_en_bout_journalise
+PASSED tests/test_accb6_garde_v1.py::test_reserves_cas_sain
+PASSED tests/test_accb6_garde_v1.py::test_reserve_adapt
+PASSED tests/test_accb6_garde_v1.py::test_reserve_consigne
+PASSED tests/test_accb6_garde_v1.py::test_reserve_dir_et_spe
+PASSED tests/test_accb6_garde_v1.py::test_reserve_nul36
+PASSED tests/test_accb6_garde_v1.py::test_audit_r4_declencheurs
+PASSED tests/test_accb6_lecture_v1.py::test_bout_en_bout_g4_etats_attendus_et_ecrits
+PASSED tests/test_accb6_lecture_v1.py::test_manifeste_graines_par_jeu_et_sonde_et_memes_tirages
+PASSED tests/test_accb6_lecture_v1.py::test_somme_et_maximum_egaux_a_la_reference
+PASSED tests/test_accb6_lecture_v1.py::test_liste_fermee_et_aucune_moyenne_ni_mediane
+PASSED tests/test_accb6_lecture_v1.py::test_mediane_seulement_sur_les_directions_du_plancher
+PASSED tests/test_accb6_lecture_v1.py::test_g1_rien_n_est_lu
+PASSED tests/test_accb6_lecture_v1.py::test_g2_aucune_ligne_de_ii_lue
+PASSED tests/test_accb6_lecture_v1.py::test_g3_ii_descriptif_jamais_etabli
+PASSED tests/test_accb6_lecture_v1.py::test_mention_jamais_lue
+PASSED tests/test_accb6_lecture_v1.py::test_seuls_les_tableaux_nommes_de_e1_et_e3_sont_lus
+PASSED tests/test_accb6_lecture_v1.py::test_episode_incomplet_tache_exclue_et_comptee
+PASSED tests/test_accb6_lecture_v1.py::test_plus_de_dix_pour_cent_exclues_echec
+PASSED tests/test_accb6_lecture_v1.py::test_dix_pour_cent_exactement_garde
+PASSED tests/test_accb6_lecture_v1.py::test_score_non_fini_tache_exclue
+PASSED tests/test_accb6_lecture_v1.py::test_pas_repete_episode_incomplet
+PASSED tests/test_accb6_lecture_v1.py::test_tirages_degeneres_echec_du_couple
+PASSED tests/test_accb6_lecture_v1.py::test_sonde_en_echec_a_la_notation
+PASSED tests/test_accb6_lecture_v1.py::test_aire_par_action_egale_au_champ_de_t07
+PASSED tests/test_accb6_lecture_v1.py::test_aire_par_action_en_ecart_arret
+PASSED tests/test_accb6_lecture_v1.py::test_aire_par_action_ecart_tolere_sous_1e9
+PASSED tests/test_accb6_lecture_v1.py::test_identite_e1_e3_en_ecart_arret
+PASSED tests/test_accb6_lecture_v1.py::test_e3_empreinte_fausse_refus
+PASSED tests/test_accb6_lecture_v1.py::test_tableau_scores_absent_arret
+PASSED tests/test_accb6_lecture_v1.py::test_entrees_e2_e2b_en_defaut_refus[principales]
+PASSED tests/test_accb6_lecture_v1.py::test_entrees_e2_e2b_en_defaut_refus[agregation]
+PASSED tests/test_accb6_lecture_v1.py::test_entrees_e2_e2b_en_defaut_refus[niveau]
+PASSED tests/test_accb6_lecture_v1.py::test_entrees_e2_e2b_en_defaut_refus[sondes_lues_e4]
+PASSED tests/test_accb6_lecture_v1.py::test_fuite_nommee_sur_saboteur
+PASSED tests/test_accb6_lecture_v1.py::test_constantes_du_texte
+PASSED tests/test_accb6_lecture_v1.py::test_dix_mille_tirages_par_defaut
+PASSED tests/test_accb6_lecture_v1.py::test_commande_refuse_un_nombre_de_tirages_change
+PASSED tests/test_accb6_lecture_v1.py::test_g2_defense_en_profondeur_sans_conditions_retirees
+PASSED tests/test_accb6_lecture_v1.py::test_directions_de_plancher_800_exigees[200]
+PASSED tests/test_accb6_lecture_v1.py::test_directions_de_plancher_800_exigees[799]
+PASSED tests/test_accb6_lecture_v1.py::test_directions_de_plancher_800_exigees[801]
+PASSED tests/test_accb6_lecture_v1.py::test_directions_de_plancher_200_par_la_commande_code_3_puis_relance_refusee
+PASSED tests/test_accb6_lecture_v1.py::test_k_recoupe_avec_niveau_applique_meme_si_e2_et_e4_s_accordent
+PASSED tests/test_accb6_lecture_v1.py::test_reserve_plancher_neuf_recopiee_unite
+PASSED tests/test_accb6_lecture_v1.py::test_reserve_carte_du_plancher_neuf_recopiee_de_bout_en_bout[avec-carte]
+PASSED tests/test_accb6_lecture_v1.py::test_reserve_carte_du_plancher_neuf_recopiee_de_bout_en_bout[sans]
+PASSED tests/test_accb6_lecture_v1.py::test_reserves_de_t07_hors_de_forme_arret
+PASSED tests/test_accb6_phrases_texte_v1.py::test_chaque_phrase_produite_egale_la_table_du_texte
+PASSED tests/test_accb6_phrases_texte_v1.py::test_controles_vb6_1_et_vb6_2
+PASSED tests/test_accb6_phrases_texte_v1.py::test_morceaux_recopies_du_texte
+PASSED tests/test_accb6_relance_v1.py::test_cas_sain_autres_fichiers_d_arret
+PASSED tests/test_accb6_relance_v1.py::test_artefact_arret_d_un_run_quelconque
+PASSED tests/test_accb6_relance_v1.py::test_relance_apres_un_arret_refusee_avant_tout_calcul
+195 passed in 478.07s (0:07:58)
+code 0
+10:40:21

@@ -1,0 +1,21 @@
+..............................x.......x................................. [ 14%]
+.................s...................................................... [ 29%]
+........................................................................ [ 44%]
+...........................................x..........s................. [ 59%]
+........................................................................ [ 74%]
+........................................................................ [ 89%]
+..............x......................................                    [100%]
+=============================== warnings summary ===============================
+tests/test_t07_plancher_v3_notation_v1.py::test_refus_et_cas_sains
+  /tmp/claude-0/-home-user/1cc16375-a2bd-54b9-a03f-27d43b6f26a6/scratchpad/agents/mesure-att-c7/d/src/controle_ia/t07/plancher_v3.py:139: RuntimeWarning: invalid value encountered in matmul
+    S = A @ m["W"] + m["b"]
+
+-- Docs: https://docs.pytest.org/en/stable/how-to/capture-warnings.html
+=========================== short test summary info ============================
+SKIPPED [1] tests/test_t07_lecture_v1.py:504: branche origin/prep/t06-candidat8-v1 non récupérée : essai d'égalité sauté (déclaré)
+SKIPPED [1] tests/test_t07_lecture_v2.py:911: commit 061ac380 absent de ce clone : essai d'égalité sauté (déclaré)
+XFAIL tests/test_t07_corrections_cl1_v1.py::test_CT01_action_sans_caractere_de_mot_temoin_en_echec_sans_arret - règle de CT-01 remplacée par C20-01 (R-2098) : une action sans caractère de mot est exclue de la notation des témoins, qui notent le reste ; voir tests/test_t07_corrections_cl20_v1.py
+XFAIL tests/test_t07_corrections_cl1_v1.py::test_CT11_dates_du_journal_non_decroissantes - son cas sain écrit un appui « x », hors forme depuis D-3 (R-2103) ; règle des dates rejouée aux formes exactes : tests/test_t07_journal_p3bis_d3_v1.py::test_D3_regle_des_dates_inchangee
+XFAIL tests/test_t07_lecture_v2.py::test_journal_cas_sain_lignes_et_refus_lus - interprétation tolérante (ligne vide ignorée, appui libre) retirée par D-3 (R-2103) ; cas sain refait aux formes exactes : tests/test_t07_journal_p3bis_d3_v1.py
+XFAIL tests/test_t07_repli_etapes_v1.py::test_garde_refusee_rien_calcule_puis_relance - SCELLEMENT-CONCEPTS-T07 devenue permise (brouillon 21, option (c), R-2158) : son absence ne refuse plus la garde (« DID NOT RAISE ») ; remplacé par test_t07_option_c_concepts_v1.test_repli_ligne_exigee_manquante_rien_calcule_puis_relance (RUN-CONFIRMATION-T06)
+479 passed, 2 skipped, 4 xfailed, 1 warning in 785.79s (0:13:05)

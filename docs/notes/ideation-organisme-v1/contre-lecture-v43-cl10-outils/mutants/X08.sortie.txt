@@ -1,0 +1,70 @@
+........................../tmp/claude-0/-home-user-controle-ia-travail/75a1275d-b838-5015-909e-b2bfadb395f9/scratchpad/relecture-v43/cl10/outils-cl10/mutants/X08/essais/test_v7_ideation.py:557: ResourceWarning: unclosed file <_io.TextIOWrapper name='/tmp/claude-0/-home-user-controle-ia-travail/75a1275d-b838-5015-909e-b2bfadb395f9/scratchpad/relecture-v43/cl10/outils-cl10/mutants/X08/essais/_tmp/tmphlaqjhko/petit-enfant.pid' mode='r' encoding='UTF-8'>
+  pid = int(open(pid_f).read())
+ResourceWarning: Enable tracemalloc to get the object allocation traceback
+../tmp/claude-0/-home-user-controle-ia-travail/75a1275d-b838-5015-909e-b2bfadb395f9/scratchpad/relecture-v43/cl10/outils-cl10/mutants/X08/essais/test_v7_ideation.py:649: ResourceWarning: unclosed file <_io.TextIOWrapper name='/tmp/claude-0/-home-user-controle-ia-travail/75a1275d-b838-5015-909e-b2bfadb395f9/scratchpad/relecture-v43/cl10/outils-cl10/mutants/X08/essais/_tmp/tmp7zaf_axr/cx-3/proposeurs/argon/traces-passe-2/consigne.md' mode='r' encoding='utf-8'>
+  encoding="utf-8").read()
+ResourceWarning: Enable tracemalloc to get the object allocation traceback
+................................./tmp/claude-0/-home-user-controle-ia-travail/75a1275d-b838-5015-909e-b2bfadb395f9/scratchpad/relecture-v43/cl10/outils-cl10/mutants/X08/essais/test_v7_ideation.py:1254: ResourceWarning: unclosed file <_io.TextIOWrapper name='/tmp/claude-0/-home-user-controle-ia-travail/75a1275d-b838-5015-909e-b2bfadb395f9/scratchpad/relecture-v43/cl10/outils-cl10/mutants/X08/essais/_tmp/tmpfh4u9nys/pe.pid' mode='r' encoding='UTF-8'>
+  pe = int(open(pid_f).read())
+ResourceWarning: Enable tracemalloc to get the object allocation traceback
+............F.............F..F...F........
+======================================================================
+FAIL: test_relancable_calcule_avec_un_controle_claude_paye (essais.test_v7_ideation.TestV41.test_relancable_calcule_avec_un_controle_claude_paye)
+CL40-01 (code), point 6 : contrôle Claude payé (0,01 puis 0,2 par modèle), réglages du devis v7 quinquies (somme
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/tmp/claude-0/-home-user-controle-ia-travail/75a1275d-b838-5015-909e-b2bfadb395f9/scratchpad/relecture-v43/cl10/outils-cl10/mutants/X08/essais/test_v7_ideation.py", line 1654, in test_relancable_calcule_avec_un_controle_claude_paye
+    self.assertEqual(r["relancable"], relancable, r["motifs_relance"])
+    ~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: False != True : ['somme des plafonds Claude de la relance 40.2200 > total 40.0']
+
+======================================================================
+FAIL: test_cl41_07_panne_d_argon_au_controle_ne_coute_rien_chez_claude (essais.test_v7_ideation.TestV42.test_cl41_07_panne_d_argon_au_controle_ne_coute_rien_chez_claude)
+CL41-07 : réglages du devis, contrôles Claude payés (0,2 chacun) ; Argon rend « KO » à 0,15 au contrôle, joué en
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/tmp/claude-0/-home-user-controle-ia-travail/75a1275d-b838-5015-909e-b2bfadb395f9/scratchpad/relecture-v43/cl10/outils-cl10/mutants/X08/essais/test_v7_ideation.py", line 2600, in test_cl41_07_panne_d_argon_au_controle_ne_coute_rien_chez_claude
+    self.assertTrue(r["relancable"], r["motifs_relance"])
+    ~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: False is not true : ['somme des plafonds Claude de la relance 40.4000 > total 40.0']
+
+======================================================================
+FAIL: test_v12_relancable_avec_le_cout_externe_de_la_tentative (essais.test_v7_ideation.TestV42.test_v12_relancable_avec_le_cout_externe_de_la_tentative)
+CL41-08 (V12) : réglages du devis, seul le coût externe de la tentative fait dépasser — Argon « KO » à 0,5 :
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/tmp/claude-0/-home-user-controle-ia-travail/75a1275d-b838-5015-909e-b2bfadb395f9/scratchpad/relecture-v43/cl10/outils-cl10/mutants/X08/essais/test_v7_ideation.py", line 2715, in test_v12_relancable_avec_le_cout_externe_de_la_tentative
+    self.assertEqual(r["motifs_relance"], ["somme des plafonds externes de la relance 11.7000 > total externe 11.6"])
+    ~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: Lists differ: ['somme des plafonds Claude de la relance 40.4000 > total 40.0[71 chars]1.6'] != ['somme des plafonds externes de la relance 11.7000 > total externe 11.6']
+
+First differing element 0:
+'somme des plafonds Claude de la relance 40.4000 > total 40.0'
+'somme des plafonds externes de la relance 11.7000 > total externe 11.6'
+
+First list contains 1 additional elements.
+First extra element 1:
+'somme des plafonds externes de la relance 11.7000 > total externe 11.6'
+
+- ['somme des plafonds Claude de la relance 40.4000 > total 40.0',
+-  'somme des plafonds externes de la relance 11.7000 > total externe 11.6']
+? ^
+
++ ['somme des plafonds externes de la relance 11.7000 > total externe 11.6']
+? ^
+
+
+======================================================================
+FAIL: test_cl40_01_c_relance_sans_rejouer_les_controles_reussis (essais.test_v7_ideation.TestV43.test_cl40_01_c_relance_sans_rejouer_les_controles_reussis)
+CL40-01, option (c) (décision de Lazar) : réglages du devis, contrôles Claude payés 0,2 et réussis, Argon « OK » à
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/tmp/claude-0/-home-user-controle-ia-travail/75a1275d-b838-5015-909e-b2bfadb395f9/scratchpad/relecture-v43/cl10/outils-cl10/mutants/X08/essais/test_v7_ideation.py", line 3254, in test_cl40_01_c_relance_sans_rejouer_les_controles_reussis
+    self.assertTrue(r1["relancable"], r1["motifs_relance"])  # v42 : 40,4 > 40
+    ~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: False is not true : ['somme des plafonds Claude de la relance 40.4000 > total 40.0']
+
+----------------------------------------------------------------------
+Ran 103 tests in 22.912s
+
+FAILED (failures=4)

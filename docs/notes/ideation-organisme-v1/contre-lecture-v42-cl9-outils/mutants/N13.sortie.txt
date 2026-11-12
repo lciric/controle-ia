@@ -1,0 +1,34 @@
+........................../tmp/claude-0/-home-user-controle-ia-travail/75a1275d-b838-5015-909e-b2bfadb395f9/scratchpad/relecture-v42/cl9/outils-cl9/mutants/N13/essais/test_v7_ideation.py:557: ResourceWarning: unclosed file <_io.TextIOWrapper name='/tmp/claude-0/-home-user-controle-ia-travail/75a1275d-b838-5015-909e-b2bfadb395f9/scratchpad/relecture-v42/cl9/outils-cl9/mutants/N13/essais/_tmp/tmpu_xsc01k/petit-enfant.pid' mode='r' encoding='UTF-8'>
+  pid = int(open(pid_f).read())
+ResourceWarning: Enable tracemalloc to get the object allocation traceback
+../tmp/claude-0/-home-user-controle-ia-travail/75a1275d-b838-5015-909e-b2bfadb395f9/scratchpad/relecture-v42/cl9/outils-cl9/mutants/N13/essais/test_v7_ideation.py:649: ResourceWarning: unclosed file <_io.TextIOWrapper name='/tmp/claude-0/-home-user-controle-ia-travail/75a1275d-b838-5015-909e-b2bfadb395f9/scratchpad/relecture-v42/cl9/outils-cl9/mutants/N13/essais/_tmp/tmp0egioelx/cx-3/proposeurs/argon/traces-passe-2/consigne.md' mode='r' encoding='utf-8'>
+  encoding="utf-8").read()
+ResourceWarning: Enable tracemalloc to get the object allocation traceback
+................................./tmp/claude-0/-home-user-controle-ia-travail/75a1275d-b838-5015-909e-b2bfadb395f9/scratchpad/relecture-v42/cl9/outils-cl9/mutants/N13/essais/test_v7_ideation.py:1254: ResourceWarning: unclosed file <_io.TextIOWrapper name='/tmp/claude-0/-home-user-controle-ia-travail/75a1275d-b838-5015-909e-b2bfadb395f9/scratchpad/relecture-v42/cl9/outils-cl9/mutants/N13/essais/_tmp/tmpo8z5lwxq/pe.pid' mode='r' encoding='UTF-8'>
+  pe = int(open(pid_f).read())
+ResourceWarning: Enable tracemalloc to get the object allocation traceback
+.....................FF..........
+======================================================================
+FAIL: test_cl41_02_fiche_bornee_et_marge_realiste (essais.test_v7_ideation.TestV42.test_cl41_02_fiche_bornee_et_marge_realiste)
+CL41-02 : listes bornées (9 questions, 12 antériorités) et fiche bornée à 12 000 caractères servis (échappements
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/tmp/claude-0/-home-user-controle-ia-travail/75a1275d-b838-5015-909e-b2bfadb395f9/scratchpad/relecture-v42/cl9/outils-cl9/mutants/N13/essais/test_v7_ideation.py", line 2356, in test_cl41_02_fiche_bornee_et_marge_realiste
+    self.assertEqual(m["taille_consigne_de_controle"], v["appel_de_controle"]["externe:argon"]["taille_consigne"])
+    ~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: 99198 != 525
+
+======================================================================
+FAIL: test_cl41_03_et_n13_consigne_de_controle_recue_par_la_commande (essais.test_v7_ideation.TestV42.test_cl41_03_et_n13_consigne_de_controle_recue_par_la_commande)
+CL41-03 : la consigne de contrôle d'Argon que **reçoit la commande** encadre le matériau entre délimiteurs et finit
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/tmp/claude-0/-home-user-controle-ia-travail/75a1275d-b838-5015-909e-b2bfadb395f9/scratchpad/relecture-v42/cl9/outils-cl9/mutants/N13/essais/test_v7_ideation.py", line 2388, in test_cl41_03_et_n13_consigne_de_controle_recue_par_la_commande
+    self.assertIn(attendu, materiau)  # N13 : la consigne de passe 2, pas les pièces seules
+    ~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^
+AssertionError: '## Tes fiches de la première passe' not found in '## Pièce : piece-a.md\n# Pièce A\nTexte de contexte.'
+
+----------------------------------------------------------------------
+Ran 94 tests in 18.067s
+
+FAILED (failures=2)

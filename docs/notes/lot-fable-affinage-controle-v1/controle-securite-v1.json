@@ -1,0 +1,67 @@
+{
+ "angle": "securite",
+ "modele": "claude-opus-5-5 (sous-agent neuf, outil Workflow, wf_38107792-44a)",
+ "verdict": "conforme avec réserves",
+ "fichiers_lus": [
+  "LISEZMOI.md",
+  "brief-affinage-equipe-rouge-fable-v2.md",
+  "passation-affinage-equipe-rouge-fable-v1.md",
+  "integration-proposeurs-ia-v1.md",
+  "conception-pole-scientifique-v1.md",
+  "LISEZMOI.md.sha256",
+  "brief-affinage-equipe-rouge-fable-v2.md.sha256",
+  "passation-affinage-equipe-rouge-fable-v1.md.sha256",
+  "integration-proposeurs-ia-v1.md.sha256",
+  "conception-pole-scientifique-v1.md.sha256"
+ ],
+ "constats": [
+  {
+   "fichier": "integration-proposeurs-ia-v1.md",
+   "ligne": 223,
+   "categorie": "contradiction de rôle entre documents",
+   "extrait_court": "lignée Opus pour l'auteur, Fable 5.1 réservée à la contre-lecture",
+   "pourquoi": "Le passage « Ce que Lazar tranche » n'a pas été mis à jour : il recommande encore la lignée Opus comme auteur et Fable comme contre-lecteur et vérificateur. Or la section 0 du même document (lignes 29 à 31), le brief et la passation donnent à Fable le rôle d'auteur. Le lecteur peut croire que son rôle est contesté ou qu'il doit tenir le rôle de vérificateur dans la boucle. Ce n'est pas une permission offensive, et le brief prime. Correctif : marquer la question comme tranchée à 12:24.",
+   "gravite": "mineur"
+  },
+  {
+   "fichier": "brief-affinage-equipe-rouge-fable-v2.md",
+   "ligne": 94,
+   "categorie": "formulation ambiguë sur l'agent évasif",
+   "extrait_court": "pas par une boucle libre d'agent évasif que tu raffinerais",
+   "pourquoi": "Le qualificatif « libre » revient dans la passation (ligne 239) et dans l'intégration (lignes 141 et 142). Il laisse entendre qu'une boucle gouvernée, qui raffinerait un agent évasif d'épisode en épisode, resterait admissible dans la conception. L'intégration (lignes 146 et 147, « aucun pipeline opérationnel des étapes 1-2 avant la revue externe ») suggère en plus qu'une telle chaîne opérationnelle viendrait après la revue. L'interdit sans condition « tu ne construis pas d'agents évasifs » (brief ligne 96) en limite la portée pour le lecteur lui-même. Correctif : écrire « aucune boucle d'agent évasif, libre ou gouvernée, dans la conception ; l'adversaire confiné est hors du périmètre ».",
+   "gravite": "mineur"
+  },
+  {
+   "fichier": "passation-affinage-equipe-rouge-fable-v1.md",
+   "ligne": 214,
+   "categorie": "écart de formulation des limites",
+   "extrait_court": "moniteur est violée), conditions de succès, défense possible",
+   "pourquoi": "La passation et l'intégration (ligne 16) autorisent les « conditions de succès » du contournement. Le brief (ligne 92) et le LISEZMOI (ligne 55) ne parlent que de « condition mesurable ». Cette tournure se place du côté de l'attaquant. Combinée à « l'affinage resserre la caractérisation » (intégration, lignes 129 et 130), elle peut pousser un affinage d'épisode en épisode à aiguiser les conditions de réussite d'une évasion, ce qui le rapproche d'une recette. Correctif : aligner sur « condition mesurable sous laquelle le moniteur est aveugle ».",
+   "gravite": "mineur"
+  },
+  {
+   "fichier": "integration-proposeurs-ia-v1.md",
+   "ligne": 149,
+   "categorie": "critère de voie permise incomplet",
+   "extrait_court": "(e) résolution de contraintes",
+   "pourquoi": "Les voies analytiques permises sont définies par un seul critère : elles « ne construisent aucun agent » (ligne 150 ; brief ligne 94 ; passation lignes 238 et 239). Or la résolution de contraintes et les cas de test synthétiques peuvent produire des entrées ou des trajectoires évasives concrètes sans construire d'agent. L'interdit voisin de toute « séquence d'actions concrète » couvre ce cas, mais le critère gagnerait à le dire. Correctif : ajouter « et ne produisent aucune entrée ni trajectoire évasive concrète ».",
+   "gravite": "mineur"
+  },
+  {
+   "fichier": "conception-pole-scientifique-v1.md",
+   "ligne": 54,
+   "categorie": "contradiction sur la réécriture de soi",
+   "extrait_court": "restreinte par C-17 à trois paramètres : à lever dans le bac à sable",
+   "pourquoi": "Ce document propose de lever une restriction de sûreté sur la réécriture de soi. La passation (ligne 146) la présente comme « restreinte », sans mention de levée. Le noyau et ses gardes restent protégés (ligne 47), mais un lecteur d'équipe rouge peut y lire que le pôle est autorisé à réécrire largement son propre code d'affinage. Il faut au minimum préciser que la levée est une option de conception non décidée.",
+   "gravite": "mineur"
+  },
+  {
+   "fichier": "conception-pole-scientifique-v1.md",
+   "ligne": 55,
+   "categorie": "limites clés et réseau non alignées",
+   "extrait_court": "une instance avec Docker et des clés (chez session-depot)",
+   "pourquoi": "Le moteur de la littérature y est décrit avec des clés montées, sans la mention « écarté » qu'ajoute l'intégration (lignes 93 et 94, conteneur sans clés ni réseau). La ligne 43 admet aussi une exception réseau (« hors moissonnage borné du noyau »), alors que la passation (ligne 144) dit « aucun réseau » sans exception. Rien de tout cela ne donne d'accès au lecteur, qui ne dispose d'aucune clé. C'est en revanche un écart entre documents sur les limites du bac à sable.",
+   "gravite": "mineur"
+  }
+ ]
+}

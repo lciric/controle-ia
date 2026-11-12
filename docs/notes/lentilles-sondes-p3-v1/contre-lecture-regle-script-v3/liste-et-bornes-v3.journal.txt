@@ -1,0 +1,22 @@
+# contre-lecture v3 — liste de mots et bornes (Thu Oct 29 11:14:22 UTC 2026)
+# 1. outil de l'auteur rejoué (candidat puis final, avec le journal E6 de l'auteur) :
+#    candidat 316806097b116593… et exclusions 282a57088e944625… reproduits ; liste finale aac34d5cb52637fe… reproduite octet pour octet
+# 2. contrôle indépendant contre le vrai tokenizer.json (vocabulaire seul, sans le script v3) :
+tokenizer 79e3e522635f candidat 316806097b11 finale aac34d5cb526
+tromperie : 80 mots, 96 jetons ; finale sans jeton : [] ; E6 retirés 152, dont avec jeton : []
+enjeux : 142 mots, 189 jetons ; finale sans jeton : [] ; E6 retirés 25, dont avec jeton : []
+communs finale : []
+BILAN OK
+# 3. bornes de la règle (outils/bornes_regle_v3.py) :
+alpha par test = 0,05/32 = 1/640 = 0.0015625
+  n_iso = 13 : (1 + n)/10001 = 14/10001 = 0.0013999 ≤ alpha ? True
+  n_iso = 14 : (1 + n)/10001 = 15/10001 = 0.0014999 ≤ alpha ? True
+  n_iso = 15 : (1 + n)/10001 = 16/10001 = 0.0015998 ≤ alpha ? False
+plus grand n_iso : 14
+borne familiale 32 × 15/10001 = 480/10001 = 0.047995200479952004
+par lentille 16 × 15/10001 = 0.023997600239976002
+200 isotropes : plus petit p = 1/201 = 0.004975124378109453 > alpha ? True
+quantile 0,99 inverted_cdf de 200 valeurs : statistique d'ordre 198 (numpy : 198 ) ; n_pl max = 2 ; niveau de rang 3/201 = 1/67 = 0.01493
+équivalence S > quantile ⇔ n_pl ≤ 2 (20 000 cas entiers avec ex aequo) : True
+minima du test du signe (b + c de 6 à 16) : 6-0, 7-0, 8-0, 8-1, 9-1, 10-1, 10-2, 11-2, 12-2, 12-3, 13-3
+# 4. métadonnées réelles des sondes (noms, empreintes, couches ; aucune sortie de lentille) : sondes-figees.json sceau OK ; run = RUN_V3 ; principales = PRINCIPALES_V3 ; 16 sondes = SONDES_V3, 16 préfixes conformes ; 400 planchers, tous à la couche 15

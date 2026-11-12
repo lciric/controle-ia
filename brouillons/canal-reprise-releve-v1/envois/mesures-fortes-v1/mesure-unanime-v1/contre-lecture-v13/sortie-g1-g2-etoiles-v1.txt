@@ -1,0 +1,30 @@
+# Appariement des ** : total par texte (le littéral `**` de la ligne 422 compte pour 1, donc un total impair = tout apparié)
+v12 : total ** = 547
+v13 : total ** = 569
+lignes ajoutées 428-437 de la v13 : total ** = 20 (doit être pair)
+lignes modifiées 1,3,4,31,32,47,48,53,54,55,61,62 de la v13 : total ** = 32 ; mêmes lignes en v12 : 30
+
+# g1 — test de chaîne pur reproduisant la ligne 61 de la séquence (aucun fichier ouvert) :
+  case "$DONNEES" in /home/claude/canal-conv-audit-n04/donnees/*) echo "la répétition ne lit jamais les données réelles" >&2; exit 4;; esac
+/home/claude/canal-conv-audit-n04/donnees/20261019-230011-p3-reel/scores-p3.npz            → REFUSÉ (exit 4)
+../../../../../donnees/20261019-230011-p3-reel/scores-p3.npz                               → PASSE
+/tmp/lien-vers-les-donnees.npz                                                             → PASSE
+/home/claude/canal-conv-audit-n04//donnees/20261019-230011-p3-reel/scores-p3.npz           → PASSE
+synthetique-format-reel-repetition.npz                                                     → PASSE
+
+# g1 — la garde par empreinte proposée (comparaison de chaînes, EMPREINTE_REELLE de la ligne 33) :
+968414fc7ce7db935c2c4a390a13e2eceebe2fd722628cccb52caf27128004cf       → REFUSÉ
+447dc136dde083f68d1f9899344207bd5b8a6caf56c95b441d1c492dd72cb709       → PASSE
+Rappel : en REPETITION, l'argument 3 est passé au script comme --empreinte-attendue ; le script compare à l'empreinte du fichier lu (garde testée par --test-gardes) : lire le fichier réel exige donc de passer 968414fc… en argument 3, ce que la garde par empreinte attraperait quel que soit le chemin.
+
+# g1 — chemin enregistré au manifeste par les répétitions déposées :
+v11 : /tmp/claude-0/-home-claude/c5a45195-121d-5962-9d0a-4896cc046231/scratchpad/repetition-generale/synthetique-format-reel.npz
+v12 : /home/claude/canal-conv-audit-n04/brouillons/canal-reprise-releve-v1/envois/mesures-fortes-v1/mesure-unanime-v1/synthetique-format-reel-repetition.npz
+v13 : synthetique-format-reel-repetition.npz
+La séquence fait cd vers son propre dossier (ligne 25) : un chemin relatif y est résolu depuis le dossier du préenregistrement.
+
+# g2 — renvoi de ligne dans le commentaire du test :
+53:# (B1) commit ≠ manifeste → 8 (note pas encore écrite ; la garde isolée laisse passer, puis le commit est comparé, ligne 68)
+commandes-lecture-reelle-v11.sh:68:  [ "$($PY -I -B -c "impo
+commandes-lecture-reelle-v12.sh:71:  [ "$($PY -I -B -c "impo
+commandes-lecture-reelle-v13.sh:71:  [ "$($PY -I -B -c "impo

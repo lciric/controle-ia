@@ -1,0 +1,63 @@
+# Contre-lecture du texte v2 de l'épreuve « W2 gradué » (brouillon 1) — R2
+
+**Objet** : `docs/notes/ideation-organisme-v1/a1-v4-reprise-v9/epreuve-w2g-dose-v2-brouillon1.md`, sha256 `6330c2ba8a2cdf96a7763197c3ef24dca9481944425491c2916634ccd14ab07e` (relevée par `sha256sum`, égale à l'attendu).
+**Contre-lecteur** : sous-agent neuf (Fable 5.1, autre modèle que le rédacteur, N-052), qui n'a écrit ni ce texte, ni le v1, ni ses brouillons, ni le lecteur, ni le code v5, et qui n'a lu ni la table, ni la sortie, ni le manifeste, ni la console de la trace v1 (dossier `epreuve-w2g-dose-v1-rejeu-v1/`, fichier `epreuve-w2g-dose-v1-rejeu-v1-console.txt`) : leurs compagnons `.sha256` ont été lus et `sha256sum -c` passé sur eux, ce qui ne montre aucun contenu. Rien lu sous `donnees/bras-attaque*`, `donnees/mode-tenu-a-l-ecart*`, `docs/notes/bras-attaque/` ; aucune variable d'environnement affichée ; l'épreuve n'a pas été jouée ; aucun commit ; aucun fichier existant modifié (ce rapport est le seul fichier écrit). Rédigé le 8 novembre 2026 (UTC).
+
+## Verdict
+
+**Scellable après corrections mineures.** 0 bloquant, 0 majeur, 9 mineurs. Les cinq points demandés tiennent :
+
+1. Le `diff` avec le v1 scellé (`3415f70d…`, compagnon OK) ne montre que ce que l'arrêt impose. **Règle de choix (section 2), grille, 1 000 répétitions, 4 processus, gardes 1 à 6 (section 6), « ce qui n'est pas un arrêt », 6 bis, 6 ter, section 5, section 3, annexes B et C, préalables 1, 2, 4, 6, pièces gelées et leurs empreintes : mot pour mot.** Les écarts de la table « Ce qui change » avec le `diff` réel sont des omissions de forme (mineurs 4 et 5).
+2. La cause et le remède sont établis honnêtement par la mesure décrite, et je l'ai recoupée sans jouer l'épreuve : OpenBLAS 0.3.34 (`MAX_THREADS=64`, `NO_AFFINITY`) lié à numpy 2.5.3, `nproc` = 4 ; après `import numpy` et un produit de matrices, 4 fils dans le processus parent et 4 dans chaque enfant créé par `fork` sans variable, **1 et 1 avec les quatre variables à 1**. L'arithmétique du texte est juste (0,632 et 0,1005 s par répétition, rapport 6,3 ; 6 702,2 / 10 350 = 0,648 ; 11 000 × 0,1005 ≈ 1 106 ; 6 702,2 × 11 000 / 10 350 × 20,1 / 126,4 ≈ 1 133 ; marge 6 700 / 1 150 ≈ 5,8 ; 11 000 × 0,632 ≈ 6 950). Le « sans effet sur le calcul » est établi par l'égalité des deux tables, ce qui est une preuve à la précision imprimée de la table, non une identité bit à bit : le texte le dit un peu plus fort que la mesure (mineur 2) ; ce n'est pas porteur, l'entropie du v2 étant neuve et rien n'étant combiné.
+3. Les deux commandes sont exactes contre les deux scripts (lus en entier ; `--help` des deux rendu, code 0, dans une copie de travail préparée selon le préalable 3 : commit `8947bc80…`, deux patchs d'empreintes attendues, **sept lignes « ?? », dix empreintes égales**, copie supprimée). Les quatre variables précèdent `timeout 7000 nice -n 10 python3 -I -B …` dans une seule commande simple (continuation `\`), donc entrent dans l'environnement de `python3` ; `-I` n'ignore que les variables `PYTHON*` ; les processus de calcul sont créés par `multiprocessing.get_context("fork")` (script l. 219) et héritent la configuration (vérifié : enfants à 1 fil). Les lignes ajoutées à la console (`date -u`, `/proc/loadavg`, « fils de calcul : … », table imprimée par le script l. 240, « durée … » l. 241, éventuel « arrêt : … » sur l'erreur standard) ne commencent pas par « code » suivi d'un entier : `lire_code_console` (lecteur l. 168–175, après `strip`) ne compte que `echo "code $?"`. La commande de lecture correspond aux arguments du lecteur (`--texte`, `--console`, `--lecture` obligatoires, `--duree-max-attendue` obligatoire sans défaut, `--repetitions-attendues 1000`, `--processus-attendus 4`) ; `$LECTURE` est hors de `$DOSSIER` (sinon code 4) ; `reglages.duree_max_s` = 6 700,0 est comparé à `--duree-max-attendue 6700` (garde 3).
+4. La section 3 bis déclare correctement, dans les mots de R-1946, que la mère a vu les dernières lignes de la table de la trace arrêtée (doses 0,40 à 1,00) en relevant la fin de la console ; le mécanisme est confirmé par le script (la table est imprimée sur la sortie standard juste avant la ligne de durée et le code). La lecture d'arrêt (`37b4d34d…`, compagnon OK) ne porte ni table ni intervalle (vérifié : `motifs`, `pieces`, `attendu_section_4`, aucun compte de promotion ; les motifs « répétition 447 » et « 350 répétitions, `complete` = faux » sont ceux que le texte cite). Les conséquences tirées sont les bonnes : rien n'en est lu pour choisir, règle et grille inchangées (point 1), entropie neuve donc cartes distinctes, trace jamais complétée ni combinée, seuls durée et nombre de répétitions achevées servent à la durée attendue ; l'inférence « 10 350 » est valide (aucun motif `dose_absente`, un seul `dose_incomplete`).
+5. Un seul marqueur dans le fichier (`grep -o '<<[A-Z0-9_]*>>'` : l. 112, `<<ENTROPIE_EPREUVE>>`) ; sa suppression selon l'annexe A laisse zéro occurrence. Scellable après les corrections ci-dessous (dont la casse de « levée », mineur 6).
+
+Toutes les empreintes citées que j'ai pu contrôler sont égales : v1 et son compagnon ; six pièces de la trace v1 (section 3 bis) contre leurs compagnons et contre R-1946 ; les deux patchs ; les huit modules et les deux fichiers du lecteur ; le script `c691a43d…` et le lecteur `a9f462cb…` dans `code-v5/`. Les renvois de lignes au script vérifiés : `TAILLE_LOT` l. 56, `GRILLE_DOSES_W2G` l. 67–69 et 175, `--entropie-texte` l. 172 et 188–192, `--repetitions` l. 173 et 208–209, horloge l. 82, annulation des lots l. 227–228, `fork` l. 219, `choisir_dose` l. 139–148 ; `verifier_entropie` refuse bien toute entropie décisive < 2⁶⁴.
+
+## Constats
+
+### Bloquants
+
+Aucun.
+
+### Majeurs
+
+Aucun.
+
+### Mineurs (ligne du brouillon ; correction exacte)
+
+1. **l. 7, « sans autre calcul (R-1946) »** — R-1946 dit « charge 13,8 constante pour quatre processus → fils de calcul internes en surnombre » ; elle ne dit pas « sans autre calcul ». Correction : « …pour quatre processus sur quatre cœurs (R-1946 ; aucun autre calcul long lancé par la session pendant la fenêtre, préalable 5 du v1, la mère s'en est assurée) ».
+
+2. **l. 14 et l. 119, « le remède change la vitesse, pas le calcul » / « même calcul, à la vitesse près »** — l'égalité des tables prouve l'égalité des comptes et des valeurs imprimées (écart moyen arrondi à 6 décimales, médiane à 4, intervalles à 3, script l. 151–164) sur 200 répétitions à une dose, pas une identité bit à bit du calcul. Correction (l. 14) : « …(même empreinte, comparée sans les ouvrir) : mêmes comptes et mêmes valeurs imprimées sur 200 répétitions à la dose 0,5 ; aucune différence détectée ; le remède change la vitesse. » ; (l. 119) : « …(`sha256sum`, sans ouvrir les fichiers) : mêmes comptes et mêmes valeurs imprimées, à la vitesse près. » Ajouter à la fin du paragraphe « Processus » (l. 114) : « Le manifeste ne consigne pas le nombre de fils ; la console du rejeu le porte (ligne « fils de calcul »). »
+
+3. **l. 7 « sorties non lues » et l. 116 « sorties non ouvertes au-delà de la ligne de durée du script »** — le script imprime la table (deux lignes : en-tête, dose 0,50, puis la ligne de règle) sur la sortie standard **avant** la ligne de durée (l. 240 puis 241) : lire la durée à la console expose la table de l'essai. Déclaration à préciser (R4), selon le geste réel : « la table de l'essai (graine 11, dose 0,5, 200 répétitions), imprimée à la console avant la ligne de durée (script l. 240–241), a été vue [ou : n'a pas été vue, la durée ayant été relevée par `grep durée`] ; ses comptes sont exploratoires, d'une graine neuve, et ne servent à rien ». À porter aux deux endroits (l. 7 et l. 116).
+
+4. **l. 38, dernière ligne de la table « Ce qui change »** — « sorties et codes du script » n'est pas mot pour mot : le nom du dossier y change (`epreuve-w2g-dose-v1-rejeu-v2/`, l. 173). Correction : « …sorties et codes du script (à son nom de dossier près)… ».
+
+5. **l. 24–37, table « Ce qui change »** — deux changements réels du `diff` n'y figurent pas : (i) le paragraphe « Console » (l. 175–180) : noms `console-rejeu-v2.txt` et phrase ajoutée sur `lire_code_console` ; (ii) la fin du préalable 3 (l. 153) : mention de la répétition du rédacteur du v2 à 23:18 UTC dans la copie `…-mesure-fils-copie`. Correction : ajouter deux lignes à la table : « | section 4, « Console » | `console-rejeu-v1.txt` | `console-rejeu-v2.txt` ; phrase : les lignes ajoutées ne trompent pas `lire_code_console` | noms neufs ; trace du remède | » et « | section 4, préalable 3 (fin) | répétition du rédacteur du v1 | plus celle du rédacteur du v2 (23:18 UTC) | préparation refaite | ».
+
+6. **l. 112 et l. 249, casse de « Levée »** — le v1 lit « **Entropie** : levée retenue » ; la levée telle qu'écrite à l'annexe A produirait « **Entropie** : Levée retenue ». Correction : écrire « levée » (minuscule) à la l. 112 après le marqueur, et à l'annexe A « se lise « **Entropie** : levée retenue (R-1926 ; …) » ».
+
+7. **l. 20, renvois de lignes** — « lecture des arguments du script (l. 160–260) » : le script a 250 lignes ; `principal` va de la l. 167 à la l. 246. « `lire_code_console` du lecteur (l. 168–174) » : la fonction va de la l. 168 à la l. 175. Correction : « (l. 167–246) » et « (l. 168–175) ».
+
+8. **l. 155, préalable 5 (facultatif, R5 sur le remède)** — la console n'atteste que les variables posées, pas leur effet. Ajout proposé : « ; vérification de l'effet avant le lancement, dans la même fenêtre : `OMP_NUM_THREADS=1 OPENBLAS_NUM_THREADS=1 MKL_NUM_THREADS=1 NUMEXPR_NUM_THREADS=1 python3 -I -c "import numpy as np; a=np.ones((300,300)); a@a; print(open('/proc/self/status').read().split('Threads:')[1].split()[0])"` imprime « 1 » (sans les variables : « 4 ») ». Relevé par le contre-lecteur : 1 avec, 4 sans ; enfants `fork` : 1 et 4 respectivement.
+
+9. **l. 18 et l. 249, scellement** — la mère met à jour le statut, la rédaction et le marqueur au scellement ; les corrections ci-dessus s'y ajoutent sans nouvelle contre-lecture (comme au v1). Correction : écrire à l'annexe A « Au scellement, les seuls changements au brouillon 1 (`6330c2ba…`, R-1947) sont : le statut et la rédaction en tête, la levée du marqueur, et les corrections de la contre-lecture `contre-lecture-epreuve-w2g-dose-v2-v1.md` ; le brouillon 1 reste en place pour le `diff`. » Ceci rend auditable l'écart entre le texte contre-lu et le texte dont l'empreinte fait l'entropie.
+
+## Ce qui a été vérifié, et comment
+
+- Empreintes : `sha256sum` du brouillon (égal à l'attendu), du v1 et de son compagnon (`sha256sum -c` OK), des six pièces de la trace v1 par leurs compagnons seuls (OK, aucun contenu lu), des deux patchs, des dix fichiers de la copie de travail, du script et du lecteur dans `code-v5/`.
+- `diff epreuve-w2g-dose-v1-v1.md epreuve-w2g-dose-v2-brouillon1.md` : hunks aux lignes 1, 3, 5, 7, 9–26 (en-tête), 76a (3 bis), 81 (Entropie), 83 (Processus), 85 (Mesure, Durée attendue, Durée maximale), 103 et 113 (préalable 3), 115 (préalable 5), 120–128 (commande), 130 (nom du dossier), 134 et 137 (console), 147 et 149 (4 bis, noms et phrase), 186 et 188 (section 6, deux derniers paragraphes), 200 (section 7), 204 (annexe A), 237a (sources). Rien d'autre.
+- Lecture d'arrêt `epreuve-w2g-dose-v1-rejeu-v1-lecture-v1.json` en entier ; R-1946 et R-1947 de `registres/decisions.md`.
+- Script `epreuve_w2g_dose_v1.py` (250 l.) en entier ; lecteur `lecture_epreuve_w2g_dose_v1.py` : l. 1–230 et 430–548 (en-tête, outils, `lire_code_console`, `lambda_recalcule`, `garde_1`, `lire`, `principal`).
+- Environnement : `nproc` = 4 ; Python 3.13.18 ; numpy 2.5.3 ; `numpy.show_config()` : OpenBLAS 0.3.34.106.0, `MAX_THREADS=64`, `NO_AFFINITY`, détection `scipy-openblas`.
+- Fils : essai de 2 secondes (produit 300 × 300, deux enfants `fork`), hors de l'épreuve : « 4 / [4, 4] » sans variable, « 1 / [1, 1] » avec les quatre variables.
+- Copie de travail `…/scratchpad/contre-lecture-w2g-v2-copie` selon le préalable 3 : `git status --porcelain` = sept lignes « ?? » ; `--help` des deux scripts (code 0) ; copie supprimée.
+- Marqueur : `grep -n -o '<<[A-Z0-9_]*>>'` → une occurrence, l. 112.
+
+## Non vérifié (hors périmètre ou interdit)
+
+- Les chiffres de la trace v1 (table, sortie, manifeste, console) : non lus, par consigne.
+- Les durées mesurées par le rédacteur (126,4 s, 20,1 s, charges) : non rejouées ; seules leur cohérence interne et leur recoupement avec R-1946 (6 702,2 s, 10 350 répétitions déduites de la lecture d'arrêt) sont vérifiés.
+- Les essais du lecteur (43 passés) : non rejoués ; sortie et empreinte inchangées depuis le v1.

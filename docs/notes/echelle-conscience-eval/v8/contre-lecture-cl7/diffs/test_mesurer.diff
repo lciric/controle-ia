@@ -1,0 +1,40 @@
+--- echelle-v6/tests/test_mesurer_echelle_v6.py	2026-10-27 07:08:16.135782388 +0000
++++ echelle-v7/tests/test_mesurer_echelle_v7.py	2026-10-27 07:12:18.011671016 +0000
+@@ -1,8 +1,8 @@
+-"""Gardes de `mesurer_echelle_v6.py` (R5, CLX-10, CLX-13 ; CLY-13 et CLZ-11 : aucun paramètre hors des cartes) :
++"""Gardes de `mesurer_echelle_v7.py` (R5, CLX-10, CLX-13 ; CLY-13 et CLZ-11 : aucun paramètre hors des cartes) :
+ profondeurs, révision par dossier d'instantané,
+ `_commit_hash`, dernier jeton constant (contrôlé avant toute passe), étendue de float16 ; et une mesure complète sur
+ le modèle minuscule local (cas sain), si son dossier est donné par la variable MODELE_MINUSCULE.
+-Lancement : python -m pytest -q echelle-v6/tests
++Lancement : python -m pytest -q echelle-v7/tests
+ """
+ import importlib.util
+ import json
+@@ -15,7 +15,7 @@
+ import pytest
+ 
+ SCRIPTS = pathlib.Path(__file__).resolve().parent.parent / "scripts"
+-spec = importlib.util.spec_from_file_location("mes", SCRIPTS / "mesurer_echelle_v6.py")
++spec = importlib.util.spec_from_file_location("mes", SCRIPTS / "mesurer_echelle_v7.py")
+ MES = importlib.util.module_from_spec(spec)
+ spec.loader.exec_module(MES)
+ 
+@@ -95,7 +95,7 @@
+     subprocess.run([sys.executable, "-I", "-B", str(SCRIPTS / "construire_echelle_v2.py"), str(stim)], check=True,
+                    capture_output=True)
+     sortie = tmp_path / "mesure"
+-    code = subprocess.run([sys.executable, "-I", "-B", str(SCRIPTS / "mesurer_echelle_v6.py"), "--stimuli",
++    code = subprocess.run([sys.executable, "-I", "-B", str(SCRIPTS / "mesurer_echelle_v7.py"), "--stimuli",
+                            str(stim / "echelle-v2.json"), "--sortie", str(sortie), "--modele",
+                            os.environ["MODELE_MINUSCULE"], "--processeur-permis", "--type-nombre", "float32"],
+                           capture_output=True, text=True).returncode
+@@ -104,7 +104,7 @@
+     assert m["n_stimuli"] == 3072 and m["limite"] is None and m["couches"] == [1] and m["dernier_jeton_id"] is not None
+     assert set(m["sha256_sorties"]) == {"activations-L1.npy", "ids.json"}
+     # seconde exécution dans le même dossier : refus (R12)
+-    code2 = subprocess.run([sys.executable, "-I", "-B", str(SCRIPTS / "mesurer_echelle_v6.py"), "--stimuli",
++    code2 = subprocess.run([sys.executable, "-I", "-B", str(SCRIPTS / "mesurer_echelle_v7.py"), "--stimuli",
+                             str(stim / "echelle-v2.json"), "--sortie", str(sortie), "--modele",
+                             os.environ["MODELE_MINUSCULE"], "--processeur-permis"], capture_output=True).returncode
+     assert code2 != 0

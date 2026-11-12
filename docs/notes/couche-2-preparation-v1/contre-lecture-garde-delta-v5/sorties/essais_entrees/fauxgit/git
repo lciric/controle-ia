@@ -1,0 +1,8 @@
+#!/bin/sh
+case "$1 $2" in
+ "rev-parse --show-toplevel") [ -n "$TOP_ERR" ] && { echo "$TOP_ERR" >&2; exit ${TOP_CODE:-128}; }; echo /depot; exit 0;;
+ "rev-parse --verify") [ -n "$HEAD_ERR" ] && { echo "$HEAD_ERR" >&2; exit 128; }; printf '%s\n' "${HEAD_SORTIE:-0123456789abcdef0123456789abcdef01234567}"; exit 0;;
+ "ls-files --error-unmatch") exit ${LS_CODE:-0};;
+ "status --porcelain") [ -n "$ST_CODE" ] && { echo "fatal: status" >&2; exit $ST_CODE; }; printf '%s' "$ST_SORTIE"; exit 0;;
+esac
+exit 0

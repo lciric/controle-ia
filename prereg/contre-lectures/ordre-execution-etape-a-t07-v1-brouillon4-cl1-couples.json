@@ -1,0 +1,74 @@
+[
+ {
+  "n": 1,
+  "constat": "CLE-01",
+  "ancien": "and float(x.get(\"gpu_ram\",0))>=79000]",
+  "nouveau": "and float(x.get(\"gpu_ram\",0))>=79000 and 0<=float(x.get(\"storage_total_cost\",9))<=0.08 and 0<=float(x.get(\"inet_down_cost\",9))<=0.05 and 0<=float(x.get(\"inet_up_cost\",9))<=0.05]"
+ },
+ {
+  "n": 2,
+  "constat": "CLE-01",
+  "ancien": "Au plus **trois** recherches, espacées",
+  "nouveau": "Une offre n'est retenue que si son stockage est ≤ 0,08 USD de l'heure et son téléchargement, dans les deux sens, ≤ 0,05 USD par Go (bornes du devis, § 6 ; garde d'offre de la chaîne de T0.6, `src/controle_ia/t06/session_v2.py` l. 104-109) ; un champ absent écarte l'offre. Au plus **trois** recherches, espacées"
+ },
+ {
+  "n": 3,
+  "constat": "CLE-02",
+  "ancien": "la fille l'écrit au journal et le pose dans sa session",
+  "nouveau": "la fille l'écrit au journal, le pose dans sa session et **envoie aussitôt à la mère, avant la première surveillance, l'identifiant, `TC`, `HMAX` et `ECH` en date UTC** (sans ce message, la mère ne connaît ni l'instance ni l'échéance si la session de la fille tombe ; à défaut d'identifiant, l'instance se retrouve par son étiquette `t07-b-v1`, § 4.2)"
+ },
+ {
+  "n": 4,
+  "constat": "CLE-03",
+  "ancien": "la carte ne peut pas dépasser `20 − ANT0 − 1,30` tant que le conteneur vit.",
+  "nouveau": "si le `DELETE` de la minuterie aboutit (jamais répété avec la clé d'une instance réelle, O-3), la carte ne dépasse pas `20 − ANT0 − 1,30` tant que le conteneur vit ; s'il échoue cinq fois, ou après l'état « stopped » (disque ≤ 0,08 USD de l'heure, sans minuterie), le plafond ne tient que par la destruction faite par la fille (§ 4.7) ou, si sa session est tombée, par la mère au rappel de `ECH` (§ 4.4) : à `ANT0` = 0 et 1,30 USD de l'heure, la marge à `ECH` est de 3,2 USD (2,4 h de carte ou 40 h de disque) ; à `ANT0` = 4,5 USD, de 0,1 USD."
+ },
+ {
+  "n": 5,
+  "constat": "CLE-04",
+  "ancien": "n'a lieu que sur un écrit de la mère (même GO, devis inchangé), quand la cause est levée.",
+  "nouveau": "n'a lieu que sur un écrit de la mère (même GO, devis inchangé), quand la cause est levée, **et après que la mère a recopié à l'octet, dans le journal des ouvertures de `main`, toute ligne `OUVERTURE-T07` ou `REFUS-T07` poussée par l'instance arrêtée** (texte de T0.7, « Accord au code », point 19 : sans elle, la relance fixerait un autre instant de fermeture) ; `PER` de la relance se recalcule au § 4.1, et le module écarte de lui-même une ligne de jeu postérieure à cette première ouverture. **Instance perdue (hôte, minuterie) entre la ligne « CODE-T07 conforme » et la poussée « garde, repli »** : la ligne d'ouverture a pu être écrite sans être poussée ; nœud, aucune relance sans un écrit de la mère qui fixe l'instant de fermeture."
+ },
+ {
+  "n": 6,
+  "constat": "CLE-05",
+  "ancien": "grep -E '^[0-9TZ:-]+ T07 ' | tail -n 20",
+  "nouveau": "grep -E '^[0-9TZ:-]+ T07 |^T07 REFUS' | tail -n 20"
+ },
+ {
+  "n": 7,
+  "constat": "CLE-05",
+  "ancien": "Une ligne `ARRET` : § 7. Une ligne `MINUTERIE` : l'échéance est atteinte (§ 4.7).",
+  "nouveau": "Une ligne `ARRET` : § 7. Une ligne `MINUTERIE` : l'échéance est atteinte (§ 4.7). Une ligne `T07 REFUS` (sans date : le script est sorti avant sa minuterie et sans demander l'état « stopped », l. 27, 34 et 42), ou aucune ligne `T07` trente minutes après l'état « running » : destruction par l'identifiant (§ 4.7), compte rendu, nœud."
+ },
+ {
+  "n": 8,
+  "constat": "CLE-06",
+  "ancien": "vastai --version; date -u +%FT%TZ",
+  "nouveau": "vastai --version; date -u +%FT%TZ; for v in HF_TOKEN CONTROLE_IA_GITHUB_TOKEN; do [ -n \"${!v:-}\" ] && echo \"$v présent\" || echo \"$v ABSENT : aucune création\"; done"
+ },
+ {
+  "n": 9,
+  "constat": "CLE-07",
+  "ancien": "`VERDICT-P3BIS` relevés ;",
+  "nouveau": "`VERDICT-P3BIS` relevés (comptes seulement ; le journal de P3-bis `registres/ouvertures-p3bis-v1.md` n'est ni affiché ni lu par la fille, § 2.6 : seule sa présence se relève, par `[ -f \"$M/registres/ouvertures-p3bis-v1.md\" ] && echo présent || echo absent`) ;"
+ },
+ {
+  "n": 10,
+  "constat": "CLE-08",
+  "ancien": "interpréteur de la mesure 3.13 contre 3.11 sur l'instance (§ 13, S-2)",
+  "nouveau": "interpréteur : ligne **retrouvée sous Python 3.11.17** par la contre-lecture R2 de cet ordre (`prereg/contre-lectures/ordre-execution-etape-a-t07-v1-brouillon4-cl1.md`, § 3 : même ligne, mêmes deux sauts, mêmes quatre échecs attendus, aucun avertissement ; `torch` 2.14.1 en construction processeur) ; restent la construction carte de `torch` et le git de l'image (§ 13, S-1, S-2)"
+ },
+ {
+  "n": 11,
+  "constat": "CLE-10",
+  "ancien": "essais joués **après** les paquets (≤ 1 h, attendu 0,15 h payées en cas d'écart)",
+  "nouveau": "essais joués **après** les paquets : un écart coûte le démarrage, le clone, les paquets et les essais, soit ≈ 0,6 h attendue et 1,85 h au pire (§ 6), ≤ 2,4 USD de carte, plus le téléchargement des paquets"
+ },
+ {
+  "n": 12,
+  "constat": "CLE-11",
+  "ancien": "(trois lignes : `SCELLEMENT-JEUX-T07-JD`, `SCELLEMENT-JEUX-T07-JA`, `SCELLEMENT-T08-BASE-A`)",
+  "nouveau": "(trois lignes : `SCELLEMENT-JEUX-T07-JD`, `SCELLEMENT-JEUX-T07-JA`, `SCELLEMENT-T08-BASE-A` ; une quatrième, `GEL-T08`, à `709d16fc` : son fichier est recopié sans effet, rejoué par la contre-lecture R2)"
+ }
+]

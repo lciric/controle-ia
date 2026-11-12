@@ -1,0 +1,153 @@
+{
+ "script": "comparaison_jlens_logitlens_sondes_p3_v2.py",
+ "script_sha256": "c02d989f7cabf5f116b08eb9fb05d5476208ff1a96ba9093d27e698e121c345c",
+ "version": "v2",
+ "interpreteur": "/home/user/controle-ia-travail/.venv/bin/python",
+ "commande": [
+  "/home/user/controle-ia-travail/.venv/bin/python",
+  "/home/user/controle-ia-travail/docs/notes/lentilles-sondes-p3-v1/script-v2/comparaison-jlens-logitlens-sondes-p3-v2/comparaison_jlens_logitlens_sondes_p3_v2.py",
+  "comparer",
+  "--sondes-json",
+  "/home/user/controle-ia-travail/diag/20261019-230011-p3-reel/sondes-figees.json",
+  "--sondes-npz",
+  "/tmp/claude-0/-home-user-controle-ia-travail/75a1275d-b838-5015-909e-b2bfadb395f9/scratchpad/lentilles-p3/entrees/sondes-figees-legeres.npz",
+  "--lentille",
+  "/tmp/claude-0/-home-user-controle-ia-travail/75a1275d-b838-5015-909e-b2bfadb395f9/scratchpad/lentilles-p3/entrees/lentille-Llama-3.1-8B-Instruct_jacobian_lens.pt",
+  "--lentille-config",
+  "/tmp/claude-0/-home-user-controle-ia-travail/75a1275d-b838-5015-909e-b2bfadb395f9/scratchpad/lentilles-p3/entrees/lentille-config.yaml",
+  "--desembedding",
+  "/tmp/claude-0/-home-user-controle-ia-travail/75a1275d-b838-5015-909e-b2bfadb395f9/scratchpad/lentilles-p3/entrees/model-00004-of-00004.safetensors:lm_head.weight",
+  "--norme-finale",
+  "/tmp/claude-0/-home-user-controle-ia-travail/75a1275d-b838-5015-909e-b2bfadb395f9/scratchpad/lentilles-p3/entrees/model-00004-of-00004.safetensors:model.norm.weight",
+  "--vocabulaire",
+  "/tmp/claude-0/-home-user-controle-ia-travail/75a1275d-b838-5015-909e-b2bfadb395f9/scratchpad/lentilles-p3/entrees/tokenizer.json",
+  "--concepts",
+  "/home/user/controle-ia-travail/docs/notes/lentilles-sondes-p3-v1/script-v2/comparaison-jlens-logitlens-sondes-p3-v2/concepts-sondes-p3-v2.json",
+  "--empreintes-attendues",
+  "/tmp/claude-0/-home-user-controle-ia-travail/75a1275d-b838-5015-909e-b2bfadb395f9/scratchpad/lentilles-p3/entrees/empreintes-entrees-v2.txt",
+  "--revision-modele",
+  "0e9e39f249a16976918f6564b8830bc894c89659",
+  "--sortie",
+  "/tmp/claude-0/-home-user-controle-ia-travail/75a1275d-b838-5015-909e-b2bfadb395f9/scratchpad/lentilles-p3/sortie-reelle-v2/sortie-jlens-sondes-p3-v2.json"
+ ],
+ "drapeaux_python": {
+  "isolated": 1,
+  "dont_write_bytecode": 1
+ },
+ "cree_le_utc": "2026-10-29T09:28:12Z",
+ "duree_s": 95.14,
+ "versions": {
+  "python": "3.13.17",
+  "numpy": "2.4.6",
+  "torch": "2.14.1+cu130",
+  "plateforme": "Linux-6.18.44-fc-v185-x86_64-with-glibc2.39"
+ },
+ "depot": {
+  "commit": "1737dcbc4e221ecb5e1ae88249af90f1a3b2fad4",
+  "source": "git rev-parse HEAD dans /home/user/controle-ia-travail/docs/notes/lentilles-sondes-p3-v1/script-v2/comparaison-jlens-logitlens-sondes-p3-v2",
+  "etat_du_script": "propre (suivi et inchangé depuis le commit)"
+ },
+ "revision_modele": "0e9e39f249a16976918f6564b8830bc894c89659",
+ "lentille_config": {
+  "chemin": "/tmp/claude-0/-home-user-controle-ia-travail/75a1275d-b838-5015-909e-b2bfadb395f9/scratchpad/lentilles-p3/entrees/lentille-config.yaml",
+  "sha256": "425eecd59f37b9f23a184032a4c36d9a174f8ab446d695b1b90ca7ba0d70f322",
+  "cles": {
+   "np_model_id": "llama3.1-8b-it",
+   "hf_model_name": "meta-llama/Llama-3.1-8B-Instruct",
+   "dataset": null,
+   "fit": null,
+   "gpus": null,
+   "environment": null,
+   "results": null,
+   "command": "/root/neuronpedia/utils/neuronpedia-utils/neuronpedia_utils/jlens/.venv/bin/python3 /root/neuronpedia/utils/neuronpedia-utils/neuronpedia_utils/jlens/fit_lens.py meta-llama/Llama-3.1-8B-Instruct --out_dir /root/neuronpedia/utils/neuronpedia-utils/neuronpedia_utils/exports/llama3.1-8b-it/jlens/Salesforce-wikitext --dataset Salesforce/wikitext --dataset_config wikitext-103-raw-v1 --dataset_split train --text_field text --max_chars 2000 --n_prompts 1000 --dim_batch 128 --max_seq_len 128 --dtype bfloat16 --device_map cuda --min_prompts 100 --stop_window 10 --levels 1e-2,5e-3,1e-3 --hf_cache_dir /tmp/jlens-hf-cache --stop_at_delta 0.002",
+   "attribution": "Jacobian lens ('jlens') by Anthropic PBC — companion code for the 'Verbalizable Workspace' paper (https://github.com/anthropics/jlens), Apache-2.0. Fit via Neuronpedia run-all-fit-lens.py."
+  },
+  "ajustee_sur": "inconnu"
+ },
+ "empreintes_attendues": {
+  "fichier": "empreintes-entrees-v2.txt",
+  "entrees": {
+   "sondes_json": "contrôlée par sceau compagnon",
+   "sondes_npz": "contrôlée par sondes_legeres_sha256 de sondes-figees.json",
+   "concepts": "contrôlée par sceau compagnon",
+   "lentille": "conforme",
+   "lentille_config": "conforme",
+   "desembedding_0": "conforme",
+   "norme_finale_0": "conforme",
+   "vocabulaire": "conforme"
+  }
+ },
+ "regle_primaire_empreinte_enonce": "c1b21cd6f67bb4b46f9d4514abd1d00757226b28d35604ad87d780f30e250339",
+ "entrees": {
+  "sondes_json": {
+   "chemin": "/home/user/controle-ia-travail/diag/20261019-230011-p3-reel/sondes-figees.json",
+   "sha256": "fb41812732711c1a2a152fa776c46be5a4c50a72ccdc8fd9b7b7f9edcc37d208",
+   "octets": 161668
+  },
+  "sondes_npz": {
+   "chemin": "/tmp/claude-0/-home-user-controle-ia-travail/75a1275d-b838-5015-909e-b2bfadb395f9/scratchpad/lentilles-p3/entrees/sondes-figees-legeres.npz",
+   "sha256": "701f73bd3a8ef30f46b304a6d5caa21444f0e1daf0829d04046e4024aa4e6e60",
+   "octets": 17682551
+  },
+  "concepts": {
+   "chemin": "/home/user/controle-ia-travail/docs/notes/lentilles-sondes-p3-v1/script-v2/comparaison-jlens-logitlens-sondes-p3-v2/concepts-sondes-p3-v2.json",
+   "sha256": "5874ea55b1774233c4e8252f07ca6869a5625aaf8b0c7b3f0b1d242a1aff53e7",
+   "octets": 1531
+  },
+  "lentille": {
+   "chemin": "/tmp/claude-0/-home-user-controle-ia-travail/75a1275d-b838-5015-909e-b2bfadb395f9/scratchpad/lentilles-p3/entrees/lentille-Llama-3.1-8B-Instruct_jacobian_lens.pt",
+   "sha256": "d5300a1575c0b5ad6e01b098c75adb072f3a6c246f184ce2fb35a3550fc8c68b",
+   "octets": 1040197778
+  },
+  "lentille_config": {
+   "chemin": "/tmp/claude-0/-home-user-controle-ia-travail/75a1275d-b838-5015-909e-b2bfadb395f9/scratchpad/lentilles-p3/entrees/lentille-config.yaml",
+   "sha256": "425eecd59f37b9f23a184032a4c36d9a174f8ab446d695b1b90ca7ba0d70f322",
+   "octets": 2871
+  },
+  "desembedding_0": {
+   "chemin": "/tmp/claude-0/-home-user-controle-ia-travail/75a1275d-b838-5015-909e-b2bfadb395f9/scratchpad/lentilles-p3/entrees/model-00004-of-00004.safetensors",
+   "sha256": "92ecfe1a2414458b4821ac8c13cf8cb70aed66b5eea8dc5ad9eeb4ff309d6d7b",
+   "octets": 1168138808
+  },
+  "norme_finale_0": {
+   "chemin": "/tmp/claude-0/-home-user-controle-ia-travail/75a1275d-b838-5015-909e-b2bfadb395f9/scratchpad/lentilles-p3/entrees/model-00004-of-00004.safetensors",
+   "sha256": "92ecfe1a2414458b4821ac8c13cf8cb70aed66b5eea8dc5ad9eeb4ff309d6d7b",
+   "octets": 1168138808
+  },
+  "vocabulaire": {
+   "chemin": "/tmp/claude-0/-home-user-controle-ia-travail/75a1275d-b838-5015-909e-b2bfadb395f9/scratchpad/lentilles-p3/entrees/tokenizer.json",
+   "sha256": "79e3e522635f3171300913bb421464a87de6222182a0570b9b2ccba2a964b2b4",
+   "octets": 9085657
+  },
+  "empreintes_attendues": {
+   "chemin": "/tmp/claude-0/-home-user-controle-ia-travail/75a1275d-b838-5015-909e-b2bfadb395f9/scratchpad/lentilles-p3/entrees/empreintes-entrees-v2.txt",
+   "sha256": "cc244631f52a50cb60a6ace42ce073f7feedbd707c90b675db1d7e5d75f78259",
+   "octets": 829
+  }
+ },
+ "graines": {
+  "mode": "numpy.random.SeedSequence(entropy=20261029, spawn_key=(sha256(etiquette)[:8],))",
+  "aleatoire/c7": {
+   "entropie": "20261029",
+   "spawn_key": [
+    "16750247359808913826"
+   ]
+  },
+  "aleatoire/c15": {
+   "entropie": "20261029",
+   "spawn_key": [
+    "18279287174522615872"
+   ]
+  },
+  "aleatoire/c23": {
+   "entropie": "20261029",
+   "spawn_key": [
+    "3657987203770059414"
+   ]
+  }
+ },
+ "sortie": {
+  "chemin": "sortie-jlens-sondes-p3-v2.json",
+  "sha256": "51056ca42fd796c6d77c7ae5dde8ecfefe98a4ba631cb29ef27a69c889401038"
+ }
+}

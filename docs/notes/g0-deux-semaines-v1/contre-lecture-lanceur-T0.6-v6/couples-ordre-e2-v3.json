@@ -1,0 +1,10 @@
+[
+ {
+  "ancien": "- **Clés, par leur nom seulement** : `VAST_API_KEY`, `CONTROLE_IA_GITHUB_TOKEN`, `HF_TOKEN`. `HF_TOKEN` ne sert pas au run\n  jouet, mais `surveillance` refuse de tourner si `HF_TOKEN` ou `CONTROLE_IA_GITHUB_TOKEN` a moins de 8 caractères (masquage,\n  `scripts/lancer_t06_v6.sh`, sous-commande `surveillance`) : sans lui, l'instance tournerait sans surveillance. Chaque appel\n  de `scripts/lancer_t06_v6.sh` ou de `vastai` passe sous `env -i PATH=\"$PATH\" HOME=\"$HOME\" VAST_API_KEY=\"$VAST_API_KEY\"\n  CONTROLE_IA_GITHUB_TOKEN=\"$CONTROLE_IA_GITHUB_TOKEN\" HF_TOKEN=\"$HF_TOKEN\" …` : les valeurs ne sont jamais lues par toi,\n  seulement transmises. Préalable 3 : vérifie aussi la présence de `HF_TOKEN` (sans affichage).",
+  "nouveau": "- **Clés, par leur nom seulement** : `VAST_API_KEY`, `CONTROLE_IA_GITHUB_TOKEN`. `HF_TOKEN` n'est **pas** transmis : le run est\n  jouet, et depuis la v5 (C-V5-2) `surveillance` et `creation` n'exigent `HF_TOKEN` qu'en mode réel ; la commande de création\n  porte `-e HF_TOKEN=$HF_TOKEN`, qui reste vide (aucune clé inutile sur une instance de jouet). Chaque appel\n  de `scripts/lancer_t06_v6.sh` ou de `vastai` passe sous `env -i PATH=\"$PATH\" HOME=\"$HOME\" VAST_API_KEY=\"$VAST_API_KEY\"\n  CONTROLE_IA_GITHUB_TOKEN=\"$CONTROLE_IA_GITHUB_TOKEN\" …` : les valeurs ne sont jamais lues par toi, seulement transmises.\n  Si `surveillance` refuse avec « HF_TOKEN absent ou trop court », le mode lu n'est pas « jouet » : l'instance est sans\n  surveillance, détruis-la par son identifiant (`timeout -k 5 120 \"$VAST\" destroy instance <ID>`), puis message à la mère."
+ },
+ {
+  "ancien": "`inet_down_cost` (USD), `rentable` (booléen) ; types numériques pour les sept nombres |",
+  "nouveau": "`inet_down_cost` (USD), `rentable` (booléen) ; types numériques pour les sept nombres ; **plus la clé de fiabilité** : nom exact (`reliability` ou autre, relevé sans le deviner), type, valeur de chaque offre de rang 1 à 3, toutes ≥ 0,98 attendues (le lanceur v6 ne garde la fiabilité que par le filtre envoyé à Vast ; la garde de code viendra avec le nom réel de la clé) |"
+ }
+]

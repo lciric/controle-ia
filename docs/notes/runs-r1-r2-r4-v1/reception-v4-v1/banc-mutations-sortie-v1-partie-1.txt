@@ -1,0 +1,26 @@
+Banc de mutations de verifier_reception_r1_v4_v1.py (sha256 3ea2352d57c7283420591fcbb8f6975aa4533fc2ee49257b1bb8703a2f4e93a4) ; essais test_verifier_reception_r1_v4_v1.py (sha256 23b7241edce90e37f056491159785d7f050a7e538bd1cd99f40bc5547fbe076d) ; début 2026-11-05T00:28:51Z ; python 3.13.18
+témoin (script non muté) : code 0 ; « 118 passed in 40.47s » ; 46.4 s ; conforme
+mutation (garde entière, ou garde#rang pour une seule occurrence) | occurrences mutées | issue | premier essai en échec | durée
+fiche | 6 | tuée | test_fiche_non_scellee | 2.0 s
+fiche#1 | 1 (rang 1) | tuée | test_fiche_non_scellee | 1.8 s
+fiche#2 | 1 (rang 2) | tuée | test_fiche_sceau_faux | 2.3 s
+fiche#3 | 1 (rang 3) | tuée | test_fiche_empreinte_annoncee_differente | 2.6 s
+fiche#4 | 1 (rang 4) | tuée | test_fiche_format_autre | 57.6 s
+fiche#5 | 1 (rang 5) | tuée | test_fiche_marquee_reelle_en_mode_jouet | 3.1 s
+fiche#6 | 1 (rang 6) | tuée | test_fiche_jouet_en_mode_reel | 3.9 s
+runs | 1 | tuée | test_nom_de_run_hors_forme | 5.6 s
+textes | 7 | tuée | test_piece_scellee_alteree | 6.2 s
+textes#1 | 1 (rang 1) | tuée | test_commit_du_temoin_absent | 45.2 s
+textes#2 | 1 (rang 2) | tuée | test_scellement_non_parent_du_temoin | 48.6 s
+textes#3 | 1 (rang 3) | tuée | test_versement_du_temoin_porte_autre_chose | 7.5 s
+textes#4 | 1 (rang 4) | tuée | test_piece_alteree_compagnon_complice | 54.2 s
+textes#5 | 1 (rang 5) | tuée | test_compagnon_de_piece_faux | 5.0 s
+textes#6 | 1 (rang 6) | tuée | test_configuration_canonique_autre | 7.0 s
+textes#7 | 1 (rang 7) | tuée | test_table_v4_au_commit_du_temoin | 7.2 s
+versement | 5 | tuée | test_mode_reel_textes_scelles_reels | 3.9 s
+versement#1 | 1 (rang 1) | tuée | test_mode_reel_textes_scelles_reels | 3.8 s
+versement#2 | 1 (rang 2) | tuée | test_versement_commit_a_deux_parents_meme_arbre | 47.4 s
+versement#3 | 1 (rang 3) | tuée | test_versement_modifie_un_chemin_attendu | 46.8 s
+versement#4 | 1 (rang 4) | tuée | test_versement_en_trop | 8.7 s
+versement#5 | 1 (rang 5) | tuée | test_course_arretee_versement_hors_des_runs | 48.4 s
+bilan : 22 mutants (4 motifs : fiche,runs,textes,versement, entiers et par occurrence), tous tués ; témoin conforme ; fin 2026-11-05T00:33:27Z → CONFORME

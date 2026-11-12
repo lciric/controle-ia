@@ -1,0 +1,22 @@
+[
+ {
+  "id": "O1 (bloquant, constat neuf E3-6) préalable : point E3-6 d'E3 bis réglé avant toute création",
+  "ancien": "6. Dossier de travail neuf (R12) : `W=$(mktemp -d)`.",
+  "nouveau": "6. Dossier de travail neuf (R12) : `W=$(mktemp -d)`.\n7. **Point E3-6 d'E3 bis réglé avant toute création** (garde d'équivalence au 99ᵉ centile éprouvée sur un lot à dose 1 ; non conforme au compte rendu final d'E3 bis, R-1769) : la mère remplit `<<REGLEMENT_E3_6>>` par le numéro de la ligne de `registres/decisions.md` de `main` qui l'établit (dans le registre du clone de `main`, `grep -c '^| <numéro> |'` = 1). Cette ligne donne, pour chacun des six états d'E3 bis (S100, S25, S50, S75, T100, dose0), lus sur la branche `essai/t06-e3bis-v1` (`a5c0e298`) dans `diag/<run>/episodes-t06.json` → `fiches[k].equivalence` regroupées par `phase` (l'extracteur v1 lit `etats[<état>].equivalence`, clé que la chaîne n'écrit jamais : son « absent » ne dit rien de la garde), le nombre d'actions contrôlées, le plus grand écart au 99ᵉ centile et la tolérance (0,2), et la lecture du contrôle négatif (`controles_negatifs[<état>]`) ; si aucune action n'a été contrôlée (tirage de 5 % sur les 16 paires (tâche, pas) d'E3 bis, les mêmes pour toutes les conditions : probabilité ≈ 0,44), elle porte la décision de Lazar (la course est le premier exercice de cette garde à dose 1 sur une carte, ou épreuve neuve). Marqueur vide ou ligne introuvable : arrêt et message."
+ },
+ {
+  "id": "O2 (bloquant, avec O1) marqueur neuf à remplir par la mère",
+  "ancien": "remplit les marqueurs `<<COMMIT_COURSE>>`, `<<CONFIG_COURSE>>` et `<<EMPREINTE_PREREG_T06>>`)",
+  "nouveau": "remplit les marqueurs `<<COMMIT_COURSE>>`, `<<CONFIG_COURSE>>`, `<<EMPREINTE_PREREG_T06>>` et `<<REGLEMENT_E3_6>>`)"
+ },
+ {
+  "id": "O3 (moyen, constat neuf E3-3) attendus de la distillation : exemples et époques par adaptateur",
+  "ancien": "« tests : N passed » ne doit pas manquer plus de **90 minutes** après `MATERIEL` (sinon attendu manquant) ;",
+  "nouveau": "« tests : N passed » ne doit pas manquer plus de **90 minutes** après `MATERIEL` (sinon attendu manquant) ; **distillation** (point E3-3 d'E3 bis : le journal de distillation porte une entrée par époque plus l'époque 0, et non une entrée par pas) : `PROGRES … etape=donnees-distillation saboteur_exemples=160 temoin_exemples=160` (160 transcriptions par adaptateur au plan (b), lot 1, trois époques : 480 pas d'AdamW chacun ; un nombre moindre est un attendu manquant isolé, à relever sans arrêt : pas effectifs = 3 × exemples), puis, pour chaque adaptateur, `etape=distillation adaptateur=<a> epoque=1`, `epoque=2`, `epoque=3` et `etape=adaptateur adaptateur=<a>` ; relève leurs heures (secondes par pas ≈ durée de l'époque 1 à l'époque 3 du même adaptateur divisée par 320, évaluation de la perte comprise ; `distillation.duree_s` compte depuis le début du run, chargement et génération compris, et ne sert pas à ce calcul) ;"
+ },
+ {
+  "id": "O4 (moyen) commit de la course : ce que vérifie `controles` du lanceur v12",
+  "ancien": "`COMMIT=<<COMMIT_COURSE>>` (ancêtre de `refs/remotes/origin/prep/t06-course-v12` ;",
+  "nouveau": "`COMMIT=<<COMMIT_COURSE>>` (le commit de scellement du préenregistrement de T0.6 : `controles` le retrouve lui-même, comme le dernier commit de l'histoire extraite qui ajoute `prereg/T0.6-organismes-v0-v1.md.sha256`, exige qu'il soit ancêtre de `origin/main` et l'imprime en `S=` ; la mère le choisit aussi ancêtre de `refs/remotes/origin/prep/t06-course-v12` ; `T06_BRANCHE_CODE` est sans effet sur `controles`, il ne sert qu'à `controles-epreuve` ;"
+ }
+]

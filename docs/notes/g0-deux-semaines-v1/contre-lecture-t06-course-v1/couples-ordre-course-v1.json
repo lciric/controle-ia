@@ -1,0 +1,30 @@
+[
+ {
+  "ancien": "(a) `env -i … bash scripts/lancer_t06_v10.sh controles \"$W/veille-c\"` (code 0 exigé) ; (b) pour chaque carte, dans un dossier neuf de contrôles (`$W/veille-course`, `$W/veille-relance`), `env -i … bash scripts/lancer_t06_v10.sh creation auto course 0 \"$W/veille-course\"`",
+  "nouveau": "(a) `env -i … bash scripts/lancer_t06_v10.sh controles \"$W/veille-course\"` puis `env -i … bash scripts/lancer_t06_v10.sh controles \"$W/veille-relance\"` (code 0 exigé pour chacun ; `creation` lit le `lancement.txt` que `controles` écrit dans **le même** dossier, et `controles` refuse un dossier qui existe) ; (b) pour chaque carte, dans son dossier de contrôles, `env -i … bash scripts/lancer_t06_v10.sh creation auto course 0 \"$W/veille-course\"`"
+ },
+ {
+  "ancien": "L'instance est **arrêtée** (état « stopped »), disque gardé jusqu'au verdict, 72 h au plus ; **ne la détruis pas** avant l'accord de la mère (la destruction se fait par l'identifiant, après le verdict scellé).",
+  "nouveau": "L'instance est **arrêtée** (état « stopped »), disque gardé jusqu'au verdict, 72 h au plus ; **ne la détruis pas** avant l'accord de la mère (la destruction se fait par l'identifiant, après le verdict scellé). La `surveillance` est terminée : le stockage de l'instance arrêtée n'est plus compté par la garde ; relève-le (prix du stockage × heures depuis l'arrêt) à chaque message à la mère, et compte-le dans le cumul de 200 USD. **72 h après l'arrêt**, sans message de la mère, vérifie que la branche porte tous les résultats (noms et tailles), puis détruis l'instance par son identifiant et écris-le."
+ },
+ {
+  "ancien": "si elle répond (quel que soit son état), détruis-la par l'identifiant seulement si la mère l'a demandé, sinon message ;",
+  "nouveau": "si elle répond (quel que soit son état), détruis-la par l'identifiant seulement si la mère l'a demandé, sinon message ; tant qu'elle répond et que la mère n'a pas tranché, elle est **sans surveillance** : relance `surveillance` sur le même dossier si elle tourne, ou relève toi-même toutes les 10 minutes son état et la dépense (prix × heures depuis la création) contre le plafond de 200 USD ;"
+ },
+ {
+  "ancien": "- **code 10** : fenêtre épuisée (3 heures, aucune A100 conforme) : `env -i … bash scripts/lancer_t06_v10.sh creation auto relance 0 \"$W/course\"` sur le **même** dossier ;",
+  "nouveau": "- **code 10** : fenêtre épuisée (aucune A100 conforme aux 12 recherches) : la 12ᵉ recherche tombe à `T0` + 2 h 45 et le script sort aussitôt ; **attends que `date -u` atteigne `T0` + 3 h** (GO-2026-11-07-02 : trois heures pleines) et relève cette heure, puis `env -i … bash scripts/lancer_t06_v10.sh creation auto relance 0 \"$W/course\"` sur le **même** dossier (le lanceur n'exige aucune trace de fenêtre épuisée : seule cette ligne garde le repli) ;"
+ },
+ {
+  "ancien": "`ECHEANCE_UTC_S` (4ᵉ argument) : omis (le lanceur prend la fin du GO).",
+  "nouveau": "`ECHEANCE_UTC_S` (4ᵉ argument) : omis (le lanceur prend la fin du GO). `FENETRE_N` et `FENETRE_PAS_S` ne sont **jamais** passés dans `env -i …` (valeurs du script : 12 et 900 s) ; `fenetre.txt` doit montrer 12 recherches espacées d'environ 900 s, sinon arrêt et message."
+ },
+ {
+  "ancien": "(temps de carte attendu ≈ 6 à 10 minutes, ≈ 20 au devis, 2 400 s au plus)",
+  "nouveau": "(temps de carte attendu ≈ 6 à 10 minutes, ≈ 20 au devis ; module borné à 2 400 s, mais l'amorce ajoute au pire le verrou, 1 500 s, et la poussée, 3 × 600 + 75 s : **borne de l'annexe ≈ 5 800 s, ≈ 2 USD sur A100, ≈ 7,6 USD sur H200 NVL**, dans les 200 USD, comptés au cumul)"
+ },
+ {
+  "ancien": "**La sortie du bras B est scellée par la mère avant toute lecture.**",
+  "nouveau": "**La sortie du bras B est scellée par la mère avant toute lecture.** `traces/bras-b-…/bras-b.out` porte l'issue du bras B (`{\"issue\": …}`) : **ne l'ouvre pas**, ni `bras-b.err` (noms et tailles seulement). Aux contrôles de la veille et du jour, vérifie que `docs/notes/g0-deux-semaines-v1/config-bras-b-t06-v1.json.sha256` existe au commit `<COMMIT>` (`git cat-file -e <COMMIT>:…json.sha256`) : sans lui, le bras B s'arrête à coup sûr en code 1 ; message à la mère avant toute création. Le marqueur `t06-fin-normale` est posé **avant** le bras B : si `bras B : début` est au journal et qu'aucune ligne `fin, code` ne suit après 100 minutes, ou si l'instance redémarre pendant le bras B, **arrête-la par son identifiant** (`PUT stopped`, pas de destruction) et message."
+ }
+]

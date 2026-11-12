@@ -1,0 +1,69 @@
+1c1
+< # Préenregistrement — mesure unanime du tour « mesures fortes » : fausses alertes par épisode honnête entier de l'agrégateur séquentiel, sans puis avec corrélation injectée (v12, après onze contre-lectures)
+---
+> # Préenregistrement — mesure unanime du tour « mesures fortes » : fausses alertes par épisode honnête entier de l'agrégateur séquentiel, sans puis avec corrélation injectée (v13, après douze contre-lectures)
+3,4c3,4
+< - Auteur : lignée conv-audit, instance du 27 octobre 2026 (servie par **Opus 4.8** pour cette v12 et la v11 ; v10 par Opus 5.5, v2 à v9
+<   par Fable 5.1), après le relevé `date -u` de 04:35:55 UTC le 28 octobre. **Remplace la v11** (`b1c1dd69413c824551500cb46310c15c4a809f5b05559b45e407a34d2157791c`, gardée, R12). Pour mémoire, la v11 remplaçait la v10 (`785a33fae9d835ee7529a44d76629dec7ce7bfd0544a5f7dc4b2a46646d1c3c2`, gardée, R12), et la v10 la v9 (`9206956b25ecd64c4bfb0eecd484eaa5605a4680940a34070caf9aaf49bd35e7`, gardée, R12 ; v8 `92c208af…`, v7 `54bb2892…`, v6 `24b5785b…`,
+---
+> - Auteur : lignée conv-audit, instance du 28 octobre 2026 (servie par **Opus 4.6** pour cette v13 ; **Opus 4.8** pour la v12 et la v11 ; v10 par Opus 5.5, v2 à v9
+>   par Fable 5.1), après le relevé `date -u` de 08:06:40 UTC le 28 octobre. **Remplace la v12** (`89d278e8e7ca02d1a8b4942b25c466287e70bce2a5c4aa190524355a82f56186`, gardée, R12). Pour mémoire, la v12 remplaçait la v11 (`b1c1dd69413c824551500cb46310c15c4a809f5b05559b45e407a34d2157791c`, gardée, R12), la v11 la v10 (`785a33fae9d835ee7529a44d76629dec7ce7bfd0544a5f7dc4b2a46646d1c3c2`, gardée, R12), et la v10 la v9 (`9206956b25ecd64c4bfb0eecd484eaa5605a4680940a34070caf9aaf49bd35e7`, gardée, R12 ; v8 `92c208af…`, v7 `54bb2892…`, v6 `24b5785b…`,
+31,32c31,32
+< - Date (UTC) : 2026-10-28, 04:36.
+< - Code d'analyse : `analyse_fausses_alertes_v8.py`, **inchangé depuis la v8** (commit `32de42f2`) ; les v9 à v12 ne touchent
+---
+> - Date (UTC) : 2026-10-28, 08:07.
+> - Code d'analyse : `analyse_fausses_alertes_v8.py`, **inchangé depuis la v8** (commit `32de42f2`) ; les v9 à v13 ne touchent
+47,48c47,48
+<   à une borne (CV6-4), et **tout audit suspend la lecture** (CV6-1, CV7-2). **Séquence** : `commandes-lecture-reelle-v12.sh`
+<   (`a971896d7b5c3e1dcc7ac6a6ffd39082d803b079f908c16be58f49564f11053a`, avec les gardes isolées `garde-trace-reelle-v12.sh` (`3b6fc4d83606ab0443555ab0655880ad43af9d952f34ad7b302ca26ef847b85d`) et `garde-lecture-seule-v12.sh` (`f58374077f0146f2136bdfb75ddbbaf64c515fb7fdf1800899728bad9abf734b`) et leurs tests déposés `test-garde-trace-v12.sh` (`8d730ddef86ce764cf842270e33ccf081d37e86908938548e2c998695ab46b45`) et `test-lecture-seule-v12.sh` (`0fd827a29fbbd5431ac0aa08d699d279ee3adcc34e031b29c75010ebed2a52f8`)) : commandes (1) à (4), la rédaction `rediger_note_lecture_v6.py` (`f51eaf7ec3ac1ecb74e58a45feb4d2bddbd386a9ab3c1c61a0ce412c28bc9149`, **`--instance` et `--date` obligatoires**,
+---
+>   à une borne (CV6-4), et **tout audit suspend la lecture** (CV6-1, CV7-2). **Séquence** : `commandes-lecture-reelle-v13.sh`
+>   (`edc08b3fc1b8b7d786c2197e5b518a214f69956615143746ba07b11b09c7dbd8`, avec les gardes isolées `garde-trace-reelle-v12.sh` (`3b6fc4d83606ab0443555ab0655880ad43af9d952f34ad7b302ca26ef847b85d`) et `garde-lecture-seule-v12.sh` (`f58374077f0146f2136bdfb75ddbbaf64c515fb7fdf1800899728bad9abf734b`) et leurs tests déposés `test-garde-trace-v12.sh` (`8d730ddef86ce764cf842270e33ccf081d37e86908938548e2c998695ab46b45`) et `test-lecture-seule-v13.sh` (`ac080806c9c824142014910507bc9cb8b14ff77619f788ed85d43a4dd3f1c9ce`)) : commandes (1) à (4), la rédaction `rediger_note_lecture_v7.py` (`a9af81c40864b77ecbcef8f3930ddb0061fbd2ae102c836ddeee084fc4b49ab8`, **`--instance` et `--date` obligatoires**,
+53,55c53,55
+<   E ≠ 60. **Une seule exécution réelle (CV10-1)** : l'étape 0 pose un **témoin** `execution-reelle-v12.commencee` (`noclobber`,
+<   jamais effacé) et refuse toute sortie réelle **nommée explicitement** (`sortie-reelle-v12.json` et son `.partiel`) — plus
+<   jamais un préfixe que la répétition partage ; la répétition écrit dans le **sous-dossier** `repetition-v12/`, hors de portée
+---
+>   E ≠ 60. **Une seule exécution réelle (CV10-1)** : l'étape 0 pose un **témoin** `execution-reelle-v13.commencee` (`noclobber`,
+>   jamais effacé) et refuse toute sortie réelle **nommée explicitement** (`sortie-reelle-v13.json` et son `.partiel`) — plus
+>   jamais un préfixe que la répétition partage ; la répétition écrit dans le **sous-dossier** `repetition-v13/`, hors de portée
+61,62c61,62
+<   commit au manifeste (sortie 8). Un **test déposé** `test-lecture-seule-v12.sh` exerce ce mode sur une copie isolée et une sortie artefact scellée — garde isolée (0 et 7), mode complet (commit faux → 8, cas sain → 0 note refaite, second appel → 7, sortie absente → 6) — et **la répétition le lance** (R5). **Répétition générale faite** (CV7-1) sur `synthetique-format-reel-repetition.npz` (`447dc136…`, 3 sondes
+<   réelles, 2 placebo, E = 60 ; une **copie** de ce fichier, de même empreinte et hors de `donnees/`, est le chemin lu, CV11-2(f)), sous `repetition-v12/`, déposée et scellée **dans le commit qui porte ce texte** — la séquence va
+---
+>   commit au manifeste (sortie 8). Un **test déposé** `test-lecture-seule-v13.sh` exerce ce mode sur une copie isolée et une sortie artefact scellée — garde isolée (0 et 7), mode complet (commit faux → 8, cas sain → 0 note refaite, second appel → 7, note supprimée lecture scellée → 0, lecture corrompue → ≠ 0, sortie absente → 6) — et **la répétition le lance** (R5). **Répétition générale faite** (CV7-1) sur `synthetique-format-reel-repetition.npz` (`447dc136…`, 3 sondes
+>   réelles, 2 placebo, E = 60 ; **le fichier déposé lui-même**, de même empreinte et hors de `donnees/`, est le chemin lu, CV11-2(f)), sous `repetition-v13/`, déposée et scellée **dans le commit qui porte ce texte** — la séquence va
+251,252c251,252
+<   --effectifs-seulement > effectifs-reel-v12.json` (E, K par pli, L, longueurs valides : **aucun taux** ; l'empreinte est
+<   obligatoire, le script refuse sinon) ; si E ≠ 60, `table_m2bis_m4_v8.py --E <E> --longueurs-json effectifs-reel-v12.json >
+---
+>   --effectifs-seulement > effectifs-reel-v13.json` (E, K par pli, L, longueurs valides : **aucun taux** ; l'empreinte est
+>   obligatoire, le script refuse sinon) ; si E ≠ 60, `table_m2bis_m4_v8.py --E <E> --longueurs-json effectifs-reel-v13.json >
+255,256c255,256
+<   400 --commit <commit du scellement> > sortie-reelle-v12.json` (`--tirages` 20 et `--bootstrap` 2 000 : **fixes** en mode réel,
+<   le script refuse toute autre valeur) ; sortie scellée ; (3) `lecture_mecanique_v8.py sortie-reelle-v12.json <table en
+---
+>   400 --commit <commit du scellement> > sortie-reelle-v13.json` (`--tirages` 20 et `--bootstrap` 2 000 : **fixes** en mode réel,
+>   le script refuse toute autre valeur) ; sortie scellée ; (3) `lecture_mecanique_v8.py sortie-reelle-v13.json <table en
+258c258
+<   du script v8> > lecture-mecanique-reelle-v12.json`, scellée ; (4) `rediger_note_lecture_v6.py` → `note-lecture-mecanique-v12.md`,
+---
+>   du script v8> > lecture-mecanique-reelle-v13.json`, scellée ; (4) `rediger_note_lecture_v7.py` → `note-lecture-mecanique-v13.md`,
+260,261c260,261
+<   sous le titre prévu) ; **le tout par `MESURE_INSTANCE='…' bash commandes-lecture-reelle-v12.sh <commit du scellement>`, lancé par l'outil
+<   d'exécution en arrière-plan avec un délai de deux heures** (≈ 40 à 50 minutes ; journal `journal-lecture-reelle-v12.log`),
+---
+>   sous le titre prévu) ; **le tout par `MESURE_INSTANCE='…' bash commandes-lecture-reelle-v13.sh <commit du scellement>`, lancé par l'outil
+>   d'exécution en arrière-plan avec un délai de deux heures** (≈ 40 à 50 minutes ; journal `journal-lecture-reelle-v13.log`),
+427a428,437
+> **Contre-lecture de la v12** (sous-agent neuf **Fable 5.1** ; `contre-lecture-v12/rapport-contre-lecture-mesure-unanime-v12.md`,
+> `a061e2a615a1c875af0235bdbe8f057e762e01f98886d406bce749c5bbcddbf1`, « à corriger en v13 », aucun faux « confirmé » ni faux
+> blocage ; texte et dépôt seulement, aucun défaut de plomberie) : **CV12-1** accepté (texte, ligne 62 : « une **copie** de ce
+> fichier » → « **le fichier déposé lui-même** » — le script lit le fichier directement, pas une copie ; la phrase décrivait la
+> situation de la v11) ; **CV12-2** accepté (dépôt : les répertoires `contre-lecture-v11/` et `contre-lecture-v12/` versés dans
+> l'arbre) ; **CV12-3** accepté (test : cas B3-bis — note supprimée, lecture scellée → note refaite, lecture inchangée — et
+> B3-ter — note supprimée, lecture corrompue → refus, aucune note — ajoutés à `test-lecture-seule-v13.sh`) ; **CV12-4** accepté
+> (docstring : phrase coupée dans `rediger_note_lecture_v7.py` recollée, usage complet). La v13 est écrite sous **Opus 4.6** et
+> contre-lue par un sous-agent neuf d'un **modèle différent** (R13) avant scellement ; si « à sceller tel quel », scellée sans
+> autre modification ; sinon v14.

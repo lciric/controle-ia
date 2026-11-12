@@ -1,0 +1,55 @@
+{
+  "reglages": {
+    "bac_a_sable": {
+      "delai_s": 60.0,
+      "factice": true,
+      "isolation": "AUCUNE barrière : prélude Python qui refuse le réseau et l'écriture hors du dossier de travail (démonstration, moteur simulé seulement)",
+      "memoire_mo": 1024,
+      "nom": "factice",
+      "python": "/home/user/controle-ia-travail/.venv/bin/python",
+      "sonde": "factice présent ; sonde OK ; connexion réseau refusée (réseau isolé) ; écriture hors du dossier de travail refusée"
+    },
+    "dossier_ferme": null,
+    "experimentateur": {
+      "etiquette": "experimentateur-scripte",
+      "externe": false,
+      "modele": "famille-a"
+    },
+    "lecteur": {
+      "etiquette": "verificateur-scripte",
+      "meme_modele_que_l_experimentateur": false,
+      "modele": "famille-b"
+    },
+    "nombre_demande": 2,
+    "quotas": {
+      "budget_lecteur_usd": 0.1,
+      "budget_test_usd": 0.8,
+      "delai_execution_s": 120.0,
+      "executions_par_fiche": 3,
+      "memoire_mo": 768,
+      "taille_max_servie_par_fiche": 200000,
+      "tours_max_par_fiche": 12
+    },
+    "tranche": {
+      "fichiers": [
+        {
+          "chemin": "episodes.csv",
+          "pages": 1,
+          "sha256": "cd80908b08bb86f5d5164d7213d13d949880fd73eefb3530ca754736ac2ca589",
+          "taille_caracteres": 10612
+        },
+        {
+          "chemin": "evaluateur_lois_v62.py",
+          "pages": 1,
+          "sha256": "26613fe72da7f049d5dd076aab51a3808221bf52686b9d0258a201c8b38b8632",
+          "taille_caracteres": 4644
+        }
+      ],
+      "index_sha256": "04a463548fffac08867910e73901e3b24ab7c9bd5fb714289f017f98feadf656",
+      "pages_total": 2,
+      "racine": "tranche"
+    }
+  },
+  "regle": "étage de tests de mort (R-776, option a ; v48) avec le verdict calculé par le noyau (R-1057, v57b) : résultat exploratoire ; préenregistrement court scellé avant toute session (R1), bloc statistique (fichier, colonne, statistique) exigé ; classement figé avant l'étage et vérifié après (N-053 : aucune sélection sur le verdict) ; verdict calculé par le noyau sur le fichier brut que nomme le préenregistrement, à la dernière exécution réussie, scellé avant la session du lecteur ; tout incident de la fiche → non concluant ; chiffre imprimé, lignes CALCUL: et lecteur neuf consignés comme témoins, jamais décisifs ; ordre des verdicts : non concluant < éliminée < survit ; jamais servi aux juges de la même course ; matériau (comptes et étiquettes) pour la génération suivante",
+  "version_etage": "tests_de_mort_v5 (v57b, R-1057 : verdict du noyau câblé dans l'étage)"
+}

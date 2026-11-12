@@ -1,0 +1,32 @@
+{
+ "combinaisons": 128,
+ "desaccords": [],
+ "etiquettes_du_code_mot_pour_mot_celles_du_texte": true,
+ "feuilles_atteintes_par_128_combinaisons": {
+  "(1) Ville tenue sur P3 à τ = 0": 64,
+  "(2a) marges seules": 16,
+  "(2b) non attribuable": 16,
+  "(3a) marges et dépendance": 8,
+  "(3b) marges et structure intra-épisode": 8,
+  "(4a) dépendance naturelle suffisante": 4,
+  "(4b) dépendance établie, mélange à pas fixé au-dessus de α": 4,
+  "(4c) structure intra-épisode avec dérive de pas mesurée": 4,
+  "(4d) structure intra-épisode non attribuée": 4
+ },
+ "reserve_2a_2b_conforme": true,
+ "r0_jamais_condition": true,
+ "bornes": {
+  "v0=0.05 → (1)": "(1) Ville tenue sur P3 à τ = 0",
+  "v0=0.05+1e-12 → (1)": "(1) Ville tenue sur P3 à τ = 0",
+  "v0=0.05+2e-9, bbD=0.02, vm=0.02, bbDp=0.02, vmp=0.02 → (4a)": "(4a) dépendance naturelle suffisante",
+  "v0=0.10, bbD=0 (≤0), vm=0.08 → (2a)": "(2a) marges seules",
+  "v0=0.10, bbD=1e-12 (≤0 après arrondi), vm=0.02 → (2b)": "(2b) non attribuable",
+  "v0=0.10, bbD=2e-9, vm=0.05 (pas > α), bbDp=0.02, vmp=0.05 (≤ α) → (4a)": "(4a) dépendance naturelle suffisante",
+  "v0=0.10, bbD=0.02, vm=0.05+2e-9, bbDp=0 → (3b)": "(3b) marges et structure intra-épisode",
+  "v0=0.10, bbD=0.02, vm=0.02, bbDp=0.02, vmp=0.05+2e-9 → (4b)": "(4b) dépendance établie, mélange à pas fixé au-dessus de α",
+  "v0=0.10, bbD=0.02, vm=0.02, bbDp=0, bbDd=0 → (4d)": "(4d) structure intra-épisode non attribuée",
+  "… bbDd=1e-9 → (4c)": "(4c) structure intra-épisode avec dérive de pas mesurée",
+  "… bbDd=1e-12 (→ 0) → (4d)": "(4d) structure intra-épisode non attribuée"
+ },
+ "bornes_conformes": true
+}

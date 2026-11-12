@@ -1,0 +1,415 @@
+[
+ {
+  "id": "B4-01",
+  "section": "titre",
+  "motif": "numéro du brouillon",
+  "ancien": "# Ordre — course de confirmation 7b de T0.6 (organismes v0, sous préenregistrement scellé), session fille porteuse des clés — v1, brouillon 3\n",
+  "nouveau": "# Ordre — course de confirmation 7b de T0.6 (organismes v0, sous préenregistrement scellé), session fille porteuse des clés — v1, brouillon 4\n"
+ },
+ {
+  "id": "B4-02",
+  "section": "en-tête, statut",
+  "motif": "statut du brouillon 4 : rédacteur neuf, contre-lecture appliquée (R-2143), couples, script, journal ; suite avant la remise (C3)",
+  "ancien": "- **Statut** : brouillon 3, écrit le 2026-11-10 à partir de 09:04 UTC (`date -u`) par le rédacteur des brouillons 1 et 2 (sous-agent de la session mère `session_01QPDgKgACWyCkCN8HjqwNXy`, Claude Opus 5.5 ; auteur d'aucune pièce de T0.6, T0.7, P3-bis ni de l'ordre de 7a). Remplace le brouillon 2 (`488c2e51…`, gardé, R12) sur la correction de la mère après R-2112 : l'instance de 7b n'est plus gardée pour l'étape A de T0.7 ; compagnons des données vérifiés au rapatriement. Journal : `…-brouillon3-journal-v1.md`. **Non contre-lu** ; avant la remise : marqueurs (§ 14), contre-lecture (R2) par un sous-agent neuf, scellement, remise par Lazar.\n",
+  "nouveau": "- **Statut** : brouillon 4, écrit le 2026-11-10 à partir de 10:14 UTC (`date -u`) par un **rédacteur neuf** (sous-agent de la session mère `session_01QPDgKgACWyCkCN8HjqwNXy`, Claude Opus 5.5 ; auteur d'aucune pièce de T0.6, T0.7, P3-bis, de l'ordre de 7a, des brouillons 1 à 3 de cet ordre ni de leur contre-lecture). Remplace le brouillon 3 (`eae1e64f…`, gardé, R12) en appliquant sa contre-lecture (`…-brouillon3-contre-lecture-v1.md`, `f738d855…`, R-2143) : B1, C1 à C9, M1 à M14, par couples appliqués par script (`…-brouillon4-couples-v1.json`, `…-brouillon4-appliquer-v1.py`) ; journal : `…-brouillon4-journal-v1.md`. **Non contre-lu dans cette forme** ; avant la remise : marqueurs dans l'ordre du § 14, scellement, commit, remise par Lazar ; contre-lecture du brouillon 4 (au moins du différentiel) si la mère la commande.\n"
+ },
+ {
+  "id": "B4-03",
+  "section": "en-tête, autorisation",
+  "motif": "C7 : la destruction dès le rapatriement est une décision de la mère, écrite dans l'autorisation",
+  "ancien": "; R-2082 : T0.6 scellé.\n",
+  "nouveau": "; R-2082 : T0.6 scellé ; R-2112, R-2113 : instance détruite dès le rapatriement vérifié (§ 4.13).\n"
+ },
+ {
+  "id": "B4-04",
+  "section": "en-tête, exécutante",
+  "motif": "M6, M14 : identifiant de la session en première ligne du journal ; message de remise recopié",
+  "ancien": "- **Exécutante** : la session fille `<<ID_SESSION_FILLE>>`, porteuse des clés, active pendant toute la course.\n",
+  "nouveau": "- **Exécutante** : la session fille `<<ID_SESSION_FILLE>>`, porteuse des clés, active pendant toute la course ; elle écrit son identifiant en première ligne de son journal (§ 4.0) et y recopie verbatim, avec l'heure, le message de remise de Lazar (P5, § 9).\n"
+ },
+ {
+  "id": "B4-05",
+  "section": "§ 0",
+  "motif": "C9 : GO-2026-11-10-06 inscrit (R-2115) ; le « mot de Lazar pour sa dépense » est dépassé",
+  "ancien": "(instance séparée, ordre d'exécution à part, mot de Lazar pour sa dépense ; R-2112).",
+  "nouveau": "(instance séparée, ordre d'exécution à part, sous GO-2026-11-10-06 ; R-2112, R-2115)."
+ },
+ {
+  "id": "B4-06",
+  "section": "§ 2, point 1",
+  "motif": "C1 : `resume.json` porte `ligne_B` et `ligne_C` ; son contenu n'est ni descendu ni haché",
+  "ancien": "sa présence se déduit de `resume.json`, écrit après lui (`lanceur_v6.py` l. 317 à 333).\n",
+  "nouveau": "sa présence se déduit de `resume.json` (nom et compagnon), écrit après lui (`lanceur_v6.py` l. 317 à 333). `diag/<run>/resume.json` porte `ligne_B` et `ligne_C` (`lanceur_v6.py` l. 330) : même règle, son contenu n'est ni descendu ni haché ; seul son compagnon est lu.\n"
+ },
+ {
+  "id": "B4-07",
+  "section": "§ 2, point 4",
+  "motif": "C1 : `resume.json` retiré des fichiers « hachés seulement »",
+  "ancien": "jamais affichés `lecture-cout-t06.json`, `resume.json` (il porte `ligne_A`, `ligne_B`, `ligne_C`), `distillation-t06.json`, `episodes-t06.json`, `run.err`, `run.json` (hachés seulement) ;",
+  "nouveau": "jamais affichés `lecture-cout-t06.json`, `distillation-t06.json`, `episodes-t06.json`, `run.err`, `run.json` (hachés seulement) ; `resume.json` (il porte `ligne_A`, `ligne_B`, `ligne_C`) ni descendu ni haché, son compagnon seul lu (point 1, § 4.12) ;"
+ },
+ {
+  "id": "B4-08",
+  "section": "§ 2, point 5",
+  "motif": "C1, C6 (cohérence) : ce que la fille lit",
+  "ancien": "les compagnons des données, `etape` et `motif` d'`arret.json` ; la dépense.",
+  "nouveau": "les compagnons des données et celui de `resume.json`, `etape` et `motif` d'`arret.json` (motif retenu par le filtre du § 4.12) ; la dépense."
+ },
+ {
+  "id": "B4-09",
+  "section": "§ 3, P2",
+  "motif": "C3 : la clause du 13 novembre devient une règle de la mère (R-2079) ; M12 : chemin du texte de T0.7 exigé",
+  "ancien": "| P2 | **T0.7 scellé** (GO-2026-11-02-28 l'exige) : une seule ligne `SCELLEMENT-T07` dans `registres/scellements-v1.md` de `main`, égale à celle de la remise, fichier et compagnon à son empreinte | § 4.3 | aucune création ; ligne absente le **13 novembre à 12:00 UTC** : ordre **suspendu** (R-2079, nœud), rien sans addendum de la mère |\n",
+  "nouveau": "| P2 | **T0.7 scellé** (GO-2026-11-02-28 l'exige) : une seule ligne `SCELLEMENT-T07` dans `registres/scellements-v1.md` de `main`, égale à celle de la remise, au chemin `prereg/T0.7-sondes-v0-v1.md` (R-2103, D-4), fichier et compagnon à son empreinte | § 4.3 | aucune création ; compte rendu. La bascule du **13 novembre à 12:00 UTC** si T0.7 n'est pas scellé (R-2079) est une règle de la mère, non un geste de la fille : l'ordre n'est remis qu'après le scellement de T0.7 (§ 14) |\n"
+ },
+ {
+  "id": "B4-10",
+  "section": "§ 3, P5",
+  "motif": "M14 : message de remise recopié verbatim au journal",
+  "ancien": "| P5 | **Remise** : tête clonée descendante du commit de remise ; empreinte de l'ordre égale au message de remise | § 4.1 | arrêt |\n",
+  "nouveau": "| P5 | **Remise** : message de remise de Lazar recopié verbatim, avec l'heure, au journal ; tête clonée descendante du commit de remise ; empreinte de l'ordre égale au message de remise | § 4.0, 4.1 | arrêt |\n"
+ },
+ {
+  "id": "B4-11",
+  "section": "§ 3, P6",
+  "motif": "M7 : dépense antérieure revérifiée par la fille ; marqueur rempli (`0`)",
+  "ancien": "| P6 | **Engagement** au registre des dépenses (écrit par la mère, § 6) ; dépense antérieure relevée (§ 14) | § 4.3 | aucune création |\n",
+  "nouveau": "| P6 | **Engagement** au registre des dépenses (écrit par la mère, § 6) ; dépense antérieure `ANT0` = `0` (§ 14) revérifiée : aucune ligne de dépense sous GO-2026-11-02-28 ni GO-2026-11-10-01 hors de l'engagement | § 4.3 | aucune création ; compte rendu |\n"
+ },
+ {
+  "id": "B4-12",
+  "section": "§ 3, P7",
+  "motif": "C2 : addendum v3 scellé depuis R-2092",
+  "ancien": "| P7 | **Bras B** (GO-2026-11-07-04) : code contre-lu (rempli) ; **addendum v3 scellé** (**non rempli à la rédaction**, § 7) | § 4.3 | **aucune création avant un mot de Lazar sur ce point**, dans la session de la fille |\n",
+  "nouveau": "| P7 | **Bras B** (GO-2026-11-07-04) : code contre-lu (rempli) ; **addendum v3 scellé** (R-2092, § 7) : fichier et compagnon à `1a372523…` | § 4.3 | **aucune création avant un mot de Lazar sur ce point**, dans la session de la fille |\n"
+ },
+ {
+  "id": "B4-13",
+  "section": "§ 3, P10",
+  "motif": "M8 : la lecture de la chaîne (étiquette qui commence par `t06-v2`)",
+  "ancien": "| P10 | Aucune instance d'étiquette `t06-v2…` | § 4.7 | arrêt ; rien n'est touché |\n",
+  "nouveau": "| P10 | Aucune instance dont l'étiquette commence par `t06-v2` (lecture de la chaîne : `session_v2.verifier_instances`, l. 153) | § 4.7 | arrêt ; rien n'est touché |\n"
+ },
+ {
+  "id": "B4-14",
+  "section": "§ 4, ligne (A)",
+  "motif": "marqueur `DEPENSE_ANTERIEURE_USD` rempli : `0` (registre des dépenses du 10 novembre ; revérifié au § 4.3, M7)",
+  "ancien": "ANT0=<<DEPENSE_ANTERIEURE_USD>>;",
+  "nouveau": "ANT0=0;"
+ },
+ {
+  "id": "B4-15",
+  "section": "§ 4, après (A)",
+  "motif": "C5 (cohérence) : l'identifiant d'instance n'est jamais retapé",
+  "ancien": "`PY` : interpréteur du dépôt de la fille (chemin réel consigné s'il diffère). `W`, `D`, `B` changent à chaque reprise ; le nom en vigueur est écrit au journal.\n",
+  "nouveau": "`PY` : interpréteur du dépôt de la fille (chemin réel consigné s'il diffère). `W`, `D`, `B` changent à chaque reprise ; le nom en vigueur est écrit au journal. L'identifiant d'instance se lit toujours dans `$D/lancement.txt` (`champ instance`, C5), jamais retapé (seule exception : un mot de Lazar qui le nomme, § 4.10, code 4).\n"
+ },
+ {
+  "id": "B4-16",
+  "section": "§ 4.0, bloc",
+  "motif": "M10 : rien n'est réécrit si le dossier existe ; M9 : `VAST_API_KEY` passée seulement si présente ; M6 : identifiant de la session en première ligne du journal",
+  "ancien": "mkdir \"$W\" && : > \"$J\" && j \"début de l'ordre de 7b ; dossier $W\" || echo \"ARRÊT : $W existe déjà (R12)\"\ncat > \"$W/v13.sh\" <<'FIN'\n#!/usr/bin/env bash\n# Enveloppe du lanceur gelé v13 : variables passées à env -i par leur NOM seulement ; aucune valeur écrite ici.\n# Usage : bash v13.sh BRANCHE_DE_SORTIE SOUS-COMMANDE ARGUMENTS…\nset -u\nB=\"${1:?branche de sortie}\"; shift\ncd /home/user/course-7b-v1/main || exit 2\nexec env -i PATH=\"$PATH\" HOME=\"$HOME\" LANG=\"${LANG:-C.UTF-8}\" VAST_API_KEY=\"${VAST_API_KEY:-}\" HF_TOKEN=\"${HF_TOKEN:-}\" GH_TOKEN=\"${GH_TOKEN:-}\" CONTROLE_IA_GITHUB_TOKEN=\"${CONTROLE_IA_GITHUB_TOKEN:-}\" CONTROLE_IA_GITHUB_TOKEN_2=\"${CONTROLE_IA_GITHUB_TOKEN_2:-}\" GO_ID=GO-2026-11-02-28 T06_BRANCHE=\"$B\" REQUESTS_CA_BUNDLE=\"${REQUESTS_CA_BUNDLE:-}\" SSL_CERT_FILE=\"${SSL_CERT_FILE:-}\" HTTPS_PROXY=\"${HTTPS_PROXY:-}\" NO_PROXY=\"${NO_PROXY:-}\" INTERVALLE=\"${INTERVALLE:-60}\" bash scripts/lancer_t06_v13.sh \"$@\"\nFIN\ncat > \"$W/inventaire.sh\" <<'FIN'\n#!/usr/bin/env bash\n# Inventaire en champs filtrés (commande de l'ordre de 7a) : jamais le brut, qui imprime des variables secrètes.\ntimeout -k 5 120 vastai show instances --raw 2>/dev/null | python3 -I -c 'import json,sys; d=json.load(sys.stdin); d=d.get(\"instances\",d) if isinstance(d,dict) else d; [print(i.get(\"id\"),i.get(\"label\"),i.get(\"actual_status\"),i.get(\"dph_total\"),i.get(\"duration\")) for i in (d or [])]'\nFIN\nsha256sum \"$W/v13.sh\" \"$W/inventaire.sh\"\nvastai --version\nfor k in HF_TOKEN CONTROLE_IA_GITHUB_TOKEN CONTROLE_IA_GITHUB_TOKEN_2 VAST_API_KEY; do if [ -n \"${!k:-}\" ]; then echo \"$k présente\"; else echo \"$k absente\"; fi; done\n",
+  "nouveau": "if mkdir \"$W\"; then\n: > \"$J\"; j \"session <identifiant de la session fille>\"; j \"début de l'ordre de 7b ; dossier $W\"\ncat > \"$W/v13.sh\" <<'FIN'\n#!/usr/bin/env bash\n# Enveloppe du lanceur gelé v13 : variables passées à env -i par leur NOM seulement ; aucune valeur écrite ici.\n# Usage : bash v13.sh BRANCHE_DE_SORTIE SOUS-COMMANDE ARGUMENTS…\nset -u\nB=\"${1:?branche de sortie}\"; shift\ncd /home/user/course-7b-v1/main || exit 2\nexec env -i PATH=\"$PATH\" HOME=\"$HOME\" LANG=\"${LANG:-C.UTF-8}\" ${VAST_API_KEY:+VAST_API_KEY=\"$VAST_API_KEY\"} HF_TOKEN=\"${HF_TOKEN:-}\" GH_TOKEN=\"${GH_TOKEN:-}\" CONTROLE_IA_GITHUB_TOKEN=\"${CONTROLE_IA_GITHUB_TOKEN:-}\" CONTROLE_IA_GITHUB_TOKEN_2=\"${CONTROLE_IA_GITHUB_TOKEN_2:-}\" GO_ID=GO-2026-11-02-28 T06_BRANCHE=\"$B\" REQUESTS_CA_BUNDLE=\"${REQUESTS_CA_BUNDLE:-}\" SSL_CERT_FILE=\"${SSL_CERT_FILE:-}\" HTTPS_PROXY=\"${HTTPS_PROXY:-}\" NO_PROXY=\"${NO_PROXY:-}\" INTERVALLE=\"${INTERVALLE:-60}\" bash scripts/lancer_t06_v13.sh \"$@\"\nFIN\ncat > \"$W/inventaire.sh\" <<'FIN'\n#!/usr/bin/env bash\n# Inventaire en champs filtrés (commande de l'ordre de 7a) : jamais le brut, qui imprime des variables secrètes.\ntimeout -k 5 120 vastai show instances --raw 2>/dev/null | python3 -I -c 'import json,sys; d=json.load(sys.stdin); d=d.get(\"instances\",d) if isinstance(d,dict) else d; [print(i.get(\"id\"),i.get(\"label\"),i.get(\"actual_status\"),i.get(\"dph_total\"),i.get(\"duration\")) for i in (d or [])]'\nFIN\nsha256sum \"$W/v13.sh\" \"$W/inventaire.sh\"\nvastai --version\nfor k in HF_TOKEN CONTROLE_IA_GITHUB_TOKEN CONTROLE_IA_GITHUB_TOKEN_2 VAST_API_KEY; do if [ -n \"${!k:-}\" ]; then echo \"$k présente\"; else echo \"$k absente\"; fi; done\nelse echo \"ARRÊT : $W existe déjà (R12) : rien n'est réécrit ; dossier suivant (-v2)\"; fi\n"
+ },
+ {
+  "id": "B4-17",
+  "section": "§ 4.0, après le bloc",
+  "motif": "M9, M10",
+  "ancien": "- Dossier existant : `-v2` dans (A) et dans la ligne `cd` de l'enveloppe. L'enveloppe passe **quinze noms** à `env -i`, aucune valeur ;",
+  "nouveau": "- Dossier existant : rien n'est réécrit (M10) ; `-v2` dans (A) et dans la ligne `cd` de l'enveloppe. L'enveloppe passe **quinze noms** au plus à `env -i`, aucune valeur ; `VAST_API_KEY` seulement si elle est présente (M9 : vide, elle pourrait masquer le fichier de clé de `vastai`) ;"
+ },
+ {
+  "id": "B4-18",
+  "section": "§ 4.0, attendu",
+  "motif": "M6, M14 : première ligne du journal, message de remise",
+  "ancien": "- Attendu : 1.8.3 ; `HF_TOKEN` et un jeton GitHub présents ; `VAST_API_KEY` présente ou `vastai` configuré par son fichier.\n",
+  "nouveau": "- Attendu : 1.8.3 ; `HF_TOKEN` et un jeton GitHub présents ; `VAST_API_KEY` présente ou `vastai` configuré par son fichier ; en tête du journal, l'identifiant de la session (égal à celui de l'en-tête quand la mère l'y a écrit) ; la fille y recopie ensuite, verbatim et avec l'heure, le message de remise de Lazar (P5, M14).\n"
+ },
+ {
+  "id": "B4-19",
+  "section": "§ 4.1, bloc",
+  "motif": "M5 : dossiers du run de 7a exclus des clones",
+  "ancien": "'!/registres/index-bras-attaque*' > \"$W/motifs.txt\"",
+  "nouveau": "'!/registres/index-bras-attaque*' '!/diag/20261109-070232-t06-reel/' '!/runs/20261109-070232-t06-reel/' '!/donnees/20261109-070232-t06-reel/' > \"$W/motifs.txt\""
+ },
+ {
+  "id": "B4-20",
+  "section": "§ 4.1, texte",
+  "motif": "M5 : neuf exclusions",
+  "ancien": "une seule branche, six exclusions (sans effet sur l'arbre gelé ni sur le lanceur)",
+  "nouveau": "une seule branche, neuf exclusions, dont les trois dossiers du run de 7a (M5) (sans effet sur l'arbre gelé ni sur le lanceur)"
+ },
+ {
+  "id": "B4-21",
+  "section": "§ 4.3, bloc",
+  "motif": "M12 : chemin du texte de T0.7 ; M7 : dépense antérieure ; C2 : ligne R-2092 (marqueur rempli) et addendum v3 vérifié",
+  "ancien": "[ \"$(git show \"HEAD:$P7\" | sha256sum | cut -d' ' -f1)\" = \"$H7\" ] && [ \"$(git show \"HEAD:$P7.sha256\" | cut -d' ' -f1)\" = \"$H7\" ] && echo \"T0.7 scellé : $P7 $H7\"\ngit show HEAD:registres/depenses.md | grep -F 'GO-2026-11-02-28' | grep -F 'course de confirmation 7b' | grep -ci 'engagement'\ngrep -c '^| <<LIGNE_REGISTRE_BRAS_B>> |' registres/decisions.md\n",
+  "nouveau": "[ \"$P7\" = prereg/T0.7-sondes-v0-v1.md ] && [ \"$(git show \"HEAD:$P7\" | sha256sum | cut -d' ' -f1)\" = \"$H7\" ] && [ \"$(git show \"HEAD:$P7.sha256\" | cut -d' ' -f1)\" = \"$H7\" ] && echo \"T0.7 scellé : $P7 $H7\"\ngit show HEAD:registres/depenses.md | grep -F 'GO-2026-11-02-28' | grep -F 'course de confirmation 7b' | grep -ci 'engagement'\ngit show HEAD:registres/depenses.md | grep -F -e GO-2026-11-02-28 -e GO-2026-11-10-01 | grep -vci engagement\ngrep -c '^| R-2092 |' registres/decisions.md\nF=docs/notes/g0-deux-semaines-v1/scellement-course-t06-v1/pieces-apres-couples/addendum-bras-b-v2-brouillon-v3-apres-couples-v1.md; [ \"$(git show \"HEAD:$F\" | sha256sum | cut -d' ' -f1)\" = 1a372523290fdaf0a606db592295885f01ff9d6adc9b877fd72279fc6a44ccdf ] && [ \"$(git show \"HEAD:$F.sha256\" | cut -d' ' -f1)\" = 1a372523290fdaf0a606db592295885f01ff9d6adc9b877fd72279fc6a44ccdf ] && echo \"addendum v3 du bras B scellé\"\n"
+ },
+ {
+  "id": "B4-22",
+  "section": "§ 4.3, attendu",
+  "motif": "C2, M7, M12",
+  "ancien": "Attendu : une ligne par GO ; 0 révocation ; une ligne `SCELLEMENT-T07`, égale à la remise, fichier et compagnon conformes ; au moins une ligne d'engagement ; la ligne du bras B une fois. Si elle manque (la mère écrit `AUCUNE` quand l'addendum n'est pas scellé) : **aucune création avant un mot de Lazar sur le bras B** (§ 7).\n",
+  "nouveau": "Attendu : une ligne par GO ; 0 révocation ; une ligne `SCELLEMENT-T07`, égale à la remise ; « T0.7 scellé : prereg/T0.7-sondes-v0-v1.md … » (chemin exigé, M12 ; fichier et compagnon conformes) ; au moins une ligne d'engagement ; `0` ligne de dépense hors de l'engagement sous GO-2026-11-02-28 et GO-2026-11-10-01 (M7 : `ANT0` = 0 ; autre compte : aucune création, compte rendu) ; la ligne R-2092 une fois et « addendum v3 du bras B scellé ». Ligne R-2092 absente, ou addendum ou compagnon à une autre empreinte : **aucune création avant un mot de Lazar sur le bras B** (§ 7).\n"
+ },
+ {
+  "id": "B4-23",
+  "section": "§ 4.6, texte",
+  "motif": "cohérence : le refus de l'artefact a été observé par l'auteur des brouillons 1 à 3, non rejoué ici",
+  "ancien": "(refus observé par le rédacteur)",
+  "nouveau": "(refus observé par le rédacteur des brouillons 1 à 3, non rejoué au brouillon 4)"
+ },
+ {
+  "id": "B4-24",
+  "section": "§ 4.7, texte",
+  "motif": "M8 : lecture de la chaîne écrite ; autres instances recopiées au journal et au compte rendu, jamais touchées",
+  "ancien": "Aucune étiquette `t06-v2…` (sinon arrêt). Les instances non créées par la fille (dont 58936096, 58936099, 58936100, intouchables) ne sont jamais touchées.\n",
+  "nouveau": "Aucune étiquette qui commence par `t06-v2` (lecture de la chaîne : `session_v2.verifier_instances`, l. 153 ; « Liste d'arrêt » : « une instance du programme déjà sur le compte : aucune création ») ; sinon arrêt. Les autres instances vues (identifiant, étiquette, état) sont recopiées au journal et au compte rendu (§ 10) ; non créées par la fille (dont 58936096, 58936099, 58936100, intouchables), elles ne sont jamais touchées.\n"
+ },
+ {
+  "id": "B4-25",
+  "section": "§ 4.9, bloc",
+  "motif": "M4 : empreinte du fichier de la commande relevée et écrite au journal",
+  "ancien": "n=<numéro de la recherche retenue>; F=\"$D/creation-sortie-$n.txt\"\n",
+  "nouveau": "n=<numéro de la recherche retenue>; F=\"$D/creation-sortie-$n.txt\"; sha256sum \"$F\"; j \"commande $n : empreinte $(sha256sum < \"$F\" | cut -d' ' -f1)\"\n"
+ },
+ {
+  "id": "B4-26",
+  "section": "§ 4.9, attendu",
+  "motif": "M4",
+  "ancien": "Attendu : `3` ; `1` ; `1` ; `1` (les **neuf** variables",
+  "nouveau": "Attendu : empreinte du fichier écrite au journal (« commande N : empreinte … », revérifiée au § 4.10, M4) ; `3` ; `1` ; `1` ; `1` (les **neuf** variables"
+ },
+ {
+  "id": "B4-27",
+  "section": "§ 4.10, bloc",
+  "motif": "M4 : exécution seulement si l'empreinte est celle du § 4.9 et l'impression date de dix minutes au plus",
+  "ancien": "n=<même numéro>; GO_ID=GO-2026-11-02-28 bash -c \"$(tail -n 1 \"$D/creation-sortie-$n.txt\")\"; echo \"code $?\"\n",
+  "nouveau": "n=<même numéro>; F=\"$D/creation-sortie-$n.txt\"; h=$(sed -n \"s/.* commande $n : empreinte \\([0-9a-f]\\{64\\}\\)$/\\1/p\" \"$J\" | tail -n 1); a=$(( $(date +%s) - $(stat -c %Y \"$F\") ))\nif [ -n \"$h\" ] && [ \"$(sha256sum < \"$F\" | cut -d' ' -f1)\" = \"$h\" ] && [ \"$a\" -le 600 ]; then GO_ID=GO-2026-11-02-28 bash -c \"$(tail -n 1 \"$F\")\"; echo \"code $?\"; else echo \"RIEN N'EST EXÉCUTÉ : empreinte autre qu'au § 4.9, ou commande imprimée il y a $a s (plus de 600) : nouvelle recherche (§ 4.8)\"; fi\n"
+ },
+ {
+  "id": "B4-28",
+  "section": "§ 4.10, première puce",
+  "motif": "M4 : forme jugée acceptable, deux ajouts",
+  "ancien": "- Forme de 7a (R-1914), **à juger par la contre-lecture** (§ 13) : la commande imprimée, à l'octet ;",
+  "nouveau": "- Forme de 7a (R-1914), **jugée acceptable** par la contre-lecture du brouillon 3 (M4, § 13) : la commande imprimée, à l'octet, exécutée seulement si le fichier a l'empreinte relevée au § 4.9 et a été imprimé il y a dix minutes au plus (sinon nouvelle recherche, § 4.8) ;"
+ },
+ {
+  "id": "B4-29",
+  "section": "§ 4.10, code 4",
+  "motif": "C5 (conséquence) : sans ligne `instance` dans `lancement.txt`, aucun geste sans mot de Lazar",
+  "ancien": "**Code 4** (création incertaine) : aucune seconde création ; inventaire ; compte rendu.",
+  "nouveau": "**Code 4** (création incertaine) : aucune seconde création ; inventaire ; compte rendu ; sans ligne `instance` dans `lancement.txt`, ni surveillance, ni `stop`, ni `destroy` (C5) : une instance `t06-v2` vue à l'inventaire est signalée à Lazar (identifiant, état) ; aucun geste de la fille sans un mot de Lazar qui nomme l'identifiant."
+ },
+ {
+  "id": "B4-30",
+  "section": "§ 4.11, bloc",
+  "motif": "C5 : identifiant lu dans `lancement.txt`, jamais retapé",
+  "ancien": "ID=<identifiant créé>\npython3 -I -B -c",
+  "nouveau": "ID=$(champ instance); [[ \"$ID\" =~ ^[0-9]+$ ]] || echo \"ARRÊT : identifiant illisible dans lancement.txt\"\npython3 -I -B -c"
+ },
+ {
+  "id": "B4-31",
+  "section": "§ 4.11, bloc",
+  "motif": "M3 : code de `depense 60` affiché (code 1 : 60 USD déjà cumulés)",
+  "ancien": "\"$(champ anterieure)\" \"$(champ telechargement_forfait)\"\nbash -c 'echo",
+  "nouveau": "\"$(champ anterieure)\" \"$(champ telechargement_forfait)\"; echo \"code $?\"\nbash -c 'echo"
+ },
+ {
+  "id": "B4-32",
+  "section": "§ 4.11, première puce",
+  "motif": "M3 : relevé de H60 à chaque relance et à chaque relevé ; code 1",
+  "ancien": "instance en marche à H60 : **compte rendu à Lazar** (§ 6), sans arrêt.\n",
+  "nouveau": "instance en marche à H60 : **compte rendu à Lazar** (§ 6), sans arrêt. À chaque relance de la surveillance et à chaque relevé : `[ \"$(date +%s)\" -ge <H60> ] && echo \"60 USD atteints\"` (M3) ; dépense antérieure nulle et prix plafonds, H60 tombe après 12 à 12,5 h de marche sur H200 et après 42 à 43,5 h sur A100 (au-delà de la marche attendue). **Code 1** de `depense 60` (`arret=oui` : 60 USD déjà cumulés, dès la création si dépense antérieure et téléchargement y suffisent) : compte rendu aussitôt.\n"
+ },
+ {
+  "id": "B4-33",
+  "section": "§ 4.12, bloc",
+  "motif": "C5 : identifiant lu dans `lancement.txt`, présent une fois dans l'inventaire filtré ; M1 : `stop` seulement si l'instance tourne",
+  "ancien": "ID=<identifiant créé>; bash \"$W/inventaire.sh\"\ntimeout -k 5 120 vastai stop instance \"$ID\"; echo \"code $?\"   # seulement si l'instance n'est pas déjà arrêtée ; jamais un autre identifiant\n",
+  "nouveau": "ID=$(champ instance); [[ \"$ID\" =~ ^[0-9]+$ ]] || echo \"ARRÊT : identifiant illisible dans lancement.txt\"\nI=$(bash \"$W/inventaire.sh\"); printf '%s\\n' \"$I\"; nI=$(printf '%s\\n' \"$I\" | grep -c \"^$ID t06-v2 \"); echo \"lignes « $ID t06-v2 » : $nI (attendu 1)\"\n[ \"$nI\" = 1 ] && printf '%s\\n' \"$I\" | grep -qE \"^$ID t06-v2 (running|loading) \" && { timeout -k 5 120 vastai stop instance \"$ID\"; echo \"stop : code $?\"; } || echo \"aucun stop : instance déjà arrêtée, absente de l'inventaire, ou identifiant illisible\"\n"
+ },
+ {
+  "id": "B4-34",
+  "section": "§ 4.12, bloc",
+  "motif": "C1 : `resume.json` ni descendu ni haché ; son compagnon seul est lu",
+  "ancien": "grep -E \"^(runs|diag)/$RUN/\" \"$L\" | grep -v '\\.sha256$' | while IFS= read -r f; do a=$(git -C \"$M\" show \"$R:$f\" | sha256sum | cut -d' ' -f1); b=$(git -C \"$M\" show \"$R:$f.sha256\" | cut -d' ' -f1); [ \"$a\" = \"$b\" ] && echo \"OK $f $a\" || echo \"ÉCART $f\"; done\n",
+  "nouveau": "grep -E \"^(runs|diag)/$RUN/\" \"$L\" | grep -v '\\.sha256$' | grep -vxF \"diag/$RUN/resume.json\" | while IFS= read -r f; do a=$(git -C \"$M\" show \"$R:$f\" | sha256sum | cut -d' ' -f1); b=$(git -C \"$M\" show \"$R:$f.sha256\" | cut -d' ' -f1); [ \"$a\" = \"$b\" ] && echo \"OK $f $a\" || echo \"ÉCART $f\"; done\nf=diag/$RUN/resume.json; grep -qxF \"$f\" \"$L\" && grep -qxF \"$f.sha256\" \"$L\" && git -C \"$M\" show \"$R:$f.sha256\" | grep -qxE '[0-9a-f]{64}  resume\\.json' && echo \"OK (compagnon seul) $f\" || echo \"resume.json absent ou compagnon non conforme\"\n"
+ },
+ {
+  "id": "B4-35",
+  "section": "§ 4.12, puce « Arrêt »",
+  "motif": "C5, M1",
+  "ancien": "le `stop` imprimé n'est exécuté que si l'inventaire ne montre pas l'instance arrêtée ;",
+  "nouveau": "le `stop` n'est joué que si l'inventaire filtré porte une fois l'identifiant de `lancement.txt`, en état `running` ou `loading` (C5, M1 ; sinon « aucun stop ») ;"
+ },
+ {
+  "id": "B4-36",
+  "section": "§ 4.12, puce « Rapatriement »",
+  "motif": "C1",
+  "ancien": "sondes, données de `donnees/<run>/` et bras B restent sur le dépôt distant.",
+  "nouveau": "sondes, `resume.json`, données de `donnees/<run>/` et bras B restent sur le dépôt distant (C1)."
+ },
+ {
+  "id": "B4-37",
+  "section": "§ 4.12, puce « Attendu »",
+  "motif": "C1",
+  "ancien": "`OK` pour le manifeste, `distillation-t06.json`, `episodes-t06.json`, `lecture-cout-t06.json`, `resume.json` (hachés, **jamais affichés**) et chaque fichier des traces ;",
+  "nouveau": "`OK` pour le manifeste, `distillation-t06.json`, `episodes-t06.json`, `lecture-cout-t06.json` (hachés, **jamais affichés**) et chaque fichier des traces ; `OK (compagnon seul)` pour `resume.json` (C1) ;"
+ },
+ {
+  "id": "B4-38",
+  "section": "§ 4.12, puce « Arrêt consigné »",
+  "motif": "C6 : motif retenu aux étapes des sondes ou s'il porte un mot du filtre C01 ; C1 (cohérence)",
+  "ancien": "- **Arrêt consigné** : `etape` et `motif` seuls, jamais `partiel` :",
+  "nouveau": "- **Arrêt consigné** (la ligne de `resume.json` rend alors « resume.json absent… ») : `etape` et `motif` seuls, jamais `partiel` ; le motif n'est pas imprimé à une étape des sondes (« test croisé », « résumé ») ni s'il porte un mot du filtre C01 (amorce l. 300) : « retenu », compte rendu de ce seul fait (C6) :"
+ },
+ {
+  "id": "B4-39",
+  "section": "§ 4.12, bloc de l'arrêt consigné",
+  "motif": "C6 : filtre C01 sur le motif",
+  "ancien": "print(\"motif :\", str(r.get(\"motif\"))[:300])'",
+  "nouveau": "import re; m=str(r.get(\"motif\")); print(\"motif :\", \"retenu (étape des sondes ou motif interdit, C01) : compte rendu\" if r.get(\"etape\") in (\"test croisé\",\"résumé\") or re.search(\"au-dessus|interpr|échec|echec|aire=|bas=|haut=|ligne_|table_|plancher\", m, re.I) else m[:300])'"
+ },
+ {
+  "id": "B4-40",
+  "section": "§ 4.12, bloc des données",
+  "motif": "C8 : morceaux annoncés et poussés comparés ; lignes `ERREUR DE CHAÎNE (C11)` comptées",
+  "ancien": "&& echo \"OK $f ${c%% *}\" || echo \"ÉCART $f\"; done\n",
+  "nouveau": "&& echo \"OK $f ${c%% *}\" || echo \"ÉCART $f\"; done\nk=$(grep -E '^PROGRES [0-9T:Z-]+ etape=episodes-ecrits ' \"$D/progres.txt\" | tail -n 1 | sed -n 's/.* morceaux=\\([0-9]*\\).*/\\1/p'); echo \"morceaux annoncés (progres.txt) : ${k:-illisible} ; poussés : $(grep -cE \"^donnees/$RUN/activations-sous-ensemble-t06-[0-9]{3}\\.npz$\" \"$L\")\"\necho \"lignes ERREUR DE CHAÎNE (C11) au journal : $(grep -c 'ERREUR DE CHAÎNE (C11)' \"$D/journal-instance.txt\")\"\n"
+ },
+ {
+  "id": "B4-41",
+  "section": "§ 4.12, attendu des données",
+  "motif": "C8 : sous-ensemble complet ; C4 : compte rendu à Lazar et à la mère",
+  "ancien": "  Attendu : `2` adaptateurs, `1` fichier de mesures, `1` fichier de textes, `1` manifeste du sous-ensemble, au moins `1` morceau ; `OK` pour chacun (compagnon présent, une ligne « empreinte, deux espaces, nom »). Un compte autre ou un `ÉCART` (fichier resté sur l'instance, par exemple au-delà de 90 Mo, amorce C11) : compte rendu à la mère **avant** toute destruction.\n",
+  "nouveau": "  Attendu : `2` adaptateurs, `1` fichier de mesures, `1` fichier de textes, `1` manifeste du sous-ensemble, autant de morceaux que le champ `morceaux=` de la ligne `PROGRES … etape=episodes-ecrits` de `progres.txt` (au moins `1`) ; aucune ligne `ERREUR DE CHAÎNE (C11)` au journal (`0`) ; `OK` pour chacun (compagnon présent, une ligne « empreinte, deux espaces, nom »). Un compte autre ou un `ÉCART` (fichier resté sur l'instance, par exemple au-delà de 90 Mo, amorce C11) : compte rendu à Lazar et à la mère **avant** toute destruction (§ 4.13).\n"
+ },
+ {
+  "id": "B4-42",
+  "section": "§ 4.13, première puce",
+  "motif": "C7 : écart au devis du texte scellé déclaré",
+  "ancien": "elle ne la garde pas pour T0.7 (l'étape A se joue par la variante B, R-2112).\n",
+  "nouveau": "elle ne la garde pas pour T0.7 (l'étape A se joue par la variante B, R-2112). **Déclaré** : le devis du texte scellé comptait une instance gardée arrêtée jusqu'au verdict de la table A (72 h au plus) ; elle est détruite plus tôt, sur décision de la mère (R-2112, R-2113). Perdus avec elle : les activations complètes des trois couches (recalculables par la passe unique, plan d'analyse, point 5) et tout fichier non poussé. Aucune section gelée ne demande cette garde.\n"
+ },
+ {
+  "id": "B4-43",
+  "section": "§ 4.13, troisième puce",
+  "motif": "C4 : mot de Lazar (R-2113), écrit dans la session de la fille",
+  "ancien": "- **Écart sur les données** (§ 4.12) : destruction sur le mot de la mère.\n",
+  "nouveau": "- **Écart sur les données** (§ 4.12) : compte rendu, puis destruction sur un mot de Lazar écrit dans la session de la fille (R-2113), au plus tard le 16 à 23:00Z.\n"
+ },
+ {
+  "id": "B4-44",
+  "section": "§ 4.13, quatrième puce",
+  "motif": "B1 : la borne de 23:00Z ne vaut que pour une instance arrêtée ; un run vivant est laissé à la minuterie (« Liste d'arrêt » scellée)",
+  "ancien": "- **Dans tous les cas, au plus tard le 2026-11-16 à 23:00Z** : fin de la couverture de la dépense et avant la minuterie de l'amorce (17 novembre 00:00 UTC).\n",
+  "nouveau": "- **Instance arrêtée, ou dont l'amorce a écrit sa ligne de fin : destruction au plus tard le 2026-11-16 à 23:00Z** (fin de la couverture de la dépense ; une instance arrêtée n'a plus de minuterie, seule la fille la détruit ; arrêtée après cette heure : aussitôt le rapatriement fait). **Instance dont le run est encore vivant à cette heure : aucun geste de la fille** ; la minuterie de l'amorce consigne, pousse et détruit à partir du 17 novembre à 00:00 UTC (« Liste d'arrêt » du texte scellé ; § 8 ; amorce l. 101 à 126, avec l. 71 et 78 : consignation bornée à 2 400 s, marge de destruction 1 800 s) ; la fille relève l'inventaire filtré le 17 à 01:15 UTC et, si l'instance y figure encore, la détruit par son identifiant, puis § 4.12.\n"
+ },
+ {
+  "id": "B4-45",
+  "section": "§ 4.13, bloc",
+  "motif": "C5 : identifiant lu dans `lancement.txt` et présent une fois dans l'inventaire filtré avant `destroy`",
+  "ancien": "ID=<identifiant créé>; timeout -k 5 120 vastai destroy instance \"$ID\" -y; echo \"code $?\"\nout=$(timeout -k 5 120 vastai show instance \"$ID\" --raw 2>&1); c=$?; [ \"$out\" = '{\"instances\": null}' ] && echo \"absente (texte exact), code $c\" || echo \"texte autre (non affiché), code $c\"\n",
+  "nouveau": "ID=$(champ instance); [[ \"$ID\" =~ ^[0-9]+$ ]] || echo \"ARRÊT : identifiant illisible dans lancement.txt\"\nnI=$(bash \"$W/inventaire.sh\" | grep -c \"^$ID t06-v2 \"); echo \"lignes « $ID t06-v2 » : $nI (attendu 1)\"\n[ \"$nI\" = 1 ] && { timeout -k 5 120 vastai destroy instance \"$ID\" -y; echo \"destroy : code $?\"; out=$(timeout -k 5 120 vastai show instance \"$ID\" --raw 2>&1); c=$?; [ \"$out\" = '{\"instances\": null}' ] && echo \"absente (texte exact), code $c\" || echo \"texte autre (non affiché), code $c\"; } || echo \"aucun geste : identifiant absent de l'inventaire filtré, ou illisible\"\n"
+ },
+ {
+  "id": "B4-46",
+  "section": "§ 4.13, après le bloc",
+  "motif": "C5, M2 : attendu ; l'inventaire filtré fait foi ; seconde demande",
+  "ancien": "Du **seul identifiant créé**, forme de R-2039. Le texte de `show instance` n'est jamais affiché.\n",
+  "nouveau": "Du **seul identifiant créé**, lu dans `lancement.txt` et présent une fois dans l'inventaire filtré (C5), forme de R-2039. Le texte de `show instance` n'est jamais affiché. **Attendu** (M2) : l'un ou l'autre message ; **l'absence de l'identifiant dans l'inventaire filtré fait foi** (à 7a, `show instance` a rendu un texte autre après la destruction, R-2039) ; encore présent une minute plus tard (inventaire relevé de nouveau) : une seconde demande (même bloc), puis compte rendu.\n"
+ },
+ {
+  "id": "B4-47",
+  "section": "§ 5, point 1 (b)",
+  "motif": "M11 : lecture de l'ordre (« données de distillation ») dite comme telle",
+  "ancien": "(« out of memory », « OutOfMemoryError »). Autre erreur",
+  "nouveau": "(« out of memory », « OutOfMemoryError ») ; **lecture de l'ordre**, défendable et dite comme telle à Lazar avec l'étape exacte (M11) : le texte scellé écrit « erreur de mémoire à la distillation », et son devis compte la distillation « génération des données comprise ». Autre erreur"
+ },
+ {
+  "id": "B4-48",
+  "section": "§ 5, point 2",
+  "motif": "M11",
+  "ancien": "enjeu (fenêtre vide ou erreur de mémoire, heures, dépense déjà faite)",
+  "nouveau": "enjeu (fenêtre vide ou erreur de mémoire, avec l'étape exacte et la lecture du point 1 (b), heures, dépense déjà faite)"
+ },
+ {
+  "id": "B4-49",
+  "section": "§ 5, point 4",
+  "motif": "C5 (cohérence) : destruction de la première instance avec son dossier",
+  "ancien": "cas (b), A100 détruite d'abord (§ 4.13),",
+  "nouveau": "cas (b), A100 détruite d'abord (§ 4.13, `D` de la première instance dans (A)),"
+ },
+ {
+  "id": "B4-50",
+  "section": "§ 7, conditions",
+  "motif": "C2 : rempli depuis R-2092 (07:26 UTC, avant le brouillon 3)",
+  "ancien": "  - **addendum v3 scellé : non rempli** : sur `main`, seul le brouillon `docs/notes/g0-deux-semaines-v1/bras-b-v2/addendum-bras-b-v2-brouillon-v3.md` (`2ec90141…`, « scellable après couples », R-1781) ; la copie après couples (`1a372523…`, « prête », R-1784) n'est que sur `fe240b24`, hors de `main` ; aucune ligne du registre n'en consigne le scellement ;\n",
+  "nouveau": "  - **addendum v3 scellé : rempli** : copie après couples scellée sur `main` par la mère (R-2092), `docs/notes/g0-deux-semaines-v1/scellement-course-t06-v1/pieces-apres-couples/addendum-bras-b-v2-brouillon-v3-apres-couples-v1.md`, `1a372523290fdaf0a606db592295885f01ff9d6adc9b877fd72279fc6a44ccdf` ; la fille vérifie fichier et compagnon à cette empreinte (§ 4.3) ;\n"
+ },
+ {
+  "id": "B4-51",
+  "section": "§ 7, règle",
+  "motif": "C2",
+  "ancien": "- **Règle** : sans la ligne de la mère qui consigne le scellement de l'addendum v3 (§ 14), **la fille ne crée rien avant un mot de Lazar sur ce point**, écrit dans sa session.\n",
+  "nouveau": "- **Règle** : ligne R-2092 absente de `registres/decisions.md`, ou addendum v3 ou son compagnon à une autre empreinte (§ 4.3) : **la fille ne crée rien avant un mot de Lazar sur ce point**, écrit dans sa session.\n"
+ },
+ {
+  "id": "B4-52",
+  "section": "§ 8",
+  "motif": "B1",
+  "ancien": "Échéance du 17 à 00:00Z en marche : la minuterie consigne, pousse, détruit (l. 101 à 126) ; inventaire ; § 4.12.",
+  "nouveau": "Échéance du 17 à 00:00Z en marche : la minuterie consigne, pousse, détruit (l. 101 à 126), sans geste de la fille avant ; inventaire filtré le 17 à 01:15 UTC (§ 4.13) ; § 4.12."
+ },
+ {
+  "id": "B4-53",
+  "section": "§ 9, première puce",
+  "motif": "C4 : canal fille-Lazar-mère ; M14 : message de remise",
+  "ancien": "- **La fille nommée en en-tête** exécute cet ordre sur la remise de Lazar ; tout mot neuf de Lazar (bras B, H200, création tardive) est écrit **dans sa session** et recopié verbatim, avec l'heure, au journal.\n",
+  "nouveau": "- **La fille nommée en en-tête** exécute cet ordre sur la remise de Lazar ; le message de remise et tout mot neuf de Lazar (bras B, H200, création tardive, écart sur les données) sont écrits **dans sa session** et recopiés verbatim, avec l'heure, au journal (M14). **Canal** : la fille écrit à Lazar dans sa session ; Lazar relaie à la mère (une session d'un autre compte n'est pas joignable par la mère, R-2051, R-2090). Un « écrit » ou un « addendum de la mère » est un fichier scellé sur `main`, nommé avec son empreinte dans un mot de Lazar écrit dans la session de la fille, qui en vérifie le compagnon avant d'agir.\n"
+ },
+ {
+  "id": "B4-54",
+  "section": "§ 9, levée de l'interdit `vastai`",
+  "motif": "C5, M2",
+  "ancien": "`stop` et `destroy … -y` du **seul identifiant créé**, puis un seul `show instance <ID> --raw` (code ou texte exact seulement)",
+  "nouveau": "`stop` et `destroy … -y` du **seul identifiant créé**, lu dans `lancement.txt` et présent une fois dans l'inventaire filtré (C5), deux demandes de destruction au plus (§ 4.13), chacune suivie d'un seul `show instance <ID> --raw` (code ou texte exact seulement)"
+ },
+ {
+  "id": "B4-55",
+  "section": "§ 10",
+  "motif": "M8, M13, C1, C4, C6, C8 : compte rendu",
+  "ancien": "`vastai --version` ; P1 à P10 (valeurs, ligne `SCELLEMENT-T07`) ; heures et codes de `controles`, de la branche, des gardes ; chaque recherche ; mots de Lazar (verbatim, heure) ; carte, prix, identifiant, création, H60 ; PID de la surveillance ; dernière ligne de la suite ; durées par étape ; arrêt (`etape`, `motif`) ; `fin` et `stop` ; tête de la branche, fichiers ajoutés, compagnons ; run et manifeste ; bras B (code, durée) ; compagnons des données (comptes, empreintes) ; dépense relevée ; destruction, inventaire final ; écarts. **Ni table A, ni sondes, ni résumé** (ni `ligne_A`, `ligne_B`, `ligne_C`). Journal (garde des secrets à 0) envoyé à la mère, qui le verse et le scelle.\n",
+  "nouveau": "`vastai --version` ; P1 à P10 (valeurs, ligne `SCELLEMENT-T07`) ; autres instances vues à l'inventaire (identifiant, étiquette, état), non touchées (M8) ; heures et codes de `controles`, de la branche, des gardes ; chaque recherche ; mots de Lazar, remise comprise (verbatim, heure) ; carte, prix, identifiant, création, H60 ; PID de la surveillance ; dernière ligne de la suite ; durées par étape ; arrêt (`etape`, `motif` ou sa retenue) ; `fin` et `stop` ; tête de la branche, fichiers ajoutés, compagnons (celui de `resume.json` compris) ; run et manifeste ; bras B (code, durée) ; compagnons des données (comptes, morceaux annoncés et poussés, empreintes) ; **les trois valeurs que l'ordre de la variante B attend** (M13) : branche en vigueur (`BRANCHE_7B`), run (`RUN_T06_7B`), empreinte de `runs/<run>/manifeste.json` (pour la ligne `RUN-CONFIRMATION-T06` que la mère inscrit) ; dépense relevée ; destruction, inventaire final ; écarts. **Ni table A, ni sondes, ni résumé** (ni `ligne_A`, `ligne_B`, `ligne_C`). Journal (garde des secrets à 0) remis par Lazar à la mère, qui le verse et le scelle.\n"
+ },
+ {
+  "id": "B4-56",
+  "section": "§ 11",
+  "motif": "C9",
+  "ancien": "étape A de T0.7 par la variante B (instance séparée, ordre d'exécution à part, mot de Lazar pour sa dépense).",
+  "nouveau": "étape A de T0.7 par la variante B (instance séparée, ordre d'exécution à part, sous GO-2026-11-10-06 ; R-2112, R-2115)."
+ },
+ {
+  "id": "B4-57",
+  "section": "§ 12",
+  "motif": "B1, C9",
+  "ancien": "destruction au plus tard 2026-11-16T23:00Z. L'étape A de T0.7 (variante B) a sa propre dépense, hors de celle-ci.",
+  "nouveau": "destruction d'une instance arrêtée au plus tard 2026-11-16T23:00Z ; run encore vivant : minuterie du 17 à 00:00Z (§ 4.13). L'étape A de T0.7 (variante B) a sa propre dépense (GO-2026-11-10-06), hors de celle-ci."
+ },
+ {
+  "id": "B4-58",
+  "section": "§ 13",
+  "motif": "M4 (forme jugée acceptable, deux ajouts), C2 (règle remplie)",
+  "ancien": "## 13. À juger par la contre-lecture\n\n1. **Forme d'exécution** (§ 4.10), gardée de 7a (R-1914) : la garde de la session ne voit pas `vastai create` dans `bash -c \"$(tail -n 1 …)\"` ; restent la garde rejouée par le lanceur sur le texte exact (l. 236) et le § 4.9 ; recopier environ 73 000 caractères risquerait d'altérer la commande.\n2. **Bras B** (§ 7) : GO-2026-11-07-09 et -08-01 exigent l'addendum « avant toute lecture », non avant la course ; la règle de l'ordre est plus stricte, sur décision de la mère.\n\n",
+  "nouveau": "## 13. Jugés par la contre-lecture du brouillon 3 (R-2143)\n\n1. **Forme d'exécution** (§ 4.10), gardée de 7a (R-1914) : **acceptable** (M4 : la garde de la session ne se déclenche que sur le texte `vastai create`, `garde_calcul.py` l. 38 et 149, et ne voit pas cette commande ; le lanceur rejoue la même garde sur le texte exact, l. 236 ; le § 4.9 contrôle la ligne) ; deux ajouts appliqués : empreinte du fichier relevée au § 4.9 et revérifiée au § 4.10, exécution dans les dix minutes qui suivent l'impression.\n2. **Bras B** (§ 7) : la règle de l'ordre (addendum avant la création) est plus stricte que GO-2026-11-07-09 et -08-01 (« avant toute lecture ») ; elle est remplie (R-2092).\n\n"
+ },
+ {
+  "id": "B4-59",
+  "section": "§ 14",
+  "motif": "C3 (définition de `COMMIT_MAIN_REMISE`, ordre de remplissage, règle du 13 novembre à la mère), M6, C2 ; marqueurs remplis",
+  "ancien": "## 14. Marqueurs (à remplir par la mère avant la contre-lecture ; une occurrence chacun)\n\n| Marqueur (sans chevrons) | Où | Valeur |\n|---|---|---|\n| `ID_SESSION_FILLE` | en-tête | identifiant de la session fille |\n| `DEPENSE_ANTERIEURE_USD` | ligne (A) | dépense inscrite sous GO-2026-11-02-28 et GO-2026-11-10-01 à la remise, en USD (attendu `0`) |\n| `COMMIT_MAIN_REMISE` | § 4.1 | commit de `main` portant cet ordre scellé, `SCELLEMENT-T07` et l'engagement |\n| `LIGNE_SCELLEMENT_T07` | § 4.3 | la ligne exacte de `registres/scellements-v1.md` (format de `scripts/controle_lecture_t06_v1.py`, commit `061ac380`) |\n| `LIGNE_REGISTRE_BRAS_B` | § 4.3 | `R-NNNN` où la mère consigne le scellement de l'addendum v3 ; `AUCUNE` sinon |\n\nSources, lignes et empreintes : journal.\n",
+  "nouveau": "## 14. Marqueurs (remplis par la mère avant le scellement de l'ordre ; une occurrence chacun)\n\n**Ordre de remplissage** (C3) : T0.7 scellé et inscrit (`SCELLEMENT-T07` au registre de `main`) ; engagement au registre des dépenses (§ 6) ; commit ; marqueurs ; scellement de cet ordre ; commit de l'ordre ; remise par Lazar. La bascule du 13 novembre à 12:00 UTC (R-2079) reste une règle de la mère : sans `SCELLEMENT-T07` à cette heure, l'ordre n'est pas remis (nœud porté à Lazar).\n\n| Marqueur (sans chevrons) | Où | Valeur ; qui la donne, quand |\n|---|---|---|\n| `ID_SESSION_FILLE` | en-tête | identifiant de la session fille (`session_…`) : donné par Lazar une fois la session ouverte, recopié par la mère avant le scellement de l'ordre (M6) ; à défaut (session ouverte après le scellement), la mère écrit à sa place « à laquelle Lazar remet cet ordre » ; dans les deux cas, la fille écrit son identifiant en première ligne de son journal (§ 4.0) |\n| `COMMIT_MAIN_REMISE` | § 4.1 | commit de `main` qui porte `SCELLEMENT-T07`, l'engagement et la ligne du bras B (R-2092), **parent** du commit qui ajoute cet ordre scellé ; l'ordre lui-même se vérifie par son compagnon et par l'empreinte du message de remise (§ 4.1) ; la mère, au commit de l'engagement (C3) |\n| `LIGNE_SCELLEMENT_T07` | § 4.3 | la ligne exacte de `registres/scellements-v1.md` (format de `scripts/controle_lecture_t06_v1.py`, commit `061ac380`), au chemin `prereg/T0.7-sondes-v0-v1.md` ; la mère, après le scellement de T0.7 et son inscription ; non remplissable le 10 novembre (le registre ne porte que les lignes des jeux J-D et J-A) |\n\n**Remplis au brouillon 4** (registres de `main` relus le 10 novembre ; heures au journal) : `DEPENSE_ANTERIEURE_USD` = `0` dans (A) (aucune ligne de dépense sous GO-2026-11-02-28 ni GO-2026-11-10-01 ; revérifié par la fille, § 4.3, M7) ; `LIGNE_REGISTRE_BRAS_B` = `R-2092` (§ 4.3, C2).\n\nSources, lignes et empreintes : journal.\n"
+ }
+]

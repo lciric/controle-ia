@@ -1,0 +1,6 @@
+# Journal du socle de preuves v5 — écrit par la session mère le 2026-11-10 à 12:52 UTC (heure relevée par `date -u`)
+
+- Source : `brouillons/entretien-taif-v3/socle-preuves-entretien-v4.md` (`b1c76e27…`), contre-lue (v3 : `3a1df795…`) puis vérifiée (`prereg/contre-lectures/socle-preuves-entretien-v4-verification-courte-v1.md`, `53e8b8cd…`, Fable : « utilisable pour l'entretien après corrections »).
+- Appliqués par programme (chaque texte ancien présent une fois, vérifié ; empreinte de la v4 vérifiée avant) : VS-C1 (exigé : condition de configuration de GO-2026-11-10-10, R-2220) ; VS-C2, VS-C3, VS-C4 (facultatifs, retenus) ; titre : « — v4 » → « — v5 (v4 et les quatre couples de sa vérification courte, `53e8b8cd…`) ».
+- Inchangé : tout le reste, octet pour octet. L'en-tête « lu jusqu'à R-2219 » (VS-10) reste, la v5 étant la v4 plus ces seuls couples ; statuts à relever avant toute transmission si une ligne postérieure à R-2223 les touche.
+- Réserve du vérificateur sur son propre rapport : écrit pendant la parution de R-2223, il la dit dernière ligne lue alors qu'il ne l'avait pas lue au scellement ; lue ensuite, elle ne touche aucune phrase (rapport scellé non réécrit ; une tentative de réécriture en place a été refusée par l'outil de scellement, R12, et le fichier rétabli à son empreinte).

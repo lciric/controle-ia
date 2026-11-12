@@ -1,0 +1,159 @@
+C = c6efe532e07d50c73c49115d5c458ea3a2c3d620
+script éprouvé : sceller_p3_v1.sh 7e963932b72716f877692d5f223a50118173d5ac7b515a727a5c87e3686bf364
+script éprouvé : verifications_p3_v1.py 6667ac0ee7db2e7fe3f95eeb02d550565c75f4a26abc202cf204bc508405f1cc
+script éprouvé : essais_scellement_p3_v1.sh 1e3bd6fe2987b976ac94add2baf94dd6a394b4c67b2b123b02d8fff0cfbe9679
+lignes changées dans la copie du scellement : 3
+J = 2072ee77f14520443f578164064656e916b1e592
+S00-sain : code 0 ; CONFORME
+    | GO de calcul et décision de Lazar : GO-2026-10-04-08 (R-192) conforme
+    | S 8b78ea459291f1f0b0049eeb1f9a62158d2c295b poussé ; préenregistrement d975e9817e88d30196930c2a351927c2091f2ac024d2a5b52556730fa36cb672
+    S 8b78ea459291f1f0b0049eeb1f9a62158d2c295b : enfant de J, poussé, six fichiers seulement, copies exactes du candidat, de la configuration et des consignes relus, preuves relues, arbre propre : CONFORME
+S01-arbre-sale : code 2 ; CONFORME
+    | arbre suivi non propre
+S02-sceau-fausse-verifier-arbre : code 2 ; CONFORME
+    | verifier-arbre en échec
+    | échec avant le commit : fichiers créés retirés
+S03-poussee-refusee : code 2 ; CONFORME
+    | error: failed to push some refs to '/tmp/claude-0/-home-user/5a6b9d1d-b17d-59a1-a770-8737a831fe0a/scratchpad/p3-v2-banc-scellement/distant.git'
+    | poussée de S en échec : S reste local ; repousser avant tout lancement
+S04-epingle-candidat-fausse : code 2 ; CONFORME
+    | brouillons/P3-premier-test-i-a-v1-candidat4.md ≠ épingle, ou sceau différent de la ligne exacte
+S04b-epingle-configuration-fausse : code 2 ; CONFORME
+    | brouillons/P3-premier-test-config-v1-candidat3.json ≠ épingle, ou sceau différent de la ligne exacte
+S04c-epingle-consignes-fausse : code 2 ; CONFORME
+    | brouillons/P3-consignes-v1-candidat2.md ≠ épingle, ou sceau différent de la ligne exacte
+S05-recuperation-non-versee : code 2 ; CONFORME
+    | recuperation_p3_v1.sh du bloc-notes ≠ copie versée
+S05b-controle-a-cinq-minutes-non-verse : code 2 ; CONFORME
+    | controle_cinq_minutes_p3_v1.sh du bloc-notes ≠ copie versée
+S06-head-en-avance : code 2 ; CONFORME
+    | HEAD ≠ origin/main : pousser d'abord les préalables
+S07-prereg-present : code 2 ; CONFORME
+    | prereg/P3-premier-test-i-a-v1.md existe déjà (R12)
+S07b-consignes-presentes : code 2 ; CONFORME
+    | prereg/P3-consignes-v1.md existe déjà (R12)
+S07c-configuration-presente : code 2 ; CONFORME
+    | prereg/P3-premier-test-config-v1.json existe déjà (R12)
+S08-rapport-epingle-absent : code 2 ; CONFORME
+    | prereg/contre-lectures/P3-premier-test-v1-relecture-chaine-v1.md non suivi à HEAD
+S09-decision-absente : code 2 ; CONFORME
+    | preuves des essais : 5 journaux conformes ; 11 scripts éprouvés égaux à leurs copies versées
+    | GO de calcul et décision de Lazar non conformes : R-192 absent, en double, ou sans la décision de Lazar « (b) P1 + P2 + P3 + pilote du papier C »
+S09b-go-autre-type : code 2 ; CONFORME
+    | preuves des essais : 5 journaux conformes ; 11 scripts éprouvés égaux à leurs copies versées
+    | GO de calcul et décision de Lazar non conformes : GO-2026-10-04-08 : revendication, Lazar : GO de type « calcul », accordé par Lazar, attendu
+S09c-go-revoque : code 2 ; CONFORME
+    | preuves des essais : 5 journaux conformes ; 11 scripts éprouvés égaux à leurs copies versées
+    | GO de calcul et décision de Lazar non conformes : GO-2026-10-04-08 révoqué au registre des GO (GO-2026-10-17-98)
+S09d-decision-revoquee : code 2 ; CONFORME
+    | preuves des essais : 5 journaux conformes ; 11 scripts éprouvés égaux à leurs copies versées
+    | GO de calcul et décision de Lazar non conformes : décision R-192 révoquée au registre des GO (GO-2026-10-17-96)
+S09e-forme-exacte-au-registre-des-decisions : code 2 ; CONFORME
+    | preuves des essais : 5 journaux conformes ; 11 scripts éprouvés égaux à leurs copies versées
+    | GO de calcul et décision de Lazar non conformes : décision R-192 révoquée par R-998 (registre des décisions, « **Révocation de R-192** »)
+S09f-aucune-revocation-de-r-192 : code 0 ; CONFORME
+    | GO de calcul et décision de Lazar : GO-2026-10-04-08 (R-192) conforme
+    | S 93b91a4b42d21c4e3d302541d2db968c04635aa3 poussé ; préenregistrement d975e9817e88d30196930c2a351927c2091f2ac024d2a5b52556730fa36cb672
+S13-epingle-restee : code 2 ; CONFORME
+    | épingle restée « A_EPINGLER » dans les contrôles
+S14-code-relu-autre : code 2 ; CONFORME
+    | arbre gelé de HEAD ≠ code relu épinglé (bc05768a8eaa340a339b984d54f2a10af1b21f50)
+S15-journal-repetition-altere : code 2 ; CONFORME
+    | journal de la répétition jouet absent, d'une autre empreinte que l'épingle, ou sceau différent
+S16-rapport-autre-famille : code 2 ; CONFORME
+    | rapport épinglé hors de la famille de la contre-lecture : T0.5-pilote-v1-autre-famille-v1.md
+S17-journal-non-suivi : code 2 ; CONFORME
+    | docs/procedures/P3-premier-test-v2/repetition-jouet-p3-v1.log non suivi à HEAD
+S18-journal-autre-commit : code 2 ; CONFORME
+    | journal de la répétition jouet non conforme : ligne absente ou en double : commit du code répété : 7a54d431d89745839220f882b41b13e8c62ecfdd
+S18b-journal-aux-consignes-autres : code 2 ; CONFORME
+    | journal de la répétition jouet non conforme : ligne absente ou en double : consignes répétées : P3-consignes-v1-candidat2.md a68468fef6286bbcaa31451ba461d0adab2af7d529dd5e4fa0695643e6d1d69c
+S19-journal-hors-du-dossier : code 2 ; CONFORME
+    | code relu ou répétition jouet non épinglés
+S20-arret-avant-le-piege : code 2 ; CONFORME
+    | and the repository exists.
+    | arrêt du scellement (ligne 68)
+S21-commit-refuse : code 2 ; CONFORME
+    | arrêt du scellement (ligne 178)
+    | échec avant le commit : fichiers créés retirés
+    index propre après S21 : CONFORME
+S10-avec-argument : code 2 ; CONFORME
+    | usage : sceller_p3_v1.sh (sans argument)
+S22-rapport-non-cite : code 2 ; CONFORME
+    | rapport P3-premier-test-v1-relecture-chaine-v1.md : empreinte différente de l'épingle, ou non cité par le candidat
+S23-candidat-autre-code : code 2 ; CONFORME
+    | le candidat relu ne cite pas le code relu
+S23b-commit-du-code-cite-deux-fois : code 2 ; CONFORME
+    | commit du code cité zéro ou plusieurs fois par le candidat
+S24-candidat-sans-go : code 2 ; CONFORME
+    | intitulé « GO de calcul et décision de Lazar » cité zéro ou plusieurs fois par le candidat
+S24b-candidat-go-de-calcul-d-un-autre-perimetre : code 2 ; CONFORME
+    | preuves des essais : 5 journaux conformes ; 11 scripts éprouvés égaux à leurs copies versées
+    | GO de calcul et décision de Lazar non conformes : GO-2026-10-17-01 : seul GO-2026-10-04-08 est accepté pour P3 (GO de calcul de la phase 0, R-192)
+S25-candidat-non-conforme-r1-r2 : code 2 ; CONFORME
+    | arrêt du scellement (ligne 167)
+    | échec avant le commit : fichiers créés retirés
+S02b-sceau-d-une-copie-versee-fausse : code 2 ; CONFORME
+    | ARRÊT : docs/procedures/P3-premier-test-v2/verifications_p3_v1.py : empreinte 6667ac0ee7db… ≠ scellée 555555555555…
+    | sceau d'une copie versée non conforme
+S26-journal-inacheve : code 2 ; CONFORME
+    | journal de la répétition jouet non conforme : ligne absente ou en double : FIN DE LA RÉPÉTITION
+S27-candidat-hors-des-brouillons : code 2 ; CONFORME
+    | candidat, configuration ou consignes relus non épinglés
+S27b-epingle-de-63-caracteres : code 2 ; CONFORME
+    | candidat, configuration ou consignes relus non épinglés
+S27c-consignes-hors-des-brouillons : code 2 ; CONFORME
+    | candidat, configuration ou consignes relus non épinglés
+S27d-code-relu-de-39-caracteres : code 2 ; CONFORME
+    | code relu ou répétition jouet non épinglés
+S27e-candidat-de-63-caracteres : code 2 ; CONFORME
+    | candidat, configuration ou consignes relus non épinglés
+S28-une-seule-paire : code 2 ; CONFORME
+    | rapports épinglés : au moins deux attendus
+S29-sceau-du-candidat-autre-forme : code 2 ; CONFORME
+    | brouillons/P3-premier-test-i-a-v1-candidat4.md ≠ épingle, ou sceau différent de la ligne exacte
+S29b-sceau-de-la-configuration-autre-forme : code 2 ; CONFORME
+    | brouillons/P3-premier-test-config-v1-candidat3.json ≠ épingle, ou sceau différent de la ligne exacte
+S29c-sceau-des-consignes-autre-forme : code 2 ; CONFORME
+    | brouillons/P3-consignes-v1-candidat2.md ≠ épingle, ou sceau différent de la ligne exacte
+S40-configuration-autres-consignes : code 2 ; CONFORME
+    | la configuration relue ne cite pas les consignes relues (prereg/P3-consignes-v1.md, a68468fef628…)
+S37-ligne-de-decision-en-double : code 2 ; CONFORME
+    | preuves des essais : 5 journaux conformes ; 11 scripts éprouvés égaux à leurs copies versées
+    | GO de calcul et décision de Lazar non conformes : R-192 absent, en double, ou sans la décision de Lazar « (b) P1 + P2 + P3 + pilote du papier C »
+S38-sceaux-produits-differents-des-epingles : code 2 ; CONFORME
+    | sceaux du préenregistrement, de la configuration ou des consignes ≠ épingles
+    | échec avant le commit : fichiers créés retirés
+S30-rapport-altere : code 2 ; CONFORME
+    | rapport P3-premier-test-v1-relecture-chaine-v1.md : empreinte différente de l'épingle, ou non cité par le candidat
+S31-rapport-non-epingle : code 2 ; CONFORME
+    | rapports présents « P3-premier-test-v1-relecture-autre-v1.md P3-premier-test-v1-relecture-chaine-v1.md P3-premier-test-v1-relecture-courte-chaine-v1.md P3-premier-test-v1-relecture-courte-code-v1.md
+S32-branche-de-resultats-presente : code 2 ; CONFORME
+    | branche calcul/p3-reel-v1 : code 0 (2 attendu : absente)
+S33-script-repete-autre-que-la-copie : code 2 ; CONFORME
+    | script répété ≠ copie versée : recuperation_p3_v1.sh
+S35-intitule-en-double : code 2 ; CONFORME
+    | intitulé « Tâches de P3 » cité zéro ou plusieurs fois par le candidat
+S35b-intitule-absent : code 2 ; CONFORME
+    | intitulé « Chemin des consignes de P3 » cité zéro ou plusieurs fois par le candidat
+S41-preuve-absente : code 2 ; CONFORME
+    | docs/procedures/P3-premier-test-v2/banc-surveillance-p3-v1.log non suivi à HEAD
+S41b-preuve-sans-son-sceau : code 2 ; CONFORME
+    | preuves des essais : sceau de banc-lanceur-p3-v1.log absent ou non conforme
+S41c-preuve-au-verdict-non-conforme : code 2 ; CONFORME
+    | preuves des essais : journal banc-controles-p3-v1.log : dernière ligne ≠ « FIN DU BANC DES CONTRÔLES DE P3 ; cas non conformes : 0 »
+S41d-preuve-caduque : code 2 ; CONFORME
+    | preuves des essais : lancer_p3_v1.sh éprouvé ≠ copie versée
+S39-origin-copie-publique : code 2 ; CONFORME
+    | adresse de origin en lecture « /tmp/claude-0/-home-user/5a6b9d1d-b17d-59a1-a770-8737a831fe0a/scratchpad/p3-v2-banc-scellement/lciric/controle-ia.git » ≠ /tmp/claude-0/-home-user/5a6b9d1d-b17d-59a1
+    copie publique simulée restée vide : CONFORME
+S39b-poussee-vers-la-copie-publique : code 2 ; CONFORME
+    | adresse de origin --push « /tmp/claude-0/-home-user/5a6b9d1d-b17d-59a1-a770-8737a831fe0a/scratchpad/p3-v2-banc-scellement/lciric/controle-ia.git » ≠ /tmp/claude-0/-home-user/5a6b9d1d-b17d-59a1-a77
+    copie publique simulée restée vide : CONFORME
+S39c-seconde-adresse-de-poussee : code 2 ; CONFORME
+    | adresse de origin --push « /tmp/claude-0/-home-user/5a6b9d1d-b17d-59a1-a770-8737a831fe0a/scratchpad/p3-v2-banc-scellement/distant.git /tmp/claude-0/-home-user/5a6b9d1d-b17d-59a1-a770-8737a831fe0a/scr
+    copie publique simulée restée vide : CONFORME
+S34-sain-apres-les-artefacts : code 0 ; CONFORME
+    | GO de calcul et décision de Lazar : GO-2026-10-04-08 (R-192) conforme
+    | S 5ec549ab2f363605fabfb807d50a8c6cc371c371 poussé ; préenregistrement d975e9817e88d30196930c2a351927c2091f2ac024d2a5b52556730fa36cb672
+FIN DU BANC DU SCELLEMENT DE P3 ; cas non conformes : 0

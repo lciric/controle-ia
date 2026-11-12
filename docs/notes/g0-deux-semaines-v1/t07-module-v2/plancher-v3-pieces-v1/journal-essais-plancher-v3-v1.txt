@@ -1,0 +1,18 @@
+Journal des essais — code du plancher v3 de T0.7 (développeur, 2026-11-11, heures UTC relevées par date -u)
+Arbre : /tmp/claude-0/-home-user/1cc16375-a2bd-54b9-a03f-27d43b6f26a6/scratchpad/plancher-v3/arbre (branche prep/t07-plancher-v3-v1, partie de adb5f415)
+Interpréteur : /home/user/controle-ia-travail/.venv/bin/python (Python 3.13, numpy 2.4.6, torch 2.14.1+cpu) ; OPENBLAS_NUM_THREADS=1 pour les essais.
+
+00:59-01:06  calibrage v1 (calibrage_gardes_v1.py) : 1er lancement tué par manque de mémoire (chargement répété du npz, corrigé), relancé 01:02:25-01:06:05 ; sortie calibrage-gardes-v1.json.
+01:09-01:10  calibrage v2 (témoin « différence de moyennes » des enjeux) ; sortie calibrage-gardes-v2.json.
+01:14        essais de la notation vectorisée : 20 passés.
+01:20        essais de la réextraction (run jouet de P3) : 14 passés, 2 échecs (noms des directions ; artefact d'empan sans effet sur les enjeux) → corrigés (suffixe « -t07 » ; empan décalé vers l'arrière) → 16 passés.
+01:24-01:37  suite T0.7 de l'arbre (v1, code avant le contrôle par échantillon) : 495 passés, 27 sautés, 3 xfail, 11 échecs, tous FileNotFoundError sur brouillons/ hors de l'extraction ; extraction élargie aux pièces citées, les 11 rejoués : 11 passés (193,9 s).
+01:28        banc v1, 1er lancement : copie saine en échec (invites lues par chemin relatif au module, absentes de la copie) → copie des invites ajoutée au banc ; relancé.
+01:40-01:51  banc v1 (32 mutations) : 30 tuées, m10 (équivalente) et m18 survivantes.
+01:52        essais ajoutés (bruit de carte sans condition, témoin seul décisif, entrées fautives, réglages rétablis, nombre de directions de P3) : 60 passés, 1 sauté. Commit 6f9b4521, poussé.
+01:54-01:58  banc v2 (m18, m33-m36) : 5 tuées.
+02:00        palier et réserves portés jusqu'à l'étape B ; lecture_v4 régénéré ; essais : 60 passés, 1 sauté. Commit 0d0c5da4, poussé. Suite v2 (code du commit 6f9b4521) arrêtée par son PID (16953), périmée.
+02:00-02:15  banc v3 au commit final : 37 mutations, 36 tuées, m10 équivalente, imports tous de la copie.
+02:00-02:15  suite v3 au commit final : interrompue à ≈ 92 % par le redémarrage du conteneur (vers 02:15 ; aucun échec affiché jusque-là).
+02:18-02:19  mesure du coût v2 (machine au repos) : mesure-cout-v2.json.
+02:19-02:33:47  suite v4 au commit final : 514 passés, 27 sautés (extraction réduite), 3 xfail, aucun échec, 835,1 s, code 0 (suite-t07-v4.txt).

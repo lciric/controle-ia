@@ -1,0 +1,22 @@
+--- echelle-v6/scripts/mesurer_echelle_v6.py	2026-10-27 07:08:16.123717007 +0000
++++ echelle-v7/scripts/mesurer_echelle_v7.py	2026-10-27 07:29:12.648240163 +0000
+@@ -1,7 +1,7 @@
+ #!/usr/bin/env python3
+-"""Mesure v6 de la comparaison d'échelle 8B contre 70B (lignée « session-depot », 27 octobre 2026 ; préenregistrement
+-`prereg/test-echelle-conscience-eval-v7.md`). Copie de `mesurer_echelle_v5.py` (elle-même copie de
+-`mesurer_echelle_v4.py`) sous un nom nouveau (R12), sans changement de calcul : l'analyse v6 relit le nom et
++"""Mesure v7 de la comparaison d'échelle 8B contre 70B (lignée « session-depot », 27 octobre 2026 ; préenregistrement
++`prereg/test-echelle-conscience-eval-v8.md`). Copie de `mesurer_echelle_v6.py` (elle-même copie de la v5 et de la
++v4) sous un nom nouveau (R12), sans changement de calcul : l'analyse v7 relit le nom et
+ l'empreinte de ce script dans chaque manifeste (CLW-04). Depuis la v4 (contre-lecture n° 3, CLZ-11), la garde de délestage (CLY-13) relit l'appareil de **chaque paramètre**. La v3 ne lisait
+ que `hf_device_map`, que transformers 5.18 ne remplit que pour une répartition sur plusieurs appareils : sur un seul
+ appareil, la garde passait en silence. Un paramètre délesté sur le processeur ou le disque par accelerate apparaît sur
+@@ -19,7 +19,7 @@
+ Révision : dossier d'instantané du cache, modèle chargé depuis ce dossier (R-456) ; `_commit_hash` contraire : arrêt.
+ Plusieurs cartes : répartition automatique des couches (`device_map="auto"`).
+ 
+-    python mesurer_echelle_v6.py --stimuli echelle-v2.json --sortie DOSSIER \
++    python mesurer_echelle_v7.py --stimuli echelle-v2.json --sortie DOSSIER \
+         --modele meta-llama/Llama-3.1-70B-Instruct --revision 1605565b47bb9346c5515c34102e054115b4f98b
+ """
+ import argparse

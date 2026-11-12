@@ -1,0 +1,377 @@
+--- src/controle_ia/sonde_hote_durable_a1_v3_v8.py (renommé v9)
++++ src/controle_ia/sonde_hote_durable_a1_v3_v9.py
+@@ -1,5 +1,13 @@
+ #!/usr/bin/env python3
+-"""Sonde de l'hôte durable d'A1-v3, **version 8** (GO-2026-11-04-09, GO de la machine, 35 USD).
++"""Sonde de l'hôte durable d'A1-v3, **version 9** (GO-2026-11-05-01, 1 USD).
++
++Version 9 (R12 : v1 à v8 inchangées) : la v8, plus **seulement** ce qu'impose le fait établi par la fille le 5 novembre 2026
++(00:15 et 00:16 UTC, lecture seule) : sur Vast, toutes les offres `num_gpus=0` sont des volumes de stockage (`resource_type`
++« disk ») et ne se louent pas comme machines. (a) Vérification d'offre propre : `resource_type` « gpu » exigé (« disk » refusé),
++`num_gpus` = 1, `cpu_ram` ≥ 8 000 Mo (0 refusé ; l'exception « non renseignée » de la v5 est retirée), cœurs ≥ 4, disque ≥ 30,
++fiabilité ≥ 0,98, prix ≤ 0,40 USD/h ; la mémoire réelle reste relevée sur la machine. (b) GO exigé : GO-2026-11-05-01, plafond
++exactement 1 USD sur la ligne ; GO-2026-11-04-09 et -06 refusés. La carte n'est pas utilisée : aucun pilote, aucun calcul sur elle.
++Ce qui suit décrit la v8 :
+ 
+ Version 8 (R12 : v1 à v7 inchangées) : la v7, plus **seulement** ce qu'imposent les faits constatés par la fille le 4 novembre 2026
+ (23:35 et 23:38 UTC) : avec `--raw`, `vastai` 1.8.3 écrit ses refus sur la **sortie d'erreur**, avec le **code 0** et une sortie
+@@ -100,7 +108,7 @@
+     h, s1 = sys.modules["hote_durable_a1_v3"], sys.modules["sonde_hote_durable_a1_v3"]
+ 
+ VERSION = "sonde-hote-durable-a1-v3-v9"
+-GO_SONDE, MONTANT_GO_SONDE_USD = s1.GO_SONDE, s1.MONTANT_GO_SONDE_USD
++GO_SONDE, MONTANT_GO_SONDE_USD = "GO-2026-11-05-01", 1.0  # v9 (b) : ligne du 5 novembre 2026, plafond 1 USD
+ ETIQUETTE = "sonde-a1-v3-v9"
+ BRANCHE = "donnees/sonde-hote-durable-a1-v3-v9"
+ BRANCHE_REFUS = "donnees/sonde-hote-durable-a1-v3-v9-refus"
+@@ -133,27 +141,59 @@
+ MEMOIRE_MIN_KB = 2 * 1024 * 1024  # v5 (b) : sous 2 Go de MemTotal, l'amorce s'arrête (la minuterie détruit)
+ 
+ 
++def verifier_go_sonde(chemin_registre: Path, chemin_garde: Path, go_id: str, aujourd_hui: dt.date) -> dict:
++    """v9 (b) : GO-2026-11-05-01 seul (GO-2026-11-04-09 et -06 refusés) ; la garde de `main` telle quelle (type, Lazar,
++    validité, révocation, extensions), puis un plafond d'exactement 1 USD sur la ligne et sur chaque extension."""
++    if go_id != GO_SONDE:
++        raise h.Refus(f"GO {go_id} : la sonde v9 ne part que sous {GO_SONDE} (aucun autre GO)")
++    garde = h.charger_garde(chemin_garde, chemin_registre)
++    tampon = h.io.StringIO()
++    try:
++        with h.redirect_stderr(tampon):
++            garde.decider(f"GO_ID={go_id} vastai create instance 0", aujourd_hui)
++    except SystemExit as e:
++        if e.code not in (0, None):
++            raise h.Refus(f"garde de main : {tampon.getvalue().strip()}") from None
++    lignes = h.lignes_du_go(chemin_registre, go_id)
++    if not lignes:
++        raise h.Refus(f"{go_id} absent du registre")
++    for cellules in lignes:
++        m = h.MONTANT.match(cellules[4])
++        if not m or abs(float(m.group(1).replace(",", ".")) - MONTANT_GO_SONDE_USD) > 1e-9:
++            raise h.Refus(f"{go_id} : plafond « {cellules[4]} » au lieu de exactement {MONTANT_GO_SONDE_USD:g} USD")
++    return {"go": go_id, "lignes": len(lignes), "plafond_usd": MONTANT_GO_SONDE_USD,
++            "registre_sha256": h.sha256_fichier(chemin_registre), "echeance": lignes[0][5]}
++
++
++def _nombre(v) -> bool:
++    return isinstance(v, (int, float)) and not isinstance(v, bool)
++
++
+ def verifier_offre_sonde(offres: list[dict], offre_id: int) -> dict:
+-    """v5 (a) : la garde d'offre du lanceur durable, sauf pour `cpu_ram`, que Vast ne renseigne pas pour les offres sans carte
+-    (valeur 0). `cpu_ram` à 0 ou absent : « non renseigné », accepté seulement si `cpu_cores_effective` ≥ 4 ; une valeur
+-    strictement positive sous 8 000 : refus ; tous les autres critères (`num_gpus` = 0, disque, fiabilité, prix) inchangés."""
++    """v9 (a) : sur Vast, les offres sans carte sont des volumes (`resource_type` « disk ») ; la sonde loue une machine à **une**
++    carte : `resource_type` « gpu » exigé (« disk » refusé explicitement), `num_gpus` = 1, `cpu_ram` ≥ 8 000 Mo (0 refusé :
++    l'exception « non renseignée » de la v5 est retirée), cœurs ≥ 4, disque ≥ 30 Go, fiabilité ≥ 0,98, prix ≤ 0,40 USD/h."""
+     choisies = [o for o in offres if isinstance(o, dict) and o.get("id") == offre_id]
+     if len(choisies) != 1:
+-        return h.verifier_offre(offres, offre_id)  # même refus (« … dans la réponse de la recherche (une exigée) »)
+-    o = dict(choisies[0])
+-    ram = o.get("cpu_ram")
+-    non_renseignee = ram is None or (isinstance(ram, (int, float)) and not isinstance(ram, bool) and ram == 0)
+-    if non_renseignee:
+-        coeurs = o.get("cpu_cores_effective")
+-        if not isinstance(coeurs, (int, float)) or isinstance(coeurs, bool) or coeurs < h.OFFRE_MIN["cpu_cores_effective"]:
+-            raise h.Refus(f"offre {offre_id} : mémoire non renseignée par Vast et cpu_cores_effective = {coeurs!r} < "
+-                          f"{h.OFFRE_MIN['cpu_cores_effective']} : refus")
+-        o["cpu_ram"] = h.OFFRE_MIN["cpu_ram"]  # pour la seule garde : tous les autres critères y passent tels quels
+-    v = h.verifier_offre([o], offre_id)
+-    if non_renseignee:
+-        v["cpu_ram"] = None
+-    v["memoire_non_renseignee"] = non_renseignee
+-    return v
++        raise h.Refus(f"offre {offre_id} : {len(choisies)} dans la réponse de la recherche (une exigée)")
++    o = choisies[0]
++    rt = o.get("resource_type")
++    if rt == "disk":
++        raise h.Refus(f"offre {offre_id} : resource_type « disk » : volume de stockage, pas une machine")
++    if rt != "gpu":
++        raise h.Refus(f"offre {offre_id} : resource_type {rt!r} ; « gpu » exigé")
++    if o.get("num_gpus") != 1 or isinstance(o.get("num_gpus"), bool):
++        raise h.Refus(f"offre {offre_id} : {o.get('num_gpus')!r} carte(s) ; une exigée")
++    prix = o.get("dph_total")
++    if not _nombre(prix) or not (0 < prix <= h.PRIX_MAX_H_USD):
++        raise h.Refus(f"offre {offre_id} : prix horaire {prix!r} hors de ]0 ; {h.PRIX_MAX_H_USD}] USD")
++    for champ, mini in h.OFFRE_MIN.items():  # cpu_cores_effective 4, cpu_ram 8 000 Mo, disk_space 30, reliability 0,98
++        v = o.get(champ)
++        if not _nombre(v) or v < mini:
++            raise h.Refus(f"offre {offre_id} : {champ} = {v!r} < {mini}")
++    return {"id": offre_id, "dph_total": float(prix), **{k: o.get(k) for k in h.OFFRE_MIN}, "resource_type": rt,
++            "num_gpus": 1, "gpu_name": o.get("gpu_name"), "geolocation": o.get("geolocation"),
++            "machine_id": o.get("machine_id"), "memoire_non_renseignee": False}
+ 
+ 
+ def offre_la_moins_chere_sonde(offres: list[dict], offre_id: int) -> dict:
+@@ -503,7 +543,7 @@
+         if cles_de_modele(environ):
+             raise h.Refus(f"clé de modèle dans l'environnement du pilote : {cles_de_modele(environ)}")
+         aujourd_hui = aujourd_hui or dt.datetime.now(dt.timezone.utc).date()
+-        g = s1.verifier_go_sonde(Path(a.registre_main), Path(a.garde_main), a.go, aujourd_hui)
++        g = verifier_go_sonde(Path(a.registre_main), Path(a.garde_main), a.go, aujourd_hui)
+         j.ecrire(f"sonde v9 : GO {g['go']} accepté par la garde de main, {g['plafond_usd']:g} USD")
+         offres = json.loads(Path(a.offres).read_text())
+         offres = offres.get("offers", offres) if isinstance(offres, dict) else offres
+@@ -578,7 +618,7 @@
+ 
+ 
+ def ligne_etat(e: dict) -> str:
+-    return (f"- Sonde v9 de l'hôte durable d'A1-v3 (GO-2026-11-04-09) : instance **{e['identifiant']}**, étiquette "
++    return (f"- Sonde v9 de l'hôte durable d'A1-v3 ({GO_SONDE}) : instance **{e['identifiant']}**, étiquette "
+             f"`{e['etiquette']}`, créée {e['t0_utc']}, échéance {e['echeance_finale_utc']} ; contrôles à "
+             f"{' et '.join(e['controles_utc'])} ; toute session qui reprend lance `sonde_hote_durable_a1_v3_v9.py controler` "
+             "(étiquette contrôlée, destruction par l'identifiant avec -y).")
+@@ -732,7 +772,7 @@
+             if sortie.returncode != 0:
+                 raise h.Refus(f"{chemin} illisible au commit {tete}")
+             dest.write_bytes(sortie.stdout)
+-        g = s1.verifier_go_sonde(reg, garde, e["GO_ID"], r.aujourd_hui or dt.datetime.now(dt.timezone.utc).date())
++        g = verifier_go_sonde(reg, garde, e["GO_ID"], r.aujourd_hui or dt.datetime.now(dt.timezone.utc).date())
+         self.j.ecrire(f"GO accepté par la garde de main {tete} : {g['go']}, {g['plafond_usd']:g} USD")
+         self.signe_de_vie()
+         self.relever_l_hote()
+--- scripts/amorce_sonde_hote_durable_a1_v3_v8.sh (renommé v9)
++++ scripts/amorce_sonde_hote_durable_a1_v3_v9.sh
+@@ -1,5 +1,5 @@
+ #!/usr/bin/env bash
+-# Amorce de la sonde v9 de l'hôte durable d'A1-v3 (GO-2026-11-04-09, GO de la machine), copie de la v3 sous un nom neuf
++# Amorce de la sonde v9 de l'hôte durable d'A1-v3 (GO-2026-11-05-01, machine à une carte), copie de la v3 sous un nom neuf
+ # (R12 ; contre-lectures `contre-lecture-sonde-v1.md` à `contre-lecture-sonde-v3.md` ; v4 : chaque `apt-get` sous `timeout`, m-2 ;
+ # l'amorce entière tourne sous un `timeout` borné par la fin de vie, posé par le script de démarrage). Lancée par le script de démarrage du
+ # conteneur APRÈS la minuterie de destruction : quel que soit le code de sortie de cette amorce, la minuterie détruit la machine à
+@@ -22,7 +22,7 @@
+         [ -n "${!v:-}" ] && { echo "AMORCE SONDE V9 : variable de clé de modèle $v présente : rien ne part"; exit 2; } ;;
+     esac
+ done
+-[ "$GO_ID" = "GO-2026-11-04-09" ] || { echo "AMORCE SONDE V9 : GO $GO_ID au lieu de GO-2026-11-04-09"; exit 2; }
++[ "$GO_ID" = "GO-2026-11-05-01" ] || { echo "AMORCE SONDE V9 : GO $GO_ID au lieu de GO-2026-11-05-01"; exit 2; }
+ command -v curl >/dev/null 2>&1 || { echo "AMORCE SONDE V9 : curl absent : rien ne part (la minuterie passe par python3)"; exit 2; }
+ case "$ECHEANCE_UTC_S" in ''|*[!0-9]*) echo "AMORCE SONDE V9 : ECHEANCE_UTC_S non entière : rien ne part"; exit 2;; esac
+ case "$DUREE_MAX_S" in ''|*[!0-9]*) echo "AMORCE SONDE V9 : DUREE_MAX_S non entière : rien ne part"; exit 2;; esac
+--- tests/test_sonde_hote_durable_a1_v3_v8.py (renommé v9)
++++ tests/test_sonde_hote_durable_a1_v3_v9.py
+@@ -1,5 +1,5 @@
+ """Essais en mode jouet de la sonde v9 de l'hôte durable d'A1-v3 (contre-lectures `contre-lecture-sonde-v1.md` à
+-`contre-lecture-sonde-v3.md`, mémoire non renseignée des offres sans carte, mandataire du conteneur de la fille, réponse de
++`contre-lecture-sonde-v3.md`, machine à une carte (v9), mandataire du conteneur de la fille, réponse de
+ création catégorisée ; m7 : cas sain
+ et artefact pour chaque garde, l'amorce et le script de démarrage compris). Aucune location, aucun réseau, aucune clé : `curl`
+ et `vastai` sont des outils factices, les dépôts sont locaux, Vast est un fichier.
+@@ -24,15 +24,16 @@
+ 
+ RACINE = Path(__file__).resolve().parents[1]
+ GARDE = RACINE / ".claude" / "hooks" / "garde_calcul.py"
+-JOUR = dt.date(2026, 11, 4)
++JOUR = dt.date(2026, 11, 5)  # v9 : jour de validité de GO-2026-11-05-01 (passé explicitement, jamais pris à la collecte)
+ JETON = "ghp_jouet_sonde_v4_XYZ987654321"
+ CLE_VAST = "vastjouet-cle-instance-v3-0001"
+ CLE_COMPTE = "vastjouet-cle-compte-v3-0002"
+ ENTETE = ("| id | accordé le | type | périmètre | plafond | échéance | accordé par | référence |\n"
+           "|---|---|---|---|---|---|---|---|\n")
+ LIGNE_06 = "| GO-2026-11-04-06 | 2026-11-04 | calcul | A1-v3, Argon | 400 USD | 2026-11-18 | Lazar | mot |\n"
+-LIGNE_09 = "| GO-2026-11-04-09 | 2026-11-04 | calcul | machine de l'hôte durable | 35 USD | 2026-11-18 | Lazar | mot |\n"
+-OFFRE = {"id": 11, "num_gpus": 0, "dph_total": 0.12, "cpu_cores_effective": 8, "cpu_ram": 16000, "disk_space": 50,
++LIGNE_09_ANCIEN = "| GO-2026-11-04-09 | 2026-11-04 | calcul | machine de l'hôte durable | 35 USD | 2026-11-18 | Lazar | mot |\n"
++LIGNE_09 = "| GO-2026-11-05-01 | 2026-11-05 | calcul | sonde v9, machine à une carte | 1 USD | 2026-11-06 | Lazar | mot |\n"  # v9
++OFFRE = {"id": 11, "resource_type": "gpu", "num_gpus": 1, "dph_total": 0.12, "cpu_cores_effective": 8, "cpu_ram": 16000, "disk_space": 50,
+          "reliability": 0.995}
+ 
+ 
+@@ -79,14 +80,14 @@
+     reg.write_text("# R\n\n" + ENTETE + LIGNE_06 + kw.pop("ligne", LIGNE_09))
+     offres = tmp_path / "offres.json"
+     offres.write_text(json.dumps([OFFRE, dict(OFFRE, id=12, dph_total=0.09)]))
+-    a = dict(go="GO-2026-11-04-09", registre_main=str(reg), garde_main=str(GARDE), offres=str(offres), offre="12",
++    a = dict(go="GO-2026-11-05-01", registre_main=str(reg), garde_main=str(GARDE), offres=str(offres), offre="12",
+              commit_prive="a" * 40, journal_local=str(tmp_path / "journal-sonde-v9.log"), duree_s="1200",
+              verifier_seulement=False)
+     a.update(kw)
+     return type("A", (), a)()
+ 
+ 
+-ENV_PILOTE = {"GH_TOKEN": JETON, "VAST_API_KEY": CLE_COMPTE, "GO_ID": "GO-2026-11-04-09"}
++ENV_PILOTE = {"GH_TOKEN": JETON, "VAST_API_KEY": CLE_COMPTE, "GO_ID": "GO-2026-11-05-01"}
+ 
+ 
+ def test_louer_cas_sain_etat_ecrit_puis_seconde_location_refusee(tmp_path):
+@@ -103,7 +104,7 @@
+ 
+ 
+ @pytest.mark.parametrize("env_modif, kw, motif", [
+-    ({"GO_ID": None}, {}, "GO_ID=GO-2026-11-04-09 exigé"),
++    ({"GO_ID": None}, {}, "GO_ID=GO-2026-11-05-01 exigé"),
+     ({"CLE_ARGON": "x"}, {}, "clé de modèle"),
+     ({}, {"go": "GO-2026-11-04-06"}, "aucun autre GO"),
+     ({}, {"ligne": ""}, "absent"),
+@@ -224,9 +225,9 @@
+ 
+ def test_offre_la_moins_chere_tiree_de_la_reponse(tmp_path, capsys):
+     f = tmp_path / "offres.json"
+-    f.write_text(json.dumps([OFFRE, dict(OFFRE, id=12, dph_total=0.09), dict(OFFRE, id=13, dph_total=0.01, num_gpus=1)]))
++    f.write_text(json.dumps([OFFRE, dict(OFFRE, id=12, dph_total=0.09), dict(OFFRE, id=13, dph_total=0.01, num_gpus=2)]))
+     assert s.principal(["offre", "--offres", str(f)]) == 0 and capsys.readouterr().out.strip() == "12"
+-    f.write_text(json.dumps([dict(OFFRE, num_gpus=1)]))
++    f.write_text(json.dumps([dict(OFFRE, num_gpus=2)]))
+     assert s.principal(["offre", "--offres", str(f)]) == 2
+ 
+ 
+@@ -323,7 +324,7 @@
+     c = s.corps("a" * 40, OFFRE, 1200, JETON, 1_800_000_000)
+     assert set(c["env"]) == {"COMMIT_PRIVE", "GO_ID", "PRIX_H_USD", "DUREE_MAX_S", "DEPOT_URL", "GH_TOKEN", "ECHEANCE_UTC_S",
+                              "TIR_MINUTERIE"}
+-    assert c["label"] == "sonde-a1-v3-v9" and c["env"]["GO_ID"] == "GO-2026-11-04-09"
++    assert c["label"] == "sonde-a1-v3-v9" and c["env"]["GO_ID"] == "GO-2026-11-05-01"
+     assert c["env"]["ECHEANCE_UTC_S"] == "1800000000" and c["env"]["TIR_MINUTERIE"] == "0"
+     for mauvaise in (None, 0, -5, True, "1800000000"):
+         with pytest.raises(h.Refus, match="échéance absolue"):
+@@ -345,7 +346,7 @@
+         (d / nom).write_text("# factice\n")
+     (d / "sonde_hote_durable_a1_v3_v9.py").write_text(
+         "import os, sys, pathlib\npathlib.Path(os.environ['RACINE_AMORCE'], 'exec-atteint.txt').write_text(' '.join(sys.argv[1:]))\n")
+-    env = {"PATH": os.environ["PATH"], "COMMIT_PRIVE": "a" * 40, "GO_ID": "GO-2026-11-04-09", "PRIX_H_USD": "0.1",
++    env = {"PATH": os.environ["PATH"], "COMMIT_PRIVE": "a" * 40, "GO_ID": "GO-2026-11-05-01", "PRIX_H_USD": "0.1",
+            "DUREE_MAX_S": "1200", "ECHEANCE_UTC_S": "1800000000", "GH_TOKEN": JETON, "RACINE_AMORCE": str(racine),
+            "SAUTER_INSTALLATION": "1"}
+     for k, v in modif.items():
+@@ -363,7 +364,8 @@
+ @pytest.mark.parametrize("modif, motif", [
+     ({"GH_TOKEN": None}, "GH_TOKEN absente"), ({"CLE_ARGON": "x"}, "clé de modèle CLE_ARGON"),
+     ({"RR_ANTHROPIC_API_KEY_3": "x"}, "clé de modèle RR_ANTHROPIC_API_KEY_3"),
+-    ({"GO_ID": "GO-2026-11-04-06"}, "au lieu de GO-2026-11-04-09"), ({"DUREE_MAX_S": "12a"}, "non entière"),
++    ({"GO_ID": "GO-2026-11-04-06"}, "au lieu de GO-2026-11-05-01"), ({"DUREE_MAX_S": "12a"}, "non entière"),
++    ({"GO_ID": "GO-2026-11-04-09"}, "au lieu de GO-2026-11-05-01"),
+ ])
+ def test_amorce_artefacts(tmp_path, modif, motif):
+     r, racine = amorce(tmp_path, **modif)
+@@ -376,7 +378,7 @@
+     r, _ = amorce(tmp_path)
+     (racine / "amorce-depot/src/controle_ia/hote_durable_a1_v3.py").unlink()
+     (racine / "exec-atteint.txt").unlink()
+-    env = {"PATH": os.environ["PATH"], "COMMIT_PRIVE": "a" * 40, "GO_ID": "GO-2026-11-04-09", "PRIX_H_USD": "0.1",
++    env = {"PATH": os.environ["PATH"], "COMMIT_PRIVE": "a" * 40, "GO_ID": "GO-2026-11-05-01", "PRIX_H_USD": "0.1",
+            "DUREE_MAX_S": "1200", "ECHEANCE_UTC_S": "1800000000", "GH_TOKEN": JETON, "RACINE_AMORCE": str(racine),
+            "SAUTER_INSTALLATION": "1"}
+     r = subprocess.run(["bash", str(RACINE / s.AMORCE)], env=env, capture_output=True, text=True)
+@@ -413,7 +415,7 @@
+         r.travail, r.clone_prive, r.periode_s, r.attente_poussee_s = racine / "sonde-a1-v3-v9", clone, 0.1, 0
+         r.jouet, r.vast_jouet, r.aujourd_hui = True, tmp_path / "vast.json", JOUR
+         h.ClientVastJouet(r.vast_jouet)._ecrire({"instances": [{"id": 90000001, "label": etiquette}], "gestes": []})
+-        env = {"GO_ID": "GO-2026-11-04-09", "PRIX_H_USD": "0.12", "DUREE_MAX_S": "60", "GH_TOKEN": JETON,
++        env = {"GO_ID": "GO-2026-11-05-01", "PRIX_H_USD": "0.12", "DUREE_MAX_S": "60", "GH_TOKEN": JETON,
+                "CONTAINER_ID": "90000001", "CONTAINER_API_KEY": CLE_VAST, "COMMIT_PRIVE": "a" * 40,
+                "ECHEANCE_UTC_S": str(int(time.time()) + 3000), "TIR_MINUTERIE": "0"}
+         return r, env, nu
+@@ -794,46 +796,78 @@
+ 
+ 
+ 
+-# --- v5 : offres sans carte à `cpu_ram` = 0 (fait constaté par la fille, 4 novembre 2026, 22:31 UTC) -----------------------
++# --- v5 remplacé en v9 : les offres sans carte sont des volumes ; la sonde loue une machine à une carte ---------------------
++# (fait établi par la fille, 5 novembre 2026, 00:15 et 00:16 UTC : `num_gpus=0` ⇒ `resource_type` « disk »)
+ 
+-SANS_RAM = dict(OFFRE, id=21, cpu_ram=0, cpu_cores_effective=12, dph_total=0.08)
++GPU_OK = dict(OFFRE, id=21, resource_type="gpu", num_gpus=1, gpu_name="GTX_1070", cpu_cores_effective=14, cpu_ram=8007,
++              dph_total=0.055)
++VOLUME = dict(OFFRE, id=31, resource_type="disk", num_gpus=0, cpu_ram=0, dph_total=0.01)
+ 
+ 
+-def test_offre_sans_ram_renseignee_cas_sain():
+-    v = s.verifier_offre_sonde([SANS_RAM], 21)
+-    assert v["memoire_non_renseignee"] is True and v["cpu_ram"] is None and v["cpu_cores_effective"] == 12
+-    sans_champ = {k: x for k, x in SANS_RAM.items() if k != "cpu_ram"}
+-    assert s.verifier_offre_sonde([sans_champ], 21)["memoire_non_renseignee"] is True
+-    normale = s.verifier_offre_sonde([OFFRE], 11)
+-    assert normale["memoire_non_renseignee"] is False and normale["cpu_ram"] == 16000
+-    with pytest.raises(h.Refus, match="cpu_ram = 0 < 8000"):  # le lanceur durable, inchangé, la refusait
+-        h.verifier_offre([SANS_RAM], 21)
++def test_offre_gpu_conforme_cas_sain():
++    v = s.verifier_offre_sonde([GPU_OK], 21)
++    assert v["resource_type"] == "gpu" and v["num_gpus"] == 1 and v["cpu_ram"] == 8007 and v["memoire_non_renseignee"] is False
++    assert v["dph_total"] == 0.055 and v["gpu_name"] == "GTX_1070"
+ 
+ 
+ @pytest.mark.parametrize("modif, motif", [
+-    ({"cpu_cores_effective": 2}, "mémoire non renseignée par Vast et cpu_cores_effective = 2 < 4"),
+-    ({"cpu_ram": 4000}, "cpu_ram = 4000 < 8000"),
+-    ({"num_gpus": 1}, "sans carte"),
++    ({"resource_type": "disk", "num_gpus": 0}, "resource_type « disk » : volume de stockage"),
++    ({"resource_type": None}, "« gpu » exigé"), ({"resource_type": "cpu"}, "« gpu » exigé"),
++    ({"num_gpus": 2}, "2 carte(s) ; une exigée"), ({"num_gpus": 0}, "0 carte(s) ; une exigée"),
++    ({"num_gpus": True}, "carte(s) ; une exigée"),
++    ({"cpu_ram": 0}, "cpu_ram = 0 < 8000"),          # l'exception « non renseignée » de la v5 est retirée
++    ({"cpu_ram": None}, "cpu_ram = None < 8000"), ({"cpu_ram": 4000}, "cpu_ram = 4000 < 8000"),
++    ({"cpu_cores_effective": 2}, "cpu_cores_effective = 2 < 4"),
+     ({"disk_space": 20}, "disk_space"), ({"reliability": 0.9}, "reliability"), ({"dph_total": 0.41}, "prix horaire"),
+-    ({"cpu_ram": True}, "cpu_ram"),
+ ])
+-def test_offre_sans_ram_artefacts(modif, motif):
+-    with pytest.raises(h.Refus, match=motif):
+-        s.verifier_offre_sonde([dict(SANS_RAM, **modif)], 21)
++def test_offre_artefacts_v9(modif, motif):
++    with pytest.raises(h.Refus, match=re_echappe(motif)):
++        s.verifier_offre_sonde([dict(GPU_OK, **modif)], 21)
+ 
+ 
+-def test_la_moins_chere_et_journal_memoire_non_renseignee(tmp_path, capsys):
++def re_echappe(t):
++    import re
++    return re.escape(t)
++
++
++def test_la_moins_chere_ignore_les_volumes(tmp_path, capsys):
+     f = tmp_path / "offres.json"
+-    f.write_text(json.dumps([OFFRE, SANS_RAM, dict(SANS_RAM, id=22, cpu_cores_effective=2, dph_total=0.01)]))
++    f.write_text(json.dumps([GPU_OK, VOLUME, dict(GPU_OK, id=22, num_gpus=2, dph_total=0.02)]))
+     assert s.principal(["offre", "--offres", str(f)]) == 0 and capsys.readouterr().out.strip() == "21"
+-    with pytest.raises(h.Refus, match="moins chère"):
+-        s.offre_la_moins_chere_sonde(json.loads(f.read_text()), 11)
+-    a = args_louer(tmp_path)
+-    Path(a.offres).write_text(json.dumps([OFFRE, SANS_RAM]))
+-    a.offre = "21"
++    with pytest.raises(h.Refus, match="volume de stockage"):
++        s.offre_la_moins_chere_sonde(json.loads(f.read_text()), 31)
++    f.write_text(json.dumps([VOLUME]))
++    assert s.principal(["offre", "--offres", str(f)]) == 2
++
++
++def test_go_v9_cas_sain_et_artefacts(tmp_path):
++    reg = tmp_path / "go-v9.md"
++    reg.write_text("# R\n\n" + ENTETE + LIGNE_06 + LIGNE_09_ANCIEN + LIGNE_09)
++    assert s.verifier_go_sonde(reg, GARDE, "GO-2026-11-05-01", JOUR)["plafond_usd"] == 1
++    assert s.verifier_go_sonde(RACINE / "registres" / "go.md", GARDE, "GO-2026-11-05-01", JOUR)["echeance"] == "2026-11-06"
++    for go in ("GO-2026-11-04-09", "GO-2026-11-04-06"):
++        with pytest.raises(h.Refus, match="ne part que sous GO-2026-11-05-01"):
++            s.verifier_go_sonde(reg, GARDE, go, JOUR)
++    reg.write_text("# R\n\n" + ENTETE + LIGNE_09.replace("| 1 USD |", "| 2 USD |"))
++    with pytest.raises(h.Refus, match="exactement 1 USD"):
++        s.verifier_go_sonde(reg, GARDE, "GO-2026-11-05-01", JOUR)
++    reg.write_text("# R\n\n" + ENTETE + LIGNE_09)
++    with pytest.raises(h.Refus, match="hors de sa période"):
++        s.verifier_go_sonde(reg, GARDE, "GO-2026-11-05-01", dt.date(2026, 11, 7))
++
++
++def test_louer_refuse_le_go_09(tmp_path):
+     vast = h.ClientVastJouet(tmp_path / "vast.json")
+-    assert s.louer(a, vast, JOUR, dict(ENV_PILOTE)) == 0
+-    assert "mémoire non renseignée par Vast" in (tmp_path / "journal-sonde-v9.log").read_text()
++    env = dict(ENV_PILOTE, GO_ID="GO-2026-11-04-09")
++    assert s.louer(args_louer(tmp_path, go="GO-2026-11-04-09"), vast, JOUR, env) == 2 and vast.instances() == []
++
++
++def test_machine_refuse_le_go_09(monde):
++    r, env, nu = monde()
++    env["GO_ID"] = "GO-2026-11-04-09"
++    assert s.MachineSondeV9(r, env, 120).principal() == 0
++    j = versees(nu, s.BRANCHE_REFUS)[f"{s.BRANCHE_REFUS}/journal-sonde-a1-v3-v9.log"].decode()
++    assert "ne part que sous GO-2026-11-05-01" in j and "course factice détachée" not in j
+ 
+ 
+ def meminfo(tmp_path, ko):
+@@ -1137,7 +1171,7 @@
+ 
+ 
+ def test_moins_d_offres_conformes_que_cinq(tmp_path):
+-    offres = [OFFRES_V8[0], OFFRES_V8[1], dict(OFFRE, id=150, num_gpus=1, dph_total=0.01)]  # la carte n'est jamais essayée
++    offres = [OFFRES_V8[0], OFFRES_V8[1], dict(OFFRE, id=150, num_gpus=2, dph_total=0.01)]  # la carte n'est jamais essayée
+     c, compte, env = vastai_compteur(tmp_path, [NSA] * 3)
+     assert louer_v8(tmp_path, c, env, offres) == 2
+     assert Path(str(compte) + ".offres").read_text().split() == ["100", "101"]

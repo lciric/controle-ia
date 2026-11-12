@@ -1,0 +1,106 @@
+script éprouvé : lancer_p3bis_v2.sh 029bdb5c114a6166a21fa93724d71a2bf6158dc9686993424f6fbe8462352b08
+script éprouvé : verifications_p3bis_v2.py 1524df5f6432197fde4793a4fde56d4496407a107c88f5e294a6bc9716923054
+script éprouvé : essais_lanceur_p3bis_v2.sh a89745be6e9aaea55bf71252fd504eae06617453b2e5985a720c071876813ef6
+lignes changées dans la copie du lanceur : 3 (DEPOT, DEPOT_URL, INTERVALLE_OFFRE_S)
+L00-sain : code 0 ; CONFORME
+    | succès : True ; identifiant 99999999 ; message : 
+    création : GO, étiquette, branche, texte, dépôt de travail et commit passés à l'instance, jetons présents sans valeur : CONFORME
+    traces : instance écrite (cible unique des arrêts), offre choisie, un seul essai d'offre, aucun repli : CONFORME
+L01-relance-2-sain : code 0 ; CONFORME
+    | succès : True ; identifiant 99999999 ; message : 
+    relance : branche calcul/p3bis-reel-v2, étiquette p3bis-v2 : CONFORME
+L02-branche-presente : code 2 ; CONFORME
+    | branche calcul/p3bis-reel-v1 : git ls-remote, code 0 (2 attendu : absente du dépôt distant)
+L03-relance-sans-tentative : code 2 ; CONFORME
+    | relance 2 : branche calcul/p3bis-reel-v1 absente du dépôt distant (code 2) ; une relance suit une tentative
+L04-go-revoque : code 2 ; CONFORME
+    | GO de calcul : GO-2026-11-10-02 (ou GO-2026-11-02-29, qu'il prolonge) révoqué au registre des GO (GO-2026-11-10-99) : pas de création
+L04b-go-d-origine-revoque : code 2 ; CONFORME
+    | GO de calcul : GO-2026-11-10-02 (ou GO-2026-11-02-29, qu'il prolonge) révoqué au registre des GO (GO-2026-11-10-98) : pas de création
+L05-go-autre : code 2 ; CONFORME
+    | GO de calcul : GO-2026-11-08-13 : seul GO-2026-11-10-02 est accepté pour P3-bis : pas de création
+L06-date-apres-limite : code 3 ; CONFORME
+    | date du jour 2026-11-24 après le 2026-11-23 : aucune création (ligne de GO neuve, nœud)
+L06b-borne-de-creation-saine : code 0 ; CONFORME
+    | succès : True ; identifiant 99999999 ; message : 
+L06c-apres-la-borne-de-creation : code 3 ; CONFORME
+    | date du jour 2026-11-19 après la borne de création du 2026-11-18 (brouillon 10, R-2097) : aucune création, relance comprise
+L06d-apres-la-borne-avant-l-echeance : code 3 ; CONFORME
+    | date du jour 2026-11-23 après la borne de création du 2026-11-18 (brouillon 10, R-2097) : aucune création, relance comprise
+L07-date-passe-pendant-les-offres : code 3 ; CONFORME
+    | date du jour 2026-11-19 après la borne de création du 2026-11-18 (brouillon 10, R-2097) : aucune création, relance comprise
+L08-controles-ko : code 2 ; CONFORME
+    | contrôles avant dépense en échec : pas de création
+L09-controles-derniere-ligne : code 2 ; CONFORME
+    | contrôles : dernière ligne inattendue
+L10-jeton-court : code 2 ; CONFORME
+    | jeton absent (HF_TOKEN ou CONTROLE_IA_GITHUB_TOKEN) : pas de création
+L10b-jeton-absent : code 2 ; CONFORME
+    | jeton absent (HF_TOKEN ou CONTROLE_IA_GITHUB_TOKEN) : pas de création
+L11-copie-versee-autre : code 2 ; CONFORME
+    | surveiller_p3bis_v2.sh exécuté ≠ copie versée au commit S
+L12-preuve-absente : code 2 ; CONFORME
+    | preuves des essais : journal banc-recuperation-p3bis-v2.log absent de S
+L12b-preuve-sceau-faux : code 2 ; CONFORME
+    | preuves des essais : sceau de banc-lanceur-p3bis-v2.log absent ou non conforme à S
+L13-preuve-non-conforme : code 2 ; CONFORME
+    | preuves des essais : journal banc-controles-p3bis-v2.log : ligne d'échec avant le verdict : cas 3 : non conforme (cité)
+L14-amorce-non-citee : code 2 ; CONFORME
+    | empreinte de l'amorce (b331e44f763f87744b9669998c8a7aa32308e449d07ba414e6c2bb0bc4ed22f4) non citée par le texte
+L15-branche-citee-autre : code 2 ; CONFORME
+    | PREREG ou BRANCHE : la ligne « Lancement » de S cite autre chose
+L16-depot-url-autre : code 2 ; CONFORME
+    | DEPOT_URL : la ligne « Lancement » de S cite autre chose
+L17-pas-le-commit-de-scellement : code 2 ; CONFORME
+    | 7fcfb30754531df979c6483f24a03154ed02c0af n'ajoute pas prereg/P3-bis-temoin-positif-v1.md.sha256 : ce n'est pas le commit de scellement
+L18-scellement-non-pousse : code 2 ; CONFORME
+    | commit de scellement 312c67749437026c49acdf857a255788566d7df8 absent du dépôt distant
+L19-repli-ecrit : code 0 ; CONFORME
+    | succès : True ; identifiant 99999999 ; message : 
+    repli : douze essais processeur exigé, ligne de repli écrite, offre hors EPYC 7513 prise : CONFORME
+L20-aucune-offre-meme-en-repli : code 3 ; CONFORME
+    | aucune offre conforme, même en repli : pas de création
+L21-offre-au-troisieme-essai : code 0 ; CONFORME
+    | succès : True ; identifiant 99999999 ; message : 
+    trois essais, offre aux bornes exactes (2,10 USD/h, fiabilité 0,98, 30 cœurs) prise, aucun repli : CONFORME
+L22-offres-illisibles : code 2 ; CONFORME
+    | offres : relecture impossible (code 2)
+L23-instance-inconnue : code 2 ; CONFORME
+    | instances : non tolérée(s), ou liste illisible (voir les lignes ci-dessus et lancement.txt) : pas de création
+L24-toleree-relancee : code 2 ; CONFORME
+    | instances : non tolérée(s), ou liste illisible (voir les lignes ci-dessus et lancement.txt) : pas de création
+L25-nommee-en-marche-saine : code 0 ; CONFORME
+    | succès : True ; identifiant 99999999 ; message : 
+L25b-nommee-credit-court : code 3 ; CONFORME
+    | crédit insuffisant : pas de création ; recharge demandée à Lazar
+L26-nommee-mais-arretee : code 2 ; CONFORME
+    | instances : non tolérée(s), ou liste illisible (voir les lignes ci-dessus et lancement.txt) : pas de création
+L26b-nommee-go-inconnu : code 2 ; CONFORME
+    | instances : non tolérée(s), ou liste illisible (voir les lignes ci-dessus et lancement.txt) : pas de création
+L27-credit-insuffisant : code 3 ; CONFORME
+    | crédit insuffisant : pas de création ; recharge demandée à Lazar
+L27b-credit-exact : code 0 ; CONFORME
+    | succès : True ; identifiant 99999999 ; message : 
+L28-credit-illisible : code 2 ; CONFORME
+    | crédit illisible (show user, code 2) : pas de création
+L29-creation-refusee : code 4 ; CONFORME
+    | création douteuse (statuts 0 4 0) : vérifier « vastai show instances », sans --raw
+    création refusée : aucune ligne « instance » (aucune cible d'arrêt) : CONFORME
+L30-reponse-illisible-jeton : code 4 ; CONFORME
+    | création douteuse (statuts 0 4 0) : vérifier « vastai show instances », sans --raw
+    réponse illisible : jeton masqué dans reponse-masquee.txt : CONFORME
+L34-jeton-dans-la-reponse : code 0 ; CONFORME
+    | succès : True ; identifiant 99999998 ; message : jeton ***
+L31-dossier-existant : CONFORME
+L31-argument-S-court : CONFORME
+L31-argument-numerique : CONFORME
+L31-argument-marche : CONFORME
+L31-argument-N : CONFORME
+L31-argument-N0 : CONFORME
+L31-usage : CONFORME
+L32-garde-de-calcul-refuse : code 2 ; CONFORME
+    | arrêt avant la création (ligne 202)
+L33-outil-introuvable : CONFORME
+L35-aucun-autre-verbe (ni arrêt ni destruction par le lanceur) : CONFORME
+cas joués : 58
+FIN DU BANC DU LANCEUR DE P3-BIS ; cas non conformes : 0

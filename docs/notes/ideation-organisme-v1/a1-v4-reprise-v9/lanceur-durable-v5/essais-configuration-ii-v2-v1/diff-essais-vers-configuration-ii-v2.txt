@@ -1,0 +1,200 @@
+--- /home/user/controle-ia-travail/docs/notes/ideation-organisme-v1/a1-v4-reprise-v9/lanceur-durable-v5/test_lanceur_durable_v5_a1v4.py	2026-11-08 17:00:59.793791029 +0000
++++ /tmp/claude-0/-home-user/86976e6f-3fae-57b1-a905-26802f445363/scratchpad/essais-conf-v2/b/test_lanceur_durable_v5_a1v4_conf_ii_v2_b.py	2026-11-09 00:38:02.373009102 +0000
+@@ -27,7 +27,7 @@
+ from controle_ia import hote_durable_a1_v3_v4 as v4
+ from controle_ia import sonde_hote_durable_a1_v3_v10 as s10
+ 
+-ICI = Path(__file__).resolve().parent
++ICI = Path('/home/user/controle-ia-travail/docs/notes/ideation-organisme-v1/a1-v4-reprise-v9/lanceur-durable-v5')
+ _spec = importlib.util.spec_from_file_location("hote_durable_a1_v4_v5", ICI / "hote_durable_a1_v4_v5.py")
+ v5 = importlib.util.module_from_spec(_spec)
+ sys.modules["hote_durable_a1_v4_v5"] = v5
+@@ -53,10 +53,16 @@
+ CONTRAT = '{"success": true, "new_contract": 4242}'
+ PY_MACHINE = "/usr/bin/python3"  # Python 3.13 à numpy 2.5.3 sur l'hôte des essais (comme l'image)
+ MAINTENANT = dt.datetime(2026, 11, 8, 18, 0, 0, tzinfo=dt.timezone.utc)
+-FICHIERS_PUBLICS = ("pole/attaque_goodhart_v2.py", "pole/attaque_goodhart_v3.py", "pole/attaque_goodhart_v4.py", "pole/nul_v8.py",
+-                    "pole/nul_v9.py", "demonstrations/attaque_goodhart_v2.py", "demonstrations/attaque_goodhart_v3.py",
+-                    "demonstrations/banc_tricheurs_v7.py", "demonstrations/banc_tricheurs_v8.py", "demonstrations/banc_tricheurs_v9.py")
+-LANCEUR_GELE = "demonstrations/attaque_goodhart_v4.py"
++_CONF_II = json.loads((ICI / "configuration-mondes-variante-ii-v2.json").read_text(encoding="utf-8"))  # adaptation : monde jouet aux noms de la (ii) v2
++LANCEUR_GELE = _CONF_II["lanceur_gele"]
++FICHIERS_PUBLICS = tuple(sorted(set(_CONF_II["fichiers_geles_publics"]) - {LANCEUR_GELE}))
++PREFIXE_II = _CONF_II["prefixe_texte"]
++N_GELES_II = len(_CONF_II["fichiers_geles_publics"])
++LANCEUR_GELE_I = "demonstrations/attaque_goodhart_v4.py"  # variante (i), configuration v1 inchangée
++PUB_II = Path('/tmp/claude-0/-home-user/86976e6f-3fae-57b1-a905-26802f445363/scratchpad/commit-v5/public')  # clone public au commit préparé b8c1db3a (patchs v5 et lecteur)
++def nom_texte_ii(n):
++    return v5.nom_texte(n, PREFIXE_II)
++VERSION_CONF = {"i": "v1", "ii": "v2"}  # adaptation : la variante (ii) lue est la v2
+ 
+ 
+ def sha(o: bytes) -> str:
+@@ -87,13 +93,13 @@
+ def configuration(dossier: Path, racine_publique: Path | None, variante_fichier="ii", sceller_aussi=True, **modif) -> Path:
+     """La configuration livrée de la variante, fichiers gelés remplacés par ceux du dépôt public jouet, puis `modif`."""
+     variante = variante_fichier
+-    c = json.loads((ICI / f"configuration-mondes-variante-{variante}-v1.json").read_text(encoding="utf-8"))
++    c = json.loads((ICI / f"configuration-mondes-variante-{variante}-{VERSION_CONF[variante]}.json").read_text(encoding="utf-8"))
+     if racine_publique is not None:
+         c["fichiers_geles_publics"] = {r: sha((racine_publique / "orchestrator" / r).read_bytes()) for r in FICHIERS_PUBLICS + (LANCEUR_GELE,)}
+     for k, v in modif.items():
+         c.pop(k) if v is None else c.__setitem__(k, v)
+     dossier.mkdir(parents=True, exist_ok=True)
+-    p = dossier / f"configuration-mondes-variante-{variante}-v1.json"
++    p = dossier / f"configuration-mondes-variante-{variante}-{VERSION_CONF[variante]}.json"
+     p.write_text(json.dumps(c, ensure_ascii=False, indent=1) + "\n", encoding="utf-8")
+     if sceller_aussi:
+         sceller(p)
+@@ -114,7 +120,7 @@
+     bloc_e = "\n".join(f"{e}  {r}" for r, e in sorted(gelees.items()))
+     corps = (f"# Préenregistrement A1-v4 (jouet)\n\n{'<<CASE_CONFIGURATION>>' if marqueur else ''}\n{v5.DEBUT_PLAN}\n```\n{bloc_plan}\n```\n"
+              f"{v5.FIN_PLAN}\n\n{v5.DEBUT_EMPREINTES}\n```\n{bloc_e}\n```\n{v5.FIN_EMPREINTES}\n")
+-    p = racine_publique / (nom or v5.nom_texte(version))
++    p = racine_publique / (nom or nom_texte_ii(version))
+     p.parent.mkdir(parents=True, exist_ok=True)
+     p.write_text(corps, encoding="utf-8")
+     return p, sceller(p)
+@@ -310,18 +316,18 @@
+     livrée ; empreintes égales aux fichiers du clone public local s'il est présent."""
+     pub = Path("/home/user/ideation-organism")
+     for variante in ("i", "ii"):
+-        src = ICI / f"configuration-mondes-variante-{variante}-v1.json"
++        src = ICI / f"configuration-mondes-variante-{variante}-{VERSION_CONF[variante]}.json"
+         with pytest.raises(h.Refus, match="compagnon .sha256 absent"):
+             v5.lire_configuration_mondes(src)
+         copie = tmp_path / src.name
+         copie.write_bytes(src.read_bytes())
+         sceller(copie)
+         c = v5.lire_configuration_mondes(copie)
+-        assert c["variante"] == variante and c["lanceur_gele"] == LANCEUR_GELE and len(c["fichiers_geles_publics"]) == 11
+-        assert {"pole/attaque_goodhart_v4.py", "pole/nul_v9.py", "demonstrations/banc_tricheurs_v9.py", LANCEUR_GELE} <= set(c["fichiers_geles_publics"])
++        assert c["variante"] == variante and c["lanceur_gele"] == (LANCEUR_GELE if variante == "ii" else LANCEUR_GELE_I) and len(c["fichiers_geles_publics"]) == (N_GELES_II if variante == "ii" else 11)
++        assert {"pole/attaque_goodhart_v4.py", "pole/nul_v9.py", "demonstrations/banc_tricheurs_v9.py", (LANCEUR_GELE if variante == "ii" else LANCEUR_GELE_I)} <= set(c["fichiers_geles_publics"])
+         if (pub / "orchestrator" / "pole" / "nul_v9.py").is_file():
+-            assert v5.verifier_fichiers_geles(pub, c) == 11
+-    assert json.loads((ICI / "configuration-mondes-variante-ii-v1.json").read_text())["mondes_texte"] == "W2 et W2g"
++            assert v5.verifier_fichiers_geles(PUB_II if variante == "ii" else pub, c) == (N_GELES_II if variante == "ii" else 11)
++    assert json.loads((ICI / "configuration-mondes-variante-ii-v2.json").read_text())["mondes_texte"] == "W2 et W2g"
+ 
+ 
+ def test_texte_sain(tmp_path):
+@@ -329,11 +335,11 @@
+     conf = v5.lire_configuration_mondes(d["conf"])
+     t = v5.verifier_texte(d["texte"], d["sha_texte"], conf)
+     assert (t["version"], t["mondes"], t["plafond_usd"], t["go"], t["go_machine"]) == (1, "W2 et W2g", 200.0, "GO-2026-11-02-22", GO_M)
+-    assert t["nom"] == v5.nom_texte(1) and t["lignes_gelees"] == 11 and t["sha256"] == d["sha_texte"]
++    assert t["nom"] == nom_texte_ii(1) and t["lignes_gelees"] == N_GELES_II and t["sha256"] == d["sha_texte"]
+     assert v5.verifier_texte(d["texte"], d["sha_texte"], conf, GO_M)["go_machine"] == GO_M  # ligne go_machine égale à la ligne vérifiée
+     with pytest.raises(h.Refus, match="go_machine = 'GO-2026-11-08-12', la ligne vérifiée"):
+         v5.verifier_texte(d["texte"], d["sha_texte"], conf, "GO-2026-11-08-11")
+-    assert v5.verifier_fichiers_geles(d["pub"], conf) == 11
++    assert v5.verifier_fichiers_geles(d["pub"], conf) == N_GELES_II
+ 
+ 
+ @pytest.mark.parametrize("texte_modif, sha_faux, motif", [
+@@ -347,7 +353,7 @@
+     ({"go": "GO-2026-11-04-06"}, False, "go = 'GO-2026-11-04-06'"),
+     ({"mode": "essai"}, False, "mode = 'essai'"),
+     ({"go_machine": "GO-2026-11-02-22"}, False, "go_machine = 'GO-2026-11-02-22' illisible ou égal"),
+-    ({"nom": "orchestrator/prereg/preenregistrement-attaque-goodhart-v5-v1.md"}, False, "nom du texte"),
++    ({"nom": "orchestrator/prereg/preenregistrement-attaque-goodhart-v4-v1.md"}, False, "nom du texte"),  # adaptation : nom v4 sous le préfixe v5 de la (ii) v2
+     ({"fournisseurs": "argon, kimi"}, False, "fournisseurs"),
+     ({"gelees": {"pole/nul_v9.py": "0" * 64}}, False, "autre empreinte"),
+     ({"gelees": {"pole/nul_v9.py": None}}, False, "absents du bloc"),
+@@ -473,10 +479,10 @@
+     assert e["identifiant"] == 4242 and e["etiquette"] == "a1-v4-v9" and e["borne_signe_de_vie_utc"] == "2026-11-08T18:30:00Z"
+     assert e["echeance_finale_utc"] == dt.datetime.fromtimestamp(ech, dt.timezone.utc).strftime("%Y-%m-%dT%H:%M:%SZ")
+     assert (e["go_machine"], e["go_course"], e["plafond_machine_usd"], e["variante_mondes"]) == (GO_M, "GO-2026-11-02-22", 35.0, "ii")
+-    assert e["texte"] == v5.nom_texte(1) and e["mondes"] == ["W2", "W2g"]
++    assert e["texte"] == nom_texte_ii(1) and e["mondes"] == ["W2", "W2g"]
+     j = Path(a.journal_local).read_text()
+     assert "LIGNE POUR registres/etat.md" in j and "garde de dépense (1/2)" in j and "garde de dépense (2/2)" in j
+-    assert "plafond lu 35 USD" in j and "11 fichiers gelés publics égaux" in j and "W2 et W2g" in j
++    assert "plafond lu 35 USD" in j and f"{N_GELES_II} fichiers gelés publics égaux" in j and "W2 et W2g" in j
+     args_vastai = (dv / "arguments").read_text()
+     assert "CLE_ARGON=" in args_vastai and "GEMINI_API_KEY_2" not in args_vastai and "GO_MACHINE=GO-2026-11-08-12" in args_vastai
+     for s in (CLE, JETON, CLE_COMPTE):
+@@ -538,7 +544,7 @@
+     (d["pub"] / "orchestrator" / LANCEUR_GELE).write_text("# lanceur modifié\n")
+     code, a, dv = louer(tmp_path, depot=d)
+     j = Path(a.journal_local).read_text()
+-    assert code == 2 and appels(dv) == 0 and "fichier gelé modifié ou absent du clone public : demonstrations/attaque_goodhart_v4.py" in j
++    assert code == 2 and appels(dv) == 0 and f"fichier gelé modifié ou absent du clone public : {LANCEUR_GELE}" in j
+ 
+ 
+ def test_louer_verification_seule_rien_cree_deux_calculs(tmp_path):
+@@ -659,7 +665,7 @@
+     assert r.returncode == 0 and r.stdout.strip() == "21"
+     d = depot_public(tmp_path, tmp_path / "comp.json", git_aussi=False)
+     r = module_seul("verifier-texte", "--texte", str(d["texte"]), "--sha-texte", d["sha_texte"], "--configuration-mondes", str(d["conf"]))
+-    assert r.returncode == 0 and json.loads(r.stdout)["fichiers_geles_publics_egaux"] == 11 and not (tmp_path / "journal-location.log").exists()
++    assert r.returncode == 0 and json.loads(r.stdout)["fichiers_geles_publics_egaux"] == N_GELES_II and not (tmp_path / "journal-location.log").exists()
+     r = module_seul("verifier-texte", "--texte", str(d["texte"]), "--sha-texte", "e" * 64, "--configuration-mondes", str(d["conf"]))
+     assert r.returncode == 2 and "REFUS" in r.stderr
+ 
+@@ -687,7 +693,7 @@
+         (d / m).write_text(f'import pathlib\npathlib.Path({str(racine / "exec-atteint.txt")!r}).write_text("oui")\n')
+     mem = tmp_path / "meminfo"
+     mem.write_text(f"MemTotal:       {meminfo_kb} kB\n" if meminfo_kb is not None else "illisible\n")
+-    env = {"PATH": os.environ["PATH"], "COMMIT_PRIVE": "a" * 40, "COMMIT_PUBLIC": "b" * 40, "SHA_TEXTE": "c" * 64, "NOM_TEXTE": v5.nom_texte(1),
++    env = {"PATH": os.environ["PATH"], "COMMIT_PRIVE": "a" * 40, "COMMIT_PUBLIC": "b" * 40, "SHA_TEXTE": "c" * 64, "NOM_TEXTE": nom_texte_ii(1),
+            "COMMIT_REGISTRE": "d" * 40, "GO_ID": "GO-2026-11-02-22", "GO_MACHINE": GO_M, "CHEMIN_CONFIGURATION_MONDES": "docs/x/conf.json",
+            "SHA_CONFIGURATION_MONDES": "f" * 64, "PRIX_H_USD": "0.055", "ECHEANCE_UTC_S": "1800000000", "CLE_ARGON": CLE, "GH_TOKEN": JETON,
+            "RACINE_AMORCE": str(racine), "SAUTER_INSTALLATION": "1", "A1V4_MEMINFO": str(mem),
+@@ -730,7 +736,7 @@
+ 
+ # --- machine -----------------------------------------------------------------------------------------------------------------------
+ 
+-CHEMIN_CONF_DEPOT = "docs/notes/ideation-organisme-v1/a1-v4-reprise-v9/lanceur-durable-v5/configuration-mondes-variante-ii-v1.json"
++CHEMIN_CONF_DEPOT = "docs/notes/ideation-organisme-v1/a1-v4-reprise-v9/lanceur-durable-v5/configuration-mondes-variante-ii-v2.json"
+ 
+ 
+ @pytest.fixture
+@@ -780,7 +786,7 @@
+                        python_course=PY_MACHINE, port=t1.port_libre(), periode_s=0.1, duree_max_s=600, attente_relais_s=10, essais_poussee=2,
+                        attente_poussee_s=0, jouet=True, vast_jouet=tmp_path / "vast.json", aujourd_hui=JOUR)
+         h.ClientVastJouet(r.vast_jouet)._ecrire({"instances": [{"id": 90000001, "etat": "running", "label": etiquette}], "gestes": []})
+-        env = {"COMMIT_PRIVE": commit_prive, "COMMIT_PUBLIC": d["commit_public"], "SHA_TEXTE": d["sha_texte"], "NOM_TEXTE": v5.nom_texte(1),
++        env = {"COMMIT_PRIVE": commit_prive, "COMMIT_PUBLIC": d["commit_public"], "SHA_TEXTE": d["sha_texte"], "NOM_TEXTE": nom_texte_ii(1),
+                "COMMIT_REGISTRE": commit_registre, "GO_ID": "GO-2026-11-02-22", "GO_MACHINE": GO_M, "CHEMIN_CONFIGURATION_MONDES": CHEMIN_CONF_DEPOT,
+                "SHA_CONFIGURATION_MONDES": sha(conf_octets), "PRIX_H_USD": "0.2", "ECHEANCE_UTC_S": str(int(time.time()) + echeance_dans_s),
+                "CLE_ARGON": CLE, "GH_TOKEN": JETON, "CONTAINER_ID": "90000001", "CONTAINER_API_KEY": CLE_VAST}
+@@ -804,12 +810,12 @@
+     j = journal(f, b)
+     for attendu in ("hote-durable-a1-v4-v5 ; machine GO-2026-11-08-12 ; appels GO-2026-11-02-22", '"plafond_usd": 35.0', '"plafond_usd": 200.0',
+                     "garde de dépense (machine) : coût au plus", "variante (ii) ['W2', 'W2g']", "aucun doublon",
+-                    f"signe de vie poussé : {v5.BRANCHE_VIE}", "pièces gelées : 4 empreintes égales", "11 fichiers gelés publics égaux",
+-                    f"texte {v5.nom_texte(1)} {d['sha_texte']} = compagnon = SHA_TEXTE ; mondes « W2 et W2g »",
++                    f"signe de vie poussé : {v5.BRANCHE_VIE}", "pièces gelées : 4 empreintes égales", f"{N_GELES_II} fichiers gelés publics égaux",
++                    f"texte {nom_texte_ii(1)} {d['sha_texte']} = compagnon = SHA_TEXTE ; mondes « W2 et W2g »",
+                     "--verifier-seulement : code 0", "course lancée : PID", "fin du lanceur : code 0", "inchangé", "nature de la fin : fin_du_lanceur"):
+         assert attendu in j, attendu
+     assert f[f"{b}/code-sortie-lanceur.txt"].strip() == "0" and f"{b}/demarrage/amorce-a1v4-v5.log" in f
+-    assert f"{b}/sortie-attaque-goodhart-v4/manifeste.json" in f and f"{b}/configuration-mondes/configuration-mondes-variante-ii-v1.json" in f
++    assert f"{b}/sortie-attaque-goodhart-v5/manifeste.json" in f and f"{b}/configuration-mondes/configuration-mondes-variante-ii-v2.json" in f
+     assert f"{b}/garde-a1-v4.jsonl" in f and f"{b}/course-stdout-a1-v4.log" in f and f"{b}/relais-argon-journal-a1-v4.jsonl" in f
+     for ligne in f[f"{b}/{v5.LISTE_EMPREINTES}"].splitlines():
+         e, nom = ligne.split("  ", 1)
+@@ -827,9 +833,9 @@
+     m = v5.MachineV5(r, env)
+     m.conf = v5.lire_configuration_mondes(d["conf"])
+     cmd = m.cmd_course(True)
+-    assert cmd[3:7] == [PY_MACHINE, "-I", "-B", "demonstrations/attaque_goodhart_v4.py"] and cmd[-1] == "--verifier-seulement"
+-    assert cmd[cmd.index("--preenregistrement") + 1] == "prereg/preenregistrement-attaque-goodhart-v4-v1.md"
+-    assert cmd[cmd.index("--go") + 1] == "GO-2026-11-02-22" and cmd[7].endswith("a1-v4-reprise-v9-v1/sortie-attaque-goodhart-v4")
++    assert cmd[3:7] == [PY_MACHINE, "-I", "-B", "demonstrations/attaque_goodhart_v5.py"] and cmd[-1] == "--verifier-seulement"
++    assert cmd[cmd.index("--preenregistrement") + 1] == "prereg/preenregistrement-attaque-goodhart-v5-v1.md"
++    assert cmd[cmd.index("--go") + 1] == "GO-2026-11-02-22" and cmd[7].endswith("a1-v4-reprise-v9-v1/sortie-attaque-goodhart-v5")
+     assert "--verifier-seulement" not in m.cmd_course(False)
+ 
+ 
+@@ -848,7 +854,7 @@
+     ({}, {"SHA_CONFIGURATION_MONDES": "0" * 64}, "le pilote a vérifié"),
+     ({}, {"SHA_TEXTE": "e" * 64}, "différente de celle attendue"),
+     ({}, {"NOM_TEXTE": "orchestrator/prereg/preenregistrement-attaque-goodhart-v3-v4.md"}, "nom du texte"),
+-    ({}, {"NOM_TEXTE": "orchestrator/prereg/preenregistrement-attaque-goodhart-v4-v2.md"}, "texte introuvable"),
++    ({}, {"NOM_TEXTE": "orchestrator/prereg/preenregistrement-attaque-goodhart-v5-v2.md"}, "texte introuvable"),
+     ({}, {"CHEMIN_CONFIGURATION_MONDES": None}, "variable CHEMIN_CONFIGURATION_MONDES absente"),
+     ({}, {"GEMINI_API_KEY_2": "autre"}, "autre que CLE_ARGON"),
+     ({"echeance_dans_s": 3600 + 30}, {}, "échéance absolue trop proche"),

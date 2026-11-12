@@ -5,7 +5,9 @@
 # Variables passées par --env à la création de l'instance :
 #   COMMIT    commit de scellement du préenregistrement
 #   ETUDE     pilote (défaut) ou revalidation (revalidation courte de l'équivalence, P-007, lecture de R-085, avant le pilote)
-#   GH_TOKEN  jeton GitHub à grain fin, limité à lciric/controle-ia (contenu en lecture et écriture)
+#   GH_TOKEN  jeton GitHub à grain fin, limité au dépôt de travail privé lciric/controle-ia-travail (l'ancien
+#             lciric/controle-ia renommé ; contenu en lecture et écriture). Le nom lciric/controle-ia désigne désormais la
+#             copie expurgée publique (N-016) : jamais visée par l'instance
 #   HF_TOKEN  jeton Hugging Face en lecture (licences Llama 3.1 et Llama 3.2 acceptées sur le compte)
 #   BRANCHE   (facultatif) branche de résultats ; défaut calcul/t05-<ETUDE>-<MODE>-v1. Une branche qui existe déjà sur le
 #             dépôt distant arrête avant tout calcul : un relancement passe ici une branche nouvelle (…-v2 ; W-11)
@@ -15,7 +17,7 @@
 # TACHES (transmis au script du pilote).
 set -uo pipefail
 : "${COMMIT:?COMMIT absent}" "${GH_TOKEN:?GH_TOKEN absent}" "${HF_TOKEN:?HF_TOKEN absent}"
-DEPOT_URL="${DEPOT_URL:-https://github.com/lciric/controle-ia.git}"
+DEPOT_URL="${DEPOT_URL:-https://github.com/lciric/controle-ia-travail.git}"
 RACINE_AMORCE="${RACINE_AMORCE:-/root}"
 export HOME="${HOME:-/root}" DEPOT_URL
 cd "$RACINE_AMORCE" || exit 1

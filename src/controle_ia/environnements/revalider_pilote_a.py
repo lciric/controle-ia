@@ -47,7 +47,8 @@ from pathlib import Path
 import numpy as np
 import torch
 
-from ..gardes import GardeArret
+from ..gardes import (GardeArret, exiger_sans_signal, lever_sur_term, motif_d_arret,
+                      relever_term_apres)
 from ..harnais.activations import ecarts_par_jeton, passe_unique
 from ..harnais.run_harnais_factice import graine_entiere
 from ..harnais.validation_reelle import (ENTROPIE_CITEE, exiger_code_cite, exiger_code_importe_sous,
@@ -416,14 +417,17 @@ def executer(config: dict, racine: Path, run_id: str, prereg: str | None, chemin
     except Exception as e:          # garde, panne, signal TERM : consigné avec la règle sur les bras lus, puis propagé
         noyau_partiel, proposition = choisir_noyau(etat["lectures"])
         ecrire_resultat(racine, chemin_m, "arret", {
-            "etape": etat["etape"], "motif": f"{type(e).__name__}: {e}", "duree_s": round(time.perf_counter() - debut, 1),
+            "etape": etat["etape"], "motif": motif_d_arret(e), "duree_s": round(time.perf_counter() - debut, 1),
             "bras_lus": sorted(etat["lectures"]), "noyau_retenu_sur_les_bras_lus": noyau_partiel,
             "proposition_au_noeud": proposition})
+        relever_term_apres(e)       # TERM reçu, exception convertie par une bibliothèque : l'arrêt TERM fait foi (D-1)
         raise
 
 
 def exiger_echeance_bras(echeance: float, bras: str) -> None:
-    """Échéance du bras contrôlée avant le repère (vérification 2, W-3) ; la phase « chemin » la reçoit aussi."""
+    """Échéance du bras contrôlée avant le repère (vérification 2, W-3) ; la phase « chemin » la reçoit aussi. Un signal
+    TERM reçu et avalé par une bibliothèque y est relevé aussi (D-1)."""
+    exiger_sans_signal(f"avant le repère du bras {bras}")
     if time.perf_counter() > echeance:
         raise GardeArret(f"limite de durée du bras {bras} dépassée avant le repère")
 
@@ -552,6 +556,7 @@ def _executer_apres_manifeste(config, racine, chemin_m, manifeste, plan, ids_epi
         lecture = lire_bras(mesures, r["controle_negatif"], repere, r["rejeu_identique"], config, zone_generee=zone,
                             audit=audit, chemin=chemin["lecture"] if chemin else None, bras=bras,
                             memoire_pic_gio=r["memoire_pic_gio"], duree_projetee_s=projetee)
+        exiger_sans_signal(f"avant la lecture du bras {bras}")   # aucune lecture après un signal reçu (K-2)
         sortie = {"lecture": lecture, "repere": repere, "zone_generee": zone, "audit": audit,
                   "chemin": None if chemin is None else {"lecture": chemin["lecture"],
                                                          "controle_negatif": chemin["controle_negatif"]}}
@@ -575,12 +580,12 @@ def _executer_apres_manifeste(config, racine, chemin_m, manifeste, plan, ids_epi
               + [f"rapport au repère au-dessus de {config['rho_max']} au noyau « {b} »"
                  for b, x in etat["lectures"].items() if x.get("reserve_rho")],
               "bras": resultats}
+    exiger_sans_signal("avant le résumé")           # aucun résumé après un signal TERM, même avalé (D-1)
     ecrire_resultat(racine, chemin_m, "resume", resume)
     return resume
 
 
-def _signal_term(signum, frame):
-    raise GardeArret("signal TERM reçu (délai externe du run ou plafond de l'amorce) : arrêt consigné")
+_signal_term = lever_sur_term      # drapeau, puis exception (gardes, D-1)
 
 
 def _main(argv: list[str]) -> int:

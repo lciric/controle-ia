@@ -18,7 +18,7 @@
 #                 des tâches d'évaluation : `…` »), que ce script lit
 #   PREREG_ABSENT 1 seulement en mode jouet : répétition sans préenregistrement (run non décisif) ; CONFIG et TACHES
 #                 (revalidation : CONFIG, ENTRAINEMENT, EVALUATION) donnent alors les chemins (hors du dépôt possible)
-#   DEPOT_URL     défaut https://github.com/lciric/controle-ia.git
+#   DEPOT_URL     défaut https://github.com/lciric/controle-ia-travail.git (dépôt de travail privé ; N-016)
 #   GH_TOKEN      jeton GitHub à grain fin (dépôt distant GitHub) ; lu par un assistant d'identification, jamais écrit
 #   HF_TOKEN      jeton Hugging Face en lecture (mode reel) ; lu par huggingface_hub
 #   BRANCHE       défaut calcul/t05-pilote-<MODE>-v1 (revalidation : calcul/t05-revalidation-<MODE>-v1 ; le mode dans le
@@ -36,7 +36,7 @@ set -euo pipefail
 : "${COMMIT:?COMMIT obligatoire (commit de scellement du préenregistrement)}"
 ETUDE="${ETUDE:-pilote}"
 MODE="${MODE:-reel}"
-DEPOT_URL="${DEPOT_URL:-https://github.com/lciric/controle-ia.git}"
+DEPOT_URL="${DEPOT_URL:-https://github.com/lciric/controle-ia-travail.git}"
 case "$ETUDE" in
     pilote) BRANCHE="${BRANCHE:-calcul/t05-pilote-$MODE-v1}"; PREREG="${PREREG:-prereg/T0.5-pilote-8B-v1.md}" ;;
     revalidation) BRANCHE="${BRANCHE:-calcul/t05-revalidation-$MODE-v1}"
@@ -138,7 +138,38 @@ else
     journal "préenregistrement lu : $ATTENDUS tests attendus ; configuration $CONFIG ; tâches ${CITES[*]} présentes et scellées"
 fi
 
-pousser() { git push -q origin "$BRANCHE"; }
+# Droit d'écriture du jeton éprouvé avant toute installation (relecture du lancement de la revalidation, D-2 et L-6) :
+# la branche neuve est poussée telle quelle (commit extrait). Depuis la session de pilotage, le jeton ne peut pas être
+# éprouvé (le mandataire de sortie remplace les identifiants) ; une poussée refusée ici coûte quelques minutes, au lieu
+# de résultats restés sur une instance arrêtée (leçon de N-012). Trois tentatives, cinq secondes d'écart (incident de
+# réseau) ; puis refus : arrêt consigné au journal avec la cause de git, code 2. Une poussée refusée ne crée pas la
+# branche ; après une poussée réussie, la branche existe et un relancement en prend une nouvelle (…-v2 ; K-5).
+poussee_initiale=0
+for essai in 1 2 3; do
+    if git push -q origin "$BRANCHE" 2>"$TRAVAIL/poussee-initiale.err"; then poussee_initiale=1; break; fi
+    journal "poussée initiale de la branche $BRANCHE : tentative $essai refusée"
+    if [ "$essai" -lt 3 ]; then sleep 5; fi
+done
+if [ "$poussee_initiale" != 1 ]; then
+    cause=$( (grep -E '^(fatal|error|remote):' "$TRAVAIL/poussee-initiale.err" || tail -n 2 "$TRAVAIL/poussee-initiale.err") | tr '\n' ' ' || true)
+    journal "poussée initiale de la branche $BRANCHE refusée ($cause) : droit d'écriture du jeton ? arrêt avant l'installation"
+    exit 2
+fi
+journal "branche $BRANCHE poussée avant l'installation (droit d'écriture éprouvé)"
+
+pousser() {
+    # trois tentatives, attente croissante (15 s, puis 60 s) : une panne passagère du réseau à la fin d'un run de
+    # plusieurs heures ne laisse pas les résultats sur l'instance (état des lieux du pilote ; leçon de N-012) ; chaque
+    # refus est journalisé avec la cause donnée par git ; aucun repli silencieux
+    local essai cause
+    for essai in 1 2 3; do
+        if git push -q origin "$BRANCHE" 2>"$TRAVAIL/poussee.err"; then return 0; fi
+        cause=$( (grep -E '^(fatal|error|remote):' "$TRAVAIL/poussee.err" || tail -n 2 "$TRAVAIL/poussee.err") | tr '\n' ' ' || true)
+        journal "poussée de la branche $BRANCHE : tentative $essai refusée ($cause)"
+        if [ "$essai" -lt 3 ]; then sleep $((15 * essai * essai)); fi
+    done
+    return 1
+}
 traces() {
     # journal, sorties des tests et du run, versés sur la branche (hors arbre gelé) pour la session de pilotage ;
     # un dossier neuf à chaque versement (R12)
@@ -146,7 +177,7 @@ traces() {
     mkdir -p traces
     d=$(mktemp -d "traces/t05-$(date -u +%Y%m%d-%H%M%S)-XXXX")
     for f in "$JOURNAL" "$TRAVAIL/tests.txt" "$TRAVAIL/tests.err" "$TRAVAIL"/run.json "$TRAVAIL"/run.err \
-             "$TRAVAIL"/nvidia-smi.txt; do
+             "$TRAVAIL"/nvidia-smi.txt "$TRAVAIL"/pip-freeze.txt; do
         [ -f "$f" ] && cp "$f" "$d/"
     done
     (cd "$d" && sha256sum -- * > empreintes.sha256) || true          # R6 : traces scellées
@@ -171,11 +202,24 @@ pousser_vecteurs() {
     t1=$(printf '100644 blob %s\tvecteurs-par-action.npz\n100644 blob %s\tvecteurs-par-action.npz.sha256\n' "$b" "$s" | git mktree)
     t2=$(printf '040000 tree %s\t%s\n' "$t1" "$run" | git mktree)
     c=$(git commit-tree "$t2" -m "T0.5 — vecteurs par action du run $run (empreinte $(cut -c1-16 "$f.sha256"))")
-    if git push -q origin "$c:refs/heads/donnees/t05/$run"; then
-        journal "vecteurs poussés : branche donnees/t05/$run, commit $c, $taille octets"
-    else
-        journal "vecteurs : poussée impossible : restés sur l'instance"; return 1
+    # plomberie en échec (set -e est sans effet dans un appel « || ») : aucun commit, donc aucune poussée, sinon la
+    # poussée d'une référence vide passerait pour un succès (vérification courte du candidat 2, VC-01)
+    if ! [[ "$b" =~ ^[0-9a-f]{40}$ && "$s" =~ ^[0-9a-f]{40}$ && "$t1" =~ ^[0-9a-f]{40}$ && "$t2" =~ ^[0-9a-f]{40}$ \
+            && "$c" =~ ^[0-9a-f]{40}$ ]]; then
+        journal "vecteurs : commit impossible (plomberie git en échec) : non poussés, restés sur l'instance"; return 1
     fi
+    local essai cause                                 # trois tentatives, attente croissante, comme pousser()
+    for essai in 1 2 3; do
+        if git push -q origin "$c:refs/heads/donnees/t05/$run" 2>"$TRAVAIL/poussee-vecteurs.err"; then
+            journal "vecteurs poussés : branche donnees/t05/$run, commit $c, $taille octets"
+            return 0
+        fi
+        # cause donnée par git, comme pousser() (relecture R2, CO-03 : un refus de taille se lit ici)
+        cause=$( (grep -E '^(fatal|error|remote):' "$TRAVAIL/poussee-vecteurs.err" || tail -n 2 "$TRAVAIL/poussee-vecteurs.err") | tr '\n' ' ' || true)
+        journal "vecteurs : poussée, tentative $essai refusée ($cause)"
+        if [ "$essai" -lt 3 ]; then sleep $((15 * essai * essai)); fi
+    done
+    journal "vecteurs : poussée impossible : restés sur l'instance"; return 1
 }
 CONSIGNE=""
 consigner_arret() {
@@ -231,6 +275,11 @@ else
     # shellcheck disable=SC1091
     . .venv/bin/activate
     pip install -q -r requirements-gpu.txt
+fi
+# versions de toutes les dépendances, indirectes comprises, versées dans les traces (état des lieux, piste 14) ;
+# descriptif : un échec ne change pas le run, il est journalisé (aucun repli silencieux)
+if ! python -m pip freeze --all >"$TRAVAIL/pip-freeze.txt" 2>"$TRAVAIL/pip-freeze.err"; then
+    journal "pip freeze impossible (descriptif, sans effet sur le run) : $(tail -n 1 "$TRAVAIL/pip-freeze.err" | tr '\n' ' ')"
 fi
 
 python -c "import torch; print('torch', torch.__version__, 'cuda', torch.version.cuda, 'disponible', torch.cuda.is_available())" | tee -a "$JOURNAL"
@@ -303,5 +352,11 @@ ETAPE="fin"
 journal "fin : $RUN ; arrêter l'instance par son identifiant (R10)"
 CONSIGNE=1
 traces "fin"
-pousser
-journal "branche $BRANCHE poussée"
+# dernière poussée : elle porte aussi le commit des résultats si la première a échoué ; en échec, une ligne de synthèse
+# (relecture R2, CO-08) : le run est complet, la branche distante ne l'a pas, l'instance garde tout (PL-11)
+if pousser; then
+    journal "branche $BRANCHE poussée (résultats et traces)"
+else
+    journal "run complet, mais poussée finale impossible après trois tentatives : résultats et traces restés sur l'instance"
+    exit 1
+fi

@@ -1,0 +1,124 @@
+# diffs normalisés (v13 -> v14 dans les noms) : séquence, test de reprise, garde et test de garde (2026-11-10T09:20:01Z)
+## séquence v13 (noms normalisés en v14) / séquence v14
+3a4,6
+> # **Remplace la v13** : correction du défaut CV13-1 (garde témoin paramétrée, noms en arguments — la garde est indépendante de
+> # la version, comme `garde-lecture-seule-v12.sh` l'est déjà), correction CV13-3 (garde par empreinte en répétition), correction
+> # CV13-4 (renvoi de ligne dans le test de reprise). Aucune modification de science.
+11,14c14,19
+< # (sa présence = une exécution réelle a déjà commencé) et refuse toute sortie réelle explicitement nommée (jamais un préfixe
+< # que la répétition partage). La répétition écrit dans le **sous-dossier** `repetition-v14/`, hors de portée de la garde, mais
+< # **passe par la même étape 0** (fonction `etape_0`), pour que les gardes soient exercées (R5). Le témoin n'est jamais effacé :
+< # une relance après interruption est une **version nouvelle du préenregistrement** (R12), sauf reprise `LECTURE_SEULE` ci-dessous.
+---
+> # (sa présence = une exécution réelle a déjà commencé) et refuse toute sortie réelle explicitement nommée (`sortie-reelle-v14.json`
+> # et son `.partiel`) par la garde paramétrée `garde-trace-reelle-v14.sh` (CV13-1 : les noms sont passés en **arguments** et la
+> # garde ne contient aucun nom codé en dur ; le test déposé `test-garde-trace-v14.sh` vérifie aussi que les noms plantés sont ceux
+> # de la séquence). La répétition écrit dans le **sous-dossier** `repetition-v14/`, hors de portée de la garde, mais **passe par
+> # la même étape 0** (fonction `etape_0`), pour que les gardes soient exercées (R5). Le témoin n'est jamais effacé : une relance
+> # après interruption est une **version nouvelle du préenregistrement** (R12), sauf reprise `LECTURE_SEULE` ci-dessous.
+34a40
+> SORTIE=sortie-reelle-v14.json
+38c44
+< compagnons() { sha256sum -c analyse_fausses_alertes_v8.py.sha256 table_m2bis_m4_v8.py.sha256 table-m2bis-m4-v8.json.sha256 lecture_mecanique_v8.py.sha256 rediger_note_lecture_v7.py.sha256 commandes-lecture-reelle-v14.sh.sha256 garde-trace-reelle-v12.sh.sha256 test-garde-trace-v12.sh.sha256 garde-lecture-seule-v12.sh.sha256 test-lecture-seule-v14.sh.sha256; }
+---
+> compagnons() { sha256sum -c analyse_fausses_alertes_v8.py.sha256 table_m2bis_m4_v8.py.sha256 table-m2bis-m4-v8.json.sha256 lecture_mecanique_v8.py.sha256 rediger_note_lecture_v7.py.sha256 commandes-lecture-reelle-v14.sh.sha256 garde-trace-reelle-v14.sh.sha256 test-garde-trace-v14.sh.sha256 garde-lecture-seule-v12.sh.sha256 test-lecture-seule-v14.sh.sha256; }
+44c50
+<     bash garde-trace-reelle-v12.sh  # exit 3 si une trace d'exécution réelle existe
+---
+>     bash garde-trace-reelle-v14.sh "$TEMOIN" "$SORTIE" "$SORTIE.partiel"  # exit 3 si une trace d'exécution réelle existe (CV13-1 : noms en arguments)
+50,51c56,57
+<     [ -s sortie-reelle-v14.json ] && [ -e sortie-reelle-v14.json.sha256 ] || { echo "LECTURE_SEULE : aucune sortie réelle finale scellée" >&2; exit 6; }
+<     $PY -B -m controle_ia.scellement verifier sortie-reelle-v14.json
+---
+>     [ -s "$SORTIE" ] && [ -e "$SORTIE.sha256" ] || { echo "LECTURE_SEULE : aucune sortie réelle finale scellée" >&2; exit 6; }
+>     $PY -B -m controle_ia.scellement verifier "$SORTIE"
+54c60
+<     bash test-garde-trace-v12.sh
+---
+>     bash test-garde-trace-v14.sh
+61c67,68
+<   case "$DONNEES" in /home/claude/canal-conv-audit-n04/donnees/*) echo "la répétition ne lit jamais les données réelles" >&2; exit 4;; esac
+---
+>   case "$DONNEES" in /home/claude/canal-conv-audit-n04/donnees/*) echo "la répétition ne lit jamais les données réelles (chemin)" >&2; exit 4;; esac
+>   [ "$EMPREINTE" != "$EMPREINTE_REELLE" ] || { echo "la répétition ne lit jamais les données réelles (empreinte = réelle)" >&2; exit 4; }
+71c78
+<   [ "$($PY -I -B -c "import json;print(json.load(open('sortie-reelle-v14.json'))['manifeste']['commit'])")" = "$COMMIT" ] || { echo "commit ≠ manifeste de la sortie" >&2; exit 8; }
+---
+>   [ "$($PY -I -B -c "import json;print(json.load(open('$SORTIE'))['manifeste']['commit'])")" = "$COMMIT" ] || { echo "commit ≠ manifeste de la sortie" >&2; exit 8; }
+94,95c101,102
+<   $PY -I -B $SCRIPT --reel "$DONNEES" --empreinte-attendue "$EMPREINTE" --sondes-reelles "$NR" --sondes-placebo "$NP" --commit "$COMMIT" > "${PREF}sortie-reelle-v14.json.partiel"
+<   mv "${PREF}sortie-reelle-v14.json.partiel" "${PREF}sortie-reelle-v14.json"; sceller "${PREF}sortie-reelle-v14.json"
+---
+>   $PY -I -B $SCRIPT --reel "$DONNEES" --empreinte-attendue "$EMPREINTE" --sondes-reelles "$NR" --sondes-placebo "$NP" --commit "$COMMIT" > "${PREF}$SORTIE.partiel"
+>   mv "${PREF}$SORTIE.partiel" "${PREF}$SORTIE"; sceller "${PREF}$SORTIE"
+103c110
+<   $PY -I -B lecture_mecanique_v8.py "${PREF}sortie-reelle-v14.json" "$TABLE" --empreinte-donnees "$EMPREINTE" --empreinte-script "$EMP_SCRIPT" > "${PREF}lecture-mecanique-reelle-v14.json.partiel"
+---
+>   $PY -I -B lecture_mecanique_v8.py "${PREF}$SORTIE" "$TABLE" --empreinte-donnees "$EMPREINTE" --empreinte-script "$EMP_SCRIPT" > "${PREF}lecture-mecanique-reelle-v14.json.partiel"
+109c116
+<   $PY -I -B rediger_note_lecture_v7.py "${PREF}lecture-mecanique-reelle-v14.json" "${PREF}sortie-reelle-v14.json" --prereg "$PREREG" --commit "$COMMIT" --heure "$HEURE" --date "$DATE_LETTRES" --instance "$MESURE_INSTANCE" --table "$TABLE" > "${PREF}note-lecture-mecanique-v14.md.partiel"
+---
+>   $PY -I -B rediger_note_lecture_v7.py "${PREF}lecture-mecanique-reelle-v14.json" "${PREF}$SORTIE" --prereg "$PREREG" --commit "$COMMIT" --heure "$HEURE" --date "$DATE_LETTRES" --instance "$MESURE_INSTANCE" --table "$TABLE" > "${PREF}note-lecture-mecanique-v14.md.partiel"
+## test-lecture-seule v13 normalisé / v14
+37c37
+<          garde-trace-reelle-v12.sh test-garde-trace-v12.sh garde-lecture-seule-v12.sh test-lecture-seule-v14.sh \
+---
+>          garde-trace-reelle-v14.sh test-garde-trace-v14.sh garde-lecture-seule-v12.sh test-lecture-seule-v14.sh \
+53c53
+< # (B1) commit ≠ manifeste → 8 (note pas encore écrite ; la garde isolée laisse passer, puis le commit est comparé, ligne 68)
+---
+> # (B1) commit ≠ manifeste → 8 (note pas encore écrite ; la garde isolée laisse passer, puis le commit est comparé dans la branche LECTURE_SEULE)
+## garde-trace v12 / v14
+2,5c2,7
+< # Garde « une seule exécution réelle » (CV10-1), isolée pour être **testable** (R5) : exit 3 si une trace d'exécution réelle
+< # existe dans le dossier courant (témoin, sortie finale, ou `.partiel`), 0 sinon. Ne regarde **que** des noms explicites, jamais
+< # un préfixe que la répétition (sous-dossier `repetition-v12/`) partage. Appelée par `commandes-lecture-reelle-v12.sh` en mode
+< # réel, et exercée par `test-garde-trace-v12.sh` sur des états plantés.
+---
+> # Garde « une seule exécution réelle » (CV10-1, CV13-1), isolée pour être **testable** (R5) : exit 3 si une trace d'exécution
+> # réelle existe dans le dossier courant, 0 sinon. Les noms des traces sont passés en **arguments** (la garde est indépendante de
+> # la version ; CV13-1). Ne regarde **que** les noms passés, jamais un préfixe que la répétition partage. Appelée par
+> # `commandes-lecture-reelle-v14.sh` en mode réel, et exercée par `test-garde-trace-v14.sh` sur des états plantés.
+> #
+> # Usage : bash garde-trace-reelle-v14.sh TEMOIN SORTIE SORTIE_PARTIEL
+7c9,10
+< for f in execution-reelle-v12.commencee sortie-reelle-v12.json sortie-reelle-v12.json.partiel; do
+---
+> [ $# -ge 1 ] || { echo "usage : garde-trace-reelle-v14.sh TEMOIN [SORTIE [PARTIEL]]" >&2; exit 2; }
+> for f in "$@"; do
+## test-garde-trace v12 normalisé / v14
+2,3c2,5
+< # Test déposé (R5, CV10-1) de la garde `garde-trace-reelle-v14.sh` : un état **sain** (y compris avec le sous-dossier
+< # `repetition-v14/` et ses fichiers `sortie-reelle-v14-...`) passe ; chaque trace réelle plantée bloque (code 3).
+---
+> # Test déposé (R5, CV10-1, CV13-1) de la garde `garde-trace-reelle-v14.sh` : un état **sain** (y compris avec le sous-dossier
+> # `repetition-v14/` et ses fichiers `sortie-reelle-v14.json`) passe ; chaque trace réelle plantée bloque (code 3). Vérifie
+> # aussi que les noms plantés sont les noms que la séquence v14 utilise réellement (CV13-1 : les noms de la séquence **sont**
+> # les noms du test, plus de noms codés en dur qui divergent).
+6a9,12
+> # les trois noms que la séquence v14 pose (mêmes variables que la séquence)
+> TEMOIN=execution-reelle-v14.commencee
+> SORTIE=sortie-reelle-v14.json
+> PARTIEL="$SORTIE.partiel"
+9c15
+<   ( cd "$tmp/d" && bash "$G" ) >/dev/null 2>&1; local c=$?
+---
+>   ( cd "$tmp/d" && bash "$G" "$TEMOIN" "$SORTIE" "$PARTIEL" ) >/dev/null 2>&1; local c=$?
+15,17c21,23
+< rm -rf "$tmp/d"; mkdir -p "$tmp/d"; : > "$tmp/d/execution-reelle-v14.commencee"; essai "témoin posé" 3
+< rm -rf "$tmp/d"; mkdir -p "$tmp/d"; : > "$tmp/d/sortie-reelle-v14.json"; essai "sortie finale" 3
+< rm -rf "$tmp/d"; mkdir -p "$tmp/d"; : > "$tmp/d/sortie-reelle-v14.json.partiel"; essai "partiel" 3
+---
+> rm -rf "$tmp/d"; mkdir -p "$tmp/d"; : > "$tmp/d/$TEMOIN"; essai "témoin posé" 3
+> rm -rf "$tmp/d"; mkdir -p "$tmp/d"; : > "$tmp/d/$SORTIE"; essai "sortie finale" 3
+> rm -rf "$tmp/d"; mkdir -p "$tmp/d"; : > "$tmp/d/$PARTIEL"; essai "partiel" 3
+18a25,33
+> # vérifie que les noms du test sont ceux de la séquence v14 (CV13-1 : jamais de divergence)
+> SEQ=commandes-lecture-reelle-v14.sh
+> if [ -e "$SEQ" ]; then
+>   grep -q "TEMOIN=execution-reelle-v14.commencee" "$SEQ" || { echo "ÉCHEC : le TEMOIN de la séquence ne correspond pas"; FAIL=1; }
+>   grep -q "sortie-reelle-v14.json" "$SEQ" || { echo "ÉCHEC : la SORTIE de la séquence ne correspond pas"; FAIL=1; }
+>   echo "OK   noms du test = noms de la séquence v14"
+> else
+>   echo "INFO séquence v14 absente (pas encore déposée) ; vérification des noms reportée"
+> fi

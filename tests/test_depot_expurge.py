@@ -31,6 +31,34 @@ def test_appariement_par_segment():
     assert not de.correspond("donnees-bis/x", "donnees/**")
 
 
+def test_segment_double_etoile_au_milieu():
+    motif = "brouillons/**/corpus-primaire-*/**"
+    assert de.correspond("brouillons/corpus-primaire-v1/a.md", motif)                      # zéro dossier
+    assert de.correspond("brouillons/canal/envois/x/corpus-primaire-v2/sous/b.json", motif)
+    assert not de.correspond("brouillons/canal/corpus-primaire-v1", motif)                # le dossier seul, sans fichier
+    assert not de.correspond("brouillons/canal/corpus-secondaire-v1/a.md", motif)
+    assert not de.correspond("docs/corpus-primaire-v1/a.md", motif)
+
+
+def test_corpus_et_lots_de_tournoi_jamais_dans_la_copie():
+    """Le corpus intégral des idées ne quitte jamais le dépôt privé. Cas sains : une note voisine et le compagnon
+    `.sha256` du lot restent."""
+    assert de.motif_de("brouillons/canal-reprise-releve-v1/envois/p/corpus-primaire-v3/idee-001.md") is not None
+    assert de.motif_de("livrables/lot-ideation-tournoi-v47-v1.zip") is not None
+    assert de.motif_de("livrables/lot-ideation-tournoi-v47-v1.zip.sha256") is None
+    assert de.motif_de("brouillons/canal-reprise-releve-v1/envois/p/synthese-v1.md") is None
+
+
+def test_releve_de_gemini_jamais_dans_la_copie():
+    """R-348 : la clé Vast.ai gardée par Lazar (N-038 (c)) est écrite en clair sous `gemini/` ; ce dossier ne passe
+    jamais dans la copie expurgée. Cas sain : un fichier du programme reste."""
+    porteur = "gemini/11_EDIFICE_CERTIFIE_54_CORRECTIFS_L_STAR_V2_TAIF/run_campagne_gpu_72h_5_volets_llama3.py"
+    assert de.motif_de(porteur) is not None
+    assert de.motif_de("gemini/README.md") is not None
+    assert de.motif_de("src/controle_ia/scellement.py") is None
+    assert de.motif_de("gemini-bis/x.py") is None
+
+
 def test_fichiers_charges_par_le_code_jamais_retires():
     suivis = subprocess.run(["git", "-C", str(RACINE), "ls-files"], capture_output=True, text=True,
                             check=True).stdout.split("\n")
@@ -136,9 +164,53 @@ def test_copie_de_bout_en_bout_saine_puis_artefact(tmp_path, monkeypatch, capsys
     assert list((tmp_path / "sortie-artefact").glob("*.bundle")) == []
 
 
+def test_garde_des_secrets_saine_et_artefact():
+    """R-349 : valeurs de clés de l'environnement et formes connues, dans un fichier ou dans une archive gardée ; la
+    valeur n'est jamais dite ; chemins, noms de configuration et valeurs courtes ne sont pas lus comme des clés ; `RR_*`
+    le sont depuis R-351."""
+    fausse = "0123456789abcdef" * 4
+    env = {"FAUSSE_API_KEY": fausse, "RR_ANTHROPIC_API_KEY": "rr" + "7" * 30, "SESSION_TOKEN_FILE": "/run/jeton/abc123def456ghi789",
+           "GIT_CONFIG_KEY_0": "http.https://example.invalid/.extraheader", "HOME": "/root", "COURT_TOKEN": "a1b2"}
+    valeurs = de.valeurs_secretes(env)
+    assert set(valeurs) == {"FAUSSE_API_KEY", "RR_ANTHROPIC_API_KEY"}
+    assert de.secrets_dans("notes.md", b"aucun secret ici", valeurs) == []
+    trouve = de.secrets_dans("src/config.py", ("CLE = '" + fausse + "'").encode(), valeurs)
+    assert trouve == ["src/config.py : valeur de FAUSSE_API_KEY"] and fausse not in " ".join(trouve)
+    assert de.secrets_dans("b.py", b"x = 'sk-ant-" + b"A" * 30 + b"'", {}) == ["b.py : clé Anthropic"]
+    brut = de.secrets_dans("livrables/r.zip", _zip({"d/e.txt": fausse.encode()}), valeurs)
+    assert "livrables/r.zip!d/e.txt : valeur de FAUSSE_API_KEY" in brut  # zip non compressé : aussi l'archive elle-même
+    tampon = io.BytesIO()
+    with zipfile.ZipFile(tampon, "w", compression=zipfile.ZIP_DEFLATED) as z:
+        z.writestr("d/e.txt", ("prefixe " * 50 + fausse).encode())
+    compresse = de.secrets_dans("livrables/c.zip", tampon.getvalue(), valeurs)
+    assert compresse == ["livrables/c.zip!d/e.txt : valeur de FAUSSE_API_KEY"], "compressé : seul le membre la révèle"
+
+
+def test_copie_refusee_si_un_secret_est_garde(tmp_path, monkeypatch, capsys):
+    _depot_factice(tmp_path / "secret", copie_cachee=False)
+    fausse = "fedcba9876543210" * 4
+    (tmp_path / "secret" / "notes-cle.md").write_text(f"cle : {fausse}\n", encoding="utf-8")
+    _git_factice(tmp_path / "secret", "add", "-A")
+    _git_factice(tmp_path / "secret", "commit", "-q", "-m", "secret")
+    monkeypatch.setattr(de, "RACINE", tmp_path / "secret")
+    monkeypatch.setenv("FAUSSE_API_KEY", fausse)
+    capsys.readouterr()
+    assert de.main(["HEAD", str(tmp_path / "sortie-secret")]) == 1
+    err = capsys.readouterr().err
+    assert "notes-cle.md : valeur de FAUSSE_API_KEY" in err and fausse not in err
+    assert list((tmp_path / "sortie-secret").glob("*.bundle")) == []
+
+
 def test_archive_d_un_format_non_examine_arrete(tmp_path, monkeypatch):
     _depot_factice(tmp_path / "gz", copie_cachee=False, compresse=True)
     monkeypatch.setattr(de, "RACINE", tmp_path / "gz")
     with pytest.raises(SystemExit, match="format non examiné"):
         de.main(["HEAD", str(tmp_path / "sortie-gz")])
     assert list((tmp_path / "sortie-gz").glob("*.bundle")) == []
+
+
+def test_pdf_de_sous_dossier_retire():
+    d = de
+    assert any(d.correspond("docs/sources/pdf/bisociation-litterature-reelle-v1/arxiv-2306.01495.pdf", m) for m, _ in d.RETRAITS)
+    assert not any(d.correspond("docs/sources/pdf/bisociation-litterature-reelle-v1/arxiv-2306.01495.pdf.sha256", m)
+                   for m, _ in d.RETRAITS)

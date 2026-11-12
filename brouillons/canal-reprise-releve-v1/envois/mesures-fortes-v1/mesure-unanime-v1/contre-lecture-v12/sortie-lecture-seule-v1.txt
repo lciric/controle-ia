@@ -1,0 +1,68 @@
+== cas 0 : sans MESURE_INSTANCE (attendu 1, message « MESURE_INSTANCE obligatoire »)
+cas0   OK       code 1   (attendu 1  ) | dernière(s) ligne(s) du journal : commandes-lecture-reelle-v12.sh: line 67: MESURE_INSTANCE: MESURE_INSTANCE obligatoire (qui lance : lignée et modèle)
+MESURE_INSTANCE obligatoire (qui lance : lignée et modèle)
+== cas A : préenregistrement non scellé (attendu 1, GardeArret)
+casA   OK       code 1   (attendu 1  ) | dernière(s) ligne(s) du journal :     raise GardeArret(f"{p} : empreinte compagnon {c.name} absente") controle_ia.gardes.GardeArret: preenregistrement-mesure-unanime-v12.md : empreinte compagnon preenregistrement-mesure-unanime-v12.md.sha256 absente 
+ls-casA.out:GardeArret(f"{p} : emprei
+== cas B : préenregistrement scellé (copie), aucune sortie (attendu 6)
+casB   OK       code 6   (attendu 6  ) | dernière(s) ligne(s) du journal : préenregistrement v12 scellé, conforme et intact : 89d278e8e7ca02d1a8b4942b25c466287e70bce2a5c4aa190524355a82f56186 LECTURE_SEULE : aucune sortie réelle finale scellée 
+== fabrication de la sortie ARTEFACT (npz synthétique 3 + 2 sondes ; empreinte de données retouchée vers la réelle)
+artefact : 27233 octets ; empreinte_donnees retouchée = 968414fc7ce7db935c2c4a390a13e2eceebe2fd722628cccb52caf27128004cf
+== cas C : sortie présente, non scellée (attendu 6)
+casC   OK       code 6   (attendu 6  ) | dernière(s) ligne(s) du journal : préenregistrement v12 scellé, conforme et intact : 89d278e8e7ca02d1a8b4942b25c466287e70bce2a5c4aa190524355a82f56186 LECTURE_SEULE : aucune sortie réelle finale scellée 
+== cas C bis : sortie scellée puis corrompue d'un octet (attendu ≠ 0, message du vérificateur, aucune lecture écrite)
+casCb  OK       code 1   (attendu 1  ) | dernière(s) ligne(s) du journal : préenregistrement v12 scellé, conforme et intact : 89d278e8e7ca02d1a8b4942b25c466287e70bce2a5c4aa190524355a82f56186 ARRÊT : sortie-reelle-v12.json : empreinte 1cf84fde4c7a… ≠ scellée 08d3fdecbd92… 
+empreinte 1cf84fde4c7a… ≠ scellée 08d3fdecbd92…
+   état après C bis : sortie-reelle-v12.json sortie-reelle-v12.json.brute sortie-reelle-v12.json.sha256 
+== cas D1 : table en vigueur absente (attendu ≠ 0, message de cat)
+casD1  OK       code 1   (attendu 1  ) | dernière(s) ligne(s) du journal : LECTURE_SEULE : aucune note scellée pour note-lecture-mecanique-v12.md ; reprise des étapes (3) et (4) possible cat: table-en-vigueur-v12.txt: No such file or directory 
+== cas D1 bis : compagnon de la table en vigueur faux (attendu ≠ 0, sha256sum)
+casD1b OK       code 1   (attendu 1  ) | dernière(s) ligne(s) du journal : table-en-vigueur-v12.txt: FAILED sha256sum: WARNING: 1 computed checksum did NOT match 
+   état après D1 bis : sortie-reelle-v12.json sortie-reelle-v12.json.brute sortie-reelle-v12.json.sha256 table-en-vigueur-v12.txt table-en-vigueur-v12.txt.sha256 
+== cas D2 : commit ≠ manifeste (attendu 8)
+casD2  OK       code 8   (attendu 8  ) | dernière(s) ligne(s) du journal : table-en-vigueur-v12.txt: OK commit ≠ manifeste de la sortie 
+   état après D2 : sortie-reelle-v12.json sortie-reelle-v12.json.brute sortie-reelle-v12.json.sha256 table-en-vigueur-v12.txt table-en-vigueur-v12.txt.sha256 
+== cas D3 : empreinte des données du manifeste ≠ réelle (attendu : refus de la lecture à l'étape (3), code 1, aucune note)
+casD3  OK       code 1   (attendu 1  ) | dernière(s) ligne(s) du journal : table-en-vigueur-v12.txt: OK empreinte des données de la sortie ≠ celle attendue 
+empreinte des do
+   état après D3 : lecture-mecanique-reelle-v12.json.partiel sortie-reelle-v12.json sortie-reelle-v12.json.brute sortie-reelle-v12.json.sauve sortie-reelle-v12.json.sha256 sortie-reelle-v12.json.sha256.sauve table-en-vigueur-v12.txt table-en-vigueur-v12.txt.sha256 
+== cas E : cas sain (attendu 0 ; lecture et note écrites et scellées)
+casE   OK       code 0   (attendu 0  ) | dernière(s) ligne(s) du journal : première ligne : la synthèse a raison (comparateur par épisode entier ; sommes sans niveau sous dépendance non vue, maximum tenu) — proposé à Lazar pour G1 et H2 réserves : [] 
+   état après E : lecture-mecanique-reelle-v12.json lecture-mecanique-reelle-v12.json.sha256 note-lecture-mecanique-v12.md note-lecture-mecanique-v12.md.sha256 sortie-reelle-v12.json sortie-reelle-v12.json.brute sortie-reelle-v12.json.sha256 table-en-vigueur-v12.txt table-en-vigueur-v12.txt.sha256 
+lecture-mecanique-reelle-v12.json: OK
+note-lecture-mecanique-v12.md: OK
+contre-lecture v12 (Fable 5.1), artefact, écrite après le relevé `date -u` de 04:54:07 UTC, le 28 octobre 2026. Préenregistrement **scellé** (compagnon vérifié) : `preenregistrement-mesure-unanime-v12.md` (`89d278e8e7ca02d1a8b4942b25c466287e70bce2a5c4aa190524355a82f56186`), commit du scelleme
+   occurrences de « RÉPÉTITION GÉNÉRALE » dans la note (attendu 0 : commit ≠ repetition-generale) : 0
+== cas F : second appel (attendu 7 ; rien réécrit)
+casF   OK       code 7   (attendu 7  ) | dernière(s) ligne(s) du journal : OK 08d3fdecbd92…  sortie-reelle-v12.json LECTURE_SEULE : la note note-lecture-mecanique-v12.md est déjà scellée (R12) ; la séquence est allée au bout, rien à reprendre 
+   lecture-mecanique-reelle-v12.json: OK
+   lecture-mecanique-reelle-v12.json.sha256: OK
+   note-lecture-mecanique-v12.md: OK
+   note-lecture-mecanique-v12.md.sha256: OK
+== cas G : note et compagnon retirés, lecture scellée intacte (attendu 0 ; note refaite ; lecture et compagnon intacts)
+casG   OK       code 0   (attendu 0  ) | dernière(s) ligne(s) du journal : première ligne : la synthèse a raison (comparateur par épisode entier ; sommes sans niveau sous dépendance non vue, maximum tenu) — proposé à Lazar pour G1 et H2 réserves : [] 
+   lecture-mecanique-reelle-v12.json: OK
+   lecture-mecanique-reelle-v12.json.sha256: OK
+   date de la lecture (attendu 2000) : 2000-01-01 ; note : note-lecture-mecanique-v12.md note-lecture-mecanique-v12.md.sha256 
+== cas G ter : lecture scellée puis corrompue d'un octet, note retirée (attendu : refus à l'étape (3), code ≠ 0, AUCUNE note)
+casGt  OK       code 1   (attendu 1  ) | dernière(s) ligne(s) du journal : table-en-vigueur-v12.txt: OK ARRÊT : lecture-mecanique-reelle-v12.json : empreinte ec488c6d7a20… ≠ scellée b63fa5ef9a50… 
+empreinte ec488c6d7a20… ≠ scellée b63fa5ef9a50…
+   note écrite ? aucune (attendu)
+== cas G quater : lecture présente mais NON scellée (coupure entre mv et sceller) (attendu 0 ; lecture refaite à l'identique et scellée ; note écrite)
+casGq  OK       code 0   (attendu 0  ) | dernière(s) ligne(s) du journal : première ligne : la synthèse a raison (comparateur par épisode entier ; sommes sans niveau sous dépendance non vue, maximum tenu) — proposé à Lazar pour G1 et H2 réserves : [] 
+   lecture identique à l'octet ? oui ; état : lecture-mecanique-reelle-v12.json lecture-mecanique-reelle-v12.json.sha256 note-lecture-mecanique-v12.md note-lecture-mecanique-v12.md.sha256 sortie-reelle-v12.json sortie-reelle-v12.json.brute sortie-reelle-v12.json.sha256 table-en-vigueur-v12.txt table-en-vigueur-v12.txt.sha256 
+== cas H : lecture absente, un .partiel de lecture laissé (coupure pendant l'étape (3)) ; note absente (attendu 0 ; lecture refaite, .partiel disparu)
+casH   OK       code 0   (attendu 0  ) | dernière(s) ligne(s) du journal : première ligne : la synthèse a raison (comparateur par épisode entier ; sommes sans niveau sous dépendance non vue, maximum tenu) — proposé à Lazar pour G1 et H2 réserves : [] 
+   lecture identique à l'octet ? oui ; état : lecture-mecanique-reelle-v12.json lecture-mecanique-reelle-v12.json.sha256 note-lecture-mecanique-v12.md note-lecture-mecanique-v12.md.sha256 sortie-reelle-v12.json sortie-reelle-v12.json.brute sortie-reelle-v12.json.sha256 table-en-vigueur-v12.txt table-en-vigueur-v12.txt.sha256 
+== cas I : note présente mais NON scellée (coupure entre mv et sceller de la note) (attendu 0 ; note refaite et scellée)
+casI   OK       code 0   (attendu 0  ) | dernière(s) ligne(s) du journal : première ligne : la synthèse a raison (comparateur par épisode entier ; sommes sans niveau sous dépendance non vue, maximum tenu) — proposé à Lazar pour G1 et H2 réserves : [] 
+   état : lecture-mecanique-reelle-v12.json lecture-mecanique-reelle-v12.json.sha256 note-lecture-mecanique-v12.md note-lecture-mecanique-v12.md.sha256 sortie-reelle-v12.json sortie-reelle-v12.json.brute sortie-reelle-v12.json.sha256 table-en-vigueur-v12.txt table-en-vigueur-v12.txt.sha256 
+== témoin et garde isolée, dans ce dossier de travail (hors de la séquence) : pose 1 → 0 ; pose 2 → 3 ; garde → 3
+   pose 1 : rc=0
+   pose 2 : rc=1
+   garde isolée : rc=3
+== relecture : où la séquence écrit « && { » (aucune ne doit finir une fonction)
+19:# note est absente (défaut CV11-1 de la v11 : `[ -e X ] && { … }` sous `set -e`) ; on ne réécrit jamais un fichier scellé.
+37:sceller() { [ -e "$1.sha256" ] && { echo "déjà scellé, non réécrit (R12) : $1" >&2; return 0; }; $PY -B -m controle_ia.scellement sceller "$1"; }
+87:    [ -e "$TABLE.partiel" ] && { echo "$TABLE.partiel : interruption précédente, version nouvelle (R12)" >&2; exit 5; }
+fin

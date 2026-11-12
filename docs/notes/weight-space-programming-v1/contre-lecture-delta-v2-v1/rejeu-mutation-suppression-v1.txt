@@ -1,0 +1,26 @@
+F
+=================================== FAILURES ===================================
+_____________________ test_liste_fermee_saine_et_artefacts _____________________
+
+mini_depot = (PosixPath('/tmp/pytest-of-root/pytest-314/test_liste_fermee_saine_et_art0/depot'), 'b92e38aaf71af239463fbe3defd52ddce2272264', '75ad1c28fc18a89a14cdda18a55d0081c48ee9b5')
+
+    def test_liste_fermee_saine_et_artefacts(mini_depot):
+        d, base, code = mini_depot
+        assert garde_code.verifier_liste_fermee(d, code, base, ["src/a.py", "src/b.py"])["n_fichiers"] == 2
+        with pytest.raises(garde_code.GardeCode, match="hors liste"):
+            garde_code.verifier_liste_fermee(d, code, base, ["src/a.py"])
+        with pytest.raises(garde_code.GardeCode, match="absents"):
+            garde_code.verifier_liste_fermee(d, code, base, ["src/a.py", "src/b.py", "src/c.py"])
+        (d / "src" / "vieux.py").unlink()
+        _git(d, "add", "-A")
+        _git(d, "commit", "-q", "-m", "suppression")
+>       with pytest.raises(garde_code.GardeCode, match="suppression"):
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+E       Failed: DID NOT RAISE GardeCode
+
+tests/test_sparks_exp7_nul_v2.py:250: Failed
+=========================== short test summary info ============================
+FAILED tests/test_sparks_exp7_nul_v2.py::test_liste_fermee_saine_et_artefacts
+!!!!!!!!!!!!!!!!!!!!!!!!!! stopping after 1 failures !!!!!!!!!!!!!!!!!!!!!!!!!!!
+1 failed, 68 deselected in 2.92s
+rc=1

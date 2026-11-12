@@ -1,0 +1,450 @@
+{
+ "workflow": "wf_0db3c142-d6f",
+ "script": "verification-r2-pilote-t05-c3-wf_0db3c142-d6f.js",
+ "script_sha256": "32d8567f124a074a5624ebf635cba312fa1b4f97c1fa186cc2a4191809a7a46c",
+ "journal_sha256": "7776b434b0248359e99d9286f7caab1243b395f956b654b01e2956f7e6fd771f",
+ "resultats": [
+  {
+   "etiquette": "verification:code",
+   "agent": "ac2c2305ab9eebacd",
+   "resultat": {
+    "angle": "code",
+    "resume": "Aucun bloquant, aucun majeur. La correction de VC-01 (c8a3325) est juste et complète pour la fonction : les cinq sorties de la plomberie (deux hash-object, deux mktree, commit-tree) sont exigées en 40 caractères hexadécimaux avant toute poussée. La sonde, point de panne par point de panne, donne « commit impossible … restés sur l'instance » sans aucune poussée ; l'ancien script donnait un faux « vecteurs poussés … commit , ». Rien ne change par ailleurs : codes de sortie (1 sur un arrêt, 0 sur un run complet), commit des résultats, poussée finale ; la ligne nouvelle est bien dans le journal versé d'un run complet.\nR5 : le test ajouté échoue sur l'ancien script (1 failed, ligne 422, faux succès reproduit) et passe sur le nouveau (1 passed). Le fichier entier, en place : 33 passed in 282.78s (0:04:42). Collecte : 689 tests, égal au candidat 3.\nLes lignes VC-01 à VC-08 du candidat 3 disent vrai, à des nuances d'information près (UC-05). L'arbre gelé de 7b07300 est égal à celui de c8a3325 (ainsi que e4be3e1, 71f5174, 4f3f478). Depuis a744490, seul c8a3325 le touche.\nUn constat mineur : UC-01, la récupération ne reconnaît pas le nouveau message dans sa ligne indicative ; le KO 5a rattrape le cas. Six informations : UC-02 à UC-07.",
+    "reponses": [
+     {
+      "question": "1. VC-01 : la correction est-elle juste, complète, sans effet de bord sur la suite du script (codes de sortie, résultats, poussée finale) ?",
+      "reponse": "Oui, sur les trois points.\n\nJuste : pousser_vecteurs n'est appelée que sous « || true » (l. 235 et 350), donc set -e est ignoré dans tout son corps. Un c vide faisait de la poussée une suppression d'une référence absente, que le dépôt local accepte (code 0). La garde (l. 207-210) exige le format exact des cinq valeurs et rend 1 avant la boucle de poussée. Les variables sont locales et affectées avant le test : rien à craindre de set -u. bash -n est correct.\n\nComplète : la sonde test_sonde_uc_plomberie.py fait échouer tour à tour hash-object (les deux appels, puis le seul 2e), mktree (1er puis 2e appel) et commit-tree. Avec le nouveau script, les cinq cas donnent code 1, « commit impossible … restés sur l'instance », aucune tentative, aucune branche. Avec l'ancien, les cinq donnent « vecteurs poussés … commit , 4096 octets ».\n\nSans effet de bord : la sonde test_sonde_uc_run_complet.py couvre le run complet avec vecteurs.\n- Cas sain : code 0, vecteurs poussés (commit f205e1b3…), dernière ligne « (résultats et traces) ».\n- Panne : code 0, même dernière ligne, aucune branche, et la ligne « commit impossible » dans le journal versé.\n- Sur un arrêt, le code reste 1.\n\nRestes : UC-01 à UC-03, liés à la correction ; UC-06 et UC-07, antérieurs."
+     },
+     {
+      "question": "2. R5 : le test ajouté échoue-t-il sur l'ancien script et passe-t-il sur le nouveau ?",
+      "reponse": "Oui. J'ai monté deux arbres minimaux sous verification-c3/code/r5/.\n- Contenu commun, tiré de 7b07300 : pyproject.toml, conftest.py, le fichier de test (aea1925a…), et les modules __init__, gardes et scellement (égaux à a744490).\n- Script : ancien = git show a744490:… (012a2116…) ; nouveau = git show 7b07300:… (077424d0…).\n\nRésultats :\n- Ancien script : « 1 failed in 0.91s », code 1, à l'assertion de la ligne 422. Le journal montre « vecteurs poussés : branche donnees/t05/20261012-045458-t05-pilote-jouet, commit , 4096 octets » : le faux succès est reproduit.\n- Nouveau script : « 1 passed in 0.81s », code 0.\n\nCas sain de la garde : test_vecteurs_refus_passager_puis_poussee_et_cause_journalisee passe en place, et la sonde du run complet sain pousse les vecteurs."
+     },
+     {
+      "question": "3. tests/test_script_instance_t05.py en entier, en place : dernière ligne ?",
+      "reponse": "« 33 passed in 282.78s (0:04:42) », code 0 ; de 04:56:28 à 05:01:12 UTC, avec --basetemp sous mon dossier.\n\nDurées :\n- tests à attentes réelles : 90,82 + 75,95 + 75,61 + 15,56 = 257,94 s, soit environ 4,3 min ;\n- test_poussee_initiale : 10,71 s ;\n- le nouveau test : 0,57 s.\n\nCollecte seule en place : 689 tests, dont 33 dans ce fichier. C'est égal à « Tests attendus : 689 » du candidat 3 (l. 16), au journal de la répétition jouet (« tests collectés : 689 ») et à 688 + 1."
+     },
+     {
+      "question": "4. Les lignes VC-01 à VC-08 de la table du candidat 3 disent-elles vrai ?",
+      "reponse": "Oui.\n- VC-01 (l. 454) : vrai ; voir les questions 1 et 2.\n- VC-02 (l. 455), « voir VT-09 » : « Calcul » (l. 173) écrit environ 4 minutes et « départ du run attendu vers 900 à 950 s après la création ». Ma mesure (257,94 s) le confirme, et c8a3325 n'ajoute aucune attente.\n- VC-03, VC-04, VC-06 à VC-08 (l. 456) : vrai. src/ est inchangé depuis a744490 ; la ligne de synthèse de VC-06 est intacte (désormais l. 360). La raison « sans effet sur la lecture » tient.\n- VC-05 (l. 457) : vrai dans chaine-c3/recuperation_pilote_v1.sh (0c712381…) : KO « 6 aucune trace versée » à la l. 168, recherche de nvidia-smi.txt et pip-freeze.txt dans tous les dossiers nouveaux aux l. 176-178.\n\nNuances d'information (UC-05) : pour VC-06, la condition « si le script est rouvert » était remplie, et le changement n'a pas été adopté, pour une raison valable ; pour VC-07, aucune action n'était proposée, si bien que « non adopté » est un abus de mots.\n\nLes gravités sont conformes au fichier versé …verification-c2-resultats-v1.json (1f78fa75…)."
+     },
+     {
+      "question": "5. L'arbre gelé de 7b07300 est-il égal à celui de c8a3325 ? Rien d'autre n'a-t-il changé ? Pistes fragiles ?",
+      "reponse": "Oui, il est égal : git diff --quiet c8a3325 7b07300 -- <CHEMINS_GELES> rend le code 0. Même résultat pour 4f3f478, 71f5174 et e4be3e1.\n\nRien d'autre n'a changé :\n- depuis a744490, git log ne liste que c8a3325, et --stat ne montre que le script (+6) et le test (+20) ;\n- l'arbre de travail est égal à HEAD, sans fichier non suivi dans l'arbre gelé ;\n- hors de l'arbre gelé, seuls des brouillons, des documents, prereg/contre-lectures/ et des registres ont changé.\n\nCODE_RELU = 7b07300 est cohérent avec sceller_pilote_v1.sh:63 et avec les contrôles avant dépense (l. 71).\n\nPistes fragiles :\n- UC-01 à UC-07.\n- Rien de l'arbre gelé ne doit bouger avant le scellement, README.md, .claude/, .gitignore et les requirements compris. Corriger UC-02, UC-03 ou UC-07 imposerait une nouvelle répétition. UC-01 est hors de l'arbre gelé, mais la récupération est jouée par la répétition en cours et doit égaler sa copie versée à S.\n- Restes déjà déclarés : CO-15 et K-1, réseau, durée des juges.\n- Doute : le comportement de GitHub devant la suppression d'une référence absente n'est pas éprouvé ; la question est sans objet désormais."
+     }
+    ],
+    "constats": [
+     {
+      "id": "UC-01",
+      "gravite": "mineur",
+      "objet": "chaine-c3/recuperation_pilote_v1.sh:174 (0c712381…) ; message émis par scripts/pilote_t05_instance.sh:209",
+      "constat": "La ligne indicative « KO? journal » de la récupération cherche « vecteurs (absents|trop gros|: empreinte non conforme|: poussée impossible) ». Elle ne reconnaît pas le nouveau message « vecteurs : commit impossible (plomberie git en échec) : non poussés, restés sur l'instance ». Seul l'indice de diagnostic manque : le KO 5a (branche des vecteurs absente, instance gardée, PL-11) se déclenche, et le plan v3 interdit toute destruction avant la vérification des vecteurs. Sur un arrêt, la ligne n'est de toute façon pas dans le journal versé (UC-06) : seul le run complet est touché.",
+      "preuve": "P='vecteurs (absents|trop gros|: empreinte non conforme|: poussée impossible)' ; printf « … vecteurs : commit impossible (plomberie git en échec) : … » | grep -E \"$P\" → code 1 ; « vecteurs : poussée impossible : … » → code 0 ; « vecteurs trop gros (…) : … » → code 0. La ligne 174 n'appelle pas ko() : elle n'est pas comptée dans les échecs. Aucun autre consommateur de ces lignes dans la chaîne ni dans scripts/ (grep).",
+      "action": "Ajouter « |: commit impossible » à l'alternative de la ligne 174, ou chercher « restés sur l'instance ». Ne le faire que si la répétition jouet doit être rejouée de toute façon : la récupération est jouée par elle et doit égaler sa copie versée à S. Sinon, déclarer la ligne indicative incomplète, le KO 5a faisant foi."
+     },
+     {
+      "id": "UC-02",
+      "gravite": "information",
+      "objet": "scripts/pilote_t05_instance.sh:200-210",
+      "constat": "En cas de panne de la plomberie, la cause donnée par git (par exemple « fatal: … ») n'est pas journalisée ; elle l'est pour les poussées (CO-03). Le journal ne porte que la ligne générique « commit impossible ». La cause part sur la sortie d'erreur du conteneur, probablement lisible par vastai logs (doute : non éprouvé ici). Elle n'est ni dans journal.txt ni dans les traces.",
+      "preuve": "Sonde test_sonde_uc_plomberie.py : le journal du nouveau script ne contient que « vecteurs : commit impossible (plomberie git en échec) : non poussés, restés sur l'instance » ; « fatal: panne simulée … » n'y figure pas. Les l. 200-204 ne redirigent pas la sortie d'erreur.",
+      "action": "Aucune maintenant : toucher l'arbre gelé remettrait en cause CODE_RELU et la répétition. Si le code est rouvert : 2>>\"$TRAVAIL/plomberie-vecteurs.err\", et citer sa dernière ligne dans le journal."
+     },
+     {
+      "id": "UC-03",
+      "gravite": "information",
+      "objet": "scripts/pilote_t05_instance.sh:207-208",
+      "constat": "La garde exige 40 caractères hexadécimaux, donc des objets SHA-1. Sur un dépôt SHA-256 (64 caractères), elle refuserait à tort : vecteurs non poussés, KO 5a, instance gardée, sans perte silencieuse. Sans objet pour ce pilote : clone de GitHub en SHA-1, image python:3.11-bookworm.",
+      "preuve": "git rev-parse --show-object-format → sha1 ; init.defaultObjectFormat réglé ni au niveau global ni au niveau système (code 1) ; image --image python:3.11-bookworm (lancer_pilote_v1.sh:185).",
+      "action": "Aucune. Si le code est rouvert : ^[0-9a-f]{40}([0-9a-f]{24})?$, ou tester le code de retour de chaque commande."
+     },
+     {
+      "id": "UC-04",
+      "gravite": "information",
+      "objet": "tests/test_script_instance_t05.py:407-424",
+      "constat": "Le test du dépôt n'éprouve que la panne de hash-object. Les quatre autres points (hash-object du sceau seul, mktree 1 et 2, commit-tree) ne sont éprouvés que par ma sonde, hors du dépôt, avec le résultat attendu.",
+      "preuve": "test_sonde_uc_plomberie.py (1528f6cd…), sortie sonde-plomberie-sortie.txt (d580a767…) : cinq cas, ancien script en faux succès, nouveau script en « commit impossible », sans tentative ni branche.",
+      "action": "Aucune. Si le test est rouvert, le paramétrer par mktree et commit-tree."
+     },
+     {
+      "id": "UC-05",
+      "gravite": "information",
+      "objet": "brouillons/T0.5-pilote-8B-v1-candidat3.md:456",
+      "constat": "VC-06 : c2 proposait le changement « si le script est rouvert ». c8a3325 a rouvert le script sans l'adopter, avec une raison exacte : le plan v3, étape 6, lit le journal, et l'absence de « poussée du run impossible » lève l'ambiguïté. VC-07 : c2 ne proposait aucune action, si bien que « non adopté » est un abus de mots, sans conséquence.",
+      "preuve": "Rapport c2 : VC-06, « Si le script est rouvert : … » ; VC-07, « Action : aucune ». git diff a744490 7b07300 -- scripts : seules les l. 205-210 sont ajoutées ; la ligne de synthèse est intacte, désormais l. 360.",
+      "action": "Aucune. Facultatif : « VC-07 : aucune action proposée »."
+     },
+     {
+      "id": "UC-06",
+      "gravite": "information",
+      "objet": "scripts/pilote_t05_instance.sh:225-236 (consigner_arret)",
+      "constat": "Sur un arrêt, la ligne des vecteurs, quelle qu'en soit l'issue, est écrite après le versement et la poussée des traces : elle n'est jamais dans le journal versé. C'est antérieur à c8a3325 et inchangé. La session connaît l'issue par la branche (5a, 5b) et par vastai logs (20 dernières lignes affichées par l'amorce).",
+      "preuve": "test_sonde_uc_journal_verse.py (c8ae6026…), nouveau script. Arrêt avec hash-object en panne : journal local « vecteurs : commit impossible … », journal versé traces/t05-…/journal.txt sans ligne de vecteurs. Arrêt sain : journal local « vecteurs poussés : … commit 9b8ca553… », journal versé sans ligne de vecteurs, branche présente.",
+      "action": "Aucune (la récupération lit la branche)."
+     },
+     {
+      "id": "UC-07",
+      "gravite": "information",
+      "objet": "scripts/pilote_t05_instance.sh:184 et 357-358 (traces, poussée finale)",
+      "constat": "Un commit des traces en échec est muet (« … >/dev/null 2>&1 || true »). La dernière ligne dit alors « branche … poussée (résultats et traces) » alors qu'aucune trace n'est versée, avec le code 0. C'est la même famille que VC-01, antérieur. La récupération le rattrape (l. 168, KO « 6 aucune trace versée … instance gardée »). Très improbable : commit local d'un petit dossier, juste après celui des résultats.",
+      "preuve": "test_sonde_uc_journal_verse.py, run complet, git factice dont seul le commit « traces de l'instance » échoue : code 0 ; dernière ligne « branche calcul/t05-pilote-jouet-v1 poussée (résultats et traces) » ; aucun dossier traces/ sur la branche ; aucune ligne d'échec au journal.",
+      "action": "Aucune maintenant (arbre gelé). Si le script est rouvert : journaliser l'échec du commit des traces et le dire dans la dernière ligne."
+     }
+    ],
+    "rapport_markdown_chemin": "/tmp/claude-0/-home-user/5a6b9d1d-b17d-59a1-a770-8737a831fe0a/scratchpad/verification-c3/code/rapport-code.md"
+   }
+  },
+  {
+   "etiquette": "verification:texte",
+   "agent": "a048a1b3bcf32859d",
+   "resultat": {
+    "angle": "texte",
+    "resume": "Le candidat 3 est scellable en l'état du point de vue du texte : 0 bloquant, 0 majeur, 12 mineurs, 7 informations. Ses empreintes sont conformes (normalisé 83056d15…, 689 tests collectés).\nLa table de traitement de la vérification c2 (39 lignes, 54 constats) dit vrai pour 31 lignes. 6 ne disent vrai qu'en partie : VT-11, VN-03, VN-08, VN-18, VH-07 et VH-11. 2 décrivent un engagement ou un message à venir : VT-12 et VN-09/17. Les lignes qui renvoient aux bancs des contrôles et du scellement, à la répétition ou au message restent sous condition.\nLa liste des causes d'arrêt est fermée ; aucun arrêt ne reste sans classement. Cinq points de conduite sont non écrits : perte d'instance pendant le run (journal muet), récupération des résultats non poussés, origine du seuil de 1 500 s, arrêt du run relancé ou crédit insuffisant, classes qui se chevauchent.\nN-019 est partout la décision de Lazar, avec l'option (a) en condition, et toutes les valeurs sont exactes. Le GO de Lazar (GO-2026-10-12-01, R-147) est arrivé pendant la vérification ; les gardes de la chaîne passent sur les registres courants.\nR-147 lève le retrait de R-145 et élargit la délégation, ce que le texte ne dit pas. Le GO nomme « le brouillon 10 » : traiter les mineurs hors du texte, par une ligne R-… au scellement, plutôt que par un brouillon 11.\nR1 est complet. Les changements du brouillon 10 sont motivés, mais le résumé de la Transparence est incomplet. Plusieurs lignes renvoient au plan v2 et à « douze scripts ».",
+    "reponses": [
+     {
+      "question": "1. La table « Traitement de la vérification courte du candidat 2 » dit-elle vrai ?",
+      "reponse": "Oui pour l'essentiel. La table a 39 lignes pour 54 constats ; ses comptes sont exacts (8 majeurs, 29 mineurs, 17 informations ; 6 sceptiques, aucun réfuté).\n- Lignes vraies (31) : VT-01 à VT-10, VT-13, VT-14 ; VC-01 à VC-08 ; VN-01, VN-02, VN-04 à 07, VN-10, VN-11, VN-14, VN-12, VN-13 ; VH-01 à VH-06, VH-08 à VH-10, VH-12. Pour VH-01, VH-02, VH-05 et VH-06, le code est vrai mais les bancs restent à jouer.\n- Lignes vraies en partie (6) :\n  - VT-11 : la proposition v2 dit encore « prêt (préenregistrement vérifié, chaîne et bancs) » ;\n  - VN-03 : le résidu de la l. 16 de etat.md n'a été corrigé qu'à d4475b6, pendant la vérification ;\n  - VN-08 : les rapports c2 ne sont cités par empreinte dans aucun registre ;\n  - VN-18 : non traité, l'incohérence des fourchettes reste à la l. 173 ;\n  - VH-07 : le banc du scellement n'est pas encore versé ;\n  - VH-11 : « aucune action » alors que le plan v3 l'a traité.\n- Lignes sous condition (2) : VT-12 et VN-09/17. Restent aussi sous condition : le message à Lazar (VN-02, VN-12, VN-13, VT-11) ; la répétition jouet (en cours à 7b07300) ; les bancs des contrôles et du scellement, injouables avant les épingles. Le banc du générateur (21/21) et celui du lanceur (50/50) sont conformes."
+     },
+     {
+      "question": "2. Préséance et causes d'arrêt : sans ambiguïté, liste fermée, cohérentes avec le plan v3, le lanceur, les contrôles et la récupération ? Un cas réel resterait-il sans classement ?",
+      "reponse": "La liste est fermée (« tout autre cas : cause indéterminée »), et aucun arrêt réel ne reste sans classement.\nCohérence :\n- plan v3 : étapes 4, 5, 6 et 7 alignées ; étape 4 bis cohérente, mais elle attend en dur « BRANCHE=…-v1 », alors qu'un relancement porte -v2 (UT-11) ;\n- lanceur : il contrôle les trois mots et une seule instance ; la cause tirée de la liste, l'étape et le motif restent de la procédure ;\n- contrôles et récupération en relance : -v1 présente sans episodes.json et -v2 absente, ce qui est la forme mécanique de « poussé » et de « après la poussée initiale ».\nCas classés par une lecture non écrite :\n- UT-01 : pendant le run, le journal de l'instance est muet ; une perte d'instance n'établit donc jamais l'absence d'episodes.json et tombe en « indéterminée », alors que « instance perdue » est rangée en infrastructure ;\n- UT-02 : résultats écrits mais non poussés, sans procédure de récupération (R-060) ni règle de lecture, avec un conflit possible avec la l. 191 ;\n- UT-03 : seuil de 1 500 s compté depuis la ligne AMORCE (l. 200) ou depuis la création (l. 173) ;\n- UT-04 : arrêt du run relancé, et crédit insuffisant au relancement ;\n- UT-05 : la poussée initiale refusée pour un refus de droit est dans deux classes."
+     },
+     {
+      "question": "3. N-019 : partout décision de Lazar à venir, option (a) posée comme condition, valeurs justes et cohérentes ?",
+      "reponse": "Oui.\n- N-019 est la décision de Lazar citée en tête aux l. 7, 20, 257, 266, 343, 413, 434 et 449 ; la décision v1 de la session est dite retirée. Seule erreur : l. 374, « décidée par Lazar (R-145) » (UT-08).\n- La l. 7 pose l'option (a) comme condition de validité.\n- Valeurs recalculées, exactes et cohérentes avec la proposition v2 et la configuration : 7 584,02 s, marge 2,77 %, 7 752,55 s par lots, 15 000 s, 80 %.\n- Le GO-2026-10-12-01 (R-147) est arrivé pendant la vérification. Les blocs PYGO des contrôles et GO19 du lanceur, rejoués sur les registres courants avec une copie du texte qui porte ce GO, rendent le code 0.\n- R-147 lève le retrait de R-145 et élargit la délégation, ce que le texte ne dit pas (UT-12). Le GO nomme « le brouillon 10 »."
+     },
+     {
+      "question": "4. R1 complet ? Changements du brouillon 10 hors des tables avec leur motif ; rien de gelé changé sans le dire ?",
+      "reponse": "R1 est complet (l. 32-249) ; problemes() est vide ; l'annexe est égale aux constantes de lire_pilote.py.\nChangements du brouillon 10 hors des tables, avec leur motif :\n- l. 1 : titre ;\n- l. 3 : ligne d'auteur (VT-10, VT-13) ;\n- l. 7 : option (a) posée comme condition (VT-10) ;\n- l. 8 : ligne « Lancement » (VT-01, VT-02) ;\n- l. 24 : préenregistrement de la revalidation cité (VT-04) ;\n- l. 173 : Calcul (VT-09, VC-02, manque 6, VT-14) ;\n- l. 196 : préséance (VT-01, VT-02) ;\n- l. 198-204 : causes (VT-01, VT-03) ;\n- l. 262 : incident D-20 (VT-07) ;\n- l. 266 : résumés de la Transparence (VT-13) ;\n- l. 280 : ligne des rapports (VT-08) ;\n- plus la ligne « run relancé » de la table de lecture (l. 193).\nAucun seuil, aucune prédiction, aucune constante ni clé de configuration n'a changé. Les éléments gelés changés sont déclarés dans la ligne d'auteur et dans la table VT. En revanche, la Transparence (l. 266) omet « écrit et poussé » et la clause du devis et du crédit (UT-06).\nLe différentiel du candidat 2 au candidat 3 ne montre rien d'inattendu (seulement l. 6, 20 et 23 en plus)."
+     },
+     {
+      "question": "5. Tables de l'état des lieux et de la relecture R2 complétées : sondage d'au moins dix lignes",
+      "reponse": "18 lignes sondées.\n- Couverture : les 124 constats de l'état des lieux sont cités.\n- Lignes vraies : PF-01, HR-02, AR-20, VR-07, RC-04/08, RC-07/X-7, SI-11, SI-12, AR-15, TX-02, CO-09/10, NO-01/02, et CH-03 pour le code.\n- Lignes vraies en partie :\n  - « informations, sans action » : HR-14, PF-07 et VR-15 avaient une action, faite ;\n  - critique : manque 2 cité « (R-145) » ; manque 19 sous condition ; « 11,5 cibles » attribué aux fiches alors qu'il vient du bilan ; correction 3 (mémoire vive 64 Go) non reprise sans le dire ;\n  - VR-12 et VR-14 non repris ;\n  - TX-01 « aligné sur le plan v2 » : c'est le v3 qui l'est.\n- Ligne périmée : CH-12 (« plan v2, douze scripts »)."
+     },
+     {
+      "question": "6. Ce qui manquerait à un futur sous-agent R13",
+      "reponse": "Pour appliquer les critères à des résultats scellés, rien d'essentiel ne manque. Pour juger qu'il lit le bon run, il lui faudrait :\n- la règle de lecture des résultats récupérés sur une instance gardée (UT-02) ;\n- le statut d'un relancement décidé après une perte d'instance en plein run (UT-01) ;\n- l'origine du seuil de 1 500 s (UT-03) et le sort d'un arrêt du run relancé (UT-04) ;\n- le régime des issues « nœud » après R-147, et la lecture de « décision v1 retirée » face au retrait levé (UT-12) ;\n- des renvois à jour : plan v3, treize scripts, bonne ligne R-… (UT-07, UT-08) ;\n- une trace du traitement de la vérification c3 si aucun brouillon 11 n'est fait (UT-18) ;\n- la forme de la ligne de registre qui consigne le modèle des étiqueteurs."
+     }
+    ],
+    "constats": [
+     {
+      "id": "UT-01",
+      "gravite": "mineur",
+      "objet": "Préséance, « écrit » établi sur les pièces (candidat l. 196, 200) ; pilote_t05_instance.sh l. 328-347 ; lancer_pilote_a.py l. 333-359",
+      "constat": "Pendant le run, le journal de l'instance n'a aucune ligne entre « run : … » et la fin. Une perte d'instance en plein run n'établit donc jamais l'absence d'episodes.json : à la lettre, c'est une cause indéterminée, donc un nœud, alors que « instance perdue » est rangée parmi les causes d'infrastructure. Le texte ne dit pas si le temps écoulé compte comme pièce. Doute : majeur, si l'on juge probable une perte d'instance en plein run.",
+      "preuve": "l. 196 : « « Écrit » s'établit sur les pièces : résultats poussés, ou journal de l'instance relevé par la surveillance ; si elles n'établissent pas l'absence d'episodes.json, la cause est indéterminée ». Script l. 328 : journal \"run : $RUN\" ; l. 330-331 : lanceur avec >run.json 2>>run.err ; rien jusqu'à « run terminé » (l. 347). Le lanceur n'imprime rien à l'écriture des épisodes (l. 359).",
+      "action": "Sans toucher au code gelé, fixer la convention dans la ligne R-… de scellement : « perte de l'instance après « run : … » = nœud », ou « temps écoulé inférieur à X s = absence établie »."
+     },
+     {
+      "id": "UT-02",
+      "gravite": "mineur",
+      "objet": "Résultats écrits mais non poussés (l. 196 ; l. 191 ; plan v3 étapes 6 et 7)",
+      "constat": "La phrase « se récupèrent depuis l'instance gardée (N-009), sinon nœud » n'a ni procédure ni règle de lecture. La session ne peut pas copier depuis une instance (R-060). La récupération exige des commits de l'instance. La l. 191 rend non lisible un run sans arret.json ni resume.json, cas d'une instance arrêtée par la surveillance. Doute : majeur, si un échec de poussée finale est jugé probable.",
+      "preuve": "l. 196 ; l. 191 ; recuperation_pilote_v1.sh l. 62-63 (auteurs « instance de calcul (T0.5) ») ; etat.md, N-012 : « la clé ne permet ni copie ni exécution » (R-060) ; plan v3 l. 126-140 : aucune récupération depuis une instance.",
+      "action": "Écrire, dans la ligne R-… ou une note : qui récupère (Lazar), comment les fichiers sont vérifiés (sceaux, manifeste, journal) et comment ils se lisent (tels quels avec arret.json ou resume.json scellés, sinon l. 191). Sinon, écrire « écrit non poussé = nœud »."
+     },
+     {
+      "id": "UT-03",
+      "gravite": "mineur",
+      "objet": "Seuil de 1 500 s (l. 200 contre l. 173 ; plan v3 l. 116)",
+      "constat": "Les causes comptent la mise en place depuis la ligne « AMORCE » ; le Calcul (Z-5) compte depuis la création, qui fonde réellement le seuil (surveillance à 17 700 s après la création, délai externe à 16 200 s après le début du run).",
+      "preuve": "l. 200 : « (de la ligne « AMORCE » au début du run) a dépassé 1 500 s » ; l. 173 : « si le run démarre dans les 1 500 s après la création ».",
+      "action": "Aligner sur la création (lancement.txt) et l'horodatage de « run : … », ou déclarer l'écart."
+     },
+     {
+      "id": "UT-04",
+      "gravite": "mineur",
+      "objet": "Relancement : arrêt du run relancé et crédit insuffisant (l. 192, 199, 204 ; plan v3 étape 3)",
+      "constat": "Un arrêt du run relancé (-v2) n'est classé nulle part : la l. 192, prise à la lettre, dit « un relancement ». Pour un crédit insuffisant au relancement, la l. 204 exige qu'il « tienne dans le crédit » mais ne range en nœud que le cas « hors du devis », alors que le plan prévoit l'attente d'une recharge.",
+      "preuve": "l. 204 : « et seulement s'il tient dans le reste du devis … et du crédit ; … ou un relancement hors du devis donnent un nœud » ; l. 199 ne parle que de -v1 ; plan v3 l. 90-91 : code 3, recharge demandée.",
+      "action": "Écrire « un arrêt du run relancé donne un nœud ; aucune branche -v3 » et le sort d'un crédit insuffisant (attente de recharge ou nœud)."
+     },
+     {
+      "id": "UT-05",
+      "gravite": "mineur",
+      "objet": "Causes d'arrêt : chevauchement des classes (l. 199 et 201)",
+      "constat": "« Poussée initiale refusée quand git donne un refus de droit » est encore rangée en cause déterministe, alors que la classe « arrêt avant la poussée initiale » couvre toute poussée initiale refusée. L'issue est la même (nœud), mais la ligne R-… doit citer une cause de la liste, et deux conviennent.",
+      "preuve": "l. 199 : « poussée initiale refusée quelle qu'en soit la cause … : nœud » ; l. 201 : « poussée initiale refusée quand git donne un refus de droit ».",
+      "action": "Retirer l'élément de la l. 201, ou l'annoter « (arrêt avant la poussée initiale) »."
+     },
+     {
+      "id": "UT-06",
+      "gravite": "mineur",
+      "objet": "Transparence, résumé du brouillon 10 (l. 266)",
+      "constat": "Le résumé ne déclare que le classement en nœud et la fermeture de la liste. Il omet la préséance « écrit et poussé » (récupération ou nœud, « écrit » établi sur les pièces) et la condition de devis et de crédit du relancement : deux changements de règles gelées, déclarés seulement dans la ligne d'auteur et la table.",
+      "preuve": "l. 266 : « le brouillon 10 classe en nœud les arrêts d'avant la poussée initiale et ferme la liste des causes (VT-01, VT-03) » ; l. 3, 441-442.",
+      "action": "Compléter à la prochaine version ; sans brouillon 11, le déclarer dans la ligne R-… de scellement."
+     },
+     {
+      "id": "UT-07",
+      "gravite": "mineur",
+      "objet": "Renvois au plan v2 et aux « douze scripts » (l. 370, 372, 381, 432, 440)",
+      "constat": "Le texte ne cite par empreinte que le plan v3. Le plan v2 (étape 5) range encore « dépôt distant injoignable » parmi les causes de relancement, contre le texte. La chaîne compte treize scripts, pas douze.",
+      "preuve": "l. 381 et 440 : « aligné(s) sur le plan v2 (étape 4 bis) » ; l. 432 : « Plan de lancement v2 … douze scripts » ; plan v2 l. 100 ; plan v3 l. 29-33 ; scellement l. 47-50 ; répétition finale l. 23-24.",
+      "action": "Écrire « plan v3 (4 bis et 5) » et « treize scripts », ou le déclarer dans la ligne R-…."
+     },
+     {
+      "id": "UT-08",
+      "gravite": "mineur",
+      "objet": "Critique, manque 2 (l. 374)",
+      "constat": "« N-019 décidée par Lazar (R-145) » : R-145 rend N-019 à Lazar ; la décision de Lazar est GO-2026-10-12-01 (R-147).",
+      "preuve": "registres/decisions.md l. 282 (R-145) et l. 284 (R-147).",
+      "action": "« N-019 rendue à Lazar (R-145), décidée par son GO cité en tête »."
+     },
+     {
+      "id": "UT-09",
+      "gravite": "mineur",
+      "objet": "VN-18 non traité : fourchettes des juges (l. 173 ; l. 466 ; proposition v2 l. 30)",
+      "constat": "« Appariement de 5 à 27 minutes » ne s'accorde pas avec « de 5 400 à 15 100 s avec l'appariement » : la borne basse prend 800 s (VR-03), la haute 1 620 s. La table dit « aucune autre action ».",
+      "preuve": "4 600 + 300 = 4 900 s, et non 5 400 ; le sceptique de VN-02 recommandait d'accorder la fourchette.",
+      "action": "« De 4 900 à 15 100 s » (ou citer la source de chaque borne), sinon marquer VN-18 « non adopté » avec sa raison."
+     },
+     {
+      "id": "UT-10",
+      "gravite": "mineur",
+      "objet": "VN-08 : citation des rapports c2 (l. 462)",
+      "constat": "« Cités par empreinte (R-146) » est faux pour les rapports de la vérification c2 : R-146 ne cite que ceux de la relecture R2, et aucun registre ne cite les rapports c2, versés à e4be3e1.",
+      "preuve": "grep 1f78fa75 et verification-c2 : 0 occurrence dans decisions.md, etat.md et la proposition v2. Rapports c2 : JSON 1f78fa75…, archive tar d18df563….",
+      "action": "Ajouter une ligne R-… qui cite les rapports c2 (puis c3) par empreinte, ou corriger la ligne VN-08."
+     },
+     {
+      "id": "UT-11",
+      "gravite": "mineur",
+      "objet": "Plan v3, étape 4 bis (l. 103-106), cité par le texte pour les étapes 4 à 6",
+      "constat": "La ligne attendue « début : … BRANCHE=calcul/t05-pilote-reel-v1 » est écrite en dur, alors qu'un relancement porte -v2. Appliquée à la lettre, l'étape arrêterait l'instance relancée et ferait un nœud.",
+      "preuve": "plan v3 l. 104-106 ; script de l'instance l. 60 (BRANCHE=$BRANCHE) ; plan v3 l. 121-122 (-v2).",
+      "action": "Note au plan (ou plan v4) : « BRANCHE de ce lancement (-v1, ou -v2 en relance) »."
+     },
+     {
+      "id": "UT-12",
+      "gravite": "mineur",
+      "objet": "R-147, posée pendant la vérification (decisions.md l. 284 ; go.md l. 24 ; candidat l. 3, 20, 343, 413, 449 et issues « nœud »)",
+      "constat": "R-147 lève le retrait de R-145 (Lazar confirme la décision de la session) et élargit la délégation aux nœuds « de même nature que N-019 ». Le texte, écrit avant, dit la décision v1 « retirée » et emploie « nœud » au sens antérieur, parfois « proposition à Lazar ». Le GO nomme « le brouillon 10 et le candidat vérifié » : un brouillon 11 sortirait de sa lettre.",
+      "preuve": "R-147 : « le retrait de R-145 est levé » ; « la session tranche seule, à l'avenir, les nœuds de même nature … consignés et déclarés dans le texte concerné » ; GO-2026-10-12-01 : « préenregistrement … scellé depuis le brouillon 10 ».",
+      "action": "Dans la ligne R-… de scellement : (i) « décision v1 retirée par R-145, retrait levé par R-147 » ; (ii) le régime des issues « nœud » de ce pilote (recommandé : décisions de Lazar, sauf les cas que R-147 couvre expressément, consignés avant toute action). Ne pas rouvrir le texte pour cela."
+     },
+     {
+      "id": "UT-13",
+      "gravite": "information",
+      "objet": "Restes du sceptique de VT-01 (l. 440 ; l. 228 ; plan v3)",
+      "constat": "Deux demandes du sceptique ne sont ni faites ni déclarées : écrire que la session ne crée jamais -v1 (les gardes acceptent une -v1 poussée par la session ; le cas R1 du banc la simule) ; corriger « étape 2 » en « étape 4 bis » (l. 228). Le texte classe déjà sur la ligne du journal, ce qui ferme la voie.",
+      "preuve": "journal wf_3be6f986-f59, sceptique VT-01, action recommandée 3 et 4 ; banc des contrôles l. 175.",
+      "action": "Une phrase dans une note au plan ; citer ces restes dans la ligne R-…."
+     },
+     {
+      "id": "UT-14",
+      "gravite": "information",
+      "objet": "Proposition N-019 v2, l. 37 (VN-09)",
+      "constat": "La proposition v2 (scellée, soumise) dit encore « prêt (préenregistrement vérifié, chaîne et bancs) », alors que la vérification c3 et les bancs sont en cours et les épingles non posées.",
+      "preuve": "Proposition v2 l. 37 ; contrôles l. 22-27 (A_EPINGLER) ; brouillon de message v2 l. 1 (ÉTAT_FINAL).",
+      "action": "Dire l'état réel dans le message à l'envoi."
+     },
+     {
+      "id": "UT-15",
+      "gravite": "information",
+      "objet": "Ligne d'auteur et citations (l. 3 ; l. 22, 346 ; l. 260)",
+      "constat": "Trois détails, sans effet :\n- le générateur ajoute des chemins et des empreintes (P-009, P-010, décision v1, mesures-defaut.json, etc.) sans le dire dans la ligne d'auteur ;\n- lecture-defaut.json est cité sans empreinte, mais son empreinte 3c8e76ba… figure dans le verdict cité ;\n- « 11,5 cibles » est attribué aux fiches alors qu'il vient du bilan.",
+      "preuve": "41 empreintes recalculées, toutes justes ; verdict l. 189.",
+      "action": "Aucune avant le scellement ; à reprendre si un brouillon 11 se fait."
+     },
+     {
+      "id": "UT-16",
+      "gravite": "information",
+      "objet": "Lignes sous condition (l. 414, 424, 427, 429, 432, 451, 459, 463-470, 473)",
+      "constat": "État des épreuves et du message :\n- conformes : banc du lanceur c3b (50/50), banc du générateur à 7b07300 (21/21) ;\n- non jouables avant les épingles : bancs des contrôles et du scellement, répétition finale ;\n- en cours : répétition jouet ;\n- non envoyé : message à Lazar.",
+      "preuve": "banc-lanceur-pilote-c3b.log ; banc-generateur-pilote-c3.log ; rep-pilote-v1-7b07300.log (cinq lignes « script répété » égales à chaine-c3).",
+      "action": "Relire ces lignes cas par cas au commit des préalables (VT-12)."
+     },
+     {
+      "id": "UT-17",
+      "gravite": "information",
+      "objet": "Traitements partiels non dits (l. 344, 373, 375, 478)",
+      "constat": "Traitements partiels non dits :\n- VR-12 et VR-14 ne sont repris nulle part ;\n- la correction 3 (mémoire vive à 64 Go) n'est pas reprise ;\n- « informations, sans action » couvre HR-14, PF-07 et VR-15, dont l'action a été faite ;\n- VH-11 « aucune action » alors que le plan v3 l'a traité ;\n- le reste 5 du sceptique de VN-01 (montants en dollars de la v2 non vérifiés) n'est pas noté.",
+      "preuve": "JSON de l'état des lieux (8ca0f843…) ; plan v3 l. 86-87 ; journal des sceptiques.",
+      "action": "Le dire dans la ligne R-… si l'on veut une trace exacte."
+     },
+     {
+      "id": "UT-18",
+      "gravite": "information",
+      "objet": "Traitement de la vérification c3 (l. 280, ligne masquée)",
+      "constat": "Sans brouillon 11, aucune table du texte scellé ne portera le traitement de cette vérification ; seule la ligne masquée citera nos rapports.",
+      "preuve": "Normaliseur l. 19 ; seuls les champs masqués changent au scellement.",
+      "action": "Verser un fichier de traitement scellé dans la famille relecture-b8-verification-c3, cité par la ligne masquée, ou une ligne R-…."
+     },
+     {
+      "id": "UT-19",
+      "gravite": "information",
+      "objet": "Résidu de VN-03 (etat.md l. 16)",
+      "constat": "Le résidu (« brouillon 8 ; … lancement à la recharge du crédit ») a été corrigé à d4475b6, pendant la vérification.",
+      "preuve": "etat.md à 7b07300, puis à d4475b6.",
+      "action": "Aucune."
+     }
+    ],
+    "rapport_markdown_chemin": "/tmp/claude-0/-home-user/5a6b9d1d-b17d-59a1-a770-8737a831fe0a/scratchpad/verification-c3/texte/rapport-texte.md"
+   }
+  },
+  {
+   "etiquette": "verification:chaine",
+   "agent": "a454792a69b182983",
+   "resultat": {
+    "angle": "chaîne",
+    "resume": "Verdict : les corrections de VH-01 à VH-14 et les restes des sceptiques sont dans la chaîne figée et tiennent à l'épreuve. Aucun constat bloquant.\nÉprouvé : le scellement relit tout avant l'entropie ; un arrêt avant le piège sort en code 2 (contre 128 pour la version c2) ; la révocation est lue par cellules, à l'identique dans les trois blocs (sonde de 13 cas).\nJournal de la répétition jouet (7b07300, fini à 05:31) : conforme ligne à ligne aux attentes des contrôles ; ses cinq empreintes égalent la chaîne figée.\nUn majeur, UH-01 : le banc du scellement figé ne peut pas passer, car remise (l. 63) déplace la branche du dépôt nu vers un commit qu'il n'a pas. Rejoué sur un dépôt synthétique : 8 cas sur 20 non conformes ; 20 sur 20 avec une ligne corrigée. Le candidat et la répétition ne sont pas touchés.\nMineurs : épingles de A33 et A34 mal calculées ; S18 peut retomber sur S15 ; verdict de P17h au seul code ; lignes de révocation « |GO- » sans espace ignorées ; le scellement ne relit ni les rapports présents, ni la garde du registre, ni le sceau du candidat ; pas de cas au banc pour VH-04 ; journaux des bancs sans empreinte (le banc du générateur c3 a tourné pendant la réécriture de son script) ; ordre des préalables du plan v3 ; gardes de la récupération sans artefact ; nettoyage après un commit en échec.\nTête passée à d4475b6 (GO-2026-10-12-01, R-147) : le générateur figé y reproduit le candidat 3 (83056d15…, 6979a00e…).\nCODE_RELU est à épingler à 7b073008….",
+    "reponses": [
+     {
+      "question": "1. VH-01 à VH-14 et restes des sceptiques : corrigés ? comment ? trous ?",
+      "reponse": "VH-01 : corrigé. sceller l. 37-41 (refus de A_EPINGLER, CODE_RELU et REPETITION_JOUET bien formés) ; l. 51-55 et l. 45 (26 copies versées et journal suivis à HEAD) ; l. 60-63 (arbre gelé = code relu) ; l. 64-66 (journal : empreinte, sceau, commit). Plan v3, étape 1. Bancs S13 à S19. Restes du sceptique : journal lu à HEAD, oui ; artefacts S17, S18, S19 écrits ; « A_EPINGLER » seulement dans les lignes d'épingles. Trous : le banc ne passe pas (UH-01) ; S18 peut dégénérer (UH-02) ; aucune ligne R-… ne consigne le traitement (UH-13).\nVH-02 : corrigé. Répétition l. 34-38, 40, 47, 83 ; contrôles l. 145-206 (64 hexadécimaux, pas de doublon, les cinq noms exactement, l. 174-182 ; cause dans la ligne KO, l. 186-205). A31 à A34 au banc. Répétition lancée depuis une copie figée par chemin absolu (vu par ps). Journal conforme. Trous : épingles de A33 et A34 mal calculées (UH-03) ; chaîne figée deux minutes après le départ de la répétition, sans effet (UH-09).\nVH-03 : traité. Texte : nœud (candidat l. 196 et 199). Plan v3 l. 122-125 : destruction de la première instance, puis lancement « premier ». Cohérent avec le lanceur (l. 31-33) et avec le cas R4.\nVH-04 : corrigé (sceller l. 15, piège ERR). Éprouvé : code 2, contre 128 pour la version c2. Aucun artefact au banc (UH-07).\nVH-05 : corrigé. Même lambda dans remplir l. 271, contrôles l. 100 et lanceur l. 108. Trous : sélection des lignes par startswith (UH-05) ; P17h jugé au seul code (UH-04).\nVH-06 : corrigé (KO avec message d'assertion ; copie_ctl à une ligne exactement ; banc borné à 6 600 s). Reste : A28 sans groupe, sans effet.\nVH-07 : en partie. Banc du scellement écrit mais cassé (UH-01) ; relance R1 à R4 au banc des contrôles ; deux artefacts de la récupération dans la répétition. Gardes de la récupération sans artefact : copie versée, 4d à 4f, 6b, 6c (UH-10).\nVH-08 : corrigé (récupération l. 15, 24-25, 153, 157, 208).\nVH-09 : corrigé (sceller l. 34-36). Trou : motif plus lâche que celui des contrôles, et pas de contrôle « présents = épinglés » (UH-06).\nVH-10 : corrigé (contrôles l. 20, récupération l. 14).\nVH-11 : traité de fait par le plan v3, mais la table du candidat dit « aucune action » (UH-13).\nVH-12 : corrigé (récupération l. 13, 22, 35-38).\nVH-13 : sans objet.\nVH-14 : sans objet. Aucun Python n'est lancé depuis docs/ du dépôt de travail ; verifier-arbre : arbre intact."
+     },
+     {
+      "question": "2. Révocation lue par cellules : même règle partout ? Garde de calcul ? Cas nouveaux des bancs isolés ?",
+      "reponse": "Règle identique : le texte de la condition est le même à l'octet près dans le générateur (l. 271), les contrôles (l. 100) et le lanceur (l. 108) ; empreinte du texte f3921062… dans les trois. Elle compte comme révocation une ligne à 8 cellules de type « révocation » (casse ignorée) qui nomme le GO dans le périmètre ou la référence, et une ligne à autre que 8 cellules qui contient « révocation » et le GO.\nSonde des blocs extraits tels quels (13 cas, sonde-n019.log) : même verdict partout, sauf l'écart voulu (le générateur ne contrôle pas le GO de calcul). Les registres de HEAD (GO-2026-10-12-01, R-147) passent.\nLa garde de calcul refuse aussi une ligne mal formée, et plus largement : tout le registre, pour toute commande de lancement, sur 8 cellules non respectées, dates illisibles ou identifiant en double (lire_go, l. 49-72). Elle est rejouée par les contrôles (l. 319) et par le lanceur (l. 175-176).\nÉcarts : une ligne « |GO-… » sans espace est ignorée par les trois blocs ; la garde la lit, mais ne contrôle que le GO de calcul. La révocation du GO de N-019 sous cette forme n'est donc vue par personne (UH-05).\nCas nouveaux : G15b isolé et discriminant (l'ancienne règle aurait accepté) ; G15c sain. A05b : motif discriminant, mais deux KO (la garde échoue aussi). A05c sain. P17h : verdict au seul code, alors que la garde de l'étape 6 rendrait aussi le code 2 ; non isolé automatiquement, mais le journal c3b montre le bon message (UH-04). P17i sain."
+     },
+     {
+      "question": "3. Scellement : ordre des gardes avant l'entropie, piège ERR, nettoyage, code 2 ; banc S00 à S19 ; faux CONFORME ?",
+      "reponse": "Ordre : usage (l. 16-17) ; épingles (l. 26-30) ; familles (l. 31-36) ; A_EPINGLER (l. 38) ; code relu et journal épinglés (l. 39-41) ; fetch, HEAD = origin/main, arbre suivi propre, R12 (l. 42-46) ; suivi à HEAD (l. 51-55) ; chaîne par cmp (l. 56-58) ; candidat relu (l. 59) ; arbre gelé (l. 60-63) ; journal (l. 64-66) ; normalisé (l. 67). Toutes ces gardes précèdent l'entropie (l. 80).\nLe piège ERR donne le code 2 (éprouvé). fin() retire les fichiers créés et le dossier de travail (montré par le banc synthétique). Trou rare : après un git add, un commit en échec laisse des fichiers indexés (UH-14).\nBanc, à la lecture : chaque cas vise sa garde. S04, S14 et S18 changent l'épingle dans le bloc-notes et dans la copie versée ; S13, S16 et S19 visent des gardes placées avant le cmp ; le montage de S17 est vérifié.\nMais le banc figé échoue. remise (l. 63) fait update-ref vers un commit absent du dépôt nu. Joué sur un dépôt synthétique (bouchon du générateur), il rend 8 non conformes sur 20 (S02, S04, S08, S09, S14, S15, S17, S18), tous arrêtés sur « HEAD ≠ origin/main ». Avec `git push -q -f \"$E/distant.git\" \"${1:-$J}:refs/heads/main\"` : 20 sur 20, chaque cas avec le message de sa garde (UH-01).\nFaux CONFORME possibles : S18 peut rejouer S15 si la sed de l'épingle ne mord pas (UH-02) ; le motif de S08 est générique ; S06 passe même avec le défaut, puisque sa garde est celle que le défaut déclenche."
+     },
+     {
+      "question": "4. Contrôles avant dépense : bloc de la répétition ; banc des contrôles (A31-A34, A05b, A05c, A23) ; durée sous 6 600 s ?",
+      "reponse": "Bloc de la répétition (l. 145-206) : six lignes exigées exactes ; quatre passages, une fois chacun ; deux « TOUS CONFORMES » ; chaque KO dans la fenêtre de cinq lignes qui suit son étiquette ; lignes « script répété » (64 hexadécimaux, pas de doublon, les cinq noms exactement) ; égalité aux copies versées à S ; empreinte et sceau du journal ; cause dans la ligne KO. Rejoué tel quel sur le vrai journal : code 0.\nBanc : A31 isolé ; A32 isolé, épingle juste. A33 et A34 : épingle calculée sur le journal laissé par le cas précédent (l. 143 et 145), donc deux fautes ; le verdict tient seulement par l'ordre des vérifications (UH-03). A05b : deux KO, motif discriminant. A05c : sain. A23 : un seul KO, « proposition-N-019-v2.md non cité ».\nDurée : 42 cas `jouer` plus Z1 (sans clone). Par cas : clone local mesuré à 16,5 s, verifier-arbre à 1,6 s, quelques secondes de Python ; soit 25 à 40 s par cas et 20 à 30 minutes au total, très loin de 6 600 s. Borne cohérente (écart de 6 700 s au plus, sous 7 200 s). Le banc n'a jamais tourné."
+     },
+     {
+      "question": "5. Répétition jouet : les attentes des contrôles correspondent-elles à ce qu'écrivent les scripts ? Journal fini confronté ?",
+      "reponse": "Oui, à la lecture et sur le journal fini (05:31 ; 63 lignes ; 531f2d79…).\n- Bloc PYREP extrait des contrôles figés, avec CODE_RELU = 7b073008… : code 0.\n- Les cinq empreintes « script répété » égalent la chaîne figée.\n- Chaque ligne exigée est présente une fois, chaque passage une fois, avec les codes 0, 2, 1 et 0 ; deux « TOUS CONFORMES ».\n- Exactement deux KO : l. 54 « KO  0 calcul/t05-pilote-jouet-a-v1 porte un episodes.json » et l. 59 « KO  4c fichiers d'un run complet », chacun dans sa fenêtre.\n- Tests collectés : 689.\n- La ligne finale « code 0 », ajoutée par l'appel, est sans effet.\nÀ épingler : CODE_RELU = 7b073008585279a06251b08d6b456694320a3c58 (et non e4be3e1) ; REPETITION_JOUET = empreinte du journal versé tel quel (UH-12)."
+     },
+     {
+      "question": "6. Plan v3 cohérent avec les scripts et le brouillon 10 (relancement, arrêts d'avant la poussée initiale, préséance) ? Pistes fragiles ?",
+      "reponse": "Cohérent.\n- Relancement : causes identiques au candidat (l. 198-204) ; trois mots et instance contrôlés par le lanceur (l. 59-67).\n- Arrêt avant la poussée initiale : nœud, puis destruction de la première instance et lancement « premier » ; cohérent avec la tolérance du lanceur et le cas R4.\n- Préséance : la chaîne ne lit que « absent de -v1 » ; le reste relève de la procédure.\n- Étapes 1 et 4 fidèles aux scripts.\nÀ la tête d4475b6, avec le vrai GO-2026-10-12-01 et R-147, le générateur figé reproduit le candidat 3 (normalisé 83056d15…, configuration 6979a00e…), et les contrôles « parties masquées », « GO » et la garde l'acceptent.\nPistes fragiles : UH-01 (banc du scellement) ; UH-06 (exigences des contrôles non relues au scellement, couvertes seulement par la répétition finale à C) ; UH-08 (journaux des bancs) ; UH-09 (ordre des préalables non exécutable à la lettre ; chaîne figée deux minutes après le départ de la répétition).\nToute correction du plan imposerait un candidat 4 (plan cité non masqué) : corriger les scripts et consigner le reste."
+     },
+     {
+      "question": "7. Journaux des bancs : cas non conformes ou attentes mal posées ?",
+      "reponse": "Lanceur c3b : 50 sur 50 conformes. Départ à 04:48:47, après la dernière réécriture du banc ; messages justes. La première exécution (c3) avait P17i non conforme (dates illisibles pour la garde), depuis corrigé. Attente mal posée : verdict au seul code (UH-04).\nGénérateur c3 : 21 sur 21 conformes. G00 normalisé 83056d15… (= candidat 3) ; G10 reel égal au candidat. Mais il a tourné de 04:47:40 à 04:50:32, alors que son script a été réécrit à 04:48:40 : le journal ne se rattache pas à une version unique et doit être rejoué au commit des préalables depuis une copie figée (UH-08)."
+     }
+    ],
+    "constats": [
+     {
+      "id": "UH-01",
+      "gravite": "majeur",
+      "objet": "essais_scellement_pilote_v1.sh:63 (remise ; appelée l. 78, 90, 108, 112, 126, 133)",
+      "constat": "remise fait `git -C \"$E/distant.git\" update-ref refs/heads/main \"$Jx\"` vers un commit créé dans le clone après la copie nue (l. 41), que le dépôt nu n'a pas : l'opération échoue (« nonexistent object »). origin/main reste à J, et le scellement s'arrête sur « HEAD ≠ origin/main ». Huit cas sur vingt sortent NON CONFORME (S02, S04, S08, S09, S14, S15, S17, S18). Le banc n'a jamais tourné (épingles absentes) : les gardes nouvelles du scellement (VH-01, VH-09) n'ont aucun artefact joué (R5).",
+      "preuve": "Banc figé (copie identique, 2697a9ec…) joué sur un dépôt synthétique : vrais scellement.py et prereg.py, contrôles épinglés par poser_epingles.py, candidat 3, générateur remplacé par un bouchon aux mêmes messages. Sortie : « fatal: update_ref failed for ref 'refs/heads/main': … nonexistent object », puis « S02-sceau-fausse-verifier-arbre : code 2 ; NON CONFORME (motif « ÉCHEC » absent) | HEAD ≠ origin/main » ; 8 NON CONFORME (verification-c3/chaine/banc-scellement-synthetique/banc-scellement-synthetique.log, 65f38ea6…). Avec la seule l. 63 remplacée : 20 sur 20 CONFORME, chaque cas avec le message de sa garde (…-corrige.log, 9cce4377…).",
+      "action": "l. 63 : `git push -q -f \"$E/distant.git\" \"${1:-$J}:refs/heads/main\"; git fetch -q origin` (chemin explicite). Nouvelle copie et nouvelles empreintes de la chaîne, sans effet sur le candidat ni sur la répétition jouet. Puis jouer le banc au commit des préalables et verser son journal."
+     },
+     {
+      "id": "UH-02",
+      "gravite": "mineur",
+      "objet": "essais_scellement_pilote_v1.sh:87-91, 137-140, 109 ; sceller_pilote_v1.sh:64-66",
+      "constat": "epingle_versee ne vérifie pas qu'une ligne exactement a changé. Pour S18, si la sed de l'épingle ne mord pas, le commit du journal modifié passe quand même : S18 rejoue alors S15 (empreinte), avec le même message (l. 66), et reste CONFORME. Le motif de S08 (« ARRÊT du remplissage ») vaut pour tout arrêt du générateur.",
+      "preuve": "Lecture. Pour S04 et S14, une sed sans effet empêche le commit (« montage impossible »), mais pas pour S18. Aujourd'hui l'épingle est écrite sans guillemets, donc la sed mord (banc synthétique conforme).",
+      "action": "Dans epingle_versee, exiger `diff | grep -c '^>'` = 1 (comme copie_ctl). Scinder le message des l. 64-66 (empreinte, commit) et viser chacun. Pour S08, viser le nom du rapport retiré."
+     },
+     {
+      "id": "UH-03",
+      "gravite": "mineur",
+      "objet": "essais_controles_pilote_v1.sh:143, 145",
+      "constat": "Les épingles de A33 et A34 sont calculées sur le journal de l'arbre de travail, laissé par le cas précédent (art-A32, puis art-A33), et non sur celui de C1. La copie jouée porte donc une épingle qui n'égale pas le journal versé à S : deux fautes au lieu d'une, contrairement au commentaire des l. 138-139. Le verdict tient seulement parce que PYREP refuse avant la comparaison d'empreinte.",
+      "preuve": "Démonstration sur un journal synthétique : A33, épingle a1cf04f2… contre journal ca1d6bec… ; A34, épingle 06168847… contre journal 2508e4d1…. A32 est juste (calculé après A31, qui ne touche pas le journal).",
+      "action": "Calculer chaque épingle depuis `git show \"$C1:$LOGJ\"`, ou ramener l'arbre à C1 avant chaque copie_ctl."
+     },
+     {
+      "id": "UH-04",
+      "gravite": "mineur",
+      "objet": "essais_lanceur_pilote_v1.sh:117 (cas P17h l. 185-186, P17b) ; lancer_pilote_v1.sh:175-176",
+      "constat": "Le verdict du banc du lanceur ne lit que le code. Une ligne mal formée est aussi refusée, en code 2, par la garde de calcul à l'étape 6 : si la règle de prudence du bloc GO19 disparaissait, P17h resterait CONFORME. A05b (contrôles) déclenche deux KO (bloc N-019 et garde), mais son motif reste discriminant.",
+      "preuve": "Sonde B05 : la garde refuse le registre (« registre GO mal formé ligne 25 : 8 colonnes attendues, 3 trouvées »). banc-lanceur-pilote-c3b.log : P17h affiche « GO-2026-10-12-99 révoqué dans le registre courant », ce qui ne se vérifie qu'à la lecture.",
+      "action": "Ajouter à cas() un motif attendu dans la sortie (grep), au moins pour P12* et P17*."
+     },
+     {
+      "id": "UH-05",
+      "gravite": "mineur",
+      "objet": "remplir_pilote_v1.py:271 ; controles_avant_depense_pilote_v1.sh:100 ; lancer_pilote_v1.sh:108 ; garde_calcul.py:41",
+      "constat": "Les trois blocs choisissent les lignes par startswith(\"| GO-\"), alors que la garde reconnaît ^\\|\\s*GO-…\\s*\\|. Une révocation du GO de N-019 écrite « |GO-…|…|révocation|… » (sans espace) est ignorée par les blocs. La garde la lit, mais ne contrôle que le GO de calcul : personne ne la refuse.",
+      "preuve": "Sonde B08 : tout est accepté (générateur, contrôles, lanceur, garde). Sonde B09, même forme pour le GO de calcul : la garde refuse (sonde-n019.log, 8c553eae…).",
+      "action": "Choisir les lignes par re.match(r\"^\\|\\s*GO-\\d{4}-\\d{2}-\\d{2}-\\d{2}\\s*\\|\", l) dans les trois blocs, ou écrire et consigner la forme exigée « | GO-… | »."
+     },
+     {
+      "id": "UH-06",
+      "gravite": "mineur",
+      "objet": "sceller_pilote_v1.sh:34-67 ; controles_avant_depense_pilote_v1.sh:117-119, 213-215, 319",
+      "constat": "Le scellement ne relit pas trois exigences que les contrôles imposent ensuite à S, sans recours (R12) : rapports présents = épinglés (motif [a-z0-9-]+-v1.(md|json|tar), plus strict que celui du scellement, l. 35) ; garde de calcul sur le registre ; sceau du candidat relu (brouillons/ est hors de verifier-arbre). Un écart introduit après le commit C de la répétition finale passerait donc le scellement : rapport versé non épinglé, ligne GO mal formée, nom de rapport hors motif.",
+      "preuve": "Lecture. Sonde B06 : une ligne mal formée est acceptée par le générateur, refusée par la garde.",
+      "action": "Avant l'entropie, ajouter au scellement la comparaison presents/attendus des contrôles, la garde sur registres/go.md de HEAD (même entrée que l. 319) et la vérification du sceau du candidat relu. Sinon, n'ajouter après C que les journaux des bancs."
+     },
+     {
+      "id": "UH-07",
+      "gravite": "mineur",
+      "objet": "essais_scellement_pilote_v1.sh (aucun cas) ; sceller_pilote_v1.sh:15",
+      "constat": "Le correctif de VH-04 est juste, mais aucun banc versé ne l'éprouve (R5). Le piège ERR n'écrit aucune ligne propre ; seul le message de git apparaît.",
+      "preuve": "essai-vh04/codes.log : git fetch vers un dépôt absent donne le code 2 avec la version figée, 128 avec la version lue par c2.",
+      "action": "Ajouter S20 (adresse de lecture injoignable, code 2 attendu). Écrire `trap 'echo \"arrêt du scellement (ligne $LINENO)\"; exit 2' ERR`."
+     },
+     {
+      "id": "UH-08",
+      "gravite": "mineur",
+      "objet": "en-têtes des quatre bancs ; banc-generateur-pilote-c3.log ; chaine-c3/essais_generateur_pilote_v1.sh (daté de 04:48:40)",
+      "constat": "Aucun journal de banc ne porte l'empreinte de son propre script. Le banc du générateur c3 a tourné de 04:47:40 à 04:50:32, alors que son script a été réécrit à 04:48:40 ; bash le lit au fil de l'exécution, donc son journal ne se rattache pas à une version unique. Le banc du lanceur c3b est parti après la réécriture (04:48:47).",
+      "preuve": "Dates (ls --time-style=full-iso) : banc-generateur-pilote-c3/entropie.txt à 04:47:40, gen-G19 à 04:50:29 ; chaine-c3/essais_* à 04:48:40.",
+      "action": "Rejouer les quatre bancs au commit des préalables depuis des copies figées (chemin absolu), avec en tête l'empreinte du banc et des scripts éprouvés ; verser ces journaux et les relire contre les copies versées."
+     },
+     {
+      "id": "UH-09",
+      "gravite": "mineur",
+      "objet": "plan-lancement-pilote-v3.md:37, 46-60",
+      "constat": "Les préalables sont donnés « dans cet ordre », mais l'épingle REPETITION_JOUET (point 3) ne peut précéder la répétition qui produit le journal (point 5) ni son versement (point 4). Le script de versement, hors chaîne, exige d'ailleurs les épingles avant de verser. « La chaîne est figée avant cette répétition » est inexact de deux minutes (départ 04:47:19, chaîne figée 04:49:37, trois bancs réécrits à 04:48:40), sans effet sur la preuve.",
+      "preuve": "ps (départ de la répétition) ; dates de chaine-c3/ ; verser_chaine_pilote_v1.sh l. 18-21.",
+      "action": "Pas de plan v4 : il imposerait un candidat 4, le plan étant cité non masqué. Consigner l'ordre réel dans R-… et dans la passation : répétition, épingles, versement, commit C, bancs et répétition finale, journaux, C'."
+     },
+     {
+      "id": "UH-10",
+      "gravite": "mineur",
+      "objet": "recuperation_pilote_v1.sh:35-38, 123-147, 179-188 ; repetition_jouet_pilote_v1.sh:82",
+      "constat": "Seules les gardes 0 (préséance) et 4c de la récupération ont un artefact joué. « Copie versée » et « carte » sont désactivées dans la répétition. 4d à 4f et 6c ne sont jouées que sur des cas sains. Seul l'état « partiel » est déclaré en résidu (R5).",
+      "preuve": "Lecture ; journal de la répétition, l. 54 et 59.",
+      "action": "Déclarer ces résidus (passation, R-…), ou ajouter un petit banc de la récupération sur branches synthétiques, sans toucher aux cinq scripts répétés."
+     },
+     {
+      "id": "UH-14",
+      "gravite": "mineur",
+      "objet": "sceller_pilote_v1.sh:72, 92-93",
+      "constat": "Si git commit échoue après git add, fin() saute les fichiers indexés (ls-files les voit) et affiche pourtant « fichiers créés retirés ». Le scellement suivant s'arrête sur « arbre suivi non propre ». Cas rare.",
+      "preuve": "Lecture.",
+      "action": "Dans fin(), `git reset -q -- \"$P\" \"$P.sha256\" \"$CFG\" \"$CFG.sha256\"` avant le retrait."
+     },
+     {
+      "id": "UH-12",
+      "gravite": "information",
+      "objet": "rep-pilote-v1-7b07300.log (531f2d79…) ; controles_avant_depense_pilote_v1.sh:152",
+      "constat": "La répétition jouet au commit 7b07300 est conforme ligne à ligne aux attentes figées. CODE_RELU doit valoir 7b073008585279a06251b08d6b456694320a3c58 (et non e4be3e1, de même arbre gelé). REPETITION_JOUET doit valoir l'empreinte du journal versé tel quel.",
+      "preuve": "sonde-journal/confrontation.log : bloc PYREP code 0 ; cinq empreintes = chaîne figée ; lignes exigées une fois ; KO aux l. 54 et 59.",
+      "action": "Épingler ces valeurs ; verser le journal sans le modifier."
+     },
+     {
+      "id": "UH-13",
+      "gravite": "information",
+      "objet": "candidat 3 l. 470 et 478 ; registres/decisions.md ; verser_chaine_pilote_v1.sh:20-21",
+      "constat": "VH-11 est dit « aucune action » alors que le plan v3 en est la suite. VH-07 dit « banc versé » alors qu'il ne l'est pas encore. Aucune ligne R-… ne consigne le traitement de c2. La liste d'empreintes « relue » exigée par le versement différera de chaine-c3.sha256 : épingles des contrôles, et correction d'UH-01.",
+      "preuve": "Lecture.",
+      "action": "Consigner le traitement de c2 et de c3. Joindre à la passation le différentiel chaine-c3 → chaîne versée (lignes d'épingles et ligne d'UH-01 seulement)."
+     },
+     {
+      "id": "UH-11",
+      "gravite": "information",
+      "objet": "commits cdf0d4f et d4475b6 (registres)",
+      "constat": "La tête a bougé pendant la vérification (GO-2026-10-12-01, N-019 tranché, R-147), avec un arbre gelé identique. Les registres de HEAD passent les trois blocs et la garde. À HEAD, le générateur figé en mode reel reproduit le candidat 3, et les blocs « parties masquées » et « GO » des contrôles l'acceptent. R-147 laisse à Lazar les gestes irréversibles, dont la destruction d'une première instance (VH-03).",
+      "preuve": "Sonde B00 ; generateur-reel/sortie.json (4dbf604c… ; normalise_sha256 83056d15…, configuration 6979a00e…, tests 689).",
+      "action": "Aucune."
+     }
+    ],
+    "rapport_markdown_chemin": "/tmp/claude-0/-home-user/5a6b9d1d-b17d-59a1-a770-8737a831fe0a/scratchpad/verification-c3/chaine/rapport-chaine.md"
+   }
+  },
+  {
+   "etiquette": "sceptique:UH-01",
+   "agent": "ac93870620924878f",
+   "resultat": {
+    "refute": false,
+    "gravite_revue": "majeur",
+    "motif": "Constat confirmé, et la gravité « majeur » est la bonne. Je n'ai rien trouvé qui le réfute.\n\n1. Le dépôt nu n'a pas le commit visé. Le dépôt nu est une copie faite à la l. 41 (`git clone -q --bare .`), sans fichier `alternates`. Les commits créés ensuite dans le clone n'y sont donc pas. À la l. 63, `git -C \"$E/distant.git\" update-ref refs/heads/main \"$Jx\"` échoue avec « nonexistent object ». Le banc n'est pas sous `set -e`, et la fonction `remise` se termine sur `set-url`, qui réussit : rien ne s'arrête et rien n'est signalé. origin/main reste donc à J.\n\n2. Le scellement s'arrête avant la garde visée. Il compare HEAD et origin/main aux l. 43-44, avant toutes les gardes que visent ces cas : l. 54 (fichier non suivi), 63 (code relu), 64-66 (journal), 67 (texte normalisé), 81 (générateur : rapports, N-019) et 88-89 (verifier-arbre). Les huit cas qui appellent `remise` avec un commit neuf sortent donc en code 2 sur « HEAD ≠ origin/main » : S02, S04, S08, S09, S14, S15, S17 et S18. Leur motif attendu est absent, d'où NON CONFORME.\n\n3. La correction proposée marche. Je l'ai rejouée indépendamment : 20 cas sur 20 conformes. S03 reste juste, puisque la poussée passe par le chemin explicite et non par l'adresse de poussée faussée.\n\n4. Le défaut n'est corrigé nulle part.\n   - La copie de travail `pilote-v1/` est identique à la copie figée (2697a9ec…).\n   - L'état antérieur `avant-c3/` (66081a42…) porte la même l. 63.\n   - Le banc modèle v5b de la revalidation faisait une poussée (`remettre`, l. 56 : `git push -q -f origin \"$BASE:main\"`). Le banc du pilote a donc reculé par rapport à son modèle.\n   - Le vérificateur de c2 n'avait pas relu ce banc (rapport-chaine.md, l. 371).\n\n5. Pourquoi « majeur » et non « bloquant ». Le plan v3 (étape 0.5) exige les bancs « conformes, lus cas par cas » et leurs journaux versés. Sans correction, la procédure s'arrêterait avant le scellement : c'est un risque réel d'arrêt et d'écart à R5, pas un run faux. L'échec est bruyant : `fatal: update_ref failed`, puis une ligne NON CONFORME par cas.\n\n6. Nuance sur une phrase du constat. « Les gardes nouvelles (VH-01, VH-09) n'ont aucun artefact joué » est vrai de l'état actuel, puisque le banc n'a jamais tourné. Mais le défaut ne masque pas toutes ces gardes. Celles qui précèdent la l. 44 restent conformes même avec le banc figé : S13 (« A_EPINGLER »), S16 (rapport hors des deux familles, VH-09) et S19 (journal hors du dossier). Le défaut masque les gardes de VH-01 placées après la l. 44 (S14, S15, S17, S18) et quatre gardes plus anciennes (S02, S04, S08, S09).\n\n7. Point aggravant, de clarté. Le banc sort en code 0 et n'affiche aucun décompte, même avec 8 cas NON CONFORME. Seule la lecture cas par cas révèle l'échec.",
+    "preuve": "Les essais n'ont rien écrit hors de verification-c3/sceptiques/UH-01/ :\n- dépôt réel : `git status --short` vide ;\n- chaîne figée : `sha256sum -c ../chaine-c3.sha256` toujours OK ;\n- copie figée lue : chaine-c3/essais_scellement_pilote_v1.sh, 2697a9ec… (OK au contrôle des empreintes de la chaîne).\n\n(a) Reproduction minimale, mêmes commandes que les l. 17, 39, 41 et 61-65 du banc, git 2.43.0 :\n- `distant.git/objects/info/alternates : absent` ;\n- `remise` sans argument (vers J) : réussit ;\n- après un commit local, `remise \"$J2\"` donne « fatal: update_ref failed for ref 'refs/heads/main': cannot update ref 'refs/heads/main': trying to write ref 'refs/heads/main' with nonexistent object a0f34893… » ;\n- `distant main = b20c62f7… (J)` et `cat-file -t J2` dans distant.git : « could not get object info » ;\n- l. 43-44 du scellement : « HEAD ≠ origin/main : pousser d'abord les préalables ».\n\n(b) Le banc figé, sans modification, joué sur un dépôt synthétique construit par moi. Le dépôt contient :\n- scellement.py, prereg.py et gardes.py réels (`git show 7b07300:…`) ;\n- le candidat 3 réel (empreinte normalisée 83056d15…) ;\n- les épingles posées par sed ;\n- un générateur remplacé par un bouchon aux mêmes arguments et aux mêmes messages d'arrêt.\n\nFichiers et empreintes, sous banc/ :\n- construire_source.sh : 9eda36a5… ;\n- bouchon_remplir.py : 403de53c… ;\n- banc-fige.log : c75c9809… ;\n- essais_scellement_corrige_l63.sh : 9c4c1da7… ;\n- banc-corrige.log : 5b9ffc2b….\n\nRésultats du banc figé :\n- huit lignes « fatal: update_ref failed … nonexistent object » ;\n- huit cas NON CONFORME, tous « (motif … absent) » avec « HEAD ≠ origin/main : pousser d'abord les préalables » : S02, S04, S08, S09, S14, S15, S17, S18 ;\n- douze cas CONFORME ;\n- `code du banc : 0`.\n\nAvec la seule l. 63 remplacée par `git push -q -f \"$E/distant.git\" \"${1:-$J}:refs/heads/main\"; git fetch -q origin`, chaque cas sort sur le message de sa garde. NON CONFORME : 0 ; CONFORME : 20.\n- S02 : « ÉCHEC docs/procedures/pilote-T0.5-v1/recuperation_pilote_v1.sh : … empreinte 0c71238114e6… ≠ scellée 000000000000… » ;\n- S04 : « candidat relu : normalisé ≠ épingle » ;\n- S08 : « ARRÊT du remplissage du pilote : git show … » ;\n- S09 : « N-019 : colonne d'état ≠ … » ;\n- S14 : « arbre gelé de HEAD ≠ code relu épinglé » ;\n- S15 et S18 : « journal de la répétition jouet absent, d'une autre empreinte ou d'un autre commit » ;\n- S17 : « … repetition-jouet-pilote-v1.log non suivi à HEAD ».\n\nLes journaux de chaque cas sont dans E-fige/ et E-corrige/.\n\n(c) Ordre des gardes dans sceller_pilote_v1.sh : la l. 44 (HEAD contre origin/main) précède les l. 54, 63, 64-66, 67, 81 et 88-89.\n\n(d) Effets de bord d'une correction :\n- Le candidat 3 ne cite le banc que par son nom (l. 424, 467, 470), jamais par son empreinte.\n- La répétition jouet ne consigne que deux choses : `SCRIPTS_REPETES=\"deriver_taches… remplir… normaliser… recuperation…\"` (l. 35) et repetition_jouet (l. 38).\n- La répétition finale (l. 20-31) compare les 13 copies versées à C au bloc-notes.\n- pilote-v1/essais_scellement_pilote_v1.sh : 2697a9ec… (même l. 63).\n\nHors du constat : la tête du dépôt est maintenant d4475b6, « N-019 tranché (a) par Lazar (GO-2026-10-12-01, R-147) ».",
+    "action_recommandee": "1. Corriger la l. 63 comme proposé : `git push -q -f \"$E/distant.git\" \"${1:-$J}:refs/heads/main\"; git fetch -q origin`. Garder le chemin explicite, pour que la remise qui suit S03 marche malgré l'adresse de poussée faussée.\n\n2. Facultatif, conseillé : finir le banc par un décompte (« N CONFORME sur 20 ») et sortir en code ≠ 0 s'il reste un cas NON CONFORME. Une lecture qui ne regarderait que la fin du journal ne pourrait plus manquer un échec.\n\n3. Pour figer la correction :\n   - mettre la copie corrigée dans pilote-v1/ ;\n   - faire une nouvelle copie figée de la chaîne, avec de nouvelles empreintes, et consigner le changement comme seul écart à la chaîne vérifiée par c3 ;\n   - verser la copie corrigée à C, avec son `.sha256`. La répétition finale et le scellement exigent l'égalité entre bloc-notes et copie versée.\n\n   Rien à refaire pour le candidat 3 ni pour la répétition jouet en cours : ni l'un ni l'autre ne dépend de l'empreinte de ce banc.\n\n4. Au commit des préalables, épingles posées : jouer le banc corrigé et lire les 20 cas un par un. Chaque cas doit sortir sur le message de sa garde, et pas seulement en code 2. Verser ensuite le journal du banc."
+   }
+  }
+ ]
+}

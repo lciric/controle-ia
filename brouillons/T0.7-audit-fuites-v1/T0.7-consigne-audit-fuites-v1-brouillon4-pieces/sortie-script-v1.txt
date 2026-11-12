@@ -1,0 +1,68 @@
+essai 1a cellules, `\|` échappé : sain, conforme
+essai 1b cellules, ligne mal formée : arrêt attendu obtenu (ligne de tableau mal formée : '| `K` | x | c | d')
+essai 2a clé unique : sain, conforme
+essai 2b clé absente : arrêt attendu obtenu (clé K trouvée 0 fois (une attendue))
+essai 2c clé en double : arrêt attendu obtenu (clé K trouvée 2 fois (une attendue))
+essai 3a appliquer puis défaire : sain, conforme
+essai 3b ancien absent : arrêt attendu obtenu (couple 1 : « ancien » présent 0 fois (une attendue) : 'z')
+essai 3c ancien en double : arrêt attendu obtenu (couple 1 : « ancien » présent 2 fois (une attendue) : 'b')
+essai 3d nouveau ambigu au retour : arrêt attendu obtenu (couple 1 : « nouveau » présent 2 fois au moment de le défaire : 'a')
+essai 4 couples calculés : sain, conforme
+essai 5a passage en lignes : sain, conforme
+essai 5b passage absent : arrêt attendu obtenu (passage introuvable ou multiple (0 fois) : 'zz')
+essai 5c passage double : arrêt attendu obtenu (passage introuvable ou multiple (2 fois) : 'ab')
+essai 5d passage partiel : arrêt attendu obtenu (passage présent, mais pas en lignes entières : 'ab')
+essai 6a découpeur sain : sain, conforme
+essai 6b découpeur, octet changé : arrêt attendu obtenu (découpeur c.json : e7639c15b1995c6b9204a2b1e98e0a8ea8111b2e3bb5f89f2d82bc9594d9dcb2 ≠ 4921db8186ced81a772d1db74995cbb3295044d4cacb628225722c27456b5598)
+essai 6c découpeur, compagnon faux : arrêt attendu obtenu (compagnon de t.json dans le commit : '0000000000000000000000000000000000000000000000000000000000000000 t.json' ≠ 1ce819da676e4fbff0c55a2f9cb9ffb3afb835794950250f6690c11d22b88c18  t.json)
+essai 6d découpeur, commit ou fichier absent : arrêt attendu obtenu (`git show c0:D/t.json` : absent (jouet))
+essai 7 écriture sur un fichier différent : arrêt attendu obtenu (brouillons/T0.7-audit-fuites-v1/T0.7-consigne-audit-fuites-v1-brouillon4-pieces/appliquer_couples_brouillon4_v1.py existe avec un autre contenu : rien n'est écrasé (R12))
+essais : 19 conformes, 0 en échec
+entrée brouillons/T0.7-audit-fuites-v1/T0.7-consigne-audit-fuites-v1-brouillon3.md : sha256 0d51099e5ef58829ce83731592eb8573aae8ce8848344488ffc672be45ac273e (égale à l'attendu et au compagnon)
+entrée brouillons/T0.7-audit-fuites-v1/T0.7-consigne-audit-fuites-v1-brouillon3-journal-v1.md : sha256 a153119f2edace5a42724758f38a33c418d1ecec7e72d6adad1790e0b4070b9a (égale à l'attendu et au compagnon)
+entrée brouillons/T0.7-sondes-v0-v1-brouillon21.md : sha256 f7dcb226efe8671b977ce906c286f7e7243f78a2c9fcf205cbfe5715866ea0cc (égale à l'attendu et au compagnon)
+entrée brouillons/T0.7-sondes-v0-v1-brouillon22.md : sha256 8b84cba5bd527e10a3b835ebc0caa7e7da0e31af503904e51621d752d65f0a37 (égale à l'attendu et au compagnon)
+entrée prereg/T0.7-sondes-v0-v1.md : sha256 d7d180eccbbce8ff2e370f82957543c28f1e564c872f981c7ada403949baade5 (égale à l'attendu et au compagnon)
+entrée docs/notes/runs-r1-r2-r4-v1/reception-v4-v1/etape-E-reception-r1-v4-v1.md : sha256 bb6652f2cdd914f2ba0b3cd70c8af37ee6dd40fb0da0db8e289133ed6f5e79e1 (égale à l'attendu et au compagnon)
+entrée docs/notes/g0-deux-semaines-v1/consignes-mere-2026-11-10-1136-v1/consigne-audit-fuites-t07-brouillon4-v1.md : sha256 df38829a025db0f341b1a919d1c2afbfbd19c4f5c7019b8926483dd0f4cf629d (égale à l'attendu et au compagnon)
+AUDIT-FUITES-T07 : brouillon 21 l. 2087, brouillon 22 l. 2111, texte scellé l. 2208
+CONSIGNE-AUDIT-FUITES-T07 : brouillon 21 l. 2086, brouillon 22 l. 2110, texte scellé l. 2207
+cellule 2 AUDIT, brouillon 21 : 9cee4938b9aaaa852a1be89491ad93bbab491d670379681a34de1661bb6754e9 (= citée par le brouillon 3, annexe B)
+cellule 2 AUDIT, texte scellé : 381a72d5b52c1534d116c81b71568dd4728d1a4d90a22a25e99109508e30fede ; brouillon 22 : 381a72d5b52c1534d116c81b71568dd4728d1a4d90a22a25e99109508e30fede
+cellule 1 AUDIT : brouillon 21 = texte scellé : True ; brouillon 22 = texte scellé : True
+cellule 3 AUDIT : brouillon 21 = texte scellé : True ; brouillon 22 = texte scellé : True
+cellule 4 AUDIT : brouillon 21 = texte scellé : True ; brouillon 22 = texte scellé : True
+ligne AUDIT entière, brouillon 22 = texte scellé à l'octet : True (sha256 53eca69ef2cd0c777d16f8ad64f380ecaa62381fa21ea05a728ba92c55ce6051 / 53eca69ef2cd0c777d16f8ad64f380ecaa62381fa21ea05a728ba92c55ce6051)
+ligne CONSIGNE entière : brouillon 21 = texte scellé : True ; brouillon 22 = texte scellé : True (sha256 33d8e306abe31e186ed17e5b794be5c0740b8936050ce23410ffe116c254cdee)
+couples A, B, C, D du journal appliqués à la cellule du brouillon 21 : 381a72d5b52c1534d116c81b71568dd4728d1a4d90a22a25e99109508e30fede ; = texte scellé : True ; = repère du journal : True
+couple calculé (A) : ancien 238 caractères, présent 1 fois ; nouveau 513 caractères
+couple calculé (C) : ancien 7 caractères, présent 1 fois ; nouveau 7 caractères
+couple calculé (B) : ancien 43 caractères, présent 1 fois ; nouveau 160 caractères
+couple calculé (D) : ancien 11 caractères, présent 1 fois ; nouveau 131 caractères
+§ 2.2 du brouillon 3 : cellule 2 et cellules 3 — 4 égales à l'octet au brouillon 21, donc au texte scellé
+annexe B du brouillon 3 : cellules égales à l'octet au brouillon 21
+§ 2.3 4ter (brouillon 3 l. 83, sha256 72e1ceb7ae65609c439c5df92e38e5a627dcf3e8d01c4a605dc041d7339166f8) : brouillon 21 l. 1350-1355, texte scellé l. 1492-1497 (une fois, lignes entières, à l'octet)
+§ 2.3 L1b (brouillon 3 l. 92, sha256 dde0824be7e7ba1616452e6e9287293d37c5ecf22c59d3c16c9186ca6844f47b) : brouillon 21 l. 1765-1765, texte scellé l. 1907-1907 (une fois, lignes entières, à l'octet)
+§ 2.3 L6 (brouillon 3 l. 96, sha256 5e7118d404c938c2ae268833db47a4bfce8ebfe0fa4de1a69dd60f62ceca8dc9) : brouillon 21 l. 1769-1769, texte scellé l. 1911-1911 (une fois, lignes entières, à l'octet)
+§ 2.3 arret (brouillon 3 l. 100, sha256 46f49843011a0d5308682e3a29986d7b54e4d2a2927745b58cbaf1c27357ae86) : brouillon 21 l. 1864-1867, texte scellé l. 2009-2012 (une fois, lignes entières, à l'octet)
+§ 2.3 ni (brouillon 3 l. 107, sha256 990bbac422cb63e76662a687a7644e8553a1055b3a219d76eb7bf1333c0dbaf7) : brouillon 21 l. 1083-1089, texte scellé l. 1226-1232 (une fois, lignes entières, à l'octet)
+§ 2.3 paraphrase « Module » : brouillon 21 l. 2442-2444 = texte scellé l. 2574-2576 (sha256 809306570d0c8bdc5459b78e416dca5ebf0514b844f4f45ec324ea7a8aec01f9)
+renvoi au brouillon 21 l. 1385 : ligne présente dans le texte scellé aux l. [1527]
+renvoi au brouillon 21 l. 1386 : ligne présente dans le texte scellé aux l. [1528]
+renvoi au brouillon 21 l. 1387 : ligne présente dans le texte scellé aux l. [1529]
+renvoi au brouillon 21 l. 1388 : ligne présente dans le texte scellé aux l. [1530]
+renvoi au brouillon 21 l. 1389 : ligne présente dans le texte scellé aux l. [1531]
+renvoi au brouillon 21 l. 1390 : ligne présente dans le texte scellé aux l. [1532]
+renvoi au brouillon 21 l. 2046 : ligne présente dans le texte scellé aux l. [2166]
+renvoi au brouillon 21 l. 2047 : ligne présente dans le texte scellé aux l. [2167]
+renvoi au brouillon 21 l. 2048 : ligne présente dans le texte scellé aux l. [2168]
+renvoi au brouillon 21 l. 2049 : ligne présente dans le texte scellé aux l. [2169]
+renvoi au brouillon 21 l. 2050 : ligne présente dans le texte scellé aux l. [2170]
+renvoi au brouillon 21 l. 2078 : ligne présente dans le texte scellé aux l. [2199]
+découpeur : commit, dossier et trois empreintes présents dans R-2238 ; trois empreintes présentes dans la réception R1 v4 (docs/notes/runs-r1-r2-r4-v1/reception-v4-v1/etape-E-reception-r1-v4-v1.md, sha256 bb6652f2cdd914f2ba0b3cd70c8af37ee6dd40fb0da0db8e289133ed6f5e79e1)
+découpeur : NON REMPLI — `git show c7484c43:donnees/decoupeur-llama-3.1-8b-instruct-0e9e39f2-v1/tokenizer.json` : code 128, fatal: path 'donnees/decoupeur-llama-3.1-8b-instruct-0e9e39f2-v1/tokenizer.json' does not exist in 'c7484c43657a2ce22d76af33efd06aaa11a6aafa'
+couples : 23 appliqués, chacun une fois ; défaits du dernier au premier : brouillon 3 à l'octet
+marqueur restant : <<CHEMIN_DECOUPEUR>> (1 fois)
+marqueur restant : <<RAPPORT_CONTRE_LECTURE_2>> (1 fois)
+brouillon 4 : brouillons/T0.7-audit-fuites-v1/T0.7-consigne-audit-fuites-v1-brouillon4.md — écrit — sha256 f9f4bd380a3066371c88d39ede0ef60bde77070311cd2cd9ca221cf8f3f194c5
+couples : brouillons/T0.7-audit-fuites-v1/T0.7-consigne-audit-fuites-v1-brouillon4-pieces/couples-brouillon3-vers-brouillon4-v1.json — écrit — sha256 746f38793753fcf4167296c5057854fa56784fad96fb96a8ca3d1529c55e36b7

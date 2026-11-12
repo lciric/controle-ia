@@ -1,0 +1,36 @@
+Préparatifs du tour du collisionneur « mémoire du pôle : encodage et redites » (GO-2026-10-27-01, R-539, R-542)
+Versés le 27 octobre 2026 vers 10:15 UTC par l'instance « session-depot », pour qu'une session neuve lance le tour
+sans rien reconstruire. Aucune clé ici : les scripts lisent les clés par variable, jamais affichées.
+
+Pourquoi : à 08:30 puis à 10:09 UTC, l'appel de contrôle rend Gemini OK, mais Fable et Opus échouent (HTTP 400
+« credit balance is too low ») sur RR_ANTHROPIC_API_KEY. Lazar a posé de nouvelles clés dans l'environnement vers
+10:05 UTC ; une session déjà ouverte garde les variables lues à son démarrage : seule une session neuve les lit.
+
+Contenu :
+  tour/question-memoire-encodage-v2.md   question v2 de conv-audit (9149db14…), relais de l'instance sortante
+  tour/faits-memoire-encodage-v1.md      faits assemblés (9a4be1df…, 79 Ko), pièces vérifiées contre leurs empreintes
+  pieces/                                 les pièces C, M (M1.py, LISEZMOI de l'orchestrateur), J, G (G1, G2), S1, S2
+  tour/collisionneur_v2.py               outil v2.6 (0e63febd…), celui des deux tours précédents
+  tour/test_collisionneur_v2.py, tour/test_depense_v4.py   ses tests (59 passent aux versions figées)
+  tour/appel_controle_v5.py, tour/controler-especes-v1.sh  appel de contrôle des trois espèces (un appel court chacune)
+  tour/diag_anthropic_v1.py              diagnostic d'un échec Anthropic (message d'erreur seul, tronqué)
+  tour/lancer-tour-v1.sh                 étage III standard, trois tours, trois modèles, plafond 22 USD
+  tour/appel-controle-especes-v1-echec-credit.json, tour/appel-controle-especes-v2.json, tour/controle-especes-v2.log
+                                          les deux appels de contrôle en échec (0,0007 USD chacun)
+  pip-freeze-memoire-v1.txt              versions figées de l'environnement (anthropic 2.3.0, etc.)
+
+Marche à suivre dans la session neuve (routine R14 faite d'abord) :
+  1. Vérifier les empreintes de ce dossier (compagnons .sha256) ; vérifier que GO-2026-10-27-01 est en cours de
+     validité (échéance 2026-10-31) et relu par lire_go et decider.
+  2. Copier `preparation/` dans le bloc-notes de la session (jamais travailler dans l'arbre du dépôt), puis y créer
+     l'environnement : python3 -m venv venv && venv/bin/pip install --no-cache-dir -r pip-freeze-memoire-v1.txt
+     (sans la dernière ligne, qui donne la version de Python) ; les scripts de tour/ appellent ../venv/bin/python.
+  3. Lancer les tests de l'outil dans cet environnement.
+  4. Renommer la sortie de l'appel de contrôle (R12 : appel-controle-especes-v3.json) dans controler-especes-v1.sh,
+     sous un nom nouveau de script (controler-especes-v2.sh), puis le lancer : les trois espèces doivent rendre OK.
+     Si la clé Anthropic neuve porte un autre nom de variable que RR_ANTHROPIC_API_KEY, Lazar le dit ; ne jamais
+     chercher ni afficher une clé.
+  5. Lancer lancer-tour-v1.sh (tâche de fond, borne de durée explicite d'au moins 2 h) ; un refus arrête le tour.
+  6. Verser le tour sur une branche neuve `donnees/collisionneur-memoire-encodage-v1`, empreintes à l'appui ; consigner
+     la dépense ; faire la synthèse et l'envoyer à Lazar. Les réponses du collisionneur ne sont jamais servies à un
+     organisme.

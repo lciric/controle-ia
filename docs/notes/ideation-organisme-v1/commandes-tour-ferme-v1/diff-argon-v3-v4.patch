@@ -1,0 +1,181 @@
+--- commande_argon_v56_nuit_v3.py (sha256 95fa406475b53ac5026544f9e1ce9280ab545b670bdbf309694734c08ba1af73)
++++ commande_argon_v56_nuit_v4.py
+@@ -1,7 +1,57 @@
+ #!/usr/bin/env python3
+-"""Commande externe d'Argon (gemini-4-argon) pour le tour fermé, étage 1 (orchestrateur v63) — v3.
++"""Commande externe d'Argon (gemini-4-argon) pour le tour fermé, étage 1 (orchestrateur v63) — v4.
+ 
+-Version 3, rédigée le 2 novembre 2026 (sous-agent de session-depot) ; rien n'a été lancé par le rédacteur. **Version 3 =
++Version 4, rédigée le 3 novembre 2026 (sous-agent de session-depot) ; rien n'a été lancé par le rédacteur. **Version 4 =
++`commande_argon_v56_nuit_v3.py` (sha256 `95fa4064…`, inchangée, R12) avec quatre changements dans la seule sous-commande
++`appeler`, et seulement ceux-là** (contre-lecture neuve de la v3,
++`contre-lecture-v3/contre-lecture-commandes-tour-ferme-v3-v1.md`, sha256 `6b4eac8b…` : bloquant B1 et mineur 1 ; cause
++de refus demandée pour la version 64 de l'étage, qui lira un code 4 « rien envoyé » comme « budget_depasse ») :
++
++1. **Clé d'étape propre au fournisseur (bloquant B1 de la contre-lecture)** : la garde d'étape du registre partagé (garde 2)
++   est jugée sous la clé `ETAPE_POLE` suivie de `/argon` (fonction `etape_du_registre`) ; si `ETAPE_POLE` finit déjà par
++   `/argon`, rien n'est ajouté (idempotent : un lanceur peut déjà passer l'étape par fournisseur). Raison : le lanceur v63
++   donne aux deux relais le même `ETAPE_POLE=tour_ferme_v63` avec des parts différentes (`PLAFOND_ETAPE_USD` 44.00 pour
++   Kimi, 6.00 pour Argon) et le même registre ; en v3, la dépense de Kimi entrait dans la garde d'étape d'Argon, qui refusait
++   le vérificateur dès ≈ 5,95 USD dépensés par Kimi dans l'étape (expérience E1 de la contre-lecture). Le champ
++   `etape` de la dernière ligne garde la valeur reçue ; le champ neuf `etape_registre` porte la clé passée au registre
++   (celle de sa ligne `debut`). La garde cumulée (`--plafond-cumule-usd`, les deux fournisseurs ensemble, même registre)
++   ne change pas ; `registre_depense_cumulee_v1.py` est identique (sha256 `8ba92066…`).
++2. **Cause de refus lisible par programme** : toute sortie en code 4, et elle seule, porte le champ `cause_refus`, l'une des
++   six valeurs de `CAUSES_REFUS` : `plafond_session` (pire cas au-dessus du plafond de session, sortie minimale du rôle
++   comprise), `garde_etape`, `garde_cumulee`, `registre_illisible`, `relais_plafond` (HTTP 402 du relais) ou
++   `relais_max_appels` (HTTP 429 du relais). La garde d'étape et la garde cumulée lèvent la même exception (`PlafondCumule`) :
++   la commande les distingue par le **préfixe du message** (`cause_du_registre`, `PREFIXE_GARDE_ETAPE`), sans toucher au
++   registre. Choix et raison : (a) le message est rédigé par la décision elle-même, sous le verrou exclusif du registre
++   (`reserver`, l. 133-144) ; une comparaison refaite par la commande avant `reserver` lirait le registre hors de ce verrou,
++   que l'autre commande peut changer entre la lecture et la décision (les deux partagent le registre), au point de tomber sur
++   une ligne en cours d'écriture : la cause rendue pourrait ne pas être la garde qui a refusé ; (b) le registre est gelé
++   (copie identique, sha256 `8ba92066…`, contrôlée par la suite d'essais) : ses préfixes « garde d'étape ( » (l. 143) et
++   « garde cumulée : » (l. 137) ne bougent pas, et les essais éprouvent les deux cas contre le vrai registre ; (c) la garde
++   cumulée est jugée la première (l. 135-138) : si les deux refuseraient, la cause est `garde_cumulee`. Les deux autres refus
++   `PlafondCumule` du registre, « plafond cumulé invalide » et « pire cas invalide » (l. 127-130), sont les contrôles
++   d'entrée de la garde cumulée : `garde_cumulee`. `RegistreIllisible` et `OSError` (ligne illisible, dossier absent, fichier
++   ou verrou illisible) : `registre_illisible`.
++   Le relais Argon (`servir`) ne transmet jamais un statut de l'interface (une erreur de Gemini lui revient en réponse 200
++   portant `echec`) : tout 402 ou 429 reçu est un refus du relais lui-même, rendu en code 4 depuis la v2, `envoye: false`.
++3. **Dernière ligne JSON sur un refus d'argparse** (mineur 1 de la contre-lecture) : une option refusée par `argparse` pour
++   `appeler` (faute de frappe dans la configuration, option obligatoire absente, valeur illisible) sortait en code 2 sans
++   dernière ligne, donc plafond de session compté `cout_inconnu` par l'adaptateur ; elle sort en code 2 avec la dernière
++   ligne `{"texte": "", "cout_usd": 1e-06, "version", "erreur", "envoye": false, "role"}` (`role` = `ROLE_POLE` s'il
++   est donné), comme la commande de Kimi. Pour `servir`, rien ne change : le refus d'argparse est relevé tel quel.
++4. **Version** `commande-argon-v56-nuit-v4`, cet en-tête (différences numérotées, historiques gardés en dessous) et les
++   lignes d'usage. Rien d'autre ne change : mêmes gardes, mêmes bornes de sortie par rôle, même pire cas, même registre,
++   même protocole vers le relais local 8805, mêmes codes de sortie.
++
++**Sous-commande `servir` (le relais Argon local, port 8805) : identique à la v3 au comportement près, et octet pour octet
++hors la constante `VERSION`.** Le bloc compris entre la ligne-marqueur du relais (« relais (sous-commande `servir`) »)
++et celle de la commande est identique octet pour octet à celui de la v3 (lui-même identique à celui de la v2) ;
++les constantes et fonctions qu'il lit (`HOTE`, `COLLISIONNEUR_DEFAUT`, `SHA_COLLISIONNEUR`, `PRIX`, `MAX_OCTETS_CORPS`,
++`pire_cas`, `maintenant`) sont inchangées ; dans `principal`, le sous-analyseur `servir` et son aiguillage aussi, et un refus
++d'argparse pour `servir` sort comme en v3 (code 2, rien sur la sortie standard). Seule `VERSION`, partagée par les deux
++sous-commandes, change (champ `version` de `GET /relais/etat`, en-tête `Server`). Le relais 8805 est un instrument gelé
++d'A1-v3 : il est et restera servi depuis `commande_argon_v56_nuit_v2.py` ; cette version ne sert qu'en `appeler`.
++
++Historique de la version 3 — rédigée le 2 novembre 2026 (sous-agent de session-depot). **Version 3 =
+ `commande_argon_v56_nuit_v2.py` (sha256 `221df610…`, inchangée, R12) avec quatre changements dans la seule sous-commande
+ `appeler`, et seulement ceux-là** (défaut TF-01 : la v2 refusait, code 2, les rôles de l'étage de tests de mort) :
+ 
+@@ -62,15 +112,17 @@
+ nulle) → pire cas ; rien envoyé → plancher 1e-6.
+ 
+ Codes (`appeler`) : 0 conforme ; 2 réglage ou entrée refusés ; 3 relais ou interface (HTTP, connexion) ; 4 pire cas
+-au-dessus d'un plafond (session, étape, cumulé, relais) ou registre illisible ; 5 réponse non conforme (vide, tronquée,
+-refus du modèle, anomalie, modèle servi différent, coût au-dessus du pire cas réservé) ; 6 délai dépassé ou interruption.
++au-dessus d'un plafond (session, étape, cumulé, relais) ou registre illisible — rien envoyé, champ `cause_refus` (v4) ;
++5 réponse non conforme (vide, tronquée, refus du modèle, anomalie, modèle servi différent, coût au-dessus du pire cas
++réservé) ; 6 délai dépassé ou interruption.
+ Codes (`servir`) : 2 réglage refusé (clé absente, collisionneur à empreinte différente, modèle non permis) ; sinon sert
+ jusqu'à l'arrêt par PID (R10).
+ 
+ Usage :
+   env -i PATH=/usr/bin:/bin LANG=C.UTF-8 GEMINI_API_KEY="$GEMINI_API_KEY_2" HTTPS_PROXY=… SSL_CERT_FILE=… \\
+-      python3 -I -B commande_argon_v56_nuit_v3.py servir --port 8805 --plafond-usd 10 --max-appels 50 --journal J.jsonl
+-  python3 -I -B commande_argon_v56_nuit_v3.py appeler --url-relais http://127.0.0.1:8805 --registre R.jsonl \\
++      python3 -I -B commande_argon_v56_nuit_v2.py servir --port 8805 --plafond-usd 10 --max-appels 50 --journal J.jsonl
++                                     (relais 8805 : servi depuis la v2, instrument gelé d'A1-v3 ; `servir` d'ici est identique)
++  python3 -I -B commande_argon_v56_nuit_v4.py appeler --url-relais http://127.0.0.1:8805 --registre R.jsonl \\
+       --plafond-cumule-usd 50 [--max-sortie-proposeur 32000] [--max-sortie-court 4000] [--sortie-min-jetons 1000] \\
+       [--max-sortie-lecteur 1000] [--sortie-min-jetons-lecteur 200] [--delai-s 1750]
+                                      (consigne sur l'entrée standard ; environnement fourni par l'orchestrateur)
+@@ -97,7 +149,7 @@
+ sys.path.insert(0, ICI)  # -I n'ajoute pas le dossier du script : le registre partagé est chargé d'ici
+ import registre_depense_cumulee_v1 as reg  # noqa: E402
+ 
+-VERSION = "commande-argon-v56-nuit-v3"
++VERSION = "commande-argon-v56-nuit-v4"
+ ROLES = ("proposeur_ideation", "juge_ideation", "experimentateur_test", "lecteur_test")  # v3 (1)
+ PLANCHER = 1e-6
+ HOTE = "127.0.0.1"
+@@ -278,6 +330,11 @@
+ 
+ # --- commande (sous-commande `appeler`) ------------------------------------------------------------------------------------
+ 
++CAUSES_REFUS = ("plafond_session", "garde_etape", "garde_cumulee", "registre_illisible", "relais_plafond",
++                "relais_max_appels")  # v4 (2) : valeurs de `cause_refus`, présent sur toute sortie en code 4 et sur elle seule
++CAUSES_RELAIS = {402: "relais_plafond", 429: "relais_max_appels"}  # v4 (2) : refus du relais lui-même, rien envoyé
++PREFIXE_GARDE_ETAPE = "garde d'étape ("  # v4 (2) : registre_depense_cumulee_v1.py l. 143 (fichier gelé, sha256 8ba92066…)
++
+ 
+ def rendre(code, texte="", cout=PLANCHER, **diag):
+     cout = cout if (isinstance(cout, (int, float)) and math.isfinite(cout) and cout > 0) else PLANCHER
+@@ -316,6 +373,24 @@
+     return etape, p
+ 
+ 
++def etape_du_registre(etape, fournisseur):
++    """v4 (1, B1) : clé d'étape passée au registre, propre au fournisseur : `ETAPE_POLE` suivi de `/<fournisseur>` ; rien
++    n'est ajouté s'il y finit déjà (idempotent) ; None sans porte « environnement » (garde d'étape inactive)."""
++    if etape is None:
++        return None
++    suffixe = "/" + fournisseur
++    return etape if etape.endswith(suffixe) else etape + suffixe
++
++
++def cause_du_registre(e):
++    """v4 (2) : cause d'un refus du registre, lue sur la décision elle-même (message rédigé sous le verrou du registre) :
++    préfixe « garde d'étape ( » → `garde_etape` ; tout autre `PlafondCumule` (garde cumulée et ses deux contrôles
++    d'entrée) → `garde_cumulee` ; `RegistreIllisible` ou `OSError` → `registre_illisible`."""
++    if isinstance(e, reg.PlafondCumule):
++        return "garde_etape" if str(e).startswith(PREFIXE_GARDE_ETAPE) else "garde_cumulee"
++    return "registre_illisible"
++
++
+ def appeler(args, environ, entree):
+     try:
+         cible = verifier_url(args.url_relais)
+@@ -339,17 +414,19 @@
+     mt = min(maxi, int((plafond - entree_usd) * 1e6 / PRIX[1])) if plafond > entree_usd else 0
+     if mt < mini:  # v3 (2)
+         rendre(4, erreur=f"pire cas au-dessus du plafond de session {plafond} USD ({len(prompt)} caractères)", envoye=False,
+-               role=role)  # v3 (3)
++               role=role, cause_refus="plafond_session")  # v3 (3), v4 (2)
+     pire = pire_cas(len(prompt), mt)
+     if pire > plafond + 1e-12:
+-        rendre(4, erreur="pire cas au-dessus du plafond de session", envoye=False, role=role)  # v3 (3)
++        rendre(4, erreur="pire cas au-dessus du plafond de session", envoye=False, role=role,
++               cause_refus="plafond_session")  # v3 (3), v4 (2)
++    etape_registre = etape_du_registre(etape, "argon")  # v4 (1)
+     diag = {"max_tokens": mt, "caracteres": len(prompt), "pire_cas_usd": round(pire, 8), "modele_demande": args.modele,
+-            "role": role, "etape": etape}
++            "role": role, "etape": etape, "etape_registre": etape_registre}  # v4 (1) : `etape` = la valeur reçue
+     try:
+         ident = reg.reserver(args.registre, plafond_cumule_usd=args.plafond_cumule_usd, pire_cas_usd=pire, fournisseur="argon",
+-                             role=role, modele=args.modele, etape=etape, plafond_etape_usd=plafond_dur)
++                             role=role, modele=args.modele, etape=etape_registre, plafond_etape_usd=plafond_dur)  # v4 (1)
+     except (reg.PlafondCumule, reg.RegistreIllisible, OSError) as e:
+-        rendre(4, erreur=str(e)[:300], envoye=False, **diag)
++        rendre(4, erreur=str(e)[:300], envoye=False, cause_refus=cause_du_registre(e), **diag)  # v4 (2)
+ 
+     def fin(code, texte="", cout=PLANCHER, origine="plancher", statut="echec", **extra):
+         envoye = extra.pop("envoye", True)
+@@ -377,8 +454,9 @@
+     except urllib.error.HTTPError as e:
+         motif = e.read()[:300].decode("utf-8", "replace")
+         avant = e.code in (400, 402, 403, 411, 413, 429)  # refus du relais : rien n'est parti vers l'interface
++        extra = {"cause_refus": CAUSES_RELAIS[e.code]} if e.code in CAUSES_RELAIS else {}  # v4 (2) : 402 et 429, code 4
+         fin(4 if e.code in (402, 429) else 3, cout=PLANCHER if avant else pire, origine="plancher" if avant else "pire_cas",
+-            erreur=f"HTTP {e.code} : {motif}", envoye=not avant)
++            erreur=f"HTTP {e.code} : {motif}", envoye=not avant, **extra)
+     except urllib.error.URLError as e:
+         if isinstance(e.reason, ConnectionRefusedError):
+             fin(3, erreur="relais Argon injoignable (connexion refusée)", envoye=False)
+@@ -435,7 +513,13 @@
+     p.add_argument("--delai-s", type=float, default=1750.0)
+     p.add_argument("--registre", required=True)
+     p.add_argument("--plafond-cumule-usd", type=float, required=True)
+-    args = a.parse_args(argv)
++    try:
++        args = a.parse_args(argv)
++    except SystemExit as e:  # v4 (3) : option refusée par argparse (ou --help)
++        if argv[0] == "servir":
++            raise  # `servir` : comportement de la v3, inchangé (code 2, rien sur la sortie standard)
++        rendre(2, erreur=f"arguments refusés par argparse (sortie {e.code})", envoye=False,
++               role=(os.environ if environ is None else environ).get("ROLE_POLE"))
+     if args.mode == "servir":
+         if args.port <= 0 or args.plafond_usd <= 0 or args.max_appels <= 0:
+             raise SystemExit("servir : --port, --plafond-usd, --max-appels strictement positifs")

@@ -1,0 +1,107 @@
+{
+ "de": {
+  "chemin": "brouillons/T0.7-audit-fuites-v1/T0.7-consigne-audit-fuites-v1-brouillon5.md",
+  "sha256": "7228ce724d4f2a7c146124ceb70156cf99118b2acebcdc4b3b7d9e5d977d2b67"
+ },
+ "regle": "appliqués dans l'ordre, chaque « ancien » présent une fois ; défaits du dernier au premier, ils redonnent le brouillon 5 à l'octet",
+ "couples": [
+  {
+   "id": "K01",
+   "statut": "exigé",
+   "motif": "CL2-06 : la ligne CODE-T07 cite un fichier, pas un commit ; ce fichier entre dans la liste fermée",
+   "ancien": "lues comme dit au § 4 (« Lecture du registre »).",
+   "nouveau": "lues comme dit au § 4 (« Lecture du registre ») ; si la ligne `CODE-T07` est présente, le fichier qu'elle cite\n   (`registres/code-t07/CODE-T07-v2.json` le 11 novembre 2026), ouvert par son chemin exact après contrôle de son\n   empreinte contre la ligne, dont seuls le champ `commit` et l'entrée `fichiers` de\n   `src/controle_ia/t07/criteres_v1.py` sont lus."
+  },
+  {
+   "id": "K02",
+   "statut": "exigé",
+   "motif": "CL2-06 : d'où vient le commit du validateur",
+   "ancien": "le commit cité par la ligne `CODE-T07` si elle existe, sinon `8ae9fc44`",
+   "nouveau": "le commit écrit au champ `commit` du fichier que cite la ligne `CODE-T07` si elle existe (la ligne porte un chemin et\n   une empreinte, pas un commit : point 2 ; l'empreinte de `criteres_v1.py` doit aussi égaler l'entrée `fichiers` de ce\n   fichier, sinon arrêt), sinon `8ae9fc44`"
+  },
+  {
+   "id": "K03",
+   "statut": "exigé",
+   "motif": "CL2-07 (Q-B5-3) : écritures hors du dépôt, dans le bac à sable",
+   "ancien": "Aucun autre chemin n'est écrit.",
+   "nouveau": "Aucun autre chemin du dépôt n'est écrit ; hors du dépôt, seuls\nle bac à sable de l'auditeur (`TMPDIR`, § 7 ; les trois fichiers du découpeur, § 6.1) et celui du contre-lecteur du\nfichier (fichiers de rejeu, § 3) sont écrits, et chacun cite le chemin du sien dans son rapport."
+  },
+  {
+   "id": "K14",
+   "statut": "exigé",
+   "motif": "CL2-05 : numéros de ligne de la réception R1 v4 (les trois empreintes sont aux l. 71-73)",
+   "ancien": "etape-E-reception-r1-v4-v1.md` l. 70-72,",
+   "nouveau": "etape-E-reception-r1-v4-v1.md` l. 71-73,"
+  },
+  {
+   "id": "K04",
+   "statut": "facultatif",
+   "motif": "CL2-08 : le point 8 de la liste fermée dit encore « chemin donné par la mère »",
+   "ancien": "8. Le découpeur du modèle de 7b, au chemin donné par la mère (`CHEMIN_DECOUPEUR`, § 6.1), et rien d'autre de ce dossier.",
+   "nouveau": "8. Le découpeur du modèle de 7b : les trois fichiers nommés au § 6.1, lus par `git show` au commit et au dossier écrits\n   là, puis leurs copies dans le bac à sable ; rien d'autre de ce dossier ni de cette branche."
+  },
+  {
+   "id": "K05",
+   "statut": "facultatif",
+   "motif": "CL2-09 : chemin et empreinte du texte scellé dans la liste fermée",
+   "ancien": "7. T0.7 : les seules lignes recopiées au § 2,",
+   "nouveau": "7. T0.7 scellé (`prereg/T0.7-sondes-v0-v1.md`, `d7d180eccbbce8ff2e370f82957543c28f1e564c872f981c7ada403949baade5`, égal à\n   son compagnon, sinon arrêt) : les seules lignes recopiées au § 2,"
+  },
+  {
+   "id": "K06",
+   "statut": "facultatif",
+   "motif": "CL2-09 : « en vigueur » → texte scellé (§ 7)",
+   "ancien": "cellules du § 2 égales au texte de T0.7 en vigueur",
+   "nouveau": "cellules du § 2 égales au texte scellé de T0.7"
+  },
+  {
+   "id": "K07",
+   "statut": "facultatif",
+   "motif": "CL2-09 : « en vigueur » → texte scellé (§ 10)",
+   "ancien": "Cellules du § 2 différentes au texte de T0.7 en vigueur",
+   "nouveau": "Cellules du § 2 différentes au texte scellé de T0.7"
+  },
+  {
+   "id": "K08",
+   "statut": "facultatif",
+   "motif": "CL2-10 : renvoi aux lignes du brouillon 21, repère du texte scellé",
+   "ancien": "(même contrôle que le module, T0.7 l. 2078)",
+   "nouveau": "(même contrôle que le module, T0.7 l. 2078 au brouillon 21, l. 2199 au texte scellé)"
+  },
+  {
+   "id": "K09",
+   "statut": "facultatif",
+   "motif": "CL2-10 : idem",
+   "ancien": "A, T0.7 l. 2046). Ligne",
+   "nouveau": "A, T0.7 l. 2046 au brouillon 21, l. 2166 au texte scellé ; les renvois de ce § 4 à T0.7 sont en lignes du\n  brouillon 21). Ligne"
+  },
+  {
+   "id": "K10",
+   "statut": "facultatif",
+   "motif": "CL2-10 : idem",
+   "ancien": "l'étape A (T0.7 l. 2046), elle-même",
+   "nouveau": "l'étape A (T0.7 l. 2046 ; texte scellé l. 2166), elle-même"
+  },
+  {
+   "id": "K11",
+   "statut": "facultatif",
+   "motif": "CL2-10 : idem",
+   "ancien": "(garde d'ordre, l. 2047-2050)",
+   "nouveau": "(garde d'ordre, l. 2047-2050 ; texte scellé l. 2167-2170)"
+  },
+  {
+   "id": "K12",
+   "statut": "facultatif",
+   "motif": "CL2-10 : idem",
+   "ancien": "(étape A, l. 1385-1390)",
+   "nouveau": "(étape A, l. 1385-1390 ; texte scellé l. 1527-1532)"
+  },
+  {
+   "id": "K13",
+   "statut": "facultatif",
+   "motif": "CL2-11 : R5, fichier du découpeur absent ou vide",
+   "ancien": "empreinte du découpeur fausse → arrêt ;",
+   "nouveau": "empreinte du découpeur fausse, ou fichier du découpeur absent ou vide (`git show` en échec) → arrêt ;"
+  }
+ ]
+}

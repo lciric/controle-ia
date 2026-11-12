@@ -1,0 +1,44 @@
+# Sorties payées, scellées, jamais synthétisées — organisme d'idéation et lignée de l'objectif ultime — v2
+
+- **Rédacteur** : sous-agent neuf (Claude Opus 5.5) de la session mère ; consigne `docs/notes/g0-deux-semaines-v1/consignes-mere-2026-11-10-1136-v1/consigne-inventaire-idees-organisme-v1.md` (`2f16dfd064540f9b…`). Écrit le 10 novembre 2026 à 12:38 UTC (`date -u`). **v2** : remplace la v1 (`fd46a13e…`, gardée, R12) ; seule correction : à la dernière rangée du § 2, « R-50 (N-050) » de la v1 devient « N-050 » ; ajout du § 5 (sources du jalon 7).
+- **Méthode** : relevé fait **à partir du registre seulement** (`registres/decisions.md`, copie de lecture de 12:16 UTC, `d10a422e…` ; `registres/depenses.md`, lignes 319, 324 et 333) et d'une recherche par nom de dossier sur `main` (`git grep`, chemins interdits exclus). **Aucune de ces sorties n'a été ouverte** : ni cellule de collisionneur, ni réponse de modèle, ni fichier sous `donnees/` ou sur une branche `donnees/…`. Les commits sont ceux que le registre écrit ; ils n'ont pas été vérifiés par `git show` (ce serait ouvrir la sortie).
+- **Ce que « non lue » veut dire ici** : aucune synthèse scellée de la sortie n'a été trouvée au dépôt de travail, et le registre la dit versée « sans lecture » ou « non lue ». Une lecture chez conv-audit, sur sa propre branche, n'est pas exclue quand le registre dit la sortie « copiée au canal » ; elle n'a pas été vérifiée.
+
+## 1. Non lues selon le registre, nommées par la consigne
+
+| sortie | chemin et commit (selon le registre) | dépense | lignes du registre | état au relevé |
+|---|---|---|---|---|
+| Collisionneur v8, tour 2 N12-N13 (15 cellules sur 15) | `donnees/collisionneur-v8-runs-v2`, commit `0e7b3e59d7c5aeee5e63b43ef920fb8f565c8a11` (560 fichiers dont 34 sorties scellées, pour les quatre runs) | 15,60 USD (plafond 40, GO-2026-11-01-05) | R-965, R-1039, R-1050, R-2199 ; dépenses l. 319 | non lue ; lecture (a) du pilier « mathématiques nouvelles » lancée le 10 novembre (R-2199) : critères de lecture `docs/notes/ideation-organisme-v1/course-2/collisionneur-n12-n13-v1/criteres-lecture-n12-n13-tour2-v1.md` présents sur `main`, aucune synthèse du tour 2 au relevé |
+| Collisionneur v8, convergence v3 | même branche et commit | 26,09 USD, reprise comprise (GO-2026-11-01-06) | R-965, R-1039, R-1050 ; dépenses l. 319 | non lue (« zapper le collisionneur », R-1036) ; les avis d'Argon seul et de Kimi seul sur la même question sont lus (R-973) |
+| Collisionneur v8, sélection génération à génération v1 | même branche et commit | 16,38 USD, reprise comprise (GO-2026-11-01-07) | R-965, R-1039, R-1050 ; dépenses l. 319 | non lue |
+| Collisionneur v8, vérification non circulaire du bac à sable v1 | même branche et commit | 16,24 USD (GO-2026-11-01-08) | R-965, R-978, R-1039, R-1050 ; dépenses l. 319 | non lue |
+| (les quatre runs v8, ensemble) | — | ≈ 74,33 USD au total, contrôles compris | R-1039 | écart déclaré pour toute lecture future : l'espèce B a servi Opus 4.6, non Opus 5.5 (R-1050) |
+| Collisionneur v9 « brainstorm » du 2 novembre, cinq espèces (GO-2026-11-02-31) | `donnees/collisionneur-v9-brainstorm-v1` (commit `ac25c055` selon les dépenses, `9edaeb26` cité ailleurs au registre) ; suite `donnees/collisionneur-v9-brainstorm-v1-suite`, commit `42aa6b1b…` (15 cellules, « tout tient ») | 20,85 USD pour la première partie (13 cellules sur 15) ; suite : voir `registres/depenses.md` | R-1065, R-1080, R-1102, R-1104, R-1109, R-1110, R-1112 ; dépenses l. 324 | non lue ; une synthèse des cinq réponses finales a été confiée à un lecteur le 3 novembre (R-1112) : aucune synthèse scellée trouvée sur `main` au relevé |
+
+## 2. Autres sorties de l'organisme payées et scellées dont aucune lecture n'est trouvée au dépôt de travail
+
+| sortie | chemin et commit (selon le registre) | dépense | lignes du registre | état au relevé |
+|---|---|---|---|---|
+| A1-v3, seconde course (interrompue par l'infrastructure) | branche d'état interrompu versée (R-1105) ; état scellé `fd66feb7…` (19 fichiers sur 19) | 48,49583 USD, 620 appels | R-1105, R-1463, R-1478 ; section Résultats v3, [B7] | « état scellé non lu » (audit A9 : « rien lu ni relancé ») |
+| Course de l'organisme « Heimersheim » (cinq espèces, aiguilleur v2) | `donnees/course-heimersheim-v1-run`, commit `a64f9afe9597e145111c95785a5f883d358e21f0` (167 fichiers) | 10,026275 USD | R-1111, R-1116, R-1118, R-1120 ; dépenses l. 333 | copiée au canal « sans lecture » par session-depot ; lecture chez conv-audit non vérifiée |
+| Course « Kirchner Q2 » | `donnees/course-kirchner-q2-v1-run-seconde`, `5d8a9e84` (selon le registre) | voir `registres/depenses.md` | R-1121, R-1124, R-1127, R-1133 | aucune synthèse trouvée sur `main` |
+| Courses « Ibrahim Q1 » (deux) | `donnees/course-ibrahim-q1-v1-run`, `23d320a8` ; `donnees/course-ibrahim-q1-seconde-v1-run`, `29b46644` | seconde : 10,64 USD ; première : voir les dépenses | R-1135, R-1139, R-1141, R-1170, R-1171, R-1174 | aucune synthèse trouvée sur `main` |
+| Courses « Scheurer » (avec Claude : arrêt au nœud C13, aucune fiche ; sans Claude : 22 classées) | `donnees/course-scheurer-v1-run`, `04ab7367` ; `donnees/course-scheurer-v2-run`, `3a5d4202` | sans Claude : 5,24 USD ; première : voir les dépenses | R-1150, R-1151, R-1160, R-1161, R-1170, R-1176, R-1177 | conv-audit dit l'avoir lue (R-1172) ; aucune synthèse sur `main` |
+| Courses « Colognese-Ward Q2 » (cinq espèces : arrêt au nœud C13 ; sans Opus : 31 classées) | `donnees/course-colognese-ward-q2-v1-run`, `53baefe6` ; `donnees/course-colognese-ward-q2-v2-run`, `dd213bd0` | voir les dépenses | R-1152, R-1154, R-1164, R-1166, R-1168 | aucune synthèse trouvée sur `main` |
+| Course « Jang-Feng » | `donnees/course-jang-feng-v1-run`, `8904d606` | 8,74 USD | R-1157, R-1166 | copiée au canal ; aucune synthèse sur `main` |
+| Tours du collisionneur v9 sur les questions des mentors (Kirchner Q2, Ibrahim Q1, Scheurer, Colognese-Ward Q2) | `donnees/collisionneur-v9-kirchner-q2-v1` `16ec2e5a` et `…-suite` `19e18141` ; `donnees/collisionneur-v9-ibrahim-q1-v1-suite` `82cfad3e` ; `donnees/collisionneur-v9-scheurer-v1-run` `b733fe22` et `…-suite` `9182f17d` (3,99 USD) ; `donnees/collisionneur-v9-colognese-ward-q2-v1` `4449651c` et `…-run` `5490f53c` | voir les dépenses | R-1124, R-1133, R-1137, R-1140, R-1145, R-1148 | copiés au canal ; aucune synthèse sur `main` |
+| Collisionneur, lot 3 étage III (24 octobre), arrêté au tour III.1 | `donnees/collisionneur-lot3-etage3-v1`, `7ae8324` (orpheline) | 1,01 USD | R-359, R-361 | aucune synthèse trouvée |
+| Parts `test_final` des pilotes de conception (pilote 4, courses M et S) et relevés mécaniques (B) | dossiers des courses du pilote 4 (non nommés ici) | comprises dans les GO des pilotes | N-050 ; R-500, R-501 | **fermées par règle** jusqu'à la fin du compteur de rondes de la boucle extérieure (N-050) ; relevés (B) réservés aux agents de la boucle |
+
+## 3. Statut de lecture non établi par ce relevé
+
+Tours anciens du collisionneur dont la synthèse n'a pas été trouvée par nom au dépôt de travail ; certains ont nourri des décisions (N-045 cite les tours « structure » et « comparaison », N-049 cite des synthèses de conv-audit des tours « agents sur le noyau » et « littérature des boucles », `f23ee714…` et `58010971…`), donc une lecture a eu lieu ailleurs : « structure » (R-392), « comparaison » (R-397), « réécrire sa structure ou apprendre dedans » (R-379), « publication » et « format » (R-419, R-430), « emprunts » (R-425, R-431 : réponses lues par session-depot pour la demande v5.3) et « financement et affiliation » (R-425), « escalier de coût » (R-436, R-465, R-467), « agents outillés et isolation » (R-439, R-469), « lecture du pilote » (R-451, R-452), « test des hypothèses de M » (R-447), « agents sur le noyau » (R-466, R-472), « interface de calcul bornée » (R-469, R-474), « littérature des boucles » (R-475, R-480), « already clean » (R-483), « graines du pilote 4 » (R-491, R-493, R-495), « programme TAIF » (R-484, R-485 : cellules refusées, ni lues ni relancées par règle). À établir par une lecture du canal de conv-audit, hors de cette tâche.
+
+## 4. Hors champ, existence seulement
+
+- Cellules en quarantaine du collisionneur « évasion et moniteurs » (N-057) et générateurs scellés en quarantaine cités par P-041 : scellés, à ne pas lire par quiconque conçoit un moniteur ; aucun chemin ni contenu repris ici.
+- Sorties du mode tenu à l'écart et du bras d'attaque : hors du mandat (cloison) ; ni listées ni ouvertes.
+
+## 5. Ajout de la v2
+
+- Aucune sortie payée nouvelle n'a été trouvée aux jalons 4 à 7 (synthèses scellées, dépôt public, antériorité, pièces de l'organisme). Le programme de conception de l'organisme (conv-audit, 27 octobre) prévoit des courses par couche ; seules les couches 0 et 1 ont des sorties, déjà lues ou reprises ci-dessus.
